@@ -1,0 +1,1059 @@
+$bog_builderui_div $mol_view
+
+$bog_ragufront_sidebar_nav $bog_builderui_div
+	icon \
+	label \
+	active false
+	click? null
+	attr *
+		^
+		bog_ragufront_sidebar_nav_active <= active
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Icon $bog_builderui_div sub / <= icon
+		<= Label $bog_builderui_div sub / <= label
+
+$bog_ragufront_sidebar_lang $bog_builderui_div
+	label \
+	active false
+	click? null
+	attr *
+		^
+		bog_ragufront_sidebar_lang_active <= active
+	event *
+		^
+		click? <=> click? null
+	sub / <= label
+
+$bog_ragufront_sidebar $bog_builderui_div
+	screen? \gallery
+	lang? \RU
+	dataset_id \wiki
+	sub /
+		<= Brand $bog_builderui_div sub /
+			<= Brand_logo $bog_builderui_div sub / \R
+			<= Brand_title $bog_builderui_div sub / \RAGU
+			<= Brand_badge $bog_builderui_div sub / \demo
+		<= Sections_label $bog_builderui_div sub / \Разделы
+		<= Nav $bog_builderui_div sub /
+			<= Nav_gallery $bog_ragufront_sidebar_nav
+				icon \▤
+				label \Датасеты
+				active <= is_gallery false
+				click? <=> click_gallery? null
+			<= Nav_explorer $bog_ragufront_sidebar_nav
+				icon \◉
+				label \Граф
+				active <= is_explorer false
+				click? <=> click_explorer? null
+			<= Nav_chat $bog_ragufront_sidebar_nav
+				icon \💬
+				label \Чат
+				active <= is_chat false
+				click? <=> click_chat? null
+			<= Nav_dashboard $bog_ragufront_sidebar_nav
+				icon \▦
+				label \Дашборд
+				active <= is_dashboard false
+				click? <=> click_dashboard? null
+		<= Spacer $bog_builderui_div
+		<= Footer $bog_builderui_div sub /
+			<= Corpus_label $bog_builderui_div sub / \Активный корпус
+			<= Corpus_card $bog_builderui_div sub /
+				<= Corpus_name $bog_builderui_div sub / <= dataset_name \
+				<= Corpus_meta $bog_builderui_div sub / \2 410 узлов · 38 сообществ
+			<= Lang_row $bog_builderui_div sub /
+				<= Lang_label $bog_builderui_div sub / \ЯЗЫК
+				<= Lang_en $bog_ragufront_sidebar_lang
+					label \EN
+					active <= is_en false
+					click? <=> click_en? null
+				<= Lang_ru $bog_ragufront_sidebar_lang
+					label \RU
+					active <= is_ru false
+					click? <=> click_ru? null
+
+$bog_ragufront_topbar_preset $bog_builderui_div
+	label \
+	active false
+	click? null
+	attr *
+		^
+		bog_ragufront_topbar_preset_active <= active
+	event *
+		^
+		click? <=> click? null
+	sub / <= label
+
+$bog_ragufront_topbar $bog_builderui_div
+	screen \gallery
+	dataset_id \wiki
+	preset? \demo
+	open_settings? null
+	sub /
+		<= Title_block $bog_builderui_div sub /
+			<= Title $bog_builderui_div sub / <= screen_title \
+			<= Subtitle $bog_builderui_div sub / <= dataset_name \
+		<= Spacer $bog_builderui_div
+		<= Preset_label $bog_builderui_div sub / \Пресет
+		<= Preset_group $bog_builderui_div sub /
+			<= Preset_fast $bog_ragufront_topbar_preset
+				label \⚡ Быстро
+				active <= is_fast false
+				click? <=> click_fast? null
+			<= Preset_accurate $bog_ragufront_topbar_preset
+				label \🎯 Точно
+				active <= is_accurate false
+				click? <=> click_accurate? null
+			<= Preset_demo $bog_ragufront_topbar_preset
+				label \🎬 Демо
+				active <= is_demo false
+				click? <=> click_demo? null
+		<= Settings_btn $bog_builderui_div
+			event * click? <=> open_settings? null
+			sub / \⚙ Настройки
+		<= Export_btn $bog_builderui_div sub / \↓ Экспорт
+
+$mol_scroll $mol_view
+	scroll_top? 0
+	scroll_left? 0
+	attr *
+		^
+		tabindex <= tabindex -1
+	event *
+		^
+		scroll? <=> event_scroll? null
+
+$bog_ragufront_settings_group $bog_builderui_div
+	step \
+	title \
+	opts \
+	control \
+	reindex true
+	sub /
+		<= Head $bog_builderui_div sub /
+			<= Step $bog_builderui_div sub / <= step
+			<= Reindex $bog_builderui_div
+				attr * bog_ragufront_settings_group_reindex <= reindex
+				sub / \требует переиндексации
+		<= Title $bog_builderui_div sub / <= title
+		<= Opts $bog_builderui_div sub / <= opts
+		<= Control $bog_builderui_div sub / <= control
+
+$bog_ragufront_settings $bog_builderui_div
+	showed? false
+	close? null
+	attr *
+		^
+		bog_ragufront_settings_showed <= showed?
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Header_text $bog_builderui_div sub /
+					<= Header_title $bog_builderui_div sub / \Настройки движка RAGU
+					<= Header_sub $bog_builderui_div sub / \пресет + ручной режим
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Group_chunking $bog_ragufront_settings_group
+					step \Шаг 1
+					title \Chunking
+					opts \Simple / SemanticText / SmartSemantic · размер · overlap
+					control \SmartSemanticChunker ▾
+					reindex true
+				<= Group_extraction $bog_ragufront_settings_group
+					step \Шаг 2
+					title \Extraction
+					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
+					control \two-stage · meno-lite 7B · ICL hybrid ▾
+					reindex true
+				<= Group_summarization $bog_ragufront_settings_group
+					step \Шаг 3
+					title \Summarization
+					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
+					control \DBSCAN вкл · суммаризация вкл
+					reindex true
+				<= Group_communities $bog_ragufront_settings_group
+					step \Шаг 4
+					title \Communities
+					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
+					control \Leiden · resolution 1.0
+					reindex true
+				<= Group_refinement $bog_ragufront_settings_group
+					step \Шаг 5
+					title \Refinement
+					opts \RemoveIsolatedNodes и пост-обработчики
+					control \RemoveIsolatedNodes вкл
+					reindex true
+				<= Group_search $bog_ragufront_settings_group
+					step \Шаг 6
+					title \Search
+					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
+					control \LocalSearch · rerank ✓ · top-k 8
+					reindex false
+
+$bog_ragufront_gallery_card $bog_builderui_div
+	id \
+	title \
+	domain \
+	desc \
+	nodes \
+	edges \
+	comms \
+	click? null
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Preview $bog_builderui_div sub /
+			<= Preview_label $bog_builderui_div sub / \превью графа
+			<= Domain_badge $bog_builderui_div sub / <= domain
+		<= Title $bog_builderui_div sub / <= title
+		<= Desc $bog_builderui_div sub / <= desc
+		<= Tags $bog_builderui_div sub /
+			<= Tag_nodes $bog_builderui_div sub / <= tag_nodes \
+			<= Tag_edges $bog_builderui_div sub / <= tag_edges \
+			<= Tag_comms $bog_builderui_div sub / <= tag_comms \
+
+$bog_ragufront_gallery $bog_builderui_div
+	dataset_id \wiki
+	select_dataset? null
+	datasets /
+	sub /
+		<= Header $bog_builderui_div sub /
+			<= Header_text $bog_builderui_div sub /
+				<= Header_title $bog_builderui_div sub / \Галерея корпусов
+				<= Header_subtitle $bog_builderui_div sub / \Выберите готовый граф знаний или загрузите свой документ / индекс
+			<= Spacer $bog_builderui_div
+			<= Upload_doc $bog_builderui_div sub / \＋ Загрузить документ
+			<= Upload_idx $bog_builderui_div sub / \⇪ Загрузить готовый индекс
+		<= Grid $bog_builderui_div sub <= rows /
+			<= Card* $bog_ragufront_gallery_card
+				id <= card_id* \
+				title <= card_title* \
+				domain <= card_domain* \
+				desc <= card_desc* \
+				nodes <= card_nodes* \
+				edges <= card_edges* \
+				comms <= card_comms* \
+				click? <=> click*? null
+
+$bog_ragufront_explorer $bog_builderui_div
+	sub /
+		<= Canvas $bog_builderui_div sub /
+			<= Canvas_bg $bog_builderui_div sub /
+				<= Canvas_label $bog_builderui_div sub /
+					\⬡ ⬡ ⬡
+					\
+					\ИНТЕРАКТИВНЫЙ ГРАФ ЗНАНИЙ
+					\Sigma.js / WebGL · force layout
+					\цвет = тип NEREL · толщина = strength
+			<= Filters $bog_builderui_div sub /
+				<= Filter_search $bog_builderui_div sub / \🔍 Поиск узла…
+				<= Filter_type $bog_builderui_div sub / \Тип сущности ▾
+				<= Filter_thresh $bog_builderui_div sub / \Порог strength ▾
+				<= Filter_comm $bog_builderui_div sub / \◉ Сообщества: вкл
+			<= Legend $bog_builderui_div sub /
+				<= Legend_title $bog_builderui_div sub / \Entity Types
+				<= Legend_person $bog_builderui_div sub /
+					<= Legend_person_dot $bog_builderui_div
+					<= Legend_person_label $bog_builderui_div sub / \PERSON
+				<= Legend_org $bog_builderui_div sub /
+					<= Legend_org_dot $bog_builderui_div
+					<= Legend_org_label $bog_builderui_div sub / \ORGANIZATION
+				<= Legend_loc $bog_builderui_div sub /
+					<= Legend_loc_dot $bog_builderui_div
+					<= Legend_loc_label $bog_builderui_div sub / \LOCATION
+				<= Legend_event $bog_builderui_div sub /
+					<= Legend_event_dot $bog_builderui_div
+					<= Legend_event_label $bog_builderui_div sub / \EVENT
+				<= Legend_date $bog_builderui_div sub /
+					<= Legend_date_dot $bog_builderui_div
+					<= Legend_date_label $bog_builderui_div sub / \DATE
+				<= Legend_work $bog_builderui_div sub /
+					<= Legend_work_dot $bog_builderui_div
+					<= Legend_work_label $bog_builderui_div sub / \WORK_OF_ART
+				<= Legend_law $bog_builderui_div sub /
+					<= Legend_law_dot $bog_builderui_div
+					<= Legend_law_label $bog_builderui_div sub / \LAW
+		<= Aside $bog_builderui_div sub /
+			<= Aside_title $bog_builderui_div sub / \Карточка сущности
+			<= Entity_head $bog_builderui_div sub /
+				<= Entity_dot $bog_builderui_div
+				<= Entity_name $bog_builderui_div sub / \Бьёрнстьерне Бьёрнсон
+			<= Entity_type $bog_builderui_div sub / \PERSON
+			<= Entity_desc $bog_builderui_div sub / \Автор текста гимна Норвегии (1859). Норвежский писатель, лауреат Нобелевской премии по литературе.
+			<= Relations_title $bog_builderui_div sub / \Связи (12)
+			<= Rel_one $bog_builderui_div sub /
+				<= Rel_one_type $bog_builderui_div sub / \WORKS_AS
+				<= Rel_one_target $bog_builderui_div sub / \писатель
+			<= Rel_two $bog_builderui_div sub /
+				<= Rel_two_type $bog_builderui_div sub / \AWARDED_WITH
+				<= Rel_two_target $bog_builderui_div sub / \Нобелевская премия
+			<= Rel_three $bog_builderui_div sub /
+				<= Rel_three_type $bog_builderui_div sub / \PLACE_OF_BIRTH
+				<= Rel_three_target $bog_builderui_div sub / \Квикне, Норвегия
+			<= Sources_title $bog_builderui_div sub / \Источники (provenance)
+			<= Sources $bog_builderui_div sub / \chunk #418 · chunk #902 …
+			<= Ask_btn $bog_builderui_div sub / \💬 Спросить про эту сущность
+
+$bog_ragufront_chat $bog_builderui_div
+	sub /
+		<= Modes_bar $bog_builderui_div sub /
+			<= Modes_label $bog_builderui_div sub / \Движок поиска
+			<= Modes $bog_builderui_div sub /
+				<= Mode_local $bog_builderui_div sub / \LocalSearch
+				<= Mode_global $bog_builderui_div sub / \Global
+				<= Mode_mix $bog_builderui_div sub / \Mix
+				<= Mode_plan $bog_builderui_div sub / \QueryPlan
+		<= Body $bog_builderui_div sub /
+			<= Msg_user $bog_builderui_div sub / \Кто написал гимн Норвегии и когда?
+			<= Msg_assistant_wrap $bog_builderui_div sub /
+				<= Msg_assistant $bog_builderui_div sub / \Текст гимна Норвегии написал Бьёрнстьерне Бьёрнсон в 1859 году…
+				<= Trace $bog_builderui_div sub /
+					<= Trace_head $bog_builderui_div sub /
+						<= Trace_head_title $bog_builderui_div sub / \▾ Трейс ответа
+						<= Trace_head_meta $bog_builderui_div sub / \LocalSearch · top-k 8 · rerank ✓
+					<= Trace_body $bog_builderui_div sub /
+						<= Trace_label $bog_builderui_div sub / \СУЩНОСТИ В КОНТЕКСТЕ
+						<= Trace_chips $bog_builderui_div sub /
+							<= Trace_chip_one $bog_builderui_div sub / \Бьёрнсон
+							<= Trace_chip_two $bog_builderui_div sub / \гимн Норвегии
+							<= Trace_chip_three $bog_builderui_div sub / \1859
+						<= Trace_stats $bog_builderui_div sub /
+							<= Trace_stat_chunks $bog_builderui_div sub / \chunks: 3
+							<= Trace_stat_comms $bog_builderui_div sub / \communities: 1
+							<= Trace_stat_retr $bog_builderui_div sub / \retrieval 140мс
+							<= Trace_stat_gen $bog_builderui_div sub / \gen 1.2с
+							<= Trace_stat_power $bog_builderui_div sub / \≈0.4 Вт·ч
+						<= Trace_link $bog_builderui_div sub / \↳ подсветить на графе
+		<= Footer $bog_builderui_div sub /
+			<= Suggestions $bog_builderui_div sub /
+				<= Sug_one $bog_builderui_div sub / \Кто получал Нобелевскую премию?
+				<= Sug_two $bog_builderui_div sub / \Связь Ибсена и Бьёрнсона?
+			<= Input_row $bog_builderui_div sub /
+				<= Input_hint $bog_builderui_div sub / \Спросите что-нибудь про корпус…
+				<= Input_spacer $bog_builderui_div
+				<= Input_send $bog_builderui_div sub / \↑
+
+$bog_ragufront_dashboard_metric $bog_builderui_div
+	name \
+	value \
+	pct \0%
+	sub /
+		<= Name $bog_builderui_div sub / <= name
+		<= Bar $bog_builderui_div sub /
+			<= Bar_fill $bog_builderui_div
+		<= Value $bog_builderui_div sub / <= value
+
+$bog_ragufront_dashboard_stage $bog_builderui_div
+	name \
+	time \
+	pct \0%
+	sub /
+		<= Name $bog_builderui_div sub / <= name
+		<= Bar $bog_builderui_div sub /
+			<= Bar_fill $bog_builderui_div
+		<= Time $bog_builderui_div sub / <= time
+
+$bog_ragufront_dashboard $bog_builderui_div
+	metrics /
+	stages /
+	sub /
+		<= Title $bog_builderui_div sub / \Дашборд корпуса
+		<= Subtitle $bog_builderui_div sub / \Статистика графа · качество · энергия и стоимость · тайминги и логи
+		<= Grid $bog_builderui_div sub /
+			<= Card_stats $bog_builderui_div sub /
+				<= Card_stats_label $bog_builderui_div sub / \① Статистика графа
+				<= Stats_row $bog_builderui_div sub /
+					<= Stat_nodes $bog_builderui_div sub /
+						<= Stat_nodes_val $bog_builderui_div sub / \2 410
+						<= Stat_nodes_lbl $bog_builderui_div sub / \узлов
+					<= Stat_edges $bog_builderui_div sub /
+						<= Stat_edges_val $bog_builderui_div sub / \7 088
+						<= Stat_edges_lbl $bog_builderui_div sub / \связей
+					<= Stat_comms $bog_builderui_div sub /
+						<= Stat_comms_val $bog_builderui_div sub / \38
+						<= Stat_comms_lbl $bog_builderui_div sub / \сообществ
+				<= Stats_dist $bog_builderui_div sub / \распределение типов сущностей
+			<= Card_quality $bog_builderui_div sub /
+				<= Card_quality_label $bog_builderui_div sub / \② Качество (бенчмарки)
+				<= Metric_rows $bog_builderui_div sub <= metric_rows /
+					<= Metric* $bog_ragufront_dashboard_metric
+						name <= metric_name* \
+						value <= metric_value* \
+						pct <= metric_pct* \0%
+				<= Quality_footer $bog_builderui_div sub / \RAGU vs LightRAG / HippoRAG2 / Naive
+			<= Card_energy $bog_builderui_div sub /
+				<= Card_energy_label $bog_builderui_div sub / \③ Энергия и стоимость
+				<= Energy_row $bog_builderui_div sub /
+					<= Energy_kwh $bog_builderui_div sub /
+						<= Energy_kwh_val $bog_builderui_div sub / \0.18
+						<= Energy_kwh_lbl $bog_builderui_div sub / \кВт·ч / корпус
+					<= Energy_cost $bog_builderui_div sub /
+						<= Energy_cost_val $bog_builderui_div sub / \−94%
+						<= Energy_cost_lbl $bog_builderui_div sub / \$ vs GPT-4 API
+				<= Energy_note $bog_builderui_div sub /
+					\кВт·ч = TDP × время × PUE
+					\meno-lite 7B локально vs ~40k токенов/док по тарифам gpt-4o
+			<= Card_timings $bog_builderui_div sub /
+				<= Card_timings_label $bog_builderui_div sub / \④ Тайминги пайплайна
+				<= Stage_rows $bog_builderui_div sub <= stage_rows /
+					<= Stage* $bog_ragufront_dashboard_stage
+						name <= stage_name* \
+						time <= stage_time* \
+						pct <= stage_pct* \0%
+			<= Card_logs $bog_builderui_div sub /
+				<= Card_logs_label $bog_builderui_div sub / \Логи запросов (разворачиваются в трейс)
+				<= Log_list $bog_builderui_div sub /
+					<= Log_one $bog_builderui_div sub /
+						<= Log_one_time $bog_builderui_div sub / \12:04:18
+						<= Log_one_text $bog_builderui_div sub / \«Кто написал гимн…»
+						<= Log_one_mode $bog_builderui_div sub / \LocalSearch
+						<= Log_one_dur $bog_builderui_div sub / \1.3с
+						<= Log_one_arrow $bog_builderui_div sub / \▾
+					<= Log_two $bog_builderui_div sub /
+						<= Log_two_time $bog_builderui_div sub / \12:03:51
+						<= Log_two_text $bog_builderui_div sub / \«Связь Ибсена и…»
+						<= Log_two_mode $bog_builderui_div sub / \MixSearch
+						<= Log_two_dur $bog_builderui_div sub / \2.1с
+						<= Log_two_arrow $bog_builderui_div sub / \▾
+
+$bog_builderui_card $bog_builderui_div
+
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown? <=> keydown? null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
+$mol_string $mol_view
+	dom_name \input
+	enabled true
+	minimal_height 40
+	autocomplete false
+	selection? /number
+		0
+		0
+	auto /
+		<= selection_watcher null
+		<= error_report null
+	field *
+		^
+		disabled <= disabled false
+		value <= value_changed? <=> value? \
+		placeholder <= hint_visible <= hint \
+		spellcheck <= spellcheck true
+		autocomplete <= autocomplete_native \
+		selectionEnd <= selection_end 0
+		selectionStart <= selection_start 0
+		inputMode <= keyboard \text
+		enterkeyhint <= enter \go
+	attr *
+		^
+		maxlength <= length_max +Infinity
+		type <= type? \text
+	event *
+		^
+		input? <=> event_change? null
+	plugins /
+		<= Submit $mol_hotkey
+			mod_ctrl <= submit_with_ctrl false
+			key * enter? <=> submit? null
+
+$bog_builderui_field $mol_string
+	minimal_height 36
+
+$mol_gallery $mol_view
+	sub <= items /$mol_view
+	Side* $mol_gallery
+		style *
+			flexGrow <= side_size* \1
+		items <= side_items* /$mol_view
+
+$mol_chart_legend $mol_scroll
+	graphs /$mol_plot_graph
+	graphs_front /$mol_plot_graph
+	sub /
+		<= Gallery $mol_gallery items <= graph_legends /$mol_view
+	-
+	Graph_legend* $mol_view
+		sub /
+			<= Graph_sample_box* $mol_view
+				sub /
+					<= Graph_sample* null
+			<= Graph_title* $mol_view
+				sub /
+					<= graph_title* \
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_group $mol_svg
+	dom_name \g
+
+$mol_svg_title $mol_svg
+	dom_name \title
+	sub /
+		<= title
+
+$mol_plot_graph $mol_svg_group
+	series_x /number
+	series_y /number
+	-
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	-
+	style *
+		^
+		color <= color \
+	-
+	viewport $mol_vector_2d<$mol_vector_range<number>> /
+		<= viewport_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= viewport_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	shift /number
+		0
+		0
+	scale /number
+		1
+		1
+	cursor_position $mol_vector_2d<number> /
+		NaN
+		NaN
+	dimensions_pane $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_pane_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= dimensions_pane_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= dimensions_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	size_real $mol_vector_2d<number> /
+		0
+		0
+	gap $mol_vector_2d<$mol_vector_range<number>> /
+		<= gap_x $mol_vector_range<number> /
+			0
+			0
+		<= gap_y $mol_vector_range<number> /
+			0
+			0
+	repos_x* 0
+	repos_y* 0
+	indexes /number
+	points /readonly(number)[]
+	front /$mol_svg
+	back /$mol_svg
+	Hint $mol_svg_title
+		title <= hint <= title \
+	hue? +NaN
+	Sample null
+
+$mol_plot_graph_sample $mol_view
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	style *
+		^
+		color <= color \black
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_touch $mol_plugin
+	start_zoom? 0
+	start_distance? 0
+	zoom? 1
+	allow_draw true
+	allow_pan true
+	allow_zoom true
+	action_type? \
+	action_point? $mol_vector_2d<number> /
+		NaN
+		NaN
+	-
+	start_pan? /
+		0
+		0
+	pan? $mol_vector_2d<number> /
+		0
+		0
+	pointer_center $mol_vector_2d<number> /
+		NaN
+		NaN
+	-
+	start_pos? null
+	swipe_precision 16
+	-
+	swipe_right? null
+	swipe_bottom? null
+	swipe_left? null
+	swipe_top? null
+	-
+	swipe_from_right? null
+	swipe_from_bottom? null
+	swipe_from_left? null
+	swipe_from_top? null
+	-
+	swipe_to_right? null
+	swipe_to_bottom? null
+	swipe_to_left? null
+	swipe_to_top? null
+	-
+	draw_start?event null
+	draw?event null
+	draw_end?event null
+	-
+	style *
+		^
+		touch-action \none
+		overscroll-behavior \none
+	-
+	event *
+		^
+		pointerdown?event <=> event_start?event null
+		pointermove?event <=> event_move?event null
+		pointerup?event <=> event_end?event null
+		pointerleave?event <=> event_leave?event null
+		wheel?event <=> event_wheel?event null
+
+$mol_plot_pane $mol_svg_root
+	aspect \none
+	-
+	hue_base? +NaN
+	hue_shift? 111
+	-
+	gap_hor 48
+	gap_vert 24
+	gap_left <= gap_hor
+	gap_right <= gap_hor
+	gap_top <= gap_vert
+	gap_bottom <= gap_vert
+	gap $mol_vector_2d<$mol_vector_range<number>> /
+		<= gap_x $mol_vector_range<number> /
+			<= gap_left
+			<= gap_right
+		<= gap_y $mol_vector_range<number> /
+			<= gap_bottom
+			<= gap_top
+	-
+	shift_limit $mol_vector_2d<$mol_vector_range<number>> /
+		<= shift_limit_x $mol_vector_range<number> /
+			0
+			0
+		<= shift_limit_y $mol_vector_range<number> /
+			0
+			0
+	shift_default $mol_vector_2d<number> /
+		0
+		0
+	shift? $mol_vector_2d<number> /
+		0
+		0
+	scale_limit $mol_vector_2d<$mol_vector_range<number>> /
+		<= scale_limit_x $mol_vector_range<number> /
+			0
+			Infinity
+		<= scale_limit_y $mol_vector_range<number> /
+			0
+			-Infinity
+	scale_default $mol_vector_2d<number> /
+		0
+		0
+	scale? $mol_vector_2d<number> /
+		1
+		-1
+	scale_x? 1
+	scale_y? -1
+	size $mol_vector_2d<number> /
+		0
+		0
+	size_real $mol_vector_2d<number> /
+		1
+		1
+	dimensions $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= dimensions_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	dimensions_viewport $mol_vector_2d<$mol_vector_range<number>> /
+		<= dimensions_viewport_x $mol_vector_range<number> /
+			Infinity
+			-Infinity
+		<= dimensions_viewport_y $mol_vector_range<number> /
+			Infinity
+			-Infinity
+	-
+	sub <= graphs_sorted /$mol_svg
+	graphs_colored <= graphs_visible <= graphs_positioned <= graphs /$mol_plot_graph
+	-
+	plugins /
+		^
+		<= Touch $mol_touch
+			zoom? <=> zoom? 1
+			pan? <=> shift?
+			pointer_center => cursor_position
+			allow_draw <= allow_draw true
+			allow_pan <= allow_pan true
+			allow_zoom <= allow_zoom true
+			action_type => action_type
+			action_point => action_point
+			draw_start?event <=> draw_start?event null
+			draw?event <=> draw?event null
+			draw_end?event <=> draw_end?event null
+	- event *
+		^
+		dblclick?event <=> reset?event null
+
+$mol_chart $mol_view
+	gap_hor 48
+	gap_vert 24
+	gap_left <= gap_hor
+	gap_right <= gap_hor
+	gap_bottom <= gap_vert
+	gap_top <= gap_vert
+	graphs /$mol_plot_graph
+	sub /
+		<= Legend $mol_chart_legend
+			graphs <= graphs_colored
+		<= Plot $mol_plot_pane
+			scale_x? => zoom?
+			zoom? <=> zoom?
+			gap_left <= gap_left
+			gap_right <= gap_right
+			gap_bottom <= gap_bottom
+			gap_top <= gap_top
+			graphs <= graphs
+			graphs_colored => graphs_colored
+			hue_base <= hue_base 210
+			hue_shift <= hue_shift 163
+
+$bog_builderui_chart $mol_chart
+
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	align /number
+		-.5
+		-.5
+	offset /number
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	align \bottom_center
+	prefer \vert
+	auto /
+		<= bubble null
+	sub /
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Follower $mol_follower
+			offset <= bubble_offset /number
+				0
+				1
+			align <= bubble_align /number
+				0
+				0
+			Anchor <= Anchor
+			Sub <= Bubble $mol_pop_bubble
+				content <= bubble_content /$mol_view_content
+				height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		tabindex 0
+		popover \manual
+
+$mol_speck $mol_view
+	theme \$mol_theme_accent
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click? null
+	event_click? null
+	status? /
+	event *
+		^
+		click? <=> activate? <=> event_activate? null
+		dblclick? <=> clicks? null
+		keydown? <=> key_press? <=> event_key_press? null
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_pick $mol_pop
+	event *
+		^
+		keydown? <=> keydown? null
+	Anchor <= Trigger $mol_check
+		minimal_width 40
+		minimal_height 40
+		enabled <= trigger_enabled true
+		checked? <=> showed?
+		clicks? <=> clicks? null
+		sub <= trigger_content /$mol_view_content
+			<= title
+		hint <= hint \
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 7
+	width_limit +Infinity
+	row_width 0
+	sub / <= title
+
+$mol_dimmer $mol_paragraph
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low* $mol_paragraph
+		sub /
+			<= string* \
+	High* $mol_paragraph
+		sub /
+			<= string* \
+
+$mol_nav $mol_plugin
+	cycle? false
+	-
+	mod_ctrl false
+	mod_shift false
+	mod_alt false
+	-
+	keys_x? /
+	keys_y? /
+	-
+	current_x? null
+	current_y? null
+	-
+	event_up? null
+	event_down? null
+	event_left? null
+	event_right? null
+	event *
+		^
+		keydown? <=> event_key? null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
+
+$mol_search $mol_pop
+	query? \
+	suggests /string
+	plugins /$mol_plugin
+		^
+		<= Hotkey $mol_hotkey
+			key * escape? <=> clear? null
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y? <=> nav_focused? null
+	showed? <=> suggests_showed? false
+	align_hor \right
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value? <=> query? \
+				hint <= hint @ \Search...
+				submit? <=> submit? null
+				enabled <= enabled true
+				keyboard <= keyboard \search
+				enter <= enter \search
+				bring => bring
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				enabled <= enabled true
+				click? <=> clear? null
+				sub /
+					<= Clear_icon $mol_icon_close
+	bubble_content /$mol_view_content
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_items /$mol_view
+	Suggest* $mol_button_minor
+		click? <=> suggest_select*? null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
+				needle <= query? \
+
+$mol_icon_dots_vertical $mol_icon path \M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z
+
+$mol_select $mol_pick
+	dictionary? *
+	options /string
+	value? \
+	option_label_default \
+	Option_row* $mol_button_minor
+		enabled <= enabled true
+		event_click? <=> event_select*? null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
+				needle <= filter_pattern? \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y? <=> option_focused? null
+			cycle? <=> nav_cycle? true
+	hint @ \Pick..
+	bubble_content /
+		<= Filter
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_content /$mol_view
+	Filter $mol_search
+		query? <=> filter_pattern? \
+		hint <= filter_hint @ \Filter..
+		submit? <=> submit? null
+		enabled <= enabled true
+	Trigger_icon $mol_icon_dots_vertical
+	trigger_enabled <= enabled
+
+$bog_builderui_select $mol_select
+
+$mol_pop_over $mol_pop
+	showed <= hovered? false
+	attr *
+		^
+		tabindex 0
+	event *
+		^
+		mouseenter? <=> event_show? null
+		mouseleave? <=> event_hide? null
+
+$bog_builderui_tooltip $mol_pop_over
+
+$bog_ragufront_app $bog_builderui_div
+	screen? \gallery
+	preset? \demo
+	lang? \RU
+	dataset_id? \wiki
+	settings_open? false
+	body /
+	sub /
+		<= Sidebar $bog_ragufront_sidebar
+			screen? <=> screen?
+			lang? <=> lang?
+			dataset_id <= dataset_id
+		<= Main $bog_builderui_div sub /
+			<= Topbar $bog_ragufront_topbar
+				screen <= screen
+				dataset_id <= dataset_id
+				preset? <=> preset?
+				open_settings? <=> open_settings? null
+			<= Body $mol_scroll sub <= body
+		<= Settings $bog_ragufront_settings
+			showed? <=> settings_open?
+	Gallery $bog_ragufront_gallery
+		dataset_id <= dataset_id
+		select_dataset? <=> select_dataset? null
+	Explorer $bog_ragufront_explorer
+	Chat $bog_ragufront_chat
+	Dashboard $bog_ragufront_dashboard

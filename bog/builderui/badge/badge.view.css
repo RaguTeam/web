@@ -1,0 +1,15 @@
+[bog_builderui_badge][bog_builderui_badge_variant="secondary"] {
+	background-color: var(--bog_builderui_field);
+	color: var(--bog_builderui_text);
+}
+
+[bog_builderui_badge][bog_builderui_badge_variant="outline"] {
+	background-color: transparent;
+	color: var(--bog_builderui_text);
+	border: 1px solid var(--bog_builderui_line);
+}
+
+[bog_builderui_badge][bog_builderui_badge_variant="destructive"] {
+	background-color: var(--bog_builderui_special);
+	color: var(--bog_builderui_back);
+}
