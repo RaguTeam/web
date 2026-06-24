@@ -1,8 +1,0 @@
-$bog_builderui_badge $bog_builderui_div
-	title \
-	variant \default
-	attr *
-		^
-		bog_builderui_badge_variant <= variant
-	sub /
-		<= title

@@ -217,9 +217,11 @@
     "$bog_ragufront_settings_group",
     "$bog_ragufront_gallery",
     "$bog_ragufront_gallery_card",
+    "$bog_ragufront_gallery_card_preview",
     "$bog_ragufront_explorer",
     "$bog_ragufront_chat",
     "$bog_ragufront_dashboard",
+    "$bog_ragufront_dashboard_dist",
     "$bog_ragufront_dashboard_metric",
     "$bog_ragufront_dashboard_stage"
   ],

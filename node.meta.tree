@@ -53,17 +53,3 @@
 	include \/mol/view/tree/test
 \/bog/ragufront/app
 	deploy \/mol/offline/install
-	deploy \/bog/builderui/theme.css
-	deploy \/bog/builderui/tokens/tokens.ts
-	deploy \/bog/builderui/div/div.view.tree
-	deploy \/bog/builderui/div/div.view.css.ts
-	deploy \/bog/builderui/button/button.view.tree
-	deploy \/bog/builderui/button/button.view.css.ts
-	deploy \/bog/builderui/button/button.view.css
-	deploy \/bog/builderui/card/card.view.tree
-	deploy \/bog/builderui/card/card.view.css.ts
-	deploy \/bog/builderui/field/field.view.tree
-	deploy \/bog/builderui/field/field.view.css.ts
-	deploy \/bog/builderui/badge/badge.view.tree
-	deploy \/bog/builderui/badge/badge.view.css.ts
-	deploy \/bog/builderui/badge/badge.view.css

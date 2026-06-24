@@ -2591,6 +2591,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $bog_ragufront_gallery_card_preview extends $bog_builderui_div {
+	}
+	
+}
+
+//# sourceMappingURL=preview.view.tree.d.ts.map
+declare namespace $ {
 
 	type $bog_builderui_div__sub_bog_ragufront_gallery_card_1 = $mol_type_enforce<
 		readonly(any)[]
@@ -2602,10 +2613,10 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_bog_ragufront_gallery_card_3 = $mol_type_enforce<
+	type $bog_ragufront_gallery_card_preview__sub_bog_ragufront_gallery_card_3 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $bog_ragufront_gallery_card_preview['sub'] >
 	>
 	type $bog_builderui_div__sub_bog_ragufront_gallery_card_4 = $mol_type_enforce<
 		readonly(any)[]
@@ -2641,7 +2652,7 @@ declare namespace $ {
 		click( next?: any ): any
 		Preview_label( ): $bog_builderui_div
 		Domain_badge( ): $bog_builderui_div
-		Preview( ): $bog_builderui_div
+		Preview( ): $bog_ragufront_gallery_card_preview
 		Title( ): $bog_builderui_div
 		Desc( ): $bog_builderui_div
 		tag_nodes( ): string
@@ -3314,6 +3325,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $bog_ragufront_dashboard_dist extends $bog_builderui_div {
+	}
+	
+}
+
+//# sourceMappingURL=dist.view.tree.d.ts.map
+declare namespace $ {
 
 	type $bog_builderui_div__sub_bog_ragufront_dashboard_metric_1 = $mol_type_enforce<
 		readonly(any)[]
@@ -3460,10 +3482,10 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_bog_ragufront_dashboard_14 = $mol_type_enforce<
+	type $bog_ragufront_dashboard_dist__sub_bog_ragufront_dashboard_14 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $bog_ragufront_dashboard_dist['sub'] >
 	>
 	type $bog_builderui_div__sub_bog_ragufront_dashboard_15 = $mol_type_enforce<
 		readonly(any)[]
@@ -3679,7 +3701,7 @@ declare namespace $ {
 		Stat_comms_lbl( ): $bog_builderui_div
 		Stat_comms( ): $bog_builderui_div
 		Stats_row( ): $bog_builderui_div
-		Stats_dist( ): $bog_builderui_div
+		Stats_dist( ): $bog_ragufront_dashboard_dist
 		Card_stats( ): $bog_builderui_div
 		Card_quality_label( ): $bog_builderui_div
 		metric_name( id: any): string

@@ -198,6 +198,8 @@ $bog_ragufront_settings $bog_builderui_div
 					control \LocalSearch · rerank ✓ · top-k 8
 					reindex false
 
+$bog_ragufront_gallery_card_preview $bog_builderui_div
+
 $bog_ragufront_gallery_card $bog_builderui_div
 	id \
 	title \
@@ -211,7 +213,7 @@ $bog_ragufront_gallery_card $bog_builderui_div
 		^
 		click? <=> click? null
 	sub /
-		<= Preview $bog_builderui_div sub /
+		<= Preview $bog_ragufront_gallery_card_preview sub /
 			<= Preview_label $bog_builderui_div sub / \превью графа
 			<= Domain_badge $bog_builderui_div sub / <= domain
 		<= Title $bog_builderui_div sub / <= title
@@ -342,6 +344,8 @@ $bog_ragufront_chat $bog_builderui_div
 				<= Input_spacer $bog_builderui_div
 				<= Input_send $bog_builderui_div sub / \↑
 
+$bog_ragufront_dashboard_dist $bog_builderui_div
+
 $bog_ragufront_dashboard_metric $bog_builderui_div
 	name \
 	value \
@@ -381,7 +385,7 @@ $bog_ragufront_dashboard $bog_builderui_div
 					<= Stat_comms $bog_builderui_div sub /
 						<= Stat_comms_val $bog_builderui_div sub / \38
 						<= Stat_comms_lbl $bog_builderui_div sub / \сообществ
-				<= Stats_dist $bog_builderui_div sub / \распределение типов сущностей
+				<= Stats_dist $bog_ragufront_dashboard_dist sub / \распределение типов сущностей
 			<= Card_quality $bog_builderui_div sub /
 				<= Card_quality_label $bog_builderui_div sub / \② Качество (бенчмарки)
 				<= Metric_rows $bog_builderui_div sub <= metric_rows /

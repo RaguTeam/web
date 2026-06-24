@@ -5744,11 +5744,27 @@ var $;
                 left: '20px',
                 right: '20px',
             },
+            display: 'flex',
             flex: { direction: 'column' },
             gap: '18px',
         },
     });
 })($ || ($ = {}));
+
+;
+	($.$bog_ragufront_gallery_card_preview) = class $bog_ragufront_gallery_card_preview extends ($.$bog_builderui_div) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/ragufront/gallery/card/preview/preview.view.css", "[bog_ragufront_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
 
 ;
 	($.$bog_ragufront_gallery_card) = class $bog_ragufront_gallery_card extends ($.$bog_builderui_div) {
@@ -5767,7 +5783,7 @@ var $;
 			return obj;
 		}
 		Preview(){
-			const obj = new this.$.$bog_builderui_div();
+			const obj = new this.$.$bog_ragufront_gallery_card_preview();
 			(obj.sub) = () => ([(this.Preview_label()), (this.Domain_badge())]);
 			return obj;
 		}
@@ -5912,7 +5928,6 @@ var $;
         Preview: {
             height: '118px',
             border: { radius: '7px' },
-            background: { color: '#e7e4e0' },
             align: { items: 'center' },
             justify: { content: 'center' },
             position: 'relative',
@@ -6125,7 +6140,8 @@ var $;
 var $;
 (function ($) {
     $mol_style_define($bog_ragufront_gallery, {
-        flex: { direction: 'column' },
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
         padding: {
             top: '1.5rem',
             bottom: '1.5rem',
@@ -6134,12 +6150,14 @@ var $;
         },
         Header: {
             flex: { direction: 'row' },
+            flexWrap: 'wrap',
             align: { items: 'flex-end' },
             gap: '0.875rem',
             margin: { bottom: '1.25rem' },
         },
         Header_text: {
-            flex: { direction: 'column' },
+            flex: { direction: 'column', grow: 1, shrink: 1 },
+            minWidth: 0,
         },
         Header_title: {
             font: { weight: 700, size: '20px' },
@@ -6180,8 +6198,9 @@ var $;
         },
         Grid: {
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
             gap: '16px',
+            minWidth: 0,
         },
     });
 })($ || ($ = {}));
@@ -6536,6 +6555,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const { radial_gradient } = $mol_style_func;
     const dot_base = {
         minWidth: '9px',
         maxWidth: '9px',
@@ -6584,10 +6604,11 @@ var $;
         margin: { top: '2px' },
     };
     $mol_style_define($bog_ragufront_explorer, {
-        flex: { direction: 'row' },
+        flex: { direction: 'row', shrink: 1 },
+        minWidth: 0,
         height: '100%',
         Canvas: {
-            flex: { grow: 1, direction: 'column' },
+            flex: { grow: 1, shrink: 1, direction: 'column' },
             position: 'relative',
             background: { color: '#1c1b1a' },
             minWidth: 0,
@@ -6600,6 +6621,12 @@ var $;
             left: 0,
             align: { items: 'center' },
             justify: { content: 'center' },
+            background: {
+                image: [
+                    [radial_gradient('circle at 35% 40%, #5b5bd62e, transparent 45%')],
+                    [radial_gradient('circle at 70% 65%, #d65b8c24, transparent 45%')],
+                ],
+            },
         },
         Canvas_label: {
             font: {
@@ -7143,7 +7170,8 @@ var $;
         color: '#78716c',
     };
     $mol_style_define($bog_ragufront_chat, {
-        flex: { direction: 'column' },
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
         height: '100%',
         Modes_bar: {
             flex: { direction: 'row' },
@@ -7357,6 +7385,21 @@ var $;
         },
     });
 })($ || ($ = {}));
+
+;
+	($.$bog_ragufront_dashboard_dist) = class $bog_ragufront_dashboard_dist extends ($.$bog_builderui_div) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/ragufront/dashboard/dist/dist.view.css", "[bog_ragufront_dashboard_dist] {\n\tbackground-image: repeating-linear-gradient(90deg, #efedea 0 7px, #e7e4e0 7px 14px);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
 
 ;
 	($.$bog_ragufront_dashboard_metric) = class $bog_ragufront_dashboard_metric extends ($.$bog_builderui_div) {
@@ -7647,7 +7690,7 @@ var $;
 			return obj;
 		}
 		Stats_dist(){
-			const obj = new this.$.$bog_builderui_div();
+			const obj = new this.$.$bog_ragufront_dashboard_dist();
 			(obj.sub) = () => (["распределение типов сущностей"]);
 			return obj;
 		}
@@ -8059,7 +8102,8 @@ var $;
         color: '#1f8a5b',
     };
     $mol_style_define($bog_ragufront_dashboard, {
-        flex: { direction: 'column' },
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
         padding: {
             top: '1.5rem',
             bottom: '1.5rem',
@@ -8077,8 +8121,9 @@ var $;
         },
         Grid: {
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '16px',
+            minWidth: 0,
         },
         Card_stats: card,
         Card_quality: card,
@@ -8108,7 +8153,6 @@ var $;
             margin: { top: '14px' },
             height: '64px',
             border: { radius: '6px' },
-            background: { color: '#e7e4e0' },
             align: { items: 'center' },
             justify: { content: 'center' },
             font: {
@@ -14068,13 +14112,16 @@ var $;
         Main: {
             flex: {
                 grow: 1,
+                shrink: 1,
                 direction: 'column',
             },
             minWidth: 0,
         },
         Body: {
-            flex: { grow: 1 },
+            display: 'flex',
+            flex: { grow: 1, shrink: 1, direction: 'column' },
             minHeight: 0,
+            minWidth: 0,
         },
     });
 })($ || ($ = {}));
