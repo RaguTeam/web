@@ -223,7 +223,8 @@
     "$bog_ragufront_dashboard",
     "$bog_ragufront_dashboard_dist",
     "$bog_ragufront_dashboard_metric",
-    "$bog_ragufront_dashboard_stage"
+    "$bog_ragufront_dashboard_stage",
+    "$mol_state_arg"
   ],
   "dependencies": {
     "autoinstall": "*",

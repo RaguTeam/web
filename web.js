@@ -13592,6 +13592,148 @@ var $;
 ;
 "use strict";
 
+;
+"use strict";
+var $;
+(function ($) {
+    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix;
+        static href(next) {
+            if (next === undefined) {
+                next = $mol_dom.location.href;
+            }
+            else if (!/^about:srcdoc/.test(next)) {
+                new $mol_after_frame(() => {
+                    const next = this.href();
+                    const prev = $mol_dom.location.href;
+                    if (next === prev)
+                        return;
+                    const history = $mol_dom.history;
+                    history.replaceState(history.state, $mol_dom.document.title, next);
+                });
+            }
+            if ($mol_dom.parent && ($mol_dom.parent !== $mol_dom.self)) {
+                $mol_dom.parent.postMessage(['hashchange', next], '*');
+            }
+            return next;
+        }
+        static href_normal() {
+            return this.link({});
+        }
+        static href_absolute() {
+            return new URL(this.href(), $mol_dom.location.href).toString();
+        }
+        static dict(next) {
+            var href = this.href(next && this.make_link(next)).split(/#!?/)[1] || '';
+            var chunks = href.split(this.separator);
+            var params = {};
+            chunks.forEach(chunk => {
+                if (!chunk)
+                    return;
+                var vals = chunk.split('=').map(decodeURIComponent);
+                params[vals.shift()] = vals.join('=');
+            });
+            return params;
+        }
+        static dict_cut(except) {
+            const dict = this.dict();
+            const cut = {};
+            for (const key in dict) {
+                if (except.indexOf(key) >= 0)
+                    break;
+                cut[key] = dict[key];
+            }
+            return cut;
+        }
+        static value(key, next) {
+            const nextDict = (next === void 0) ? void 0 : { ...this.dict(), [key]: next };
+            const next2 = this.dict(nextDict)[key];
+            return (next2 == null) ? null : next2;
+        }
+        static link(next) {
+            return this.make_link({
+                ...this.dict_cut(Object.keys(next)),
+                ...next,
+            });
+        }
+        static prolog = '!';
+        static separator = '/';
+        static make_link(next) {
+            const chunks = [];
+            for (let key in next) {
+                if (null == next[key])
+                    continue;
+                const val = next[key];
+                chunks.push([key].concat(val ? [val] : []).map(this.encode).join('='));
+            }
+            return new URL('#' + this.prolog + chunks.join(this.separator), this.href_absolute()).toString();
+        }
+        static commit() {
+            $mol_dom.history.pushState($mol_dom.history.state, $mol_dom.document.title, this.href());
+        }
+        static go(next) {
+            $mol_dom.location.href = this.link(next);
+        }
+        static encode(str) {
+            return encodeURIComponent(str).replace(/\(/g, '%28').replace(/\)/g, '%29');
+        }
+        constructor(prefix = '') {
+            super();
+            this.prefix = prefix;
+        }
+        value(key, next) {
+            return this.constructor.value(this.prefix + key, next);
+        }
+        sub(postfix) {
+            return new this.constructor(this.prefix + postfix + '.');
+        }
+        link(next) {
+            var prefix = this.prefix;
+            var dict = {};
+            for (var key in next) {
+                dict[prefix + key] = next[key];
+            }
+            return this.constructor.link(dict);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href_normal", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href_absolute", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "dict", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_arg, "dict_cut", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_arg, "value", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_arg, "make_link", null);
+    __decorate([
+        $mol_action
+    ], $mol_state_arg, "commit", null);
+    __decorate([
+        $mol_action
+    ], $mol_state_arg, "go", null);
+    $.$mol_state_arg = $mol_state_arg;
+    function $mol_state_arg_change() {
+        $mol_state_arg.href($mol_dom.location.href);
+    }
+    self.addEventListener('hashchange', $mol_state_arg_change);
+})($ || ($ = {}));
+
+;
+"use strict";
+
 
 ;
 "use strict";
@@ -13618,6 +13760,17 @@ var $;
                 this.screen('explorer');
                 return null;
             }
+            arg_value(key, next, fallback) {
+                const arg = this.$.$mol_state_arg;
+                if (next === undefined)
+                    return arg.value(key) ?? fallback;
+                arg.value(key, next === fallback ? null : next);
+                return next;
+            }
+            screen(next) { return this.arg_value('screen', next, 'gallery'); }
+            preset(next) { return this.arg_value('preset', next, 'demo'); }
+            lang(next) { return this.arg_value('lang', next, 'RU'); }
+            dataset_id(next) { return this.arg_value('ds', next, 'wiki'); }
         }
         __decorate([
             $mol_action
@@ -13625,6 +13778,18 @@ var $;
         __decorate([
             $mol_action
         ], $bog_ragufront_app.prototype, "select_dataset", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ragufront_app.prototype, "screen", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ragufront_app.prototype, "preset", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ragufront_app.prototype, "lang", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ragufront_app.prototype, "dataset_id", null);
         $$.$bog_ragufront_app = $bog_ragufront_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

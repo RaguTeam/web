@@ -6064,6 +6064,40 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static href_normal(): string;
+        static href_absolute(): string;
+        static dict(next?: {
+            [key: string]: string | null;
+        }): Readonly<{
+            [key: string]: string;
+        }>;
+        static dict_cut(except: string[]): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string | null): string | null;
+        static link(next: Record<string, string | null>): string;
+        static prolog: string;
+        static separator: string;
+        static make_link(next: {
+            [key: string]: string | null;
+        }): string;
+        static commit(): void;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
+        static encode(str: string): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string | null;
+        sub(postfix: string): $mol_state_arg;
+        link(next: Record<string, string | null>): string;
+    }
+}
+
+declare namespace $ {
 
 	type $bog_ragufront_sidebar__screen_bog_ragufront_app_1 = $mol_type_enforce<
 		ReturnType< $bog_ragufront_app['screen'] >
@@ -6154,6 +6188,11 @@ declare namespace $.$$ {
         body(): $.$bog_ragufront_gallery[] | $bog_ragufront_explorer[] | $bog_ragufront_chat[] | $.$bog_ragufront_dashboard[];
         open_settings(): null;
         select_dataset(id: string): null;
+        arg_value(key: string, next: string | undefined, fallback: string): string;
+        screen(next?: string): string;
+        preset(next?: string): string;
+        lang(next?: string): string;
+        dataset_id(next?: string): string;
     }
 }
 
