@@ -13656,6 +13656,7 @@ var $;
         Body: {
             display: 'flex',
             flex: { grow: 1, shrink: 1, direction: 'column' },
+            align: { items: 'stretch' },
             minHeight: 0,
             minWidth: 0,
         },
