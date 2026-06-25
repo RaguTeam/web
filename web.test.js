@@ -3474,6 +3474,25 @@ var $;
                 const v = $bog_ragufront_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 6);
             },
+            'url state: screen / preset / lang / dataset_id round-trip through $mol_state_arg'($) {
+                const app = $bog_ragufront_app.make({ $ });
+                const arg = $.$mol_state_arg;
+                // defaults are NOT written to URL (kept clean)
+                $mol_assert_equal(app.screen(), 'gallery');
+                $mol_assert_equal(arg.value('screen'), null);
+                // non-default values land in $mol_state_arg
+                app.screen('explorer');
+                $mol_assert_equal(arg.value('screen'), 'explorer');
+                app.preset('fast');
+                $mol_assert_equal(arg.value('preset'), 'fast');
+                app.lang('EN');
+                $mol_assert_equal(arg.value('lang'), 'EN');
+                app.dataset_id('law');
+                $mol_assert_equal(arg.value('ds'), 'law');
+                // resetting to default removes from URL
+                app.screen('gallery');
+                $mol_assert_equal(arg.value('screen'), null);
+            },
             'e2e: full user flow through all screens'($) {
                 const app = $bog_ragufront_app.make({ $ });
                 // initial: gallery screen, 6 dataset cards
