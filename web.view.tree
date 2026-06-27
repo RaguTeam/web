@@ -205,40 +205,54 @@ $raggu_web_topbar_preset $bog_builderui_div
 		click? <=> click? null
 	sub / <= label
 
-$raggu_web_topbar $bog_builderui_div
-	screen \gallery
-	dataset_id \wiki
-	preset? \demo
-	open_settings? null
-	preset_label_text @ \Preset
-	settings_btn_text @ \⚙ Settings
-	export_btn_text @ \↓ Export
-	preset_fast_label @ \⚡ Fast
-	preset_accurate_label @ \🎯 Accurate
-	preset_demo_label @ \🎬 Demo
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	align /number
+		-.5
+		-.5
+	offset /number
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	align \bottom_center
+	prefer \vert
+	auto /
+		<= bubble null
 	sub /
-		<= Title_block $bog_builderui_div sub /
-			<= Title $bog_builderui_div sub / <= screen_title \
-			<= Subtitle $bog_builderui_div sub / <= dataset_name \
-		<= Spacer $bog_builderui_div
-		<= Preset_label $bog_builderui_div sub / <= preset_label_text
-		<= Preset_group $bog_builderui_div sub /
-			<= Preset_fast $raggu_web_topbar_preset
-				label <= preset_fast_label
-				active <= is_fast false
-				click? <=> click_fast? null
-			<= Preset_accurate $raggu_web_topbar_preset
-				label <= preset_accurate_label
-				active <= is_accurate false
-				click? <=> click_accurate? null
-			<= Preset_demo $raggu_web_topbar_preset
-				label <= preset_demo_label
-				active <= is_demo false
-				click? <=> click_demo? null
-		<= Settings_btn $bog_builderui_div
-			event * click? <=> open_settings? null
-			sub / <= settings_btn_text
-		<= Export_btn $bog_builderui_div sub / <= export_btn_text
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Follower $mol_follower
+			offset <= bubble_offset /number
+				0
+				1
+			align <= bubble_align /number
+				0
+				0
+			Anchor <= Anchor
+			Sub <= Bubble $mol_pop_bubble
+				content <= bubble_content /$mol_view_content
+				height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		tabindex 0
+		popover \manual
 
 $mol_scroll $mol_view
 	scroll_top? 0
@@ -249,365 +263,6 @@ $mol_scroll $mol_view
 	event *
 		^
 		scroll? <=> event_scroll? null
-
-$raggu_web_settings_group $bog_builderui_div
-	step \
-	title \
-	opts \
-	control \
-	reindex true
-	reindex_text @ \requires reindexing
-	sub /
-		<= Head $bog_builderui_div sub /
-			<= Step $bog_builderui_div sub / <= step
-			<= Reindex $bog_builderui_div
-				attr * raggu_web_settings_group_reindex <= reindex
-				sub / <= reindex_text
-		<= Title $bog_builderui_div sub / <= title
-		<= Opts $bog_builderui_div sub / <= opts
-		<= Control $bog_builderui_div sub / <= control
-
-$raggu_web_settings $bog_builderui_div
-	showed? false
-	close? null
-	attr *
-		^
-		raggu_web_settings_showed <= showed?
-	sub /
-		<= Backdrop $bog_builderui_div
-			event * click? <=> close? null
-		<= Panel $bog_builderui_div sub /
-			<= Header $bog_builderui_div sub /
-				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / \Настройки движка RAGU
-					<= Header_sub $bog_builderui_div sub / \пресет + ручной режим
-				<= Spacer $bog_builderui_div
-				<= Close_btn $bog_builderui_div
-					event * click? <=> close? null
-					sub / \✕
-			<= Body $mol_scroll sub /
-				<= Group_chunking $raggu_web_settings_group
-					step \Шаг 1
-					title \Chunking
-					opts \Simple / SemanticText / SmartSemantic · размер · overlap
-					control \SmartSemanticChunker ▾
-					reindex true
-				<= Group_extraction $raggu_web_settings_group
-					step \Шаг 2
-					title \Extraction
-					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
-					control \two-stage · meno-lite 7B · ICL hybrid ▾
-					reindex true
-				<= Group_summarization $raggu_web_settings_group
-					step \Шаг 3
-					title \Summarization
-					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
-					control \DBSCAN вкл · суммаризация вкл
-					reindex true
-				<= Group_communities $raggu_web_settings_group
-					step \Шаг 4
-					title \Communities
-					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
-					control \Leiden · resolution 1.0
-					reindex true
-				<= Group_refinement $raggu_web_settings_group
-					step \Шаг 5
-					title \Refinement
-					opts \RemoveIsolatedNodes и пост-обработчики
-					control \RemoveIsolatedNodes вкл
-					reindex true
-				<= Group_search $raggu_web_settings_group
-					step \Шаг 6
-					title \Search
-					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
-					control \LocalSearch · rerank ✓ · top-k 8
-					reindex false
-
-$raggu_web_gallery_card_preview $bog_builderui_div
-
-$raggu_web_gallery_card $bog_builderui_div
-	id \
-	title \
-	domain \
-	desc \
-	nodes \
-	edges \
-	comms \
-	click? null
-	preview_label_text @ \graph preview
-	event *
-		^
-		click? <=> click? null
-	sub /
-		<= Preview $raggu_web_gallery_card_preview sub /
-			<= Preview_label $bog_builderui_div sub / <= preview_label_text
-			<= Domain_badge $bog_builderui_div sub / <= domain
-		<= Title $bog_builderui_div sub / <= title
-		<= Desc $bog_builderui_div sub / <= desc
-		<= Tags $bog_builderui_div sub /
-			<= Tag_nodes $bog_builderui_div sub / <= tag_nodes \
-			<= Tag_edges $bog_builderui_div sub / <= tag_edges \
-			<= Tag_comms $bog_builderui_div sub / <= tag_comms \
-
-$raggu_web_gallery $bog_builderui_div
-	dataset_id \wiki
-	select_dataset? null
-	datasets /
-	header_title_text @ \Corpus gallery
-	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
-	upload_doc_text @ \＋ Upload document
-	upload_idx_text @ \⇪ Upload prebuilt index
-	sub /
-		<= Header $bog_builderui_div sub /
-			<= Header_text $bog_builderui_div sub /
-				<= Header_title $bog_builderui_div sub / <= header_title_text
-				<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
-			<= Spacer $bog_builderui_div
-			<= Upload_doc $bog_builderui_div sub / <= upload_doc_text
-			<= Upload_idx $bog_builderui_div sub / <= upload_idx_text
-		<= Grid $bog_builderui_div sub <= rows /
-			<= Card* $raggu_web_gallery_card
-				id <= card_id* \
-				title <= card_title* \
-				domain <= card_domain* \
-				desc <= card_desc* \
-				nodes <= card_nodes* \
-				edges <= card_edges* \
-				comms <= card_comms* \
-				click? <=> click*? null
-
-$raggu_web_explorer $bog_builderui_div
-	canvas_title_text @ \INTERACTIVE KNOWLEDGE GRAPH
-	canvas_engine_text @ \Sigma.js / WebGL · force layout
-	canvas_meaning_text @ \color = NEREL type · thickness = strength
-	filter_search_text @ \🔍 Find node…
-	filter_type_text @ \Entity type ▾
-	filter_thresh_text @ \Strength threshold ▾
-	filter_comm_text @ \◉ Communities: on
-	aside_title_text @ \Entity card
-	entity_name_text @ \Bjørnstjerne Bjørnson
-	entity_desc_text @ \Author of the Norwegian anthem (1859). Norwegian writer, Nobel Prize laureate in Literature.
-	relations_title_text @ \Relations (12)
-	rel_one_target_text @ \writer
-	rel_two_target_text @ \Nobel Prize
-	rel_three_target_text @ \Kvikne, Norway
-	sources_title_text @ \Sources (provenance)
-	sources_text @ \chunk #418 · chunk #902 …
-	ask_btn_text @ \💬 Ask about this entity
-	sub /
-		<= Canvas $bog_builderui_div sub /
-			<= Canvas_bg $bog_builderui_div sub /
-				<= Canvas_label $bog_builderui_div sub /
-					\⬡ ⬡ ⬡
-					\
-					<= canvas_title_text
-					<= canvas_engine_text
-					<= canvas_meaning_text
-			<= Filters $bog_builderui_div sub /
-				<= Filter_search $bog_builderui_div sub / <= filter_search_text
-				<= Filter_type $bog_builderui_div sub / <= filter_type_text
-				<= Filter_thresh $bog_builderui_div sub / <= filter_thresh_text
-				<= Filter_comm $bog_builderui_div sub / <= filter_comm_text
-			<= Legend $bog_builderui_div sub /
-				<= Legend_title $bog_builderui_div sub / \Entity Types
-				<= Legend_person $bog_builderui_div sub /
-					<= Legend_person_dot $bog_builderui_div
-					<= Legend_person_label $bog_builderui_div sub / \PERSON
-				<= Legend_org $bog_builderui_div sub /
-					<= Legend_org_dot $bog_builderui_div
-					<= Legend_org_label $bog_builderui_div sub / \ORGANIZATION
-				<= Legend_loc $bog_builderui_div sub /
-					<= Legend_loc_dot $bog_builderui_div
-					<= Legend_loc_label $bog_builderui_div sub / \LOCATION
-				<= Legend_event $bog_builderui_div sub /
-					<= Legend_event_dot $bog_builderui_div
-					<= Legend_event_label $bog_builderui_div sub / \EVENT
-				<= Legend_date $bog_builderui_div sub /
-					<= Legend_date_dot $bog_builderui_div
-					<= Legend_date_label $bog_builderui_div sub / \DATE
-				<= Legend_work $bog_builderui_div sub /
-					<= Legend_work_dot $bog_builderui_div
-					<= Legend_work_label $bog_builderui_div sub / \WORK_OF_ART
-				<= Legend_law $bog_builderui_div sub /
-					<= Legend_law_dot $bog_builderui_div
-					<= Legend_law_label $bog_builderui_div sub / \LAW
-		<= Aside $bog_builderui_div sub /
-			<= Aside_title $bog_builderui_div sub / <= aside_title_text
-			<= Entity_head $bog_builderui_div sub /
-				<= Entity_dot $bog_builderui_div
-				<= Entity_name $bog_builderui_div sub / <= entity_name_text
-			<= Entity_type $bog_builderui_div sub / \PERSON
-			<= Entity_desc $bog_builderui_div sub / <= entity_desc_text
-			<= Relations_title $bog_builderui_div sub / <= relations_title_text
-			<= Rel_one $bog_builderui_div sub /
-				<= Rel_one_type $bog_builderui_div sub / \WORKS_AS
-				<= Rel_one_target $bog_builderui_div sub / <= rel_one_target_text
-			<= Rel_two $bog_builderui_div sub /
-				<= Rel_two_type $bog_builderui_div sub / \AWARDED_WITH
-				<= Rel_two_target $bog_builderui_div sub / <= rel_two_target_text
-			<= Rel_three $bog_builderui_div sub /
-				<= Rel_three_type $bog_builderui_div sub / \PLACE_OF_BIRTH
-				<= Rel_three_target $bog_builderui_div sub / <= rel_three_target_text
-			<= Sources_title $bog_builderui_div sub / <= sources_title_text
-			<= Sources $bog_builderui_div sub / <= sources_text
-			<= Ask_btn $bog_builderui_div sub / <= ask_btn_text
-
-$raggu_web_chat $bog_builderui_div
-	modes_label_text @ \Search engine
-	msg_user_text @ \Who wrote the Norwegian anthem and when?
-	msg_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
-	trace_head_title_text @ \▾ Answer trace
-	trace_head_meta_text @ \LocalSearch · top-k 8 · rerank ✓
-	trace_label_text @ \ENTITIES IN CONTEXT
-	trace_chip_one_text @ \Bjørnson
-	trace_chip_two_text @ \Norwegian anthem
-	trace_chip_three_text @ \1859
-	trace_stat_chunks_text @ \chunks: 3
-	trace_stat_comms_text @ \communities: 1
-	trace_stat_retr_text @ \retrieval 140ms
-	trace_stat_gen_text @ \gen 1.2s
-	trace_stat_power_text @ \≈0.4 Wh
-	trace_link_text @ \↳ highlight on graph
-	sug_one_text @ \Who received the Nobel Prize?
-	sug_two_text @ \Connection between Ibsen and Bjørnson?
-	input_hint_text @ \Ask anything about the corpus…
-	sub /
-		<= Modes_bar $bog_builderui_div sub /
-			<= Modes_label $bog_builderui_div sub / <= modes_label_text
-			<= Modes $bog_builderui_div sub /
-				<= Mode_local $bog_builderui_div sub / \LocalSearch
-				<= Mode_global $bog_builderui_div sub / \Global
-				<= Mode_mix $bog_builderui_div sub / \Mix
-				<= Mode_plan $bog_builderui_div sub / \QueryPlan
-		<= Body $bog_builderui_div sub /
-			<= Msg_user $bog_builderui_div sub / <= msg_user_text
-			<= Msg_assistant_wrap $bog_builderui_div sub /
-				<= Msg_assistant $bog_builderui_div sub / <= msg_assistant_text
-				<= Trace $bog_builderui_div sub /
-					<= Trace_head $bog_builderui_div sub /
-						<= Trace_head_title $bog_builderui_div sub / <= trace_head_title_text
-						<= Trace_head_meta $bog_builderui_div sub / <= trace_head_meta_text
-					<= Trace_body $bog_builderui_div sub /
-						<= Trace_label $bog_builderui_div sub / <= trace_label_text
-						<= Trace_chips $bog_builderui_div sub /
-							<= Trace_chip_one $bog_builderui_div sub / <= trace_chip_one_text
-							<= Trace_chip_two $bog_builderui_div sub / <= trace_chip_two_text
-							<= Trace_chip_three $bog_builderui_div sub / <= trace_chip_three_text
-						<= Trace_stats $bog_builderui_div sub /
-							<= Trace_stat_chunks $bog_builderui_div sub / <= trace_stat_chunks_text
-							<= Trace_stat_comms $bog_builderui_div sub / <= trace_stat_comms_text
-							<= Trace_stat_retr $bog_builderui_div sub / <= trace_stat_retr_text
-							<= Trace_stat_gen $bog_builderui_div sub / <= trace_stat_gen_text
-							<= Trace_stat_power $bog_builderui_div sub / <= trace_stat_power_text
-						<= Trace_link $bog_builderui_div sub / <= trace_link_text
-		<= Footer $bog_builderui_div sub /
-			<= Suggestions $bog_builderui_div sub /
-				<= Sug_one $bog_builderui_div sub / <= sug_one_text
-				<= Sug_two $bog_builderui_div sub / <= sug_two_text
-			<= Input_row $bog_builderui_div sub /
-				<= Input_hint $bog_builderui_div sub / <= input_hint_text
-				<= Input_spacer $bog_builderui_div
-				<= Input_send $bog_builderui_div sub / \↑
-
-$raggu_web_dashboard_dist $bog_builderui_div
-
-$raggu_web_dashboard_metric $bog_builderui_div
-	name \
-	value \
-	pct \0%
-	sub /
-		<= Name $bog_builderui_div sub / <= name
-		<= Bar $bog_builderui_div sub /
-			<= Bar_fill $bog_builderui_div
-		<= Value $bog_builderui_div sub / <= value
-
-$raggu_web_dashboard_stage $bog_builderui_div
-	name \
-	time \
-	pct \0%
-	sub /
-		<= Name $bog_builderui_div sub / <= name
-		<= Bar $bog_builderui_div sub /
-			<= Bar_fill $bog_builderui_div
-		<= Time $bog_builderui_div sub / <= time
-
-$raggu_web_dashboard $bog_builderui_div
-	metrics /
-	stages /
-	title_text @ \Corpus dashboard
-	subtitle_text @ \Graph stats · quality · energy and cost · timings and logs
-	card_stats_label_text @ \① Graph stats
-	stat_nodes_lbl_text @ \nodes
-	stat_edges_lbl_text @ \edges
-	stat_comms_lbl_text @ \communities
-	stats_dist_text @ \entity type distribution
-	card_quality_label_text @ \② Quality (benchmarks)
-	quality_footer_text @ \RAGU vs LightRAG / HippoRAG2 / Naive
-	card_energy_label_text @ \③ Energy and cost
-	energy_kwh_lbl_text @ \kWh / corpus
-	energy_cost_lbl_text @ \$ vs GPT-4 API
-	energy_note_text @ \kWh = TDP × time × PUE · meno-lite 7B locally vs ~40k tokens/doc on gpt-4o pricing
-	card_timings_label_text @ \④ Pipeline timings
-	card_logs_label_text @ \Query logs (expand into trace)
-	log_one_text_text @ \«Who wrote the anthem…»
-	log_two_text_text @ \«Connection between Ibsen and…»
-	sub /
-		<= Title $bog_builderui_div sub / <= title_text
-		<= Subtitle $bog_builderui_div sub / <= subtitle_text
-		<= Grid $bog_builderui_div sub /
-			<= Card_stats $bog_builderui_div sub /
-				<= Card_stats_label $bog_builderui_div sub / <= card_stats_label_text
-				<= Stats_row $bog_builderui_div sub /
-					<= Stat_nodes $bog_builderui_div sub /
-						<= Stat_nodes_val $bog_builderui_div sub / \2 410
-						<= Stat_nodes_lbl $bog_builderui_div sub / <= stat_nodes_lbl_text
-					<= Stat_edges $bog_builderui_div sub /
-						<= Stat_edges_val $bog_builderui_div sub / \7 088
-						<= Stat_edges_lbl $bog_builderui_div sub / <= stat_edges_lbl_text
-					<= Stat_comms $bog_builderui_div sub /
-						<= Stat_comms_val $bog_builderui_div sub / \38
-						<= Stat_comms_lbl $bog_builderui_div sub / <= stat_comms_lbl_text
-				<= Stats_dist $raggu_web_dashboard_dist sub / <= stats_dist_text
-			<= Card_quality $bog_builderui_div sub /
-				<= Card_quality_label $bog_builderui_div sub / <= card_quality_label_text
-				<= Metric_rows $bog_builderui_div sub <= metric_rows /
-					<= Metric* $raggu_web_dashboard_metric
-						name <= metric_name* \
-						value <= metric_value* \
-						pct <= metric_pct* \0%
-				<= Quality_footer $bog_builderui_div sub / <= quality_footer_text
-			<= Card_energy $bog_builderui_div sub /
-				<= Card_energy_label $bog_builderui_div sub / <= card_energy_label_text
-				<= Energy_row $bog_builderui_div sub /
-					<= Energy_kwh $bog_builderui_div sub /
-						<= Energy_kwh_val $bog_builderui_div sub / \0.18
-						<= Energy_kwh_lbl $bog_builderui_div sub / <= energy_kwh_lbl_text
-					<= Energy_cost $bog_builderui_div sub /
-						<= Energy_cost_val $bog_builderui_div sub / \−94%
-						<= Energy_cost_lbl $bog_builderui_div sub / <= energy_cost_lbl_text
-				<= Energy_note $bog_builderui_div sub / <= energy_note_text
-			<= Card_timings $bog_builderui_div sub /
-				<= Card_timings_label $bog_builderui_div sub / <= card_timings_label_text
-				<= Stage_rows $bog_builderui_div sub <= stage_rows /
-					<= Stage* $raggu_web_dashboard_stage
-						name <= stage_name* \
-						time <= stage_time* \
-						pct <= stage_pct* \0%
-			<= Card_logs $bog_builderui_div sub /
-				<= Card_logs_label $bog_builderui_div sub / <= card_logs_label_text
-				<= Log_list $bog_builderui_div sub /
-					<= Log_one $bog_builderui_div sub /
-						<= Log_one_time $bog_builderui_div sub / \12:04:18
-						<= Log_one_text $bog_builderui_div sub / <= log_one_text_text
-						<= Log_one_mode $bog_builderui_div sub / \LocalSearch
-						<= Log_one_dur $bog_builderui_div sub / \1.3s
-						<= Log_one_arrow $bog_builderui_div sub / \▾
-					<= Log_two $bog_builderui_div sub /
-						<= Log_two_time $bog_builderui_div sub / \12:03:51
-						<= Log_two_text $bog_builderui_div sub / <= log_two_text_text
-						<= Log_two_mode $bog_builderui_div sub / \MixSearch
-						<= Log_two_dur $bog_builderui_div sub / \2.1s
-						<= Log_two_arrow $bog_builderui_div sub / \▾
 
 $bog_builderui_card $bog_builderui_div
 
@@ -930,55 +585,6 @@ $mol_chart $mol_view
 
 $bog_builderui_chart $mol_chart
 
-$mol_ghost $mol_view
-	Sub $mol_view
-
-$mol_follower $mol_ghost
-	Anchor $mol_view
-	align /number
-		-.5
-		-.5
-	offset /number
-		0
-		0
-	style *
-		^
-		transform <= transform \
-
-$mol_pop $mol_view
-	showed? false
-	align_vert \
-	align_hor \
-	align \bottom_center
-	prefer \vert
-	auto /
-		<= bubble null
-	sub /
-		<= Anchor null
-	sub_visible /
-		<= Anchor
-		<= Follower $mol_follower
-			offset <= bubble_offset /number
-				0
-				1
-			align <= bubble_align /number
-				0
-				0
-			Anchor <= Anchor
-			Sub <= Bubble $mol_pop_bubble
-				content <= bubble_content /$mol_view_content
-				height_max <= height_max 9999
-
-$mol_pop_bubble $mol_view
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
-	attr *
-		^
-		tabindex 0
-		popover \manual
-
 $mol_check $mol_button_minor
 	attr *
 		^
@@ -1152,6 +758,874 @@ $mol_pop_over $mol_pop
 		mouseleave? <=> event_hide? null
 
 $bog_builderui_tooltip $mol_pop_over
+
+$bog_builderui_menu $bog_builderui_card
+	items /
+	sub <= items
+
+$bog_builderui_menu_item $mol_button_minor
+
+$raggu_web_export $mol_pop
+	screen \gallery
+	showed? false
+	align \bottom_right
+	export_btn_text @ \↓ Export
+	empty_text @ \Nothing to export
+	Anchor $bog_builderui_div
+		event * click? <=> toggle? null
+		sub / <= export_btn_text
+	bubble_content /
+		<= Menu $bog_builderui_menu
+			items <= items /
+	Item* $bog_builderui_menu_item
+		title <= item_label* \
+		click? <=> item_click*? null
+	Empty $bog_builderui_div
+		sub / <= empty_text
+
+$raggu_web_topbar $bog_builderui_div
+	screen \gallery
+	dataset_id \wiki
+	preset? \demo
+	open_settings? null
+	preset_label_text @ \Preset
+	settings_btn_text @ \⚙ Settings
+	preset_fast_label @ \⚡ Fast
+	preset_accurate_label @ \🎯 Accurate
+	preset_demo_label @ \🎬 Demo
+	sub /
+		<= Title_block $bog_builderui_div sub /
+			<= Title $bog_builderui_div sub / <= screen_title \
+			<= Subtitle $bog_builderui_div sub / <= dataset_name \
+		<= Spacer $bog_builderui_div
+		<= Preset_label $bog_builderui_div sub / <= preset_label_text
+		<= Preset_group $bog_builderui_div sub /
+			<= Preset_fast $raggu_web_topbar_preset
+				label <= preset_fast_label
+				active <= is_fast false
+				click? <=> click_fast? null
+			<= Preset_accurate $raggu_web_topbar_preset
+				label <= preset_accurate_label
+				active <= is_accurate false
+				click? <=> click_accurate? null
+			<= Preset_demo $raggu_web_topbar_preset
+				label <= preset_demo_label
+				active <= is_demo false
+				click? <=> click_demo? null
+		<= Settings_btn $bog_builderui_div
+			event * click? <=> open_settings? null
+			sub / <= settings_btn_text
+		<= Export $raggu_web_export
+			screen <= screen
+
+$bog_builderui_button $mol_button_minor
+	minimal_height 32
+	minimal_width 0
+	variant \default
+	attr *
+		^
+		bog_builderui_button_variant <= variant
+
+$raggu_web_settings_group $bog_builderui_div
+	step \
+	title \
+	opts \
+	controls /
+	reindex true
+	reindex_text @ \requires reindexing
+	sub /
+		<= Head $bog_builderui_div sub /
+			<= Step $bog_builderui_div sub / <= step
+			<= Reindex $bog_builderui_div
+				attr * raggu_web_settings_group_reindex <= reindex
+				sub / <= reindex_text
+		<= Title $bog_builderui_div sub / <= title
+		<= Opts $bog_builderui_div sub / <= opts
+		<= Controls $bog_builderui_div sub <= controls
+
+$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$rise_range $mol_view
+	minimal_height 48
+	unit \
+	medium? 5
+	enabled true
+	sub /
+		<= Labels $mol_view
+			sub /
+				<= Min $mol_view
+					sub / <= label_min \
+				<= Medium $mol_view
+					sub / <= label_medium \
+				<= Max $mol_view
+					sub / <= label_max \
+		<= Input $rise_range_input
+			disabled <= disabled false
+			min <= min? 0
+			max <= max? 10
+			step <= step? 1
+			value? <=> value? 0
+			event_input? <=> event_input? null
+		<= Current $mol_view
+			sub /
+				<= Value $rise_range_value
+					sub / <= value
+					disabled <= disabled
+	attr *
+		^
+		disabled <= disabled
+	style *
+		^
+		--rise_range_percent <= percent \0%
+
+$rise_range_input $mol_view
+	dom_name \input
+	attr *
+		^
+		type \range
+		disabled <= disabled false
+	field *
+		^
+		min <= min? 0
+		max <= max? 10
+		step <= step? 1
+		value <= value? 0
+	event *
+		^
+		input? <=> event_input? null
+
+$rise_range_value $mol_view
+	attr *
+		^
+		disabled <= disabled false
+
+$bog_builderui_slider $rise_range
+
+$raggu_web_settings $bog_builderui_div
+	showed? false
+	close? null
+	attr *
+		^
+		raggu_web_settings_showed <= showed?
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Header_text $bog_builderui_div sub /
+					<= Header_title $bog_builderui_div sub / \Настройки движка RAGU
+					<= Header_sub $bog_builderui_div sub / \пресет + ручной режим
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Presets $bog_builderui_div sub /
+					<= Preset_fast $bog_builderui_button
+						title @ \⚡ Fast
+						click? <=> preset_fast? null
+					<= Preset_accurate $bog_builderui_button
+						title @ \🎯 Accurate
+						click? <=> preset_accurate? null
+					<= Preset_demo $bog_builderui_button
+						title @ \🎬 Demo
+						click? <=> preset_demo? null
+				<= Group_chunking $raggu_web_settings_group
+					step \Шаг 1
+					title \Chunking
+					opts \Simple / SemanticText / SmartSemantic · размер · overlap
+					reindex true
+					controls /
+						<= Chunking_strategy $bog_builderui_select
+							value? <=> chunking_strategy? \SmartSemantic
+							dictionary *
+								Simple \Simple
+								SemanticText \SemanticText
+								SmartSemantic \SmartSemantic
+						<= Chunking_size_row $bog_builderui_div sub /
+							<= Chunking_size_label $bog_builderui_div sub / <= chunking_size_label_text @ \chunk size
+							<= Chunking_size_input $bog_builderui_field
+								type \number
+								value? <=> chunking_size_str? \512
+						<= Chunking_overlap_row $bog_builderui_div sub /
+							<= Chunking_overlap_label $bog_builderui_div sub / <= chunking_overlap_label_text @ \overlap
+							<= Chunking_overlap_input $bog_builderui_field
+								type \number
+								value? <=> chunking_overlap_str? \64
+				<= Group_extraction $raggu_web_settings_group
+					step \Шаг 2
+					title \Extraction
+					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
+					reindex true
+					controls /
+						<= Extraction_mode $bog_builderui_select
+							value? <=> extraction_mode? \two-stage
+							dictionary *
+								single @ \single-stage
+								two-stage @ \two-stage
+						<= Extraction_model $bog_builderui_select
+							value? <=> extraction_model? \meno-lite-7b
+							dictionary *
+								meno-lite-7b \meno-lite 7B
+								gpt-4 \GPT-4
+								llama3-70b \Llama 3 70B
+						<= Extraction_icl $bog_builderui_select
+							value? <=> extraction_icl? \hybrid
+							dictionary *
+								semantic @ \ICL semantic
+								BM25 @ \ICL BM25
+								hybrid @ \ICL hybrid
+								random @ \ICL random
+				<= Group_summarization $raggu_web_settings_group
+					step \Шаг 3
+					title \Summarization
+					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
+					reindex true
+					controls /
+						<= Summarization_dbscan $mol_check_box
+							checked? <=> summarization_dbscan? false
+							title @ \DBSCAN clustering
+						<= Summarization_llm $mol_check_box
+							checked? <=> summarization_llm? false
+							title @ \LLM summarization
+				<= Group_communities $raggu_web_settings_group
+					step \Шаг 4
+					title \Communities
+					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
+					reindex true
+					controls /
+						<= Communities_algo $bog_builderui_select
+							value? <=> communities_algo? \Leiden
+							dictionary *
+								Leiden \Leiden
+						<= Communities_resolution_row $bog_builderui_div sub /
+							<= Communities_resolution_label $bog_builderui_div sub / <= communities_resolution_label_text @ \resolution
+							<= Communities_resolution_value $bog_builderui_div sub / <= communities_resolution_label \1.0
+						<= Communities_resolution $bog_builderui_slider
+							value? <=> communities_resolution_x10? 10
+							min 5
+							max 20
+							step 1
+				<= Group_refinement $raggu_web_settings_group
+					step \Шаг 5
+					title \Refinement
+					opts \RemoveIsolatedNodes и пост-обработчики
+					reindex true
+					controls /
+						<= Refinement_isolated $mol_check_box
+							checked? <=> refinement_isolated? false
+							title @ \RemoveIsolatedNodes
+				<= Group_search $raggu_web_settings_group
+					step \Шаг 6
+					title \Search
+					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
+					reindex false
+					controls /
+						<= Search_mode $bog_builderui_select
+							value? <=> search_mode? \Local
+							dictionary *
+								Local \LocalSearch
+								Global \GlobalSearch
+								Naive \NaiveSearch
+								Mix \MixSearch
+								QueryPlan \QueryPlan
+						<= Search_rerank $mol_check_box
+							checked? <=> search_rerank? false
+							title @ \rerank
+						<= Search_topk_row $bog_builderui_div sub /
+							<= Search_topk_label $bog_builderui_div sub / <= search_topk_label_text @ \top-k
+							<= Search_topk_value $bog_builderui_div sub / <= search_topk_label \8
+						<= Search_topk $bog_builderui_slider
+							value? <=> search_topk? 8
+							min 1
+							max 50
+							step 1
+
+$raggu_web_gallery_card_preview $bog_builderui_div
+
+$raggu_web_gallery_card $bog_builderui_div
+	id \
+	title \
+	domain \
+	desc \
+	nodes \
+	edges \
+	comms \
+	click? null
+	preview_label_text @ \graph preview
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Preview $raggu_web_gallery_card_preview sub /
+			<= Preview_label $bog_builderui_div sub / <= preview_label_text
+			<= Domain_badge $bog_builderui_div sub / <= domain
+		<= Title $bog_builderui_div sub / <= title
+		<= Desc $bog_builderui_div sub / <= desc
+		<= Tags $bog_builderui_div sub /
+			<= Tag_nodes $bog_builderui_div sub / <= tag_nodes \
+			<= Tag_edges $bog_builderui_div sub / <= tag_edges \
+			<= Tag_comms $bog_builderui_div sub / <= tag_comms \
+
+$bog_builderui_progress $mol_view
+	dom_name \progress
+	value 50
+	max 100
+	attr *
+		^
+		value <= value 50
+		max <= max 100
+
+$raggu_web_gallery_upload $bog_builderui_div
+	showed? false
+	kind \document
+	step? 0
+	total_steps 6
+	error \
+	close? null
+	complete? null
+	title_text @ \Indexing document
+	subtitle_text @ \Mock pipeline run · 6 stages · about 4 seconds
+	step_chunking_text @ \Chunking
+	step_extraction_text @ \Extraction
+	step_summarization_text @ \Summarization
+	step_communities_text @ \Communities
+	step_refinement_text @ \Refinement
+	step_search_text @ \Search index
+	progress_label_text @ \Stage
+	close_text @ \✕
+	error_title_text @ \Upload rejected
+	retry_text @ \Close
+	body /
+	step_rows /
+	attr *
+		^
+		raggu_web_gallery_upload_showed <= showed?
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_card sub /
+			<= Header $bog_builderui_div sub /
+				<= Header_text $bog_builderui_div sub /
+					<= Header_title $bog_builderui_div sub / <= panel_title \
+					<= Header_subtitle $bog_builderui_div sub / <= subtitle_text
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / <= close_text
+			<= Body $bog_builderui_div sub <= body
+	Error_body $bog_builderui_div sub /
+		<= Error_title $bog_builderui_div sub / <= error_title_text
+		<= Error_text $bog_builderui_div sub / <= error
+	Progress_body $bog_builderui_div sub /
+		<= Progress_bar $bog_builderui_progress
+			max <= total_steps
+			value <= step?
+		<= Progress_label $bog_builderui_div sub /
+			<= progress_label_text
+			<= progress_label_separator \
+			<= step_label \
+			<= progress_label_slash \ /
+			<= total_steps_text \6
+		<= Steps_list $bog_builderui_div sub <= step_rows
+	Step* $bog_builderui_div
+		attr *
+			^
+			raggu_web_gallery_upload_step_status <= step_status* \pending
+		sub /
+			<= Step_marker* $bog_builderui_div sub / <= step_marker_text* \○
+			<= Step_name* $bog_builderui_div sub / <= step_name_text* \
+
+$raggu_web_gallery $bog_builderui_div
+	dataset_id \wiki
+	select_dataset? null
+	datasets /
+	upload_kind? \
+	upload_complete? null
+	upload_close? null
+	header_title_text @ \Corpus gallery
+	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
+	upload_doc_text @ \＋ Upload document
+	upload_idx_text @ \⇪ Upload prebuilt index
+	sub /
+		<= Header $bog_builderui_div sub /
+			<= Header_text $bog_builderui_div sub /
+				<= Header_title $bog_builderui_div sub / <= header_title_text
+				<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
+			<= Spacer $bog_builderui_div
+			<= Upload_doc $bog_builderui_div
+				sub / <= upload_doc_text
+				event * click? <=> upload_doc_click? null
+			<= Upload_idx $bog_builderui_div
+				sub / <= upload_idx_text
+				event * click? <=> upload_idx_click? null
+		<= Grid $bog_builderui_div sub <= rows /
+			<= Card* $raggu_web_gallery_card
+				id <= card_id* \
+				title <= card_title* \
+				domain <= card_domain* \
+				desc <= card_desc* \
+				nodes <= card_nodes* \
+				edges <= card_edges* \
+				comms <= card_comms* \
+				click? <=> click*? null
+		<= Upload $raggu_web_gallery_upload
+			showed? <=> upload_showed? false
+			kind <= upload_kind?
+			complete? <=> upload_complete? null
+			close? <=> upload_close? null
+
+$raggu_web_explorer $bog_builderui_div
+	canvas_title_text @ \INTERACTIVE KNOWLEDGE GRAPH
+	canvas_engine_text @ \Sigma.js / WebGL · force layout
+	canvas_meaning_text @ \color = NEREL type · thickness = strength
+	filter_search_text @ \🔍 Find node…
+	filter_type_text @ \Entity type ▾
+	filter_thresh_text @ \Strength threshold ▾
+	filter_comm_text @ \◉ Communities: on
+	aside_title_text @ \Entity card
+	entity_name_text @ \Bjørnstjerne Bjørnson
+	entity_desc_text @ \Author of the Norwegian anthem (1859). Norwegian writer, Nobel Prize laureate in Literature.
+	relations_title_text @ \Relations (12)
+	rel_one_target_text @ \writer
+	rel_two_target_text @ \Nobel Prize
+	rel_three_target_text @ \Kvikne, Norway
+	sources_title_text @ \Sources (provenance)
+	sources_text @ \chunk #418 · chunk #902 …
+	ask_btn_text @ \💬 Ask about this entity
+	sub /
+		<= Canvas $bog_builderui_div sub /
+			<= Canvas_bg $bog_builderui_div sub /
+				<= Canvas_label $bog_builderui_div sub /
+					\⬡ ⬡ ⬡
+					\
+					<= canvas_title_text
+					<= canvas_engine_text
+					<= canvas_meaning_text
+			<= Filters $bog_builderui_div sub /
+				<= Filter_search $bog_builderui_div sub / <= filter_search_text
+				<= Filter_type $bog_builderui_div sub / <= filter_type_text
+				<= Filter_thresh $bog_builderui_div sub / <= filter_thresh_text
+				<= Filter_comm $bog_builderui_div sub / <= filter_comm_text
+			<= Legend $bog_builderui_div sub /
+				<= Legend_title $bog_builderui_div sub / \Entity Types
+				<= Legend_person $bog_builderui_div sub /
+					<= Legend_person_dot $bog_builderui_div
+					<= Legend_person_label $bog_builderui_div sub / \PERSON
+				<= Legend_org $bog_builderui_div sub /
+					<= Legend_org_dot $bog_builderui_div
+					<= Legend_org_label $bog_builderui_div sub / \ORGANIZATION
+				<= Legend_loc $bog_builderui_div sub /
+					<= Legend_loc_dot $bog_builderui_div
+					<= Legend_loc_label $bog_builderui_div sub / \LOCATION
+				<= Legend_event $bog_builderui_div sub /
+					<= Legend_event_dot $bog_builderui_div
+					<= Legend_event_label $bog_builderui_div sub / \EVENT
+				<= Legend_date $bog_builderui_div sub /
+					<= Legend_date_dot $bog_builderui_div
+					<= Legend_date_label $bog_builderui_div sub / \DATE
+				<= Legend_work $bog_builderui_div sub /
+					<= Legend_work_dot $bog_builderui_div
+					<= Legend_work_label $bog_builderui_div sub / \WORK_OF_ART
+				<= Legend_law $bog_builderui_div sub /
+					<= Legend_law_dot $bog_builderui_div
+					<= Legend_law_label $bog_builderui_div sub / \LAW
+		<= Aside $bog_builderui_div sub /
+			<= Aside_title $bog_builderui_div sub / <= aside_title_text
+			<= Entity_head $bog_builderui_div sub /
+				<= Entity_dot $bog_builderui_div
+				<= Entity_name $bog_builderui_div sub / <= entity_name_text
+			<= Entity_type $bog_builderui_div sub / \PERSON
+			<= Entity_desc $bog_builderui_div sub / <= entity_desc_text
+			<= Relations_title $bog_builderui_div sub / <= relations_title_text
+			<= Rel_one $bog_builderui_div sub /
+				<= Rel_one_type $bog_builderui_div sub / \WORKS_AS
+				<= Rel_one_target $bog_builderui_div sub / <= rel_one_target_text
+			<= Rel_two $bog_builderui_div sub /
+				<= Rel_two_type $bog_builderui_div sub / \AWARDED_WITH
+				<= Rel_two_target $bog_builderui_div sub / <= rel_two_target_text
+			<= Rel_three $bog_builderui_div sub /
+				<= Rel_three_type $bog_builderui_div sub / \PLACE_OF_BIRTH
+				<= Rel_three_target $bog_builderui_div sub / <= rel_three_target_text
+			<= Sources_title $bog_builderui_div sub / <= sources_title_text
+			<= Sources $bog_builderui_div sub / <= sources_text
+			<= Ask_btn $bog_builderui_div sub / <= ask_btn_text
+
+$mol_stack $mol_view
+
+$mol_text_code_token $mol_dimmer
+	attr *
+		^
+		mol_text_code_token_type <= type \
+
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= uri \
+		target \_blank
+
+$mol_text_code_line $mol_paragraph
+	text \
+	minimal_height 24
+	numb_showed true
+	syntax null
+	uri_resolve* \
+	Numb $mol_view
+		sub /
+			<= numb 0
+	Token* $mol_text_code_token
+		type <= token_type* \
+		haystack <= token_text* \
+		needle <= highlight \
+	Token_link* $mol_text_code_token_link
+		haystack <= token_text* \
+		needle <= highlight \
+		uri <= token_uri* \
+	find_pos* null
+
+$mol_icon_clipboard $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3
+
+$mol_icon_clipboard_outline $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M7,7H17V5H19V19H5V5H7V7Z
+
+$mol_button_copy $mol_button_minor
+	blobs /$mol_blob
+		<= text_blob? $mol_blob /
+			/BlobPart <= text <= title
+			* type \text/plain
+		<= html_blob? $mol_blob /
+			/BlobPart <= html \
+			* type \text/html
+	data *
+	sub /
+		<= Icon $mol_icon_clipboard_outline
+		<= title \
+
+$mol_text_code $mol_stack
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	find_pos* null
+	uri_base \
+	row_themes /string
+	sub /
+		<= Rows $mol_list
+			render_visible_only <= render_visible_only false
+			rows <= rows /
+				<= Row*0 $mol_text_code_line
+					numb_showed <= sidebar_showed
+					numb <= row_numb* 0
+					theme <= row_theme* \
+					text <= row_text* \
+					syntax <= syntax null
+					uri_resolve* <= uri_resolve* \
+					highlight <= highlight \
+		<= Copy $mol_button_copy
+			hint @ \Copy whole code
+			text <= text_export \
+
+$mol_textarea $mol_stack
+	attr *
+		^
+		mol_textarea_clickable <= clickable? false
+		mol_textarea_sidebar_showed <= sidebar_showed false
+	event *
+		keydown? <=> press? null
+		pointermove? <=> hover? null
+	sub /
+		<= Edit $mol_textarea_edit
+			value? <=> value? \
+			hint <= hint \ 
+			enabled <= enabled true
+			spellcheck <= spellcheck true
+			length_max <= length_max +Infinity
+			selection? <=> selection? /number
+			bring => bring
+			submit? <=> submit? null
+			submit_with_ctrl <= submit_with_ctrl true
+		<= View $mol_text_code
+			text <= value
+			render_visible_only false
+			row_numb* <= row_numb* 0
+			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
+			syntax <= syntax $mol_syntax2
+	symbols_alt *string
+		comma \<
+		period \>
+		dash \−
+		equals \≈
+		graveAccent \́
+		forwardSlash \÷
+		E \€
+		V \✔
+		X \×
+		C \©
+		P \§
+		H \₽
+		key0 \°
+		key8 \•
+		key2 \@
+		key3 \#
+		key4 \$
+		key6 \^
+		key7 \&
+		bracketOpen \[
+		bracketClose \]
+		slashBack \|
+	symbols_alt_ctrl *string
+		space \ 
+	symbols_alt_shift *string
+		V \✅
+		X \❌
+		O \⭕
+		key1 \❗
+		key4 \💲
+		key7 \❓
+		comma \«
+		period \»
+		semicolon \“
+		quoteSingle \”
+		dash \—
+		equals \≠
+		graveAccent \̱
+		bracketOpen \{
+		bracketClose \}
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	enter \enter
+	field *
+		^
+		scrollTop 0
+
+$raggu_web_chat $bog_builderui_div
+	modes_label_text @ \Search engine
+	trace_head_title_text @ \▾ Answer trace
+	trace_head_meta_text @ \LocalSearch · top-k 8 · rerank ✓
+	trace_label_text @ \ENTITIES IN CONTEXT
+	trace_chip_one_text @ \Bjørnson
+	trace_chip_two_text @ \Norwegian anthem
+	trace_chip_three_text @ \1859
+	trace_stat_chunks_text @ \chunks: 3
+	trace_stat_comms_text @ \communities: 1
+	trace_stat_retr_text @ \retrieval 140ms
+	trace_stat_gen_text @ \gen 1.2s
+	trace_stat_power_text @ \≈0.4 Wh
+	trace_link_text @ \↳ highlight on graph
+	sug_one_text @ \Who received the Nobel Prize?
+	sug_two_text @ \Connection between Ibsen and Bjørnson?
+	input_hint_text @ \Ask anything about the corpus…
+	send_label_text @ \Send
+	seed_user_text @ \Who wrote the Norwegian anthem and when?
+	seed_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
+	mock_prefix_text @ \Thanks for the question:
+	mock_suffix_text @ \(Mock response. Real retrieval will be wired to the backend.)
+	prompt_text? \
+	prompt_submit? null
+	use_sug_one? null
+	use_sug_two? null
+	rows /
+	message_text* \
+	message_role* \
+	message_with_trace* false
+	sub /
+		<= Modes_bar $bog_builderui_div sub /
+			<= Modes_label $bog_builderui_div sub / <= modes_label_text
+			<= Modes $bog_builderui_div sub /
+				<= Mode_local $bog_builderui_div sub / \LocalSearch
+				<= Mode_global $bog_builderui_div sub / \Global
+				<= Mode_mix $bog_builderui_div sub / \Mix
+				<= Mode_plan $bog_builderui_div sub / \QueryPlan
+		<= Body $mol_list rows <= rows
+		<= Footer $bog_builderui_div sub /
+			<= Suggestions $bog_builderui_div sub /
+				<= Sug_one $bog_builderui_div
+					sub / <= sug_one_text
+					event * click? <=> use_sug_one? null
+				<= Sug_two $bog_builderui_div
+					sub / <= sug_two_text
+					event * click? <=> use_sug_two? null
+			<= Input_row $bog_builderui_div sub /
+				<= Prompt $mol_textarea
+					hint <= input_hint_text
+					value? <=> prompt_text? \
+					submit? <=> prompt_submit? null
+				<= Input_send $mol_button_minor
+					hint <= send_label_text
+					click? <=> prompt_submit? null
+					sub / \↑
+	Message* $bog_builderui_div
+		attr *
+			^
+			raggu_role <= message_role*
+		sub /
+			<= Message_text* $bog_builderui_div sub / <= message_text*
+			<= Message_trace* $bog_builderui_div
+				attr *
+					raggu_visible <= message_with_trace*
+				sub /
+					<= Message_trace_head* $bog_builderui_div sub /
+						<= Message_trace_head_title* $bog_builderui_div sub / <= trace_head_title_text
+						<= Message_trace_head_meta* $bog_builderui_div sub / <= trace_head_meta_text
+					<= Message_trace_body* $bog_builderui_div sub /
+						<= Message_trace_label* $bog_builderui_div sub / <= trace_label_text
+						<= Message_trace_chips* $bog_builderui_div sub /
+							<= Message_trace_chip_one* $bog_builderui_div sub / <= trace_chip_one_text
+							<= Message_trace_chip_two* $bog_builderui_div sub / <= trace_chip_two_text
+							<= Message_trace_chip_three* $bog_builderui_div sub / <= trace_chip_three_text
+						<= Message_trace_stats* $bog_builderui_div sub /
+							<= Message_trace_stat_chunks* $bog_builderui_div sub / <= trace_stat_chunks_text
+							<= Message_trace_stat_comms* $bog_builderui_div sub / <= trace_stat_comms_text
+							<= Message_trace_stat_retr* $bog_builderui_div sub / <= trace_stat_retr_text
+							<= Message_trace_stat_gen* $bog_builderui_div sub / <= trace_stat_gen_text
+							<= Message_trace_stat_power* $bog_builderui_div sub / <= trace_stat_power_text
+						<= Message_trace_link* $bog_builderui_div sub / <= trace_link_text
+
+$raggu_web_dashboard_dist $bog_builderui_div
+
+$raggu_web_dashboard_metric $bog_builderui_div
+	name \
+	value \
+	pct \0%
+	sub /
+		<= Name $bog_builderui_div sub / <= name
+		<= Bar $bog_builderui_div sub /
+			<= Bar_fill $bog_builderui_div
+		<= Value $bog_builderui_div sub / <= value
+
+$raggu_web_dashboard_stage $bog_builderui_div
+	name \
+	time \
+	pct \0%
+	sub /
+		<= Name $bog_builderui_div sub / <= name
+		<= Bar $bog_builderui_div sub /
+			<= Bar_fill $bog_builderui_div
+		<= Time $bog_builderui_div sub / <= time
+
+$raggu_web_dashboard_log $bog_builderui_div
+	time \
+	text \
+	mode \
+	dur \
+	expanded? false
+	chunks \
+	communities \
+	retrieval \
+	generation \
+	power \
+	trace_label \
+	trace_link \
+	arrow \▾
+	attr *
+		^
+		raggu_web_dashboard_log_expanded <= expanded? false
+	sub /
+		<= Head $bog_builderui_div sub /
+			event * click? <=> toggle? null
+			<= Time $bog_builderui_div sub / <= time
+			<= Text $bog_builderui_div sub / <= text
+			<= Mode $bog_builderui_div sub / <= mode
+			<= Dur $bog_builderui_div sub / <= dur
+			<= Arrow $bog_builderui_div sub / <= arrow
+		<= Trace $bog_builderui_div sub /
+			<= Trace_label $bog_builderui_div sub / <= trace_label
+			<= Trace_stats $bog_builderui_div sub /
+				<= Trace_stat_chunks $bog_builderui_div sub / <= chunks
+				<= Trace_stat_comms $bog_builderui_div sub / <= communities
+				<= Trace_stat_retr $bog_builderui_div sub / <= retrieval
+				<= Trace_stat_gen $bog_builderui_div sub / <= generation
+				<= Trace_stat_power $bog_builderui_div sub / <= power
+			<= Trace_link $bog_builderui_div sub / <= trace_link
+
+$raggu_web_dashboard $bog_builderui_div
+	metrics /
+	stages /
+	logs /
+	title_text @ \Corpus dashboard
+	subtitle_text @ \Graph stats · quality · energy and cost · timings and logs
+	card_stats_label_text @ \① Graph stats
+	stat_nodes_lbl_text @ \nodes
+	stat_edges_lbl_text @ \edges
+	stat_comms_lbl_text @ \communities
+	stats_dist_text @ \entity type distribution
+	card_quality_label_text @ \② Quality (benchmarks)
+	quality_footer_text @ \RAGU vs LightRAG / HippoRAG2 / Naive
+	card_energy_label_text @ \③ Energy and cost
+	energy_kwh_lbl_text @ \kWh / corpus
+	energy_cost_lbl_text @ \$ vs GPT-4 API
+	energy_formula_text @ \kWh = TDP × time × PUE
+	energy_note_text @ \TDP 300W · PUE 1.4 · meno-lite 7B locally vs ~40k tokens/doc on gpt-4o pricing
+	card_timings_label_text @ \④ Pipeline timings
+	card_logs_label_text @ \Query logs (expand into trace)
+	trace_label_text @ \ENTITIES IN CONTEXT
+	trace_link_text @ \↳ highlight on graph
+	sub /
+		<= Title $bog_builderui_div sub / <= title_text
+		<= Subtitle $bog_builderui_div sub / <= subtitle_text
+		<= Grid $bog_builderui_div sub /
+			<= Card_stats $bog_builderui_div sub /
+				<= Card_stats_label $bog_builderui_div sub / <= card_stats_label_text
+				<= Stats_row $bog_builderui_div sub /
+					<= Stat_nodes $bog_builderui_div sub /
+						<= Stat_nodes_val $bog_builderui_div sub / \2 410
+						<= Stat_nodes_lbl $bog_builderui_div sub / <= stat_nodes_lbl_text
+					<= Stat_edges $bog_builderui_div sub /
+						<= Stat_edges_val $bog_builderui_div sub / \7 088
+						<= Stat_edges_lbl $bog_builderui_div sub / <= stat_edges_lbl_text
+					<= Stat_comms $bog_builderui_div sub /
+						<= Stat_comms_val $bog_builderui_div sub / \38
+						<= Stat_comms_lbl $bog_builderui_div sub / <= stat_comms_lbl_text
+				<= Stats_dist $raggu_web_dashboard_dist sub / <= stats_dist_text
+			<= Card_quality $bog_builderui_div sub /
+				<= Card_quality_label $bog_builderui_div sub / <= card_quality_label_text
+				<= Metric_rows $bog_builderui_div sub <= metric_rows /
+					<= Metric* $raggu_web_dashboard_metric
+						name <= metric_name* \
+						value <= metric_value* \
+						pct <= metric_pct* \0%
+				<= Quality_footer $bog_builderui_div sub / <= quality_footer_text
+			<= Card_energy $bog_builderui_div sub /
+				<= Card_energy_label $bog_builderui_div sub / <= card_energy_label_text
+				<= Energy_row $bog_builderui_div sub /
+					<= Energy_kwh $bog_builderui_div sub /
+						<= Energy_kwh_val $bog_builderui_div sub / <= energy_kwh_val \
+						<= Energy_kwh_lbl $bog_builderui_div sub / <= energy_kwh_lbl_text
+					<= Energy_cost $bog_builderui_div sub /
+						<= Energy_cost_val $bog_builderui_div sub / <= energy_cost_val \
+						<= Energy_cost_lbl $bog_builderui_div sub / <= energy_cost_lbl_text
+				<= Energy_formula $bog_builderui_div sub / <= energy_formula_text
+				<= Energy_note $bog_builderui_div sub / <= energy_note_text
+			<= Card_timings $bog_builderui_div sub /
+				<= Card_timings_label $bog_builderui_div sub / <= card_timings_label_text
+				<= Stage_rows $bog_builderui_div sub <= stage_rows /
+					<= Stage* $raggu_web_dashboard_stage
+						name <= stage_name* \
+						time <= stage_time* \
+						pct <= stage_pct* \0%
+			<= Card_logs $bog_builderui_div sub /
+				<= Card_logs_label $bog_builderui_div sub / <= card_logs_label_text
+				<= Log_list $bog_builderui_div sub <= log_rows /
+					<= Log* $raggu_web_dashboard_log
+						time <= log_time* \
+						text <= log_text* \
+						mode <= log_mode* \
+						dur <= log_dur* \
+						expanded? <=> log_expanded*? false
+						chunks <= log_chunks* \
+						communities <= log_communities* \
+						retrieval <= log_retrieval* \
+						generation <= log_generation* \
+						power <= log_power* \
+						trace_label <= trace_label_text
+						trace_link <= trace_link_text
 
 $raggu_web_app $bog_builderui_div
 	screen? \gallery

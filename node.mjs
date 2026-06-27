@@ -7283,158 +7283,13 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$raggu_web_topbar) = class $raggu_web_topbar extends ($.$bog_builderui_div) {
-		screen_title(){
-			return "";
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.screen_title())]);
+	($.$mol_ghost) = class $mol_ghost extends ($.$mol_view) {
+		Sub(){
+			const obj = new this.$.$mol_view();
 			return obj;
-		}
-		dataset_name(){
-			return "";
-		}
-		Subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.dataset_name())]);
-			return obj;
-		}
-		Title_block(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Title()), (this.Subtitle())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Preset_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.preset_label_text())]);
-			return obj;
-		}
-		is_fast(){
-			return false;
-		}
-		click_fast(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_fast(){
-			const obj = new this.$.$raggu_web_topbar_preset();
-			(obj.label) = () => ((this.preset_fast_label()));
-			(obj.active) = () => ((this.is_fast()));
-			(obj.click) = (next) => ((this.click_fast(next)));
-			return obj;
-		}
-		is_accurate(){
-			return false;
-		}
-		click_accurate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_accurate(){
-			const obj = new this.$.$raggu_web_topbar_preset();
-			(obj.label) = () => ((this.preset_accurate_label()));
-			(obj.active) = () => ((this.is_accurate()));
-			(obj.click) = (next) => ((this.click_accurate(next)));
-			return obj;
-		}
-		is_demo(){
-			return false;
-		}
-		click_demo(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_demo(){
-			const obj = new this.$.$raggu_web_topbar_preset();
-			(obj.label) = () => ((this.preset_demo_label()));
-			(obj.active) = () => ((this.is_demo()));
-			(obj.click) = (next) => ((this.click_demo(next)));
-			return obj;
-		}
-		Preset_group(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Preset_fast()), 
-				(this.Preset_accurate()), 
-				(this.Preset_demo())
-			]);
-			return obj;
-		}
-		open_settings(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Settings_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.open_settings(next))});
-			(obj.sub) = () => ([(this.settings_btn_text())]);
-			return obj;
-		}
-		Export_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.export_btn_text())]);
-			return obj;
-		}
-		screen(){
-			return "gallery";
-		}
-		dataset_id(){
-			return "wiki";
-		}
-		preset(next){
-			if(next !== undefined) return next;
-			return "demo";
-		}
-		preset_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_label_text"));
-		}
-		settings_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_topbar_settings_btn_text"));
-		}
-		export_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_topbar_export_btn_text"));
-		}
-		preset_fast_label(){
-			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_fast_label"));
-		}
-		preset_accurate_label(){
-			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_accurate_label"));
-		}
-		preset_demo_label(){
-			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_demo_label"));
-		}
-		sub(){
-			return [
-				(this.Title_block()), 
-				(this.Spacer()), 
-				(this.Preset_label()), 
-				(this.Preset_group()), 
-				(this.Settings_btn()), 
-				(this.Export_btn())
-			];
 		}
 	};
-	($mol_mem(($.$raggu_web_topbar.prototype), "Title"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Subtitle"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Title_block"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_label"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "click_fast"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_fast"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "click_accurate"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_accurate"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "click_demo"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_demo"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_group"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "open_settings"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Settings_btn"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "Export_btn"));
-	($mol_mem(($.$raggu_web_topbar.prototype), "preset"));
+	($mol_mem(($.$mol_ghost.prototype), "Sub"));
 
 
 ;
@@ -7447,123 +7302,219 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $raggu_web_topbar extends $.$raggu_web_topbar {
-            screen_title() {
-                return this.$.$mol_locale.text(`$raggu_web_app_screen_${this.screen()}_title`) || '';
+        /**
+         * Mixin view logic to DOM node of another component.
+         */
+        class $mol_ghost extends $.$mol_ghost {
+            dom_node_external(next) {
+                return this.Sub().dom_node(next);
             }
-            dataset_name() {
-                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${this.dataset_id()}_title`) || '';
+            dom_node_actual() {
+                this.dom_node();
+                const node = this.Sub().dom_node_actual();
+                const attr = this.attr();
+                const style = this.style();
+                const fields = this.field();
+                $mol_dom_render_attributes(node, attr);
+                $mol_dom_render_styles(node, style);
+                $mol_dom_render_fields(node, fields);
+                return node;
             }
-            is_fast() { return this.preset() === 'fast'; }
-            is_accurate() { return this.preset() === 'accurate'; }
-            is_demo() { return this.preset() === 'demo'; }
-            click_fast() { this.preset('fast'); return null; }
-            click_accurate() { this.preset('accurate'); return null; }
-            click_demo() { this.preset('demo'); return null; }
+            dom_tree() {
+                const Sub = this.Sub();
+                const node = Sub.dom_tree();
+                try {
+                    this.dom_node_actual();
+                    this.auto();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+                return node;
+            }
+            title() {
+                return this.Sub().title();
+            }
+            minimal_width() {
+                return this.Sub().minimal_width();
+            }
+            minimal_height() {
+                return this.Sub().minimal_height();
+            }
         }
         __decorate([
-            $mol_action
-        ], $raggu_web_topbar.prototype, "click_fast", null);
+            $mol_mem
+        ], $mol_ghost.prototype, "dom_node_actual", null);
+        $$.$mol_ghost = $mol_ghost;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_follower) = class $mol_follower extends ($.$mol_ghost) {
+		transform(){
+			return "";
+		}
+		Anchor(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		align(){
+			return [-.5, -.5];
+		}
+		offset(){
+			return [0, 0];
+		}
+		style(){
+			return {...(super.style()), "transform": (this.transform())};
+		}
+	};
+	($mol_mem(($.$mol_follower.prototype), "Anchor"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Marker on top of another component with tracking of its position.
+         */
+        class $mol_follower extends $.$mol_follower {
+            pos() {
+                const self_rect = this.view_rect();
+                const prev = $mol_wire_probe(() => this.pos());
+                const anchor_rect = this.Anchor()?.view_rect();
+                if (!anchor_rect)
+                    return null;
+                const offset = this.offset();
+                const align = this.align();
+                const left = Math.floor((prev?.left ?? 0)
+                    - (self_rect?.left ?? 0)
+                    + (self_rect?.width ?? 0) * align[0]
+                    + (anchor_rect?.left ?? 0)
+                    + offset[0] * (anchor_rect?.width ?? 0));
+                const top = Math.floor((prev?.top ?? 0)
+                    - (self_rect?.top ?? 0)
+                    + (self_rect?.height ?? 0) * align[1]
+                    + (anchor_rect?.top ?? 0)
+                    + offset[1] * (anchor_rect?.height ?? 0));
+                return { left, top };
+            }
+            transform() {
+                const pos = this.pos();
+                if (!pos)
+                    return 'scale(0)';
+                const { left, top } = pos;
+                return `translate( ${left}px, ${top}px )`;
+            }
+        }
         __decorate([
-            $mol_action
-        ], $raggu_web_topbar.prototype, "click_accurate", null);
+            $mol_mem
+        ], $mol_follower.prototype, "pos", null);
         __decorate([
-            $mol_action
-        ], $raggu_web_topbar.prototype, "click_demo", null);
-        $$.$raggu_web_topbar = $raggu_web_topbar;
+            $mol_mem
+        ], $mol_follower.prototype, "transform", null);
+        $$.$mol_follower = $mol_follower;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
 "use strict";
-/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    $mol_style_define($raggu_web_topbar, {
-        height: '58px',
-        minHeight: '58px',
-        background: { color: $bog_builderui_tokens.card },
-        border: {
-            bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-        },
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '0.875rem',
-        padding: {
-            left: '1.25rem',
-            right: '1.25rem',
-        },
-        Title_block: {
-            flex: { direction: 'column' },
-        },
-        Title: {
-            font: { weight: 700, size: '15px' },
-        },
-        Subtitle: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Preset_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-        },
-        Preset_group: {
-            flex: { direction: 'row' },
-            gap: '0.25rem',
-            background: { color: $bog_builderui_tokens.field },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '3px',
-                bottom: '3px',
-                left: '3px',
-                right: '3px',
-            },
-        },
-        Settings_btn: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '6px',
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '7px',
-                bottom: '7px',
-                left: '12px',
-                right: '12px',
-            },
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
-        Export_btn: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '6px',
-            background: { color: '#5b5bd6' },
-            color: $bog_builderui_tokens.card,
-            border: { radius: '7px' },
-            padding: {
-                top: '7px',
-                bottom: '7px',
-                left: '12px',
-                right: '12px',
-            },
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
-    });
+    $mol_style_attach("mol/follower/follower.view.css", "[mol_follower] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\ttransition: none;\n}\n");
 })($ || ($ = {}));
+
+;
+	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
+		bubble(){
+			return null;
+		}
+		Anchor(){
+			return null;
+		}
+		bubble_offset(){
+			return [0, 1];
+		}
+		bubble_align(){
+			return [0, 0];
+		}
+		bubble_content(){
+			return [];
+		}
+		height_max(){
+			return 9999;
+		}
+		Bubble(){
+			const obj = new this.$.$mol_pop_bubble();
+			(obj.content) = () => ((this.bubble_content()));
+			(obj.height_max) = () => ((this.height_max()));
+			return obj;
+		}
+		Follower(){
+			const obj = new this.$.$mol_follower();
+			(obj.offset) = () => ((this.bubble_offset()));
+			(obj.align) = () => ((this.bubble_align()));
+			(obj.Anchor) = () => ((this.Anchor()));
+			(obj.Sub) = () => ((this.Bubble()));
+			return obj;
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		align_vert(){
+			return "";
+		}
+		align_hor(){
+			return "";
+		}
+		align(){
+			return "bottom_center";
+		}
+		prefer(){
+			return "vert";
+		}
+		auto(){
+			return [(this.bubble())];
+		}
+		sub(){
+			return [(this.Anchor())];
+		}
+		sub_visible(){
+			return [(this.Anchor()), (this.Follower())];
+		}
+	};
+	($mol_mem(($.$mol_pop.prototype), "Bubble"));
+	($mol_mem(($.$mol_pop.prototype), "Follower"));
+	($mol_mem(($.$mol_pop.prototype), "showed"));
+	($.$mol_pop_bubble) = class $mol_pop_bubble extends ($.$mol_view) {
+		content(){
+			return [];
+		}
+		height_max(){
+			return 9999;
+		}
+		sub(){
+			return (this.content());
+		}
+		style(){
+			return {...(super.style()), "maxHeight": (this.height_max())};
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"tabindex": 0, 
+				"popover": "manual"
+			};
+		}
+	};
+
 
 ;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
@@ -7759,294 +7710,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$raggu_web_settings_group) = class $raggu_web_settings_group extends ($.$bog_builderui_div) {
-		Step(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.step())]);
-			return obj;
-		}
-		Reindex(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({"raggu_web_settings_group_reindex": (this.reindex())});
-			(obj.sub) = () => ([(this.reindex_text())]);
-			return obj;
-		}
-		Head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Step()), (this.Reindex())]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Opts(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.opts())]);
-			return obj;
-		}
-		Control(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.control())]);
-			return obj;
-		}
-		step(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		opts(){
-			return "";
-		}
-		control(){
-			return "";
-		}
-		reindex(){
-			return true;
-		}
-		reindex_text(){
-			return (this.$.$mol_locale.text("$raggu_web_settings_group_reindex_text"));
-		}
-		sub(){
-			return [
-				(this.Head()), 
-				(this.Title()), 
-				(this.Opts()), 
-				(this.Control())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_settings_group.prototype), "Step"));
-	($mol_mem(($.$raggu_web_settings_group.prototype), "Reindex"));
-	($mol_mem(($.$raggu_web_settings_group.prototype), "Head"));
-	($mol_mem(($.$raggu_web_settings_group.prototype), "Title"));
-	($mol_mem(($.$raggu_web_settings_group.prototype), "Opts"));
-	($mol_mem(($.$raggu_web_settings_group.prototype), "Control"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_settings_group, {
-        flex: { direction: 'column' },
-        Head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-        },
-        Step: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 700,
-                size: '10px',
-            },
-            color: '#5b5bd6',
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
-        },
-        Reindex: {
-            background: { color: '#fdf0e6' },
-            color: '#c2691a',
-            border: { radius: '4px' },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '6px',
-                right: '6px',
-            },
-            font: { size: '9px', weight: 600 },
-            display: 'none',
-            '@': {
-                raggu_web_settings_group_reindex: {
-                    true: { display: 'flex' },
-                },
-            },
-        },
-        Title: {
-            font: { weight: 600, size: '13px' },
-            margin: { top: '5px' },
-        },
-        Opts: {
-            font: { size: '11px' },
-            color: $bog_builderui_tokens.shade,
-            lineHeight: '1.5',
-            margin: { top: '4px' },
-        },
-        Control: {
-            height: '30px',
-            margin: { top: '8px' },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-            background: { color: $bog_builderui_tokens.back },
-            align: { items: 'center' },
-            padding: {
-                left: '10px',
-                right: '10px',
-            },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_settings) = class $raggu_web_settings extends ($.$bog_builderui_div) {
-		close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Backdrop(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			return obj;
-		}
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Настройки движка RAGU"]);
-			return obj;
-		}
-		Header_sub(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["пресет + ручной режим"]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header_title()), (this.Header_sub())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Close_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			(obj.sub) = () => (["✕"]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Close_btn())
-			]);
-			return obj;
-		}
-		Group_chunking(){
-			const obj = new this.$.$raggu_web_settings_group();
-			(obj.step) = () => ("Шаг 1");
-			(obj.title) = () => ("Chunking");
-			(obj.opts) = () => ("Simple / SemanticText / SmartSemantic · размер · overlap");
-			(obj.control) = () => ("SmartSemanticChunker ▾");
-			(obj.reindex) = () => (true);
-			return obj;
-		}
-		Group_extraction(){
-			const obj = new this.$.$raggu_web_settings_group();
-			(obj.step) = () => ("Шаг 2");
-			(obj.title) = () => ("Extraction");
-			(obj.opts) = () => ("single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель");
-			(obj.control) = () => ("two-stage · meno-lite 7B · ICL hybrid ▾");
-			(obj.reindex) = () => (true);
-			return obj;
-		}
-		Group_summarization(){
-			const obj = new this.$.$raggu_web_settings_group();
-			(obj.step) = () => ("Шаг 3");
-			(obj.title) = () => ("Summarization");
-			(obj.opts) = () => ("DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей");
-			(obj.control) = () => ("DBSCAN вкл · суммаризация вкл");
-			(obj.reindex) = () => (true);
-			return obj;
-		}
-		Group_communities(){
-			const obj = new this.$.$raggu_web_settings_group();
-			(obj.step) = () => ("Шаг 4");
-			(obj.title) = () => ("Communities");
-			(obj.opts) = () => ("Hierarchical Leiden (resolution, levels) · суммаризация сообществ");
-			(obj.control) = () => ("Leiden · resolution 1.0");
-			(obj.reindex) = () => (true);
-			return obj;
-		}
-		Group_refinement(){
-			const obj = new this.$.$raggu_web_settings_group();
-			(obj.step) = () => ("Шаг 5");
-			(obj.title) = () => ("Refinement");
-			(obj.opts) = () => ("RemoveIsolatedNodes и пост-обработчики");
-			(obj.control) = () => ("RemoveIsolatedNodes вкл");
-			(obj.reindex) = () => (true);
-			return obj;
-		}
-		Group_search(){
-			const obj = new this.$.$raggu_web_settings_group();
-			(obj.step) = () => ("Шаг 6");
-			(obj.title) = () => ("Search");
-			(obj.opts) = () => ("Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k");
-			(obj.control) = () => ("LocalSearch · rerank ✓ · top-k 8");
-			(obj.reindex) = () => (false);
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([
-				(this.Group_chunking()), 
-				(this.Group_extraction()), 
-				(this.Group_summarization()), 
-				(this.Group_communities()), 
-				(this.Group_refinement()), 
-				(this.Group_search())
-			]);
-			return obj;
-		}
-		Panel(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header()), (this.Body())]);
-			return obj;
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_settings_showed": (this.showed())};
-		}
-		sub(){
-			return [(this.Backdrop()), (this.Panel())];
-		}
-	};
-	($mol_mem(($.$raggu_web_settings.prototype), "close"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Backdrop"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Header_sub"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Close_btn"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Header"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Group_chunking"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Group_extraction"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Group_summarization"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Group_communities"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Group_refinement"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Group_search"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Body"));
-	($mol_mem(($.$raggu_web_settings.prototype), "Panel"));
-	($mol_mem(($.$raggu_web_settings.prototype), "showed"));
-
-
-;
 "use strict";
 
 
@@ -8056,2773 +7719,124 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $raggu_web_settings extends $.$raggu_web_settings {
-            close() {
-                this.showed(false);
-                return null;
+        /**
+         * `Bubble` that can be shown anchored to `Anchor` element.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
+         */
+        class $mol_pop extends $.$mol_pop {
+            showed(next = false) {
+                this.focused();
+                return next;
+            }
+            sub_visible() {
+                return [
+                    this.Anchor(),
+                    ...this.showed() ? [this.Follower()] : [],
+                ];
+            }
+            height_max() {
+                const viewport = this.$.$mol_window.size();
+                const rect_bubble = this.view_rect();
+                const align = this.align_vert();
+                if (align === 'bottom')
+                    return (viewport.height - rect_bubble.bottom);
+                if (align === 'top')
+                    return rect_bubble.top;
+                return 0;
+            }
+            align() {
+                switch (this.prefer()) {
+                    case 'hor': return `${this.align_hor()}_${this.align_vert()}`;
+                    case 'vert': return `${this.align_vert()}_${this.align_hor()}`;
+                    default: return this.prefer();
+                }
+            }
+            align_vert() {
+                const rect_pop = this.view_rect();
+                if (!rect_pop)
+                    return 'suspense';
+                const viewport = this.$.$mol_window.size();
+                return rect_pop.top > viewport.height / 2 ? 'top' : 'bottom';
+            }
+            align_hor() {
+                const rect_pop = this.view_rect();
+                if (!rect_pop)
+                    return 'suspense';
+                const viewport = this.$.$mol_window.size();
+                return rect_pop.left > viewport.width / 2 ? 'left' : 'right';
+            }
+            bubble_offset() {
+                const tags = new Set(this.align().split('_'));
+                if (tags.has('suspense'))
+                    return [0, 0];
+                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
+                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
+                if ([...tags][0] === hor) {
+                    return [
+                        { left: 0, center: .5, right: 1 }[hor],
+                        { top: 1, center: .5, bottom: 0 }[vert],
+                    ];
+                }
+                else {
+                    return [
+                        { left: 1, center: .5, right: 0 }[hor],
+                        { top: 0, center: .5, bottom: 1 }[vert],
+                    ];
+                }
+            }
+            bubble_align() {
+                const tags = new Set(this.align().split('_'));
+                if (tags.has('suspense'))
+                    return [-.5, -.5];
+                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
+                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
+                return [
+                    { left: -1, center: -.5, right: 0, suspense: -.5 }[hor],
+                    { top: -1, center: -.5, bottom: 0, suspense: -.5 }[vert],
+                ];
+            }
+            bubble() {
+                if (!this.showed())
+                    return;
+                this.Bubble().dom_node().showPopover?.();
             }
         }
         __decorate([
-            $mol_action
-        ], $raggu_web_settings.prototype, "close", null);
-        $$.$raggu_web_settings = $raggu_web_settings;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_settings, {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'none',
-        zIndex: 40,
-        '@': {
-            raggu_web_settings_showed: {
-                true: { display: 'flex' },
-            },
-        },
-        Backdrop: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            background: { color: '#1c1b1a59' },
-        },
-        Panel: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: '380px',
-            background: { color: $bog_builderui_tokens.card },
-            border: {
-                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            zIndex: 1,
-            flex: { direction: 'column' },
-            box: {
-                shadow: [{
-                        x: '-12px',
-                        y: 0,
-                        blur: '40px',
-                        spread: 0,
-                        color: '#0000001f',
-                    }],
-            },
-        },
-        Header: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-        },
-        Header_text: {
-            flex: { direction: 'column' },
-        },
-        Header_title: {
-            font: { weight: 700, size: '16px' },
-        },
-        Header_sub: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '2px' },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Close_btn: {
-            minWidth: '30px',
-            maxWidth: '30px',
-            height: '30px',
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            cursor: 'pointer',
-            font: { size: '15px' },
-        },
-        Body: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            display: 'flex',
-            flex: { direction: 'column' },
-            gap: '18px',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_gallery_card_preview) = class $raggu_web_gallery_card_preview extends ($.$bog_builderui_div) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("raggu/web/gallery/card/preview/preview.view.css", "[raggu_web_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$raggu_web_gallery_card) = class $raggu_web_gallery_card extends ($.$bog_builderui_div) {
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preview_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.preview_label_text())]);
-			return obj;
-		}
-		Domain_badge(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.domain())]);
-			return obj;
-		}
-		Preview(){
-			const obj = new this.$.$raggu_web_gallery_card_preview();
-			(obj.sub) = () => ([(this.Preview_label()), (this.Domain_badge())]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Desc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.desc())]);
-			return obj;
-		}
-		tag_nodes(){
-			return "";
-		}
-		Tag_nodes(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.tag_nodes())]);
-			return obj;
-		}
-		tag_edges(){
-			return "";
-		}
-		Tag_edges(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.tag_edges())]);
-			return obj;
-		}
-		tag_comms(){
-			return "";
-		}
-		Tag_comms(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.tag_comms())]);
-			return obj;
-		}
-		Tags(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Tag_nodes()), 
-				(this.Tag_edges()), 
-				(this.Tag_comms())
-			]);
-			return obj;
-		}
-		id(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		domain(){
-			return "";
-		}
-		desc(){
-			return "";
-		}
-		nodes(){
-			return "";
-		}
-		edges(){
-			return "";
-		}
-		comms(){
-			return "";
-		}
-		preview_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_gallery_card_preview_label_text"));
-		}
-		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
-		}
-		sub(){
-			return [
-				(this.Preview()), 
-				(this.Title()), 
-				(this.Desc()), 
-				(this.Tags())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "click"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Preview_label"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Domain_badge"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Preview"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Title"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Desc"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_nodes"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_edges"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_comms"));
-	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tags"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
-            unit(key) {
-                return this.$.$mol_locale.text(`$raggu_web_gallery_card_unit_${key}`) || '';
-            }
-            tag_nodes() { return `${this.nodes()} ${this.unit('nodes')}`; }
-            tag_edges() { return `${this.edges()} ${this.unit('edges')}`; }
-            tag_comms() { return `${this.comms()} ${this.unit('comms')}`; }
-        }
-        $$.$raggu_web_gallery_card = $raggu_web_gallery_card;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const tag_style = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-        background: { color: $bog_builderui_tokens.field },
-        border: { radius: '5px' },
-        padding: {
-            top: '3px',
-            bottom: '3px',
-            left: '7px',
-            right: '7px',
-        },
-    };
-    $mol_style_define($raggu_web_gallery_card, {
-        background: { color: $bog_builderui_tokens.card },
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-        padding: {
-            top: '13px',
-            bottom: '13px',
-            left: '13px',
-            right: '13px',
-        },
-        flex: { direction: 'column' },
-        cursor: 'pointer',
-        Preview: {
-            height: '118px',
-            border: { radius: '7px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            position: 'relative',
-        },
-        Preview_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Domain_badge: {
-            position: 'absolute',
-            top: '8px',
-            left: '8px',
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '7px',
-                right: '7px',
-            },
-            font: { size: '10px' },
-            color: $bog_builderui_tokens.shade,
-        },
-        Title: {
-            font: { weight: 700, size: '14px' },
-            margin: { top: '11px' },
-        },
-        Desc: {
-            font: { size: '11px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '4px' },
-            lineHeight: '1.4',
-        },
-        Tags: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '6px',
-            margin: { top: '10px' },
-        },
-        Tag_nodes: tag_style,
-        Tag_edges: tag_style,
-        Tag_comms: tag_style,
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_gallery) = class $raggu_web_gallery extends ($.$bog_builderui_div) {
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.header_title_text())]);
-			return obj;
-		}
-		Header_subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.header_subtitle_text())]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header_title()), (this.Header_subtitle())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Upload_doc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.upload_doc_text())]);
-			return obj;
-		}
-		Upload_idx(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.upload_idx_text())]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Upload_doc()), 
-				(this.Upload_idx())
-			]);
-			return obj;
-		}
-		card_id(id){
-			return "";
-		}
-		card_title(id){
-			return "";
-		}
-		card_domain(id){
-			return "";
-		}
-		card_desc(id){
-			return "";
-		}
-		card_nodes(id){
-			return "";
-		}
-		card_edges(id){
-			return "";
-		}
-		card_comms(id){
-			return "";
-		}
-		click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Card(id){
-			const obj = new this.$.$raggu_web_gallery_card();
-			(obj.id) = () => ((this.card_id(id)));
-			(obj.title) = () => ((this.card_title(id)));
-			(obj.domain) = () => ((this.card_domain(id)));
-			(obj.desc) = () => ((this.card_desc(id)));
-			(obj.nodes) = () => ((this.card_nodes(id)));
-			(obj.edges) = () => ((this.card_edges(id)));
-			(obj.comms) = () => ((this.card_comms(id)));
-			(obj.click) = (next) => ((this.click(id, next)));
-			return obj;
-		}
-		rows(){
-			return [(this.Card(id))];
-		}
-		Grid(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.rows()));
-			return obj;
-		}
-		dataset_id(){
-			return "wiki";
-		}
-		select_dataset(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		datasets(){
-			return [];
-		}
-		header_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_gallery_header_title_text"));
-		}
-		header_subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_gallery_header_subtitle_text"));
-		}
-		upload_doc_text(){
-			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_doc_text"));
-		}
-		upload_idx_text(){
-			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_idx_text"));
-		}
-		sub(){
-			return [(this.Header()), (this.Grid())];
-		}
-	};
-	($mol_mem(($.$raggu_web_gallery.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Header_subtitle"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Upload_doc"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Upload_idx"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Header"));
-	($mol_mem_key(($.$raggu_web_gallery.prototype), "click"));
-	($mol_mem_key(($.$raggu_web_gallery.prototype), "Card"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "Grid"));
-	($mol_mem(($.$raggu_web_gallery.prototype), "select_dataset"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const DATASETS = [
-            { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
-            { id: 'un', nodes: '9.1k', edges: '27k', comms: '96' },
-            { id: 'papers', nodes: '1.2k', edges: '3.4k', comms: '24' },
-            { id: 'medical', nodes: '6.7k', edges: '19k', comms: '71' },
-            { id: 'wiki', nodes: '2.4k', edges: '7.1k', comms: '38' },
-            { id: 'own', nodes: '—', edges: '—', comms: '—' },
-        ];
-        class $raggu_web_gallery extends $.$raggu_web_gallery {
-            datasets() { return DATASETS; }
-            rows() {
-                return this.datasets().map(ds => this.Card(ds.id));
-            }
-            dataset(id) {
-                return this.datasets().find(d => d.id === id) ?? DATASETS[0];
-            }
-            dataset_text(id, suffix) {
-                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${id}_${suffix}`) || '';
-            }
-            card_id(id) { return id; }
-            card_title(id) { return this.dataset_text(id, 'title'); }
-            card_domain(id) { return this.dataset_text(id, 'domain'); }
-            card_desc(id) { return this.dataset_text(id, 'desc'); }
-            card_nodes(id) { return this.dataset(id).nodes; }
-            card_edges(id) { return this.dataset(id).edges; }
-            card_comms(id) { return this.dataset(id).comms; }
-            click(id) {
-                this.select_dataset(id);
-                return null;
-            }
-        }
+            $mol_mem
+        ], $mol_pop.prototype, "showed", null);
         __decorate([
-            $mol_action
-        ], $raggu_web_gallery.prototype, "click", null);
-        $$.$raggu_web_gallery = $raggu_web_gallery;
+            $mol_mem
+        ], $mol_pop.prototype, "sub_visible", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "height_max", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "align", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "align_vert", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "align_hor", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "bubble_offset", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "bubble_align", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "bubble", null);
+        $$.$mol_pop = $mol_pop;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
 "use strict";
-/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    $mol_style_define($raggu_web_gallery, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        padding: {
-            top: '1.5rem',
-            bottom: '1.5rem',
-            left: '1.75rem',
-            right: '1.75rem',
-        },
-        Header: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            align: { items: 'flex-end' },
-            gap: '0.875rem',
-            margin: { bottom: '1.25rem' },
-        },
-        Header_text: {
-            flex: { direction: 'column', grow: 1, shrink: 1 },
-            minWidth: 0,
-        },
-        Header_title: {
-            font: { weight: 700, size: '20px' },
-        },
-        Header_subtitle: {
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '3px' },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Upload_doc: {
-            border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '16px',
-                right: '16px',
-            },
-            font: { size: '12px', weight: 600 },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.card },
-            cursor: 'pointer',
-        },
-        Upload_idx: {
-            border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '16px',
-                right: '16px',
-            },
-            font: { size: '12px', weight: 600 },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.card },
-            cursor: 'pointer',
-        },
-        Grid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '16px',
-            minWidth: 0,
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_explorer) = class $raggu_web_explorer extends ($.$bog_builderui_div) {
-		Canvas_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				"⬡ ⬡ ⬡", 
-				"", 
-				(this.canvas_title_text()), 
-				(this.canvas_engine_text()), 
-				(this.canvas_meaning_text())
-			]);
-			return obj;
-		}
-		Canvas_bg(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Canvas_label())]);
-			return obj;
-		}
-		Filter_search(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.filter_search_text())]);
-			return obj;
-		}
-		Filter_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.filter_type_text())]);
-			return obj;
-		}
-		Filter_thresh(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.filter_thresh_text())]);
-			return obj;
-		}
-		Filter_comm(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.filter_comm_text())]);
-			return obj;
-		}
-		Filters(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Filter_search()), 
-				(this.Filter_type()), 
-				(this.Filter_thresh()), 
-				(this.Filter_comm())
-			]);
-			return obj;
-		}
-		Legend_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Entity Types"]);
-			return obj;
-		}
-		Legend_person_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_person_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["PERSON"]);
-			return obj;
-		}
-		Legend_person(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_person_dot()), (this.Legend_person_label())]);
-			return obj;
-		}
-		Legend_org_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_org_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["ORGANIZATION"]);
-			return obj;
-		}
-		Legend_org(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_org_dot()), (this.Legend_org_label())]);
-			return obj;
-		}
-		Legend_loc_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_loc_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LOCATION"]);
-			return obj;
-		}
-		Legend_loc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_loc_dot()), (this.Legend_loc_label())]);
-			return obj;
-		}
-		Legend_event_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_event_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["EVENT"]);
-			return obj;
-		}
-		Legend_event(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_event_dot()), (this.Legend_event_label())]);
-			return obj;
-		}
-		Legend_date_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_date_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["DATE"]);
-			return obj;
-		}
-		Legend_date(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_date_dot()), (this.Legend_date_label())]);
-			return obj;
-		}
-		Legend_work_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_work_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["WORK_OF_ART"]);
-			return obj;
-		}
-		Legend_work(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_work_dot()), (this.Legend_work_label())]);
-			return obj;
-		}
-		Legend_law_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Legend_law_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LAW"]);
-			return obj;
-		}
-		Legend_law(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_law_dot()), (this.Legend_law_label())]);
-			return obj;
-		}
-		Legend(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Legend_title()), 
-				(this.Legend_person()), 
-				(this.Legend_org()), 
-				(this.Legend_loc()), 
-				(this.Legend_event()), 
-				(this.Legend_date()), 
-				(this.Legend_work()), 
-				(this.Legend_law())
-			]);
-			return obj;
-		}
-		Canvas(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Canvas_bg()), 
-				(this.Filters()), 
-				(this.Legend())
-			]);
-			return obj;
-		}
-		Aside_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.aside_title_text())]);
-			return obj;
-		}
-		Entity_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Entity_name(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_name_text())]);
-			return obj;
-		}
-		Entity_head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Entity_dot()), (this.Entity_name())]);
-			return obj;
-		}
-		Entity_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["PERSON"]);
-			return obj;
-		}
-		Entity_desc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_desc_text())]);
-			return obj;
-		}
-		Relations_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.relations_title_text())]);
-			return obj;
-		}
-		Rel_one_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["WORKS_AS"]);
-			return obj;
-		}
-		Rel_one_target(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_one_target_text())]);
-			return obj;
-		}
-		Rel_one(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_one_type()), (this.Rel_one_target())]);
-			return obj;
-		}
-		Rel_two_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["AWARDED_WITH"]);
-			return obj;
-		}
-		Rel_two_target(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_two_target_text())]);
-			return obj;
-		}
-		Rel_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_two_type()), (this.Rel_two_target())]);
-			return obj;
-		}
-		Rel_three_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["PLACE_OF_BIRTH"]);
-			return obj;
-		}
-		Rel_three_target(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_three_target_text())]);
-			return obj;
-		}
-		Rel_three(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_three_type()), (this.Rel_three_target())]);
-			return obj;
-		}
-		Sources_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sources_title_text())]);
-			return obj;
-		}
-		Sources(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sources_text())]);
-			return obj;
-		}
-		Ask_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.ask_btn_text())]);
-			return obj;
-		}
-		Aside(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Aside_title()), 
-				(this.Entity_head()), 
-				(this.Entity_type()), 
-				(this.Entity_desc()), 
-				(this.Relations_title()), 
-				(this.Rel_one()), 
-				(this.Rel_two()), 
-				(this.Rel_three()), 
-				(this.Sources_title()), 
-				(this.Sources()), 
-				(this.Ask_btn())
-			]);
-			return obj;
-		}
-		canvas_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_title_text"));
-		}
-		canvas_engine_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_engine_text"));
-		}
-		canvas_meaning_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_meaning_text"));
-		}
-		filter_search_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_search_text"));
-		}
-		filter_type_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_type_text"));
-		}
-		filter_thresh_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_thresh_text"));
-		}
-		filter_comm_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_comm_text"));
-		}
-		aside_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_aside_title_text"));
-		}
-		entity_name_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_entity_name_text"));
-		}
-		entity_desc_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_entity_desc_text"));
-		}
-		relations_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_relations_title_text"));
-		}
-		rel_one_target_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_one_target_text"));
-		}
-		rel_two_target_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_two_target_text"));
-		}
-		rel_three_target_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_three_target_text"));
-		}
-		sources_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_sources_title_text"));
-		}
-		sources_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_sources_text"));
-		}
-		ask_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_explorer_ask_btn_text"));
-		}
-		sub(){
-			return [(this.Canvas()), (this.Aside())];
-		}
-	};
-	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas_bg"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_search"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_type"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_thresh"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_comm"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Filters"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_title"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law_label"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Legend"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Aside_title"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_dot"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_name"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_head"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_type"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_desc"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Relations_title"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one_type"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one_target"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two_type"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two_target"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three_type"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three_target"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Sources_title"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Sources"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Ask_btn"));
-	($mol_mem(($.$raggu_web_explorer.prototype), "Aside"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const { radial_gradient } = $mol_style_func;
-    const dot_base = {
-        minWidth: '9px',
-        maxWidth: '9px',
-        height: '9px',
-        border: { radius: '50%' },
-    };
-    const legend_row = {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '8px',
-        padding: {
-            top: '2px',
-            bottom: '2px',
-        },
-    };
-    const legend_label = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-    };
-    const relation_card = {
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-        padding: {
-            top: '8px',
-            bottom: '8px',
-            left: '10px',
-            right: '10px',
-        },
-        margin: { bottom: '6px' },
-        font: { size: '11px' },
-        flex: { direction: 'column' },
-    };
-    const relation_type = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '10px',
-        },
-        color: '#5b5bd6',
-    };
-    const relation_target = {
-        color: $bog_builderui_tokens.shade,
-        margin: { top: '2px' },
-    };
-    $mol_style_define($raggu_web_explorer, {
-        flex: { direction: 'row', shrink: 1 },
-        minWidth: 0,
-        height: '100%',
-        Canvas: {
-            flex: { grow: 1, shrink: 1, direction: 'column' },
-            position: 'relative',
-            background: { color: '#1c1b1a' },
-            minWidth: 0,
-        },
-        Canvas_bg: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            background: {
-                image: [
-                    [radial_gradient('circle at 35% 40%, #5b5bd62e, transparent 45%')],
-                    [radial_gradient('circle at 70% 65%, #d65b8c24, transparent 45%')],
-                ],
-            },
-        },
-        Canvas_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '12px',
-            },
-            color: '#6b6864',
-            letterSpacing: '1px',
-            textAlign: 'center',
-            whiteSpace: 'pre-line',
-        },
-        Filters: {
-            position: 'absolute',
-            top: '14px',
-            left: '14px',
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '8px',
-            maxWidth: '62%',
-        },
-        Filter_search: {
-            background: { color: '#ffffffe6' },
-            border: { radius: '7px' },
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '11px',
-                right: '11px',
-            },
-            font: { size: '11px', weight: 600 },
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '7px',
-        },
-        Filter_type: {
-            background: { color: '#ffffffe6' },
-            border: { radius: '7px' },
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '11px',
-                right: '11px',
-            },
-            font: { size: '11px', weight: 600 },
-        },
-        Filter_thresh: {
-            background: { color: '#ffffffe6' },
-            border: { radius: '7px' },
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '11px',
-                right: '11px',
-            },
-            font: { size: '11px', weight: 600 },
-        },
-        Filter_comm: {
-            background: { color: '#5b5bd6' },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '11px',
-                right: '11px',
-            },
-            font: { size: '11px', weight: 600 },
-        },
-        Legend: {
-            position: 'absolute',
-            top: '14px',
-            right: '14px',
-            background: { color: '#1c1b1ae6' },
-            border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
-            padding: {
-                top: '11px',
-                bottom: '11px',
-                left: '13px',
-                right: '13px',
-            },
-            width: '150px',
-            flex: { direction: 'column' },
-        },
-        Legend_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 700,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.line,
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
-            margin: { bottom: '8px' },
-        },
-        Legend_person: legend_row,
-        Legend_org: legend_row,
-        Legend_loc: legend_row,
-        Legend_event: legend_row,
-        Legend_date: legend_row,
-        Legend_work: legend_row,
-        Legend_law: legend_row,
-        Legend_person_dot: { ...dot_base, background: { color: '#e0524f' } },
-        Legend_org_dot: { ...dot_base, background: { color: '#4f8ee0' } },
-        Legend_loc_dot: { ...dot_base, background: { color: '#3fb56b' } },
-        Legend_event_dot: { ...dot_base, background: { color: '#d97ad9' } },
-        Legend_date_dot: { ...dot_base, background: { color: '#e0a73f' } },
-        Legend_work_dot: { ...dot_base, background: { color: '#7c6ce0' } },
-        Legend_law_dot: { ...dot_base, background: { color: '#3fb8b8' } },
-        Legend_person_label: legend_label,
-        Legend_org_label: legend_label,
-        Legend_loc_label: legend_label,
-        Legend_event_label: legend_label,
-        Legend_date_label: legend_label,
-        Legend_work_label: legend_label,
-        Legend_law_label: legend_label,
-        Aside: {
-            minWidth: '300px',
-            maxWidth: '300px',
-            background: { color: $bog_builderui_tokens.card },
-            border: {
-                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '18px',
-                right: '18px',
-            },
-            overflow: 'auto',
-            flex: { direction: 'column' },
-        },
-        Aside_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            letterSpacing: '0.7px',
-        },
-        Entity_head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-            margin: { top: '11px' },
-        },
-        Entity_dot: {
-            minWidth: '12px',
-            maxWidth: '12px',
-            height: '12px',
-            border: { radius: '50%' },
-            background: { color: '#7c6ce0' },
-        },
-        Entity_name: {
-            font: { weight: 700, size: '16px' },
-        },
-        Entity_type: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: '#5b5bd6',
-            margin: { top: '6px' },
-        },
-        Entity_desc: {
-            font: { size: '12px' },
-            color: $bog_builderui_tokens.shade,
-            lineHeight: '1.5',
-            margin: { top: '10px' },
-        },
-        Relations_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            margin: { top: '18px', bottom: '8px' },
-        },
-        Rel_one: relation_card,
-        Rel_two: relation_card,
-        Rel_three: relation_card,
-        Rel_one_type: relation_type,
-        Rel_two_type: relation_type,
-        Rel_three_type: relation_type,
-        Rel_one_target: relation_target,
-        Rel_two_target: relation_target,
-        Rel_three_target: relation_target,
-        Sources_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            margin: { top: '16px', bottom: '8px' },
-        },
-        Sources: {
-            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-            },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.back },
-        },
-        Ask_btn: {
-            margin: { top: '16px' },
-            background: { color: '#5b5bd6' },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-            },
-            textAlign: 'center',
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_chat) = class $raggu_web_chat extends ($.$bog_builderui_div) {
-		Modes_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.modes_label_text())]);
-			return obj;
-		}
-		Mode_local(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LocalSearch"]);
-			return obj;
-		}
-		Mode_global(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Global"]);
-			return obj;
-		}
-		Mode_mix(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Mix"]);
-			return obj;
-		}
-		Mode_plan(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["QueryPlan"]);
-			return obj;
-		}
-		Modes(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Mode_local()), 
-				(this.Mode_global()), 
-				(this.Mode_mix()), 
-				(this.Mode_plan())
-			]);
-			return obj;
-		}
-		Modes_bar(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Modes_label()), (this.Modes())]);
-			return obj;
-		}
-		Msg_user(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.msg_user_text())]);
-			return obj;
-		}
-		Msg_assistant(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.msg_assistant_text())]);
-			return obj;
-		}
-		Trace_head_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_head_title_text())]);
-			return obj;
-		}
-		Trace_head_meta(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_head_meta_text())]);
-			return obj;
-		}
-		Trace_head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Trace_head_title()), (this.Trace_head_meta())]);
-			return obj;
-		}
-		Trace_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_label_text())]);
-			return obj;
-		}
-		Trace_chip_one(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_chip_one_text())]);
-			return obj;
-		}
-		Trace_chip_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_chip_two_text())]);
-			return obj;
-		}
-		Trace_chip_three(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_chip_three_text())]);
-			return obj;
-		}
-		Trace_chips(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Trace_chip_one()), 
-				(this.Trace_chip_two()), 
-				(this.Trace_chip_three())
-			]);
-			return obj;
-		}
-		Trace_stat_chunks(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_stat_chunks_text())]);
-			return obj;
-		}
-		Trace_stat_comms(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_stat_comms_text())]);
-			return obj;
-		}
-		Trace_stat_retr(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_stat_retr_text())]);
-			return obj;
-		}
-		Trace_stat_gen(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_stat_gen_text())]);
-			return obj;
-		}
-		Trace_stat_power(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_stat_power_text())]);
-			return obj;
-		}
-		Trace_stats(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Trace_stat_chunks()), 
-				(this.Trace_stat_comms()), 
-				(this.Trace_stat_retr()), 
-				(this.Trace_stat_gen()), 
-				(this.Trace_stat_power())
-			]);
-			return obj;
-		}
-		Trace_link(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_link_text())]);
-			return obj;
-		}
-		Trace_body(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Trace_label()), 
-				(this.Trace_chips()), 
-				(this.Trace_stats()), 
-				(this.Trace_link())
-			]);
-			return obj;
-		}
-		Trace(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Trace_head()), (this.Trace_body())]);
-			return obj;
-		}
-		Msg_assistant_wrap(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Msg_assistant()), (this.Trace())]);
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Msg_user()), (this.Msg_assistant_wrap())]);
-			return obj;
-		}
-		Sug_one(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sug_one_text())]);
-			return obj;
-		}
-		Sug_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sug_two_text())]);
-			return obj;
-		}
-		Suggestions(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Sug_one()), (this.Sug_two())]);
-			return obj;
-		}
-		Input_hint(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.input_hint_text())]);
-			return obj;
-		}
-		Input_spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Input_send(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["↑"]);
-			return obj;
-		}
-		Input_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Input_hint()), 
-				(this.Input_spacer()), 
-				(this.Input_send())
-			]);
-			return obj;
-		}
-		Footer(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Suggestions()), (this.Input_row())]);
-			return obj;
-		}
-		modes_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_modes_label_text"));
-		}
-		msg_user_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_msg_user_text"));
-		}
-		msg_assistant_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_msg_assistant_text"));
-		}
-		trace_head_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_head_title_text"));
-		}
-		trace_head_meta_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_head_meta_text"));
-		}
-		trace_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_label_text"));
-		}
-		trace_chip_one_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_one_text"));
-		}
-		trace_chip_two_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_two_text"));
-		}
-		trace_chip_three_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_three_text"));
-		}
-		trace_stat_chunks_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_chunks_text"));
-		}
-		trace_stat_comms_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_comms_text"));
-		}
-		trace_stat_retr_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_retr_text"));
-		}
-		trace_stat_gen_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_gen_text"));
-		}
-		trace_stat_power_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_power_text"));
-		}
-		trace_link_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_trace_link_text"));
-		}
-		sug_one_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_sug_one_text"));
-		}
-		sug_two_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_sug_two_text"));
-		}
-		input_hint_text(){
-			return (this.$.$mol_locale.text("$raggu_web_chat_input_hint_text"));
-		}
-		sub(){
-			return [
-				(this.Modes_bar()), 
-				(this.Body()), 
-				(this.Footer())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_chat.prototype), "Modes_label"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Mode_local"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Mode_global"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Mode_mix"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Mode_plan"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Modes"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Modes_bar"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Msg_user"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Msg_assistant"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_head_title"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_head_meta"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_head"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_label"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chip_one"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chip_two"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chip_three"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chips"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_chunks"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_comms"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_retr"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_gen"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_power"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stats"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_link"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace_body"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Trace"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Msg_assistant_wrap"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Body"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Sug_one"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Sug_two"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Suggestions"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Input_hint"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Input_spacer"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Input_send"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Input_row"));
-	($mol_mem(($.$raggu_web_chat.prototype), "Footer"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const mode_pill_inactive = {
-        background: { color: $bog_builderui_tokens.field },
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-        padding: {
-            top: '5px',
-            bottom: '5px',
-            left: '10px',
-            right: '10px',
-        },
-        font: { size: '11px', weight: 600 },
-        color: $bog_builderui_tokens.shade,
-    };
-    const chip = {
-        background: { color: '#ece9fb' },
-        color: '#5b5bd6',
-        border: { radius: '5px' },
-        padding: {
-            top: '3px',
-            bottom: '3px',
-            left: '8px',
-            right: '8px',
-        },
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '10px',
-        },
-    };
-    const trace_stat = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-    };
-    const suggestion = {
-        border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
-        padding: {
-            top: '5px',
-            bottom: '5px',
-            left: '11px',
-            right: '11px',
-        },
-        font: { size: '11px' },
-        color: $bog_builderui_tokens.shade,
-    };
-    $mol_style_define($raggu_web_chat, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        height: '100%',
-        Modes_bar: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '9px',
-            padding: {
-                top: '14px',
-                bottom: '14px',
-                left: '22px',
-                right: '22px',
-            },
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-        },
-        Modes_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-        },
-        Modes: {
-            flex: { direction: 'row' },
-            gap: '5px',
-        },
-        Mode_local: {
-            background: { color: '#5b5bd6' },
-            color: '#ffffff',
-            border: { radius: '6px' },
-            padding: {
-                top: '5px',
-                bottom: '5px',
-                left: '10px',
-                right: '10px',
-            },
-            font: { size: '11px', weight: 600 },
-        },
-        Mode_global: mode_pill_inactive,
-        Mode_mix: mode_pill_inactive,
-        Mode_plan: mode_pill_inactive,
-        Body: {
-            flex: { grow: 1, direction: 'column' },
-            overflow: 'auto',
-            padding: {
-                top: '22px',
-                bottom: '22px',
-                left: '22px',
-                right: '22px',
-            },
-            gap: '16px',
-        },
-        Msg_user: {
-            align: { self: 'flex-end' },
-            maxWidth: '70%',
-            background: { color: '#5b5bd6' },
-            color: '#ffffff',
-            borderRadius: '12px 12px 3px 12px',
-            padding: {
-                top: '11px',
-                bottom: '11px',
-                left: '15px',
-                right: '15px',
-            },
-            font: { size: '13px' },
-        },
-        Msg_assistant_wrap: {
-            align: { self: 'flex-start' },
-            maxWidth: '78%',
-            flex: { direction: 'column' },
-        },
-        Msg_assistant: {
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            borderRadius: '12px 12px 12px 3px',
-            padding: {
-                top: '13px',
-                bottom: '13px',
-                left: '16px',
-                right: '16px',
-            },
-            font: { size: '13px' },
-            lineHeight: '1.55',
-            color: $bog_builderui_tokens.text,
-        },
-        Trace: {
-            margin: { top: '8px' },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '9px' },
-            background: { color: $bog_builderui_tokens.back },
-            overflow: 'hidden',
-            flex: { direction: 'column' },
-        },
-        Trace_head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '7px',
-            padding: {
-                top: '9px',
-                bottom: '9px',
-                left: '13px',
-                right: '13px',
-            },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: '#5b5bd6',
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-        },
-        Trace_head_meta: {
-            marginLeft: 'auto',
-            color: $bog_builderui_tokens.shade,
-            font: { weight: 500 },
-        },
-        Trace_body: {
-            padding: {
-                top: '11px',
-                bottom: '11px',
-                left: '13px',
-                right: '13px',
-            },
-            flex: { direction: 'column' },
-            gap: '8px',
-        },
-        Trace_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Trace_chips: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '5px',
-        },
-        Trace_chip_one: chip,
-        Trace_chip_two: chip,
-        Trace_chip_three: chip,
-        Trace_stats: {
-            flex: { direction: 'row' },
-            gap: '14px',
-            margin: { top: '2px' },
-        },
-        Trace_stat_chunks: trace_stat,
-        Trace_stat_comms: trace_stat,
-        Trace_stat_retr: trace_stat,
-        Trace_stat_gen: trace_stat,
-        Trace_stat_power: trace_stat,
-        Trace_link: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: '#5b5bd6',
-        },
-        Footer: {
-            padding: {
-                top: '14px',
-                bottom: '14px',
-                left: '22px',
-                right: '22px',
-            },
-            border: {
-                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            flex: { direction: 'column' },
-        },
-        Suggestions: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '7px',
-            margin: { bottom: '10px' },
-        },
-        Sug_one: suggestion,
-        Sug_two: suggestion,
-        Input_row: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-            padding: {
-                top: '12px',
-                bottom: '12px',
-                left: '15px',
-                right: '15px',
-            },
-            color: $bog_builderui_tokens.shade,
-            font: { size: '13px' },
-        },
-        Input_spacer: {
-            flex: { grow: 1 },
-        },
-        Input_send: {
-            background: { color: '#5b5bd6' },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '6px',
-                bottom: '6px',
-                left: '14px',
-                right: '14px',
-            },
-            font: { size: '12px', weight: 600 },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_dashboard_dist) = class $raggu_web_dashboard_dist extends ($.$bog_builderui_div) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("raggu/web/dashboard/dist/dist.view.css", "[raggu_web_dashboard_dist] {\n\tbackground-image: repeating-linear-gradient(90deg, #efedea 0 7px, #e7e4e0 7px 14px);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$raggu_web_dashboard_metric) = class $raggu_web_dashboard_metric extends ($.$bog_builderui_div) {
-		Name(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.name())]);
-			return obj;
-		}
-		Bar_fill(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Bar(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Bar_fill())]);
-			return obj;
-		}
-		Value(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.value())]);
-			return obj;
-		}
-		name(){
-			return "";
-		}
-		value(){
-			return "";
-		}
-		pct(){
-			return "0%";
-		}
-		sub(){
-			return [
-				(this.Name()), 
-				(this.Bar()), 
-				(this.Value())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Name"));
-	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Bar_fill"));
-	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Bar"));
-	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Value"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_dashboard_metric extends $.$raggu_web_dashboard_metric {
-            Bar_fill() {
-                const fill = super.Bar_fill();
-                fill.style = () => ({ width: this.pct() });
-                return fill;
-            }
-        }
-        $$.$raggu_web_dashboard_metric = $raggu_web_dashboard_metric;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_dashboard_metric, {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '10px',
-        margin: { top: '12px' },
-        Name: {
-            minWidth: '120px',
-            maxWidth: '120px',
-            font: { size: '12px', weight: 600 },
-        },
-        Bar: {
-            flex: { grow: 1 },
-            height: '8px',
-            border: { radius: '4px' },
-            background: { color: '#ece9fb' },
-            position: 'relative',
-            overflow: 'hidden',
-        },
-        Bar_fill: {
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            background: { color: '#5b5bd6' },
-        },
-        Value: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: '#5b5bd6',
-            minWidth: '36px',
-            maxWidth: '36px',
-            textAlign: 'right',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_dashboard_stage) = class $raggu_web_dashboard_stage extends ($.$bog_builderui_div) {
-		Name(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.name())]);
-			return obj;
-		}
-		Bar_fill(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Bar(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Bar_fill())]);
-			return obj;
-		}
-		Time(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.time())]);
-			return obj;
-		}
-		name(){
-			return "";
-		}
-		time(){
-			return "";
-		}
-		pct(){
-			return "0%";
-		}
-		sub(){
-			return [
-				(this.Name()), 
-				(this.Bar()), 
-				(this.Time())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Name"));
-	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Bar_fill"));
-	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Bar"));
-	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Time"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_dashboard_stage extends $.$raggu_web_dashboard_stage {
-            Bar_fill() {
-                const fill = super.Bar_fill();
-                fill.style = () => ({ width: this.pct() });
-                return fill;
-            }
-        }
-        $$.$raggu_web_dashboard_stage = $raggu_web_dashboard_stage;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_dashboard_stage, {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '10px',
-        margin: { top: '10px' },
-        Name: {
-            minWidth: '130px',
-            maxWidth: '130px',
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Bar: {
-            flex: { grow: 1 },
-            height: '8px',
-            border: { radius: '4px' },
-            background: { color: $bog_builderui_tokens.field },
-            overflow: 'hidden',
-        },
-        Bar_fill: {
-            height: '100%',
-            background: { color: '#a89bf0' },
-        },
-        Time: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            minWidth: '42px',
-            maxWidth: '42px',
-            textAlign: 'right',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_dashboard) = class $raggu_web_dashboard extends ($.$bog_builderui_div) {
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title_text())]);
-			return obj;
-		}
-		Subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.subtitle_text())]);
-			return obj;
-		}
-		Card_stats_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_stats_label_text())]);
-			return obj;
-		}
-		Stat_nodes_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["2 410"]);
-			return obj;
-		}
-		Stat_nodes_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.stat_nodes_lbl_text())]);
-			return obj;
-		}
-		Stat_nodes(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Stat_nodes_val()), (this.Stat_nodes_lbl())]);
-			return obj;
-		}
-		Stat_edges_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["7 088"]);
-			return obj;
-		}
-		Stat_edges_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.stat_edges_lbl_text())]);
-			return obj;
-		}
-		Stat_edges(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Stat_edges_val()), (this.Stat_edges_lbl())]);
-			return obj;
-		}
-		Stat_comms_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["38"]);
-			return obj;
-		}
-		Stat_comms_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.stat_comms_lbl_text())]);
-			return obj;
-		}
-		Stat_comms(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Stat_comms_val()), (this.Stat_comms_lbl())]);
-			return obj;
-		}
-		Stats_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Stat_nodes()), 
-				(this.Stat_edges()), 
-				(this.Stat_comms())
-			]);
-			return obj;
-		}
-		Stats_dist(){
-			const obj = new this.$.$raggu_web_dashboard_dist();
-			(obj.sub) = () => ([(this.stats_dist_text())]);
-			return obj;
-		}
-		Card_stats(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_stats_label()), 
-				(this.Stats_row()), 
-				(this.Stats_dist())
-			]);
-			return obj;
-		}
-		Card_quality_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_quality_label_text())]);
-			return obj;
-		}
-		metric_name(id){
-			return "";
-		}
-		metric_value(id){
-			return "";
-		}
-		metric_pct(id){
-			return "0%";
-		}
-		Metric(id){
-			const obj = new this.$.$raggu_web_dashboard_metric();
-			(obj.name) = () => ((this.metric_name(id)));
-			(obj.value) = () => ((this.metric_value(id)));
-			(obj.pct) = () => ((this.metric_pct(id)));
-			return obj;
-		}
-		metric_rows(){
-			return [(this.Metric(id))];
-		}
-		Metric_rows(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.metric_rows()));
-			return obj;
-		}
-		Quality_footer(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.quality_footer_text())]);
-			return obj;
-		}
-		Card_quality(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_quality_label()), 
-				(this.Metric_rows()), 
-				(this.Quality_footer())
-			]);
-			return obj;
-		}
-		Card_energy_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_energy_label_text())]);
-			return obj;
-		}
-		Energy_kwh_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["0.18"]);
-			return obj;
-		}
-		Energy_kwh_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_kwh_lbl_text())]);
-			return obj;
-		}
-		Energy_kwh(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Energy_kwh_val()), (this.Energy_kwh_lbl())]);
-			return obj;
-		}
-		Energy_cost_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["−94%"]);
-			return obj;
-		}
-		Energy_cost_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_cost_lbl_text())]);
-			return obj;
-		}
-		Energy_cost(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Energy_cost_val()), (this.Energy_cost_lbl())]);
-			return obj;
-		}
-		Energy_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Energy_kwh()), (this.Energy_cost())]);
-			return obj;
-		}
-		Energy_note(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_note_text())]);
-			return obj;
-		}
-		Card_energy(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_energy_label()), 
-				(this.Energy_row()), 
-				(this.Energy_note())
-			]);
-			return obj;
-		}
-		Card_timings_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_timings_label_text())]);
-			return obj;
-		}
-		stage_name(id){
-			return "";
-		}
-		stage_time(id){
-			return "";
-		}
-		stage_pct(id){
-			return "0%";
-		}
-		Stage(id){
-			const obj = new this.$.$raggu_web_dashboard_stage();
-			(obj.name) = () => ((this.stage_name(id)));
-			(obj.time) = () => ((this.stage_time(id)));
-			(obj.pct) = () => ((this.stage_pct(id)));
-			return obj;
-		}
-		stage_rows(){
-			return [(this.Stage(id))];
-		}
-		Stage_rows(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.stage_rows()));
-			return obj;
-		}
-		Card_timings(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Card_timings_label()), (this.Stage_rows())]);
-			return obj;
-		}
-		Card_logs_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_logs_label_text())]);
-			return obj;
-		}
-		Log_one_time(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["12:04:18"]);
-			return obj;
-		}
-		Log_one_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.log_one_text_text())]);
-			return obj;
-		}
-		Log_one_mode(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LocalSearch"]);
-			return obj;
-		}
-		Log_one_dur(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["1.3s"]);
-			return obj;
-		}
-		Log_one_arrow(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["▾"]);
-			return obj;
-		}
-		Log_one(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Log_one_time()), 
-				(this.Log_one_text()), 
-				(this.Log_one_mode()), 
-				(this.Log_one_dur()), 
-				(this.Log_one_arrow())
-			]);
-			return obj;
-		}
-		Log_two_time(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["12:03:51"]);
-			return obj;
-		}
-		Log_two_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.log_two_text_text())]);
-			return obj;
-		}
-		Log_two_mode(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["MixSearch"]);
-			return obj;
-		}
-		Log_two_dur(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["2.1s"]);
-			return obj;
-		}
-		Log_two_arrow(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["▾"]);
-			return obj;
-		}
-		Log_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Log_two_time()), 
-				(this.Log_two_text()), 
-				(this.Log_two_mode()), 
-				(this.Log_two_dur()), 
-				(this.Log_two_arrow())
-			]);
-			return obj;
-		}
-		Log_list(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Log_one()), (this.Log_two())]);
-			return obj;
-		}
-		Card_logs(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Card_logs_label()), (this.Log_list())]);
-			return obj;
-		}
-		Grid(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_stats()), 
-				(this.Card_quality()), 
-				(this.Card_energy()), 
-				(this.Card_timings()), 
-				(this.Card_logs())
-			]);
-			return obj;
-		}
-		metrics(){
-			return [];
-		}
-		stages(){
-			return [];
-		}
-		title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_title_text"));
-		}
-		subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_subtitle_text"));
-		}
-		card_stats_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_stats_label_text"));
-		}
-		stat_nodes_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_nodes_lbl_text"));
-		}
-		stat_edges_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_edges_lbl_text"));
-		}
-		stat_comms_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_comms_lbl_text"));
-		}
-		stats_dist_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_stats_dist_text"));
-		}
-		card_quality_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_quality_label_text"));
-		}
-		quality_footer_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_quality_footer_text"));
-		}
-		card_energy_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_energy_label_text"));
-		}
-		energy_kwh_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_kwh_lbl_text"));
-		}
-		energy_cost_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_cost_lbl_text"));
-		}
-		energy_note_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_note_text"));
-		}
-		card_timings_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_timings_label_text"));
-		}
-		card_logs_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_logs_label_text"));
-		}
-		log_one_text_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_log_one_text_text"));
-		}
-		log_two_text_text(){
-			return (this.$.$mol_locale.text("$raggu_web_dashboard_log_two_text_text"));
-		}
-		sub(){
-			return [
-				(this.Title()), 
-				(this.Subtitle()), 
-				(this.Grid())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Title"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Subtitle"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_stats_label"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes_val"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes_lbl"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges_val"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges_lbl"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms_val"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms_lbl"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stats_row"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stats_dist"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_stats"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_quality_label"));
-	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Metric"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Metric_rows"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Quality_footer"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_quality"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_energy_label"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh_val"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh_lbl"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost_val"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost_lbl"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_row"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_note"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_energy"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_timings_label"));
-	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Stage"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Stage_rows"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_timings"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_logs_label"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_time"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_text"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_mode"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_dur"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_arrow"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_time"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_text"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_mode"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_dur"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_arrow"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_list"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_logs"));
-	($mol_mem(($.$raggu_web_dashboard.prototype), "Grid"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const METRICS = [
-            { id: 'correctness', name: 'Answer Correctness', value: '59.0', pct: '59%' },
-            { id: 'recall', name: 'Evidence Recall', value: '84.2', pct: '84%' },
-            { id: 'relevancy', name: 'Context Relevancy', value: '90.8', pct: '91%' },
-        ];
-        const STAGES = [
-            { id: 'chunking', name: 'Chunking', time: '1.2s', pct: '15%' },
-            { id: 'extraction', name: 'Extraction', time: '8.4s', pct: '70%' },
-            { id: 'summarization', name: 'Summarization', time: '3.1s', pct: '38%' },
-            { id: 'communities', name: 'Communities', time: '2.0s', pct: '26%' },
-            { id: 'refinement', name: 'Refinement', time: '0.6s', pct: '9%' },
-        ];
-        class $raggu_web_dashboard extends $.$raggu_web_dashboard {
-            metrics() { return METRICS; }
-            stages() { return STAGES; }
-            metric_rows() { return this.metrics().map(m => this.Metric(m.id)); }
-            stage_rows() { return this.stages().map(s => this.Stage(s.id)); }
-            metric(id) { return this.metrics().find(m => m.id === id) ?? METRICS[0]; }
-            stage(id) { return this.stages().find(s => s.id === id) ?? STAGES[0]; }
-            metric_name(id) { return this.metric(id).name; }
-            metric_value(id) { return this.metric(id).value; }
-            metric_pct(id) { return this.metric(id).pct; }
-            stage_name(id) { return this.stage(id).name; }
-            stage_time(id) { return this.stage(id).time; }
-            stage_pct(id) { return this.stage(id).pct; }
-        }
-        $$.$raggu_web_dashboard = $raggu_web_dashboard;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const card_label = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '11px',
-        },
-        color: $bog_builderui_tokens.shade,
-        textTransform: 'uppercase',
-        letterSpacing: '0.6px',
-    };
-    const card = {
-        background: { color: $bog_builderui_tokens.card },
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-        padding: {
-            top: '18px',
-            bottom: '18px',
-            left: '18px',
-            right: '18px',
-        },
-        flex: { direction: 'column' },
-    };
-    const stat_val = {
-        font: { weight: 800, size: '26px' },
-    };
-    const stat_lbl = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-    };
-    const log_row = {
-        flex: { direction: 'row' },
-        gap: '14px',
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '11px',
-        },
-        color: $bog_builderui_tokens.shade,
-        padding: {
-            top: '8px',
-            bottom: '8px',
-            left: '10px',
-            right: '10px',
-        },
-        background: { color: $bog_builderui_tokens.back },
-        border: { radius: '6px' },
-    };
-    const log_time = {
-        color: $bog_builderui_tokens.shade,
-    };
-    const log_text = {
-        flex: { grow: 1 },
-    };
-    const log_dur = {
-        color: '#1f8a5b',
-    };
-    $mol_style_define($raggu_web_dashboard, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        padding: {
-            top: '1.5rem',
-            bottom: '1.5rem',
-            left: '1.75rem',
-            right: '1.75rem',
-        },
-        Title: {
-            font: { weight: 700, size: '20px' },
-            margin: { bottom: '4px' },
-        },
-        Subtitle: {
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { bottom: '20px' },
-        },
-        Grid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '16px',
-            minWidth: 0,
-        },
-        Card_stats: card,
-        Card_quality: card,
-        Card_energy: card,
-        Card_timings: card,
-        Card_logs: { ...card, gridColumn: '1 / -1' },
-        Card_stats_label: card_label,
-        Card_quality_label: card_label,
-        Card_energy_label: card_label,
-        Card_timings_label: card_label,
-        Card_logs_label: card_label,
-        Stats_row: {
-            flex: { direction: 'row' },
-            gap: '22px',
-            margin: { top: '14px' },
-        },
-        Stat_nodes: { flex: { direction: 'column' } },
-        Stat_edges: { flex: { direction: 'column' } },
-        Stat_comms: { flex: { direction: 'column' } },
-        Stat_nodes_val: stat_val,
-        Stat_edges_val: stat_val,
-        Stat_comms_val: stat_val,
-        Stat_nodes_lbl: stat_lbl,
-        Stat_edges_lbl: stat_lbl,
-        Stat_comms_lbl: stat_lbl,
-        Stats_dist: {
-            margin: { top: '14px' },
-            height: '64px',
-            border: { radius: '6px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Metric_rows: { flex: { direction: 'column' } },
-        Quality_footer: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '12px' },
-        },
-        Energy_row: {
-            flex: { direction: 'row' },
-            gap: '22px',
-            margin: { top: '14px' },
-            align: { items: 'flex-end' },
-        },
-        Energy_kwh: { flex: { direction: 'column' } },
-        Energy_cost: { flex: { direction: 'column' } },
-        Energy_kwh_val: stat_val,
-        Energy_cost_val: { ...stat_val, color: '#1f8a5b' },
-        Energy_kwh_lbl: stat_lbl,
-        Energy_cost_lbl: stat_lbl,
-        Energy_note: {
-            margin: { top: '12px' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            lineHeight: '1.5',
-            background: { color: $bog_builderui_tokens.back },
-            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
-            padding: {
-                top: '9px',
-                bottom: '9px',
-                left: '9px',
-                right: '9px',
-            },
-            whiteSpace: 'pre-line',
-        },
-        Stage_rows: { flex: { direction: 'column' } },
-        Log_list: {
-            flex: { direction: 'column' },
-            gap: '6px',
-            margin: { top: '12px' },
-        },
-        Log_one: log_row,
-        Log_two: log_row,
-        Log_one_time: log_time,
-        Log_two_time: log_time,
-        Log_one_text: log_text,
-        Log_two_text: log_text,
-        Log_one_dur: log_dur,
-        Log_two_dur: log_dur,
-    });
+    $mol_style_attach("mol/pop/pop.view.css", "@keyframes mol_pop_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tborder: none;\n\tpadding: 0;\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: fixed;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: calc( 100vw - var(--mol_gap_page) );\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n\t/* Safari ios layer fix, https://t.me/mam_mol/170017 */\n\ttransform: translateZ(0);\n\tanimation: mol_pop_show .1s ease-in;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -12740,370 +9754,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_ghost) = class $mol_ghost extends ($.$mol_view) {
-		Sub(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_ghost.prototype), "Sub"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Mixin view logic to DOM node of another component.
-         */
-        class $mol_ghost extends $.$mol_ghost {
-            dom_node_external(next) {
-                return this.Sub().dom_node(next);
-            }
-            dom_node_actual() {
-                this.dom_node();
-                const node = this.Sub().dom_node_actual();
-                const attr = this.attr();
-                const style = this.style();
-                const fields = this.field();
-                $mol_dom_render_attributes(node, attr);
-                $mol_dom_render_styles(node, style);
-                $mol_dom_render_fields(node, fields);
-                return node;
-            }
-            dom_tree() {
-                const Sub = this.Sub();
-                const node = Sub.dom_tree();
-                try {
-                    this.dom_node_actual();
-                    this.auto();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
-                return node;
-            }
-            title() {
-                return this.Sub().title();
-            }
-            minimal_width() {
-                return this.Sub().minimal_width();
-            }
-            minimal_height() {
-                return this.Sub().minimal_height();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_ghost.prototype, "dom_node_actual", null);
-        $$.$mol_ghost = $mol_ghost;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_follower) = class $mol_follower extends ($.$mol_ghost) {
-		transform(){
-			return "";
-		}
-		Anchor(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		align(){
-			return [-.5, -.5];
-		}
-		offset(){
-			return [0, 0];
-		}
-		style(){
-			return {...(super.style()), "transform": (this.transform())};
-		}
-	};
-	($mol_mem(($.$mol_follower.prototype), "Anchor"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Marker on top of another component with tracking of its position.
-         */
-        class $mol_follower extends $.$mol_follower {
-            pos() {
-                const self_rect = this.view_rect();
-                const prev = $mol_wire_probe(() => this.pos());
-                const anchor_rect = this.Anchor()?.view_rect();
-                if (!anchor_rect)
-                    return null;
-                const offset = this.offset();
-                const align = this.align();
-                const left = Math.floor((prev?.left ?? 0)
-                    - (self_rect?.left ?? 0)
-                    + (self_rect?.width ?? 0) * align[0]
-                    + (anchor_rect?.left ?? 0)
-                    + offset[0] * (anchor_rect?.width ?? 0));
-                const top = Math.floor((prev?.top ?? 0)
-                    - (self_rect?.top ?? 0)
-                    + (self_rect?.height ?? 0) * align[1]
-                    + (anchor_rect?.top ?? 0)
-                    + offset[1] * (anchor_rect?.height ?? 0));
-                return { left, top };
-            }
-            transform() {
-                const pos = this.pos();
-                if (!pos)
-                    return 'scale(0)';
-                const { left, top } = pos;
-                return `translate( ${left}px, ${top}px )`;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_follower.prototype, "pos", null);
-        __decorate([
-            $mol_mem
-        ], $mol_follower.prototype, "transform", null);
-        $$.$mol_follower = $mol_follower;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/follower/follower.view.css", "[mol_follower] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\ttransition: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
-		bubble(){
-			return null;
-		}
-		Anchor(){
-			return null;
-		}
-		bubble_offset(){
-			return [0, 1];
-		}
-		bubble_align(){
-			return [0, 0];
-		}
-		bubble_content(){
-			return [];
-		}
-		height_max(){
-			return 9999;
-		}
-		Bubble(){
-			const obj = new this.$.$mol_pop_bubble();
-			(obj.content) = () => ((this.bubble_content()));
-			(obj.height_max) = () => ((this.height_max()));
-			return obj;
-		}
-		Follower(){
-			const obj = new this.$.$mol_follower();
-			(obj.offset) = () => ((this.bubble_offset()));
-			(obj.align) = () => ((this.bubble_align()));
-			(obj.Anchor) = () => ((this.Anchor()));
-			(obj.Sub) = () => ((this.Bubble()));
-			return obj;
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		align_vert(){
-			return "";
-		}
-		align_hor(){
-			return "";
-		}
-		align(){
-			return "bottom_center";
-		}
-		prefer(){
-			return "vert";
-		}
-		auto(){
-			return [(this.bubble())];
-		}
-		sub(){
-			return [(this.Anchor())];
-		}
-		sub_visible(){
-			return [(this.Anchor()), (this.Follower())];
-		}
-	};
-	($mol_mem(($.$mol_pop.prototype), "Bubble"));
-	($mol_mem(($.$mol_pop.prototype), "Follower"));
-	($mol_mem(($.$mol_pop.prototype), "showed"));
-	($.$mol_pop_bubble) = class $mol_pop_bubble extends ($.$mol_view) {
-		content(){
-			return [];
-		}
-		height_max(){
-			return 9999;
-		}
-		sub(){
-			return (this.content());
-		}
-		style(){
-			return {...(super.style()), "maxHeight": (this.height_max())};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"tabindex": 0, 
-				"popover": "manual"
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * `Bubble` that can be shown anchored to `Anchor` element.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
-         */
-        class $mol_pop extends $.$mol_pop {
-            showed(next = false) {
-                this.focused();
-                return next;
-            }
-            sub_visible() {
-                return [
-                    this.Anchor(),
-                    ...this.showed() ? [this.Follower()] : [],
-                ];
-            }
-            height_max() {
-                const viewport = this.$.$mol_window.size();
-                const rect_bubble = this.view_rect();
-                const align = this.align_vert();
-                if (align === 'bottom')
-                    return (viewport.height - rect_bubble.bottom);
-                if (align === 'top')
-                    return rect_bubble.top;
-                return 0;
-            }
-            align() {
-                switch (this.prefer()) {
-                    case 'hor': return `${this.align_hor()}_${this.align_vert()}`;
-                    case 'vert': return `${this.align_vert()}_${this.align_hor()}`;
-                    default: return this.prefer();
-                }
-            }
-            align_vert() {
-                const rect_pop = this.view_rect();
-                if (!rect_pop)
-                    return 'suspense';
-                const viewport = this.$.$mol_window.size();
-                return rect_pop.top > viewport.height / 2 ? 'top' : 'bottom';
-            }
-            align_hor() {
-                const rect_pop = this.view_rect();
-                if (!rect_pop)
-                    return 'suspense';
-                const viewport = this.$.$mol_window.size();
-                return rect_pop.left > viewport.width / 2 ? 'left' : 'right';
-            }
-            bubble_offset() {
-                const tags = new Set(this.align().split('_'));
-                if (tags.has('suspense'))
-                    return [0, 0];
-                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
-                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
-                if ([...tags][0] === hor) {
-                    return [
-                        { left: 0, center: .5, right: 1 }[hor],
-                        { top: 1, center: .5, bottom: 0 }[vert],
-                    ];
-                }
-                else {
-                    return [
-                        { left: 1, center: .5, right: 0 }[hor],
-                        { top: 0, center: .5, bottom: 1 }[vert],
-                    ];
-                }
-            }
-            bubble_align() {
-                const tags = new Set(this.align().split('_'));
-                if (tags.has('suspense'))
-                    return [-.5, -.5];
-                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
-                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
-                return [
-                    { left: -1, center: -.5, right: 0, suspense: -.5 }[hor],
-                    { top: -1, center: -.5, bottom: 0, suspense: -.5 }[vert],
-                ];
-            }
-            bubble() {
-                if (!this.showed())
-                    return;
-                this.Bubble().dom_node().showPopover?.();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "showed", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "sub_visible", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "height_max", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align_vert", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align_hor", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "bubble_offset", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "bubble_align", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "bubble", null);
-        $$.$mol_pop = $mol_pop;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/pop/pop.view.css", "@keyframes mol_pop_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tborder: none;\n\tpadding: 0;\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: fixed;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: calc( 100vw - var(--mol_gap_page) );\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n\t/* Safari ios layer fix, https://t.me/mam_mol/170017 */\n\ttransform: translateZ(0);\n\tanimation: mol_pop_show .1s ease-in;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n");
-})($ || ($ = {}));
-
-;
 	($.$mol_check) = class $mol_check extends ($.$mol_button_minor) {
 		checked(next){
 			if(next !== undefined) return next;
@@ -14934,6 +11584,7008 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("bog/builderui/theme.css", "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');\n\n:root {\n\t--bog_builderui_font_body: 'Inter', system-ui, sans-serif;\n\t--bog_builderui_font_head: 'Inter', system-ui, sans-serif;\n\t--bog_builderui_radius: 0.5rem;\n}\n\n/* ============================================================\n   RADIUS PRESETS\n   ============================================================ */\n[bog_builderui_radius=\"none\"] { --bog_builderui_radius: 0; }\n[bog_builderui_radius=\"small\"] { --bog_builderui_radius: 0.25rem; }\n[bog_builderui_radius=\"medium\"] { --bog_builderui_radius: 0.5rem; }\n[bog_builderui_radius=\"large\"] { --bog_builderui_radius: 1rem; }\n\n/* ============================================================\n   BODY FONT\n   ============================================================ */\n[bog_builderui_font_body=\"inter\"] { --bog_builderui_font_body: 'Inter', system-ui, sans-serif; }\n[bog_builderui_font_body=\"manrope\"] { --bog_builderui_font_body: 'Manrope', system-ui, sans-serif; }\n[bog_builderui_font_body=\"dm-sans\"] { --bog_builderui_font_body: 'DM Sans', system-ui, sans-serif; }\n[bog_builderui_font_body=\"eb-garamond\"] { --bog_builderui_font_body: 'EB Garamond', Georgia, serif; }\n\n/* ============================================================\n   HEADING FONT\n   ============================================================ */\n[bog_builderui_font_head=\"inter\"] { --bog_builderui_font_head: 'Inter', system-ui, sans-serif; }\n[bog_builderui_font_head=\"manrope\"] { --bog_builderui_font_head: 'Manrope', system-ui, sans-serif; }\n[bog_builderui_font_head=\"dm-sans\"] { --bog_builderui_font_head: 'DM Sans', system-ui, sans-serif; }\n[bog_builderui_font_head=\"eb-garamond\"] { --bog_builderui_font_head: 'EB Garamond', Georgia, serif; }\n\n/* ============================================================\n   BASE COLORS (neutral palette)\n   Vars: back, card, field, text, shade, line, hover\n   ============================================================ */\n\n/* === Slate (default) === */\n:root,\n[bog_builderui_base=\"slate\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #020817;\n\t--bog_builderui_card: #0f172a;\n\t--bog_builderui_field: #1e293b;\n\t--bog_builderui_text: #f8fafc;\n\t--bog_builderui_shade: #94a3b8;\n\t--bog_builderui_line: #1e293b;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"slate\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #ffffff;\n\t--bog_builderui_card: #f8fafc;\n\t--bog_builderui_field: #f1f5f9;\n\t--bog_builderui_text: #0f172a;\n\t--bog_builderui_shade: #64748b;\n\t--bog_builderui_line: #e2e8f0;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* === Stone === */\n[bog_builderui_base=\"stone\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #0c0a09;\n\t--bog_builderui_card: #1c1917;\n\t--bog_builderui_field: #292524;\n\t--bog_builderui_text: #fafaf9;\n\t--bog_builderui_shade: #a8a29e;\n\t--bog_builderui_line: #292524;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"stone\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #fafaf9;\n\t--bog_builderui_card: #ffffff;\n\t--bog_builderui_field: #f5f5f4;\n\t--bog_builderui_text: #0c0a09;\n\t--bog_builderui_shade: #78716c;\n\t--bog_builderui_line: #e7e5e4;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* === Zinc === */\n[bog_builderui_base=\"zinc\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #09090b;\n\t--bog_builderui_card: #18181b;\n\t--bog_builderui_field: #27272a;\n\t--bog_builderui_text: #fafafa;\n\t--bog_builderui_shade: #a1a1aa;\n\t--bog_builderui_line: #27272a;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"zinc\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #ffffff;\n\t--bog_builderui_card: #fafafa;\n\t--bog_builderui_field: #f4f4f5;\n\t--bog_builderui_text: #09090b;\n\t--bog_builderui_shade: #71717a;\n\t--bog_builderui_line: #e4e4e7;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* === Gray === */\n[bog_builderui_base=\"gray\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #030712;\n\t--bog_builderui_card: #111827;\n\t--bog_builderui_field: #1f2937;\n\t--bog_builderui_text: #f9fafb;\n\t--bog_builderui_shade: #9ca3af;\n\t--bog_builderui_line: #1f2937;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"gray\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #ffffff;\n\t--bog_builderui_card: #f9fafb;\n\t--bog_builderui_field: #f3f4f6;\n\t--bog_builderui_text: #030712;\n\t--bog_builderui_shade: #6b7280;\n\t--bog_builderui_line: #e5e7eb;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* ============================================================\n   ACCENT THEMES (vars: control, focus, current, special)\n   ============================================================ */\n\n:root,\n[bog_builderui_theme=\"sky\"] {\n\t--bog_builderui_control: #0ea5e9;\n\t--bog_builderui_focus: #38bdf8;\n\t--bog_builderui_current: #06b6d4;\n\t--bog_builderui_special: #6366f1;\n}\n[bog_builderui_theme=\"rose\"] {\n\t--bog_builderui_control: #f43f5e;\n\t--bog_builderui_focus: #fb7185;\n\t--bog_builderui_current: #ec4899;\n\t--bog_builderui_special: #f97316;\n}\n[bog_builderui_theme=\"violet\"] {\n\t--bog_builderui_control: #8b5cf6;\n\t--bog_builderui_focus: #a78bfa;\n\t--bog_builderui_current: #6366f1;\n\t--bog_builderui_special: #d946ef;\n}\n[bog_builderui_theme=\"emerald\"] {\n\t--bog_builderui_control: #10b981;\n\t--bog_builderui_focus: #34d399;\n\t--bog_builderui_current: #14b8a6;\n\t--bog_builderui_special: #84cc16;\n}\n[bog_builderui_theme=\"amber\"] {\n\t--bog_builderui_control: #f59e0b;\n\t--bog_builderui_focus: #fbbf24;\n\t--bog_builderui_current: #f97316;\n\t--bog_builderui_special: #eab308;\n}\n\n/* ============================================================\n   Bridge to --mol_theme_* so stock $mol components ($mol_chart,\n   $mol_button, $mol_string) pick up our palette automatically.\n   ============================================================ */\n:where([bog_builderui_lights]) {\n\t--mol_theme_back: var(--bog_builderui_back);\n\t--mol_theme_card: var(--bog_builderui_card);\n\t--mol_theme_field: var(--bog_builderui_field);\n\t--mol_theme_hover: var(--bog_builderui_hover);\n\t--mol_theme_text: var(--bog_builderui_text);\n\t--mol_theme_shade: var(--bog_builderui_shade);\n\t--mol_theme_line: var(--bog_builderui_line);\n\t--mol_theme_focus: var(--bog_builderui_focus);\n\t--mol_theme_control: var(--bog_builderui_control);\n\t--mol_theme_current: var(--bog_builderui_current);\n\t--mol_theme_special: var(--bog_builderui_special);\n}\n\n/* ============================================================\n   CHART COLOR — independent accent for the chart bar/line\n   ============================================================ */\n:root,\n[bog_builderui_chart=\"blue\"] { --bog_builderui_chart: #3b82f6; }\n[bog_builderui_chart=\"green\"] { --bog_builderui_chart: #10b981; }\n[bog_builderui_chart=\"red\"] { --bog_builderui_chart: #ef4444; }\n[bog_builderui_chart=\"yellow\"] { --bog_builderui_chart: #eab308; }\n[bog_builderui_chart=\"purple\"] { --bog_builderui_chart: #a855f7; }\n\n/* ============================================================\n   Popover for $bog_builderui_select (style the $mol_pop bubble\n   when it sits inside our scope or carries our marker)\n   ============================================================ */\n[bog_builderui_lights] [mol_pop_bubble],\n[bog_builderui_pop] {\n\tbackground-color: var(--bog_builderui_card);\n\tborder: 1px solid var(--bog_builderui_line);\n\tborder-radius: var(--bog_builderui_radius);\n\tbox-shadow: 0 10px 30px #00000059;\n\tpadding: 0.375rem;\n\tgap: 0.125rem;\n\tmin-width: 14rem;\n\toverflow: hidden;\n}\n\n[bog_builderui_lights] [mol_select_filter] {\n\tdisplay: none;\n}\n\n[bog_builderui_lights] [mol_select_option_row] {\n\tborder-radius: calc(var(--bog_builderui_radius) - 2px);\n\tpadding: 0.5rem 0.75rem;\n\tcolor: var(--bog_builderui_text);\n\tfont-family: var(--bog_builderui_font_body);\n\tfont-size: 0.9rem;\n\tbackground-color: transparent;\n}\n\n[bog_builderui_lights] [mol_select_option_row]:hover {\n\tbackground-color: var(--bog_builderui_hover);\n}\n\n[bog_builderui_lights] [mol_select_option_label] {\n\tpadding: 0;\n\tcolor: inherit;\n}\n\n[bog_builderui_lights] [mol_select_no_options] {\n\tcolor: var(--bog_builderui_shade);\n\tpadding: 0.5rem 0.75rem;\n}\n\n[bog_builderui_lights] [bog_builderui_select] [mol_select_trigger] {\n\tgap: 0.5rem;\n\tpadding: 0 0.25rem 0 0;\n}\n[bog_builderui_lights] [bog_builderui_select] [mol_select_trigger] > * {\n\tmargin-right: 0;\n}\n\n/* ============================================================\n   Skeleton — any $mol_view in pending state gets a pulsing surface\n   ============================================================ */\n@keyframes bog_builderui_skeleton_pulse {\n\t0%, 100% { opacity: 1; }\n\t50% { opacity: 0.5; }\n}\n\n[bog_builderui_lights] [mol_view][mol_view_error=\"Promise\"],\n[bog_builderui_lights] [mol_view][mol_view_error=\"$mol_promise_blocker\"] {\n\tborder-radius: var(--bog_builderui_radius);\n\tbackground-color: var(--bog_builderui_field);\n\tcolor: transparent;\n\tanimation: bog_builderui_skeleton_pulse 1.6s ease-in-out infinite;\n}\n\n/* ============================================================\n   Tooltip surface\n   ============================================================ */\n[bog_builderui_lights] [bog_builderui_tooltip] [mol_pop_bubble] {\n\tbackground-color: var(--bog_builderui_text);\n\tcolor: var(--bog_builderui_back);\n\tborder: none;\n\tborder-radius: calc(var(--bog_builderui_radius) - 2px);\n\tpadding: 0.375rem 0.625rem;\n\tfont-family: var(--bog_builderui_font_body);\n\tfont-size: 0.8rem;\n\tbox-shadow: 0 4px 12px #0000004d;\n\tmin-width: 0;\n}\n\n");
+})($ || ($ = {}));
+
+;
+	($.$bog_builderui_menu) = class $bog_builderui_menu extends ($.$bog_builderui_card) {
+		items(){
+			return [];
+		}
+		sub(){
+			return (this.items());
+		}
+	};
+	($.$bog_builderui_menu_item) = class $bog_builderui_menu_item extends ($.$mol_button_minor) {};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($bog_builderui_menu, {
+        padding: {
+            top: '0.375rem',
+            bottom: '0.375rem',
+            left: '0.375rem',
+            right: '0.375rem',
+        },
+        gap: '0.125rem',
+        flex: {
+            direction: 'column',
+            grow: 0,
+            shrink: 0,
+        },
+        align: {
+            self: 'stretch',
+        },
+        minWidth: 0,
+        maxWidth: 'none',
+        box: {
+            shadow: [{
+                    x: 0,
+                    y: 0,
+                    blur: 0,
+                    spread: 0,
+                    color: 'transparent',
+                }],
+        },
+    });
+    $mol_style_define($bog_builderui_menu_item, {
+        justify: {
+            content: 'flex-start',
+        },
+        padding: {
+            top: '0.5rem',
+            bottom: '0.5rem',
+            left: '0.75rem',
+            right: '0.75rem',
+        },
+        border: {
+            radius: $bog_builderui_tokens.radius,
+            width: 0,
+        },
+        background: {
+            color: 'transparent',
+        },
+        color: $bog_builderui_tokens.text,
+        font: {
+            family: $bog_builderui_tokens.font_body,
+            size: '0.9rem',
+        },
+        flex: {
+            grow: 0,
+            shrink: 0,
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_export) = class $raggu_web_export extends ($.$mol_pop) {
+		toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		items(){
+			return [];
+		}
+		Menu(){
+			const obj = new this.$.$bog_builderui_menu();
+			(obj.items) = () => ((this.items()));
+			return obj;
+		}
+		item_label(id){
+			return "";
+		}
+		item_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		screen(){
+			return "gallery";
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		align(){
+			return "bottom_right";
+		}
+		export_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_export_export_btn_text"));
+		}
+		empty_text(){
+			return (this.$.$mol_locale.text("$raggu_web_export_empty_text"));
+		}
+		Anchor(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.toggle(next))});
+			(obj.sub) = () => ([(this.export_btn_text())]);
+			return obj;
+		}
+		bubble_content(){
+			return [(this.Menu())];
+		}
+		Item(id){
+			const obj = new this.$.$bog_builderui_menu_item();
+			(obj.title) = () => ((this.item_label(id)));
+			(obj.click) = (next) => ((this.item_click(id, next)));
+			return obj;
+		}
+		Empty(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.empty_text())]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$raggu_web_export.prototype), "toggle"));
+	($mol_mem(($.$raggu_web_export.prototype), "Menu"));
+	($mol_mem_key(($.$raggu_web_export.prototype), "item_click"));
+	($mol_mem(($.$raggu_web_export.prototype), "showed"));
+	($mol_mem(($.$raggu_web_export.prototype), "Anchor"));
+	($mol_mem_key(($.$raggu_web_export.prototype), "Item"));
+	($mol_mem(($.$raggu_web_export.prototype), "Empty"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_export, {
+        Anchor: {
+            display: 'flex',
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '6px',
+            background: { color: '#5b5bd6' },
+            color: $bog_builderui_tokens.card,
+            border: { radius: '7px' },
+            padding: {
+                top: '7px',
+                bottom: '7px',
+                left: '12px',
+                right: '12px',
+            },
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+            userSelect: 'none',
+        },
+        Menu: {
+            minWidth: '200px',
+            background: { color: $bog_builderui_tokens.card },
+            border: {
+                width: '1px',
+                style: 'solid',
+                color: $bog_builderui_tokens.line,
+                radius: $bog_builderui_tokens.radius,
+            },
+            box: {
+                shadow: [{
+                        x: 0,
+                        y: '4px',
+                        blur: '16px',
+                        spread: 0,
+                        color: '#0000001a',
+                    }],
+            },
+        },
+        Empty: {
+            padding: {
+                top: '0.5rem',
+                bottom: '0.5rem',
+                left: '0.75rem',
+                right: '0.75rem',
+            },
+            color: $bog_builderui_tokens.shade,
+            font: {
+                family: $bog_builderui_tokens.font_body,
+                size: '0.85rem',
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const FORMATS = {
+            explorer: [
+                { id: 'graphml', label_key: '$raggu_web_export_fmt_graphml', fallback: 'GraphML (.xml)', ext: 'xml', mime: 'application/xml' },
+                { id: 'gexf', label_key: '$raggu_web_export_fmt_gexf', fallback: 'GEXF (.gexf)', ext: 'gexf', mime: 'application/xml' },
+                { id: 'json_graph', label_key: '$raggu_web_export_fmt_json_graph', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
+                { id: 'png_graph', label_key: '$raggu_web_export_fmt_png_graph', fallback: 'PNG (.png)', ext: 'png', mime: 'image/png' },
+            ],
+            chat: [
+                { id: 'md_chat', label_key: '$raggu_web_export_fmt_md_chat', fallback: 'Markdown (.md)', ext: 'md', mime: 'text/markdown' },
+                { id: 'json_chat', label_key: '$raggu_web_export_fmt_json_chat', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
+            ],
+            dashboard: [
+                { id: 'csv_dash', label_key: '$raggu_web_export_fmt_csv_dash', fallback: 'CSV (.csv)', ext: 'csv', mime: 'text/csv' },
+                { id: 'json_dash', label_key: '$raggu_web_export_fmt_json_dash', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
+            ],
+            gallery: [],
+        };
+        const GRAPH_NODES = [
+            { id: 'n1', label: 'Bjørnstjerne Bjørnson', type: 'PERSON' },
+            { id: 'n2', label: 'Norwegian anthem', type: 'WORK_OF_ART' },
+            { id: 'n3', label: '1859', type: 'DATE' },
+            { id: 'n4', label: 'Nobel Prize', type: 'EVENT' },
+            { id: 'n5', label: 'Kvikne, Norway', type: 'LOCATION' },
+            { id: 'n6', label: 'Henrik Ibsen', type: 'PERSON' },
+            { id: 'n7', label: 'Det Norske Theater', type: 'ORGANIZATION' },
+            { id: 'n8', label: 'Romantic Nationalism', type: 'EVENT' },
+        ];
+        const GRAPH_EDGES = [
+            { source: 'n1', target: 'n2', type: 'AUTHORED', weight: 0.95 },
+            { source: 'n2', target: 'n3', type: 'YEAR', weight: 0.9 },
+            { source: 'n1', target: 'n4', type: 'AWARDED_WITH', weight: 0.8 },
+            { source: 'n1', target: 'n5', type: 'PLACE_OF_BIRTH', weight: 0.7 },
+            { source: 'n1', target: 'n6', type: 'CONTEMPORARY_OF', weight: 0.6 },
+            { source: 'n1', target: 'n7', type: 'AFFILIATED_WITH', weight: 0.5 },
+            { source: 'n1', target: 'n8', type: 'PART_OF', weight: 0.65 },
+            { source: 'n6', target: 'n7', type: 'AFFILIATED_WITH', weight: 0.55 },
+        ];
+        function xml_escape(s) {
+            return s.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&apos;');
+        }
+        function to_graphml() {
+            const nodes = GRAPH_NODES.map(n => `    <node id="${xml_escape(n.id)}"><data key="label">${xml_escape(n.label)}</data><data key="type">${xml_escape(n.type)}</data></node>`).join('\n');
+            const edges = GRAPH_EDGES.map((e, i) => `    <edge id="e${i}" source="${xml_escape(e.source)}" target="${xml_escape(e.target)}"><data key="rel">${xml_escape(e.type)}</data><data key="weight">${e.weight}</data></edge>`).join('\n');
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="label" for="node" attr.name="label" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="rel" for="edge" attr.name="rel" attr.type="string"/>
+  <key id="weight" for="edge" attr.name="weight" attr.type="double"/>
+  <graph id="G" edgedefault="directed">
+${nodes}
+${edges}
+  </graph>
+</graphml>`;
+        }
+        function to_gexf() {
+            const nodes = GRAPH_NODES.map(n => `      <node id="${xml_escape(n.id)}" label="${xml_escape(n.label)}"><attvalues><attvalue for="0" value="${xml_escape(n.type)}"/></attvalues></node>`).join('\n');
+            const edges = GRAPH_EDGES.map((e, i) => `      <edge id="${i}" source="${xml_escape(e.source)}" target="${xml_escape(e.target)}" weight="${e.weight}" label="${xml_escape(e.type)}"/>`).join('\n');
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.3" version="1.3">
+  <graph mode="static" defaultedgetype="directed">
+    <attributes class="node">
+      <attribute id="0" title="type" type="string"/>
+    </attributes>
+    <nodes>
+${nodes}
+    </nodes>
+    <edges>
+${edges}
+    </edges>
+  </graph>
+</gexf>`;
+        }
+        function to_json_graph() {
+            return JSON.stringify({ nodes: GRAPH_NODES, edges: GRAPH_EDGES }, null, '\t');
+        }
+        // Stub PNG: 1x1 transparent pixel. Real graph rasterization is future work.
+        function to_png_stub() {
+            const bytes = new Uint8Array([
+                0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
+                0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
+                0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
+                0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
+                0x89, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x44, 0x41,
+                0x54, 0x78, 0x9c, 0x63, 0x00, 0x01, 0x00, 0x00,
+                0x05, 0x00, 0x01, 0x0d, 0x0a, 0x2d, 0xb4, 0x00,
+                0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae,
+                0x42, 0x60, 0x82,
+            ]);
+            return new Blob([bytes], { type: 'image/png' });
+        }
+        const CHAT = {
+            question: 'Who wrote the Norwegian anthem and when?',
+            answer: 'The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859.',
+            trace: {
+                mode: 'LocalSearch',
+                top_k: 8,
+                rerank: true,
+                entities: ['Bjørnson', 'Norwegian anthem', '1859'],
+                chunks: 3,
+                communities: 1,
+                retrieval_ms: 140,
+                gen_s: 1.2,
+                power_wh: 0.4,
+            },
+        };
+        function to_md_chat() {
+            const t = CHAT.trace;
+            return `# Chat export
+
+## Q
+${CHAT.question}
+
+## A
+${CHAT.answer}
+
+## Trace
+- mode: ${t.mode}
+- top-k: ${t.top_k}
+- rerank: ${t.rerank ? 'yes' : 'no'}
+- entities: ${t.entities.join(', ')}
+- chunks: ${t.chunks}
+- communities: ${t.communities}
+- retrieval: ${t.retrieval_ms} ms
+- generation: ${t.gen_s} s
+- power: ~${t.power_wh} Wh
+`;
+        }
+        function to_json_chat() {
+            return JSON.stringify(CHAT, null, '\t');
+        }
+        const METRICS = [
+            { id: 'correctness', name: 'Answer Correctness', value: '59.0', pct: '59%' },
+            { id: 'recall', name: 'Evidence Recall', value: '84.2', pct: '84%' },
+            { id: 'relevancy', name: 'Context Relevancy', value: '90.8', pct: '91%' },
+        ];
+        const STAGES = [
+            { id: 'chunking', name: 'Chunking', time: '1.2s', pct: '15%' },
+            { id: 'extraction', name: 'Extraction', time: '8.4s', pct: '70%' },
+            { id: 'summarization', name: 'Summarization', time: '3.1s', pct: '38%' },
+            { id: 'communities', name: 'Communities', time: '2.0s', pct: '26%' },
+            { id: 'refinement', name: 'Refinement', time: '0.6s', pct: '9%' },
+        ];
+        function csv_field(s) {
+            const needs = /[",\n]/.test(s);
+            const esc = s.replace(/"/g, '""');
+            return needs ? `"${esc}"` : esc;
+        }
+        function to_csv_dash() {
+            const lines = [];
+            lines.push(['section', 'id', 'name', 'value', 'pct'].join(','));
+            for (const m of METRICS) {
+                lines.push(['metric', m.id, m.name, m.value, m.pct].map(csv_field).join(','));
+            }
+            for (const s of STAGES) {
+                lines.push(['stage', s.id, s.name, s.time, s.pct].map(csv_field).join(','));
+            }
+            return lines.join('\n') + '\n';
+        }
+        function to_json_dash() {
+            return JSON.stringify({ metrics: METRICS, stages: STAGES }, null, '\t');
+        }
+        class $raggu_web_export extends $.$raggu_web_export {
+            toggle() {
+                this.showed(!this.showed());
+                return null;
+            }
+            formats() {
+                return FORMATS[this.screen()] ?? [];
+            }
+            items() {
+                const list = this.formats();
+                if (!list.length)
+                    return [this.Empty()];
+                return list.map((_, i) => this.Item(i));
+            }
+            format_at(i) {
+                return this.formats()[i];
+            }
+            item_label(i) {
+                const f = this.format_at(i);
+                if (!f)
+                    return '';
+                return this.$.$mol_locale.text(f.label_key) || f.fallback;
+            }
+            item_click(i) {
+                const f = this.format_at(i);
+                if (!f)
+                    return null;
+                this.download(f);
+                this.showed(false);
+                return null;
+            }
+            filename(f) {
+                const stamp = new Date().toISOString().slice(0, 10);
+                return `raggu-${this.screen()}-${stamp}.${f.ext}`;
+            }
+            payload(id) {
+                switch (id) {
+                    case 'graphml': return new Blob([to_graphml()], { type: 'application/xml' });
+                    case 'gexf': return new Blob([to_gexf()], { type: 'application/xml' });
+                    case 'json_graph': return new Blob([to_json_graph()], { type: 'application/json' });
+                    case 'png_graph': return to_png_stub();
+                    case 'md_chat': return new Blob([to_md_chat()], { type: 'text/markdown' });
+                    case 'json_chat': return new Blob([to_json_chat()], { type: 'application/json' });
+                    case 'csv_dash': return new Blob([to_csv_dash()], { type: 'text/csv' });
+                    case 'json_dash': return new Blob([to_json_dash()], { type: 'application/json' });
+                }
+            }
+            download(f) {
+                const blob = this.payload(f.id);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = this.filename(f);
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_export.prototype, "toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_export.prototype, "item_click", null);
+        $$.$raggu_web_export = $raggu_web_export;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_topbar) = class $raggu_web_topbar extends ($.$bog_builderui_div) {
+		screen_title(){
+			return "";
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.screen_title())]);
+			return obj;
+		}
+		dataset_name(){
+			return "";
+		}
+		Subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.dataset_name())]);
+			return obj;
+		}
+		Title_block(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Title()), (this.Subtitle())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Preset_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.preset_label_text())]);
+			return obj;
+		}
+		is_fast(){
+			return false;
+		}
+		click_fast(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preset_fast(){
+			const obj = new this.$.$raggu_web_topbar_preset();
+			(obj.label) = () => ((this.preset_fast_label()));
+			(obj.active) = () => ((this.is_fast()));
+			(obj.click) = (next) => ((this.click_fast(next)));
+			return obj;
+		}
+		is_accurate(){
+			return false;
+		}
+		click_accurate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preset_accurate(){
+			const obj = new this.$.$raggu_web_topbar_preset();
+			(obj.label) = () => ((this.preset_accurate_label()));
+			(obj.active) = () => ((this.is_accurate()));
+			(obj.click) = (next) => ((this.click_accurate(next)));
+			return obj;
+		}
+		is_demo(){
+			return false;
+		}
+		click_demo(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preset_demo(){
+			const obj = new this.$.$raggu_web_topbar_preset();
+			(obj.label) = () => ((this.preset_demo_label()));
+			(obj.active) = () => ((this.is_demo()));
+			(obj.click) = (next) => ((this.click_demo(next)));
+			return obj;
+		}
+		Preset_group(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Preset_fast()), 
+				(this.Preset_accurate()), 
+				(this.Preset_demo())
+			]);
+			return obj;
+		}
+		open_settings(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Settings_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.open_settings(next))});
+			(obj.sub) = () => ([(this.settings_btn_text())]);
+			return obj;
+		}
+		Export(){
+			const obj = new this.$.$raggu_web_export();
+			(obj.screen) = () => ((this.screen()));
+			return obj;
+		}
+		screen(){
+			return "gallery";
+		}
+		dataset_id(){
+			return "wiki";
+		}
+		preset(next){
+			if(next !== undefined) return next;
+			return "demo";
+		}
+		preset_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_label_text"));
+		}
+		settings_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_settings_btn_text"));
+		}
+		preset_fast_label(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_fast_label"));
+		}
+		preset_accurate_label(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_accurate_label"));
+		}
+		preset_demo_label(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_demo_label"));
+		}
+		sub(){
+			return [
+				(this.Title_block()), 
+				(this.Spacer()), 
+				(this.Preset_label()), 
+				(this.Preset_group()), 
+				(this.Settings_btn()), 
+				(this.Export())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_topbar.prototype), "Title"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Subtitle"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Title_block"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_label"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "click_fast"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_fast"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "click_accurate"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_accurate"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "click_demo"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_demo"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_group"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "open_settings"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Settings_btn"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Export"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "preset"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_topbar extends $.$raggu_web_topbar {
+            screen_title() {
+                return this.$.$mol_locale.text(`$raggu_web_app_screen_${this.screen()}_title`) || '';
+            }
+            dataset_name() {
+                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${this.dataset_id()}_title`) || '';
+            }
+            is_fast() { return this.preset() === 'fast'; }
+            is_accurate() { return this.preset() === 'accurate'; }
+            is_demo() { return this.preset() === 'demo'; }
+            click_fast() { this.preset('fast'); return null; }
+            click_accurate() { this.preset('accurate'); return null; }
+            click_demo() { this.preset('demo'); return null; }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_topbar.prototype, "click_fast", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_topbar.prototype, "click_accurate", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_topbar.prototype, "click_demo", null);
+        $$.$raggu_web_topbar = $raggu_web_topbar;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_topbar, {
+        height: '58px',
+        minHeight: '58px',
+        background: { color: $bog_builderui_tokens.card },
+        border: {
+            bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+        },
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '0.875rem',
+        padding: {
+            left: '1.25rem',
+            right: '1.25rem',
+        },
+        Title_block: {
+            flex: { direction: 'column' },
+        },
+        Title: {
+            font: { weight: 700, size: '15px' },
+        },
+        Subtitle: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Preset_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+        },
+        Preset_group: {
+            flex: { direction: 'row' },
+            gap: '0.25rem',
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '3px',
+                bottom: '3px',
+                left: '3px',
+                right: '3px',
+            },
+        },
+        Settings_btn: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '6px',
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '7px',
+                bottom: '7px',
+                left: '12px',
+                right: '12px',
+            },
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_builderui_button) = class $bog_builderui_button extends ($.$mol_button_minor) {
+		minimal_height(){
+			return 32;
+		}
+		minimal_width(){
+			return 0;
+		}
+		variant(){
+			return "default";
+		}
+		attr(){
+			return {...(super.attr()), "bog_builderui_button_variant": (this.variant())};
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/builderui/button/button.view.css", "[bog_builderui_button][bog_builderui_button_variant=\"secondary\"] {\n\tbackground-color: var(--bog_builderui_field);\n\tcolor: var(--bog_builderui_text);\n\tborder: 1px solid var(--bog_builderui_line);\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"outline\"] {\n\tbackground-color: transparent;\n\tcolor: var(--bog_builderui_text);\n\tborder: 1px solid var(--bog_builderui_line);\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"ghost\"] {\n\tbackground-color: transparent;\n\tcolor: var(--bog_builderui_text);\n\tborder: 0;\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"destructive\"] {\n\tbackground-color: var(--bog_builderui_special);\n\tcolor: var(--bog_builderui_back);\n\tborder: 0;\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"secondary\"]:hover,\n[bog_builderui_button][bog_builderui_button_variant=\"outline\"]:hover,\n[bog_builderui_button][bog_builderui_button_variant=\"ghost\"]:hover {\n\tbackground-color: var(--bog_builderui_hover);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($bog_builderui_button, {
+        font: {
+            family: $bog_builderui_tokens.font_body,
+            weight: 500,
+        },
+        color: $bog_builderui_tokens.back,
+        background: {
+            color: $bog_builderui_tokens.control,
+        },
+        border: {
+            radius: $bog_builderui_tokens.radius,
+            width: 0,
+        },
+        padding: {
+            top: '0.5rem',
+            bottom: '0.5rem',
+            left: '1rem',
+            right: '1rem',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_settings_group) = class $raggu_web_settings_group extends ($.$bog_builderui_div) {
+		Step(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.step())]);
+			return obj;
+		}
+		Reindex(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({"raggu_web_settings_group_reindex": (this.reindex())});
+			(obj.sub) = () => ([(this.reindex_text())]);
+			return obj;
+		}
+		Head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Step()), (this.Reindex())]);
+			return obj;
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		Opts(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.opts())]);
+			return obj;
+		}
+		Controls(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.controls()));
+			return obj;
+		}
+		step(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		opts(){
+			return "";
+		}
+		controls(){
+			return [];
+		}
+		reindex(){
+			return true;
+		}
+		reindex_text(){
+			return (this.$.$mol_locale.text("$raggu_web_settings_group_reindex_text"));
+		}
+		sub(){
+			return [
+				(this.Head()), 
+				(this.Title()), 
+				(this.Opts()), 
+				(this.Controls())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Step"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Reindex"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Head"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Title"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Opts"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Controls"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_settings_group, {
+        flex: { direction: 'column' },
+        Head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+        },
+        Step: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 700,
+                size: '10px',
+            },
+            color: '#5b5bd6',
+            textTransform: 'uppercase',
+            letterSpacing: '0.6px',
+        },
+        Reindex: {
+            background: { color: '#fdf0e6' },
+            color: '#c2691a',
+            border: { radius: '4px' },
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '6px',
+                right: '6px',
+            },
+            font: { size: '9px', weight: 600 },
+            display: 'none',
+            '@': {
+                raggu_web_settings_group_reindex: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        Title: {
+            font: { weight: 600, size: '13px' },
+            margin: { top: '5px' },
+        },
+        Opts: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            lineHeight: '1.5',
+            margin: { top: '4px' },
+        },
+        Controls: {
+            margin: { top: '8px' },
+            flex: { direction: 'column' },
+            gap: '8px',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
+		path(){
+			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
+		Icon(){
+			const obj = new this.$.$mol_icon_tick();
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_check_box.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$rise_range) = class $rise_range extends ($.$mol_view) {
+		label_min(){
+			return "";
+		}
+		Min(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label_min())]);
+			return obj;
+		}
+		label_medium(){
+			return "";
+		}
+		Medium(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label_medium())]);
+			return obj;
+		}
+		label_max(){
+			return "";
+		}
+		Max(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label_max())]);
+			return obj;
+		}
+		Labels(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Min()), 
+				(this.Medium()), 
+				(this.Max())
+			]);
+			return obj;
+		}
+		disabled(){
+			return false;
+		}
+		min(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		max(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		step(next){
+			if(next !== undefined) return next;
+			return 1;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		event_input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Input(){
+			const obj = new this.$.$rise_range_input();
+			(obj.disabled) = () => ((this.disabled()));
+			(obj.min) = () => ((this.min()));
+			(obj.max) = () => ((this.max()));
+			(obj.step) = () => ((this.step()));
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.event_input) = (next) => ((this.event_input(next)));
+			return obj;
+		}
+		Value(){
+			const obj = new this.$.$rise_range_value();
+			(obj.sub) = () => ([(this.value())]);
+			(obj.disabled) = () => ((this.disabled()));
+			return obj;
+		}
+		Current(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Value())]);
+			return obj;
+		}
+		percent(){
+			return "0%";
+		}
+		minimal_height(){
+			return 48;
+		}
+		unit(){
+			return "";
+		}
+		medium(next){
+			if(next !== undefined) return next;
+			return 5;
+		}
+		enabled(){
+			return true;
+		}
+		sub(){
+			return [
+				(this.Labels()), 
+				(this.Input()), 
+				(this.Current())
+			];
+		}
+		attr(){
+			return {...(super.attr()), "disabled": (this.disabled())};
+		}
+		style(){
+			return {...(super.style()), "--rise_range_percent": (this.percent())};
+		}
+	};
+	($mol_mem(($.$rise_range.prototype), "Min"));
+	($mol_mem(($.$rise_range.prototype), "Medium"));
+	($mol_mem(($.$rise_range.prototype), "Max"));
+	($mol_mem(($.$rise_range.prototype), "Labels"));
+	($mol_mem(($.$rise_range.prototype), "min"));
+	($mol_mem(($.$rise_range.prototype), "max"));
+	($mol_mem(($.$rise_range.prototype), "step"));
+	($mol_mem(($.$rise_range.prototype), "value"));
+	($mol_mem(($.$rise_range.prototype), "event_input"));
+	($mol_mem(($.$rise_range.prototype), "Input"));
+	($mol_mem(($.$rise_range.prototype), "Value"));
+	($mol_mem(($.$rise_range.prototype), "Current"));
+	($mol_mem(($.$rise_range.prototype), "medium"));
+	($.$rise_range_input) = class $rise_range_input extends ($.$mol_view) {
+		disabled(){
+			return false;
+		}
+		min(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		max(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		step(next){
+			if(next !== undefined) return next;
+			return 1;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		event_input(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"type": "range", 
+				"disabled": (this.disabled())
+			};
+		}
+		field(){
+			return {
+				...(super.field()), 
+				"min": (this.min()), 
+				"max": (this.max()), 
+				"step": (this.step()), 
+				"value": (this.value())
+			};
+		}
+		event(){
+			return {...(super.event()), "input": (next) => (this.event_input(next))};
+		}
+	};
+	($mol_mem(($.$rise_range_input.prototype), "min"));
+	($mol_mem(($.$rise_range_input.prototype), "max"));
+	($mol_mem(($.$rise_range_input.prototype), "step"));
+	($mol_mem(($.$rise_range_input.prototype), "value"));
+	($mol_mem(($.$rise_range_input.prototype), "event_input"));
+	($.$rise_range_value) = class $rise_range_value extends ($.$mol_view) {
+		disabled(){
+			return false;
+		}
+		attr(){
+			return {...(super.attr()), "disabled": (this.disabled())};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $rise_range extends $.$rise_range {
+            event_input(event) {
+                const el = event.target;
+                this.value(Number(el.value));
+            }
+            medium() {
+                return Math.round((this.min() + this.max()) / 2);
+            }
+            label_min() {
+                return this.min() + ' ' + this.unit();
+            }
+            label_max() {
+                return this.max() + ' ' + this.unit();
+            }
+            label_medium() {
+                return this.medium() + ' ' + this.unit();
+            }
+            percent() {
+                const val = this.value() - this.min();
+                const range = this.max() - this.min();
+                return (val / range) * 100 + '%';
+            }
+            disabled() {
+                return !this.enabled();
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $rise_range.prototype, "event_input", null);
+        $$.$rise_range = $rise_range;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Thumb_size = $mol_gap.block;
+        const Track_height = $mol_gap.space;
+        const Track_margin = $mol_gap.block; // expands vertical clickable area
+        $mol_style_define($rise_range, {
+            flex: {
+                grow: 1,
+                direction: 'column',
+            },
+            padding: {
+                top: $mol_gap.space,
+                bottom: $mol_gap.space,
+            },
+            Labels: {
+                pointerEvents: 'none',
+                left: 0,
+                right: 0,
+                justify: {
+                    content: 'space-between',
+                },
+            },
+            Current: {
+                pointerEvents: 'none',
+                position: 'relative',
+                height: '1.5rem',
+                margin: {
+                    left: $mol_style_func.calc(`${Thumb_size} / 2`),
+                    right: $mol_style_func.calc(`${Thumb_size} / 2`),
+                },
+            },
+            '[disabled]': {
+                'true': {
+                    Value: {
+                        color: $mol_theme.shade,
+                    },
+                },
+            },
+            Value: {
+                position: 'absolute',
+                left: $mol_style_func.vary('--rise_range_percent'),
+                transform: 'translateX(-50%)',
+                color: $mol_theme.current,
+            },
+        });
+        const Track = {
+            height: Track_height,
+            border: {
+                radius: $mol_gap.round,
+            },
+            background: {
+                color: $mol_theme.line,
+            },
+        };
+        const Thumb = {
+            height: Thumb_size,
+            width: Thumb_size,
+            margin: {
+                top: $mol_style_func.calc(`(${Track_height} - ${Thumb_size}) / 2`),
+            },
+            appearance: 'none',
+            border: {
+                radius: '50%',
+            },
+            background: {
+                color: $mol_theme.current,
+            },
+        };
+        $mol_style_define($rise_range_input, {
+            height: $mol_style_func.calc(`${Thumb_size} + 2 * ${Track_margin}`),
+            margin: {
+                top: $mol_style_func.calc(`-1 * ${Track_margin} / 2 - var(--mol_gap_space)`),
+                bottom: $mol_style_func.calc(`-1 * ${Track_margin} / 2`),
+                left: 0,
+                right: 0,
+            },
+            '::-webkit-slider-runnable-track': Track,
+            ['::-moz-range-track']: Track,
+            '::-webkit-slider-thumb': Thumb,
+            ['::-moz-range-thumb']: Thumb,
+            appearance: 'none',
+            background: {
+                color: 'transparent',
+            },
+            cursor: 'pointer',
+            ':disabled': {
+                cursor: 'default',
+                '::-webkit-slider-thumb': {
+                    background: {
+                        color: $mol_theme.shade,
+                    },
+                },
+                ['::-moz-range-thumb']: {
+                    background: {
+                        color: $mol_theme.shade,
+                    },
+                },
+            },
+            ':focus': {
+                outline: 'none',
+            },
+        });
+        $mol_style_define($rise_range_value, {
+            '[disabled]': {
+                'true': {
+                    color: $mol_theme.shade,
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_builderui_slider) = class $bog_builderui_slider extends ($.$rise_range) {};
+
+
+;
+"use strict";
+
+
+;
+	($.$raggu_web_settings) = class $raggu_web_settings extends ($.$bog_builderui_div) {
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Backdrop(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			return obj;
+		}
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["Настройки движка RAGU"]);
+			return obj;
+		}
+		Header_sub(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["пресет + ручной режим"]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_title()), (this.Header_sub())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Close_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			(obj.sub) = () => (["✕"]);
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Header_text()), 
+				(this.Spacer()), 
+				(this.Close_btn())
+			]);
+			return obj;
+		}
+		preset_fast(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preset_fast(){
+			const obj = new this.$.$bog_builderui_button();
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Preset_fast_title")));
+			(obj.click) = (next) => ((this.preset_fast(next)));
+			return obj;
+		}
+		preset_accurate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preset_accurate(){
+			const obj = new this.$.$bog_builderui_button();
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Preset_accurate_title")));
+			(obj.click) = (next) => ((this.preset_accurate(next)));
+			return obj;
+		}
+		preset_demo(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preset_demo(){
+			const obj = new this.$.$bog_builderui_button();
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Preset_demo_title")));
+			(obj.click) = (next) => ((this.preset_demo(next)));
+			return obj;
+		}
+		Presets(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Preset_fast()), 
+				(this.Preset_accurate()), 
+				(this.Preset_demo())
+			]);
+			return obj;
+		}
+		chunking_strategy(next){
+			if(next !== undefined) return next;
+			return "SmartSemantic";
+		}
+		Chunking_strategy(){
+			const obj = new this.$.$bog_builderui_select();
+			(obj.value) = (next) => ((this.chunking_strategy(next)));
+			(obj.dictionary) = () => ({
+				"Simple": "Simple", 
+				"SemanticText": "SemanticText", 
+				"SmartSemantic": "SmartSemantic"
+			});
+			return obj;
+		}
+		chunking_size_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_settings_chunking_size_label_text"));
+		}
+		Chunking_size_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.chunking_size_label_text())]);
+			return obj;
+		}
+		chunking_size_str(next){
+			if(next !== undefined) return next;
+			return "512";
+		}
+		Chunking_size_input(){
+			const obj = new this.$.$bog_builderui_field();
+			(obj.type) = () => ("number");
+			(obj.value) = (next) => ((this.chunking_size_str(next)));
+			return obj;
+		}
+		Chunking_size_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Chunking_size_label()), (this.Chunking_size_input())]);
+			return obj;
+		}
+		chunking_overlap_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_settings_chunking_overlap_label_text"));
+		}
+		Chunking_overlap_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.chunking_overlap_label_text())]);
+			return obj;
+		}
+		chunking_overlap_str(next){
+			if(next !== undefined) return next;
+			return "64";
+		}
+		Chunking_overlap_input(){
+			const obj = new this.$.$bog_builderui_field();
+			(obj.type) = () => ("number");
+			(obj.value) = (next) => ((this.chunking_overlap_str(next)));
+			return obj;
+		}
+		Chunking_overlap_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Chunking_overlap_label()), (this.Chunking_overlap_input())]);
+			return obj;
+		}
+		Group_chunking(){
+			const obj = new this.$.$raggu_web_settings_group();
+			(obj.step) = () => ("Шаг 1");
+			(obj.title) = () => ("Chunking");
+			(obj.opts) = () => ("Simple / SemanticText / SmartSemantic · размер · overlap");
+			(obj.reindex) = () => (true);
+			(obj.controls) = () => ([
+				(this.Chunking_strategy()), 
+				(this.Chunking_size_row()), 
+				(this.Chunking_overlap_row())
+			]);
+			return obj;
+		}
+		extraction_mode(next){
+			if(next !== undefined) return next;
+			return "two-stage";
+		}
+		Extraction_mode(){
+			const obj = new this.$.$bog_builderui_select();
+			(obj.value) = (next) => ((this.extraction_mode(next)));
+			(obj.dictionary) = () => ({"single": (this.$.$mol_locale.text("$raggu_web_settings_Extraction_mode_dictionary_single")), "two-stage": (this.$.$mol_locale.text("$raggu_web_settings_Extraction_mode_dictionary_two-stage"))});
+			return obj;
+		}
+		extraction_model(next){
+			if(next !== undefined) return next;
+			return "meno-lite-7b";
+		}
+		Extraction_model(){
+			const obj = new this.$.$bog_builderui_select();
+			(obj.value) = (next) => ((this.extraction_model(next)));
+			(obj.dictionary) = () => ({
+				"meno-lite-7b": "meno-lite 7B", 
+				"gpt-4": "GPT-4", 
+				"llama3-70b": "Llama 3 70B"
+			});
+			return obj;
+		}
+		extraction_icl(next){
+			if(next !== undefined) return next;
+			return "hybrid";
+		}
+		Extraction_icl(){
+			const obj = new this.$.$bog_builderui_select();
+			(obj.value) = (next) => ((this.extraction_icl(next)));
+			(obj.dictionary) = () => ({
+				"semantic": (this.$.$mol_locale.text("$raggu_web_settings_Extraction_icl_dictionary_semantic")), 
+				"BM25": (this.$.$mol_locale.text("$raggu_web_settings_Extraction_icl_dictionary_BM25")), 
+				"hybrid": (this.$.$mol_locale.text("$raggu_web_settings_Extraction_icl_dictionary_hybrid")), 
+				"random": (this.$.$mol_locale.text("$raggu_web_settings_Extraction_icl_dictionary_random"))
+			});
+			return obj;
+		}
+		Group_extraction(){
+			const obj = new this.$.$raggu_web_settings_group();
+			(obj.step) = () => ("Шаг 2");
+			(obj.title) = () => ("Extraction");
+			(obj.opts) = () => ("single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель");
+			(obj.reindex) = () => (true);
+			(obj.controls) = () => ([
+				(this.Extraction_mode()), 
+				(this.Extraction_model()), 
+				(this.Extraction_icl())
+			]);
+			return obj;
+		}
+		summarization_dbscan(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Summarization_dbscan(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.summarization_dbscan(next)));
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Summarization_dbscan_title")));
+			return obj;
+		}
+		summarization_llm(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Summarization_llm(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.summarization_llm(next)));
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Summarization_llm_title")));
+			return obj;
+		}
+		Group_summarization(){
+			const obj = new this.$.$raggu_web_settings_group();
+			(obj.step) = () => ("Шаг 3");
+			(obj.title) = () => ("Summarization");
+			(obj.opts) = () => ("DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей");
+			(obj.reindex) = () => (true);
+			(obj.controls) = () => ([(this.Summarization_dbscan()), (this.Summarization_llm())]);
+			return obj;
+		}
+		communities_algo(next){
+			if(next !== undefined) return next;
+			return "Leiden";
+		}
+		Communities_algo(){
+			const obj = new this.$.$bog_builderui_select();
+			(obj.value) = (next) => ((this.communities_algo(next)));
+			(obj.dictionary) = () => ({"Leiden": "Leiden"});
+			return obj;
+		}
+		communities_resolution_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_settings_communities_resolution_label_text"));
+		}
+		Communities_resolution_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.communities_resolution_label_text())]);
+			return obj;
+		}
+		communities_resolution_label(){
+			return "1.0";
+		}
+		Communities_resolution_value(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.communities_resolution_label())]);
+			return obj;
+		}
+		Communities_resolution_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Communities_resolution_label()), (this.Communities_resolution_value())]);
+			return obj;
+		}
+		communities_resolution_x10(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		Communities_resolution(){
+			const obj = new this.$.$bog_builderui_slider();
+			(obj.value) = (next) => ((this.communities_resolution_x10(next)));
+			(obj.min) = () => (5);
+			(obj.max) = () => (20);
+			(obj.step) = () => (1);
+			return obj;
+		}
+		Group_communities(){
+			const obj = new this.$.$raggu_web_settings_group();
+			(obj.step) = () => ("Шаг 4");
+			(obj.title) = () => ("Communities");
+			(obj.opts) = () => ("Hierarchical Leiden (resolution, levels) · суммаризация сообществ");
+			(obj.reindex) = () => (true);
+			(obj.controls) = () => ([
+				(this.Communities_algo()), 
+				(this.Communities_resolution_row()), 
+				(this.Communities_resolution())
+			]);
+			return obj;
+		}
+		refinement_isolated(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Refinement_isolated(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.refinement_isolated(next)));
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Refinement_isolated_title")));
+			return obj;
+		}
+		Group_refinement(){
+			const obj = new this.$.$raggu_web_settings_group();
+			(obj.step) = () => ("Шаг 5");
+			(obj.title) = () => ("Refinement");
+			(obj.opts) = () => ("RemoveIsolatedNodes и пост-обработчики");
+			(obj.reindex) = () => (true);
+			(obj.controls) = () => ([(this.Refinement_isolated())]);
+			return obj;
+		}
+		search_mode(next){
+			if(next !== undefined) return next;
+			return "Local";
+		}
+		Search_mode(){
+			const obj = new this.$.$bog_builderui_select();
+			(obj.value) = (next) => ((this.search_mode(next)));
+			(obj.dictionary) = () => ({
+				"Local": "LocalSearch", 
+				"Global": "GlobalSearch", 
+				"Naive": "NaiveSearch", 
+				"Mix": "MixSearch", 
+				"QueryPlan": "QueryPlan"
+			});
+			return obj;
+		}
+		search_rerank(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Search_rerank(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.search_rerank(next)));
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_settings_Search_rerank_title")));
+			return obj;
+		}
+		search_topk_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_settings_search_topk_label_text"));
+		}
+		Search_topk_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.search_topk_label_text())]);
+			return obj;
+		}
+		search_topk_label(){
+			return "8";
+		}
+		Search_topk_value(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.search_topk_label())]);
+			return obj;
+		}
+		Search_topk_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Search_topk_label()), (this.Search_topk_value())]);
+			return obj;
+		}
+		search_topk(next){
+			if(next !== undefined) return next;
+			return 8;
+		}
+		Search_topk(){
+			const obj = new this.$.$bog_builderui_slider();
+			(obj.value) = (next) => ((this.search_topk(next)));
+			(obj.min) = () => (1);
+			(obj.max) = () => (50);
+			(obj.step) = () => (1);
+			return obj;
+		}
+		Group_search(){
+			const obj = new this.$.$raggu_web_settings_group();
+			(obj.step) = () => ("Шаг 6");
+			(obj.title) = () => ("Search");
+			(obj.opts) = () => ("Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k");
+			(obj.reindex) = () => (false);
+			(obj.controls) = () => ([
+				(this.Search_mode()), 
+				(this.Search_rerank()), 
+				(this.Search_topk_row()), 
+				(this.Search_topk())
+			]);
+			return obj;
+		}
+		Body(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([
+				(this.Presets()), 
+				(this.Group_chunking()), 
+				(this.Group_extraction()), 
+				(this.Group_summarization()), 
+				(this.Group_communities()), 
+				(this.Group_refinement()), 
+				(this.Group_search())
+			]);
+			return obj;
+		}
+		Panel(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header()), (this.Body())]);
+			return obj;
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_settings_showed": (this.showed())};
+		}
+		sub(){
+			return [(this.Backdrop()), (this.Panel())];
+		}
+	};
+	($mol_mem(($.$raggu_web_settings.prototype), "close"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Backdrop"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header_sub"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Close_btn"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header"));
+	($mol_mem(($.$raggu_web_settings.prototype), "preset_fast"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Preset_fast"));
+	($mol_mem(($.$raggu_web_settings.prototype), "preset_accurate"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Preset_accurate"));
+	($mol_mem(($.$raggu_web_settings.prototype), "preset_demo"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Preset_demo"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Presets"));
+	($mol_mem(($.$raggu_web_settings.prototype), "chunking_strategy"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_strategy"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_size_label"));
+	($mol_mem(($.$raggu_web_settings.prototype), "chunking_size_str"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_size_input"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_size_row"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_overlap_label"));
+	($mol_mem(($.$raggu_web_settings.prototype), "chunking_overlap_str"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_overlap_input"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Chunking_overlap_row"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_chunking"));
+	($mol_mem(($.$raggu_web_settings.prototype), "extraction_mode"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Extraction_mode"));
+	($mol_mem(($.$raggu_web_settings.prototype), "extraction_model"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Extraction_model"));
+	($mol_mem(($.$raggu_web_settings.prototype), "extraction_icl"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Extraction_icl"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_extraction"));
+	($mol_mem(($.$raggu_web_settings.prototype), "summarization_dbscan"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Summarization_dbscan"));
+	($mol_mem(($.$raggu_web_settings.prototype), "summarization_llm"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Summarization_llm"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_summarization"));
+	($mol_mem(($.$raggu_web_settings.prototype), "communities_algo"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Communities_algo"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Communities_resolution_label"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Communities_resolution_value"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Communities_resolution_row"));
+	($mol_mem(($.$raggu_web_settings.prototype), "communities_resolution_x10"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Communities_resolution"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_communities"));
+	($mol_mem(($.$raggu_web_settings.prototype), "refinement_isolated"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Refinement_isolated"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_refinement"));
+	($mol_mem(($.$raggu_web_settings.prototype), "search_mode"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Search_mode"));
+	($mol_mem(($.$raggu_web_settings.prototype), "search_rerank"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Search_rerank"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Search_topk_label"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Search_topk_value"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Search_topk_row"));
+	($mol_mem(($.$raggu_web_settings.prototype), "search_topk"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Search_topk"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_search"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Body"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Panel"));
+	($mol_mem(($.$raggu_web_settings.prototype), "showed"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const $raggu_web_settings_presets = {
+            fast: {
+                chunking_strategy: 'Simple',
+                chunking_size: 256,
+                chunking_overlap: 32,
+                extraction_mode: 'single',
+                extraction_model: 'meno-lite-7b',
+                extraction_icl: 'random',
+                summarization_dbscan: false,
+                summarization_llm: false,
+                communities_algo: 'Leiden',
+                communities_resolution_x10: 10,
+                refinement_isolated: false,
+                search_mode: 'Naive',
+                search_rerank: false,
+                search_topk: 5,
+            },
+            accurate: {
+                chunking_strategy: 'SmartSemantic',
+                chunking_size: 1024,
+                chunking_overlap: 128,
+                extraction_mode: 'two-stage',
+                extraction_model: 'gpt-4',
+                extraction_icl: 'hybrid',
+                summarization_dbscan: true,
+                summarization_llm: true,
+                communities_algo: 'Leiden',
+                communities_resolution_x10: 15,
+                refinement_isolated: true,
+                search_mode: 'Mix',
+                search_rerank: true,
+                search_topk: 10,
+            },
+            demo: {
+                chunking_strategy: 'SmartSemantic',
+                chunking_size: 512,
+                chunking_overlap: 64,
+                extraction_mode: 'two-stage',
+                extraction_model: 'meno-lite-7b',
+                extraction_icl: 'hybrid',
+                summarization_dbscan: true,
+                summarization_llm: false,
+                communities_algo: 'Leiden',
+                communities_resolution_x10: 10,
+                refinement_isolated: true,
+                search_mode: 'Local',
+                search_rerank: true,
+                search_topk: 8,
+            },
+        };
+        class $raggu_web_settings extends $.$raggu_web_settings {
+            close() {
+                this.showed(false);
+                return null;
+            }
+            // ---- preset handlers ----
+            preset_fast() {
+                this.apply_preset('fast');
+                return null;
+            }
+            preset_accurate() {
+                this.apply_preset('accurate');
+                return null;
+            }
+            preset_demo() {
+                this.apply_preset('demo');
+                return null;
+            }
+            apply_preset(name) {
+                const values = $raggu_web_settings_presets[name];
+                if (!values)
+                    return null;
+                this.chunking_strategy(values.chunking_strategy);
+                this.chunking_size_str(String(values.chunking_size));
+                this.chunking_overlap_str(String(values.chunking_overlap));
+                this.extraction_mode(values.extraction_mode);
+                this.extraction_model(values.extraction_model);
+                this.extraction_icl(values.extraction_icl);
+                this.summarization_dbscan(values.summarization_dbscan);
+                this.summarization_llm(values.summarization_llm);
+                this.communities_algo(values.communities_algo);
+                this.communities_resolution_x10(values.communities_resolution_x10);
+                this.refinement_isolated(values.refinement_isolated);
+                this.search_mode(values.search_mode);
+                this.search_rerank(values.search_rerank);
+                this.search_topk(values.search_topk);
+                return null;
+            }
+            // ---- local-state-backed fields ----
+            chunking_strategy(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.chunking_strategy', next ?? null) ?? 'SmartSemantic';
+            }
+            chunking_size_str(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.chunking_size_str', next ?? null) ?? '512';
+            }
+            chunking_overlap_str(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.chunking_overlap_str', next ?? null) ?? '64';
+            }
+            extraction_mode(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.extraction_mode', next ?? null) ?? 'two-stage';
+            }
+            extraction_model(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.extraction_model', next ?? null) ?? 'meno-lite-7b';
+            }
+            extraction_icl(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.extraction_icl', next ?? null) ?? 'hybrid';
+            }
+            summarization_dbscan(next) {
+                const v = this.$.$mol_state_local.value('$raggu_web_settings.summarization_dbscan', next ?? null);
+                return v ?? true;
+            }
+            summarization_llm(next) {
+                const v = this.$.$mol_state_local.value('$raggu_web_settings.summarization_llm', next ?? null);
+                return v ?? false;
+            }
+            communities_algo(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.communities_algo', next ?? null) ?? 'Leiden';
+            }
+            communities_resolution_x10(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.communities_resolution_x10', next ?? null) ?? 10;
+            }
+            communities_resolution_label() {
+                return (this.communities_resolution_x10() / 10).toFixed(1);
+            }
+            refinement_isolated(next) {
+                const v = this.$.$mol_state_local.value('$raggu_web_settings.refinement_isolated', next ?? null);
+                return v ?? true;
+            }
+            search_mode(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.search_mode', next ?? null) ?? 'Local';
+            }
+            search_rerank(next) {
+                const v = this.$.$mol_state_local.value('$raggu_web_settings.search_rerank', next ?? null);
+                return v ?? true;
+            }
+            search_topk(next) {
+                return this.$.$mol_state_local.value('$raggu_web_settings.search_topk', next ?? null) ?? 8;
+            }
+            search_topk_label() {
+                return String(this.search_topk());
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_settings.prototype, "close", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_settings.prototype, "preset_fast", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_settings.prototype, "preset_accurate", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_settings.prototype, "preset_demo", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_settings.prototype, "apply_preset", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "chunking_strategy", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "chunking_size_str", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "chunking_overlap_str", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "extraction_mode", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "extraction_model", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "extraction_icl", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "summarization_dbscan", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "summarization_llm", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "communities_algo", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "communities_resolution_x10", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "refinement_isolated", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "search_mode", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "search_rerank", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_settings.prototype, "search_topk", null);
+        $$.$raggu_web_settings = $raggu_web_settings;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_settings, {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'none',
+        zIndex: 40,
+        '@': {
+            raggu_web_settings_showed: {
+                true: { display: 'flex' },
+            },
+        },
+        Backdrop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: { color: '#1c1b1a59' },
+        },
+        Panel: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: '380px',
+            background: { color: $bog_builderui_tokens.card },
+            border: {
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            zIndex: 1,
+            flex: { direction: 'column' },
+            box: {
+                shadow: [{
+                        x: '-12px',
+                        y: 0,
+                        blur: '40px',
+                        spread: 0,
+                        color: '#0000001f',
+                    }],
+            },
+        },
+        Header: {
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '20px',
+                right: '20px',
+            },
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+        },
+        Header_text: {
+            flex: { direction: 'column' },
+        },
+        Header_title: {
+            font: { weight: 700, size: '16px' },
+        },
+        Header_sub: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '2px' },
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Close_btn: {
+            minWidth: '30px',
+            maxWidth: '30px',
+            height: '30px',
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            cursor: 'pointer',
+            font: { size: '15px' },
+        },
+        Body: {
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '20px',
+                right: '20px',
+            },
+            display: 'flex',
+            flex: { direction: 'column' },
+            gap: '18px',
+        },
+        Presets: {
+            flex: { direction: 'row' },
+            gap: '6px',
+            padding: {
+                bottom: '6px',
+            },
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+        },
+        Chunking_size_row: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+        },
+        Chunking_overlap_row: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+        },
+        Communities_resolution_row: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            justify: { content: 'space-between' },
+        },
+        Search_topk_row: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            justify: { content: 'space-between' },
+        },
+        Chunking_size_label: {
+            minWidth: '90px',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '11px' },
+        },
+        Chunking_overlap_label: {
+            minWidth: '90px',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '11px' },
+        },
+        Communities_resolution_label: {
+            color: $bog_builderui_tokens.shade,
+            font: { size: '11px' },
+        },
+        Search_topk_label: {
+            color: $bog_builderui_tokens.shade,
+            font: { size: '11px' },
+        },
+        Communities_resolution_value: {
+            color: $bog_builderui_tokens.text,
+            font: {
+                family: 'ui-monospace, monospace',
+                size: '11px',
+                weight: 600,
+            },
+        },
+        Search_topk_value: {
+            color: $bog_builderui_tokens.text,
+            font: {
+                family: 'ui-monospace, monospace',
+                size: '11px',
+                weight: 600,
+            },
+        },
+        Chunking_size_input: {
+            flex: { grow: 1 },
+        },
+        Chunking_overlap_input: {
+            flex: { grow: 1 },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_gallery_card_preview) = class $raggu_web_gallery_card_preview extends ($.$bog_builderui_div) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("raggu/web/gallery/card/preview/preview.view.css", "[raggu_web_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$raggu_web_gallery_card) = class $raggu_web_gallery_card extends ($.$bog_builderui_div) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Preview_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.preview_label_text())]);
+			return obj;
+		}
+		Domain_badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.domain())]);
+			return obj;
+		}
+		Preview(){
+			const obj = new this.$.$raggu_web_gallery_card_preview();
+			(obj.sub) = () => ([(this.Preview_label()), (this.Domain_badge())]);
+			return obj;
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		Desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.desc())]);
+			return obj;
+		}
+		tag_nodes(){
+			return "";
+		}
+		Tag_nodes(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.tag_nodes())]);
+			return obj;
+		}
+		tag_edges(){
+			return "";
+		}
+		Tag_edges(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.tag_edges())]);
+			return obj;
+		}
+		tag_comms(){
+			return "";
+		}
+		Tag_comms(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.tag_comms())]);
+			return obj;
+		}
+		Tags(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Tag_nodes()), 
+				(this.Tag_edges()), 
+				(this.Tag_comms())
+			]);
+			return obj;
+		}
+		id(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		domain(){
+			return "";
+		}
+		desc(){
+			return "";
+		}
+		nodes(){
+			return "";
+		}
+		edges(){
+			return "";
+		}
+		comms(){
+			return "";
+		}
+		preview_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_card_preview_label_text"));
+		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.click(next))};
+		}
+		sub(){
+			return [
+				(this.Preview()), 
+				(this.Title()), 
+				(this.Desc()), 
+				(this.Tags())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "click"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Preview_label"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Domain_badge"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Preview"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Title"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Desc"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_nodes"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_edges"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_comms"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tags"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
+            unit(key) {
+                return this.$.$mol_locale.text(`$raggu_web_gallery_card_unit_${key}`) || '';
+            }
+            tag_nodes() { return `${this.nodes()} ${this.unit('nodes')}`; }
+            tag_edges() { return `${this.edges()} ${this.unit('edges')}`; }
+            tag_comms() { return `${this.comms()} ${this.unit('comms')}`; }
+        }
+        $$.$raggu_web_gallery_card = $raggu_web_gallery_card;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const tag_style = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 600,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+        background: { color: $bog_builderui_tokens.field },
+        border: { radius: '5px' },
+        padding: {
+            top: '3px',
+            bottom: '3px',
+            left: '7px',
+            right: '7px',
+        },
+    };
+    $mol_style_define($raggu_web_gallery_card, {
+        background: { color: $bog_builderui_tokens.card },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
+        padding: {
+            top: '13px',
+            bottom: '13px',
+            left: '13px',
+            right: '13px',
+        },
+        flex: { direction: 'column' },
+        cursor: 'pointer',
+        Preview: {
+            height: '118px',
+            border: { radius: '7px' },
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            position: 'relative',
+        },
+        Preview_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Domain_badge: {
+            position: 'absolute',
+            top: '8px',
+            left: '8px',
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '7px',
+                right: '7px',
+            },
+            font: { size: '10px' },
+            color: $bog_builderui_tokens.shade,
+        },
+        Title: {
+            font: { weight: 700, size: '14px' },
+            margin: { top: '11px' },
+        },
+        Desc: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '4px' },
+            lineHeight: '1.4',
+        },
+        Tags: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '6px',
+            margin: { top: '10px' },
+        },
+        Tag_nodes: tag_style,
+        Tag_edges: tag_style,
+        Tag_comms: tag_style,
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_builderui_progress) = class $bog_builderui_progress extends ($.$mol_view) {
+		value(){
+			return 50;
+		}
+		max(){
+			return 100;
+		}
+		dom_name(){
+			return "progress";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"value": (this.value()), 
+				"max": (this.max())
+			};
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/builderui/progress/progress.view.css", "[bog_builderui_progress]::-webkit-progress-bar {\n\tbackground-color: var(--bog_builderui_field);\n\tborder-radius: 9999px;\n}\n[bog_builderui_progress]::-webkit-progress-value {\n\tbackground-color: var(--bog_builderui_control);\n\tborder-radius: 9999px;\n}\n[bog_builderui_progress]::-moz-progress-bar {\n\tbackground-color: var(--bog_builderui_control);\n\tborder-radius: 9999px;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($bog_builderui_progress, {
+        appearance: 'none',
+        width: '100%',
+        height: '0.5rem',
+        border: {
+            radius: '9999px',
+            width: 0,
+        },
+        background: {
+            color: $bog_builderui_tokens.field,
+        },
+        color: $bog_builderui_tokens.control,
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_gallery_upload) = class $raggu_web_gallery_upload extends ($.$bog_builderui_div) {
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Backdrop(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			return obj;
+		}
+		panel_title(){
+			return "";
+		}
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.panel_title())]);
+			return obj;
+		}
+		Header_subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.subtitle_text())]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_title()), (this.Header_subtitle())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Close_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			(obj.sub) = () => ([(this.close_text())]);
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Header_text()), 
+				(this.Spacer()), 
+				(this.Close_btn())
+			]);
+			return obj;
+		}
+		Body(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.body()));
+			return obj;
+		}
+		Panel(){
+			const obj = new this.$.$bog_builderui_card();
+			(obj.sub) = () => ([(this.Header()), (this.Body())]);
+			return obj;
+		}
+		Error_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.error_title_text())]);
+			return obj;
+		}
+		Error_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.error())]);
+			return obj;
+		}
+		Progress_bar(){
+			const obj = new this.$.$bog_builderui_progress();
+			(obj.max) = () => ((this.total_steps()));
+			(obj.value) = () => ((this.step()));
+			return obj;
+		}
+		progress_label_separator(){
+			return "";
+		}
+		step_label(){
+			return "";
+		}
+		progress_label_slash(){
+			return " /";
+		}
+		total_steps_text(){
+			return "6";
+		}
+		Progress_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.progress_label_text()), 
+				(this.progress_label_separator()), 
+				(this.step_label()), 
+				(this.progress_label_slash()), 
+				(this.total_steps_text())
+			]);
+			return obj;
+		}
+		Steps_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.step_rows()));
+			return obj;
+		}
+		step_status(id){
+			return "pending";
+		}
+		step_marker_text(id){
+			return "○";
+		}
+		Step_marker(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.step_marker_text(id))]);
+			return obj;
+		}
+		step_name_text(id){
+			return "";
+		}
+		Step_name(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.step_name_text(id))]);
+			return obj;
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		kind(){
+			return "document";
+		}
+		step(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		total_steps(){
+			return 6;
+		}
+		error(){
+			return "";
+		}
+		complete(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_title_text"));
+		}
+		subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_subtitle_text"));
+		}
+		step_chunking_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_step_chunking_text"));
+		}
+		step_extraction_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_step_extraction_text"));
+		}
+		step_summarization_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_step_summarization_text"));
+		}
+		step_communities_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_step_communities_text"));
+		}
+		step_refinement_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_step_refinement_text"));
+		}
+		step_search_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_step_search_text"));
+		}
+		progress_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_progress_label_text"));
+		}
+		close_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_close_text"));
+		}
+		error_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_error_title_text"));
+		}
+		retry_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_retry_text"));
+		}
+		body(){
+			return [];
+		}
+		step_rows(){
+			return [];
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_gallery_upload_showed": (this.showed())};
+		}
+		sub(){
+			return [(this.Backdrop()), (this.Panel())];
+		}
+		Error_body(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Error_title()), (this.Error_text())]);
+			return obj;
+		}
+		Progress_body(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Progress_bar()), 
+				(this.Progress_label()), 
+				(this.Steps_list())
+			]);
+			return obj;
+		}
+		Step(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_gallery_upload_step_status": (this.step_status(id))});
+			(obj.sub) = () => ([(this.Step_marker(id)), (this.Step_name(id))]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "close"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Backdrop"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Header_subtitle"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Close_btn"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Header"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Body"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Panel"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Error_title"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Error_text"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Progress_bar"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Progress_label"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Steps_list"));
+	($mol_mem_key(($.$raggu_web_gallery_upload.prototype), "Step_marker"));
+	($mol_mem_key(($.$raggu_web_gallery_upload.prototype), "Step_name"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "showed"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "step"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "complete"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Error_body"));
+	($mol_mem(($.$raggu_web_gallery_upload.prototype), "Progress_body"));
+	($mol_mem_key(($.$raggu_web_gallery_upload.prototype), "Step"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const STEP_KEYS = [
+            'chunking',
+            'extraction',
+            'summarization',
+            'communities',
+            'refinement',
+            'search',
+        ];
+        class $raggu_web_gallery_upload extends $.$raggu_web_gallery_upload {
+            step(next) {
+                return next ?? 0;
+            }
+            error(next) {
+                return next ?? '';
+            }
+            has_error() {
+                return this.error() ? 'true' : 'false';
+            }
+            panel_title() {
+                const key = this.kind() === 'index' ? 'panel_title_index' : 'panel_title_document';
+                return this.$.$mol_locale.text(`$raggu_web_gallery_upload_${key}`) || this.title_text();
+            }
+            body() {
+                return this.error() ? [this.Error_body()] : [this.Progress_body()];
+            }
+            step_label() {
+                const n = this.step();
+                const idx = Math.max(0, Math.min(n, STEP_KEYS.length) - 1);
+                return this.step_name_text(STEP_KEYS[idx]);
+            }
+            step_rows() {
+                return STEP_KEYS.map(key => this.Step(key));
+            }
+            step_status(key) {
+                const idx = STEP_KEYS.indexOf(key);
+                const current = this.step();
+                if (current > idx)
+                    return 'done';
+                if (current === idx)
+                    return 'active';
+                return 'pending';
+            }
+            step_marker_text(key) {
+                const status = this.step_status(key);
+                if (status === 'done')
+                    return '●';
+                if (status === 'active')
+                    return '◐';
+                return '○';
+            }
+            step_name_text(key) {
+                switch (key) {
+                    case 'chunking': return this.step_chunking_text();
+                    case 'extraction': return this.step_extraction_text();
+                    case 'summarization': return this.step_summarization_text();
+                    case 'communities': return this.step_communities_text();
+                    case 'refinement': return this.step_refinement_text();
+                    case 'search': return this.step_search_text();
+                }
+            }
+            progress_label_separator() { return ' '; }
+            progress_label_slash() { return ' / '; }
+            total_steps_text() { return String(this.total_steps()); }
+            /**
+             * Mock pipeline: validates size limit, then advances step 0→6 via setTimeout chain.
+             * Returns immediately; UI re-renders on each step setter call.
+             */
+            start(mock_file_size_mb) {
+                this.error('');
+                this.step(0);
+                if (mock_file_size_mb > 10) {
+                    const tpl = this.$.$mol_locale.text('$raggu_web_gallery_upload_error_too_large')
+                        || 'File too large: %s MB. Limit is 10 MB.';
+                    this.error(tpl.replace('%s', mock_file_size_mb.toFixed(1)));
+                    return;
+                }
+                this.tick(1);
+            }
+            tick(next_step) {
+                setTimeout(() => {
+                    this.step(next_step);
+                    if (next_step >= this.total_steps()) {
+                        setTimeout(() => this.complete(null), 200);
+                        return;
+                    }
+                    this.tick(next_step + 1);
+                }, 600);
+            }
+            close() {
+                this.showed(false);
+                this.step(0);
+                this.error('');
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_gallery_upload.prototype, "step", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_gallery_upload.prototype, "error", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery_upload.prototype, "close", null);
+        $$.$raggu_web_gallery_upload = $raggu_web_gallery_upload;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_gallery_upload, {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'none',
+        zIndex: 50,
+        justify: { content: 'center' },
+        align: { items: 'center' },
+        '@': {
+            raggu_web_gallery_upload_showed: {
+                true: { display: 'flex' },
+            },
+        },
+        Backdrop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: { color: '#1c1b1a8c' },
+        },
+        Panel: {
+            position: 'relative',
+            zIndex: 1,
+            minWidth: '420px',
+            maxWidth: '520px',
+            width: '90%',
+            gap: '14px',
+            padding: {
+                top: '20px',
+                bottom: '20px',
+                left: '22px',
+                right: '22px',
+            },
+        },
+        Header: {
+            flex: { direction: 'row' },
+            align: { items: 'flex-start' },
+            gap: '12px',
+        },
+        Header_text: {
+            flex: { direction: 'column', grow: 1, shrink: 1 },
+            minWidth: 0,
+        },
+        Header_title: {
+            font: { weight: 700, size: '16px' },
+            color: $bog_builderui_tokens.text,
+        },
+        Header_subtitle: {
+            font: { size: '12px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '3px' },
+        },
+        Spacer: { flex: { grow: 1 } },
+        Close_btn: {
+            minWidth: '28px',
+            maxWidth: '28px',
+            height: '28px',
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            cursor: 'pointer',
+            font: { size: '13px' },
+            color: $bog_builderui_tokens.shade,
+        },
+        Body: {
+            flex: { direction: 'column' },
+            gap: '14px',
+        },
+        Progress_body: {
+            flex: { direction: 'column' },
+            gap: '14px',
+        },
+        Progress_label: {
+            flex: { direction: 'row' },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Steps_list: {
+            flex: { direction: 'column' },
+            gap: '6px',
+            margin: { top: '4px' },
+        },
+        Step: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '10px',
+            padding: {
+                top: '6px',
+                bottom: '6px',
+                left: '8px',
+                right: '8px',
+            },
+            border: { radius: '6px' },
+            font: { size: '13px' },
+            color: $bog_builderui_tokens.shade,
+            '@': {
+                raggu_web_gallery_upload_step_status: {
+                    active: {
+                        background: { color: $bog_builderui_tokens.field },
+                        color: $bog_builderui_tokens.text,
+                        font: { weight: 600 },
+                    },
+                    done: {
+                        color: $bog_builderui_tokens.text,
+                    },
+                },
+            },
+        },
+        Step_marker: {
+            minWidth: '16px',
+            font: {
+                family: 'ui-monospace, monospace',
+                size: '14px',
+            },
+        },
+        Error_body: {
+            flex: { direction: 'column' },
+            gap: '8px',
+            padding: {
+                top: '12px',
+                bottom: '12px',
+                left: '14px',
+                right: '14px',
+            },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '8px' },
+            background: { color: $bog_builderui_tokens.field },
+        },
+        Error_title: {
+            font: { weight: 700, size: '13px' },
+            color: $bog_builderui_tokens.text,
+        },
+        Error_text: {
+            font: { size: '12px' },
+            color: $bog_builderui_tokens.shade,
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_gallery) = class $raggu_web_gallery extends ($.$bog_builderui_div) {
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.header_title_text())]);
+			return obj;
+		}
+		Header_subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.header_subtitle_text())]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_title()), (this.Header_subtitle())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		upload_doc_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Upload_doc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.upload_doc_text())]);
+			(obj.event) = () => ({"click": (next) => (this.upload_doc_click(next))});
+			return obj;
+		}
+		upload_idx_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Upload_idx(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.upload_idx_text())]);
+			(obj.event) = () => ({"click": (next) => (this.upload_idx_click(next))});
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Header_text()), 
+				(this.Spacer()), 
+				(this.Upload_doc()), 
+				(this.Upload_idx())
+			]);
+			return obj;
+		}
+		card_id(id){
+			return "";
+		}
+		card_title(id){
+			return "";
+		}
+		card_domain(id){
+			return "";
+		}
+		card_desc(id){
+			return "";
+		}
+		card_nodes(id){
+			return "";
+		}
+		card_edges(id){
+			return "";
+		}
+		card_comms(id){
+			return "";
+		}
+		click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Card(id){
+			const obj = new this.$.$raggu_web_gallery_card();
+			(obj.id) = () => ((this.card_id(id)));
+			(obj.title) = () => ((this.card_title(id)));
+			(obj.domain) = () => ((this.card_domain(id)));
+			(obj.desc) = () => ((this.card_desc(id)));
+			(obj.nodes) = () => ((this.card_nodes(id)));
+			(obj.edges) = () => ((this.card_edges(id)));
+			(obj.comms) = () => ((this.card_comms(id)));
+			(obj.click) = (next) => ((this.click(id, next)));
+			return obj;
+		}
+		rows(){
+			return [(this.Card(id))];
+		}
+		Grid(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.rows()));
+			return obj;
+		}
+		upload_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		upload_complete(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		upload_close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Upload(){
+			const obj = new this.$.$raggu_web_gallery_upload();
+			(obj.showed) = (next) => ((this.upload_showed(next)));
+			(obj.kind) = () => ((this.upload_kind()));
+			(obj.complete) = (next) => ((this.upload_complete(next)));
+			(obj.close) = (next) => ((this.upload_close(next)));
+			return obj;
+		}
+		dataset_id(){
+			return "wiki";
+		}
+		select_dataset(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		datasets(){
+			return [];
+		}
+		upload_kind(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		header_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_header_title_text"));
+		}
+		header_subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_header_subtitle_text"));
+		}
+		upload_doc_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_doc_text"));
+		}
+		upload_idx_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_idx_text"));
+		}
+		sub(){
+			return [
+				(this.Header()), 
+				(this.Grid()), 
+				(this.Upload())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header_subtitle"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "upload_doc_click"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Upload_doc"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "upload_idx_click"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Upload_idx"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header"));
+	($mol_mem_key(($.$raggu_web_gallery.prototype), "click"));
+	($mol_mem_key(($.$raggu_web_gallery.prototype), "Card"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Grid"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "upload_showed"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "upload_complete"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "upload_close"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Upload"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "select_dataset"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "upload_kind"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const BUILTIN = [
+            { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
+            { id: 'un', nodes: '9.1k', edges: '27k', comms: '96' },
+            { id: 'papers', nodes: '1.2k', edges: '3.4k', comms: '24' },
+            { id: 'medical', nodes: '6.7k', edges: '19k', comms: '71' },
+            { id: 'wiki', nodes: '2.4k', edges: '7.1k', comms: '38' },
+            { id: 'own', nodes: '—', edges: '—', comms: '—' },
+        ];
+        function format_count(n) {
+            if (n >= 1000) {
+                const k = n / 1000;
+                return (k >= 10 ? k.toFixed(1) : k.toFixed(2)) + 'k';
+            }
+            return String(n);
+        }
+        function random_stats(seed) {
+            const rng = (m) => Math.floor((Math.sin(seed++) * 10000 % m + m) % m);
+            const nodes = 800 + rng(7200);
+            const edges = nodes * (2 + rng(4));
+            const comms = 12 + rng(80);
+            return {
+                nodes: format_count(nodes),
+                edges: format_count(edges),
+                comms: String(comms),
+            };
+        }
+        class $raggu_web_gallery extends $.$raggu_web_gallery {
+            extra_datasets(next) {
+                return next ?? [];
+            }
+            datasets() {
+                return [...BUILTIN, ...this.extra_datasets()];
+            }
+            rows() {
+                return this.datasets().map(ds => this.Card(ds.id));
+            }
+            dataset(id) {
+                return this.datasets().find(d => d.id === id) ?? BUILTIN[0];
+            }
+            dataset_text(id, suffix) {
+                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${id}_${suffix}`) || '';
+            }
+            card_id(id) { return id; }
+            card_title(id) {
+                const ds = this.dataset(id);
+                return ds.dynamic?.title ?? this.dataset_text(id, 'title');
+            }
+            card_domain(id) {
+                const ds = this.dataset(id);
+                return ds.dynamic?.domain ?? this.dataset_text(id, 'domain');
+            }
+            card_desc(id) {
+                const ds = this.dataset(id);
+                return ds.dynamic?.desc ?? this.dataset_text(id, 'desc');
+            }
+            card_nodes(id) { return this.dataset(id).nodes; }
+            card_edges(id) { return this.dataset(id).edges; }
+            card_comms(id) { return this.dataset(id).comms; }
+            click(id) {
+                this.select_dataset(id);
+                return null;
+            }
+            /** Mock file size in MB for upload validation. */
+            mock_file_size(kind) {
+                // document = always small, index = sometimes too big to demo validation
+                return kind === 'index' ? 4.2 : 2.8;
+            }
+            upload_doc_click() {
+                this.start_upload('document');
+                return null;
+            }
+            upload_idx_click() {
+                this.start_upload('index');
+                return null;
+            }
+            start_upload(kind) {
+                this.upload_kind(kind);
+                this.upload_showed(true);
+                this.Upload().start(this.mock_file_size(kind));
+                return null;
+            }
+            upload_complete() {
+                const kind = this.upload_kind() || 'document';
+                const list = this.extra_datasets();
+                const idx = list.length + 1;
+                const id = `up-${Date.now()}-${idx}`;
+                const seed = Date.now() + idx;
+                const stats = random_stats(seed);
+                const title_prefix = this.$.$mol_locale.text(kind === 'index'
+                    ? '$raggu_web_gallery_uploaded_index_title'
+                    : '$raggu_web_gallery_uploaded_document_title') || (kind === 'index' ? 'Uploaded index' : 'Uploaded document');
+                const domain = this.$.$mol_locale.text('$raggu_web_gallery_uploaded_domain')
+                    || 'User upload';
+                const desc = this.$.$mol_locale.text('$raggu_web_gallery_uploaded_desc')
+                    || 'Mock dataset built by the demo indexing pipeline.';
+                this.extra_datasets([
+                    ...list,
+                    {
+                        id,
+                        nodes: stats.nodes,
+                        edges: stats.edges,
+                        comms: stats.comms,
+                        dynamic: { title: `${title_prefix} #${idx}`, domain, desc },
+                    },
+                ]);
+                this.upload_showed(false);
+                this.upload_kind('');
+                return null;
+            }
+            upload_close() {
+                this.upload_showed(false);
+                this.upload_kind('');
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_gallery.prototype, "extra_datasets", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery.prototype, "click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery.prototype, "upload_doc_click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery.prototype, "upload_idx_click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery.prototype, "start_upload", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery.prototype, "upload_complete", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_gallery.prototype, "upload_close", null);
+        $$.$raggu_web_gallery = $raggu_web_gallery;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_gallery, {
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
+        padding: {
+            top: '1.5rem',
+            bottom: '1.5rem',
+            left: '1.75rem',
+            right: '1.75rem',
+        },
+        Header: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            align: { items: 'flex-end' },
+            gap: '0.875rem',
+            margin: { bottom: '1.25rem' },
+        },
+        Header_text: {
+            flex: { direction: 'column', grow: 1, shrink: 1 },
+            minWidth: 0,
+        },
+        Header_title: {
+            font: { weight: 700, size: '20px' },
+        },
+        Header_subtitle: {
+            font: { size: '13px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '3px' },
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Upload_doc: {
+            border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
+            padding: {
+                top: '10px',
+                bottom: '10px',
+                left: '16px',
+                right: '16px',
+            },
+            font: { size: '12px', weight: 600 },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.card },
+            cursor: 'pointer',
+        },
+        Upload_idx: {
+            border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
+            padding: {
+                top: '10px',
+                bottom: '10px',
+                left: '16px',
+                right: '16px',
+            },
+            font: { size: '12px', weight: 600 },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.card },
+            cursor: 'pointer',
+        },
+        Grid: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '16px',
+            minWidth: 0,
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_explorer) = class $raggu_web_explorer extends ($.$bog_builderui_div) {
+		Canvas_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				"⬡ ⬡ ⬡", 
+				"", 
+				(this.canvas_title_text()), 
+				(this.canvas_engine_text()), 
+				(this.canvas_meaning_text())
+			]);
+			return obj;
+		}
+		Canvas_bg(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Canvas_label())]);
+			return obj;
+		}
+		Filter_search(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.filter_search_text())]);
+			return obj;
+		}
+		Filter_type(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.filter_type_text())]);
+			return obj;
+		}
+		Filter_thresh(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.filter_thresh_text())]);
+			return obj;
+		}
+		Filter_comm(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.filter_comm_text())]);
+			return obj;
+		}
+		Filters(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Filter_search()), 
+				(this.Filter_type()), 
+				(this.Filter_thresh()), 
+				(this.Filter_comm())
+			]);
+			return obj;
+		}
+		Legend_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["Entity Types"]);
+			return obj;
+		}
+		Legend_person_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_person_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["PERSON"]);
+			return obj;
+		}
+		Legend_person(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_person_dot()), (this.Legend_person_label())]);
+			return obj;
+		}
+		Legend_org_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_org_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["ORGANIZATION"]);
+			return obj;
+		}
+		Legend_org(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_org_dot()), (this.Legend_org_label())]);
+			return obj;
+		}
+		Legend_loc_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_loc_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["LOCATION"]);
+			return obj;
+		}
+		Legend_loc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_loc_dot()), (this.Legend_loc_label())]);
+			return obj;
+		}
+		Legend_event_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_event_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["EVENT"]);
+			return obj;
+		}
+		Legend_event(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_event_dot()), (this.Legend_event_label())]);
+			return obj;
+		}
+		Legend_date_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_date_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["DATE"]);
+			return obj;
+		}
+		Legend_date(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_date_dot()), (this.Legend_date_label())]);
+			return obj;
+		}
+		Legend_work_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_work_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["WORK_OF_ART"]);
+			return obj;
+		}
+		Legend_work(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_work_dot()), (this.Legend_work_label())]);
+			return obj;
+		}
+		Legend_law_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Legend_law_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["LAW"]);
+			return obj;
+		}
+		Legend_law(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend_law_dot()), (this.Legend_law_label())]);
+			return obj;
+		}
+		Legend(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Legend_title()), 
+				(this.Legend_person()), 
+				(this.Legend_org()), 
+				(this.Legend_loc()), 
+				(this.Legend_event()), 
+				(this.Legend_date()), 
+				(this.Legend_work()), 
+				(this.Legend_law())
+			]);
+			return obj;
+		}
+		Canvas(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Canvas_bg()), 
+				(this.Filters()), 
+				(this.Legend())
+			]);
+			return obj;
+		}
+		Aside_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.aside_title_text())]);
+			return obj;
+		}
+		Entity_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Entity_name(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.entity_name_text())]);
+			return obj;
+		}
+		Entity_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Entity_dot()), (this.Entity_name())]);
+			return obj;
+		}
+		Entity_type(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["PERSON"]);
+			return obj;
+		}
+		Entity_desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.entity_desc_text())]);
+			return obj;
+		}
+		Relations_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.relations_title_text())]);
+			return obj;
+		}
+		Rel_one_type(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["WORKS_AS"]);
+			return obj;
+		}
+		Rel_one_target(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_one_target_text())]);
+			return obj;
+		}
+		Rel_one(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Rel_one_type()), (this.Rel_one_target())]);
+			return obj;
+		}
+		Rel_two_type(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["AWARDED_WITH"]);
+			return obj;
+		}
+		Rel_two_target(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_two_target_text())]);
+			return obj;
+		}
+		Rel_two(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Rel_two_type()), (this.Rel_two_target())]);
+			return obj;
+		}
+		Rel_three_type(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["PLACE_OF_BIRTH"]);
+			return obj;
+		}
+		Rel_three_target(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_three_target_text())]);
+			return obj;
+		}
+		Rel_three(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Rel_three_type()), (this.Rel_three_target())]);
+			return obj;
+		}
+		Sources_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.sources_title_text())]);
+			return obj;
+		}
+		Sources(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.sources_text())]);
+			return obj;
+		}
+		Ask_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.ask_btn_text())]);
+			return obj;
+		}
+		Aside(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Aside_title()), 
+				(this.Entity_head()), 
+				(this.Entity_type()), 
+				(this.Entity_desc()), 
+				(this.Relations_title()), 
+				(this.Rel_one()), 
+				(this.Rel_two()), 
+				(this.Rel_three()), 
+				(this.Sources_title()), 
+				(this.Sources()), 
+				(this.Ask_btn())
+			]);
+			return obj;
+		}
+		canvas_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_title_text"));
+		}
+		canvas_engine_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_engine_text"));
+		}
+		canvas_meaning_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_meaning_text"));
+		}
+		filter_search_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_search_text"));
+		}
+		filter_type_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_type_text"));
+		}
+		filter_thresh_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_thresh_text"));
+		}
+		filter_comm_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_comm_text"));
+		}
+		aside_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_aside_title_text"));
+		}
+		entity_name_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_entity_name_text"));
+		}
+		entity_desc_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_entity_desc_text"));
+		}
+		relations_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_relations_title_text"));
+		}
+		rel_one_target_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_one_target_text"));
+		}
+		rel_two_target_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_two_target_text"));
+		}
+		rel_three_target_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_three_target_text"));
+		}
+		sources_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_sources_title_text"));
+		}
+		sources_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_sources_text"));
+		}
+		ask_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_ask_btn_text"));
+		}
+		sub(){
+			return [(this.Canvas()), (this.Aside())];
+		}
+	};
+	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas_bg"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_search"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_thresh"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_comm"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filters"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Aside_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_name"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_head"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_desc"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Relations_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one_target"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two_target"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three_target"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Sources_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Sources"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Ask_btn"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Aside"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const { radial_gradient } = $mol_style_func;
+    const dot_base = {
+        minWidth: '9px',
+        maxWidth: '9px',
+        height: '9px',
+        border: { radius: '50%' },
+    };
+    const legend_row = {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '8px',
+        padding: {
+            top: '2px',
+            bottom: '2px',
+        },
+    };
+    const legend_label = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 500,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+    };
+    const relation_card = {
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+        padding: {
+            top: '8px',
+            bottom: '8px',
+            left: '10px',
+            right: '10px',
+        },
+        margin: { bottom: '6px' },
+        font: { size: '11px' },
+        flex: { direction: 'column' },
+    };
+    const relation_type = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 600,
+            size: '10px',
+        },
+        color: '#5b5bd6',
+    };
+    const relation_target = {
+        color: $bog_builderui_tokens.shade,
+        margin: { top: '2px' },
+    };
+    $mol_style_define($raggu_web_explorer, {
+        flex: { direction: 'row', shrink: 1 },
+        minWidth: 0,
+        height: '100%',
+        Canvas: {
+            flex: { grow: 1, shrink: 1, direction: 'column' },
+            position: 'relative',
+            background: { color: '#1c1b1a' },
+            minWidth: 0,
+        },
+        Canvas_bg: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            background: {
+                image: [
+                    [radial_gradient('circle at 35% 40%, #5b5bd62e, transparent 45%')],
+                    [radial_gradient('circle at 70% 65%, #d65b8c24, transparent 45%')],
+                ],
+            },
+        },
+        Canvas_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '12px',
+            },
+            color: '#6b6864',
+            letterSpacing: '1px',
+            textAlign: 'center',
+            whiteSpace: 'pre-line',
+        },
+        Filters: {
+            position: 'absolute',
+            top: '14px',
+            left: '14px',
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '8px',
+            maxWidth: '62%',
+        },
+        Filter_search: {
+            background: { color: '#ffffffe6' },
+            border: { radius: '7px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px', weight: 600 },
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '7px',
+        },
+        Filter_type: {
+            background: { color: '#ffffffe6' },
+            border: { radius: '7px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px', weight: 600 },
+        },
+        Filter_thresh: {
+            background: { color: '#ffffffe6' },
+            border: { radius: '7px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px', weight: 600 },
+        },
+        Filter_comm: {
+            background: { color: '#5b5bd6' },
+            color: '#ffffff',
+            border: { radius: '7px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px', weight: 600 },
+        },
+        Legend: {
+            position: 'absolute',
+            top: '14px',
+            right: '14px',
+            background: { color: '#1c1b1ae6' },
+            border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
+            padding: {
+                top: '11px',
+                bottom: '11px',
+                left: '13px',
+                right: '13px',
+            },
+            width: '150px',
+            flex: { direction: 'column' },
+        },
+        Legend_title: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 700,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.line,
+            textTransform: 'uppercase',
+            letterSpacing: '0.6px',
+            margin: { bottom: '8px' },
+        },
+        Legend_person: legend_row,
+        Legend_org: legend_row,
+        Legend_loc: legend_row,
+        Legend_event: legend_row,
+        Legend_date: legend_row,
+        Legend_work: legend_row,
+        Legend_law: legend_row,
+        Legend_person_dot: { ...dot_base, background: { color: '#e0524f' } },
+        Legend_org_dot: { ...dot_base, background: { color: '#4f8ee0' } },
+        Legend_loc_dot: { ...dot_base, background: { color: '#3fb56b' } },
+        Legend_event_dot: { ...dot_base, background: { color: '#d97ad9' } },
+        Legend_date_dot: { ...dot_base, background: { color: '#e0a73f' } },
+        Legend_work_dot: { ...dot_base, background: { color: '#7c6ce0' } },
+        Legend_law_dot: { ...dot_base, background: { color: '#3fb8b8' } },
+        Legend_person_label: legend_label,
+        Legend_org_label: legend_label,
+        Legend_loc_label: legend_label,
+        Legend_event_label: legend_label,
+        Legend_date_label: legend_label,
+        Legend_work_label: legend_label,
+        Legend_law_label: legend_label,
+        Aside: {
+            minWidth: '300px',
+            maxWidth: '300px',
+            background: { color: $bog_builderui_tokens.card },
+            border: {
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '18px',
+                right: '18px',
+            },
+            overflow: 'auto',
+            flex: { direction: 'column' },
+        },
+        Aside_title: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+            letterSpacing: '0.7px',
+        },
+        Entity_head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+            margin: { top: '11px' },
+        },
+        Entity_dot: {
+            minWidth: '12px',
+            maxWidth: '12px',
+            height: '12px',
+            border: { radius: '50%' },
+            background: { color: '#7c6ce0' },
+        },
+        Entity_name: {
+            font: { weight: 700, size: '16px' },
+        },
+        Entity_type: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: '#5b5bd6',
+            margin: { top: '6px' },
+        },
+        Entity_desc: {
+            font: { size: '12px' },
+            color: $bog_builderui_tokens.shade,
+            lineHeight: '1.5',
+            margin: { top: '10px' },
+        },
+        Relations_title: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+            margin: { top: '18px', bottom: '8px' },
+        },
+        Rel_one: relation_card,
+        Rel_two: relation_card,
+        Rel_three: relation_card,
+        Rel_one_type: relation_type,
+        Rel_two_type: relation_type,
+        Rel_three_type: relation_type,
+        Rel_one_target: relation_target,
+        Rel_two_target: relation_target,
+        Rel_three_target: relation_target,
+        Sources_title: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+            margin: { top: '16px', bottom: '8px' },
+        },
+        Sources: {
+            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
+            padding: {
+                top: '10px',
+                bottom: '10px',
+                left: '10px',
+                right: '10px',
+            },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.back },
+        },
+        Ask_btn: {
+            margin: { top: '16px' },
+            background: { color: '#5b5bd6' },
+            color: '#ffffff',
+            border: { radius: '7px' },
+            padding: {
+                top: '10px',
+                bottom: '10px',
+                left: '10px',
+                right: '10px',
+            },
+            textAlign: 'center',
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_stack) = class $mol_stack extends ($.$mol_view) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/stack/stack.view.css", "[mol_stack] {\n\tdisplay: grid;\n\t/* width: max-content; */\n\t/* height: max-content; */\n\talign-items: flex-start;\n\tjustify-items: flex-start;\n}\n\n[mol_stack] > * {\n\tgrid-area: 1/1;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** Creates lexer by dictionary of lexems. Lexem that started first wins. Then lexem that declared earlier wins. Use regexp capture to take parts of token. */
+    class $mol_syntax2 {
+        lexems;
+        constructor(lexems) {
+            this.lexems = lexems;
+            for (let name in lexems) {
+                this.rules.push({
+                    name: name,
+                    regExp: lexems[name],
+                    size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
+                });
+            }
+            const parts = '(' + this.rules.map(rule => rule.regExp.source).join(')|(') + ')';
+            this.regexp = RegExp(`([\\s\\S]*?)(?:(${parts})|$(?![^]))`, 'gmu');
+        }
+        rules = [];
+        regexp;
+        tokenize(text, handle) {
+            let end = 0;
+            lexing: while (end < text.length) {
+                const start = end;
+                this.regexp.lastIndex = start;
+                var found = this.regexp.exec(text);
+                end = this.regexp.lastIndex;
+                if (start === end)
+                    throw new Error('Empty token');
+                var prefix = found[1];
+                if (prefix)
+                    handle('', prefix, [prefix], start);
+                var suffix = found[2];
+                if (!suffix)
+                    continue;
+                let offset = 4;
+                for (let rule of this.rules) {
+                    if (found[offset - 1]) {
+                        handle(rule.name, suffix, found.slice(offset, offset + rule.size), start + prefix.length);
+                        continue lexing;
+                    }
+                    offset += rule.size + 1;
+                }
+                $mol_fail(new Error('$mol_syntax2 is broken'));
+            }
+        }
+        parse(text, handlers) {
+            this.tokenize(text, (name, ...args) => handlers[name](...args));
+        }
+    }
+    $.$mol_syntax2 = $mol_syntax2;
+})($ || ($ = {}));
+
+;
+	($.$mol_text_code_token) = class $mol_text_code_token extends ($.$mol_dimmer) {
+		type(){
+			return "";
+		}
+		attr(){
+			return {...(super.attr()), "mol_text_code_token_type": (this.type())};
+		}
+	};
+	($.$mol_text_code_token_link) = class $mol_text_code_token_link extends ($.$mol_text_code_token) {
+		uri(){
+			return "";
+		}
+		dom_name(){
+			return "a";
+		}
+		type(){
+			return "code-link";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"href": (this.uri()), 
+				"target": "_blank"
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { hsla } = $mol_style_func;
+        $mol_style_define($mol_text_code_token, {
+            display: 'inline',
+            textDecoration: 'none',
+            '@': {
+                mol_text_code_token_type: {
+                    'code-keyword': {
+                        color: hsla(0, 70, 60, 1),
+                    },
+                    'code-field': {
+                        color: hsla(300, 70, 50, 1),
+                    },
+                    'code-tag': {
+                        color: hsla(330, 70, 50, 1),
+                    },
+                    'code-global': {
+                        color: hsla(30, 80, 50, 1),
+                    },
+                    'code-decorator': {
+                        color: hsla(180, 40, 50, 1),
+                    },
+                    'code-punctuation': {
+                        color: hsla(0, 0, 50, 1),
+                    },
+                    'code-string': {
+                        color: hsla(90, 40, 50, 1),
+                    },
+                    'code-number': {
+                        color: hsla(55, 65, 45, 1),
+                    },
+                    'code-call': {
+                        color: hsla(270, 60, 50, 1),
+                    },
+                    'code-link': {
+                        color: hsla(210, 60, 50, 1),
+                    },
+                    'code-comment-inline': {
+                        opacity: .5,
+                    },
+                    'code-comment-block': {
+                        opacity: .5,
+                    },
+                    'code-docs': {
+                        opacity: .75,
+                    },
+                },
+            }
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_text_code_line) = class $mol_text_code_line extends ($.$mol_paragraph) {
+		numb(){
+			return 0;
+		}
+		token_type(id){
+			return "";
+		}
+		token_text(id){
+			return "";
+		}
+		highlight(){
+			return "";
+		}
+		token_uri(id){
+			return "";
+		}
+		text(){
+			return "";
+		}
+		minimal_height(){
+			return 24;
+		}
+		numb_showed(){
+			return true;
+		}
+		syntax(){
+			return null;
+		}
+		uri_resolve(id){
+			return "";
+		}
+		Numb(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.numb())]);
+			return obj;
+		}
+		Token(id){
+			const obj = new this.$.$mol_text_code_token();
+			(obj.type) = () => ((this.token_type(id)));
+			(obj.haystack) = () => ((this.token_text(id)));
+			(obj.needle) = () => ((this.highlight()));
+			return obj;
+		}
+		Token_link(id){
+			const obj = new this.$.$mol_text_code_token_link();
+			(obj.haystack) = () => ((this.token_text(id)));
+			(obj.needle) = () => ((this.highlight()));
+			(obj.uri) = () => ((this.token_uri(id)));
+			return obj;
+		}
+		find_pos(id){
+			return null;
+		}
+	};
+	($mol_mem(($.$mol_text_code_line.prototype), "Numb"));
+	($mol_mem_key(($.$mol_text_code_line.prototype), "Token"));
+	($mol_mem_key(($.$mol_text_code_line.prototype), "Token_link"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_syntax2_md_flow = new $mol_syntax2({
+        'quote': /^((?:(?:[>"] )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
+        'spoiler': /^((?:(?:[\?] )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
+        'header': /^([#=]+)(\s+)(.*?)$([\n\r]*)/,
+        'list': /^((?:(?: ?([*+-])|(?:\d+[\.\)])+) +(?:[^]*?)$(?:\r?\n?)(?:  (?:[^]*?)$(?:\r?\n?))*)+)((?:\r?\n)*)/,
+        'code': /^(```)([\w.-]*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
+        'code-indent': /^((?:(?: |\t)(?:[^]*?)$\r?\n?)+)([\n\r]*)/,
+        'table': /((?:^\|.+?$\r?\n?)+)([\n\r]*)/,
+        'grid': /((?:^ *! .*?$\r?\n?)+)([\n\r]*)/,
+        'cut': /^--+$((?:\r?\n)*)/,
+        'block': /^(.*?)$((?:\r?\n)*)/,
+    });
+    $.$mol_syntax2_md_line = new $mol_syntax2({
+        'strong': /\*\*(.+?)\*\*/,
+        'emphasis': /\*(?!\s)(.+?)\*|\/\/(?!\s)(.+?)\/\//,
+        'code': /```(.+?)```|;;(.+?);;|`(.+?)`/,
+        'insert': /\+\+(.+?)\+\+/,
+        'delete': /~~(.+?)~~|--(.+?)--/,
+        // 'remark' : /(\()(.+?)(\))/ ,
+        // 'quote' : /(")(.+?)(")/ ,
+        'embed': /""(?:(.*?)\\)?(.*?)""/,
+        'link': /\\\\(?:(.*?)\\)?(.*?)\\\\/,
+        'image-link': /!\[([^\[\]]*?)\]\((.*?)\)/,
+        'text-link': /\[(.*?(?:\[[^\[\]]*?\][^\[\]]*?)*)\]\((.*?)\)/,
+        'text-link-http': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
+    });
+    $.$mol_syntax2_md_code = new $mol_syntax2({
+        'code-indent': /\t+/,
+        'code-docs': /\/\/\/.*?$/,
+        'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/,
+        'code-link': /(?:\w+:\/\/|#)\S+?(?=\s|\\\\|""|$)/,
+        'code-comment-inline': /\/\/.*?(?:$|\/\/)|- \\(?!\\).*|(?<=^| )#!? .*/,
+        'code-string': /(?:".*?"|'.*?'|`.*?`| ?\\\\.+?\\\\|\/.+?\/[dygimsu]*(?!\p{Letter})|[ \t]*\\[^\n]*)/u,
+        'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
+        'code-call': /\.?\w+(?=\()/,
+        'code-sexpr': /\((\w+ )/,
+        'code-field': /(?:(?<=\.|::|->)[a-z][\w-]*|(?<=[, \t] |\t)[\w-]+\??:(?!\/\/|:))/,
+        'code-keyword': /(?<=^|\t|[ )(}{=] )((throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|val|let|const|for|do|while|until|in|out|of|new|if|then|else|switch|case|return|async|await|yield|try|catch|break|continue|get|set|public|private|protected|void|int|float|ref)( |$|;))+/,
+        'code-global': /[$]+\w*|\b[A-Z][a-z0-9]+[A-Z]\w*/,
+        'code-word': /\w+/,
+        'code-decorator': /(?<=^|  |\t)@\s*\S+/,
+        'code-tag': /<\/?[\w-]+\/?>?|&\w+;/,
+        'code-punctuation': /[\-\[\]\{\}\(\)<=>~!\?@#%&\*_\+\\\/\|;:\.,\^]+?/,
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_text_code_line extends $.$mol_text_code_line {
+            maximal_width() {
+                return this.text().length * this.letter_width();
+            }
+            syntax() {
+                return this.$.$mol_syntax2_md_code;
+            }
+            tokens(path) {
+                const tokens = [];
+                const text = (path.length > 0)
+                    // @FIXME: this logic compatible only with `string`
+                    ? this.tokens(path.slice(0, path.length - 1))[path[path.length - 1]].found.slice(1, -1)
+                    : this.text();
+                this.syntax().tokenize(text, (name, found, chunks) => {
+                    if (name === 'code-sexpr') {
+                        tokens.push({ name: 'code-punctuation', found: '(', chunks: [] });
+                        tokens.push({ name: 'code-call', found: chunks[0], chunks: [] });
+                    }
+                    else {
+                        tokens.push({ name, found, chunks });
+                    }
+                });
+                return tokens;
+            }
+            sub() {
+                return [
+                    ...this.numb_showed() ? [this.Numb()] : [],
+                    ...this.row_content([])
+                ];
+            }
+            row_content(path) {
+                const content = this.tokens(path).map((t, i) => this.Token([...path, i]));
+                return content.length ? content : ['\n'];
+            }
+            Token(path) {
+                return this.token_type(path) === 'code-link' ? this.Token_link(path) : super.Token(path);
+            }
+            token_type(path) {
+                return this.tokens([...path.slice(0, path.length - 1)])[path[path.length - 1]].name;
+            }
+            token_content(path) {
+                const tokens = this.tokens([...path.slice(0, path.length - 1)]);
+                const token = tokens[path[path.length - 1]];
+                switch (token.name) {
+                    case 'code-string': return [
+                        token.found[0],
+                        ...this.row_content(path),
+                        token.found[token.found.length - 1],
+                    ];
+                    default: return [token.found];
+                }
+            }
+            token_text(path) {
+                const tokens = this.tokens([...path.slice(0, path.length - 1)]);
+                const token = tokens[path[path.length - 1]];
+                return token.found;
+            }
+            token_uri(path) {
+                const uri = this.token_text(path);
+                return this.uri_resolve(uri);
+            }
+            *view_find(check, path = []) {
+                if (check(this, this.text())) {
+                    yield [...path, this];
+                }
+            }
+            find_pos(offset) {
+                return this.find_token_pos([offset]);
+            }
+            find_token_pos([offset, ...path]) {
+                for (const [index, token] of this.tokens(path).entries()) {
+                    if (token.found.length >= offset) {
+                        const token = this.Token([...path, index]);
+                        return { token, offset };
+                    }
+                    else {
+                        offset -= token.found.length;
+                    }
+                }
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "tokens", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "row_content", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "token_type", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "token_content", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "token_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "token_uri", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "find_pos", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code_line.prototype, "find_token_pos", null);
+        $$.$mol_text_code_line = $mol_text_code_line;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { rem } = $mol_style_unit;
+        $mol_style_define($mol_text_code_line, {
+            display: 'block',
+            position: 'relative',
+            font: {
+                family: 'monospace',
+            },
+            Numb: {
+                textAlign: 'right',
+                color: $mol_theme.shade,
+                width: rem(3),
+                margin: {
+                    left: rem(-4),
+                },
+                display: 'inline-block',
+                whiteSpace: 'nowrap',
+                userSelect: 'none',
+                position: 'absolute',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_blob = ($node.buffer?.Blob ?? $mol_dom_context.Blob);
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_clipboard) = class $mol_icon_clipboard extends ($.$mol_icon) {
+		path(){
+			return "M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_clipboard_outline) = class $mol_icon_clipboard_outline extends ($.$mol_icon) {
+		path(){
+			return "M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M7,7H17V5H19V19H5V5H7V7Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_button_copy) = class $mol_button_copy extends ($.$mol_button_minor) {
+		text(){
+			return (this.title());
+		}
+		text_blob(next){
+			if(next !== undefined) return next;
+			const obj = new this.$.$mol_blob([(this.text())], {"type": "text/plain"});
+			return obj;
+		}
+		html(){
+			return "";
+		}
+		html_blob(next){
+			if(next !== undefined) return next;
+			const obj = new this.$.$mol_blob([(this.html())], {"type": "text/html"});
+			return obj;
+		}
+		Icon(){
+			const obj = new this.$.$mol_icon_clipboard_outline();
+			return obj;
+		}
+		title(){
+			return "";
+		}
+		blobs(){
+			return [(this.text_blob()), (this.html_blob())];
+		}
+		data(){
+			return {};
+		}
+		sub(){
+			return [(this.Icon()), (this.title())];
+		}
+	};
+	($mol_mem(($.$mol_button_copy.prototype), "text_blob"));
+	($mol_mem(($.$mol_button_copy.prototype), "html_blob"));
+	($mol_mem(($.$mol_button_copy.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    const mapping = {
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        '&': '&amp;',
+    };
+    function $mol_html_encode(text) {
+        return text.replace(/[&<">]/gi, str => mapping[str]);
+    }
+    $.$mol_html_encode = $mol_html_encode;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Button copy text() value to clipboard
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+         */
+        class $mol_button_copy extends $.$mol_button_copy {
+            data() {
+                return Object.fromEntries(this.blobs().map(blob => [blob.type, blob]));
+            }
+            html() {
+                return $mol_html_encode(this.text());
+            }
+            attachments() {
+                return [new ClipboardItem(this.data())];
+            }
+            click(event) {
+                const cb = $mol_wire_sync(this.$.$mol_dom_context.navigator.clipboard);
+                cb.writeText?.(this.text());
+                cb.write?.(this.attachments());
+                if (cb.writeText === undefined && cb.write === undefined) {
+                    throw new Error("doesn't support copy to clipoard");
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_button_copy.prototype, "html", null);
+        __decorate([
+            $mol_mem
+        ], $mol_button_copy.prototype, "attachments", null);
+        $$.$mol_button_copy = $mol_button_copy;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_text_code) = class $mol_text_code extends ($.$mol_stack) {
+		sidebar_showed(){
+			return false;
+		}
+		render_visible_only(){
+			return false;
+		}
+		row_numb(id){
+			return 0;
+		}
+		row_theme(id){
+			return "";
+		}
+		row_text(id){
+			return "";
+		}
+		syntax(){
+			return null;
+		}
+		uri_resolve(id){
+			return "";
+		}
+		highlight(){
+			return "";
+		}
+		Row(id){
+			const obj = new this.$.$mol_text_code_line();
+			(obj.numb_showed) = () => ((this.sidebar_showed()));
+			(obj.numb) = () => ((this.row_numb(id)));
+			(obj.theme) = () => ((this.row_theme(id)));
+			(obj.text) = () => ((this.row_text(id)));
+			(obj.syntax) = () => ((this.syntax()));
+			(obj.uri_resolve) = (id) => ((this.uri_resolve(id)));
+			(obj.highlight) = () => ((this.highlight()));
+			return obj;
+		}
+		rows(){
+			return [(this.Row("0"))];
+		}
+		Rows(){
+			const obj = new this.$.$mol_list();
+			(obj.render_visible_only) = () => ((this.render_visible_only()));
+			(obj.rows) = () => ((this.rows()));
+			return obj;
+		}
+		text_export(){
+			return "";
+		}
+		Copy(){
+			const obj = new this.$.$mol_button_copy();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_text_code_Copy_hint")));
+			(obj.text) = () => ((this.text_export()));
+			return obj;
+		}
+		attr(){
+			return {...(super.attr()), "mol_text_code_sidebar_showed": (this.sidebar_showed())};
+		}
+		text(){
+			return "";
+		}
+		text_lines(){
+			return [];
+		}
+		find_pos(id){
+			return null;
+		}
+		uri_base(){
+			return "";
+		}
+		row_themes(){
+			return [];
+		}
+		sub(){
+			return [(this.Rows()), (this.Copy())];
+		}
+	};
+	($mol_mem_key(($.$mol_text_code.prototype), "Row"));
+	($mol_mem(($.$mol_text_code.prototype), "Rows"));
+	($mol_mem(($.$mol_text_code.prototype), "Copy"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Code visualizer.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_text_code_demo
+         */
+        class $mol_text_code extends $.$mol_text_code {
+            render_visible_only() {
+                return this.$.$mol_support_css_overflow_anchor();
+            }
+            text_lines() {
+                return (this.text() ?? '').split('\n');
+            }
+            rows() {
+                return this.text_lines().map((_, index) => this.Row(index + 1));
+            }
+            row_text(index) {
+                return this.text_lines()[index - 1];
+            }
+            row_numb(index) {
+                return index;
+            }
+            find_pos(offset) {
+                for (const [index, line] of this.text_lines().entries()) {
+                    if (line.length >= offset) {
+                        return this.Row(index + 1).find_pos(offset);
+                    }
+                    else {
+                        offset -= line.length + 1;
+                    }
+                }
+                return null;
+            }
+            sub() {
+                return [
+                    this.Rows(),
+                    ...this.sidebar_showed() ? [this.Copy()] : []
+                ];
+            }
+            syntax() {
+                return this.$.$mol_syntax2_md_code;
+            }
+            uri_base() {
+                return $mol_dom_context.document.location.href;
+            }
+            uri_resolve(uri) {
+                if (/^(\w+script+:)+/.test(uri))
+                    return null;
+                try {
+                    const url = new URL(uri, this.uri_base());
+                    return url.toString();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return null;
+                }
+            }
+            text_export() {
+                return this.text() + '\n';
+            }
+            row_theme(row) {
+                return this.row_themes()[row - 1];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_text_code.prototype, "text_lines", null);
+        __decorate([
+            $mol_mem
+        ], $mol_text_code.prototype, "rows", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code.prototype, "row_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code.prototype, "find_pos", null);
+        __decorate([
+            $mol_mem
+        ], $mol_text_code.prototype, "sub", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_text_code.prototype, "uri_resolve", null);
+        $$.$mol_text_code = $mol_text_code;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { rem, px } = $mol_style_unit;
+        $mol_style_define($mol_text_code, {
+            whiteSpace: 'pre-wrap',
+            font: {
+                family: 'monospace',
+            },
+            Rows: {
+                padding: $mol_gap.text,
+                minWidth: 0,
+            },
+            Row: {
+                font: {
+                    family: 'inherit',
+                },
+            },
+            Copy: {
+                alignSelf: 'flex-start',
+                justifySelf: 'flex-start',
+            },
+            '@': {
+                'mol_text_code_sidebar_showed': {
+                    true: {
+                        $mol_text_code_line: {
+                            margin: {
+                                left: rem(1.75),
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_textarea) = class $mol_textarea extends ($.$mol_stack) {
+		clickable(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		sidebar_showed(){
+			return false;
+		}
+		press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		hover(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hint(){
+			return " ";
+		}
+		enabled(){
+			return true;
+		}
+		spellcheck(){
+			return true;
+		}
+		length_max(){
+			return +Infinity;
+		}
+		selection(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		bring(){
+			return (this.Edit().bring());
+		}
+		submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		submit_with_ctrl(){
+			return true;
+		}
+		Edit(){
+			const obj = new this.$.$mol_textarea_edit();
+			(obj.value) = (next) => ((this.value(next)));
+			(obj.hint) = () => ((this.hint()));
+			(obj.enabled) = () => ((this.enabled()));
+			(obj.spellcheck) = () => ((this.spellcheck()));
+			(obj.length_max) = () => ((this.length_max()));
+			(obj.selection) = (next) => ((this.selection(next)));
+			(obj.submit) = (next) => ((this.submit(next)));
+			(obj.submit_with_ctrl) = () => ((this.submit_with_ctrl()));
+			return obj;
+		}
+		row_numb(id){
+			return 0;
+		}
+		highlight(){
+			return "";
+		}
+		syntax(){
+			const obj = new this.$.$mol_syntax2();
+			return obj;
+		}
+		View(){
+			const obj = new this.$.$mol_text_code();
+			(obj.text) = () => ((this.value()));
+			(obj.render_visible_only) = () => (false);
+			(obj.row_numb) = (id) => ((this.row_numb(id)));
+			(obj.sidebar_showed) = () => ((this.sidebar_showed()));
+			(obj.highlight) = () => ((this.highlight()));
+			(obj.syntax) = () => ((this.syntax()));
+			return obj;
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"mol_textarea_clickable": (this.clickable()), 
+				"mol_textarea_sidebar_showed": (this.sidebar_showed())
+			};
+		}
+		event(){
+			return {"keydown": (next) => (this.press(next)), "pointermove": (next) => (this.hover(next))};
+		}
+		sub(){
+			return [(this.Edit()), (this.View())];
+		}
+		symbols_alt(){
+			return {
+				"comma": "<", 
+				"period": ">", 
+				"dash": "−", 
+				"equals": "≈", 
+				"graveAccent": "́", 
+				"forwardSlash": "÷", 
+				"E": "€", 
+				"V": "✔", 
+				"X": "×", 
+				"C": "©", 
+				"P": "§", 
+				"H": "₽", 
+				"key0": "°", 
+				"key8": "•", 
+				"key2": "@", 
+				"key3": "#", 
+				"key4": "$", 
+				"key6": "^", 
+				"key7": "&", 
+				"bracketOpen": "[", 
+				"bracketClose": "]", 
+				"slashBack": "|"
+			};
+		}
+		symbols_alt_ctrl(){
+			return {"space": " "};
+		}
+		symbols_alt_shift(){
+			return {
+				"V": "✅", 
+				"X": "❌", 
+				"O": "⭕", 
+				"key1": "❗", 
+				"key4": "💲", 
+				"key7": "❓", 
+				"comma": "«", 
+				"period": "»", 
+				"semicolon": "“", 
+				"quoteSingle": "”", 
+				"dash": "—", 
+				"equals": "≠", 
+				"graveAccent": "̱", 
+				"bracketOpen": "{", 
+				"bracketClose": "}"
+			};
+		}
+	};
+	($mol_mem(($.$mol_textarea.prototype), "clickable"));
+	($mol_mem(($.$mol_textarea.prototype), "press"));
+	($mol_mem(($.$mol_textarea.prototype), "hover"));
+	($mol_mem(($.$mol_textarea.prototype), "value"));
+	($mol_mem(($.$mol_textarea.prototype), "selection"));
+	($mol_mem(($.$mol_textarea.prototype), "submit"));
+	($mol_mem(($.$mol_textarea.prototype), "Edit"));
+	($mol_mem(($.$mol_textarea.prototype), "syntax"));
+	($mol_mem(($.$mol_textarea.prototype), "View"));
+	($.$mol_textarea_edit) = class $mol_textarea_edit extends ($.$mol_string) {
+		dom_name(){
+			return "textarea";
+		}
+		enter(){
+			return "enter";
+		}
+		field(){
+			return {...(super.field()), "scrollTop": 0};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * An input field for entering multiline text.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+         */
+        class $mol_textarea extends $.$mol_textarea {
+            indent_inc() {
+                let text = this.value();
+                let [from, to] = this.selection();
+                const rows = text.split('\n');
+                let start = 0;
+                for (let i = 0; i < rows.length; ++i) {
+                    let end = start + rows[i].length;
+                    if (end >= from && start <= to) {
+                        if (to === from || start !== to) {
+                            rows[i] = '\t' + rows[i];
+                            to += 1;
+                            end += 1;
+                        }
+                    }
+                    start = end + 1;
+                }
+                this.value(rows.join('\n'));
+                this.selection([from + 1, to]);
+            }
+            indent_dec() {
+                let text = this.value();
+                let [from, to] = this.selection();
+                const rows = text.split('\n');
+                let start = 0;
+                for (let i = 0; i < rows.length; ++i) {
+                    const end = start + rows[i].length;
+                    if (end >= from && start <= to && rows[i].startsWith('\t')) {
+                        rows[i] = rows[i].slice(1);
+                        to -= 1;
+                        if (start < from)
+                            from -= 1;
+                    }
+                    start = end + 1;
+                }
+                this.value(rows.join('\n'));
+                this.selection([from, to]);
+            }
+            symbol_insert(event) {
+                const symbol = event.shiftKey
+                    ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
+                    : event.ctrlKey
+                        ? this.symbols_alt_ctrl()[$mol_keyboard_code[event.keyCode]]
+                        : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
+                if (!symbol)
+                    return;
+                event.preventDefault();
+                document.execCommand('insertText', false, symbol);
+            }
+            clickable(next) {
+                if (!this.enabled())
+                    return true;
+                return next ?? false;
+            }
+            hover(event) {
+                this.clickable(event.ctrlKey);
+            }
+            press(event) {
+                if (event.altKey) {
+                    this.symbol_insert(event);
+                }
+                else {
+                    switch (event.keyCode) {
+                        case !event.shiftKey && $mol_keyboard_code.tab:
+                            this.indent_inc();
+                            break;
+                        case event.shiftKey && $mol_keyboard_code.tab:
+                            this.indent_dec();
+                            break;
+                        default: return;
+                    }
+                    event.preventDefault();
+                }
+            }
+            row_numb(index) {
+                return index;
+            }
+            syntax() {
+                return this.$.$mol_syntax2_md_code;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_textarea.prototype, "clickable", null);
+        $$.$mol_textarea = $mol_textarea;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tflex-direction: column;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n\tborder-radius: var(--mol_gap_round);\n\tfont-family: monospace;\n\tposition: relative;\n\ttab-size: 4;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\twhite-space: inherit;\n\tfont-family: inherit;\n\ttab-size: inherit;\n\tuser-select: none;\n}\n\n[mol_textarea_view_copy] {\n\tpointer-events: all;\n}\n\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n\tuser-select: auto;\n}\n\n[mol_textarea_clickable] > [mol_textarea_edit] {\n\tuser-select: none;\n}\n\n[mol_textarea_edit] {\n\tfont-family: inherit;\n\tpadding: var(--mol_gap_text);\n\tcolor: transparent !important;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\ttext-align: inherit;\n\twhite-space: inherit;\n\tborder-radius: inherit;\n\toverflow-anchor: none;\n\tposition: absolute;\n\theight: 100%;\n\twidth: 100%;\n\ttab-size: inherit;\n}\n\n[mol_textarea_sidebar_showed] [mol_textarea_edit] {\n\tleft: 1.75rem;\n\twidth: calc( 100% - 1.75rem );\n}\n\n[mol_textarea_edit]:hover + [mol_textarea_view] {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_textarea_edit]:focus + [mol_textarea_view] {\n\tz-index: var(--mol_layer_focus);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_chat) = class $raggu_web_chat extends ($.$bog_builderui_div) {
+		Modes_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.modes_label_text())]);
+			return obj;
+		}
+		Mode_local(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["LocalSearch"]);
+			return obj;
+		}
+		Mode_global(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["Global"]);
+			return obj;
+		}
+		Mode_mix(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["Mix"]);
+			return obj;
+		}
+		Mode_plan(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["QueryPlan"]);
+			return obj;
+		}
+		Modes(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Mode_local()), 
+				(this.Mode_global()), 
+				(this.Mode_mix()), 
+				(this.Mode_plan())
+			]);
+			return obj;
+		}
+		Modes_bar(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Modes_label()), (this.Modes())]);
+			return obj;
+		}
+		Body(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows()));
+			return obj;
+		}
+		use_sug_one(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Sug_one(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.sug_one_text())]);
+			(obj.event) = () => ({"click": (next) => (this.use_sug_one(next))});
+			return obj;
+		}
+		use_sug_two(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Sug_two(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.sug_two_text())]);
+			(obj.event) = () => ({"click": (next) => (this.use_sug_two(next))});
+			return obj;
+		}
+		Suggestions(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Sug_one()), (this.Sug_two())]);
+			return obj;
+		}
+		prompt_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		prompt_submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Prompt(){
+			const obj = new this.$.$mol_textarea();
+			(obj.hint) = () => ((this.input_hint_text()));
+			(obj.value) = (next) => ((this.prompt_text(next)));
+			(obj.submit) = (next) => ((this.prompt_submit(next)));
+			return obj;
+		}
+		Input_send(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.send_label_text()));
+			(obj.click) = (next) => ((this.prompt_submit(next)));
+			(obj.sub) = () => (["↑"]);
+			return obj;
+		}
+		Input_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Prompt()), (this.Input_send())]);
+			return obj;
+		}
+		Footer(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Suggestions()), (this.Input_row())]);
+			return obj;
+		}
+		Message_text(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.message_text(id))]);
+			return obj;
+		}
+		Message_trace_head_title(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_head_title_text())]);
+			return obj;
+		}
+		Message_trace_head_meta(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_head_meta_text())]);
+			return obj;
+		}
+		Message_trace_head(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Message_trace_head_title(id)), (this.Message_trace_head_meta(id))]);
+			return obj;
+		}
+		Message_trace_label(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_label_text())]);
+			return obj;
+		}
+		Message_trace_chip_one(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_chip_one_text())]);
+			return obj;
+		}
+		Message_trace_chip_two(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_chip_two_text())]);
+			return obj;
+		}
+		Message_trace_chip_three(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_chip_three_text())]);
+			return obj;
+		}
+		Message_trace_chips(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Message_trace_chip_one(id)), 
+				(this.Message_trace_chip_two(id)), 
+				(this.Message_trace_chip_three(id))
+			]);
+			return obj;
+		}
+		Message_trace_stat_chunks(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_stat_chunks_text())]);
+			return obj;
+		}
+		Message_trace_stat_comms(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_stat_comms_text())]);
+			return obj;
+		}
+		Message_trace_stat_retr(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_stat_retr_text())]);
+			return obj;
+		}
+		Message_trace_stat_gen(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_stat_gen_text())]);
+			return obj;
+		}
+		Message_trace_stat_power(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_stat_power_text())]);
+			return obj;
+		}
+		Message_trace_stats(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Message_trace_stat_chunks(id)), 
+				(this.Message_trace_stat_comms(id)), 
+				(this.Message_trace_stat_retr(id)), 
+				(this.Message_trace_stat_gen(id)), 
+				(this.Message_trace_stat_power(id))
+			]);
+			return obj;
+		}
+		Message_trace_link(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_link_text())]);
+			return obj;
+		}
+		Message_trace_body(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Message_trace_label(id)), 
+				(this.Message_trace_chips(id)), 
+				(this.Message_trace_stats(id)), 
+				(this.Message_trace_link(id))
+			]);
+			return obj;
+		}
+		Message_trace(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({"raggu_visible": (this.message_with_trace(id))});
+			(obj.sub) = () => ([(this.Message_trace_head(id)), (this.Message_trace_body(id))]);
+			return obj;
+		}
+		modes_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_modes_label_text"));
+		}
+		trace_head_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_head_title_text"));
+		}
+		trace_head_meta_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_head_meta_text"));
+		}
+		trace_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_label_text"));
+		}
+		trace_chip_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_one_text"));
+		}
+		trace_chip_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_two_text"));
+		}
+		trace_chip_three_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_three_text"));
+		}
+		trace_stat_chunks_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_chunks_text"));
+		}
+		trace_stat_comms_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_comms_text"));
+		}
+		trace_stat_retr_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_retr_text"));
+		}
+		trace_stat_gen_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_gen_text"));
+		}
+		trace_stat_power_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_power_text"));
+		}
+		trace_link_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_link_text"));
+		}
+		sug_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_sug_one_text"));
+		}
+		sug_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_sug_two_text"));
+		}
+		input_hint_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_input_hint_text"));
+		}
+		send_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_send_label_text"));
+		}
+		seed_user_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_seed_user_text"));
+		}
+		seed_assistant_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_seed_assistant_text"));
+		}
+		mock_prefix_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_mock_prefix_text"));
+		}
+		mock_suffix_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_mock_suffix_text"));
+		}
+		rows(){
+			return [];
+		}
+		message_text(id){
+			return "";
+		}
+		message_role(id){
+			return "";
+		}
+		message_with_trace(id){
+			return false;
+		}
+		sub(){
+			return [
+				(this.Modes_bar()), 
+				(this.Body()), 
+				(this.Footer())
+			];
+		}
+		Message(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
+			(obj.sub) = () => ([(this.Message_text(id)), (this.Message_trace(id))]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$raggu_web_chat.prototype), "Modes_label"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_local"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_global"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_mix"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_plan"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Modes"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Modes_bar"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Body"));
+	($mol_mem(($.$raggu_web_chat.prototype), "use_sug_one"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Sug_one"));
+	($mol_mem(($.$raggu_web_chat.prototype), "use_sug_two"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Sug_two"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Suggestions"));
+	($mol_mem(($.$raggu_web_chat.prototype), "prompt_text"));
+	($mol_mem(($.$raggu_web_chat.prototype), "prompt_submit"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Prompt"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Input_send"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Input_row"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Footer"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_text"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_head_title"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_head_meta"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_head"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_label"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_chip_one"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_chip_two"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_chip_three"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_chips"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_stat_chunks"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_stat_comms"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_stat_retr"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_stat_gen"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_stat_power"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_stats"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_link"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace_body"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message_trace"));
+	($mol_mem_key(($.$raggu_web_chat.prototype), "Message"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_chat extends $.$raggu_web_chat {
+            history(next) {
+                const stored = this.$.$mol_state_session.value('$raggu_web_chat.history', next);
+                if (stored)
+                    return stored;
+                return [
+                    { role: 'user', text: this.seed_user_text() },
+                    { role: 'assistant', text: this.seed_assistant_text(), trace: true },
+                ];
+            }
+            prompt_text(next) {
+                return this.$.$mol_state_session.value('$raggu_web_chat.prompt_text', next) ?? '';
+            }
+            rows() {
+                return this.history().map((_, i) => this.Message(i));
+            }
+            message_text(index) {
+                return this.history()[index]?.text ?? '';
+            }
+            message_role(index) {
+                return this.history()[index]?.role ?? 'user';
+            }
+            message_with_trace(index) {
+                return Boolean(this.history()[index]?.trace);
+            }
+            prompt_submit() {
+                const text = this.prompt_text().trim();
+                if (!text)
+                    return null;
+                const next = [...this.history(), { role: 'user', text }];
+                this.history(next);
+                this.prompt_text('');
+                const mock = `${this.mock_prefix_text()} "${text}". ${this.mock_suffix_text()}`;
+                setTimeout(() => {
+                    const cur = this.history();
+                    this.history([...cur, { role: 'assistant', text: mock, trace: true }]);
+                }, 500);
+                return null;
+            }
+            use_sug_one() {
+                this.prompt_text(this.sug_one_text());
+                return null;
+            }
+            use_sug_two() {
+                this.prompt_text(this.sug_two_text());
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_chat.prototype, "history", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_chat.prototype, "prompt_submit", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_chat.prototype, "use_sug_one", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_chat.prototype, "use_sug_two", null);
+        $$.$raggu_web_chat = $raggu_web_chat;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const mode_pill_inactive = {
+        background: { color: $bog_builderui_tokens.field },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+        padding: {
+            top: '5px',
+            bottom: '5px',
+            left: '10px',
+            right: '10px',
+        },
+        font: { size: '11px', weight: 600 },
+        color: $bog_builderui_tokens.shade,
+    };
+    const chip = {
+        background: { color: '#ece9fb' },
+        color: '#5b5bd6',
+        border: { radius: '5px' },
+        padding: {
+            top: '3px',
+            bottom: '3px',
+            left: '8px',
+            right: '8px',
+        },
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 600,
+            size: '10px',
+        },
+    };
+    const trace_stat = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 500,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+    };
+    const suggestion = {
+        border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
+        padding: {
+            top: '5px',
+            bottom: '5px',
+            left: '11px',
+            right: '11px',
+        },
+        font: { size: '11px' },
+        color: $bog_builderui_tokens.shade,
+        cursor: 'pointer',
+    };
+    $mol_style_define($raggu_web_chat, {
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
+        height: '100%',
+        Modes_bar: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '9px',
+            padding: {
+                top: '14px',
+                bottom: '14px',
+                left: '22px',
+                right: '22px',
+            },
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+        },
+        Modes_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+        },
+        Modes: {
+            flex: { direction: 'row' },
+            gap: '5px',
+        },
+        Mode_local: {
+            background: { color: '#5b5bd6' },
+            color: '#ffffff',
+            border: { radius: '6px' },
+            padding: {
+                top: '5px',
+                bottom: '5px',
+                left: '10px',
+                right: '10px',
+            },
+            font: { size: '11px', weight: 600 },
+        },
+        Mode_global: mode_pill_inactive,
+        Mode_mix: mode_pill_inactive,
+        Mode_plan: mode_pill_inactive,
+        Body: {
+            flex: { grow: 1, direction: 'column' },
+            overflow: 'auto',
+            padding: {
+                top: '22px',
+                bottom: '22px',
+                left: '22px',
+                right: '22px',
+            },
+            gap: '16px',
+        },
+        Message: {
+            flex: { direction: 'column' },
+            maxWidth: '78%',
+            '@': {
+                raggu_role: {
+                    user: {
+                        align: { self: 'flex-end' },
+                        maxWidth: '70%',
+                    },
+                    assistant: {
+                        align: { self: 'flex-start' },
+                    },
+                },
+            },
+        },
+        Message_text: {
+            font: { size: '13px' },
+            lineHeight: '1.55',
+            '@': {
+                raggu_role: {
+                    user: {
+                        background: { color: '#5b5bd6' },
+                        color: '#ffffff',
+                        borderRadius: '12px 12px 3px 12px',
+                        padding: {
+                            top: '11px',
+                            bottom: '11px',
+                            left: '15px',
+                            right: '15px',
+                        },
+                    },
+                    assistant: {
+                        background: { color: $bog_builderui_tokens.card },
+                        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+                        borderRadius: '12px 12px 12px 3px',
+                        padding: {
+                            top: '13px',
+                            bottom: '13px',
+                            left: '16px',
+                            right: '16px',
+                        },
+                        color: $bog_builderui_tokens.text,
+                    },
+                },
+            },
+        },
+        Message_trace: {
+            margin: { top: '8px' },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '9px' },
+            background: { color: $bog_builderui_tokens.back },
+            overflow: 'hidden',
+            flex: { direction: 'column' },
+            '@': {
+                raggu_visible: {
+                    false: {
+                        display: 'none',
+                    },
+                },
+            },
+        },
+        Message_trace_head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '7px',
+            padding: {
+                top: '9px',
+                bottom: '9px',
+                left: '13px',
+                right: '13px',
+            },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: '#5b5bd6',
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+        },
+        Message_trace_head_meta: {
+            marginLeft: 'auto',
+            color: $bog_builderui_tokens.shade,
+            font: { weight: 500 },
+        },
+        Message_trace_body: {
+            padding: {
+                top: '11px',
+                bottom: '11px',
+                left: '13px',
+                right: '13px',
+            },
+            flex: { direction: 'column' },
+            gap: '8px',
+        },
+        Message_trace_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Message_trace_chips: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '5px',
+        },
+        Message_trace_chip_one: chip,
+        Message_trace_chip_two: chip,
+        Message_trace_chip_three: chip,
+        Message_trace_stats: {
+            flex: { direction: 'row' },
+            gap: '14px',
+            margin: { top: '2px' },
+        },
+        Message_trace_stat_chunks: trace_stat,
+        Message_trace_stat_comms: trace_stat,
+        Message_trace_stat_retr: trace_stat,
+        Message_trace_stat_gen: trace_stat,
+        Message_trace_stat_power: trace_stat,
+        Message_trace_link: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: '#5b5bd6',
+        },
+        Footer: {
+            padding: {
+                top: '14px',
+                bottom: '14px',
+                left: '22px',
+                right: '22px',
+            },
+            border: {
+                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            flex: { direction: 'column' },
+        },
+        Suggestions: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '7px',
+            margin: { bottom: '10px' },
+        },
+        Sug_one: suggestion,
+        Sug_two: suggestion,
+        Input_row: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '12px',
+                right: '8px',
+            },
+            color: $bog_builderui_tokens.shade,
+            font: { size: '13px' },
+        },
+        Prompt: {
+            flex: { grow: 1 },
+            border: { width: 0 },
+            background: { color: 'transparent' },
+            minHeight: '24px',
+        },
+        Input_send: {
+            background: { color: '#5b5bd6' },
+            color: '#ffffff',
+            border: { radius: '7px' },
+            padding: {
+                top: '6px',
+                bottom: '6px',
+                left: '14px',
+                right: '14px',
+            },
+            font: { size: '12px', weight: 600 },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_dashboard_dist) = class $raggu_web_dashboard_dist extends ($.$bog_builderui_div) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("raggu/web/dashboard/dist/dist.view.css", "[raggu_web_dashboard_dist] {\n\tbackground-image: repeating-linear-gradient(90deg, #efedea 0 7px, #e7e4e0 7px 14px);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$raggu_web_dashboard_metric) = class $raggu_web_dashboard_metric extends ($.$bog_builderui_div) {
+		Name(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.name())]);
+			return obj;
+		}
+		Bar_fill(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Bar(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Bar_fill())]);
+			return obj;
+		}
+		Value(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.value())]);
+			return obj;
+		}
+		name(){
+			return "";
+		}
+		value(){
+			return "";
+		}
+		pct(){
+			return "0%";
+		}
+		sub(){
+			return [
+				(this.Name()), 
+				(this.Bar()), 
+				(this.Value())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Name"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Bar_fill"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Bar"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Value"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_dashboard_metric extends $.$raggu_web_dashboard_metric {
+            Bar_fill() {
+                const fill = super.Bar_fill();
+                fill.style = () => ({ width: this.pct() });
+                return fill;
+            }
+        }
+        $$.$raggu_web_dashboard_metric = $raggu_web_dashboard_metric;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_dashboard_metric, {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '10px',
+        margin: { top: '12px' },
+        Name: {
+            minWidth: '120px',
+            maxWidth: '120px',
+            font: { size: '12px', weight: 600 },
+        },
+        Bar: {
+            flex: { grow: 1 },
+            height: '8px',
+            border: { radius: '4px' },
+            background: { color: '#ece9fb' },
+            position: 'relative',
+            overflow: 'hidden',
+        },
+        Bar_fill: {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            background: { color: '#5b5bd6' },
+        },
+        Value: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: '#5b5bd6',
+            minWidth: '36px',
+            maxWidth: '36px',
+            textAlign: 'right',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_dashboard_stage) = class $raggu_web_dashboard_stage extends ($.$bog_builderui_div) {
+		Name(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.name())]);
+			return obj;
+		}
+		Bar_fill(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Bar(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Bar_fill())]);
+			return obj;
+		}
+		Time(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.time())]);
+			return obj;
+		}
+		name(){
+			return "";
+		}
+		time(){
+			return "";
+		}
+		pct(){
+			return "0%";
+		}
+		sub(){
+			return [
+				(this.Name()), 
+				(this.Bar()), 
+				(this.Time())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Name"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Bar_fill"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Bar"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Time"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_dashboard_stage extends $.$raggu_web_dashboard_stage {
+            Bar_fill() {
+                const fill = super.Bar_fill();
+                fill.style = () => ({ width: this.pct() });
+                return fill;
+            }
+        }
+        $$.$raggu_web_dashboard_stage = $raggu_web_dashboard_stage;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_dashboard_stage, {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '10px',
+        margin: { top: '10px' },
+        Name: {
+            minWidth: '130px',
+            maxWidth: '130px',
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Bar: {
+            flex: { grow: 1 },
+            height: '8px',
+            border: { radius: '4px' },
+            background: { color: $bog_builderui_tokens.field },
+            overflow: 'hidden',
+        },
+        Bar_fill: {
+            height: '100%',
+            background: { color: '#a89bf0' },
+        },
+        Time: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            minWidth: '42px',
+            maxWidth: '42px',
+            textAlign: 'right',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_dashboard_log) = class $raggu_web_dashboard_log extends ($.$bog_builderui_div) {
+		expanded(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Time(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.time())]);
+			return obj;
+		}
+		Text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.text())]);
+			return obj;
+		}
+		Mode(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.mode())]);
+			return obj;
+		}
+		Dur(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.dur())]);
+			return obj;
+		}
+		Arrow(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.arrow())]);
+			return obj;
+		}
+		Head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				event, 
+				(this.Time()), 
+				(this.Text()), 
+				(this.Mode()), 
+				(this.Dur()), 
+				(this.Arrow())
+			]);
+			return obj;
+		}
+		Trace_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_label())]);
+			return obj;
+		}
+		Trace_stat_chunks(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.chunks())]);
+			return obj;
+		}
+		Trace_stat_comms(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.communities())]);
+			return obj;
+		}
+		Trace_stat_retr(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.retrieval())]);
+			return obj;
+		}
+		Trace_stat_gen(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.generation())]);
+			return obj;
+		}
+		Trace_stat_power(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.power())]);
+			return obj;
+		}
+		Trace_stats(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Trace_stat_chunks()), 
+				(this.Trace_stat_comms()), 
+				(this.Trace_stat_retr()), 
+				(this.Trace_stat_gen()), 
+				(this.Trace_stat_power())
+			]);
+			return obj;
+		}
+		Trace_link(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.trace_link())]);
+			return obj;
+		}
+		Trace(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Trace_label()), 
+				(this.Trace_stats()), 
+				(this.Trace_link())
+			]);
+			return obj;
+		}
+		time(){
+			return "";
+		}
+		text(){
+			return "";
+		}
+		mode(){
+			return "";
+		}
+		dur(){
+			return "";
+		}
+		chunks(){
+			return "";
+		}
+		communities(){
+			return "";
+		}
+		retrieval(){
+			return "";
+		}
+		generation(){
+			return "";
+		}
+		power(){
+			return "";
+		}
+		trace_label(){
+			return "";
+		}
+		trace_link(){
+			return "";
+		}
+		arrow(){
+			return "▾";
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_dashboard_log_expanded": (this.expanded())};
+		}
+		sub(){
+			return [(this.Head()), (this.Trace())];
+		}
+	};
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "expanded"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "toggle"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Time"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Text"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Mode"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Dur"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Arrow"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Head"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_label"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_stat_chunks"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_stat_comms"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_stat_retr"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_stat_gen"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_stat_power"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_stats"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace_link"));
+	($mol_mem(($.$raggu_web_dashboard_log.prototype), "Trace"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_dashboard_log extends $.$raggu_web_dashboard_log {
+            toggle(next) {
+                this.expanded(!this.expanded());
+                return null;
+            }
+            arrow() {
+                return this.expanded() ? '▴' : '▾';
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_dashboard_log.prototype, "toggle", null);
+        $$.$raggu_web_dashboard_log = $raggu_web_dashboard_log;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const trace_stat = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 500,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+    };
+    $mol_style_define($raggu_web_dashboard_log, {
+        flex: { direction: 'column' },
+        border: { radius: '6px' },
+        overflow: 'hidden',
+        background: { color: $bog_builderui_tokens.back },
+        Head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '14px',
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '11px',
+            },
+            color: $bog_builderui_tokens.shade,
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '10px',
+                right: '10px',
+            },
+            cursor: 'pointer',
+        },
+        Time: {
+            color: $bog_builderui_tokens.shade,
+        },
+        Text: {
+            flex: { grow: 1 },
+        },
+        Mode: {
+            color: $bog_builderui_tokens.shade,
+        },
+        Dur: {
+            color: '#1f8a5b',
+        },
+        Arrow: {
+            color: $bog_builderui_tokens.shade,
+            minWidth: '12px',
+            textAlign: 'center',
+        },
+        Trace: {
+            display: 'none',
+            flex: { direction: 'column' },
+            gap: '8px',
+            padding: {
+                top: '11px',
+                bottom: '11px',
+                left: '13px',
+                right: '13px',
+            },
+            border: {
+                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            transition: 'opacity 0.18s ease',
+        },
+        Trace_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Trace_stats: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '14px',
+            margin: { top: '2px' },
+        },
+        Trace_stat_chunks: trace_stat,
+        Trace_stat_comms: trace_stat,
+        Trace_stat_retr: trace_stat,
+        Trace_stat_gen: trace_stat,
+        Trace_stat_power: trace_stat,
+        Trace_link: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: '#5b5bd6',
+        },
+        '@': {
+            raggu_web_dashboard_log_expanded: {
+                true: {
+                    Trace: {
+                        display: 'flex',
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_dashboard) = class $raggu_web_dashboard extends ($.$bog_builderui_div) {
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title_text())]);
+			return obj;
+		}
+		Subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.subtitle_text())]);
+			return obj;
+		}
+		Card_stats_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.card_stats_label_text())]);
+			return obj;
+		}
+		Stat_nodes_val(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["2 410"]);
+			return obj;
+		}
+		Stat_nodes_lbl(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.stat_nodes_lbl_text())]);
+			return obj;
+		}
+		Stat_nodes(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Stat_nodes_val()), (this.Stat_nodes_lbl())]);
+			return obj;
+		}
+		Stat_edges_val(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["7 088"]);
+			return obj;
+		}
+		Stat_edges_lbl(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.stat_edges_lbl_text())]);
+			return obj;
+		}
+		Stat_edges(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Stat_edges_val()), (this.Stat_edges_lbl())]);
+			return obj;
+		}
+		Stat_comms_val(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["38"]);
+			return obj;
+		}
+		Stat_comms_lbl(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.stat_comms_lbl_text())]);
+			return obj;
+		}
+		Stat_comms(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Stat_comms_val()), (this.Stat_comms_lbl())]);
+			return obj;
+		}
+		Stats_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Stat_nodes()), 
+				(this.Stat_edges()), 
+				(this.Stat_comms())
+			]);
+			return obj;
+		}
+		Stats_dist(){
+			const obj = new this.$.$raggu_web_dashboard_dist();
+			(obj.sub) = () => ([(this.stats_dist_text())]);
+			return obj;
+		}
+		Card_stats(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Card_stats_label()), 
+				(this.Stats_row()), 
+				(this.Stats_dist())
+			]);
+			return obj;
+		}
+		Card_quality_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.card_quality_label_text())]);
+			return obj;
+		}
+		metric_name(id){
+			return "";
+		}
+		metric_value(id){
+			return "";
+		}
+		metric_pct(id){
+			return "0%";
+		}
+		Metric(id){
+			const obj = new this.$.$raggu_web_dashboard_metric();
+			(obj.name) = () => ((this.metric_name(id)));
+			(obj.value) = () => ((this.metric_value(id)));
+			(obj.pct) = () => ((this.metric_pct(id)));
+			return obj;
+		}
+		metric_rows(){
+			return [(this.Metric(id))];
+		}
+		Metric_rows(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.metric_rows()));
+			return obj;
+		}
+		Quality_footer(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.quality_footer_text())]);
+			return obj;
+		}
+		Card_quality(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Card_quality_label()), 
+				(this.Metric_rows()), 
+				(this.Quality_footer())
+			]);
+			return obj;
+		}
+		Card_energy_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.card_energy_label_text())]);
+			return obj;
+		}
+		energy_kwh_val(){
+			return "";
+		}
+		Energy_kwh_val(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.energy_kwh_val())]);
+			return obj;
+		}
+		Energy_kwh_lbl(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.energy_kwh_lbl_text())]);
+			return obj;
+		}
+		Energy_kwh(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Energy_kwh_val()), (this.Energy_kwh_lbl())]);
+			return obj;
+		}
+		energy_cost_val(){
+			return "";
+		}
+		Energy_cost_val(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.energy_cost_val())]);
+			return obj;
+		}
+		Energy_cost_lbl(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.energy_cost_lbl_text())]);
+			return obj;
+		}
+		Energy_cost(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Energy_cost_val()), (this.Energy_cost_lbl())]);
+			return obj;
+		}
+		Energy_row(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Energy_kwh()), (this.Energy_cost())]);
+			return obj;
+		}
+		Energy_formula(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.energy_formula_text())]);
+			return obj;
+		}
+		Energy_note(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.energy_note_text())]);
+			return obj;
+		}
+		Card_energy(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Card_energy_label()), 
+				(this.Energy_row()), 
+				(this.Energy_formula()), 
+				(this.Energy_note())
+			]);
+			return obj;
+		}
+		Card_timings_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.card_timings_label_text())]);
+			return obj;
+		}
+		stage_name(id){
+			return "";
+		}
+		stage_time(id){
+			return "";
+		}
+		stage_pct(id){
+			return "0%";
+		}
+		Stage(id){
+			const obj = new this.$.$raggu_web_dashboard_stage();
+			(obj.name) = () => ((this.stage_name(id)));
+			(obj.time) = () => ((this.stage_time(id)));
+			(obj.pct) = () => ((this.stage_pct(id)));
+			return obj;
+		}
+		stage_rows(){
+			return [(this.Stage(id))];
+		}
+		Stage_rows(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.stage_rows()));
+			return obj;
+		}
+		Card_timings(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Card_timings_label()), (this.Stage_rows())]);
+			return obj;
+		}
+		Card_logs_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.card_logs_label_text())]);
+			return obj;
+		}
+		log_time(id){
+			return "";
+		}
+		log_text(id){
+			return "";
+		}
+		log_mode(id){
+			return "";
+		}
+		log_dur(id){
+			return "";
+		}
+		log_expanded(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		log_chunks(id){
+			return "";
+		}
+		log_communities(id){
+			return "";
+		}
+		log_retrieval(id){
+			return "";
+		}
+		log_generation(id){
+			return "";
+		}
+		log_power(id){
+			return "";
+		}
+		Log(id){
+			const obj = new this.$.$raggu_web_dashboard_log();
+			(obj.time) = () => ((this.log_time(id)));
+			(obj.text) = () => ((this.log_text(id)));
+			(obj.mode) = () => ((this.log_mode(id)));
+			(obj.dur) = () => ((this.log_dur(id)));
+			(obj.expanded) = (next) => ((this.log_expanded(id, next)));
+			(obj.chunks) = () => ((this.log_chunks(id)));
+			(obj.communities) = () => ((this.log_communities(id)));
+			(obj.retrieval) = () => ((this.log_retrieval(id)));
+			(obj.generation) = () => ((this.log_generation(id)));
+			(obj.power) = () => ((this.log_power(id)));
+			(obj.trace_label) = () => ((this.trace_label_text()));
+			(obj.trace_link) = () => ((this.trace_link_text()));
+			return obj;
+		}
+		log_rows(){
+			return [(this.Log(id))];
+		}
+		Log_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.log_rows()));
+			return obj;
+		}
+		Card_logs(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Card_logs_label()), (this.Log_list())]);
+			return obj;
+		}
+		Grid(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Card_stats()), 
+				(this.Card_quality()), 
+				(this.Card_energy()), 
+				(this.Card_timings()), 
+				(this.Card_logs())
+			]);
+			return obj;
+		}
+		metrics(){
+			return [];
+		}
+		stages(){
+			return [];
+		}
+		logs(){
+			return [];
+		}
+		title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_title_text"));
+		}
+		subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_subtitle_text"));
+		}
+		card_stats_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_stats_label_text"));
+		}
+		stat_nodes_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_nodes_lbl_text"));
+		}
+		stat_edges_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_edges_lbl_text"));
+		}
+		stat_comms_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_comms_lbl_text"));
+		}
+		stats_dist_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stats_dist_text"));
+		}
+		card_quality_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_quality_label_text"));
+		}
+		quality_footer_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_quality_footer_text"));
+		}
+		card_energy_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_energy_label_text"));
+		}
+		energy_kwh_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_kwh_lbl_text"));
+		}
+		energy_cost_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_cost_lbl_text"));
+		}
+		energy_formula_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_formula_text"));
+		}
+		energy_note_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_note_text"));
+		}
+		card_timings_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_timings_label_text"));
+		}
+		card_logs_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_logs_label_text"));
+		}
+		trace_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_trace_label_text"));
+		}
+		trace_link_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_trace_link_text"));
+		}
+		sub(){
+			return [
+				(this.Title()), 
+				(this.Subtitle()), 
+				(this.Grid())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Title"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Subtitle"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_stats_label"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stats_row"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stats_dist"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_stats"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_quality_label"));
+	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Metric"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Metric_rows"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Quality_footer"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_quality"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_energy_label"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_row"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_formula"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_note"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_energy"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_timings_label"));
+	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Stage"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stage_rows"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_timings"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_logs_label"));
+	($mol_mem_key(($.$raggu_web_dashboard.prototype), "log_expanded"));
+	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Log"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_list"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_logs"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Grid"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const METRICS = [
+            { id: 'correctness', name: 'Answer Correctness', value: '59.0', pct: '59%' },
+            { id: 'recall', name: 'Evidence Recall', value: '84.2', pct: '84%' },
+            { id: 'relevancy', name: 'Context Relevancy', value: '90.8', pct: '91%' },
+        ];
+        const STAGES = [
+            { id: 'chunking', name: 'Chunking', time: '1.2s', pct: '15%' },
+            { id: 'extraction', name: 'Extraction', time: '8.4s', pct: '70%' },
+            { id: 'summarization', name: 'Summarization', time: '3.1s', pct: '38%' },
+            { id: 'communities', name: 'Communities', time: '2.0s', pct: '26%' },
+            { id: 'refinement', name: 'Refinement', time: '0.6s', pct: '9%' },
+        ];
+        const LOGS = [
+            {
+                id: 'q1',
+                time: '12:04:18',
+                text: '«Who wrote the anthem…»',
+                mode: 'LocalSearch',
+                dur: '1.3s',
+                chunks: 'chunks: 3',
+                communities: 'communities: 1',
+                retrieval: 'retrieval 140ms',
+                generation: 'gen 1.2s',
+            },
+            {
+                id: 'q2',
+                time: '12:03:51',
+                text: '«Connection between Ibsen and…»',
+                mode: 'MixSearch',
+                dur: '2.1s',
+                chunks: 'chunks: 7',
+                communities: 'communities: 3',
+                retrieval: 'retrieval 360ms',
+                generation: 'gen 1.7s',
+            },
+        ];
+        // energy assumptions
+        const TDP_W = 300; // meno-lite 7B локально
+        const PUE = 1.4; // дата-центр / охлаждение
+        const KWH_PRICE = 0.15; // $/kWh
+        const GPT4_PRICE = 0.10; // $ per doc (~40k tokens × $2.5/1M)
+        function parse_seconds(time) {
+            // '1.2s' → 1.2  |  '140ms' → 0.14
+            const trimmed = time.trim();
+            if (trimmed.endsWith('ms'))
+                return parseFloat(trimmed) / 1000;
+            if (trimmed.endsWith('s'))
+                return parseFloat(trimmed);
+            return parseFloat(trimmed) || 0;
+        }
+        class $raggu_web_dashboard extends $.$raggu_web_dashboard {
+            metrics() { return METRICS; }
+            stages() { return STAGES; }
+            logs() { return LOGS; }
+            metric_rows() { return this.metrics().map(m => this.Metric(m.id)); }
+            stage_rows() { return this.stages().map(s => this.Stage(s.id)); }
+            log_rows() { return this.logs().map(l => this.Log(l.id)); }
+            metric(id) { return this.metrics().find(m => m.id === id) ?? METRICS[0]; }
+            stage(id) { return this.stages().find(s => s.id === id) ?? STAGES[0]; }
+            log(id) { return this.logs().find(l => l.id === id) ?? LOGS[0]; }
+            metric_name(id) { return this.metric(id).name; }
+            metric_value(id) { return this.metric(id).value; }
+            metric_pct(id) { return this.metric(id).pct; }
+            stage_name(id) { return this.stage(id).name; }
+            stage_time(id) { return this.stage(id).time; }
+            stage_pct(id) { return this.stage(id).pct; }
+            log_time(id) { return this.log(id).time; }
+            log_text(id) { return this.log(id).text; }
+            log_mode(id) { return this.log(id).mode; }
+            log_dur(id) { return this.log(id).dur; }
+            log_chunks(id) { return this.log(id).chunks; }
+            log_communities(id) { return this.log(id).communities; }
+            log_retrieval(id) { return this.log(id).retrieval; }
+            log_generation(id) { return this.log(id).generation; }
+            // per-query energy estimate: TDP × dur × PUE
+            log_power(id) {
+                const sec = parse_seconds(this.log(id).dur);
+                const wh = TDP_W * (sec / 3600) * PUE;
+                return `≈${wh.toFixed(2)} Wh`;
+            }
+            // total pipeline seconds, reactive on stages
+            pipeline_seconds() {
+                return this.stages().reduce((sum, s) => sum + parse_seconds(s.time), 0);
+            }
+            // kWh = TDP × time_h × PUE / 1000
+            energy_kwh() {
+                const hours = this.pipeline_seconds() / 3600;
+                return (TDP_W * hours * PUE) / 1000;
+            }
+            energy_kwh_val() {
+                return this.energy_kwh().toFixed(2);
+            }
+            // $ saving vs gpt-4o estimate per doc
+            energy_cost_val() {
+                const our = this.energy_kwh() * KWH_PRICE;
+                if (GPT4_PRICE <= 0)
+                    return '0%';
+                const saved_pct = Math.round((1 - our / GPT4_PRICE) * 100);
+                const sign = saved_pct >= 0 ? '−' : '+';
+                return `${sign}${Math.abs(saved_pct)}%`;
+            }
+        }
+        $$.$raggu_web_dashboard = $raggu_web_dashboard;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const card_label = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 600,
+            size: '11px',
+        },
+        color: $bog_builderui_tokens.shade,
+        textTransform: 'uppercase',
+        letterSpacing: '0.6px',
+    };
+    const card = {
+        background: { color: $bog_builderui_tokens.card },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
+        padding: {
+            top: '18px',
+            bottom: '18px',
+            left: '18px',
+            right: '18px',
+        },
+        flex: { direction: 'column' },
+    };
+    const stat_val = {
+        font: { weight: 800, size: '26px' },
+    };
+    const stat_lbl = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 500,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+    };
+    $mol_style_define($raggu_web_dashboard, {
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
+        padding: {
+            top: '1.5rem',
+            bottom: '1.5rem',
+            left: '1.75rem',
+            right: '1.75rem',
+        },
+        Title: {
+            font: { weight: 700, size: '20px' },
+            margin: { bottom: '4px' },
+        },
+        Subtitle: {
+            font: { size: '13px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { bottom: '20px' },
+        },
+        Grid: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '16px',
+            minWidth: 0,
+        },
+        Card_stats: card,
+        Card_quality: card,
+        Card_energy: card,
+        Card_timings: card,
+        Card_logs: { ...card, gridColumn: '1 / -1' },
+        Card_stats_label: card_label,
+        Card_quality_label: card_label,
+        Card_energy_label: card_label,
+        Card_timings_label: card_label,
+        Card_logs_label: card_label,
+        Stats_row: {
+            flex: { direction: 'row' },
+            gap: '22px',
+            margin: { top: '14px' },
+        },
+        Stat_nodes: { flex: { direction: 'column' } },
+        Stat_edges: { flex: { direction: 'column' } },
+        Stat_comms: { flex: { direction: 'column' } },
+        Stat_nodes_val: stat_val,
+        Stat_edges_val: stat_val,
+        Stat_comms_val: stat_val,
+        Stat_nodes_lbl: stat_lbl,
+        Stat_edges_lbl: stat_lbl,
+        Stat_comms_lbl: stat_lbl,
+        Stats_dist: {
+            margin: { top: '14px' },
+            height: '64px',
+            border: { radius: '6px' },
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Metric_rows: { flex: { direction: 'column' } },
+        Quality_footer: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '12px' },
+        },
+        Energy_row: {
+            flex: { direction: 'row' },
+            gap: '22px',
+            margin: { top: '14px' },
+            align: { items: 'flex-end' },
+        },
+        Energy_kwh: { flex: { direction: 'column' } },
+        Energy_cost: { flex: { direction: 'column' } },
+        Energy_kwh_val: stat_val,
+        Energy_cost_val: { ...stat_val, color: '#1f8a5b' },
+        Energy_kwh_lbl: stat_lbl,
+        Energy_cost_lbl: stat_lbl,
+        Energy_formula: {
+            margin: { top: '10px' },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Energy_note: {
+            margin: { top: '8px' },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            lineHeight: '1.5',
+            background: { color: $bog_builderui_tokens.back },
+            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
+            padding: {
+                top: '9px',
+                bottom: '9px',
+                left: '9px',
+                right: '9px',
+            },
+            whiteSpace: 'pre-line',
+        },
+        Stage_rows: { flex: { direction: 'column' } },
+        Log_list: {
+            flex: { direction: 'column' },
+            gap: '6px',
+            margin: { top: '12px' },
+        },
+    });
 })($ || ($ = {}));
 
 ;

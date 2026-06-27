@@ -2936,143 +2936,55 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $bog_builderui_div__sub_raggu_web_topbar_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_topbar_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_topbar_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_topbar_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_topbar_preset__label_raggu_web_topbar_5 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['preset_fast_label'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['label'] >
-	>
-	type $raggu_web_topbar_preset__active_raggu_web_topbar_6 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['is_fast'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['active'] >
-	>
-	type $raggu_web_topbar_preset__click_raggu_web_topbar_7 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['click_fast'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['click'] >
-	>
-	type $raggu_web_topbar_preset__label_raggu_web_topbar_8 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['preset_accurate_label'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['label'] >
-	>
-	type $raggu_web_topbar_preset__active_raggu_web_topbar_9 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['is_accurate'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['active'] >
-	>
-	type $raggu_web_topbar_preset__click_raggu_web_topbar_10 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['click_accurate'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['click'] >
-	>
-	type $raggu_web_topbar_preset__label_raggu_web_topbar_11 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['preset_demo_label'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['label'] >
-	>
-	type $raggu_web_topbar_preset__active_raggu_web_topbar_12 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['is_demo'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['active'] >
-	>
-	type $raggu_web_topbar_preset__click_raggu_web_topbar_13 = $mol_type_enforce<
-		ReturnType< $raggu_web_topbar['click_demo'] >
-		,
-		ReturnType< $raggu_web_topbar_preset['click'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_topbar_14 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__event_raggu_web_topbar_15 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_topbar['open_settings'] > ): ReturnType< $raggu_web_topbar['open_settings'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_topbar_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_topbar_17 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_topbar extends $bog_builderui_div {
-		screen_title( ): string
-		Title( ): $bog_builderui_div
-		dataset_name( ): string
-		Subtitle( ): $bog_builderui_div
-		Title_block( ): $bog_builderui_div
-		Spacer( ): $bog_builderui_div
-		Preset_label( ): $bog_builderui_div
-		is_fast( ): boolean
-		click_fast( next?: any ): any
-		Preset_fast( ): $raggu_web_topbar_preset
-		is_accurate( ): boolean
-		click_accurate( next?: any ): any
-		Preset_accurate( ): $raggu_web_topbar_preset
-		is_demo( ): boolean
-		click_demo( next?: any ): any
-		Preset_demo( ): $raggu_web_topbar_preset
-		Preset_group( ): $bog_builderui_div
-		open_settings( next?: any ): any
-		Settings_btn( ): $bog_builderui_div
-		Export_btn( ): $bog_builderui_div
-		screen( ): string
-		dataset_id( ): string
-		preset( next?: string ): string
-		preset_label_text( ): string
-		settings_btn_text( ): string
-		export_btn_text( ): string
-		preset_fast_label( ): string
-		preset_accurate_label( ): string
-		preset_demo_label( ): string
-		sub( ): readonly(any)[]
+	export class $mol_ghost extends $mol_view {
+		Sub( ): $mol_view
 	}
 	
 }
 
-//# sourceMappingURL=topbar.view.tree.d.ts.map
+//# sourceMappingURL=ghost.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $raggu_web_topbar extends $.$raggu_web_topbar {
-        screen_title(): string;
-        dataset_name(): string;
-        is_fast(): boolean;
-        is_accurate(): boolean;
-        is_demo(): boolean;
-        click_fast(): null;
-        click_accurate(): null;
-        click_demo(): null;
+    /**
+     * Mixin view logic to DOM node of another component.
+     */
+    class $mol_ghost extends $.$mol_ghost {
+        dom_node_external(next?: Element): Element;
+        dom_node_actual(): Element;
+        dom_tree(): Element;
+        title(): string;
+        minimal_width(): number;
+        minimal_height(): number;
     }
 }
 
-/** @see $bog_builderui_tokens */
+declare namespace $ {
+
+	export class $mol_follower extends $mol_ghost {
+		transform( ): string
+		Anchor( ): $mol_view
+		align( ): readonly(number)[]
+		offset( ): readonly(number)[]
+		style( ): ({ 
+			'transform': ReturnType< $mol_follower['transform'] >,
+		})  & ReturnType< $mol_ghost['style'] >
+	}
+	
+}
+
+//# sourceMappingURL=follower.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Marker on top of another component with tracking of its position.
+     */
+    class $mol_follower extends $.$mol_follower {
+        pos(): {
+            left: number;
+            top: number;
+        } | null;
+        transform(): string;
+    }
+}
+
 declare namespace $ {
 }
 
@@ -3136,1561 +3048,89 @@ declare namespace $.$$ {
 
 declare namespace $ {
 
-	type $bog_builderui_div__sub_raggu_web_settings_group_1 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_pop_bubble__content_mol_pop_1 = $mol_type_enforce<
+		ReturnType< $mol_pop['bubble_content'] >
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_pop_bubble['content'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_settings_group_2 = $mol_type_enforce<
-		({ 
-			'raggu_web_settings_group_reindex': ReturnType< $raggu_web_settings_group['reindex'] >,
-		}) 
+	type $mol_pop_bubble__height_max_mol_pop_2 = $mol_type_enforce<
+		ReturnType< $mol_pop['height_max'] >
 		,
-		ReturnType< $bog_builderui_div['attr'] >
+		ReturnType< $mol_pop_bubble['height_max'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_settings_group_3 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_follower__offset_mol_pop_3 = $mol_type_enforce<
+		ReturnType< $mol_pop['bubble_offset'] >
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_follower['offset'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_settings_group_4 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_follower__align_mol_pop_4 = $mol_type_enforce<
+		ReturnType< $mol_pop['bubble_align'] >
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_follower['align'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_settings_group_5 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_follower__Anchor_mol_pop_5 = $mol_type_enforce<
+		ReturnType< $mol_pop['Anchor'] >
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_follower['Anchor'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_settings_group_6 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_follower__Sub_mol_pop_6 = $mol_type_enforce<
+		ReturnType< $mol_pop['Bubble'] >
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_follower['Sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_settings_group_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_settings_group extends $bog_builderui_div {
-		Step( ): $bog_builderui_div
-		Reindex( ): $bog_builderui_div
-		Head( ): $bog_builderui_div
-		Title( ): $bog_builderui_div
-		Opts( ): $bog_builderui_div
-		Control( ): $bog_builderui_div
-		step( ): string
-		title( ): string
-		opts( ): string
-		control( ): string
-		reindex( ): boolean
-		reindex_text( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=group.view.tree.d.ts.map
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__event_raggu_web_settings_1 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_settings['close'] > ): ReturnType< $raggu_web_settings['close'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_settings_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_settings_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_settings_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__event_raggu_web_settings_5 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_settings['close'] > ): ReturnType< $raggu_web_settings['close'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_settings_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_settings_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_settings_group__step_raggu_web_settings_8 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['step'] >
-	>
-	type $raggu_web_settings_group__title_raggu_web_settings_9 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['title'] >
-	>
-	type $raggu_web_settings_group__opts_raggu_web_settings_10 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['opts'] >
-	>
-	type $raggu_web_settings_group__control_raggu_web_settings_11 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['control'] >
-	>
-	type $raggu_web_settings_group__reindex_raggu_web_settings_12 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $raggu_web_settings_group['reindex'] >
-	>
-	type $raggu_web_settings_group__step_raggu_web_settings_13 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['step'] >
-	>
-	type $raggu_web_settings_group__title_raggu_web_settings_14 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['title'] >
-	>
-	type $raggu_web_settings_group__opts_raggu_web_settings_15 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['opts'] >
-	>
-	type $raggu_web_settings_group__control_raggu_web_settings_16 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['control'] >
-	>
-	type $raggu_web_settings_group__reindex_raggu_web_settings_17 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $raggu_web_settings_group['reindex'] >
-	>
-	type $raggu_web_settings_group__step_raggu_web_settings_18 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['step'] >
-	>
-	type $raggu_web_settings_group__title_raggu_web_settings_19 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['title'] >
-	>
-	type $raggu_web_settings_group__opts_raggu_web_settings_20 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['opts'] >
-	>
-	type $raggu_web_settings_group__control_raggu_web_settings_21 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['control'] >
-	>
-	type $raggu_web_settings_group__reindex_raggu_web_settings_22 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $raggu_web_settings_group['reindex'] >
-	>
-	type $raggu_web_settings_group__step_raggu_web_settings_23 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['step'] >
-	>
-	type $raggu_web_settings_group__title_raggu_web_settings_24 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['title'] >
-	>
-	type $raggu_web_settings_group__opts_raggu_web_settings_25 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['opts'] >
-	>
-	type $raggu_web_settings_group__control_raggu_web_settings_26 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['control'] >
-	>
-	type $raggu_web_settings_group__reindex_raggu_web_settings_27 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $raggu_web_settings_group['reindex'] >
-	>
-	type $raggu_web_settings_group__step_raggu_web_settings_28 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['step'] >
-	>
-	type $raggu_web_settings_group__title_raggu_web_settings_29 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['title'] >
-	>
-	type $raggu_web_settings_group__opts_raggu_web_settings_30 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['opts'] >
-	>
-	type $raggu_web_settings_group__control_raggu_web_settings_31 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['control'] >
-	>
-	type $raggu_web_settings_group__reindex_raggu_web_settings_32 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $raggu_web_settings_group['reindex'] >
-	>
-	type $raggu_web_settings_group__step_raggu_web_settings_33 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['step'] >
-	>
-	type $raggu_web_settings_group__title_raggu_web_settings_34 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['title'] >
-	>
-	type $raggu_web_settings_group__opts_raggu_web_settings_35 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['opts'] >
-	>
-	type $raggu_web_settings_group__control_raggu_web_settings_36 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_settings_group['control'] >
-	>
-	type $raggu_web_settings_group__reindex_raggu_web_settings_37 = $mol_type_enforce<
-		boolean
-		,
-		ReturnType< $raggu_web_settings_group['reindex'] >
-	>
-	type $mol_scroll__sub_raggu_web_settings_38 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_scroll['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_settings_39 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_settings extends $bog_builderui_div {
-		close( next?: any ): any
-		Backdrop( ): $bog_builderui_div
-		Header_title( ): $bog_builderui_div
-		Header_sub( ): $bog_builderui_div
-		Header_text( ): $bog_builderui_div
-		Spacer( ): $bog_builderui_div
-		Close_btn( ): $bog_builderui_div
-		Header( ): $bog_builderui_div
-		Group_chunking( ): $raggu_web_settings_group
-		Group_extraction( ): $raggu_web_settings_group
-		Group_summarization( ): $raggu_web_settings_group
-		Group_communities( ): $raggu_web_settings_group
-		Group_refinement( ): $raggu_web_settings_group
-		Group_search( ): $raggu_web_settings_group
-		Body( ): $mol_scroll
-		Panel( ): $bog_builderui_div
+	export class $mol_pop extends $mol_view {
+		bubble( ): any
+		Anchor( ): any
+		bubble_offset( ): readonly(number)[]
+		bubble_align( ): readonly(number)[]
+		bubble_content( ): readonly($mol_view_content)[]
+		height_max( ): number
+		Bubble( ): $mol_pop_bubble
+		Follower( ): $mol_follower
 		showed( next?: boolean ): boolean
+		align_vert( ): string
+		align_hor( ): string
+		align( ): string
+		prefer( ): string
+		auto( ): readonly(any)[]
+		sub( ): readonly(any)[]
+		sub_visible( ): readonly(any)[]
+	}
+	
+	export class $mol_pop_bubble extends $mol_view {
+		content( ): readonly($mol_view_content)[]
+		height_max( ): number
+		sub( ): ReturnType< $mol_pop_bubble['content'] >
+		style( ): ({ 
+			'maxHeight': ReturnType< $mol_pop_bubble['height_max'] >,
+		})  & ReturnType< $mol_view['style'] >
 		attr( ): ({ 
-			'raggu_web_settings_showed': ReturnType< $raggu_web_settings['showed'] >,
-		})  & ReturnType< $bog_builderui_div['attr'] >
-		sub( ): readonly(any)[]
+			'tabindex': number,
+			'popover': string,
+		})  & ReturnType< $mol_view['attr'] >
 	}
 	
 }
 
-//# sourceMappingURL=settings.view.tree.d.ts.map
+//# sourceMappingURL=pop.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $raggu_web_settings extends $.$raggu_web_settings {
-        close(): null;
+    /**
+     * `Bubble` that can be shown anchored to `Anchor` element.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
+     */
+    class $mol_pop extends $.$mol_pop {
+        showed(next?: boolean): boolean;
+        sub_visible(): any[];
+        height_max(): number;
+        align(): string;
+        align_vert(): "suspense" | "top" | "bottom";
+        align_hor(): "suspense" | "left" | "right";
+        bubble_offset(): number[];
+        bubble_align(): number[];
+        bubble(): void;
     }
 }
 
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $raggu_web_gallery_card_preview extends $bog_builderui_div {
-	}
-	
-}
-
-//# sourceMappingURL=preview.view.tree.d.ts.map
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_gallery_card_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_gallery_card_preview__sub_raggu_web_gallery_card_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $raggu_web_gallery_card_preview['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_card_9 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_gallery_card extends $bog_builderui_div {
-		click( next?: any ): any
-		Preview_label( ): $bog_builderui_div
-		Domain_badge( ): $bog_builderui_div
-		Preview( ): $raggu_web_gallery_card_preview
-		Title( ): $bog_builderui_div
-		Desc( ): $bog_builderui_div
-		tag_nodes( ): string
-		Tag_nodes( ): $bog_builderui_div
-		tag_edges( ): string
-		Tag_edges( ): $bog_builderui_div
-		tag_comms( ): string
-		Tag_comms( ): $bog_builderui_div
-		Tags( ): $bog_builderui_div
-		id( ): string
-		title( ): string
-		domain( ): string
-		desc( ): string
-		nodes( ): string
-		edges( ): string
-		comms( ): string
-		preview_label_text( ): string
-		event( ): ({ 
-			click( next?: ReturnType< $raggu_web_gallery_card['click'] > ): ReturnType< $raggu_web_gallery_card['click'] >,
-		})  & ReturnType< $bog_builderui_div['event'] >
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=card.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
-        unit(key: 'nodes' | 'edges' | 'comms'): string;
-        tag_nodes(): string;
-        tag_edges(): string;
-        tag_comms(): string;
-    }
-}
-
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_gallery_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_gallery_card__id_raggu_web_gallery_7 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_id'] >
-		,
-		ReturnType< $raggu_web_gallery_card['id'] >
-	>
-	type $raggu_web_gallery_card__title_raggu_web_gallery_8 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_title'] >
-		,
-		ReturnType< $raggu_web_gallery_card['title'] >
-	>
-	type $raggu_web_gallery_card__domain_raggu_web_gallery_9 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_domain'] >
-		,
-		ReturnType< $raggu_web_gallery_card['domain'] >
-	>
-	type $raggu_web_gallery_card__desc_raggu_web_gallery_10 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_desc'] >
-		,
-		ReturnType< $raggu_web_gallery_card['desc'] >
-	>
-	type $raggu_web_gallery_card__nodes_raggu_web_gallery_11 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_nodes'] >
-		,
-		ReturnType< $raggu_web_gallery_card['nodes'] >
-	>
-	type $raggu_web_gallery_card__edges_raggu_web_gallery_12 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_edges'] >
-		,
-		ReturnType< $raggu_web_gallery_card['edges'] >
-	>
-	type $raggu_web_gallery_card__comms_raggu_web_gallery_13 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['card_comms'] >
-		,
-		ReturnType< $raggu_web_gallery_card['comms'] >
-	>
-	type $raggu_web_gallery_card__click_raggu_web_gallery_14 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['click'] >
-		,
-		ReturnType< $raggu_web_gallery_card['click'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_gallery_15 = $mol_type_enforce<
-		ReturnType< $raggu_web_gallery['rows'] >
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_gallery extends $bog_builderui_div {
-		Header_title( ): $bog_builderui_div
-		Header_subtitle( ): $bog_builderui_div
-		Header_text( ): $bog_builderui_div
-		Spacer( ): $bog_builderui_div
-		Upload_doc( ): $bog_builderui_div
-		Upload_idx( ): $bog_builderui_div
-		Header( ): $bog_builderui_div
-		card_id( id: any): string
-		card_title( id: any): string
-		card_domain( id: any): string
-		card_desc( id: any): string
-		card_nodes( id: any): string
-		card_edges( id: any): string
-		card_comms( id: any): string
-		click( id: any, next?: any ): any
-		Card( id: any): $raggu_web_gallery_card
-		rows( ): readonly(any)[]
-		Grid( ): $bog_builderui_div
-		dataset_id( ): string
-		select_dataset( next?: any ): any
-		datasets( ): readonly(any)[]
-		header_title_text( ): string
-		header_subtitle_text( ): string
-		upload_doc_text( ): string
-		upload_idx_text( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=gallery.view.tree.d.ts.map
-declare namespace $.$$ {
-    type DatasetStats = {
-        id: string;
-        nodes: string;
-        edges: string;
-        comms: string;
-    };
-    export class $raggu_web_gallery extends $.$raggu_web_gallery {
-        datasets(): DatasetStats[];
-        rows(): $.$raggu_web_gallery_card[];
-        dataset(id: string): DatasetStats;
-        dataset_text(id: string, suffix: string): string;
-        card_id(id: string): string;
-        card_title(id: string): string;
-        card_domain(id: string): string;
-        card_desc(id: string): string;
-        card_nodes(id: string): string;
-        card_edges(id: string): string;
-        card_comms(id: string): string;
-        click(id: string): null;
-    }
-    export {};
-}
-
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_explorer_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_9 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_10 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_12 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_13 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_14 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_15 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_17 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_18 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_19 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_20 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_23 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_24 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_25 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_26 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_27 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_28 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_29 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_30 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_31 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_32 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_33 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_34 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_35 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_36 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_37 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_38 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_39 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_40 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_41 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_42 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_explorer_43 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_explorer extends $bog_builderui_div {
-		Canvas_label( ): $bog_builderui_div
-		Canvas_bg( ): $bog_builderui_div
-		Filter_search( ): $bog_builderui_div
-		Filter_type( ): $bog_builderui_div
-		Filter_thresh( ): $bog_builderui_div
-		Filter_comm( ): $bog_builderui_div
-		Filters( ): $bog_builderui_div
-		Legend_title( ): $bog_builderui_div
-		Legend_person_dot( ): $bog_builderui_div
-		Legend_person_label( ): $bog_builderui_div
-		Legend_person( ): $bog_builderui_div
-		Legend_org_dot( ): $bog_builderui_div
-		Legend_org_label( ): $bog_builderui_div
-		Legend_org( ): $bog_builderui_div
-		Legend_loc_dot( ): $bog_builderui_div
-		Legend_loc_label( ): $bog_builderui_div
-		Legend_loc( ): $bog_builderui_div
-		Legend_event_dot( ): $bog_builderui_div
-		Legend_event_label( ): $bog_builderui_div
-		Legend_event( ): $bog_builderui_div
-		Legend_date_dot( ): $bog_builderui_div
-		Legend_date_label( ): $bog_builderui_div
-		Legend_date( ): $bog_builderui_div
-		Legend_work_dot( ): $bog_builderui_div
-		Legend_work_label( ): $bog_builderui_div
-		Legend_work( ): $bog_builderui_div
-		Legend_law_dot( ): $bog_builderui_div
-		Legend_law_label( ): $bog_builderui_div
-		Legend_law( ): $bog_builderui_div
-		Legend( ): $bog_builderui_div
-		Canvas( ): $bog_builderui_div
-		Aside_title( ): $bog_builderui_div
-		Entity_dot( ): $bog_builderui_div
-		Entity_name( ): $bog_builderui_div
-		Entity_head( ): $bog_builderui_div
-		Entity_type( ): $bog_builderui_div
-		Entity_desc( ): $bog_builderui_div
-		Relations_title( ): $bog_builderui_div
-		Rel_one_type( ): $bog_builderui_div
-		Rel_one_target( ): $bog_builderui_div
-		Rel_one( ): $bog_builderui_div
-		Rel_two_type( ): $bog_builderui_div
-		Rel_two_target( ): $bog_builderui_div
-		Rel_two( ): $bog_builderui_div
-		Rel_three_type( ): $bog_builderui_div
-		Rel_three_target( ): $bog_builderui_div
-		Rel_three( ): $bog_builderui_div
-		Sources_title( ): $bog_builderui_div
-		Sources( ): $bog_builderui_div
-		Ask_btn( ): $bog_builderui_div
-		Aside( ): $bog_builderui_div
-		canvas_title_text( ): string
-		canvas_engine_text( ): string
-		canvas_meaning_text( ): string
-		filter_search_text( ): string
-		filter_type_text( ): string
-		filter_thresh_text( ): string
-		filter_comm_text( ): string
-		aside_title_text( ): string
-		entity_name_text( ): string
-		entity_desc_text( ): string
-		relations_title_text( ): string
-		rel_one_target_text( ): string
-		rel_two_target_text( ): string
-		rel_three_target_text( ): string
-		sources_title_text( ): string
-		sources_text( ): string
-		ask_btn_text( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=explorer.view.tree.d.ts.map
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_chat_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_9 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_10 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_12 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_13 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_14 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_15 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_17 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_18 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_19 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_20 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_23 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_24 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_25 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_26 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_27 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_28 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_29 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_30 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_31 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_32 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_33 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_34 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_chat_35 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_chat extends $bog_builderui_div {
-		Modes_label( ): $bog_builderui_div
-		Mode_local( ): $bog_builderui_div
-		Mode_global( ): $bog_builderui_div
-		Mode_mix( ): $bog_builderui_div
-		Mode_plan( ): $bog_builderui_div
-		Modes( ): $bog_builderui_div
-		Modes_bar( ): $bog_builderui_div
-		Msg_user( ): $bog_builderui_div
-		Msg_assistant( ): $bog_builderui_div
-		Trace_head_title( ): $bog_builderui_div
-		Trace_head_meta( ): $bog_builderui_div
-		Trace_head( ): $bog_builderui_div
-		Trace_label( ): $bog_builderui_div
-		Trace_chip_one( ): $bog_builderui_div
-		Trace_chip_two( ): $bog_builderui_div
-		Trace_chip_three( ): $bog_builderui_div
-		Trace_chips( ): $bog_builderui_div
-		Trace_stat_chunks( ): $bog_builderui_div
-		Trace_stat_comms( ): $bog_builderui_div
-		Trace_stat_retr( ): $bog_builderui_div
-		Trace_stat_gen( ): $bog_builderui_div
-		Trace_stat_power( ): $bog_builderui_div
-		Trace_stats( ): $bog_builderui_div
-		Trace_link( ): $bog_builderui_div
-		Trace_body( ): $bog_builderui_div
-		Trace( ): $bog_builderui_div
-		Msg_assistant_wrap( ): $bog_builderui_div
-		Body( ): $bog_builderui_div
-		Sug_one( ): $bog_builderui_div
-		Sug_two( ): $bog_builderui_div
-		Suggestions( ): $bog_builderui_div
-		Input_hint( ): $bog_builderui_div
-		Input_spacer( ): $bog_builderui_div
-		Input_send( ): $bog_builderui_div
-		Input_row( ): $bog_builderui_div
-		Footer( ): $bog_builderui_div
-		modes_label_text( ): string
-		msg_user_text( ): string
-		msg_assistant_text( ): string
-		trace_head_title_text( ): string
-		trace_head_meta_text( ): string
-		trace_label_text( ): string
-		trace_chip_one_text( ): string
-		trace_chip_two_text( ): string
-		trace_chip_three_text( ): string
-		trace_stat_chunks_text( ): string
-		trace_stat_comms_text( ): string
-		trace_stat_retr_text( ): string
-		trace_stat_gen_text( ): string
-		trace_stat_power_text( ): string
-		trace_link_text( ): string
-		sug_one_text( ): string
-		sug_two_text( ): string
-		input_hint_text( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=chat.view.tree.d.ts.map
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $raggu_web_dashboard_dist extends $bog_builderui_div {
-	}
-	
-}
-
-//# sourceMappingURL=dist.view.tree.d.ts.map
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_dashboard_metric_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_metric_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_metric_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_dashboard_metric extends $bog_builderui_div {
-		Name( ): $bog_builderui_div
-		Bar_fill( ): $bog_builderui_div
-		Bar( ): $bog_builderui_div
-		Value( ): $bog_builderui_div
-		name( ): string
-		value( ): string
-		pct( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=metric.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $raggu_web_dashboard_metric extends $.$raggu_web_dashboard_metric {
-        Bar_fill(): $bog_builderui_div;
-    }
-}
-
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_dashboard_stage_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_stage_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_stage_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_dashboard_stage extends $bog_builderui_div {
-		Name( ): $bog_builderui_div
-		Bar_fill( ): $bog_builderui_div
-		Bar( ): $bog_builderui_div
-		Time( ): $bog_builderui_div
-		name( ): string
-		time( ): string
-		pct( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=stage.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $raggu_web_dashboard_stage extends $.$raggu_web_dashboard_stage {
-        Bar_fill(): $bog_builderui_div;
-    }
-}
-
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_dashboard_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_9 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_10 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_12 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_13 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_dashboard_dist__sub_raggu_web_dashboard_14 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $raggu_web_dashboard_dist['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_15 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_dashboard_metric__name_raggu_web_dashboard_17 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['metric_name'] >
-		,
-		ReturnType< $raggu_web_dashboard_metric['name'] >
-	>
-	type $raggu_web_dashboard_metric__value_raggu_web_dashboard_18 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['metric_value'] >
-		,
-		ReturnType< $raggu_web_dashboard_metric['value'] >
-	>
-	type $raggu_web_dashboard_metric__pct_raggu_web_dashboard_19 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['metric_pct'] >
-		,
-		ReturnType< $raggu_web_dashboard_metric['pct'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_20 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['metric_rows'] >
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_23 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_24 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_25 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_26 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_27 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_28 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_29 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_30 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_31 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_32 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_33 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_dashboard_stage__name_raggu_web_dashboard_34 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['stage_name'] >
-		,
-		ReturnType< $raggu_web_dashboard_stage['name'] >
-	>
-	type $raggu_web_dashboard_stage__time_raggu_web_dashboard_35 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['stage_time'] >
-		,
-		ReturnType< $raggu_web_dashboard_stage['time'] >
-	>
-	type $raggu_web_dashboard_stage__pct_raggu_web_dashboard_36 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['stage_pct'] >
-		,
-		ReturnType< $raggu_web_dashboard_stage['pct'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_37 = $mol_type_enforce<
-		ReturnType< $raggu_web_dashboard['stage_rows'] >
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_38 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_39 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_40 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_41 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_42 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_43 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_44 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_45 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_46 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_47 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_48 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_49 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_50 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_51 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_52 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_53 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_dashboard_54 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_dashboard extends $bog_builderui_div {
-		Title( ): $bog_builderui_div
-		Subtitle( ): $bog_builderui_div
-		Card_stats_label( ): $bog_builderui_div
-		Stat_nodes_val( ): $bog_builderui_div
-		Stat_nodes_lbl( ): $bog_builderui_div
-		Stat_nodes( ): $bog_builderui_div
-		Stat_edges_val( ): $bog_builderui_div
-		Stat_edges_lbl( ): $bog_builderui_div
-		Stat_edges( ): $bog_builderui_div
-		Stat_comms_val( ): $bog_builderui_div
-		Stat_comms_lbl( ): $bog_builderui_div
-		Stat_comms( ): $bog_builderui_div
-		Stats_row( ): $bog_builderui_div
-		Stats_dist( ): $raggu_web_dashboard_dist
-		Card_stats( ): $bog_builderui_div
-		Card_quality_label( ): $bog_builderui_div
-		metric_name( id: any): string
-		metric_value( id: any): string
-		metric_pct( id: any): string
-		Metric( id: any): $raggu_web_dashboard_metric
-		metric_rows( ): readonly(any)[]
-		Metric_rows( ): $bog_builderui_div
-		Quality_footer( ): $bog_builderui_div
-		Card_quality( ): $bog_builderui_div
-		Card_energy_label( ): $bog_builderui_div
-		Energy_kwh_val( ): $bog_builderui_div
-		Energy_kwh_lbl( ): $bog_builderui_div
-		Energy_kwh( ): $bog_builderui_div
-		Energy_cost_val( ): $bog_builderui_div
-		Energy_cost_lbl( ): $bog_builderui_div
-		Energy_cost( ): $bog_builderui_div
-		Energy_row( ): $bog_builderui_div
-		Energy_note( ): $bog_builderui_div
-		Card_energy( ): $bog_builderui_div
-		Card_timings_label( ): $bog_builderui_div
-		stage_name( id: any): string
-		stage_time( id: any): string
-		stage_pct( id: any): string
-		Stage( id: any): $raggu_web_dashboard_stage
-		stage_rows( ): readonly(any)[]
-		Stage_rows( ): $bog_builderui_div
-		Card_timings( ): $bog_builderui_div
-		Card_logs_label( ): $bog_builderui_div
-		Log_one_time( ): $bog_builderui_div
-		Log_one_text( ): $bog_builderui_div
-		Log_one_mode( ): $bog_builderui_div
-		Log_one_dur( ): $bog_builderui_div
-		Log_one_arrow( ): $bog_builderui_div
-		Log_one( ): $bog_builderui_div
-		Log_two_time( ): $bog_builderui_div
-		Log_two_text( ): $bog_builderui_div
-		Log_two_mode( ): $bog_builderui_div
-		Log_two_dur( ): $bog_builderui_div
-		Log_two_arrow( ): $bog_builderui_div
-		Log_two( ): $bog_builderui_div
-		Log_list( ): $bog_builderui_div
-		Card_logs( ): $bog_builderui_div
-		Grid( ): $bog_builderui_div
-		metrics( ): readonly(any)[]
-		stages( ): readonly(any)[]
-		title_text( ): string
-		subtitle_text( ): string
-		card_stats_label_text( ): string
-		stat_nodes_lbl_text( ): string
-		stat_edges_lbl_text( ): string
-		stat_comms_lbl_text( ): string
-		stats_dist_text( ): string
-		card_quality_label_text( ): string
-		quality_footer_text( ): string
-		card_energy_label_text( ): string
-		energy_kwh_lbl_text( ): string
-		energy_cost_lbl_text( ): string
-		energy_note_text( ): string
-		card_timings_label_text( ): string
-		card_logs_label_text( ): string
-		log_one_text_text( ): string
-		log_two_text_text( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=dashboard.view.tree.d.ts.map
-declare namespace $.$$ {
-    type Metric = {
-        id: string;
-        name: string;
-        value: string;
-        pct: string;
-    };
-    type Stage = {
-        id: string;
-        name: string;
-        time: string;
-        pct: string;
-    };
-    export class $raggu_web_dashboard extends $.$raggu_web_dashboard {
-        metrics(): Metric[];
-        stages(): Stage[];
-        metric_rows(): $.$raggu_web_dashboard_metric[];
-        stage_rows(): $.$raggu_web_dashboard_stage[];
-        metric(id: string): Metric;
-        stage(id: string): Stage;
-        metric_name(id: string): string;
-        metric_value(id: string): string;
-        metric_pct(id: string): string;
-        stage_name(id: string): string;
-        stage_time(id: string): string;
-        stage_pct(id: string): string;
-    }
-    export {};
-}
-
-/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -5581,148 +4021,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-
-	export class $mol_ghost extends $mol_view {
-		Sub( ): $mol_view
-	}
-	
-}
-
-//# sourceMappingURL=ghost.view.tree.d.ts.map
-declare namespace $.$$ {
-    /**
-     * Mixin view logic to DOM node of another component.
-     */
-    class $mol_ghost extends $.$mol_ghost {
-        dom_node_external(next?: Element): Element;
-        dom_node_actual(): Element;
-        dom_tree(): Element;
-        title(): string;
-        minimal_width(): number;
-        minimal_height(): number;
-    }
-}
-
-declare namespace $ {
-
-	export class $mol_follower extends $mol_ghost {
-		transform( ): string
-		Anchor( ): $mol_view
-		align( ): readonly(number)[]
-		offset( ): readonly(number)[]
-		style( ): ({ 
-			'transform': ReturnType< $mol_follower['transform'] >,
-		})  & ReturnType< $mol_ghost['style'] >
-	}
-	
-}
-
-//# sourceMappingURL=follower.view.tree.d.ts.map
-declare namespace $.$$ {
-    /**
-     * Marker on top of another component with tracking of its position.
-     */
-    class $mol_follower extends $.$mol_follower {
-        pos(): {
-            left: number;
-            top: number;
-        } | null;
-        transform(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_pop_bubble__content_mol_pop_1 = $mol_type_enforce<
-		ReturnType< $mol_pop['bubble_content'] >
-		,
-		ReturnType< $mol_pop_bubble['content'] >
-	>
-	type $mol_pop_bubble__height_max_mol_pop_2 = $mol_type_enforce<
-		ReturnType< $mol_pop['height_max'] >
-		,
-		ReturnType< $mol_pop_bubble['height_max'] >
-	>
-	type $mol_follower__offset_mol_pop_3 = $mol_type_enforce<
-		ReturnType< $mol_pop['bubble_offset'] >
-		,
-		ReturnType< $mol_follower['offset'] >
-	>
-	type $mol_follower__align_mol_pop_4 = $mol_type_enforce<
-		ReturnType< $mol_pop['bubble_align'] >
-		,
-		ReturnType< $mol_follower['align'] >
-	>
-	type $mol_follower__Anchor_mol_pop_5 = $mol_type_enforce<
-		ReturnType< $mol_pop['Anchor'] >
-		,
-		ReturnType< $mol_follower['Anchor'] >
-	>
-	type $mol_follower__Sub_mol_pop_6 = $mol_type_enforce<
-		ReturnType< $mol_pop['Bubble'] >
-		,
-		ReturnType< $mol_follower['Sub'] >
-	>
-	export class $mol_pop extends $mol_view {
-		bubble( ): any
-		Anchor( ): any
-		bubble_offset( ): readonly(number)[]
-		bubble_align( ): readonly(number)[]
-		bubble_content( ): readonly($mol_view_content)[]
-		height_max( ): number
-		Bubble( ): $mol_pop_bubble
-		Follower( ): $mol_follower
-		showed( next?: boolean ): boolean
-		align_vert( ): string
-		align_hor( ): string
-		align( ): string
-		prefer( ): string
-		auto( ): readonly(any)[]
-		sub( ): readonly(any)[]
-		sub_visible( ): readonly(any)[]
-	}
-	
-	export class $mol_pop_bubble extends $mol_view {
-		content( ): readonly($mol_view_content)[]
-		height_max( ): number
-		sub( ): ReturnType< $mol_pop_bubble['content'] >
-		style( ): ({ 
-			'maxHeight': ReturnType< $mol_pop_bubble['height_max'] >,
-		})  & ReturnType< $mol_view['style'] >
-		attr( ): ({ 
-			'tabindex': number,
-			'popover': string,
-		})  & ReturnType< $mol_view['attr'] >
-	}
-	
-}
-
-//# sourceMappingURL=pop.view.tree.d.ts.map
-declare namespace $.$$ {
-    /**
-     * `Bubble` that can be shown anchored to `Anchor` element.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
-     */
-    class $mol_pop extends $.$mol_pop {
-        showed(next?: boolean): boolean;
-        sub_visible(): any[];
-        height_max(): number;
-        align(): string;
-        align_vert(): "suspense" | "top" | "bottom";
-        align_hor(): "suspense" | "left" | "right";
-        bubble_offset(): number[];
-        bubble_align(): number[];
-        bubble(): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_dom_event<EventType extends Event> extends $mol_object {
         readonly native: EventType;
         constructor(native: EventType);
@@ -6538,6 +4836,3419 @@ declare namespace $ {
 
 declare namespace $ {
 
+	export class $bog_builderui_menu extends $bog_builderui_card {
+		items( ): readonly(any)[]
+		sub( ): ReturnType< $bog_builderui_menu['items'] >
+	}
+	
+	export class $bog_builderui_menu_item extends $mol_button_minor {
+	}
+	
+}
+
+//# sourceMappingURL=menu.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_menu__items_raggu_web_export_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_export['items'] >
+		,
+		ReturnType< $bog_builderui_menu['items'] >
+	>
+	type $bog_builderui_div__event_raggu_web_export_2 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_export['toggle'] > ): ReturnType< $raggu_web_export['toggle'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_export_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_menu_item__title_raggu_web_export_4 = $mol_type_enforce<
+		ReturnType< $raggu_web_export['item_label'] >
+		,
+		ReturnType< $bog_builderui_menu_item['title'] >
+	>
+	type $bog_builderui_menu_item__click_raggu_web_export_5 = $mol_type_enforce<
+		ReturnType< $raggu_web_export['item_click'] >
+		,
+		ReturnType< $bog_builderui_menu_item['click'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_export_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_export extends $mol_pop {
+		toggle( next?: any ): any
+		items( ): readonly(any)[]
+		Menu( ): $bog_builderui_menu
+		item_label( id: any): string
+		item_click( id: any, next?: any ): any
+		screen( ): string
+		showed( next?: boolean ): boolean
+		align( ): string
+		export_btn_text( ): string
+		empty_text( ): string
+		Anchor( ): $bog_builderui_div
+		bubble_content( ): readonly(any)[]
+		Item( id: any): $bog_builderui_menu_item
+		Empty( ): $bog_builderui_div
+	}
+	
+}
+
+//# sourceMappingURL=export.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    type FormatId = 'graphml' | 'gexf' | 'json_graph' | 'png_graph' | 'md_chat' | 'json_chat' | 'csv_dash' | 'json_dash';
+    type FormatDef = {
+        id: FormatId;
+        label_key: string;
+        fallback: string;
+        ext: string;
+        mime: string;
+    };
+    export class $raggu_web_export extends $.$raggu_web_export {
+        toggle(): null;
+        formats(): FormatDef[];
+        items(): $bog_builderui_div[];
+        format_at(i: number): FormatDef;
+        item_label(i: number): string;
+        item_click(i: number): null;
+        filename(f: FormatDef): string;
+        payload(id: FormatId): Blob;
+        download(f: FormatDef): void;
+    }
+    export {};
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_topbar_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_topbar_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_topbar_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_topbar_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_topbar_preset__label_raggu_web_topbar_5 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['preset_fast_label'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['label'] >
+	>
+	type $raggu_web_topbar_preset__active_raggu_web_topbar_6 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['is_fast'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['active'] >
+	>
+	type $raggu_web_topbar_preset__click_raggu_web_topbar_7 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['click_fast'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['click'] >
+	>
+	type $raggu_web_topbar_preset__label_raggu_web_topbar_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['preset_accurate_label'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['label'] >
+	>
+	type $raggu_web_topbar_preset__active_raggu_web_topbar_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['is_accurate'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['active'] >
+	>
+	type $raggu_web_topbar_preset__click_raggu_web_topbar_10 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['click_accurate'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['click'] >
+	>
+	type $raggu_web_topbar_preset__label_raggu_web_topbar_11 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['preset_demo_label'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['label'] >
+	>
+	type $raggu_web_topbar_preset__active_raggu_web_topbar_12 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['is_demo'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['active'] >
+	>
+	type $raggu_web_topbar_preset__click_raggu_web_topbar_13 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['click_demo'] >
+		,
+		ReturnType< $raggu_web_topbar_preset['click'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_topbar_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_topbar_15 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_topbar['open_settings'] > ): ReturnType< $raggu_web_topbar['open_settings'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_topbar_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_export__screen_raggu_web_topbar_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_topbar['screen'] >
+		,
+		ReturnType< $raggu_web_export['screen'] >
+	>
+	export class $raggu_web_topbar extends $bog_builderui_div {
+		screen_title( ): string
+		Title( ): $bog_builderui_div
+		dataset_name( ): string
+		Subtitle( ): $bog_builderui_div
+		Title_block( ): $bog_builderui_div
+		Spacer( ): $bog_builderui_div
+		Preset_label( ): $bog_builderui_div
+		is_fast( ): boolean
+		click_fast( next?: any ): any
+		Preset_fast( ): $raggu_web_topbar_preset
+		is_accurate( ): boolean
+		click_accurate( next?: any ): any
+		Preset_accurate( ): $raggu_web_topbar_preset
+		is_demo( ): boolean
+		click_demo( next?: any ): any
+		Preset_demo( ): $raggu_web_topbar_preset
+		Preset_group( ): $bog_builderui_div
+		open_settings( next?: any ): any
+		Settings_btn( ): $bog_builderui_div
+		Export( ): $raggu_web_export
+		screen( ): string
+		dataset_id( ): string
+		preset( next?: string ): string
+		preset_label_text( ): string
+		settings_btn_text( ): string
+		preset_fast_label( ): string
+		preset_accurate_label( ): string
+		preset_demo_label( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=topbar.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_topbar extends $.$raggu_web_topbar {
+        screen_title(): string;
+        dataset_name(): string;
+        is_fast(): boolean;
+        is_accurate(): boolean;
+        is_demo(): boolean;
+        click_fast(): null;
+        click_accurate(): null;
+        click_demo(): null;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $bog_builderui_button extends $mol_button_minor {
+		minimal_height( ): number
+		minimal_width( ): number
+		variant( ): string
+		attr( ): ({ 
+			'bog_builderui_button_variant': ReturnType< $bog_builderui_button['variant'] >,
+		})  & ReturnType< $mol_button_minor['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=button.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_settings_group_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_settings_group_2 = $mol_type_enforce<
+		({ 
+			'raggu_web_settings_group_reindex': ReturnType< $raggu_web_settings_group['reindex'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_group_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_group_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_group_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_group_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_group_7 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings_group['controls'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_settings_group extends $bog_builderui_div {
+		Step( ): $bog_builderui_div
+		Reindex( ): $bog_builderui_div
+		Head( ): $bog_builderui_div
+		Title( ): $bog_builderui_div
+		Opts( ): $bog_builderui_div
+		Controls( ): $bog_builderui_div
+		step( ): string
+		title( ): string
+		opts( ): string
+		controls( ): readonly(any)[]
+		reindex( ): boolean
+		reindex_text( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=group.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_icon_tick extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=tick.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_check_box extends $mol_check {
+		Icon( ): $mol_icon_tick
+	}
+	
+}
+
+//# sourceMappingURL=box.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_view__sub_rise_range_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_rise_range_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_rise_range_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_rise_range_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $rise_range_input__disabled_rise_range_5 = $mol_type_enforce<
+		ReturnType< $rise_range['disabled'] >
+		,
+		ReturnType< $rise_range_input['disabled'] >
+	>
+	type $rise_range_input__min_rise_range_6 = $mol_type_enforce<
+		ReturnType< $rise_range['min'] >
+		,
+		ReturnType< $rise_range_input['min'] >
+	>
+	type $rise_range_input__max_rise_range_7 = $mol_type_enforce<
+		ReturnType< $rise_range['max'] >
+		,
+		ReturnType< $rise_range_input['max'] >
+	>
+	type $rise_range_input__step_rise_range_8 = $mol_type_enforce<
+		ReturnType< $rise_range['step'] >
+		,
+		ReturnType< $rise_range_input['step'] >
+	>
+	type $rise_range_input__value_rise_range_9 = $mol_type_enforce<
+		ReturnType< $rise_range['value'] >
+		,
+		ReturnType< $rise_range_input['value'] >
+	>
+	type $rise_range_input__event_input_rise_range_10 = $mol_type_enforce<
+		ReturnType< $rise_range['event_input'] >
+		,
+		ReturnType< $rise_range_input['event_input'] >
+	>
+	type $rise_range_value__sub_rise_range_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $rise_range_value['sub'] >
+	>
+	type $rise_range_value__disabled_rise_range_12 = $mol_type_enforce<
+		ReturnType< $rise_range['disabled'] >
+		,
+		ReturnType< $rise_range_value['disabled'] >
+	>
+	type $mol_view__sub_rise_range_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	export class $rise_range extends $mol_view {
+		label_min( ): string
+		Min( ): $mol_view
+		label_medium( ): string
+		Medium( ): $mol_view
+		label_max( ): string
+		Max( ): $mol_view
+		Labels( ): $mol_view
+		disabled( ): boolean
+		min( next?: number ): number
+		max( next?: number ): number
+		step( next?: number ): number
+		value( next?: number ): number
+		event_input( next?: any ): any
+		Input( ): $rise_range_input
+		Value( ): $rise_range_value
+		Current( ): $mol_view
+		percent( ): string
+		minimal_height( ): number
+		unit( ): string
+		medium( next?: number ): number
+		enabled( ): boolean
+		sub( ): readonly(any)[]
+		attr( ): ({ 
+			'disabled': ReturnType< $rise_range['disabled'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		style( ): ({ 
+			'--rise_range_percent': ReturnType< $rise_range['percent'] >,
+		})  & ReturnType< $mol_view['style'] >
+	}
+	
+	export class $rise_range_input extends $mol_view {
+		disabled( ): boolean
+		min( next?: number ): number
+		max( next?: number ): number
+		step( next?: number ): number
+		value( next?: number ): number
+		event_input( next?: any ): any
+		dom_name( ): string
+		attr( ): ({ 
+			'type': string,
+			'disabled': ReturnType< $rise_range_input['disabled'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		field( ): ({ 
+			'min': ReturnType< $rise_range_input['min'] >,
+			'max': ReturnType< $rise_range_input['max'] >,
+			'step': ReturnType< $rise_range_input['step'] >,
+			'value': ReturnType< $rise_range_input['value'] >,
+		})  & ReturnType< $mol_view['field'] >
+		event( ): ({ 
+			input( next?: ReturnType< $rise_range_input['event_input'] > ): ReturnType< $rise_range_input['event_input'] >,
+		})  & ReturnType< $mol_view['event'] >
+	}
+	
+	export class $rise_range_value extends $mol_view {
+		disabled( ): boolean
+		attr( ): ({ 
+			'disabled': ReturnType< $rise_range_value['disabled'] >,
+		})  & ReturnType< $mol_view['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=range.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $rise_range extends $.$rise_range {
+        event_input(event: Event): void;
+        medium(): number;
+        label_min(): string;
+        label_max(): string;
+        label_medium(): string;
+        percent(): string;
+        disabled(): boolean;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	export class $bog_builderui_slider extends $rise_range {
+	}
+	
+}
+
+//# sourceMappingURL=slider.view.tree.d.ts.map
+declare namespace $ {
+
+	type $bog_builderui_div__event_raggu_web_settings_1 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_settings['close'] > ): ReturnType< $raggu_web_settings['close'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_settings_5 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_settings['close'] > ): ReturnType< $raggu_web_settings['close'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_button__title_raggu_web_settings_8 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_builderui_button['title'] >
+	>
+	type $bog_builderui_button__click_raggu_web_settings_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['preset_fast'] >
+		,
+		ReturnType< $bog_builderui_button['click'] >
+	>
+	type $bog_builderui_button__title_raggu_web_settings_10 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_builderui_button['title'] >
+	>
+	type $bog_builderui_button__click_raggu_web_settings_11 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['preset_accurate'] >
+		,
+		ReturnType< $bog_builderui_button['click'] >
+	>
+	type $bog_builderui_button__title_raggu_web_settings_12 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_builderui_button['title'] >
+	>
+	type $bog_builderui_button__click_raggu_web_settings_13 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['preset_demo'] >
+		,
+		ReturnType< $bog_builderui_button['click'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_select__value_raggu_web_settings_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['chunking_strategy'] >
+		,
+		ReturnType< $bog_builderui_select['value'] >
+	>
+	type $bog_builderui_select__dictionary_raggu_web_settings_16 = $mol_type_enforce<
+		({ 
+			'Simple': string,
+			'SemanticText': string,
+			'SmartSemantic': string,
+		}) 
+		,
+		ReturnType< $bog_builderui_select['dictionary'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_field__type_raggu_web_settings_18 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_builderui_field['type'] >
+	>
+	type $bog_builderui_field__value_raggu_web_settings_19 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['chunking_size_str'] >
+		,
+		ReturnType< $bog_builderui_field['value'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_field__type_raggu_web_settings_22 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $bog_builderui_field['type'] >
+	>
+	type $bog_builderui_field__value_raggu_web_settings_23 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['chunking_overlap_str'] >
+		,
+		ReturnType< $bog_builderui_field['value'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_settings_group__step_raggu_web_settings_25 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['step'] >
+	>
+	type $raggu_web_settings_group__title_raggu_web_settings_26 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['title'] >
+	>
+	type $raggu_web_settings_group__opts_raggu_web_settings_27 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['opts'] >
+	>
+	type $raggu_web_settings_group__reindex_raggu_web_settings_28 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $raggu_web_settings_group['reindex'] >
+	>
+	type $raggu_web_settings_group__controls_raggu_web_settings_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_settings_group['controls'] >
+	>
+	type $bog_builderui_select__value_raggu_web_settings_30 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['extraction_mode'] >
+		,
+		ReturnType< $bog_builderui_select['value'] >
+	>
+	type $bog_builderui_select__dictionary_raggu_web_settings_31 = $mol_type_enforce<
+		({ 
+			'single': string,
+			'two-stage': string,
+		}) 
+		,
+		ReturnType< $bog_builderui_select['dictionary'] >
+	>
+	type $bog_builderui_select__value_raggu_web_settings_32 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['extraction_model'] >
+		,
+		ReturnType< $bog_builderui_select['value'] >
+	>
+	type $bog_builderui_select__dictionary_raggu_web_settings_33 = $mol_type_enforce<
+		({ 
+			'meno-lite-7b': string,
+			'gpt-4': string,
+			'llama3-70b': string,
+		}) 
+		,
+		ReturnType< $bog_builderui_select['dictionary'] >
+	>
+	type $bog_builderui_select__value_raggu_web_settings_34 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['extraction_icl'] >
+		,
+		ReturnType< $bog_builderui_select['value'] >
+	>
+	type $bog_builderui_select__dictionary_raggu_web_settings_35 = $mol_type_enforce<
+		({ 
+			'semantic': string,
+			'BM25': string,
+			'hybrid': string,
+			'random': string,
+		}) 
+		,
+		ReturnType< $bog_builderui_select['dictionary'] >
+	>
+	type $raggu_web_settings_group__step_raggu_web_settings_36 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['step'] >
+	>
+	type $raggu_web_settings_group__title_raggu_web_settings_37 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['title'] >
+	>
+	type $raggu_web_settings_group__opts_raggu_web_settings_38 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['opts'] >
+	>
+	type $raggu_web_settings_group__reindex_raggu_web_settings_39 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $raggu_web_settings_group['reindex'] >
+	>
+	type $raggu_web_settings_group__controls_raggu_web_settings_40 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_settings_group['controls'] >
+	>
+	type $mol_check_box__checked_raggu_web_settings_41 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['summarization_dbscan'] >
+		,
+		ReturnType< $mol_check_box['checked'] >
+	>
+	type $mol_check_box__title_raggu_web_settings_42 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_check_box['title'] >
+	>
+	type $mol_check_box__checked_raggu_web_settings_43 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['summarization_llm'] >
+		,
+		ReturnType< $mol_check_box['checked'] >
+	>
+	type $mol_check_box__title_raggu_web_settings_44 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_check_box['title'] >
+	>
+	type $raggu_web_settings_group__step_raggu_web_settings_45 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['step'] >
+	>
+	type $raggu_web_settings_group__title_raggu_web_settings_46 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['title'] >
+	>
+	type $raggu_web_settings_group__opts_raggu_web_settings_47 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['opts'] >
+	>
+	type $raggu_web_settings_group__reindex_raggu_web_settings_48 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $raggu_web_settings_group['reindex'] >
+	>
+	type $raggu_web_settings_group__controls_raggu_web_settings_49 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_settings_group['controls'] >
+	>
+	type $bog_builderui_select__value_raggu_web_settings_50 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['communities_algo'] >
+		,
+		ReturnType< $bog_builderui_select['value'] >
+	>
+	type $bog_builderui_select__dictionary_raggu_web_settings_51 = $mol_type_enforce<
+		({ 
+			'Leiden': string,
+		}) 
+		,
+		ReturnType< $bog_builderui_select['dictionary'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_52 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_53 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_54 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_slider__value_raggu_web_settings_55 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['communities_resolution_x10'] >
+		,
+		ReturnType< $bog_builderui_slider['value'] >
+	>
+	type $bog_builderui_slider__min_raggu_web_settings_56 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $bog_builderui_slider['min'] >
+	>
+	type $bog_builderui_slider__max_raggu_web_settings_57 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $bog_builderui_slider['max'] >
+	>
+	type $bog_builderui_slider__step_raggu_web_settings_58 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $bog_builderui_slider['step'] >
+	>
+	type $raggu_web_settings_group__step_raggu_web_settings_59 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['step'] >
+	>
+	type $raggu_web_settings_group__title_raggu_web_settings_60 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['title'] >
+	>
+	type $raggu_web_settings_group__opts_raggu_web_settings_61 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['opts'] >
+	>
+	type $raggu_web_settings_group__reindex_raggu_web_settings_62 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $raggu_web_settings_group['reindex'] >
+	>
+	type $raggu_web_settings_group__controls_raggu_web_settings_63 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_settings_group['controls'] >
+	>
+	type $mol_check_box__checked_raggu_web_settings_64 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['refinement_isolated'] >
+		,
+		ReturnType< $mol_check_box['checked'] >
+	>
+	type $mol_check_box__title_raggu_web_settings_65 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_check_box['title'] >
+	>
+	type $raggu_web_settings_group__step_raggu_web_settings_66 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['step'] >
+	>
+	type $raggu_web_settings_group__title_raggu_web_settings_67 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['title'] >
+	>
+	type $raggu_web_settings_group__opts_raggu_web_settings_68 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['opts'] >
+	>
+	type $raggu_web_settings_group__reindex_raggu_web_settings_69 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $raggu_web_settings_group['reindex'] >
+	>
+	type $raggu_web_settings_group__controls_raggu_web_settings_70 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_settings_group['controls'] >
+	>
+	type $bog_builderui_select__value_raggu_web_settings_71 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['search_mode'] >
+		,
+		ReturnType< $bog_builderui_select['value'] >
+	>
+	type $bog_builderui_select__dictionary_raggu_web_settings_72 = $mol_type_enforce<
+		({ 
+			'Local': string,
+			'Global': string,
+			'Naive': string,
+			'Mix': string,
+			'QueryPlan': string,
+		}) 
+		,
+		ReturnType< $bog_builderui_select['dictionary'] >
+	>
+	type $mol_check_box__checked_raggu_web_settings_73 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['search_rerank'] >
+		,
+		ReturnType< $mol_check_box['checked'] >
+	>
+	type $mol_check_box__title_raggu_web_settings_74 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_check_box['title'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_75 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_76 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_77 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_slider__value_raggu_web_settings_78 = $mol_type_enforce<
+		ReturnType< $raggu_web_settings['search_topk'] >
+		,
+		ReturnType< $bog_builderui_slider['value'] >
+	>
+	type $bog_builderui_slider__min_raggu_web_settings_79 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $bog_builderui_slider['min'] >
+	>
+	type $bog_builderui_slider__max_raggu_web_settings_80 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $bog_builderui_slider['max'] >
+	>
+	type $bog_builderui_slider__step_raggu_web_settings_81 = $mol_type_enforce<
+		number
+		,
+		ReturnType< $bog_builderui_slider['step'] >
+	>
+	type $raggu_web_settings_group__step_raggu_web_settings_82 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['step'] >
+	>
+	type $raggu_web_settings_group__title_raggu_web_settings_83 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['title'] >
+	>
+	type $raggu_web_settings_group__opts_raggu_web_settings_84 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_settings_group['opts'] >
+	>
+	type $raggu_web_settings_group__reindex_raggu_web_settings_85 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $raggu_web_settings_group['reindex'] >
+	>
+	type $raggu_web_settings_group__controls_raggu_web_settings_86 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_settings_group['controls'] >
+	>
+	type $mol_scroll__sub_raggu_web_settings_87 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_scroll['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_settings_88 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_settings extends $bog_builderui_div {
+		close( next?: any ): any
+		Backdrop( ): $bog_builderui_div
+		Header_title( ): $bog_builderui_div
+		Header_sub( ): $bog_builderui_div
+		Header_text( ): $bog_builderui_div
+		Spacer( ): $bog_builderui_div
+		Close_btn( ): $bog_builderui_div
+		Header( ): $bog_builderui_div
+		preset_fast( next?: any ): any
+		Preset_fast( ): $bog_builderui_button
+		preset_accurate( next?: any ): any
+		Preset_accurate( ): $bog_builderui_button
+		preset_demo( next?: any ): any
+		Preset_demo( ): $bog_builderui_button
+		Presets( ): $bog_builderui_div
+		chunking_strategy( next?: string ): string
+		Chunking_strategy( ): $bog_builderui_select
+		chunking_size_label_text( ): string
+		Chunking_size_label( ): $bog_builderui_div
+		chunking_size_str( next?: string ): string
+		Chunking_size_input( ): $bog_builderui_field
+		Chunking_size_row( ): $bog_builderui_div
+		chunking_overlap_label_text( ): string
+		Chunking_overlap_label( ): $bog_builderui_div
+		chunking_overlap_str( next?: string ): string
+		Chunking_overlap_input( ): $bog_builderui_field
+		Chunking_overlap_row( ): $bog_builderui_div
+		Group_chunking( ): $raggu_web_settings_group
+		extraction_mode( next?: string ): string
+		Extraction_mode( ): $bog_builderui_select
+		extraction_model( next?: string ): string
+		Extraction_model( ): $bog_builderui_select
+		extraction_icl( next?: string ): string
+		Extraction_icl( ): $bog_builderui_select
+		Group_extraction( ): $raggu_web_settings_group
+		summarization_dbscan( next?: boolean ): boolean
+		Summarization_dbscan( ): $mol_check_box
+		summarization_llm( next?: boolean ): boolean
+		Summarization_llm( ): $mol_check_box
+		Group_summarization( ): $raggu_web_settings_group
+		communities_algo( next?: string ): string
+		Communities_algo( ): $bog_builderui_select
+		communities_resolution_label_text( ): string
+		Communities_resolution_label( ): $bog_builderui_div
+		communities_resolution_label( ): string
+		Communities_resolution_value( ): $bog_builderui_div
+		Communities_resolution_row( ): $bog_builderui_div
+		communities_resolution_x10( next?: number ): number
+		Communities_resolution( ): $bog_builderui_slider
+		Group_communities( ): $raggu_web_settings_group
+		refinement_isolated( next?: boolean ): boolean
+		Refinement_isolated( ): $mol_check_box
+		Group_refinement( ): $raggu_web_settings_group
+		search_mode( next?: string ): string
+		Search_mode( ): $bog_builderui_select
+		search_rerank( next?: boolean ): boolean
+		Search_rerank( ): $mol_check_box
+		search_topk_label_text( ): string
+		Search_topk_label( ): $bog_builderui_div
+		search_topk_label( ): string
+		Search_topk_value( ): $bog_builderui_div
+		Search_topk_row( ): $bog_builderui_div
+		search_topk( next?: number ): number
+		Search_topk( ): $bog_builderui_slider
+		Group_search( ): $raggu_web_settings_group
+		Body( ): $mol_scroll
+		Panel( ): $bog_builderui_div
+		showed( next?: boolean ): boolean
+		attr( ): ({ 
+			'raggu_web_settings_showed': ReturnType< $raggu_web_settings['showed'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=settings.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_settings extends $.$raggu_web_settings {
+        close(): null;
+        preset_fast(): null;
+        preset_accurate(): null;
+        preset_demo(): null;
+        apply_preset(name: string): null;
+        chunking_strategy(next?: string): string;
+        chunking_size_str(next?: string): string;
+        chunking_overlap_str(next?: string): string;
+        extraction_mode(next?: string): string;
+        extraction_model(next?: string): string;
+        extraction_icl(next?: string): string;
+        summarization_dbscan(next?: boolean): boolean;
+        summarization_llm(next?: boolean): boolean;
+        communities_algo(next?: string): string;
+        communities_resolution_x10(next?: number): number;
+        communities_resolution_label(): string;
+        refinement_isolated(next?: boolean): boolean;
+        search_mode(next?: string): string;
+        search_rerank(next?: boolean): boolean;
+        search_topk(next?: number): number;
+        search_topk_label(): string;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $raggu_web_gallery_card_preview extends $bog_builderui_div {
+	}
+	
+}
+
+//# sourceMappingURL=preview.view.tree.d.ts.map
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_gallery_card_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_gallery_card_preview__sub_raggu_web_gallery_card_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_gallery_card_preview['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_card_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_gallery_card extends $bog_builderui_div {
+		click( next?: any ): any
+		Preview_label( ): $bog_builderui_div
+		Domain_badge( ): $bog_builderui_div
+		Preview( ): $raggu_web_gallery_card_preview
+		Title( ): $bog_builderui_div
+		Desc( ): $bog_builderui_div
+		tag_nodes( ): string
+		Tag_nodes( ): $bog_builderui_div
+		tag_edges( ): string
+		Tag_edges( ): $bog_builderui_div
+		tag_comms( ): string
+		Tag_comms( ): $bog_builderui_div
+		Tags( ): $bog_builderui_div
+		id( ): string
+		title( ): string
+		domain( ): string
+		desc( ): string
+		nodes( ): string
+		edges( ): string
+		comms( ): string
+		preview_label_text( ): string
+		event( ): ({ 
+			click( next?: ReturnType< $raggu_web_gallery_card['click'] > ): ReturnType< $raggu_web_gallery_card['click'] >,
+		})  & ReturnType< $bog_builderui_div['event'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=card.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
+        unit(key: 'nodes' | 'edges' | 'comms'): string;
+        tag_nodes(): string;
+        tag_edges(): string;
+        tag_comms(): string;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $bog_builderui_progress extends $mol_view {
+		value( ): number
+		max( ): number
+		dom_name( ): string
+		attr( ): ({ 
+			'value': ReturnType< $bog_builderui_progress['value'] >,
+			'max': ReturnType< $bog_builderui_progress['max'] >,
+		})  & ReturnType< $mol_view['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=progress.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__event_raggu_web_gallery_upload_1 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_gallery_upload['close'] > ): ReturnType< $raggu_web_gallery_upload['close'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_gallery_upload_5 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_gallery_upload['close'] > ): ReturnType< $raggu_web_gallery_upload['close'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery_upload['body'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_card__sub_raggu_web_gallery_upload_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_card['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_progress__max_raggu_web_gallery_upload_12 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery_upload['total_steps'] >
+		,
+		ReturnType< $bog_builderui_progress['max'] >
+	>
+	type $bog_builderui_progress__value_raggu_web_gallery_upload_13 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery_upload['step'] >
+		,
+		ReturnType< $bog_builderui_progress['value'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery_upload['step_rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_gallery_upload_20 = $mol_type_enforce<
+		({ 
+			'raggu_web_gallery_upload_step_status': ReturnType< $raggu_web_gallery_upload['step_status'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_upload_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_gallery_upload extends $bog_builderui_div {
+		close( next?: any ): any
+		Backdrop( ): $bog_builderui_div
+		panel_title( ): string
+		Header_title( ): $bog_builderui_div
+		Header_subtitle( ): $bog_builderui_div
+		Header_text( ): $bog_builderui_div
+		Spacer( ): $bog_builderui_div
+		Close_btn( ): $bog_builderui_div
+		Header( ): $bog_builderui_div
+		Body( ): $bog_builderui_div
+		Panel( ): $bog_builderui_card
+		Error_title( ): $bog_builderui_div
+		Error_text( ): $bog_builderui_div
+		Progress_bar( ): $bog_builderui_progress
+		progress_label_separator( ): string
+		step_label( ): string
+		progress_label_slash( ): string
+		total_steps_text( ): string
+		Progress_label( ): $bog_builderui_div
+		Steps_list( ): $bog_builderui_div
+		step_status( id: any): string
+		step_marker_text( id: any): string
+		Step_marker( id: any): $bog_builderui_div
+		step_name_text( id: any): string
+		Step_name( id: any): $bog_builderui_div
+		showed( next?: boolean ): boolean
+		kind( ): string
+		step( next?: number ): number
+		total_steps( ): number
+		error( ): string
+		complete( next?: any ): any
+		title_text( ): string
+		subtitle_text( ): string
+		step_chunking_text( ): string
+		step_extraction_text( ): string
+		step_summarization_text( ): string
+		step_communities_text( ): string
+		step_refinement_text( ): string
+		step_search_text( ): string
+		progress_label_text( ): string
+		close_text( ): string
+		error_title_text( ): string
+		retry_text( ): string
+		body( ): readonly(any)[]
+		step_rows( ): readonly(any)[]
+		attr( ): ({ 
+			'raggu_web_gallery_upload_showed': ReturnType< $raggu_web_gallery_upload['showed'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		sub( ): readonly(any)[]
+		Error_body( ): $bog_builderui_div
+		Progress_body( ): $bog_builderui_div
+		Step( id: any): $bog_builderui_div
+	}
+	
+}
+
+//# sourceMappingURL=upload.view.tree.d.ts.map
+declare namespace $.$$ {
+    const STEP_KEYS: readonly ["chunking", "extraction", "summarization", "communities", "refinement", "search"];
+    type StepKey = typeof STEP_KEYS[number];
+    type StepStatus = 'pending' | 'active' | 'done';
+    export class $raggu_web_gallery_upload extends $.$raggu_web_gallery_upload {
+        step(next?: number): number;
+        error(next?: string): string;
+        has_error(): "false" | "true";
+        panel_title(): string;
+        body(): $bog_builderui_div[];
+        step_label(): string;
+        step_rows(): $bog_builderui_div[];
+        step_status(key: StepKey): StepStatus;
+        step_marker_text(key: StepKey): string;
+        step_name_text(key: StepKey): string;
+        progress_label_separator(): string;
+        progress_label_slash(): string;
+        total_steps_text(): string;
+        /**
+         * Mock pipeline: validates size limit, then advances step 0→6 via setTimeout chain.
+         * Returns immediately; UI re-renders on each step setter call.
+         */
+        start(mock_file_size_mb: number): void;
+        tick(next_step: number): void;
+        close(): null;
+    }
+    export {};
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_gallery_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_gallery_5 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_gallery['upload_doc_click'] > ): ReturnType< $raggu_web_gallery['upload_doc_click'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_gallery_7 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_gallery['upload_idx_click'] > ): ReturnType< $raggu_web_gallery['upload_idx_click'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_gallery_card__id_raggu_web_gallery_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_id'] >
+		,
+		ReturnType< $raggu_web_gallery_card['id'] >
+	>
+	type $raggu_web_gallery_card__title_raggu_web_gallery_10 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_title'] >
+		,
+		ReturnType< $raggu_web_gallery_card['title'] >
+	>
+	type $raggu_web_gallery_card__domain_raggu_web_gallery_11 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_domain'] >
+		,
+		ReturnType< $raggu_web_gallery_card['domain'] >
+	>
+	type $raggu_web_gallery_card__desc_raggu_web_gallery_12 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_desc'] >
+		,
+		ReturnType< $raggu_web_gallery_card['desc'] >
+	>
+	type $raggu_web_gallery_card__nodes_raggu_web_gallery_13 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_nodes'] >
+		,
+		ReturnType< $raggu_web_gallery_card['nodes'] >
+	>
+	type $raggu_web_gallery_card__edges_raggu_web_gallery_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_edges'] >
+		,
+		ReturnType< $raggu_web_gallery_card['edges'] >
+	>
+	type $raggu_web_gallery_card__comms_raggu_web_gallery_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['card_comms'] >
+		,
+		ReturnType< $raggu_web_gallery_card['comms'] >
+	>
+	type $raggu_web_gallery_card__click_raggu_web_gallery_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['click'] >
+		,
+		ReturnType< $raggu_web_gallery_card['click'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_gallery_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_gallery_upload__showed_raggu_web_gallery_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['upload_showed'] >
+		,
+		ReturnType< $raggu_web_gallery_upload['showed'] >
+	>
+	type $raggu_web_gallery_upload__kind_raggu_web_gallery_19 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['upload_kind'] >
+		,
+		ReturnType< $raggu_web_gallery_upload['kind'] >
+	>
+	type $raggu_web_gallery_upload__complete_raggu_web_gallery_20 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['upload_complete'] >
+		,
+		ReturnType< $raggu_web_gallery_upload['complete'] >
+	>
+	type $raggu_web_gallery_upload__close_raggu_web_gallery_21 = $mol_type_enforce<
+		ReturnType< $raggu_web_gallery['upload_close'] >
+		,
+		ReturnType< $raggu_web_gallery_upload['close'] >
+	>
+	export class $raggu_web_gallery extends $bog_builderui_div {
+		Header_title( ): $bog_builderui_div
+		Header_subtitle( ): $bog_builderui_div
+		Header_text( ): $bog_builderui_div
+		Spacer( ): $bog_builderui_div
+		upload_doc_click( next?: any ): any
+		Upload_doc( ): $bog_builderui_div
+		upload_idx_click( next?: any ): any
+		Upload_idx( ): $bog_builderui_div
+		Header( ): $bog_builderui_div
+		card_id( id: any): string
+		card_title( id: any): string
+		card_domain( id: any): string
+		card_desc( id: any): string
+		card_nodes( id: any): string
+		card_edges( id: any): string
+		card_comms( id: any): string
+		click( id: any, next?: any ): any
+		Card( id: any): $raggu_web_gallery_card
+		rows( ): readonly(any)[]
+		Grid( ): $bog_builderui_div
+		upload_showed( next?: boolean ): boolean
+		upload_complete( next?: any ): any
+		upload_close( next?: any ): any
+		Upload( ): $raggu_web_gallery_upload
+		dataset_id( ): string
+		select_dataset( next?: any ): any
+		datasets( ): readonly(any)[]
+		upload_kind( next?: string ): string
+		header_title_text( ): string
+		header_subtitle_text( ): string
+		upload_doc_text( ): string
+		upload_idx_text( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=gallery.view.tree.d.ts.map
+declare namespace $.$$ {
+    type DatasetStats = {
+        id: string;
+        nodes: string;
+        edges: string;
+        comms: string;
+        /** Dynamic title for user-uploaded datasets. Built-ins use $mol_locale. */
+        dynamic?: {
+            title: string;
+            domain: string;
+            desc: string;
+        };
+    };
+    export class $raggu_web_gallery extends $.$raggu_web_gallery {
+        extra_datasets(next?: DatasetStats[]): DatasetStats[];
+        datasets(): DatasetStats[];
+        rows(): $.$raggu_web_gallery_card[];
+        dataset(id: string): DatasetStats;
+        dataset_text(id: string, suffix: string): string;
+        card_id(id: string): string;
+        card_title(id: string): string;
+        card_domain(id: string): string;
+        card_desc(id: string): string;
+        card_nodes(id: string): string;
+        card_edges(id: string): string;
+        card_comms(id: string): string;
+        click(id: string): null;
+        /** Mock file size in MB for upload validation. */
+        mock_file_size(kind: string): number;
+        upload_doc_click(): null;
+        upload_idx_click(): null;
+        start_upload(kind: 'document' | 'index'): null;
+        upload_complete(): null;
+        upload_close(): null;
+    }
+    export {};
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_explorer_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_26 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_28 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_31 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_32 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_33 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_34 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_35 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_36 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_37 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_38 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_39 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_40 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_41 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_42 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_explorer_43 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_explorer extends $bog_builderui_div {
+		Canvas_label( ): $bog_builderui_div
+		Canvas_bg( ): $bog_builderui_div
+		Filter_search( ): $bog_builderui_div
+		Filter_type( ): $bog_builderui_div
+		Filter_thresh( ): $bog_builderui_div
+		Filter_comm( ): $bog_builderui_div
+		Filters( ): $bog_builderui_div
+		Legend_title( ): $bog_builderui_div
+		Legend_person_dot( ): $bog_builderui_div
+		Legend_person_label( ): $bog_builderui_div
+		Legend_person( ): $bog_builderui_div
+		Legend_org_dot( ): $bog_builderui_div
+		Legend_org_label( ): $bog_builderui_div
+		Legend_org( ): $bog_builderui_div
+		Legend_loc_dot( ): $bog_builderui_div
+		Legend_loc_label( ): $bog_builderui_div
+		Legend_loc( ): $bog_builderui_div
+		Legend_event_dot( ): $bog_builderui_div
+		Legend_event_label( ): $bog_builderui_div
+		Legend_event( ): $bog_builderui_div
+		Legend_date_dot( ): $bog_builderui_div
+		Legend_date_label( ): $bog_builderui_div
+		Legend_date( ): $bog_builderui_div
+		Legend_work_dot( ): $bog_builderui_div
+		Legend_work_label( ): $bog_builderui_div
+		Legend_work( ): $bog_builderui_div
+		Legend_law_dot( ): $bog_builderui_div
+		Legend_law_label( ): $bog_builderui_div
+		Legend_law( ): $bog_builderui_div
+		Legend( ): $bog_builderui_div
+		Canvas( ): $bog_builderui_div
+		Aside_title( ): $bog_builderui_div
+		Entity_dot( ): $bog_builderui_div
+		Entity_name( ): $bog_builderui_div
+		Entity_head( ): $bog_builderui_div
+		Entity_type( ): $bog_builderui_div
+		Entity_desc( ): $bog_builderui_div
+		Relations_title( ): $bog_builderui_div
+		Rel_one_type( ): $bog_builderui_div
+		Rel_one_target( ): $bog_builderui_div
+		Rel_one( ): $bog_builderui_div
+		Rel_two_type( ): $bog_builderui_div
+		Rel_two_target( ): $bog_builderui_div
+		Rel_two( ): $bog_builderui_div
+		Rel_three_type( ): $bog_builderui_div
+		Rel_three_target( ): $bog_builderui_div
+		Rel_three( ): $bog_builderui_div
+		Sources_title( ): $bog_builderui_div
+		Sources( ): $bog_builderui_div
+		Ask_btn( ): $bog_builderui_div
+		Aside( ): $bog_builderui_div
+		canvas_title_text( ): string
+		canvas_engine_text( ): string
+		canvas_meaning_text( ): string
+		filter_search_text( ): string
+		filter_type_text( ): string
+		filter_thresh_text( ): string
+		filter_comm_text( ): string
+		aside_title_text( ): string
+		entity_name_text( ): string
+		entity_desc_text( ): string
+		relations_title_text( ): string
+		rel_one_target_text( ): string
+		rel_two_target_text( ): string
+		rel_three_target_text( ): string
+		sources_title_text( ): string
+		sources_text( ): string
+		ask_btn_text( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=explorer.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_stack extends $mol_view {
+	}
+	
+}
+
+//# sourceMappingURL=stack.view.tree.d.ts.map
+declare namespace $ {
+    /** Creates lexer by dictionary of lexems. Lexem that started first wins. Then lexem that declared earlier wins. Use regexp capture to take parts of token. */
+    class $mol_syntax2<Lexems extends {
+        [name: string]: RegExp;
+    } = {}> {
+        lexems: Lexems;
+        constructor(lexems: Lexems);
+        rules: Array<{
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }>;
+        regexp: RegExp;
+        tokenize(text: string, handle: (name: string, found: string, chunks: string[], offset: number) => void): void;
+        parse(text: string, handlers: {
+            [key in keyof Lexems | '']: (found: string, chunks: string[], offset: number) => void;
+        }): void;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_text_code_token extends $mol_dimmer {
+		type( ): string
+		attr( ): ({ 
+			'mol_text_code_token_type': ReturnType< $mol_text_code_token['type'] >,
+		})  & ReturnType< $mol_dimmer['attr'] >
+	}
+	
+	export class $mol_text_code_token_link extends $mol_text_code_token {
+		uri( ): string
+		dom_name( ): string
+		type( ): string
+		attr( ): ({ 
+			'href': ReturnType< $mol_text_code_token_link['uri'] >,
+			'target': string,
+		})  & ReturnType< $mol_text_code_token['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=token.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    var $mol_syntax2_md_flow: $mol_syntax2<{
+        quote: RegExp;
+        spoiler: RegExp;
+        header: RegExp;
+        list: RegExp;
+        code: RegExp;
+        'code-indent': RegExp;
+        table: RegExp;
+        grid: RegExp;
+        cut: RegExp;
+        block: RegExp;
+    }>;
+    var $mol_syntax2_md_line: $mol_syntax2<{
+        strong: RegExp;
+        emphasis: RegExp;
+        code: RegExp;
+        insert: RegExp;
+        delete: RegExp;
+        embed: RegExp;
+        link: RegExp;
+        'image-link': RegExp;
+        'text-link': RegExp;
+        'text-link-http': RegExp;
+    }>;
+    const $mol_syntax2_md_code: $mol_syntax2<{
+        'code-indent': RegExp;
+        'code-docs': RegExp;
+        'code-comment-block': RegExp;
+        'code-link': RegExp;
+        'code-comment-inline': RegExp;
+        'code-string': RegExp;
+        'code-number': RegExp;
+        'code-call': RegExp;
+        'code-sexpr': RegExp;
+        'code-field': RegExp;
+        'code-keyword': RegExp;
+        'code-global': RegExp;
+        'code-word': RegExp;
+        'code-decorator': RegExp;
+        'code-tag': RegExp;
+        'code-punctuation': RegExp;
+    }>;
+}
+
+declare namespace $ {
+
+	type $mol_view__sub_mol_text_code_line_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text_code_token__type_mol_text_code_line_2 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_type'] >
+		,
+		ReturnType< $mol_text_code_token['type'] >
+	>
+	type $mol_text_code_token__haystack_mol_text_code_line_3 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_text'] >
+		,
+		ReturnType< $mol_text_code_token['haystack'] >
+	>
+	type $mol_text_code_token__needle_mol_text_code_line_4 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['highlight'] >
+		,
+		ReturnType< $mol_text_code_token['needle'] >
+	>
+	type $mol_text_code_token_link__haystack_mol_text_code_line_5 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_text'] >
+		,
+		ReturnType< $mol_text_code_token_link['haystack'] >
+	>
+	type $mol_text_code_token_link__needle_mol_text_code_line_6 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['highlight'] >
+		,
+		ReturnType< $mol_text_code_token_link['needle'] >
+	>
+	type $mol_text_code_token_link__uri_mol_text_code_line_7 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_uri'] >
+		,
+		ReturnType< $mol_text_code_token_link['uri'] >
+	>
+	export class $mol_text_code_line extends $mol_paragraph {
+		numb( ): number
+		token_type( id: any): string
+		token_text( id: any): string
+		highlight( ): string
+		token_uri( id: any): string
+		text( ): string
+		minimal_height( ): number
+		numb_showed( ): boolean
+		syntax( ): any
+		uri_resolve( id: any): string
+		Numb( ): $mol_view
+		Token( id: any): $mol_text_code_token
+		Token_link( id: any): $mol_text_code_token_link
+		find_pos( id: any): any
+	}
+	
+}
+
+//# sourceMappingURL=line.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_text_code_line extends $.$mol_text_code_line {
+        maximal_width(): number;
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+        tokens(path: number[]): Readonly<{
+            name: string;
+            found: string;
+            chunks: string[];
+        }[]>;
+        sub(): (string | $mol_view)[];
+        row_content(path: number[]): string[] | $mol_text_code_token[];
+        Token(path: number[]): $mol_text_code_token;
+        token_type(path: number[]): string;
+        token_content(path: number[]): (string | $mol_text_code_token)[];
+        token_text(path: number[]): string;
+        token_uri(path: number[]): string;
+        view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
+        find_pos(offset: number): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
+        find_token_pos([offset, ...path]: number[]): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    type $mol_blob = Blob;
+    let $mol_blob: {
+        prototype: Blob;
+        new (blobParts?: readonly BlobPart[], options?: BlobPropertyBag): Blob;
+    };
+}
+
+declare namespace $ {
+
+	export class $mol_icon_clipboard extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=clipboard.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_clipboard_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
+declare namespace $ {
+    function $mol_html_encode(text: string): string;
+}
+
+declare namespace $ {
+
+	type $mol_blob__mol_button_copy_1 = $mol_type_enforce<
+		[ readonly(BlobPart)[], ({ 
+			'type': string,
+		})  ]
+		,
+		ConstructorParameters< typeof $mol_blob >
+	>
+	type $mol_blob__mol_button_copy_2 = $mol_type_enforce<
+		[ readonly(BlobPart)[], ({ 
+			'type': string,
+		})  ]
+		,
+		ConstructorParameters< typeof $mol_blob >
+	>
+	export class $mol_button_copy extends $mol_button_minor {
+		text( ): ReturnType< $mol_button_copy['title'] >
+		text_blob( next?: $mol_blob ): $mol_blob
+		html( ): string
+		html_blob( next?: $mol_blob ): $mol_blob
+		Icon( ): $mol_icon_clipboard_outline
+		title( ): string
+		blobs( ): readonly($mol_blob)[]
+		data( ): Record<string, any>
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=copy.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Button copy text() value to clipboard
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+     */
+    class $mol_button_copy extends $.$mol_button_copy {
+        data(): {
+            [k: string]: Blob;
+        };
+        html(): string;
+        attachments(): ClipboardItem[];
+        click(event?: Event): void;
+    }
+}
+
+declare namespace $ {
+
+	type $mol_text_code_line__numb_showed_mol_text_code_1 = $mol_type_enforce<
+		ReturnType< $mol_text_code['sidebar_showed'] >
+		,
+		ReturnType< $mol_text_code_line['numb_showed'] >
+	>
+	type $mol_text_code_line__numb_mol_text_code_2 = $mol_type_enforce<
+		ReturnType< $mol_text_code['row_numb'] >
+		,
+		ReturnType< $mol_text_code_line['numb'] >
+	>
+	type $mol_text_code_line__theme_mol_text_code_3 = $mol_type_enforce<
+		ReturnType< $mol_text_code['row_theme'] >
+		,
+		ReturnType< $mol_text_code_line['theme'] >
+	>
+	type $mol_text_code_line__text_mol_text_code_4 = $mol_type_enforce<
+		ReturnType< $mol_text_code['row_text'] >
+		,
+		ReturnType< $mol_text_code_line['text'] >
+	>
+	type $mol_text_code_line__syntax_mol_text_code_5 = $mol_type_enforce<
+		ReturnType< $mol_text_code['syntax'] >
+		,
+		ReturnType< $mol_text_code_line['syntax'] >
+	>
+	type $mol_text_code_line__uri_resolve_mol_text_code_6 = $mol_type_enforce<
+		ReturnType< $mol_text_code['uri_resolve'] >
+		,
+		ReturnType< $mol_text_code_line['uri_resolve'] >
+	>
+	type $mol_text_code_line__highlight_mol_text_code_7 = $mol_type_enforce<
+		ReturnType< $mol_text_code['highlight'] >
+		,
+		ReturnType< $mol_text_code_line['highlight'] >
+	>
+	type $mol_list__render_visible_only_mol_text_code_8 = $mol_type_enforce<
+		ReturnType< $mol_text_code['render_visible_only'] >
+		,
+		ReturnType< $mol_list['render_visible_only'] >
+	>
+	type $mol_list__rows_mol_text_code_9 = $mol_type_enforce<
+		ReturnType< $mol_text_code['rows'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_button_copy__hint_mol_text_code_10 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_button_copy['hint'] >
+	>
+	type $mol_button_copy__text_mol_text_code_11 = $mol_type_enforce<
+		ReturnType< $mol_text_code['text_export'] >
+		,
+		ReturnType< $mol_button_copy['text'] >
+	>
+	export class $mol_text_code extends $mol_stack {
+		sidebar_showed( ): boolean
+		render_visible_only( ): boolean
+		row_numb( id: any): number
+		row_theme( id: any): string
+		row_text( id: any): string
+		syntax( ): any
+		uri_resolve( id: any): string
+		highlight( ): string
+		Row( id: any): $mol_text_code_line
+		rows( ): readonly(any)[]
+		Rows( ): $mol_list
+		text_export( ): string
+		Copy( ): $mol_button_copy
+		attr( ): ({ 
+			'mol_text_code_sidebar_showed': ReturnType< $mol_text_code['sidebar_showed'] >,
+		})  & ReturnType< $mol_stack['attr'] >
+		text( ): string
+		text_lines( ): readonly(string)[]
+		find_pos( id: any): any
+		uri_base( ): string
+		row_themes( ): readonly(string)[]
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=code.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Code visualizer.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_text_code_demo
+     */
+    class $mol_text_code extends $.$mol_text_code {
+        render_visible_only(): boolean;
+        text_lines(): readonly string[];
+        rows(): $.$mol_text_code_line[];
+        row_text(index: number): string;
+        row_numb(index: number): number;
+        find_pos(offset: number): any;
+        sub(): ($.$mol_list | $.$mol_button_copy)[];
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+        uri_base(): string;
+        uri_resolve(uri: string): string;
+        text_export(): string;
+        row_theme(row: number): string;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	type $mol_textarea_edit__value_mol_textarea_1 = $mol_type_enforce<
+		ReturnType< $mol_textarea['value'] >
+		,
+		ReturnType< $mol_textarea_edit['value'] >
+	>
+	type $mol_textarea_edit__hint_mol_textarea_2 = $mol_type_enforce<
+		ReturnType< $mol_textarea['hint'] >
+		,
+		ReturnType< $mol_textarea_edit['hint'] >
+	>
+	type $mol_textarea_edit__enabled_mol_textarea_3 = $mol_type_enforce<
+		ReturnType< $mol_textarea['enabled'] >
+		,
+		ReturnType< $mol_textarea_edit['enabled'] >
+	>
+	type $mol_textarea_edit__spellcheck_mol_textarea_4 = $mol_type_enforce<
+		ReturnType< $mol_textarea['spellcheck'] >
+		,
+		ReturnType< $mol_textarea_edit['spellcheck'] >
+	>
+	type $mol_textarea_edit__length_max_mol_textarea_5 = $mol_type_enforce<
+		ReturnType< $mol_textarea['length_max'] >
+		,
+		ReturnType< $mol_textarea_edit['length_max'] >
+	>
+	type $mol_textarea_edit__selection_mol_textarea_6 = $mol_type_enforce<
+		ReturnType< $mol_textarea['selection'] >
+		,
+		ReturnType< $mol_textarea_edit['selection'] >
+	>
+	type $mol_textarea_edit__submit_mol_textarea_7 = $mol_type_enforce<
+		ReturnType< $mol_textarea['submit'] >
+		,
+		ReturnType< $mol_textarea_edit['submit'] >
+	>
+	type $mol_textarea_edit__submit_with_ctrl_mol_textarea_8 = $mol_type_enforce<
+		ReturnType< $mol_textarea['submit_with_ctrl'] >
+		,
+		ReturnType< $mol_textarea_edit['submit_with_ctrl'] >
+	>
+	type $mol_text_code__text_mol_textarea_9 = $mol_type_enforce<
+		ReturnType< $mol_textarea['value'] >
+		,
+		ReturnType< $mol_text_code['text'] >
+	>
+	type $mol_text_code__render_visible_only_mol_textarea_10 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $mol_text_code['render_visible_only'] >
+	>
+	type $mol_text_code__row_numb_mol_textarea_11 = $mol_type_enforce<
+		ReturnType< $mol_textarea['row_numb'] >
+		,
+		ReturnType< $mol_text_code['row_numb'] >
+	>
+	type $mol_text_code__sidebar_showed_mol_textarea_12 = $mol_type_enforce<
+		ReturnType< $mol_textarea['sidebar_showed'] >
+		,
+		ReturnType< $mol_text_code['sidebar_showed'] >
+	>
+	type $mol_text_code__highlight_mol_textarea_13 = $mol_type_enforce<
+		ReturnType< $mol_textarea['highlight'] >
+		,
+		ReturnType< $mol_text_code['highlight'] >
+	>
+	type $mol_text_code__syntax_mol_textarea_14 = $mol_type_enforce<
+		ReturnType< $mol_textarea['syntax'] >
+		,
+		ReturnType< $mol_text_code['syntax'] >
+	>
+	export class $mol_textarea extends $mol_stack {
+		clickable( next?: boolean ): boolean
+		sidebar_showed( ): boolean
+		press( next?: any ): any
+		hover( next?: any ): any
+		value( next?: string ): string
+		hint( ): string
+		enabled( ): boolean
+		spellcheck( ): boolean
+		length_max( ): number
+		selection( next?: readonly(number)[] ): readonly(number)[]
+		bring( ): ReturnType< ReturnType< $mol_textarea['Edit'] >['bring'] >
+		submit( next?: any ): any
+		submit_with_ctrl( ): boolean
+		Edit( ): $mol_textarea_edit
+		row_numb( id: any): number
+		highlight( ): string
+		syntax( ): $mol_syntax2
+		View( ): $mol_text_code
+		attr( ): ({ 
+			'mol_textarea_clickable': ReturnType< $mol_textarea['clickable'] >,
+			'mol_textarea_sidebar_showed': ReturnType< $mol_textarea['sidebar_showed'] >,
+		})  & ReturnType< $mol_stack['attr'] >
+		event( ): ({ 
+			keydown( next?: ReturnType< $mol_textarea['press'] > ): ReturnType< $mol_textarea['press'] >,
+			pointermove( next?: ReturnType< $mol_textarea['hover'] > ): ReturnType< $mol_textarea['hover'] >,
+		}) 
+		sub( ): readonly(any)[]
+		symbols_alt( ): Record<string, string>
+		symbols_alt_ctrl( ): Record<string, string>
+		symbols_alt_shift( ): Record<string, string>
+	}
+	
+	export class $mol_textarea_edit extends $mol_string {
+		dom_name( ): string
+		enter( ): string
+		field( ): ({ 
+			'scrollTop': number,
+		})  & ReturnType< $mol_string['field'] >
+	}
+	
+}
+
+//# sourceMappingURL=textarea.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * An input field for entering multiline text.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+     */
+    class $mol_textarea extends $.$mol_textarea {
+        indent_inc(): void;
+        indent_dec(): void;
+        symbol_insert(event: KeyboardEvent): void;
+        clickable(next?: boolean): boolean;
+        hover(event: PointerEvent): void;
+        press(event: KeyboardEvent): void;
+        row_numb(index: number): number;
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_chat_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_list__rows_raggu_web_chat_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_chat['rows'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_chat_10 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_chat['use_sug_one'] > ): ReturnType< $raggu_web_chat['use_sug_one'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_chat_12 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_chat['use_sug_two'] > ): ReturnType< $raggu_web_chat['use_sug_two'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_textarea__hint_raggu_web_chat_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_chat['input_hint_text'] >
+		,
+		ReturnType< $mol_textarea['hint'] >
+	>
+	type $mol_textarea__value_raggu_web_chat_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_chat['prompt_text'] >
+		,
+		ReturnType< $mol_textarea['value'] >
+	>
+	type $mol_textarea__submit_raggu_web_chat_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_chat['prompt_submit'] >
+		,
+		ReturnType< $mol_textarea['submit'] >
+	>
+	type $mol_button_minor__hint_raggu_web_chat_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_chat['send_label_text'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_raggu_web_chat_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_chat['prompt_submit'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_raggu_web_chat_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_26 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_28 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_31 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_32 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_33 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_34 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_35 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_36 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_37 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_38 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_chat_39 = $mol_type_enforce<
+		({ 
+			'raggu_visible': ReturnType< $raggu_web_chat['message_with_trace'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_40 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_chat_41 = $mol_type_enforce<
+		({ 
+			'raggu_role': ReturnType< $raggu_web_chat['message_role'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_chat_42 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_chat extends $bog_builderui_div {
+		Modes_label( ): $bog_builderui_div
+		Mode_local( ): $bog_builderui_div
+		Mode_global( ): $bog_builderui_div
+		Mode_mix( ): $bog_builderui_div
+		Mode_plan( ): $bog_builderui_div
+		Modes( ): $bog_builderui_div
+		Modes_bar( ): $bog_builderui_div
+		Body( ): $mol_list
+		use_sug_one( next?: any ): any
+		Sug_one( ): $bog_builderui_div
+		use_sug_two( next?: any ): any
+		Sug_two( ): $bog_builderui_div
+		Suggestions( ): $bog_builderui_div
+		prompt_text( next?: string ): string
+		prompt_submit( next?: any ): any
+		Prompt( ): $mol_textarea
+		Input_send( ): $mol_button_minor
+		Input_row( ): $bog_builderui_div
+		Footer( ): $bog_builderui_div
+		Message_text( id: any): $bog_builderui_div
+		Message_trace_head_title( id: any): $bog_builderui_div
+		Message_trace_head_meta( id: any): $bog_builderui_div
+		Message_trace_head( id: any): $bog_builderui_div
+		Message_trace_label( id: any): $bog_builderui_div
+		Message_trace_chip_one( id: any): $bog_builderui_div
+		Message_trace_chip_two( id: any): $bog_builderui_div
+		Message_trace_chip_three( id: any): $bog_builderui_div
+		Message_trace_chips( id: any): $bog_builderui_div
+		Message_trace_stat_chunks( id: any): $bog_builderui_div
+		Message_trace_stat_comms( id: any): $bog_builderui_div
+		Message_trace_stat_retr( id: any): $bog_builderui_div
+		Message_trace_stat_gen( id: any): $bog_builderui_div
+		Message_trace_stat_power( id: any): $bog_builderui_div
+		Message_trace_stats( id: any): $bog_builderui_div
+		Message_trace_link( id: any): $bog_builderui_div
+		Message_trace_body( id: any): $bog_builderui_div
+		Message_trace( id: any): $bog_builderui_div
+		modes_label_text( ): string
+		trace_head_title_text( ): string
+		trace_head_meta_text( ): string
+		trace_label_text( ): string
+		trace_chip_one_text( ): string
+		trace_chip_two_text( ): string
+		trace_chip_three_text( ): string
+		trace_stat_chunks_text( ): string
+		trace_stat_comms_text( ): string
+		trace_stat_retr_text( ): string
+		trace_stat_gen_text( ): string
+		trace_stat_power_text( ): string
+		trace_link_text( ): string
+		sug_one_text( ): string
+		sug_two_text( ): string
+		input_hint_text( ): string
+		send_label_text( ): string
+		seed_user_text( ): string
+		seed_assistant_text( ): string
+		mock_prefix_text( ): string
+		mock_suffix_text( ): string
+		rows( ): readonly(any)[]
+		message_text( id: any): string
+		message_role( id: any): string
+		message_with_trace( id: any): boolean
+		sub( ): readonly(any)[]
+		Message( id: any): $bog_builderui_div
+	}
+	
+}
+
+//# sourceMappingURL=chat.view.tree.d.ts.map
+declare namespace $.$$ {
+    type Raggu_chat_role = 'user' | 'assistant';
+    type Raggu_chat_item = {
+        role: Raggu_chat_role;
+        text: string;
+        trace?: boolean;
+    };
+    class $raggu_web_chat extends $.$raggu_web_chat {
+        history(next?: Raggu_chat_item[]): Raggu_chat_item[];
+        prompt_text(next?: string): string;
+        rows(): $bog_builderui_div[];
+        message_text(index: number): string;
+        message_role(index: number): Raggu_chat_role;
+        message_with_trace(index: number): boolean;
+        prompt_submit(): null;
+        use_sug_one(): null;
+        use_sug_two(): null;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $raggu_web_dashboard_dist extends $bog_builderui_div {
+	}
+	
+}
+
+//# sourceMappingURL=dist.view.tree.d.ts.map
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_dashboard_metric_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_metric_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_metric_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_dashboard_metric extends $bog_builderui_div {
+		Name( ): $bog_builderui_div
+		Bar_fill( ): $bog_builderui_div
+		Bar( ): $bog_builderui_div
+		Value( ): $bog_builderui_div
+		name( ): string
+		value( ): string
+		pct( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=metric.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_dashboard_metric extends $.$raggu_web_dashboard_metric {
+        Bar_fill(): $bog_builderui_div;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_dashboard_stage_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_stage_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_stage_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_dashboard_stage extends $bog_builderui_div {
+		Name( ): $bog_builderui_div
+		Bar_fill( ): $bog_builderui_div
+		Bar( ): $bog_builderui_div
+		Time( ): $bog_builderui_div
+		name( ): string
+		time( ): string
+		pct( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=stage.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_dashboard_stage extends $.$raggu_web_dashboard_stage {
+        Bar_fill(): $bog_builderui_div;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_log_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_dashboard_log extends $bog_builderui_div {
+		expanded( next?: boolean ): boolean
+		toggle( next?: any ): any
+		Time( ): $bog_builderui_div
+		Text( ): $bog_builderui_div
+		Mode( ): $bog_builderui_div
+		Dur( ): $bog_builderui_div
+		Arrow( ): $bog_builderui_div
+		Head( ): $bog_builderui_div
+		Trace_label( ): $bog_builderui_div
+		Trace_stat_chunks( ): $bog_builderui_div
+		Trace_stat_comms( ): $bog_builderui_div
+		Trace_stat_retr( ): $bog_builderui_div
+		Trace_stat_gen( ): $bog_builderui_div
+		Trace_stat_power( ): $bog_builderui_div
+		Trace_stats( ): $bog_builderui_div
+		Trace_link( ): $bog_builderui_div
+		Trace( ): $bog_builderui_div
+		time( ): string
+		text( ): string
+		mode( ): string
+		dur( ): string
+		chunks( ): string
+		communities( ): string
+		retrieval( ): string
+		generation( ): string
+		power( ): string
+		trace_label( ): string
+		trace_link( ): string
+		arrow( ): string
+		attr( ): ({ 
+			'raggu_web_dashboard_log_expanded': ReturnType< $raggu_web_dashboard_log['expanded'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=log.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_dashboard_log extends $.$raggu_web_dashboard_log {
+        toggle(next?: Event | null): null;
+        arrow(): "▴" | "▾";
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_dashboard_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_dashboard_dist__sub_raggu_web_dashboard_14 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_dashboard_dist['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_dashboard_metric__name_raggu_web_dashboard_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['metric_name'] >
+		,
+		ReturnType< $raggu_web_dashboard_metric['name'] >
+	>
+	type $raggu_web_dashboard_metric__value_raggu_web_dashboard_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['metric_value'] >
+		,
+		ReturnType< $raggu_web_dashboard_metric['value'] >
+	>
+	type $raggu_web_dashboard_metric__pct_raggu_web_dashboard_19 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['metric_pct'] >
+		,
+		ReturnType< $raggu_web_dashboard_metric['pct'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_20 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['metric_rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_24 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_26 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_28 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_31 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_32 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_33 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_34 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_dashboard_stage__name_raggu_web_dashboard_35 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['stage_name'] >
+		,
+		ReturnType< $raggu_web_dashboard_stage['name'] >
+	>
+	type $raggu_web_dashboard_stage__time_raggu_web_dashboard_36 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['stage_time'] >
+		,
+		ReturnType< $raggu_web_dashboard_stage['time'] >
+	>
+	type $raggu_web_dashboard_stage__pct_raggu_web_dashboard_37 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['stage_pct'] >
+		,
+		ReturnType< $raggu_web_dashboard_stage['pct'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_38 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['stage_rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_39 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_40 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_dashboard_log__time_raggu_web_dashboard_41 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_time'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['time'] >
+	>
+	type $raggu_web_dashboard_log__text_raggu_web_dashboard_42 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_text'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['text'] >
+	>
+	type $raggu_web_dashboard_log__mode_raggu_web_dashboard_43 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_mode'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['mode'] >
+	>
+	type $raggu_web_dashboard_log__dur_raggu_web_dashboard_44 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_dur'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['dur'] >
+	>
+	type $raggu_web_dashboard_log__expanded_raggu_web_dashboard_45 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_expanded'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['expanded'] >
+	>
+	type $raggu_web_dashboard_log__chunks_raggu_web_dashboard_46 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_chunks'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['chunks'] >
+	>
+	type $raggu_web_dashboard_log__communities_raggu_web_dashboard_47 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_communities'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['communities'] >
+	>
+	type $raggu_web_dashboard_log__retrieval_raggu_web_dashboard_48 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_retrieval'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['retrieval'] >
+	>
+	type $raggu_web_dashboard_log__generation_raggu_web_dashboard_49 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_generation'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['generation'] >
+	>
+	type $raggu_web_dashboard_log__power_raggu_web_dashboard_50 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_power'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['power'] >
+	>
+	type $raggu_web_dashboard_log__trace_label_raggu_web_dashboard_51 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['trace_label_text'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['trace_label'] >
+	>
+	type $raggu_web_dashboard_log__trace_link_raggu_web_dashboard_52 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['trace_link_text'] >
+		,
+		ReturnType< $raggu_web_dashboard_log['trace_link'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_53 = $mol_type_enforce<
+		ReturnType< $raggu_web_dashboard['log_rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_54 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_dashboard_55 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_dashboard extends $bog_builderui_div {
+		Title( ): $bog_builderui_div
+		Subtitle( ): $bog_builderui_div
+		Card_stats_label( ): $bog_builderui_div
+		Stat_nodes_val( ): $bog_builderui_div
+		Stat_nodes_lbl( ): $bog_builderui_div
+		Stat_nodes( ): $bog_builderui_div
+		Stat_edges_val( ): $bog_builderui_div
+		Stat_edges_lbl( ): $bog_builderui_div
+		Stat_edges( ): $bog_builderui_div
+		Stat_comms_val( ): $bog_builderui_div
+		Stat_comms_lbl( ): $bog_builderui_div
+		Stat_comms( ): $bog_builderui_div
+		Stats_row( ): $bog_builderui_div
+		Stats_dist( ): $raggu_web_dashboard_dist
+		Card_stats( ): $bog_builderui_div
+		Card_quality_label( ): $bog_builderui_div
+		metric_name( id: any): string
+		metric_value( id: any): string
+		metric_pct( id: any): string
+		Metric( id: any): $raggu_web_dashboard_metric
+		metric_rows( ): readonly(any)[]
+		Metric_rows( ): $bog_builderui_div
+		Quality_footer( ): $bog_builderui_div
+		Card_quality( ): $bog_builderui_div
+		Card_energy_label( ): $bog_builderui_div
+		energy_kwh_val( ): string
+		Energy_kwh_val( ): $bog_builderui_div
+		Energy_kwh_lbl( ): $bog_builderui_div
+		Energy_kwh( ): $bog_builderui_div
+		energy_cost_val( ): string
+		Energy_cost_val( ): $bog_builderui_div
+		Energy_cost_lbl( ): $bog_builderui_div
+		Energy_cost( ): $bog_builderui_div
+		Energy_row( ): $bog_builderui_div
+		Energy_formula( ): $bog_builderui_div
+		Energy_note( ): $bog_builderui_div
+		Card_energy( ): $bog_builderui_div
+		Card_timings_label( ): $bog_builderui_div
+		stage_name( id: any): string
+		stage_time( id: any): string
+		stage_pct( id: any): string
+		Stage( id: any): $raggu_web_dashboard_stage
+		stage_rows( ): readonly(any)[]
+		Stage_rows( ): $bog_builderui_div
+		Card_timings( ): $bog_builderui_div
+		Card_logs_label( ): $bog_builderui_div
+		log_time( id: any): string
+		log_text( id: any): string
+		log_mode( id: any): string
+		log_dur( id: any): string
+		log_expanded( id: any, next?: boolean ): boolean
+		log_chunks( id: any): string
+		log_communities( id: any): string
+		log_retrieval( id: any): string
+		log_generation( id: any): string
+		log_power( id: any): string
+		Log( id: any): $raggu_web_dashboard_log
+		log_rows( ): readonly(any)[]
+		Log_list( ): $bog_builderui_div
+		Card_logs( ): $bog_builderui_div
+		Grid( ): $bog_builderui_div
+		metrics( ): readonly(any)[]
+		stages( ): readonly(any)[]
+		logs( ): readonly(any)[]
+		title_text( ): string
+		subtitle_text( ): string
+		card_stats_label_text( ): string
+		stat_nodes_lbl_text( ): string
+		stat_edges_lbl_text( ): string
+		stat_comms_lbl_text( ): string
+		stats_dist_text( ): string
+		card_quality_label_text( ): string
+		quality_footer_text( ): string
+		card_energy_label_text( ): string
+		energy_kwh_lbl_text( ): string
+		energy_cost_lbl_text( ): string
+		energy_formula_text( ): string
+		energy_note_text( ): string
+		card_timings_label_text( ): string
+		card_logs_label_text( ): string
+		trace_label_text( ): string
+		trace_link_text( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=dashboard.view.tree.d.ts.map
+declare namespace $.$$ {
+    type Metric = {
+        id: string;
+        name: string;
+        value: string;
+        pct: string;
+    };
+    type Stage = {
+        id: string;
+        name: string;
+        time: string;
+        pct: string;
+    };
+    type Log = {
+        id: string;
+        time: string;
+        text: string;
+        mode: string;
+        dur: string;
+        chunks: string;
+        communities: string;
+        retrieval: string;
+        generation: string;
+    };
+    export class $raggu_web_dashboard extends $.$raggu_web_dashboard {
+        metrics(): Metric[];
+        stages(): Stage[];
+        logs(): Log[];
+        metric_rows(): $.$raggu_web_dashboard_metric[];
+        stage_rows(): $.$raggu_web_dashboard_stage[];
+        log_rows(): $.$raggu_web_dashboard_log[];
+        metric(id: string): Metric;
+        stage(id: string): Stage;
+        log(id: string): Log;
+        metric_name(id: string): string;
+        metric_value(id: string): string;
+        metric_pct(id: string): string;
+        stage_name(id: string): string;
+        stage_time(id: string): string;
+        stage_pct(id: string): string;
+        log_time(id: string): string;
+        log_text(id: string): string;
+        log_mode(id: string): string;
+        log_dur(id: string): string;
+        log_chunks(id: string): string;
+        log_communities(id: string): string;
+        log_retrieval(id: string): string;
+        log_generation(id: string): string;
+        log_power(id: string): string;
+        pipeline_seconds(): number;
+        energy_kwh(): number;
+        energy_kwh_val(): string;
+        energy_cost_val(): string;
+    }
+    export {};
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
 	type $bog_favicon__Icon_raggu_web_app_1 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['favicon_icon'] >
 		,
@@ -6642,7 +8353,7 @@ declare namespace $ {
 //# sourceMappingURL=app.view.tree.d.ts.map
 declare namespace $.$$ {
     class $raggu_web_app extends $.$raggu_web_app {
-        body(): $.$raggu_web_gallery[] | $raggu_web_explorer[] | $raggu_web_chat[] | $.$raggu_web_dashboard[];
+        body(): $.$raggu_web_gallery[] | $raggu_web_explorer[] | $.$raggu_web_chat[] | $.$raggu_web_dashboard[];
         lights_mode(): "light" | "dark";
         open_settings(): null;
         select_dataset(id: string): null;
