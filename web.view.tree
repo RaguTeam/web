@@ -1,5 +1,39 @@
 $bog_builderui_div $mol_view
 
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_graph $mol_icon path \M19.5 17C19.37 17 19.24 17 19.11 17.04L17.5 13.79C17.95 13.34 18.25 12.71 18.25 12C18.25 10.62 17.13 9.5 15.75 9.5C15.62 9.5 15.5 9.5 15.36 9.54L13.73 6.29C14.21 5.84 14.5 5.21 14.5 4.5C14.5 3.12 13.38 2 12 2S9.5 3.12 9.5 4.5C9.5 5.21 9.79 5.84 10.26 6.29L8.64 9.54C8.5 9.5 8.38 9.5 8.25 9.5C6.87 9.5 5.75 10.62 5.75 12C5.75 12.71 6.05 13.34 6.5 13.79L4.89 17.04C4.76 17 4.63 17 4.5 17C3.12 17 2 18.12 2 19.5C2 20.88 3.12 22 4.5 22S7 20.88 7 19.5C7 18.8 6.71 18.16 6.24 17.71L7.86 14.46C8 14.5 8.12 14.5 8.25 14.5C8.38 14.5 8.5 14.5 8.64 14.46L10.27 17.71C9.8 18.16 9.5 18.8 9.5 19.5C9.5 20.88 10.62 22 12 22S14.5 20.88 14.5 19.5C14.5 18.12 13.38 17 12 17C11.87 17 11.74 17 11.61 17.04L10 13.79C10.46 13.34 10.75 12.71 10.75 12S10.46 10.66 10 10.21L11.61 6.96C11.74 7 11.87 7 12 7S12.26 7 12.39 6.96L14 10.21C13.55 10.66 13.25 11.3 13.25 12C13.25 13.38 14.37 14.5 15.75 14.5C15.88 14.5 16 14.5 16.14 14.46L17.77 17.71C17.3 18.16 17 18.8 17 19.5C17 20.88 18.12 22 19.5 22S22 20.88 22 19.5C22 18.12 20.88 17 19.5 17Z
+
+$bog_favicon $mol_plugin
+	Icon $mol_view
+
 $raggu_web_sidebar_nav $bog_builderui_div
 	icon \
 	label \
@@ -29,43 +63,46 @@ $raggu_web_sidebar_lang $bog_builderui_div
 
 $raggu_web_sidebar $bog_builderui_div
 	screen? \gallery
-	lang? \RU
 	dataset_id \wiki
+	sections_label_text @ \Sections
+	corpus_label_text @ \Active corpus
+	corpus_meta_text @ \2,410 nodes · 38 communities
+	lang_label_text @ \LANGUAGE
 	sub /
 		<= Brand $bog_builderui_div sub /
 			<= Brand_logo $bog_builderui_div sub / \R
 			<= Brand_title $bog_builderui_div sub / \RAGU
 			<= Brand_badge $bog_builderui_div sub / \demo
-		<= Sections_label $bog_builderui_div sub / \Разделы
+		<= Sections_label $bog_builderui_div sub / <= sections_label_text
 		<= Nav $bog_builderui_div sub /
 			<= Nav_gallery $raggu_web_sidebar_nav
 				icon \▤
-				label \Датасеты
+				label @ \Datasets
 				active <= is_gallery false
 				click? <=> click_gallery? null
 			<= Nav_explorer $raggu_web_sidebar_nav
 				icon \◉
-				label \Граф
+				label @ \Graph
 				active <= is_explorer false
 				click? <=> click_explorer? null
 			<= Nav_chat $raggu_web_sidebar_nav
 				icon \💬
-				label \Чат
+				label @ \Chat
 				active <= is_chat false
 				click? <=> click_chat? null
 			<= Nav_dashboard $raggu_web_sidebar_nav
 				icon \▦
-				label \Дашборд
+				label @ \Dashboard
 				active <= is_dashboard false
 				click? <=> click_dashboard? null
 		<= Spacer $bog_builderui_div
 		<= Footer $bog_builderui_div sub /
-			<= Corpus_label $bog_builderui_div sub / \Активный корпус
+			<= Corpus_label $bog_builderui_div sub / <= corpus_label_text
 			<= Corpus_card $bog_builderui_div sub /
 				<= Corpus_name $bog_builderui_div sub / <= dataset_name \
-				<= Corpus_meta $bog_builderui_div sub / \2 410 узлов · 38 сообществ
+				<= Corpus_meta $bog_builderui_div sub / <= corpus_meta_text
 			<= Lang_row $bog_builderui_div sub /
-				<= Lang_label $bog_builderui_div sub / \ЯЗЫК
+				<= Lang_label $bog_builderui_div sub / <= lang_label_text
 				<= Lang_en $raggu_web_sidebar_lang
 					label \EN
 					active <= is_en false
@@ -92,29 +129,35 @@ $raggu_web_topbar $bog_builderui_div
 	dataset_id \wiki
 	preset? \demo
 	open_settings? null
+	preset_label_text @ \Preset
+	settings_btn_text @ \⚙ Settings
+	export_btn_text @ \↓ Export
+	preset_fast_label @ \⚡ Fast
+	preset_accurate_label @ \🎯 Accurate
+	preset_demo_label @ \🎬 Demo
 	sub /
 		<= Title_block $bog_builderui_div sub /
 			<= Title $bog_builderui_div sub / <= screen_title \
 			<= Subtitle $bog_builderui_div sub / <= dataset_name \
 		<= Spacer $bog_builderui_div
-		<= Preset_label $bog_builderui_div sub / \Пресет
+		<= Preset_label $bog_builderui_div sub / <= preset_label_text
 		<= Preset_group $bog_builderui_div sub /
 			<= Preset_fast $raggu_web_topbar_preset
-				label \⚡ Быстро
+				label <= preset_fast_label
 				active <= is_fast false
 				click? <=> click_fast? null
 			<= Preset_accurate $raggu_web_topbar_preset
-				label \🎯 Точно
+				label <= preset_accurate_label
 				active <= is_accurate false
 				click? <=> click_accurate? null
 			<= Preset_demo $raggu_web_topbar_preset
-				label \🎬 Демо
+				label <= preset_demo_label
 				active <= is_demo false
 				click? <=> click_demo? null
 		<= Settings_btn $bog_builderui_div
 			event * click? <=> open_settings? null
-			sub / \⚙ Настройки
-		<= Export_btn $bog_builderui_div sub / \↓ Экспорт
+			sub / <= settings_btn_text
+		<= Export_btn $bog_builderui_div sub / <= export_btn_text
 
 $mol_scroll $mol_view
 	scroll_top? 0
@@ -132,12 +175,13 @@ $raggu_web_settings_group $bog_builderui_div
 	opts \
 	control \
 	reindex true
+	reindex_text @ \requires reindexing
 	sub /
 		<= Head $bog_builderui_div sub /
 			<= Step $bog_builderui_div sub / <= step
 			<= Reindex $bog_builderui_div
 				attr * raggu_web_settings_group_reindex <= reindex
-				sub / \требует переиндексации
+				sub / <= reindex_text
 		<= Title $bog_builderui_div sub / <= title
 		<= Opts $bog_builderui_div sub / <= opts
 		<= Control $bog_builderui_div sub / <= control
@@ -209,12 +253,13 @@ $raggu_web_gallery_card $bog_builderui_div
 	edges \
 	comms \
 	click? null
+	preview_label_text @ \graph preview
 	event *
 		^
 		click? <=> click? null
 	sub /
 		<= Preview $raggu_web_gallery_card_preview sub /
-			<= Preview_label $bog_builderui_div sub / \превью графа
+			<= Preview_label $bog_builderui_div sub / <= preview_label_text
 			<= Domain_badge $bog_builderui_div sub / <= domain
 		<= Title $bog_builderui_div sub / <= title
 		<= Desc $bog_builderui_div sub / <= desc
@@ -227,14 +272,18 @@ $raggu_web_gallery $bog_builderui_div
 	dataset_id \wiki
 	select_dataset? null
 	datasets /
+	header_title_text @ \Corpus gallery
+	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
+	upload_doc_text @ \＋ Upload document
+	upload_idx_text @ \⇪ Upload prebuilt index
 	sub /
 		<= Header $bog_builderui_div sub /
 			<= Header_text $bog_builderui_div sub /
-				<= Header_title $bog_builderui_div sub / \Галерея корпусов
-				<= Header_subtitle $bog_builderui_div sub / \Выберите готовый граф знаний или загрузите свой документ / индекс
+				<= Header_title $bog_builderui_div sub / <= header_title_text
+				<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
 			<= Spacer $bog_builderui_div
-			<= Upload_doc $bog_builderui_div sub / \＋ Загрузить документ
-			<= Upload_idx $bog_builderui_div sub / \⇪ Загрузить готовый индекс
+			<= Upload_doc $bog_builderui_div sub / <= upload_doc_text
+			<= Upload_idx $bog_builderui_div sub / <= upload_idx_text
 		<= Grid $bog_builderui_div sub <= rows /
 			<= Card* $raggu_web_gallery_card
 				id <= card_id* \
@@ -247,20 +296,37 @@ $raggu_web_gallery $bog_builderui_div
 				click? <=> click*? null
 
 $raggu_web_explorer $bog_builderui_div
+	canvas_title_text @ \INTERACTIVE KNOWLEDGE GRAPH
+	canvas_engine_text @ \Sigma.js / WebGL · force layout
+	canvas_meaning_text @ \color = NEREL type · thickness = strength
+	filter_search_text @ \🔍 Find node…
+	filter_type_text @ \Entity type ▾
+	filter_thresh_text @ \Strength threshold ▾
+	filter_comm_text @ \◉ Communities: on
+	aside_title_text @ \Entity card
+	entity_name_text @ \Bjørnstjerne Bjørnson
+	entity_desc_text @ \Author of the Norwegian anthem (1859). Norwegian writer, Nobel Prize laureate in Literature.
+	relations_title_text @ \Relations (12)
+	rel_one_target_text @ \writer
+	rel_two_target_text @ \Nobel Prize
+	rel_three_target_text @ \Kvikne, Norway
+	sources_title_text @ \Sources (provenance)
+	sources_text @ \chunk #418 · chunk #902 …
+	ask_btn_text @ \💬 Ask about this entity
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
 				<= Canvas_label $bog_builderui_div sub /
 					\⬡ ⬡ ⬡
 					\
-					\ИНТЕРАКТИВНЫЙ ГРАФ ЗНАНИЙ
-					\Sigma.js / WebGL · force layout
-					\цвет = тип NEREL · толщина = strength
+					<= canvas_title_text
+					<= canvas_engine_text
+					<= canvas_meaning_text
 			<= Filters $bog_builderui_div sub /
-				<= Filter_search $bog_builderui_div sub / \🔍 Поиск узла…
-				<= Filter_type $bog_builderui_div sub / \Тип сущности ▾
-				<= Filter_thresh $bog_builderui_div sub / \Порог strength ▾
-				<= Filter_comm $bog_builderui_div sub / \◉ Сообщества: вкл
+				<= Filter_search $bog_builderui_div sub / <= filter_search_text
+				<= Filter_type $bog_builderui_div sub / <= filter_type_text
+				<= Filter_thresh $bog_builderui_div sub / <= filter_thresh_text
+				<= Filter_comm $bog_builderui_div sub / <= filter_comm_text
 			<= Legend $bog_builderui_div sub /
 				<= Legend_title $bog_builderui_div sub / \Entity Types
 				<= Legend_person $bog_builderui_div sub /
@@ -285,62 +351,80 @@ $raggu_web_explorer $bog_builderui_div
 					<= Legend_law_dot $bog_builderui_div
 					<= Legend_law_label $bog_builderui_div sub / \LAW
 		<= Aside $bog_builderui_div sub /
-			<= Aside_title $bog_builderui_div sub / \Карточка сущности
+			<= Aside_title $bog_builderui_div sub / <= aside_title_text
 			<= Entity_head $bog_builderui_div sub /
 				<= Entity_dot $bog_builderui_div
-				<= Entity_name $bog_builderui_div sub / \Бьёрнстьерне Бьёрнсон
+				<= Entity_name $bog_builderui_div sub / <= entity_name_text
 			<= Entity_type $bog_builderui_div sub / \PERSON
-			<= Entity_desc $bog_builderui_div sub / \Автор текста гимна Норвегии (1859). Норвежский писатель, лауреат Нобелевской премии по литературе.
-			<= Relations_title $bog_builderui_div sub / \Связи (12)
+			<= Entity_desc $bog_builderui_div sub / <= entity_desc_text
+			<= Relations_title $bog_builderui_div sub / <= relations_title_text
 			<= Rel_one $bog_builderui_div sub /
 				<= Rel_one_type $bog_builderui_div sub / \WORKS_AS
-				<= Rel_one_target $bog_builderui_div sub / \писатель
+				<= Rel_one_target $bog_builderui_div sub / <= rel_one_target_text
 			<= Rel_two $bog_builderui_div sub /
 				<= Rel_two_type $bog_builderui_div sub / \AWARDED_WITH
-				<= Rel_two_target $bog_builderui_div sub / \Нобелевская премия
+				<= Rel_two_target $bog_builderui_div sub / <= rel_two_target_text
 			<= Rel_three $bog_builderui_div sub /
 				<= Rel_three_type $bog_builderui_div sub / \PLACE_OF_BIRTH
-				<= Rel_three_target $bog_builderui_div sub / \Квикне, Норвегия
-			<= Sources_title $bog_builderui_div sub / \Источники (provenance)
-			<= Sources $bog_builderui_div sub / \chunk #418 · chunk #902 …
-			<= Ask_btn $bog_builderui_div sub / \💬 Спросить про эту сущность
+				<= Rel_three_target $bog_builderui_div sub / <= rel_three_target_text
+			<= Sources_title $bog_builderui_div sub / <= sources_title_text
+			<= Sources $bog_builderui_div sub / <= sources_text
+			<= Ask_btn $bog_builderui_div sub / <= ask_btn_text
 
 $raggu_web_chat $bog_builderui_div
+	modes_label_text @ \Search engine
+	msg_user_text @ \Who wrote the Norwegian anthem and when?
+	msg_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
+	trace_head_title_text @ \▾ Answer trace
+	trace_head_meta_text @ \LocalSearch · top-k 8 · rerank ✓
+	trace_label_text @ \ENTITIES IN CONTEXT
+	trace_chip_one_text @ \Bjørnson
+	trace_chip_two_text @ \Norwegian anthem
+	trace_chip_three_text @ \1859
+	trace_stat_chunks_text @ \chunks: 3
+	trace_stat_comms_text @ \communities: 1
+	trace_stat_retr_text @ \retrieval 140ms
+	trace_stat_gen_text @ \gen 1.2s
+	trace_stat_power_text @ \≈0.4 Wh
+	trace_link_text @ \↳ highlight on graph
+	sug_one_text @ \Who received the Nobel Prize?
+	sug_two_text @ \Connection between Ibsen and Bjørnson?
+	input_hint_text @ \Ask anything about the corpus…
 	sub /
 		<= Modes_bar $bog_builderui_div sub /
-			<= Modes_label $bog_builderui_div sub / \Движок поиска
+			<= Modes_label $bog_builderui_div sub / <= modes_label_text
 			<= Modes $bog_builderui_div sub /
 				<= Mode_local $bog_builderui_div sub / \LocalSearch
 				<= Mode_global $bog_builderui_div sub / \Global
 				<= Mode_mix $bog_builderui_div sub / \Mix
 				<= Mode_plan $bog_builderui_div sub / \QueryPlan
 		<= Body $bog_builderui_div sub /
-			<= Msg_user $bog_builderui_div sub / \Кто написал гимн Норвегии и когда?
+			<= Msg_user $bog_builderui_div sub / <= msg_user_text
 			<= Msg_assistant_wrap $bog_builderui_div sub /
-				<= Msg_assistant $bog_builderui_div sub / \Текст гимна Норвегии написал Бьёрнстьерне Бьёрнсон в 1859 году…
+				<= Msg_assistant $bog_builderui_div sub / <= msg_assistant_text
 				<= Trace $bog_builderui_div sub /
 					<= Trace_head $bog_builderui_div sub /
-						<= Trace_head_title $bog_builderui_div sub / \▾ Трейс ответа
-						<= Trace_head_meta $bog_builderui_div sub / \LocalSearch · top-k 8 · rerank ✓
+						<= Trace_head_title $bog_builderui_div sub / <= trace_head_title_text
+						<= Trace_head_meta $bog_builderui_div sub / <= trace_head_meta_text
 					<= Trace_body $bog_builderui_div sub /
-						<= Trace_label $bog_builderui_div sub / \СУЩНОСТИ В КОНТЕКСТЕ
+						<= Trace_label $bog_builderui_div sub / <= trace_label_text
 						<= Trace_chips $bog_builderui_div sub /
-							<= Trace_chip_one $bog_builderui_div sub / \Бьёрнсон
-							<= Trace_chip_two $bog_builderui_div sub / \гимн Норвегии
-							<= Trace_chip_three $bog_builderui_div sub / \1859
+							<= Trace_chip_one $bog_builderui_div sub / <= trace_chip_one_text
+							<= Trace_chip_two $bog_builderui_div sub / <= trace_chip_two_text
+							<= Trace_chip_three $bog_builderui_div sub / <= trace_chip_three_text
 						<= Trace_stats $bog_builderui_div sub /
-							<= Trace_stat_chunks $bog_builderui_div sub / \chunks: 3
-							<= Trace_stat_comms $bog_builderui_div sub / \communities: 1
-							<= Trace_stat_retr $bog_builderui_div sub / \retrieval 140мс
-							<= Trace_stat_gen $bog_builderui_div sub / \gen 1.2с
-							<= Trace_stat_power $bog_builderui_div sub / \≈0.4 Вт·ч
-						<= Trace_link $bog_builderui_div sub / \↳ подсветить на графе
+							<= Trace_stat_chunks $bog_builderui_div sub / <= trace_stat_chunks_text
+							<= Trace_stat_comms $bog_builderui_div sub / <= trace_stat_comms_text
+							<= Trace_stat_retr $bog_builderui_div sub / <= trace_stat_retr_text
+							<= Trace_stat_gen $bog_builderui_div sub / <= trace_stat_gen_text
+							<= Trace_stat_power $bog_builderui_div sub / <= trace_stat_power_text
+						<= Trace_link $bog_builderui_div sub / <= trace_link_text
 		<= Footer $bog_builderui_div sub /
 			<= Suggestions $bog_builderui_div sub /
-				<= Sug_one $bog_builderui_div sub / \Кто получал Нобелевскую премию?
-				<= Sug_two $bog_builderui_div sub / \Связь Ибсена и Бьёрнсона?
+				<= Sug_one $bog_builderui_div sub / <= sug_one_text
+				<= Sug_two $bog_builderui_div sub / <= sug_two_text
 			<= Input_row $bog_builderui_div sub /
-				<= Input_hint $bog_builderui_div sub / \Спросите что-нибудь про корпус…
+				<= Input_hint $bog_builderui_div sub / <= input_hint_text
 				<= Input_spacer $bog_builderui_div
 				<= Input_send $bog_builderui_div sub / \↑
 
@@ -369,64 +453,79 @@ $raggu_web_dashboard_stage $bog_builderui_div
 $raggu_web_dashboard $bog_builderui_div
 	metrics /
 	stages /
+	title_text @ \Corpus dashboard
+	subtitle_text @ \Graph stats · quality · energy and cost · timings and logs
+	card_stats_label_text @ \① Graph stats
+	stat_nodes_lbl_text @ \nodes
+	stat_edges_lbl_text @ \edges
+	stat_comms_lbl_text @ \communities
+	stats_dist_text @ \entity type distribution
+	card_quality_label_text @ \② Quality (benchmarks)
+	quality_footer_text @ \RAGU vs LightRAG / HippoRAG2 / Naive
+	card_energy_label_text @ \③ Energy and cost
+	energy_kwh_lbl_text @ \kWh / corpus
+	energy_cost_lbl_text @ \$ vs GPT-4 API
+	energy_note_text @ \kWh = TDP × time × PUE · meno-lite 7B locally vs ~40k tokens/doc on gpt-4o pricing
+	card_timings_label_text @ \④ Pipeline timings
+	card_logs_label_text @ \Query logs (expand into trace)
+	log_one_text_text @ \«Who wrote the anthem…»
+	log_two_text_text @ \«Connection between Ibsen and…»
 	sub /
-		<= Title $bog_builderui_div sub / \Дашборд корпуса
-		<= Subtitle $bog_builderui_div sub / \Статистика графа · качество · энергия и стоимость · тайминги и логи
+		<= Title $bog_builderui_div sub / <= title_text
+		<= Subtitle $bog_builderui_div sub / <= subtitle_text
 		<= Grid $bog_builderui_div sub /
 			<= Card_stats $bog_builderui_div sub /
-				<= Card_stats_label $bog_builderui_div sub / \① Статистика графа
+				<= Card_stats_label $bog_builderui_div sub / <= card_stats_label_text
 				<= Stats_row $bog_builderui_div sub /
 					<= Stat_nodes $bog_builderui_div sub /
 						<= Stat_nodes_val $bog_builderui_div sub / \2 410
-						<= Stat_nodes_lbl $bog_builderui_div sub / \узлов
+						<= Stat_nodes_lbl $bog_builderui_div sub / <= stat_nodes_lbl_text
 					<= Stat_edges $bog_builderui_div sub /
 						<= Stat_edges_val $bog_builderui_div sub / \7 088
-						<= Stat_edges_lbl $bog_builderui_div sub / \связей
+						<= Stat_edges_lbl $bog_builderui_div sub / <= stat_edges_lbl_text
 					<= Stat_comms $bog_builderui_div sub /
 						<= Stat_comms_val $bog_builderui_div sub / \38
-						<= Stat_comms_lbl $bog_builderui_div sub / \сообществ
-				<= Stats_dist $raggu_web_dashboard_dist sub / \распределение типов сущностей
+						<= Stat_comms_lbl $bog_builderui_div sub / <= stat_comms_lbl_text
+				<= Stats_dist $raggu_web_dashboard_dist sub / <= stats_dist_text
 			<= Card_quality $bog_builderui_div sub /
-				<= Card_quality_label $bog_builderui_div sub / \② Качество (бенчмарки)
+				<= Card_quality_label $bog_builderui_div sub / <= card_quality_label_text
 				<= Metric_rows $bog_builderui_div sub <= metric_rows /
 					<= Metric* $raggu_web_dashboard_metric
 						name <= metric_name* \
 						value <= metric_value* \
 						pct <= metric_pct* \0%
-				<= Quality_footer $bog_builderui_div sub / \RAGU vs LightRAG / HippoRAG2 / Naive
+				<= Quality_footer $bog_builderui_div sub / <= quality_footer_text
 			<= Card_energy $bog_builderui_div sub /
-				<= Card_energy_label $bog_builderui_div sub / \③ Энергия и стоимость
+				<= Card_energy_label $bog_builderui_div sub / <= card_energy_label_text
 				<= Energy_row $bog_builderui_div sub /
 					<= Energy_kwh $bog_builderui_div sub /
 						<= Energy_kwh_val $bog_builderui_div sub / \0.18
-						<= Energy_kwh_lbl $bog_builderui_div sub / \кВт·ч / корпус
+						<= Energy_kwh_lbl $bog_builderui_div sub / <= energy_kwh_lbl_text
 					<= Energy_cost $bog_builderui_div sub /
 						<= Energy_cost_val $bog_builderui_div sub / \−94%
-						<= Energy_cost_lbl $bog_builderui_div sub / \$ vs GPT-4 API
-				<= Energy_note $bog_builderui_div sub /
-					\кВт·ч = TDP × время × PUE
-					\meno-lite 7B локально vs ~40k токенов/док по тарифам gpt-4o
+						<= Energy_cost_lbl $bog_builderui_div sub / <= energy_cost_lbl_text
+				<= Energy_note $bog_builderui_div sub / <= energy_note_text
 			<= Card_timings $bog_builderui_div sub /
-				<= Card_timings_label $bog_builderui_div sub / \④ Тайминги пайплайна
+				<= Card_timings_label $bog_builderui_div sub / <= card_timings_label_text
 				<= Stage_rows $bog_builderui_div sub <= stage_rows /
 					<= Stage* $raggu_web_dashboard_stage
 						name <= stage_name* \
 						time <= stage_time* \
 						pct <= stage_pct* \0%
 			<= Card_logs $bog_builderui_div sub /
-				<= Card_logs_label $bog_builderui_div sub / \Логи запросов (разворачиваются в трейс)
+				<= Card_logs_label $bog_builderui_div sub / <= card_logs_label_text
 				<= Log_list $bog_builderui_div sub /
 					<= Log_one $bog_builderui_div sub /
 						<= Log_one_time $bog_builderui_div sub / \12:04:18
-						<= Log_one_text $bog_builderui_div sub / \«Кто написал гимн…»
+						<= Log_one_text $bog_builderui_div sub / <= log_one_text_text
 						<= Log_one_mode $bog_builderui_div sub / \LocalSearch
-						<= Log_one_dur $bog_builderui_div sub / \1.3с
+						<= Log_one_dur $bog_builderui_div sub / \1.3s
 						<= Log_one_arrow $bog_builderui_div sub / \▾
 					<= Log_two $bog_builderui_div sub /
 						<= Log_two_time $bog_builderui_div sub / \12:03:51
-						<= Log_two_text $bog_builderui_div sub / \«Связь Ибсена и…»
+						<= Log_two_text $bog_builderui_div sub / <= log_two_text_text
 						<= Log_two_mode $bog_builderui_div sub / \MixSearch
-						<= Log_two_dur $bog_builderui_div sub / \2.1с
+						<= Log_two_dur $bog_builderui_div sub / \2.1s
 						<= Log_two_arrow $bog_builderui_div sub / \▾
 
 $bog_builderui_card $bog_builderui_div
@@ -498,13 +597,6 @@ $mol_chart_legend $mol_scroll
 			<= Graph_title* $mol_view
 				sub /
 					<= graph_title* \
-
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	font_size 16
-	font_family \
-	style_size *
 
 $mol_svg_group $mol_svg
 	dom_name \g
@@ -584,13 +676,6 @@ $mol_plot_graph_sample $mol_view
 	style *
 		^
 		color <= color \black
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
-		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
 
 $mol_touch $mol_plugin
 	start_zoom? 0
@@ -925,21 +1010,6 @@ $mol_list $mol_view
 		0
 		0
 
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
-
 $mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
 
 $mol_search $mol_pop
@@ -1037,14 +1107,15 @@ $bog_builderui_tooltip $mol_pop_over
 $raggu_web_app $bog_builderui_div
 	screen? \gallery
 	preset? \demo
-	lang? \RU
 	dataset_id? \wiki
 	settings_open? false
 	body /
+	plugins /
+		<= Favicon $bog_favicon
+			Icon <= favicon_icon $mol_icon_graph
 	sub /
 		<= Sidebar $raggu_web_sidebar
 			screen? <=> screen?
-			lang? <=> lang?
 			dataset_id <= dataset_id
 		<= Main $bog_builderui_div sub /
 			<= Topbar $raggu_web_topbar

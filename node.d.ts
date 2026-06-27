@@ -1769,10 +1769,122 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
+        static now(precision: number): number;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_svg extends $mol_view {
+		dom_name( ): string
+		dom_name_space( ): string
+		font_size( ): number
+		font_family( ): string
+		style_size( ): Record<string, any>
+	}
+	
+}
+
+//# sourceMappingURL=svg.view.tree.d.ts.map
+declare namespace $.$$ {
+    /** Base SVG component to display SVG images or icons. */
+    class $mol_svg extends $.$mol_svg {
+        computed_style(): Record<string, any>;
+        font_size(): number;
+        font_family(): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_svg_root extends $mol_svg {
+		view_box( ): string
+		aspect( ): string
+		dom_name( ): string
+		attr( ): ({ 
+			'viewBox': ReturnType< $mol_svg_root['view_box'] >,
+			'preserveAspectRatio': ReturnType< $mol_svg_root['aspect'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=root.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_svg_path extends $mol_svg {
+		geometry( ): string
+		dom_name( ): string
+		attr( ): ({ 
+			'd': ReturnType< $mol_svg_path['geometry'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=path.view.tree.d.ts.map
+declare namespace $ {
     /**
      * Fails if `Actual` type is not subtype of `Expected`.
      */
     type $mol_type_enforce<Actual extends Expected, Expected> = Actual;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_svg_path__geometry_mol_icon_1 = $mol_type_enforce<
+		ReturnType< $mol_icon['path'] >
+		,
+		ReturnType< $mol_svg_path['geometry'] >
+	>
+	export class $mol_icon extends $mol_svg_root {
+		path( ): string
+		Path( ): $mol_svg_path
+		view_box( ): string
+		minimal_width( ): number
+		minimal_height( ): number
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=icon.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_graph extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=graph.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $bog_favicon extends $mol_plugin {
+		Icon( ): $mol_view
+	}
+	
+}
+
+//# sourceMappingURL=favicon.view.tree.d.ts.map
+declare namespace $.$$ {
+    /** Плагин, который ставит favicon из переданного $mol_icon_* и подобных */
+    class $bog_favicon extends $.$bog_favicon {
+        Icon(next?: $mol_view): $mol_view;
+        favicon_data(): string;
+        apply_favicon(): void;
+        auto(): any;
+        sub(): readonly [];
+    }
 }
 
 declare namespace $ {
@@ -1810,6 +1922,250 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_mem_persist: typeof $mol_wire_solid;
+}
+
+declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
+}
+
+declare namespace $ {
+    function $mol_wait_user_async(this: $): Promise<unknown>;
+    function $mol_wait_user(this: $): unknown;
+}
+
+declare namespace $ {
+    class $mol_storage extends $mol_object2 {
+        static native(): StorageManager;
+        static persisted(next?: boolean, cache?: 'cache'): boolean;
+        static estimate(): StorageEstimate;
+        static dir(): FileSystemDirectoryHandle;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static changes(next?: StorageEvent): StorageEvent | undefined;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value | null;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Decorates method to fiber to ensure it is executed only once inside other fiber from [mol_wire](../wire/README.md)
+     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+     */
+    let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
+    class $mol_lock extends $mol_object {
+        protected promise: null | Promise<void>;
+        wait(): Promise<() => void>;
+        grab(): () => void;
+    }
+}
+
+declare namespace $ {
+    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+}
+
+declare namespace $ {
+    function $mol_charset_decode(buffer: AllowSharedBufferSource, encoding?: $mol_charset_encoding): string;
+}
+
+declare namespace $ {
+    /** Temporary buffer. Recursive usage isn't supported. */
+    function $mol_charset_buffer(size: number): Uint8Array<ArrayBuffer>;
+}
+
+declare namespace $ {
+    function $mol_charset_encode(str: string): Uint8Array<ArrayBuffer>;
+    function $mol_charset_encode_to(str: string, buf: Uint8Array<ArrayBuffer>, from?: number): number;
+    function $mol_charset_encode_size(str: string): number;
+}
+
+declare namespace $ {
+    type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append';
+    type $mol_file_transaction_buffer = ArrayBufferView;
+    class $mol_file_transaction extends $mol_object {
+        path(): string;
+        modes(): readonly $mol_file_transaction_mode[];
+        write(options: {
+            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
+            offset?: number | null;
+            length?: number | null;
+            position?: number | null;
+        }): number;
+        read(): Uint8Array<ArrayBuffer>;
+        truncate(size: number): void;
+        flush(): void;
+        close(): void;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_transaction_node extends $mol_file_transaction {
+        protected descr(): number;
+        write({ buffer, offset, length, position }: {
+            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
+            offset?: number | null;
+            length?: number | null;
+            position?: number | null;
+        }): number;
+        truncate(size: number): void;
+        read(): Uint8Array<ArrayBuffer>;
+        flush(): void;
+        close(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_base extends $mol_object {
+        static absolute<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
+        static relative<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
+        static base: string;
+        path(): string;
+        parent(): this;
+        exists_cut(): boolean;
+        protected root(): boolean;
+        protected stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
+        protected static changed: Set<$mol_file_base>;
+        protected static frame: null | $mol_after_timeout;
+        protected static changed_add(type: 'change' | 'rename', path: string): void;
+        /**
+         * Должно быть больше, чем время между событиями от вотчера при записи внешним процессом.
+         * Иначе запуск ресетов паралельно с изменением может привести к неконсистентности.
+         */
+        static watch_debounce(): number;
+        static flush(): void;
+        protected static watching: boolean;
+        protected static lock: $mol_lock;
+        protected static watch_off(path: string): void;
+        static unwatched<Result>(side_effect: () => Result, affected_dir: string): Result;
+        reset(): void;
+        modified(): Date | null;
+        version(): string;
+        protected info(path: string): null | $mol_file_stat;
+        protected ensure(): void;
+        protected drop(): void;
+        protected copy(to: string): void;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(buffer: Uint8Array<ArrayBuffer>): void;
+        protected kids(): readonly this[];
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        writable(opts: {
+            start?: number;
+        }): WritableStream<Uint8Array<ArrayBuffer>>;
+        buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
+        stat_make(size: number): {
+            readonly type: "file";
+            readonly size: number;
+            readonly atime: Date;
+            readonly mtime: Date;
+            readonly ctime: Date;
+        };
+        clone(to: string): this | null;
+        watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): "" | $mol_file_type;
+        name(): string;
+        ext(): string;
+        text(next?: string, virt?: 'virt'): string;
+        text_int(next?: string, virt?: 'virt'): string;
+        sub(reset?: null): this[];
+        resolve(path: string): this;
+        relate(base?: $mol_file_base): string;
+        find(include?: RegExp, exclude?: RegExp): this[];
+        size(): number;
+        toJSON(): string;
+        open(...modes: readonly $mol_file_transaction_mode[]): $mol_file_transaction;
+    }
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file extends $mol_file_base {
+    }
+}
+
+declare namespace $ {
+    function $mol_file_node_buffer_normalize(buf: Buffer<ArrayBuffer>): Uint8Array<ArrayBuffer>;
+    class $mol_file_node extends $mol_file {
+        static relative<This extends typeof $mol_file>(this: This, path: string): InstanceType<This>;
+        watcher(reset?: null): {
+            destructor(): void;
+        };
+        protected info(path: string): $mol_file_stat | null;
+        protected ensure(): null | undefined;
+        protected copy(to: string): void;
+        protected drop(): void;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(buffer: Uint8Array<ArrayBuffer>): undefined;
+        protected kids(): this[];
+        resolve(path: string): this;
+        relate(base?: $mol_file): string;
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        writable(opts?: {
+            start?: number;
+        }): WritableStream<Uint8Array<ArrayBuffer>>;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local_node<Value> extends $mol_state_local<Value> {
+        static dir(): $mol_file;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+    }
+}
+
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    /**
+     * Localisation in $mol framework
+     * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
+     */
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+        static warn(key: string): null;
+    }
+}
+
+declare namespace $ {
 
 	export class $raggu_web_sidebar_lang extends $bog_builderui_div {
 		click( next?: any ): any
@@ -1828,14 +2184,6 @@ declare namespace $ {
 
 //# sourceMappingURL=lang.view.tree.d.ts.map
 declare namespace $ {
-}
-
-declare namespace $ {
-    /**
-     * Decorates method to fiber to ensure it is executed only once inside other fiber from [mol_wire](../wire/README.md)
-     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
-     */
-    let $mol_action: typeof $mol_wire_method;
 }
 
 declare namespace $ {
@@ -2050,8 +2398,11 @@ declare namespace $ {
 		Lang_row( ): $bog_builderui_div
 		Footer( ): $bog_builderui_div
 		screen( next?: string ): string
-		lang( next?: string ): string
 		dataset_id( ): string
+		sections_label_text( ): string
+		corpus_label_text( ): string
+		corpus_meta_text( ): string
+		lang_label_text( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -2123,7 +2474,7 @@ declare namespace $ {
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $raggu_web_topbar_preset__label_raggu_web_topbar_5 = $mol_type_enforce<
-		string
+		ReturnType< $raggu_web_topbar['preset_fast_label'] >
 		,
 		ReturnType< $raggu_web_topbar_preset['label'] >
 	>
@@ -2138,7 +2489,7 @@ declare namespace $ {
 		ReturnType< $raggu_web_topbar_preset['click'] >
 	>
 	type $raggu_web_topbar_preset__label_raggu_web_topbar_8 = $mol_type_enforce<
-		string
+		ReturnType< $raggu_web_topbar['preset_accurate_label'] >
 		,
 		ReturnType< $raggu_web_topbar_preset['label'] >
 	>
@@ -2153,7 +2504,7 @@ declare namespace $ {
 		ReturnType< $raggu_web_topbar_preset['click'] >
 	>
 	type $raggu_web_topbar_preset__label_raggu_web_topbar_11 = $mol_type_enforce<
-		string
+		ReturnType< $raggu_web_topbar['preset_demo_label'] >
 		,
 		ReturnType< $raggu_web_topbar_preset['label'] >
 	>
@@ -2213,6 +2564,12 @@ declare namespace $ {
 		screen( ): string
 		dataset_id( ): string
 		preset( next?: string ): string
+		preset_label_text( ): string
+		settings_btn_text( ): string
+		export_btn_text( ): string
+		preset_fast_label( ): string
+		preset_accurate_label( ): string
+		preset_demo_label( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -2344,6 +2701,7 @@ declare namespace $ {
 		opts( ): string
 		control( ): string
 		reindex( ): boolean
+		reindex_text( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -2669,6 +3027,7 @@ declare namespace $ {
 		nodes( ): string
 		edges( ): string
 		comms( ): string
+		preview_label_text( ): string
 		event( ): ({ 
 			click( next?: ReturnType< $raggu_web_gallery_card['click'] > ): ReturnType< $raggu_web_gallery_card['click'] >,
 		})  & ReturnType< $bog_builderui_div['event'] >
@@ -2680,6 +3039,7 @@ declare namespace $ {
 //# sourceMappingURL=card.view.tree.d.ts.map
 declare namespace $.$$ {
     class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
+        unit(key: 'nodes' | 'edges' | 'comms'): string;
         tag_nodes(): string;
         tag_edges(): string;
         tag_comms(): string;
@@ -2788,6 +3148,10 @@ declare namespace $ {
 		dataset_id( ): string
 		select_dataset( next?: any ): any
 		datasets( ): readonly(any)[]
+		header_title_text( ): string
+		header_subtitle_text( ): string
+		upload_doc_text( ): string
+		upload_idx_text( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -2795,19 +3159,17 @@ declare namespace $ {
 
 //# sourceMappingURL=gallery.view.tree.d.ts.map
 declare namespace $.$$ {
-    type Dataset = {
+    type DatasetStats = {
         id: string;
-        title: string;
-        domain: string;
-        desc: string;
         nodes: string;
         edges: string;
         comms: string;
     };
     export class $raggu_web_gallery extends $.$raggu_web_gallery {
-        datasets(): Dataset[];
+        datasets(): DatasetStats[];
         rows(): $.$raggu_web_gallery_card[];
-        dataset(id: string): Dataset;
+        dataset(id: string): DatasetStats;
+        dataset_text(id: string, suffix: string): string;
         card_id(id: string): string;
         card_title(id: string): string;
         card_domain(id: string): string;
@@ -3092,6 +3454,23 @@ declare namespace $ {
 		Sources( ): $bog_builderui_div
 		Ask_btn( ): $bog_builderui_div
 		Aside( ): $bog_builderui_div
+		canvas_title_text( ): string
+		canvas_engine_text( ): string
+		canvas_meaning_text( ): string
+		filter_search_text( ): string
+		filter_type_text( ): string
+		filter_thresh_text( ): string
+		filter_comm_text( ): string
+		aside_title_text( ): string
+		entity_name_text( ): string
+		entity_desc_text( ): string
+		relations_title_text( ): string
+		rel_one_target_text( ): string
+		rel_two_target_text( ): string
+		rel_three_target_text( ): string
+		sources_title_text( ): string
+		sources_text( ): string
+		ask_btn_text( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -3315,6 +3694,24 @@ declare namespace $ {
 		Input_send( ): $bog_builderui_div
 		Input_row( ): $bog_builderui_div
 		Footer( ): $bog_builderui_div
+		modes_label_text( ): string
+		msg_user_text( ): string
+		msg_assistant_text( ): string
+		trace_head_title_text( ): string
+		trace_head_meta_text( ): string
+		trace_label_text( ): string
+		trace_chip_one_text( ): string
+		trace_chip_two_text( ): string
+		trace_chip_three_text( ): string
+		trace_stat_chunks_text( ): string
+		trace_stat_comms_text( ): string
+		trace_stat_retr_text( ): string
+		trace_stat_gen_text( ): string
+		trace_stat_power_text( ): string
+		trace_link_text( ): string
+		sug_one_text( ): string
+		sug_two_text( ): string
+		input_hint_text( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -3748,6 +4145,23 @@ declare namespace $ {
 		Grid( ): $bog_builderui_div
 		metrics( ): readonly(any)[]
 		stages( ): readonly(any)[]
+		title_text( ): string
+		subtitle_text( ): string
+		card_stats_label_text( ): string
+		stat_nodes_lbl_text( ): string
+		stat_edges_lbl_text( ): string
+		stat_comms_lbl_text( ): string
+		stats_dist_text( ): string
+		card_quality_label_text( ): string
+		quality_footer_text( ): string
+		card_energy_label_text( ): string
+		energy_kwh_lbl_text( ): string
+		energy_cost_lbl_text( ): string
+		energy_note_text( ): string
+		card_timings_label_text( ): string
+		card_logs_label_text( ): string
+		log_one_text_text( ): string
+		log_two_text_text( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -4084,36 +4498,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    /** State of time moment */
-    class $mol_state_time extends $mol_object {
-        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
-        static now(precision: number): number;
-    }
-}
-
-declare namespace $ {
-
-	export class $mol_svg extends $mol_view {
-		dom_name( ): string
-		dom_name_space( ): string
-		font_size( ): number
-		font_family( ): string
-		style_size( ): Record<string, any>
-	}
-	
-}
-
-//# sourceMappingURL=svg.view.tree.d.ts.map
-declare namespace $.$$ {
-    /** Base SVG component to display SVG images or icons. */
-    class $mol_svg extends $.$mol_svg {
-        computed_style(): Record<string, any>;
-        font_size(): number;
-        font_family(): any;
-    }
-}
-
-declare namespace $ {
 
 	export class $mol_svg_group extends $mol_svg {
 		dom_name( ): string
@@ -4409,24 +4793,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_svg_root extends $mol_svg {
-		view_box( ): string
-		aspect( ): string
-		dom_name( ): string
-		attr( ): ({ 
-			'viewBox': ReturnType< $mol_svg_root['view_box'] >,
-			'preserveAspectRatio': ReturnType< $mol_svg_root['aspect'] >,
-		})  & ReturnType< $mol_svg['attr'] >
-	}
-	
-}
-
-//# sourceMappingURL=root.view.tree.d.ts.map
-declare namespace $ {
 
 	type $mol_vector_2d__mol_touch_1 = $mol_type_enforce<
 		[ number, number ]
@@ -4516,10 +4882,6 @@ declare namespace $.$$ {
         swipe_bottom(event: PointerEvent): void;
         event_wheel(event: WheelEvent): void;
     }
-}
-
-declare namespace $ {
-    let $mol_mem_cached: typeof $mol_wire_probe;
 }
 
 declare namespace $ {
@@ -5415,238 +5777,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_mem_persist: typeof $mol_wire_solid;
-}
-
-declare namespace $ {
-    function $mol_wait_user_async(this: $): Promise<unknown>;
-    function $mol_wait_user(this: $): unknown;
-}
-
-declare namespace $ {
-    class $mol_storage extends $mol_object2 {
-        static native(): StorageManager;
-        static persisted(next?: boolean, cache?: 'cache'): boolean;
-        static estimate(): StorageEstimate;
-        static dir(): FileSystemDirectoryHandle;
-    }
-}
-
-declare namespace $ {
-    class $mol_state_local<Value> extends $mol_object {
-        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
-        static native(): Storage | {
-            getItem(key: string): any;
-            setItem(key: string, value: string): void;
-            removeItem(key: string): void;
-        };
-        static changes(next?: StorageEvent): StorageEvent | undefined;
-        static value<Value>(key: string, next?: Value | null): Value | null;
-        prefix(): string;
-        value(key: string, next?: Value): Value | null;
-    }
-}
-
-declare namespace $ {
-    class $mol_lock extends $mol_object {
-        protected promise: null | Promise<void>;
-        wait(): Promise<() => void>;
-        grab(): () => void;
-    }
-}
-
-declare namespace $ {
-    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
-}
-
-declare namespace $ {
-    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-}
-
-declare namespace $ {
-    function $mol_charset_decode(buffer: AllowSharedBufferSource, encoding?: $mol_charset_encoding): string;
-}
-
-declare namespace $ {
-    /** Temporary buffer. Recursive usage isn't supported. */
-    function $mol_charset_buffer(size: number): Uint8Array<ArrayBuffer>;
-}
-
-declare namespace $ {
-    function $mol_charset_encode(str: string): Uint8Array<ArrayBuffer>;
-    function $mol_charset_encode_to(str: string, buf: Uint8Array<ArrayBuffer>, from?: number): number;
-    function $mol_charset_encode_size(str: string): number;
-}
-
-declare namespace $ {
-    type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append';
-    type $mol_file_transaction_buffer = ArrayBufferView;
-    class $mol_file_transaction extends $mol_object {
-        path(): string;
-        modes(): readonly $mol_file_transaction_mode[];
-        write(options: {
-            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
-            offset?: number | null;
-            length?: number | null;
-            position?: number | null;
-        }): number;
-        read(): Uint8Array<ArrayBuffer>;
-        truncate(size: number): void;
-        flush(): void;
-        close(): void;
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_transaction_node extends $mol_file_transaction {
-        protected descr(): number;
-        write({ buffer, offset, length, position }: {
-            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
-            offset?: number | null;
-            length?: number | null;
-            position?: number | null;
-        }): number;
-        truncate(size: number): void;
-        read(): Uint8Array<ArrayBuffer>;
-        flush(): void;
-        close(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_file_base extends $mol_object {
-        static absolute<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
-        static relative<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
-        static base: string;
-        path(): string;
-        parent(): this;
-        exists_cut(): boolean;
-        protected root(): boolean;
-        protected stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
-        protected static changed: Set<$mol_file_base>;
-        protected static frame: null | $mol_after_timeout;
-        protected static changed_add(type: 'change' | 'rename', path: string): void;
-        /**
-         * Должно быть больше, чем время между событиями от вотчера при записи внешним процессом.
-         * Иначе запуск ресетов паралельно с изменением может привести к неконсистентности.
-         */
-        static watch_debounce(): number;
-        static flush(): void;
-        protected static watching: boolean;
-        protected static lock: $mol_lock;
-        protected static watch_off(path: string): void;
-        static unwatched<Result>(side_effect: () => Result, affected_dir: string): Result;
-        reset(): void;
-        modified(): Date | null;
-        version(): string;
-        protected info(path: string): null | $mol_file_stat;
-        protected ensure(): void;
-        protected drop(): void;
-        protected copy(to: string): void;
-        protected read(): Uint8Array<ArrayBuffer>;
-        protected write(buffer: Uint8Array<ArrayBuffer>): void;
-        protected kids(): readonly this[];
-        readable(opts: {
-            start?: number;
-            end?: number;
-        }): ReadableStream<Uint8Array<ArrayBuffer>>;
-        writable(opts: {
-            start?: number;
-        }): WritableStream<Uint8Array<ArrayBuffer>>;
-        buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
-        stat_make(size: number): {
-            readonly type: "file";
-            readonly size: number;
-            readonly atime: Date;
-            readonly mtime: Date;
-            readonly ctime: Date;
-        };
-        clone(to: string): this | null;
-        watcher(): {
-            destructor(): void;
-        };
-        exists(next?: boolean): boolean;
-        type(): "" | $mol_file_type;
-        name(): string;
-        ext(): string;
-        text(next?: string, virt?: 'virt'): string;
-        text_int(next?: string, virt?: 'virt'): string;
-        sub(reset?: null): this[];
-        resolve(path: string): this;
-        relate(base?: $mol_file_base): string;
-        find(include?: RegExp, exclude?: RegExp): this[];
-        size(): number;
-        toJSON(): string;
-        open(...modes: readonly $mol_file_transaction_mode[]): $mol_file_transaction;
-    }
-}
-
-declare namespace $ {
-    type $mol_file_type = 'file' | 'dir' | 'link';
-    interface $mol_file_stat {
-        type: $mol_file_type;
-        size: number;
-        atime: Date;
-        mtime: Date;
-        ctime: Date;
-    }
-    class $mol_file extends $mol_file_base {
-    }
-}
-
-declare namespace $ {
-    function $mol_file_node_buffer_normalize(buf: Buffer<ArrayBuffer>): Uint8Array<ArrayBuffer>;
-    class $mol_file_node extends $mol_file {
-        static relative<This extends typeof $mol_file>(this: This, path: string): InstanceType<This>;
-        watcher(reset?: null): {
-            destructor(): void;
-        };
-        protected info(path: string): $mol_file_stat | null;
-        protected ensure(): null | undefined;
-        protected copy(to: string): void;
-        protected drop(): void;
-        protected read(): Uint8Array<ArrayBuffer>;
-        protected write(buffer: Uint8Array<ArrayBuffer>): undefined;
-        protected kids(): this[];
-        resolve(path: string): this;
-        relate(base?: $mol_file): string;
-        readable(opts: {
-            start?: number;
-            end?: number;
-        }): ReadableStream<Uint8Array<ArrayBuffer>>;
-        writable(opts?: {
-            start?: number;
-        }): WritableStream<Uint8Array<ArrayBuffer>>;
-    }
-}
-
-declare namespace $ {
-    class $mol_state_local_node<Value> extends $mol_state_local<Value> {
-        static dir(): $mol_file;
-        static value<Value>(key: string, next?: Value | null): Value | null;
-    }
-}
-
-declare namespace $ {
-    interface $mol_locale_dict {
-        [key: string]: string;
-    }
-    /**
-     * Localisation in $mol framework
-     * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
-     */
-    class $mol_locale extends $mol_object {
-        static lang_default(): string;
-        static lang(next?: string): string;
-        static source(lang: string): any;
-        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): string;
-        static warn(key: string): null;
-    }
-}
-
-declare namespace $ {
 
 	export class $mol_nav extends $mol_plugin {
 		event_key( next?: any ): any
@@ -5750,41 +5880,6 @@ declare namespace $.$$ {
 declare namespace $ {
 }
 
-declare namespace $ {
-
-	export class $mol_svg_path extends $mol_svg {
-		geometry( ): string
-		dom_name( ): string
-		attr( ): ({ 
-			'd': ReturnType< $mol_svg_path['geometry'] >,
-		})  & ReturnType< $mol_svg['attr'] >
-	}
-	
-}
-
-//# sourceMappingURL=path.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $mol_svg_path__geometry_mol_icon_1 = $mol_type_enforce<
-		ReturnType< $mol_icon['path'] >
-		,
-		ReturnType< $mol_svg_path['geometry'] >
-	>
-	export class $mol_icon extends $mol_svg_root {
-		path( ): string
-		Path( ): $mol_svg_path
-		view_box( ): string
-		minimal_width( ): number
-		minimal_height( ): number
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=icon.view.tree.d.ts.map
 declare namespace $ {
 
 	export class $mol_icon_close extends $mol_icon {
@@ -6194,15 +6289,15 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $raggu_web_sidebar__screen_raggu_web_app_1 = $mol_type_enforce<
+	type $bog_favicon__Icon_raggu_web_app_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_app['favicon_icon'] >
+		,
+		ReturnType< $bog_favicon['Icon'] >
+	>
+	type $raggu_web_sidebar__screen_raggu_web_app_2 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['screen'] >
 		,
 		ReturnType< $raggu_web_sidebar['screen'] >
-	>
-	type $raggu_web_sidebar__lang_raggu_web_app_2 = $mol_type_enforce<
-		ReturnType< $raggu_web_app['lang'] >
-		,
-		ReturnType< $raggu_web_sidebar['lang'] >
 	>
 	type $raggu_web_sidebar__dataset_id_raggu_web_app_3 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['dataset_id'] >
@@ -6255,6 +6350,8 @@ declare namespace $ {
 		ReturnType< $raggu_web_gallery['select_dataset'] >
 	>
 	export class $raggu_web_app extends $bog_builderui_div {
+		favicon_icon( ): $mol_icon_graph
+		Favicon( ): $bog_favicon
 		Sidebar( ): $raggu_web_sidebar
 		open_settings( next?: any ): any
 		Topbar( ): $raggu_web_topbar
@@ -6264,10 +6361,10 @@ declare namespace $ {
 		select_dataset( next?: any ): any
 		screen( next?: string ): string
 		preset( next?: string ): string
-		lang( next?: string ): string
 		dataset_id( next?: string ): string
 		settings_open( next?: boolean ): boolean
 		body( ): readonly(any)[]
+		plugins( ): readonly(any)[]
 		sub( ): readonly(any)[]
 		Gallery( ): $raggu_web_gallery
 		Explorer( ): $raggu_web_explorer
@@ -6286,7 +6383,6 @@ declare namespace $.$$ {
         arg_value(key: string, next: string | undefined, fallback: string): string;
         screen(next?: string): string;
         preset(next?: string): string;
-        lang(next?: string): string;
         dataset_id(next?: string): string;
     }
 }

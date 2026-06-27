@@ -209,6 +209,8 @@
     "$bog_builderui_select",
     "$bog_builderui_tooltip",
     "$mol_pop_over",
+    "$mol_icon_graph",
+    "$bog_favicon",
     "$raggu_web_sidebar",
     "$raggu_web_sidebar_nav",
     "$raggu_web_sidebar_lang",

@@ -3617,7 +3617,264 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_svg) = class $mol_svg extends ($.$mol_view) {
+		dom_name(){
+			return "svg";
+		}
+		dom_name_space(){
+			return "http://www.w3.org/2000/svg";
+		}
+		font_size(){
+			return 16;
+		}
+		font_family(){
+			return "";
+		}
+		style_size(){
+			return {};
+		}
+	};
+
+
+;
 "use strict";
+var $;
+(function ($) {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision, reset) {
+            if (precision) {
+                return new $mol_after_timeout(precision, () => this.task(precision, null));
+            }
+            else {
+                return new $mol_after_frame(() => this.task(precision, null));
+            }
+        }
+        static now(precision) {
+            this.task(precision);
+            return Date.now();
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "task", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_time, "now", null);
+    $.$mol_state_time = $mol_state_time;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /** Base SVG component to display SVG images or icons. */
+        class $mol_svg extends $.$mol_svg {
+            computed_style() {
+                const win = this.$.$mol_dom_context;
+                const style = win.getComputedStyle(this.dom_node());
+                if (!style['font-size'])
+                    $mol_state_time.now(0);
+                return style;
+            }
+            font_size() {
+                return parseInt(this.computed_style()['font-size']) || 16;
+            }
+            font_family() {
+                return this.computed_style()['font-family'];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_svg.prototype, "computed_style", null);
+        __decorate([
+            $mol_mem
+        ], $mol_svg.prototype, "font_size", null);
+        __decorate([
+            $mol_mem
+        ], $mol_svg.prototype, "font_family", null);
+        $$.$mol_svg = $mol_svg;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_root) = class $mol_svg_root extends ($.$mol_svg) {
+		view_box(){
+			return "0 0 100 100";
+		}
+		aspect(){
+			return "xMidYMid";
+		}
+		dom_name(){
+			return "svg";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"viewBox": (this.view_box()), 
+				"preserveAspectRatio": (this.aspect())
+			};
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/svg/root/root.view.css", "[mol_svg_root] {\n\toverflow: hidden;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$mol_svg_path) = class $mol_svg_path extends ($.$mol_svg) {
+		geometry(){
+			return "";
+		}
+		dom_name(){
+			return "path";
+		}
+		attr(){
+			return {...(super.attr()), "d": (this.geometry())};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon) = class $mol_icon extends ($.$mol_svg_root) {
+		path(){
+			return "";
+		}
+		Path(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.path()));
+			return obj;
+		}
+		view_box(){
+			return "0 0 24 24";
+		}
+		minimal_width(){
+			return 16;
+		}
+		minimal_height(){
+			return 16;
+		}
+		sub(){
+			return [(this.Path())];
+		}
+	};
+	($mol_mem(($.$mol_icon.prototype), "Path"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/icon/icon.view.css", "[mol_icon] {\n\tfill: currentColor;\n\tstroke: none;\n\twidth: 1em;\n\theight: 1.5em;\n\tflex: 0 0 auto;\n\tvertical-align: top;\n\tdisplay: inline-block;\n\tfilter: drop-shadow(0px 1px 1px var(--mol_theme_back));\n\ttransform-origin: center;\n}\n\n[mol_icon_path] {\n\ttransform-origin: center;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_graph) = class $mol_icon_graph extends ($.$mol_icon) {
+		path(){
+			return "M19.5 17C19.37 17 19.24 17 19.11 17.04L17.5 13.79C17.95 13.34 18.25 12.71 18.25 12C18.25 10.62 17.13 9.5 15.75 9.5C15.62 9.5 15.5 9.5 15.36 9.54L13.73 6.29C14.21 5.84 14.5 5.21 14.5 4.5C14.5 3.12 13.38 2 12 2S9.5 3.12 9.5 4.5C9.5 5.21 9.79 5.84 10.26 6.29L8.64 9.54C8.5 9.5 8.38 9.5 8.25 9.5C6.87 9.5 5.75 10.62 5.75 12C5.75 12.71 6.05 13.34 6.5 13.79L4.89 17.04C4.76 17 4.63 17 4.5 17C3.12 17 2 18.12 2 19.5C2 20.88 3.12 22 4.5 22S7 20.88 7 19.5C7 18.8 6.71 18.16 6.24 17.71L7.86 14.46C8 14.5 8.12 14.5 8.25 14.5C8.38 14.5 8.5 14.5 8.64 14.46L10.27 17.71C9.8 18.16 9.5 18.8 9.5 19.5C9.5 20.88 10.62 22 12 22S14.5 20.88 14.5 19.5C14.5 18.12 13.38 17 12 17C11.87 17 11.74 17 11.61 17.04L10 13.79C10.46 13.34 10.75 12.71 10.75 12S10.46 10.66 10 10.21L11.61 6.96C11.74 7 11.87 7 12 7S12.26 7 12.39 6.96L14 10.21C13.55 10.66 13.25 11.3 13.25 12C13.25 13.38 14.37 14.5 15.75 14.5C15.88 14.5 16 14.5 16.14 14.46L17.77 17.71C17.3 18.16 17 18.8 17 19.5C17 20.88 18.12 22 19.5 22S22 20.88 22 19.5C22 18.12 20.88 17 19.5 17Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$bog_favicon) = class $bog_favicon extends ($.$mol_plugin) {
+		Icon(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_favicon.prototype), "Icon"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /** Плагин, который ставит favicon из переданного $mol_icon_* и подобных */
+        class $bog_favicon extends $.$bog_favicon {
+            // сюда передаем Icon <= icon $mol_icon_waze
+            Icon(next) {
+                if (next !== undefined)
+                    return next;
+                throw new Error('[bog_favicon] Icon is required: use `Icon <= icon $mol_icon_*` in view.tree');
+            }
+            favicon_data() {
+                const icon = this.Icon();
+                const node = icon.dom_tree();
+                if (!node.getAttribute('xmlns')) {
+                    node.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                }
+                const svg = node.outerHTML;
+                return 'data:image/svg+xml,' + encodeURIComponent(svg);
+            }
+            apply_favicon() {
+                const doc = $mol_dom_context.document;
+                if (!doc)
+                    return;
+                const href = this.favicon_data();
+                let link = doc.querySelector('link[rel="icon"]');
+                if (!link) {
+                    link = doc.createElement('link');
+                    link.rel = 'icon';
+                    doc.head.appendChild(link);
+                }
+                link.type = 'image/svg+xml';
+                if (link.href !== href)
+                    link.href = href;
+            }
+            auto() {
+                this.favicon_data();
+                this.apply_favicon();
+                return null;
+            }
+            sub() {
+                return [];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_favicon.prototype, "Icon", null);
+        __decorate([
+            $mol_mem
+        ], $bog_favicon.prototype, "favicon_data", null);
+        $$.$bog_favicon = $bog_favicon;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 	($.$raggu_web_sidebar_nav) = class $raggu_web_sidebar_nav extends ($.$bog_builderui_div) {
@@ -3694,6 +3951,1357 @@ var $;
             },
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem_persist = $mol_wire_solid;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_mem_cached = $mol_wire_probe;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const factories = new WeakMap();
+    function factory(val) {
+        let make = factories.get(val);
+        if (make)
+            return make;
+        make = $mol_func_name_from((...args) => new val(...args), val);
+        factories.set(val, make);
+        return make;
+    }
+    const getters = new WeakMap();
+    function get_prop(host, field) {
+        let props = getters.get(host);
+        let get_val = props?.[field];
+        if (get_val)
+            return get_val;
+        get_val = (next) => {
+            if (next !== undefined)
+                host[field] = next;
+            return host[field];
+        };
+        Object.defineProperty(get_val, 'name', { value: field });
+        if (!props) {
+            props = {};
+            getters.set(host, props);
+        }
+        props[field] = get_val;
+        return get_val;
+    }
+    /**
+     * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
+     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+     */
+    function $mol_wire_sync(obj) {
+        return new Proxy(obj, {
+            get(obj, field) {
+                let val = obj[field];
+                const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field));
+                if (typeof val !== 'function')
+                    return temp(obj, []).sync();
+                return function $mol_wire_sync(...args) {
+                    const fiber = temp(obj, args);
+                    return fiber.sync();
+                };
+            },
+            set(obj, field, next) {
+                const temp = $mol_wire_task.getter(get_prop(obj, field));
+                temp(obj, [next]).sync();
+                return true;
+            },
+            construct(obj, args) {
+                const temp = $mol_wire_task.getter(factory(obj));
+                return temp(obj, args).sync();
+            },
+            apply(obj, self, args) {
+                const temp = $mol_wire_task.getter(obj);
+                return temp(self, args).sync();
+            },
+        });
+    }
+    $.$mol_wire_sync = $mol_wire_sync;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_wait_user_async() {
+        return new Promise(done => $mol_dom.addEventListener('click', function onclick() {
+            $mol_dom.removeEventListener('click', onclick);
+            done(null);
+        }));
+    }
+    $.$mol_wait_user_async = $mol_wait_user_async;
+    function $mol_wait_user() {
+        return this.$mol_wire_sync(this).$mol_wait_user_async();
+    }
+    $.$mol_wait_user = $mol_wait_user;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_storage extends $mol_object2 {
+        static native() {
+            return this.$.$mol_dom_context.navigator.storage ?? {
+                persisted: async () => false,
+                persist: async () => false,
+                estimate: async () => ({}),
+                getDirectory: async () => null,
+            };
+        }
+        static persisted(next, cache) {
+            $mol_mem_persist();
+            if (cache)
+                return Boolean(next);
+            const native = this.native();
+            if (next && !$mol_mem_cached(() => this.persisted())) {
+                this.$.$mol_wait_user_async()
+                    .then(() => native.persist())
+                    .then(actual => {
+                    setTimeout(() => this.persisted(actual, 'cache'), 5000);
+                    if (actual)
+                        this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` });
+                    else
+                        this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` });
+                });
+            }
+            return next ?? $mol_wire_sync(native).persisted();
+        }
+        static estimate() {
+            return $mol_wire_sync(this.native() ?? {}).estimate();
+        }
+        static dir() {
+            return $mol_wire_sync(this.native()).getDirectory();
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_storage, "native", null);
+    __decorate([
+        $mol_mem
+    ], $mol_storage, "persisted", null);
+    $.$mol_storage = $mol_storage;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_state_local extends $mol_object {
+        static 'native()';
+        static native() {
+            if (this['native()'])
+                return this['native()'];
+            check: try {
+                const native = $mol_dom_context.localStorage;
+                if (!native)
+                    break check;
+                native.setItem('', '');
+                native.removeItem('');
+                return this['native()'] = native;
+            }
+            catch (error) {
+                console.warn(error);
+            }
+            return this['native()'] = {
+                getItem(key) {
+                    return this[':' + key];
+                },
+                setItem(key, value) {
+                    this[':' + key] = value;
+                },
+                removeItem(key) {
+                    this[':' + key] = void 0;
+                }
+            };
+        }
+        static changes(next) { return next; }
+        static value(key, next) {
+            this.changes();
+            if (next === void 0)
+                return JSON.parse(this.native().getItem(key) || 'null');
+            if (next === null) {
+                this.native().removeItem(key);
+            }
+            else {
+                this.native().setItem(key, JSON.stringify(next));
+                this.$.$mol_storage.persisted(true);
+            }
+            return next;
+        }
+        prefix() { return ''; }
+        value(key, next) {
+            return $mol_state_local.value(this.prefix() + '.' + key, next);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_local, "changes", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_local, "value", null);
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    self.addEventListener('storage', event => $.$mol_state_local.changes(event));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Decorates method to fiber to ensure it is executed only once inside other fiber from [mol_wire](../wire/README.md)
+     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+     */
+    $.$mol_action = $mol_wire_method;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_lock extends $mol_object {
+        promise = null;
+        async wait() {
+            let next = () => { };
+            let destructed = false;
+            const task = $mol_wire_auto();
+            if (!task)
+                return next;
+            const destructor = task.destructor.bind(task);
+            task.destructor = () => {
+                destructor();
+                destructed = true;
+                next();
+            };
+            let promise;
+            do {
+                promise = this.promise;
+                await promise;
+                if (destructed)
+                    return next;
+            } while (promise !== this.promise);
+            this.promise = new Promise(done => { next = done; });
+            return next;
+        }
+        grab() { return $mol_wire_sync(this).wait(); }
+    }
+    $.$mol_lock = $mol_lock;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_compare_array(a, b) {
+        if (a === b)
+            return true;
+        if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
+            return false;
+        if (a.length !== b.length)
+            return false;
+        for (let i = 0; i < a.length; i++)
+            if (a[i] !== b[i])
+                return false;
+        return true;
+    }
+    $.$mol_compare_array = $mol_compare_array;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    const decoders = {};
+    function $mol_charset_decode(buffer, encoding = 'utf8') {
+        let decoder = decoders[encoding];
+        if (!decoder)
+            decoder = decoders[encoding] = new TextDecoder(encoding);
+        return decoder.decode(buffer);
+    }
+    $.$mol_charset_decode = $mol_charset_decode;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    let buf = new Uint8Array(2 ** 12); // 4KB Mem Page
+    /** Temporary buffer. Recursive usage isn't supported. */
+    function $mol_charset_buffer(size) {
+        if (buf.byteLength < size)
+            buf = new Uint8Array(size);
+        return buf;
+    }
+    $.$mol_charset_buffer = $mol_charset_buffer;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_charset_encode(str) {
+        const buf = $mol_charset_buffer(str.length * 3);
+        return buf.slice(0, $mol_charset_encode_to(str, buf));
+    }
+    $.$mol_charset_encode = $mol_charset_encode;
+    function $mol_charset_encode_to(str, buf, from = 0) {
+        let pos = from;
+        for (let i = 0; i < str.length; i++) {
+            let code = str.charCodeAt(i);
+            if (code < 0x80) { // ASCII - 1 octet
+                buf[pos++] = code;
+            }
+            else if (code < 0x800) { // 2 octet
+                buf[pos++] = 0xc0 | (code >> 6);
+                buf[pos++] = 0x80 | (code & 0x3f);
+            }
+            else if (code < 0xd800 || code >= 0xe000) { // 3 octet
+                buf[pos++] = 0xe0 | (code >> 12);
+                buf[pos++] = 0x80 | ((code >> 6) & 0x3f);
+                buf[pos++] = 0x80 | (code & 0x3f);
+            }
+            else { // surrogate pair
+                const point = ((code - 0xd800) << 10) + str.charCodeAt(++i) + 0x2400;
+                buf[pos++] = 0xf0 | (point >> 18);
+                buf[pos++] = 0x80 | ((point >> 12) & 0x3f);
+                buf[pos++] = 0x80 | ((point >> 6) & 0x3f);
+                buf[pos++] = 0x80 | (point & 0x3f);
+            }
+        }
+        return pos - from;
+    }
+    $.$mol_charset_encode_to = $mol_charset_encode_to;
+    function $mol_charset_encode_size(str) {
+        let size = 0;
+        for (let i = 0; i < str.length; i++) {
+            let code = str.charCodeAt(i);
+            if (code < 0x80)
+                size += 1;
+            else if (code < 0x800)
+                size += 2;
+            else if (code < 0xd800 || code >= 0xe000)
+                size += 3;
+            else
+                size += 4;
+        }
+        return size;
+    }
+    $.$mol_charset_encode_size = $mol_charset_encode_size;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_transaction extends $mol_object {
+        path() { return ''; }
+        modes() { return []; }
+        write(options) {
+            throw new Error('Not implemented');
+        }
+        read() {
+            throw new Error('Not implemented');
+        }
+        truncate(size) {
+            throw new Error('Not implemented');
+        }
+        flush() {
+            throw new Error('Not implemented');
+        }
+        close() {
+            throw new Error('Not implemented');
+        }
+        destructor() {
+            this.close();
+        }
+    }
+    $.$mol_file_transaction = $mol_file_transaction;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_base extends $mol_object {
+        static absolute(path) {
+            return this.make({
+                path: $mol_const(path)
+            });
+        }
+        static relative(path) {
+            throw new Error('Not implemented yet');
+        }
+        static base = '';
+        path() {
+            return '.';
+        }
+        parent() {
+            return this.resolve('..');
+        }
+        exists_cut() { return this.exists(); }
+        root() {
+            const path = this.path();
+            const base = this.constructor.base;
+            // Если путь выше или равен base или если parent такойже как и this - считаем это корнем
+            return base.startsWith(path) || this == this.parent();
+        }
+        stat(next, virt) {
+            const path = this.path();
+            const parent = this.parent();
+            // Отслеживать проверку наличия родительской папки не стоит до корня диска
+            // Лучше ограничить mam-ом
+            if (!this.root()) {
+                /*
+                Если parent папка удалилась, надо ресетнуть все объекты в ней на любой глубине.
+                Например, rm -rf с последующим git pull: parent папка может удалиться, потом создасться,
+                а текущая папка успеет только удалиться до момента выполнения stat.
+                Поэтому parent.exists() не запустит перевычисления, нужна именно parent.version()
+
+                Однако, parent.version() меняется не только при удалении, будет ложное срабатывание
+                С этим придется мириться, красивого решения пока нет.
+                */
+                parent.version();
+            }
+            parent.watcher();
+            if (virt)
+                return next ?? null;
+            return next ?? this.info(path);
+        }
+        static changed = new Set;
+        static frame = null;
+        static changed_add(type, path) {
+            if (/([\/\\]\.|___$)/.test(path))
+                return;
+            const file = this.relative(path.at(-1) === '/' ? path.slice(0, -1) : path);
+            // console.log(type, path)
+            // add (change): добавился файл - у parent надо обновить список sub, если он был заюзан
+            // change, unlink (rename): обновился или удалился файл - ресетим
+            // addDir (change), добавилась папка, у parent обновляем список директорий в sub
+            // дочерние ресетим
+            // unlinkDir (rename), удалилась папка, ресетим ее
+            // stat у всех дочерних обновится сам, т.к. связан с parent.version()
+            this.changed.add(file);
+            if (!this.watching)
+                return;
+            // throttle, пока события поступают не сбрасываем.
+            // аналог awaitWriteFinish из chokidar
+            // интервалы между change-сообщениями модифицируемого файла должны быть меньше watch_debounce
+            this.frame?.destructor();
+            this.frame = new this.$.$mol_after_timeout(this.watch_debounce(), () => {
+                if (!this.watching)
+                    return;
+                this.watching = false;
+                $mol_wire_async(this).flush();
+            });
+        }
+        /**
+         * Должно быть больше, чем время между событиями от вотчера при записи внешним процессом.
+         * Иначе запуск ресетов паралельно с изменением может привести к неконсистентности.
+         */
+        static watch_debounce() { return 500; }
+        static flush() {
+            // Пока flush работает, вотчер сюда не заходит, но может добавлять новые изменения
+            // на каждом перезапуске они применятся
+            // Пока run выполняется, изменения накапливаются, в конце run вызывается flush
+            // Пока применяются изменения, run должен ожидать конца flush
+            for (const file of this.changed) {
+                const parent = file.parent();
+                try {
+                    if ($mol_wire_probe(() => parent.sub()))
+                        parent.sub(null);
+                    file.reset();
+                }
+                catch (error) {
+                    if ($mol_fail_catch(error))
+                        $mol_fail_log(error);
+                }
+            }
+            this.changed.clear();
+            this.watching = true;
+            // this.watch_wd?.destructor()
+            // this.watch_wd = null
+        }
+        static watching = true;
+        static lock = new $mol_lock;
+        static watch_off(path) {
+            this.watching = false;
+            // run должен ожидать конца flush
+            this.flush();
+            this.watching = false;
+            /*
+            watch запаздывает и событие может прилететь через 3 сек после окончания сайд эффекта
+            поэтому добавляем папку, которую меняет side_effect
+            Когда дойдет до выполнения flush, он ресетнет ее
+            
+            Иначе будут лишние срабатывания
+            Например, удалили hyoo/board, watch ресетит и exists начинает отдавать false, срабатывает git clone
+            Сразу после него событие addDir еще не успело прийти,
+            на следующем перезапуске вызывается git pull, т.к.
+            с точки зрения реактивной системы hyoo/board еще не существует.
+            */
+            this.changed.add(this.absolute(path));
+        }
+        // protected static watch_wd = null as null | $mol_after_timeout
+        static unwatched(side_effect, affected_dir) {
+            // ждем, пока выполнится предыдущий unwatched
+            const unlock = this.lock.grab();
+            this.watch_off(affected_dir);
+            try {
+                const result = side_effect();
+                this.flush();
+                unlock();
+                return result;
+            }
+            catch (e) {
+                if (!$mol_promise_like(e)) {
+                    this.flush();
+                    unlock();
+                }
+                $mol_fail_hidden(e);
+            }
+        }
+        reset() {
+            this.stat(null);
+        }
+        modified() { return this.stat()?.mtime ?? null; }
+        version() {
+            const next = this.stat()?.mtime.getTime().toString(36).toUpperCase() ?? '';
+            // console.log('version', next, this.path())
+            return next;
+        }
+        info(path) { return null; }
+        ensure() { }
+        drop() { }
+        copy(to) { }
+        read() { return new Uint8Array; }
+        write(buffer) { }
+        kids() {
+            return [];
+        }
+        readable(opts) {
+            return new ReadableStream;
+        }
+        writable(opts) {
+            return new WritableStream;
+        }
+        // open( ... modes: readonly $mol_file_mode[] ) { return 0 }
+        buffer(next) {
+            // Если версия пустая - возвращаем пустой буфер
+            let readed = new Uint8Array();
+            if (next === undefined) {
+                // Если меняется версия файла, буфер надо перечитать
+                if (this.version())
+                    readed = this.read();
+            }
+            const prev = $mol_mem_cached(() => this.buffer());
+            const changed = prev === undefined || !$mol_compare_array(prev, next ?? readed);
+            if (prev !== undefined && changed) {
+                // Логируем, если повторно читаем/пишем и буфер поменялся
+                this.$.$mol_log3_rise({
+                    place: `$mol_file_node.buffer()`,
+                    message: 'Changed',
+                    path: this.relate(),
+                });
+            }
+            if (next === undefined)
+                return changed ? readed : prev;
+            // Если буфер при записи не поменялся и файл не удаляли перед этим - не записываем новую версию.
+            // Если записывать, это приведет к смене mtime и вотчер снова триггернется, даже если содержимое файла не поменялось.
+            // В этом алгоритме есть изъян.
+            // Если файл записали, потом отключили вотчер, кто-то из вне его поменял, потом включили вотчер, снова записали тот же буфер,
+            // то буфер не запишется на диск, т.к. кэш не консистентен с диском.
+            if (!changed && this.exists())
+                return prev;
+            this.parent().exists(true);
+            this.stat(this.stat_make(next.length), 'virt');
+            this.write(next);
+            return next;
+        }
+        stat_make(size) {
+            const now = new Date();
+            return {
+                type: 'file',
+                size,
+                atime: now,
+                mtime: now,
+                ctime: now,
+            };
+        }
+        clone(to) {
+            if (!this.exists())
+                return null;
+            const target = this.constructor.absolute(to);
+            try {
+                this.version();
+                target.parent().exists(true);
+                this.copy(to);
+                target.reset();
+                return target;
+            }
+            catch (error) {
+                if ($mol_fail_catch(error)) {
+                    console.error(error);
+                }
+            }
+            return null;
+        }
+        // static watch_root = ''
+        // static watcher_warned = false
+        watcher() {
+            // const constructor = this.constructor as typeof $mol_file_base
+            // if (! constructor.watcher_warned) {
+            // 	console.warn(`${constructor}.watcher() not implemented`)
+            // 	constructor.watcher_warned = true
+            // }
+            return {
+                destructor() { }
+            };
+        }
+        exists(next) {
+            const exists = Boolean(this.stat());
+            // console.log('exists current', exists, 'next', next, this.path())
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next) {
+                this.parent().exists(true);
+                this.ensure();
+            }
+            else {
+                this.drop();
+            }
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat()?.type ?? '';
+        }
+        name() {
+            return this.path().replace(/^.*\//, '');
+        }
+        ext() {
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
+        }
+        text(next, virt) {
+            // Если записываем text, и вотчер ресетнул записанный файл,
+            // то надо снова его обновить, вызвать логику, которая делала пуш в text.
+            // Например файл удалили, потом снова создали, версия поменялась - перезаписываем
+            // Если использовать version, то вновь созданный файл, через вотчер запустит свое пересоздание
+            if (next !== undefined)
+                this.exists();
+            return this.text_int(next, virt);
+        }
+        text_int(next, virt) {
+            if (virt) {
+                this.stat(this.stat_make(0), 'virt');
+                return next;
+            }
+            if (next === undefined) {
+                return $mol_charset_decode(this.buffer());
+            }
+            else {
+                const buffer = $mol_charset_encode(next);
+                this.buffer(buffer);
+                return next;
+            }
+        }
+        sub(reset) {
+            if (!this.exists())
+                return [];
+            if (this.type() !== 'dir')
+                return [];
+            this.version();
+            // Если дочерний file удалился, список надо обновить
+            return this.kids().filter(file => file.exists());
+        }
+        resolve(path) {
+            throw new Error('implement');
+        }
+        relate(base = this.constructor.relative('.')) {
+            const base_path = base.path();
+            const path = this.path();
+            return path.startsWith(base_path) ? path.slice(base_path.length) : path;
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+        size() {
+            switch (this.type()) {
+                case 'file': return this.stat()?.size ?? 0;
+                default: return 0;
+            }
+        }
+        toJSON() {
+            return this.path();
+        }
+        open(...modes) {
+            return this.$.$mol_file_transaction.make({
+                path: () => this.path(),
+                modes: () => modes
+            });
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_file_base.prototype, "exists_cut", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "stat", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "modified", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "version", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_base.prototype, "readable", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_base.prototype, "writable", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "buffer", null);
+    __decorate([
+        $mol_action
+    ], $mol_file_base.prototype, "stat_make", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_base.prototype, "clone", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "exists", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "type", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "text_int", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "sub", null);
+    __decorate([
+        $mol_mem
+    ], $mol_file_base.prototype, "size", null);
+    __decorate([
+        $mol_action
+    ], $mol_file_base.prototype, "open", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_base, "absolute", null);
+    __decorate([
+        $mol_action
+    ], $mol_file_base, "flush", null);
+    __decorate([
+        $mol_action
+    ], $mol_file_base, "watch_off", null);
+    $.$mol_file_base = $mol_file_base;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file extends $mol_file_base {
+    }
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_rest_code;
+    (function ($mol_rest_code) {
+        $mol_rest_code[$mol_rest_code["Continue"] = 100] = "Continue";
+        $mol_rest_code[$mol_rest_code["Switching protocols"] = 101] = "Switching protocols";
+        $mol_rest_code[$mol_rest_code["Processing"] = 102] = "Processing";
+        $mol_rest_code[$mol_rest_code["OK"] = 200] = "OK";
+        $mol_rest_code[$mol_rest_code["Created"] = 201] = "Created";
+        $mol_rest_code[$mol_rest_code["Accepted"] = 202] = "Accepted";
+        $mol_rest_code[$mol_rest_code["Non-Authoritative Information"] = 203] = "Non-Authoritative Information";
+        $mol_rest_code[$mol_rest_code["No Content"] = 204] = "No Content";
+        $mol_rest_code[$mol_rest_code["Reset Content"] = 205] = "Reset Content";
+        $mol_rest_code[$mol_rest_code["Partial Content"] = 206] = "Partial Content";
+        $mol_rest_code[$mol_rest_code["Multi Status"] = 207] = "Multi Status";
+        $mol_rest_code[$mol_rest_code["Already Reported"] = 208] = "Already Reported";
+        $mol_rest_code[$mol_rest_code["IM Used"] = 226] = "IM Used";
+        $mol_rest_code[$mol_rest_code["Multiple Choices"] = 300] = "Multiple Choices";
+        $mol_rest_code[$mol_rest_code["Moved Permanently"] = 301] = "Moved Permanently";
+        $mol_rest_code[$mol_rest_code["Found"] = 302] = "Found";
+        $mol_rest_code[$mol_rest_code["See Other"] = 303] = "See Other";
+        $mol_rest_code[$mol_rest_code["Not Modified"] = 304] = "Not Modified";
+        $mol_rest_code[$mol_rest_code["Use Proxy"] = 305] = "Use Proxy";
+        $mol_rest_code[$mol_rest_code["Temporary Redirect"] = 307] = "Temporary Redirect";
+        $mol_rest_code[$mol_rest_code["Bad Request"] = 400] = "Bad Request";
+        $mol_rest_code[$mol_rest_code["Unauthorized"] = 401] = "Unauthorized";
+        $mol_rest_code[$mol_rest_code["Payment Required"] = 402] = "Payment Required";
+        $mol_rest_code[$mol_rest_code["Forbidden"] = 403] = "Forbidden";
+        $mol_rest_code[$mol_rest_code["Not Found"] = 404] = "Not Found";
+        $mol_rest_code[$mol_rest_code["Method Not Allowed"] = 405] = "Method Not Allowed";
+        $mol_rest_code[$mol_rest_code["Not Acceptable"] = 406] = "Not Acceptable";
+        $mol_rest_code[$mol_rest_code["Proxy Authentication Required"] = 407] = "Proxy Authentication Required";
+        $mol_rest_code[$mol_rest_code["Request Timeout"] = 408] = "Request Timeout";
+        $mol_rest_code[$mol_rest_code["Conflict"] = 409] = "Conflict";
+        $mol_rest_code[$mol_rest_code["Gone"] = 410] = "Gone";
+        $mol_rest_code[$mol_rest_code["Length Required"] = 411] = "Length Required";
+        $mol_rest_code[$mol_rest_code["Precondition Failed"] = 412] = "Precondition Failed";
+        $mol_rest_code[$mol_rest_code["Request Entity Too Large"] = 413] = "Request Entity Too Large";
+        $mol_rest_code[$mol_rest_code["Request URI Too Long"] = 414] = "Request URI Too Long";
+        $mol_rest_code[$mol_rest_code["Unsupported Media Type"] = 415] = "Unsupported Media Type";
+        $mol_rest_code[$mol_rest_code["Requested Range Not Satisfiable"] = 416] = "Requested Range Not Satisfiable";
+        $mol_rest_code[$mol_rest_code["Expectation Failed"] = 417] = "Expectation Failed";
+        $mol_rest_code[$mol_rest_code["Teapot"] = 418] = "Teapot";
+        $mol_rest_code[$mol_rest_code["Unprocessable Entity"] = 422] = "Unprocessable Entity";
+        $mol_rest_code[$mol_rest_code["Locked"] = 423] = "Locked";
+        $mol_rest_code[$mol_rest_code["Failed Dependency"] = 424] = "Failed Dependency";
+        $mol_rest_code[$mol_rest_code["Upgrade Required"] = 426] = "Upgrade Required";
+        $mol_rest_code[$mol_rest_code["Precondition Required"] = 428] = "Precondition Required";
+        $mol_rest_code[$mol_rest_code["Too Many Requests"] = 429] = "Too Many Requests";
+        $mol_rest_code[$mol_rest_code["Request Header Fields Too Large"] = 431] = "Request Header Fields Too Large";
+        $mol_rest_code[$mol_rest_code["Unavailable For Legal Reasons"] = 451] = "Unavailable For Legal Reasons";
+        $mol_rest_code[$mol_rest_code["Internal Server Error"] = 500] = "Internal Server Error";
+        $mol_rest_code[$mol_rest_code["Not Implemented"] = 501] = "Not Implemented";
+        $mol_rest_code[$mol_rest_code["Bad Gateway"] = 502] = "Bad Gateway";
+        $mol_rest_code[$mol_rest_code["Service Unavailable"] = 503] = "Service Unavailable";
+        $mol_rest_code[$mol_rest_code["Gateway Timeout"] = 504] = "Gateway Timeout";
+        $mol_rest_code[$mol_rest_code["HTTP Version Not Supported"] = 505] = "HTTP Version Not Supported";
+        $mol_rest_code[$mol_rest_code["Insufficient Storage"] = 507] = "Insufficient Storage";
+        $mol_rest_code[$mol_rest_code["Loop Detected"] = 508] = "Loop Detected";
+        $mol_rest_code[$mol_rest_code["Not Extended"] = 510] = "Not Extended";
+        $mol_rest_code[$mol_rest_code["Network Authentication Required"] = 511] = "Network Authentication Required";
+        $mol_rest_code[$mol_rest_code["Network Read Timeout Error"] = 598] = "Network Read Timeout Error";
+        $mol_rest_code[$mol_rest_code["Network Connect Timeout Error"] = 599] = "Network Connect Timeout Error";
+    })($mol_rest_code = $.$mol_rest_code || ($.$mol_rest_code = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function cause_serialize(cause) {
+        return JSON.stringify(cause, null, '  ')
+            .replace(/\(/, '<')
+            .replace(/\)/, ' >');
+    }
+    function frame_normalize(frame) {
+        return (typeof frame === 'string' ? frame : cause_serialize(frame))
+            .trim()
+            .replace(/at /gm, '   at ')
+            .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)');
+    }
+    class $mol_error_mix extends AggregateError {
+        cause;
+        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
+        constructor(message, cause = {}, ...errors) {
+            super(errors, message, { cause });
+            this.cause = cause;
+            const desc = Object.getOwnPropertyDescriptor(this, 'stack');
+            const stack_get = () => desc?.get?.() ?? super.stack ?? desc?.value ?? this.message;
+            Object.defineProperty(this, 'stack', {
+                get: () => stack_get() + '\n' + [
+                    this.cause ?? 'no cause',
+                    ...this.errors.flatMap(e => [
+                        String(e.stack),
+                        ...e instanceof $mol_error_mix || !e.cause ? [] : [e.cause]
+                    ])
+                ].map(frame_normalize).join('\n')
+            });
+            // в nodejs, что б не дублировалось cause в консоли
+            Object.defineProperty(this, 'cause', {
+                get: () => cause
+            });
+        }
+        static [Symbol.toPrimitive]() {
+            return this.toString();
+        }
+        static toString() {
+            return $$.$mol_func_name(this);
+        }
+        static make(...params) {
+            return new this(...params);
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function pass(data) {
+        return data;
+    }
+    function $mol_error_fence(task, fallback, loading = pass) {
+        try {
+            return task();
+        }
+        catch (error) {
+            let normalized;
+            try {
+                normalized = $mol_promise_like(error) ? loading(error) : fallback(error);
+            }
+            catch (sub_error) {
+                normalized = $mol_promise_like(sub_error) ? sub_error : new $mol_error_mix(sub_error.message, { error }, sub_error);
+            }
+            if (normalized instanceof Error || $mol_promise_like(normalized)) {
+                $mol_fail_hidden(normalized);
+            }
+            return normalized;
+        }
+    }
+    $.$mol_error_fence = $mol_error_fence;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_error_enriched(cause, cb) {
+        return $mol_error_fence(cb, e => new $mol_error_mix(e.message, cause, e));
+    }
+    $.$mol_error_enriched = $mol_error_enriched;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $mol_object {
+        native;
+        request;
+        status() {
+            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
+            return types[Math.floor(this.native.status / 100)];
+        }
+        code() {
+            return this.native.status;
+        }
+        ok() {
+            return this.native.ok;
+        }
+        message() {
+            return $mol_rest_code[this.code()] || `HTTP Error ${this.code()}`;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const mime = this.mime() || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).json());
+        }
+        blob() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).blob());
+        }
+        buffer() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).arrayBuffer());
+        }
+        xml() {
+            return $mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch_request extends $mol_object {
+        native;
+        response_async() {
+            const controller = new AbortController();
+            let done = false;
+            const request = new Request(this.native, { signal: controller.signal });
+            const promise = fetch(request).finally(() => {
+                done = true;
+            });
+            return Object.assign(promise, {
+                destructor: () => {
+                    // Abort of done request breaks response parsing
+                    if (!done && !controller.signal.aborted)
+                        controller.abort();
+                },
+            });
+        }
+        response() {
+            return this.$.$mol_fetch_response.make({
+                native: $mol_wire_sync(this).response_async(),
+                request: this
+            });
+        }
+        success() {
+            const response = this.response();
+            if (response.status() === 'success')
+                return response;
+            throw new Error(response.message(), { cause: response });
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_request.prototype, "response", null);
+    $.$mol_fetch_request = $mol_fetch_request;
+    class $mol_fetch extends $mol_object {
+        static request(input, init) {
+            return this.$.$mol_fetch_request.make({
+                native: new Request(input, init)
+            });
+        }
+        static response(input, init) {
+            return this.request(input, init).response();
+        }
+        static success(input, init) {
+            return this.request(input, init).success();
+        }
+        static stream(input, init) {
+            return this.success(input, init).stream();
+        }
+        static text(input, init) {
+            return this.success(input, init).text();
+        }
+        static json(input, init) {
+            return this.success(input, init).json();
+        }
+        static blob(input, init) {
+            return this.success(input, init).blob();
+        }
+        static buffer(input, init) {
+            return this.success(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.success(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.success(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.success(input, init).html();
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "request", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_webdav extends $mol_file_base {
+        static relative(path) {
+            return this.absolute(new URL(path, this.base).toString());
+        }
+        resolve(path) {
+            let res = this.path() + '/' + path;
+            while (true) {
+                let prev = res;
+                // foo/../ -> /
+                res = res.replace(/\/[^\/.]+\/\.\.\//, '/');
+                if (prev === res)
+                    break;
+            }
+            // http://localhost/.. -> http://localhost
+            res = res.replace(/\/\.\.\/?$/, '');
+            if (res === this.path())
+                return this;
+            return this.constructor.absolute(res);
+        }
+        static headers() { return {}; }
+        headers() { return this.constructor.headers(); }
+        fetch(init) {
+            return this.$.$mol_fetch.success(this.path(), {
+                ...init,
+                headers: {
+                    ...this.headers(),
+                    ...init.headers,
+                }
+            });
+        }
+        read() {
+            try {
+                const response = this.fetch({});
+                return new Uint8Array(response.buffer());
+            }
+            catch (error) {
+                if (error instanceof Error
+                    && error.cause instanceof $mol_fetch_response
+                    && error.cause.native.status === 404)
+                    return new Uint8Array;
+                $mol_fail_hidden(error);
+            }
+        }
+        write(body) { this.fetch({ method: 'PUT', body }); }
+        ensure() { this.fetch({ method: 'MKCOL' }); }
+        drop() { this.fetch({ method: 'DELETE' }); }
+        copy(to) {
+            this.fetch({
+                method: 'COPY',
+                headers: { Destination: to }
+            });
+        }
+        kids() {
+            const response = this.fetch({ method: 'PROPFIND' });
+            const xml = response.xml();
+            const result = [];
+            for (const multistatus of xml.childNodes) {
+                if (multistatus.nodeName !== 'D:multistatus')
+                    continue;
+                for (const response of multistatus.childNodes) {
+                    let path;
+                    if (response.nodeName === 'D:href')
+                        path = response.textContent ?? '';
+                    if (!path)
+                        continue;
+                    if (response.nodeName !== 'D:propstat')
+                        continue;
+                    const stat = webdav_stat(response);
+                    const file = this.resolve(path);
+                    file.stat(stat, 'virt');
+                    result.push(file);
+                }
+            }
+            return result;
+        }
+        readable(opts) {
+            return this.fetch({
+                headers: !opts.start ? {} : {
+                    'Range': `bytes=${opts.start}-${opts.end ?? ''}`
+                }
+            }).stream() || $mol_fail(new Error('Not found'));
+        }
+        info() {
+            return this.kids().at(0)?.stat() ?? null;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_file_webdav.prototype, "readable", null);
+    $.$mol_file_webdav = $mol_file_webdav;
+    function webdav_stat(prop_stat) {
+        const now = new Date();
+        const stat = {
+            type: 'file',
+            size: 0,
+            atime: now,
+            mtime: now,
+            ctime: now,
+        };
+        for (const prop of prop_stat.childNodes) {
+            if (prop.nodeName !== 'D:prop')
+                continue;
+            for (const value of prop.childNodes) {
+                const name = value.nodeName;
+                const text = value.textContent ?? '';
+                if (name === 'D:getcontenttype') {
+                    stat.type = text.endsWith('directory') ? 'dir' : 'file';
+                }
+                if (name === 'D:getcontentlength') {
+                    stat.size = Number(value.textContent || '0');
+                    if (Number.isNaN(stat.size))
+                        stat.size = 0;
+                }
+                if (name === 'D:getlastmodified')
+                    stat.mtime = stat.atime = new Date(text);
+                if (name === 'D:creationdate')
+                    stat.ctime = new Date(text);
+            }
+        }
+        return stat;
+    }
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_web extends $mol_file_webdav {
+        static base = new URL('.', $mol_dom_context.document?.currentScript?.['src'] ?? globalThis.location.href).toString();
+        // Вотчер выключен, версия всегда будет одна
+        // Если пустая строка - будет считаться, что файла нет
+        version() { return '1'; }
+        // Ворнинги подавляем, иначе в каждом приложении, загружающим локали, будет ворнинг
+        // override watcher() { return { destructor() {} }}
+        info() {
+            // Директории не поддерживаются
+            try {
+                const response = this.fetch({ method: 'HEAD' });
+                const headers = response.headers();
+                let size = Number(headers.get('Content-Length'));
+                if (Number.isNaN(size))
+                    size = 0;
+                const last = headers.get('Last-Modified');
+                const mtime = last ? new Date(last) : new Date();
+                return {
+                    type: 'file',
+                    size,
+                    mtime,
+                    atime: mtime,
+                    ctime: mtime,
+                };
+            }
+            catch (error) {
+                if (error instanceof Error
+                    && error.cause instanceof $mol_fetch_response
+                    && error.cause.native.status === 404)
+                    return null;
+                $mol_fail_hidden(error);
+            }
+        }
+    }
+    $.$mol_file_web = $mol_file_web;
+    $.$mol_file = $mol_file_web;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Localisation in $mol framework
+     * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
+     */
+    class $mol_locale extends $mol_object {
+        static lang_default() {
+            return 'en';
+        }
+        static lang(next) {
+            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
+        }
+        static source(lang) {
+            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
+        }
+        static texts(lang, next) {
+            if (next)
+                return next;
+            try {
+                return this.source(lang).valueOf();
+            }
+            catch (error) {
+                if ($mol_fail_catch(error)) {
+                    const def = this.lang_default();
+                    if (lang === def)
+                        throw error;
+                }
+            }
+            return {};
+        }
+        static text(key) {
+            const lang = this.lang();
+            const target = this.texts(lang)[key];
+            if (target)
+                return target;
+            this.warn(key);
+            const en = this.texts('en')[key];
+            if (!en)
+                return key;
+            return en;
+        }
+        static warn(key) {
+            console.warn(`Not translated to "${this.lang()}": ${key}`);
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang_default", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "source", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "texts", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "text", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_locale, "warn", null);
+    $.$mol_locale = $mol_locale;
 })($ || ($ = {}));
 
 ;
@@ -3783,7 +5391,7 @@ var $;
 		}
 		Sections_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Разделы"]);
+			(obj.sub) = () => ([(this.sections_label_text())]);
 			return obj;
 		}
 		is_gallery(){
@@ -3796,7 +5404,7 @@ var $;
 		Nav_gallery(){
 			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("▤");
-			(obj.label) = () => ("Датасеты");
+			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_sidebar_Nav_gallery_label")));
 			(obj.active) = () => ((this.is_gallery()));
 			(obj.click) = (next) => ((this.click_gallery(next)));
 			return obj;
@@ -3811,7 +5419,7 @@ var $;
 		Nav_explorer(){
 			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("◉");
-			(obj.label) = () => ("Граф");
+			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_sidebar_Nav_explorer_label")));
 			(obj.active) = () => ((this.is_explorer()));
 			(obj.click) = (next) => ((this.click_explorer(next)));
 			return obj;
@@ -3826,7 +5434,7 @@ var $;
 		Nav_chat(){
 			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("💬");
-			(obj.label) = () => ("Чат");
+			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_sidebar_Nav_chat_label")));
 			(obj.active) = () => ((this.is_chat()));
 			(obj.click) = (next) => ((this.click_chat(next)));
 			return obj;
@@ -3841,7 +5449,7 @@ var $;
 		Nav_dashboard(){
 			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("▦");
-			(obj.label) = () => ("Дашборд");
+			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_sidebar_Nav_dashboard_label")));
 			(obj.active) = () => ((this.is_dashboard()));
 			(obj.click) = (next) => ((this.click_dashboard(next)));
 			return obj;
@@ -3862,7 +5470,7 @@ var $;
 		}
 		Corpus_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Активный корпус"]);
+			(obj.sub) = () => ([(this.corpus_label_text())]);
 			return obj;
 		}
 		dataset_name(){
@@ -3875,7 +5483,7 @@ var $;
 		}
 		Corpus_meta(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["2 410 узлов · 38 сообществ"]);
+			(obj.sub) = () => ([(this.corpus_meta_text())]);
 			return obj;
 		}
 		Corpus_card(){
@@ -3885,7 +5493,7 @@ var $;
 		}
 		Lang_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["ЯЗЫК"]);
+			(obj.sub) = () => ([(this.lang_label_text())]);
 			return obj;
 		}
 		is_en(){
@@ -3938,12 +5546,20 @@ var $;
 			if(next !== undefined) return next;
 			return "gallery";
 		}
-		lang(next){
-			if(next !== undefined) return next;
-			return "RU";
-		}
 		dataset_id(){
 			return "wiki";
+		}
+		sections_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_sidebar_sections_label_text"));
+		}
+		corpus_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_sidebar_corpus_label_text"));
+		}
+		corpus_meta_text(){
+			return (this.$.$mol_locale.text("$raggu_web_sidebar_corpus_meta_text"));
+		}
+		lang_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_sidebar_lang_label_text"));
 		}
 		sub(){
 			return [
@@ -3982,19 +5598,7 @@ var $;
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_row"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Footer"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "screen"));
-	($mol_mem(($.$raggu_web_sidebar.prototype), "lang"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Decorates method to fiber to ensure it is executed only once inside other fiber from [mol_wire](../wire/README.md)
-     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
-     */
-    $.$mol_action = $mol_wire_method;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -4006,30 +5610,22 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const DATASET_NAMES = {
-            law: 'Кодексы и законы РФ',
-            un: 'Устав ООН + резолюции',
-            papers: 'Наша статья + цитируемые',
-            medical: 'GraphRAG-Bench Medical',
-            wiki: 'Википедия: писатели',
-            own: 'Свой корпус',
-        };
         class $raggu_web_sidebar extends $.$raggu_web_sidebar {
             dataset_name() {
-                return DATASET_NAMES[this.dataset_id()] ?? '';
+                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${this.dataset_id()}_title`) || '';
             }
             is_gallery() { return this.screen() === 'gallery'; }
             is_explorer() { return this.screen() === 'explorer'; }
             is_chat() { return this.screen() === 'chat'; }
             is_dashboard() { return this.screen() === 'dashboard'; }
-            is_en() { return this.lang() === 'EN'; }
-            is_ru() { return this.lang() === 'RU'; }
+            is_en() { return this.$.$mol_locale.lang() === 'en'; }
+            is_ru() { return this.$.$mol_locale.lang() === 'ru'; }
             click_gallery() { this.screen('gallery'); return null; }
             click_explorer() { this.screen('explorer'); return null; }
             click_chat() { this.screen('chat'); return null; }
             click_dashboard() { this.screen('dashboard'); return null; }
-            click_en() { this.lang('EN'); return null; }
-            click_ru() { this.lang('RU'); return null; }
+            click_en() { this.$.$mol_locale.lang('en'); return null; }
+            click_ru() { this.$.$mol_locale.lang('ru'); return null; }
         }
         __decorate([
             $mol_action
@@ -4292,7 +5888,7 @@ var $;
 		}
 		Preset_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Пресет"]);
+			(obj.sub) = () => ([(this.preset_label_text())]);
 			return obj;
 		}
 		is_fast(){
@@ -4304,7 +5900,7 @@ var $;
 		}
 		Preset_fast(){
 			const obj = new this.$.$raggu_web_topbar_preset();
-			(obj.label) = () => ("⚡ Быстро");
+			(obj.label) = () => ((this.preset_fast_label()));
 			(obj.active) = () => ((this.is_fast()));
 			(obj.click) = (next) => ((this.click_fast(next)));
 			return obj;
@@ -4318,7 +5914,7 @@ var $;
 		}
 		Preset_accurate(){
 			const obj = new this.$.$raggu_web_topbar_preset();
-			(obj.label) = () => ("🎯 Точно");
+			(obj.label) = () => ((this.preset_accurate_label()));
 			(obj.active) = () => ((this.is_accurate()));
 			(obj.click) = (next) => ((this.click_accurate(next)));
 			return obj;
@@ -4332,7 +5928,7 @@ var $;
 		}
 		Preset_demo(){
 			const obj = new this.$.$raggu_web_topbar_preset();
-			(obj.label) = () => ("🎬 Демо");
+			(obj.label) = () => ((this.preset_demo_label()));
 			(obj.active) = () => ((this.is_demo()));
 			(obj.click) = (next) => ((this.click_demo(next)));
 			return obj;
@@ -4353,12 +5949,12 @@ var $;
 		Settings_btn(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.event) = () => ({"click": (next) => (this.open_settings(next))});
-			(obj.sub) = () => (["⚙ Настройки"]);
+			(obj.sub) = () => ([(this.settings_btn_text())]);
 			return obj;
 		}
 		Export_btn(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["↓ Экспорт"]);
+			(obj.sub) = () => ([(this.export_btn_text())]);
 			return obj;
 		}
 		screen(){
@@ -4370,6 +5966,24 @@ var $;
 		preset(next){
 			if(next !== undefined) return next;
 			return "demo";
+		}
+		preset_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_label_text"));
+		}
+		settings_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_settings_btn_text"));
+		}
+		export_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_export_btn_text"));
+		}
+		preset_fast_label(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_fast_label"));
+		}
+		preset_accurate_label(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_accurate_label"));
+		}
+		preset_demo_label(){
+			return (this.$.$mol_locale.text("$raggu_web_topbar_preset_demo_label"));
 		}
 		sub(){
 			return [
@@ -4410,23 +6024,13 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const SCREEN_TITLES = {
-            gallery: 'Датасеты',
-            explorer: 'Граф знаний',
-            chat: 'Чат с агентом',
-            dashboard: 'Дашборд',
-        };
-        const DATASET_NAMES = {
-            law: 'Кодексы и законы РФ',
-            un: 'Устав ООН + резолюции',
-            papers: 'Наша статья + цитируемые',
-            medical: 'GraphRAG-Bench Medical',
-            wiki: 'Википедия: писатели',
-            own: 'Свой корпус',
-        };
         class $raggu_web_topbar extends $.$raggu_web_topbar {
-            screen_title() { return SCREEN_TITLES[this.screen()] ?? ''; }
-            dataset_name() { return DATASET_NAMES[this.dataset_id()] ?? ''; }
+            screen_title() {
+                return this.$.$mol_locale.text(`$raggu_web_app_screen_${this.screen()}_title`) || '';
+            }
+            dataset_name() {
+                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${this.dataset_id()}_title`) || '';
+            }
             is_fast() { return this.preset() === 'fast'; }
             is_accurate() { return this.preset() === 'accurate'; }
             is_demo() { return this.preset() === 'demo'; }
@@ -4740,7 +6344,7 @@ var $;
 		Reindex(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.attr) = () => ({"raggu_web_settings_group_reindex": (this.reindex())});
-			(obj.sub) = () => (["требует переиндексации"]);
+			(obj.sub) = () => ([(this.reindex_text())]);
 			return obj;
 		}
 		Head(){
@@ -4777,6 +6381,9 @@ var $;
 		}
 		reindex(){
 			return true;
+		}
+		reindex_text(){
+			return (this.$.$mol_locale.text("$raggu_web_settings_group_reindex_text"));
 		}
 		sub(){
 			return [
@@ -5162,7 +6769,7 @@ var $;
 		}
 		Preview_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["превью графа"]);
+			(obj.sub) = () => ([(this.preview_label_text())]);
 			return obj;
 		}
 		Domain_badge(){
@@ -5239,6 +6846,9 @@ var $;
 		comms(){
 			return "";
 		}
+		preview_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_card_preview_label_text"));
+		}
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
 		}
@@ -5274,9 +6884,12 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
-            tag_nodes() { return `${this.nodes()} узлов`; }
-            tag_edges() { return `${this.edges()} связей`; }
-            tag_comms() { return `${this.comms()} сообществ`; }
+            unit(key) {
+                return this.$.$mol_locale.text(`$raggu_web_gallery_card_unit_${key}`) || '';
+            }
+            tag_nodes() { return `${this.nodes()} ${this.unit('nodes')}`; }
+            tag_edges() { return `${this.edges()} ${this.unit('edges')}`; }
+            tag_comms() { return `${this.comms()} ${this.unit('comms')}`; }
         }
         $$.$raggu_web_gallery_card = $raggu_web_gallery_card;
     })($$ = $.$$ || ($.$$ = {}));
@@ -5369,12 +6982,12 @@ var $;
 	($.$raggu_web_gallery) = class $raggu_web_gallery extends ($.$bog_builderui_div) {
 		Header_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Галерея корпусов"]);
+			(obj.sub) = () => ([(this.header_title_text())]);
 			return obj;
 		}
 		Header_subtitle(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Выберите готовый граф знаний или загрузите свой документ / индекс"]);
+			(obj.sub) = () => ([(this.header_subtitle_text())]);
 			return obj;
 		}
 		Header_text(){
@@ -5388,12 +7001,12 @@ var $;
 		}
 		Upload_doc(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["＋ Загрузить документ"]);
+			(obj.sub) = () => ([(this.upload_doc_text())]);
 			return obj;
 		}
 		Upload_idx(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["⇪ Загрузить готовый индекс"]);
+			(obj.sub) = () => ([(this.upload_idx_text())]);
 			return obj;
 		}
 		Header(){
@@ -5461,6 +7074,18 @@ var $;
 		datasets(){
 			return [];
 		}
+		header_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_header_title_text"));
+		}
+		header_subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_header_subtitle_text"));
+		}
+		upload_doc_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_doc_text"));
+		}
+		upload_idx_text(){
+			return (this.$.$mol_locale.text("$raggu_web_gallery_upload_idx_text"));
+		}
 		sub(){
 			return [(this.Header()), (this.Grid())];
 		}
@@ -5489,12 +7114,12 @@ var $;
     var $$;
     (function ($$) {
         const DATASETS = [
-            { id: 'law', title: 'Кодексы и законы РФ', domain: 'Право', desc: 'Сеть норм, отсылок, органов и понятий российского права.', nodes: '18.4k', edges: '52k', comms: '210' },
-            { id: 'un', title: 'Устав ООН + резолюции', domain: 'Международное право', desc: 'Органы, государства, статьи и ключевые резолюции ООН.', nodes: '9.1k', edges: '27k', comms: '96' },
-            { id: 'papers', title: 'Наша статья + цитируемые', domain: 'Наука', desc: 'Авторы, методы, бенчмарки и цитирования — граф про сам GraphRAG.', nodes: '1.2k', edges: '3.4k', comms: '24' },
-            { id: 'medical', title: 'GraphRAG-Bench Medical', domain: 'Медицина', desc: 'Биомедицинский корпус из бенчмарков — рядом метрики качества.', nodes: '6.7k', edges: '19k', comms: '71' },
-            { id: 'wiki', title: 'Википедия: писатели', domain: 'Биографии', desc: 'Связный тематический срез: персоны, события, награды.', nodes: '2.4k', edges: '7.1k', comms: '38' },
-            { id: 'own', title: '＋ Загрузить свой', domain: '—', desc: 'Документ или готовый индекс — построим граф на лету.', nodes: '—', edges: '—', comms: '—' },
+            { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
+            { id: 'un', nodes: '9.1k', edges: '27k', comms: '96' },
+            { id: 'papers', nodes: '1.2k', edges: '3.4k', comms: '24' },
+            { id: 'medical', nodes: '6.7k', edges: '19k', comms: '71' },
+            { id: 'wiki', nodes: '2.4k', edges: '7.1k', comms: '38' },
+            { id: 'own', nodes: '—', edges: '—', comms: '—' },
         ];
         class $raggu_web_gallery extends $.$raggu_web_gallery {
             datasets() { return DATASETS; }
@@ -5504,10 +7129,13 @@ var $;
             dataset(id) {
                 return this.datasets().find(d => d.id === id) ?? DATASETS[0];
             }
-            card_id(id) { return this.dataset(id).id; }
-            card_title(id) { return this.dataset(id).title; }
-            card_domain(id) { return this.dataset(id).domain; }
-            card_desc(id) { return this.dataset(id).desc; }
+            dataset_text(id, suffix) {
+                return this.$.$mol_locale.text(`$raggu_web_app_dataset_${id}_${suffix}`) || '';
+            }
+            card_id(id) { return id; }
+            card_title(id) { return this.dataset_text(id, 'title'); }
+            card_domain(id) { return this.dataset_text(id, 'domain'); }
+            card_desc(id) { return this.dataset_text(id, 'desc'); }
             card_nodes(id) { return this.dataset(id).nodes; }
             card_edges(id) { return this.dataset(id).edges; }
             card_comms(id) { return this.dataset(id).comms; }
@@ -5600,9 +7228,9 @@ var $;
 			(obj.sub) = () => ([
 				"⬡ ⬡ ⬡", 
 				"", 
-				"ИНТЕРАКТИВНЫЙ ГРАФ ЗНАНИЙ", 
-				"Sigma.js / WebGL · force layout", 
-				"цвет = тип NEREL · толщина = strength"
+				(this.canvas_title_text()), 
+				(this.canvas_engine_text()), 
+				(this.canvas_meaning_text())
 			]);
 			return obj;
 		}
@@ -5613,22 +7241,22 @@ var $;
 		}
 		Filter_search(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["🔍 Поиск узла…"]);
+			(obj.sub) = () => ([(this.filter_search_text())]);
 			return obj;
 		}
 		Filter_type(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Тип сущности ▾"]);
+			(obj.sub) = () => ([(this.filter_type_text())]);
 			return obj;
 		}
 		Filter_thresh(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Порог strength ▾"]);
+			(obj.sub) = () => ([(this.filter_thresh_text())]);
 			return obj;
 		}
 		Filter_comm(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["◉ Сообщества: вкл"]);
+			(obj.sub) = () => ([(this.filter_comm_text())]);
 			return obj;
 		}
 		Filters(){
@@ -5769,7 +7397,7 @@ var $;
 		}
 		Aside_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Карточка сущности"]);
+			(obj.sub) = () => ([(this.aside_title_text())]);
 			return obj;
 		}
 		Entity_dot(){
@@ -5778,7 +7406,7 @@ var $;
 		}
 		Entity_name(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Бьёрнстьерне Бьёрнсон"]);
+			(obj.sub) = () => ([(this.entity_name_text())]);
 			return obj;
 		}
 		Entity_head(){
@@ -5793,12 +7421,12 @@ var $;
 		}
 		Entity_desc(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Автор текста гимна Норвегии (1859). Норвежский писатель, лауреат Нобелевской премии по литературе."]);
+			(obj.sub) = () => ([(this.entity_desc_text())]);
 			return obj;
 		}
 		Relations_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Связи (12)"]);
+			(obj.sub) = () => ([(this.relations_title_text())]);
 			return obj;
 		}
 		Rel_one_type(){
@@ -5808,7 +7436,7 @@ var $;
 		}
 		Rel_one_target(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["писатель"]);
+			(obj.sub) = () => ([(this.rel_one_target_text())]);
 			return obj;
 		}
 		Rel_one(){
@@ -5823,7 +7451,7 @@ var $;
 		}
 		Rel_two_target(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Нобелевская премия"]);
+			(obj.sub) = () => ([(this.rel_two_target_text())]);
 			return obj;
 		}
 		Rel_two(){
@@ -5838,7 +7466,7 @@ var $;
 		}
 		Rel_three_target(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Квикне, Норвегия"]);
+			(obj.sub) = () => ([(this.rel_three_target_text())]);
 			return obj;
 		}
 		Rel_three(){
@@ -5848,17 +7476,17 @@ var $;
 		}
 		Sources_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Источники (provenance)"]);
+			(obj.sub) = () => ([(this.sources_title_text())]);
 			return obj;
 		}
 		Sources(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["chunk #418 · chunk #902 …"]);
+			(obj.sub) = () => ([(this.sources_text())]);
 			return obj;
 		}
 		Ask_btn(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["💬 Спросить про эту сущность"]);
+			(obj.sub) = () => ([(this.ask_btn_text())]);
 			return obj;
 		}
 		Aside(){
@@ -5877,6 +7505,57 @@ var $;
 				(this.Ask_btn())
 			]);
 			return obj;
+		}
+		canvas_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_title_text"));
+		}
+		canvas_engine_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_engine_text"));
+		}
+		canvas_meaning_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_canvas_meaning_text"));
+		}
+		filter_search_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_search_text"));
+		}
+		filter_type_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_type_text"));
+		}
+		filter_thresh_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_thresh_text"));
+		}
+		filter_comm_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_filter_comm_text"));
+		}
+		aside_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_aside_title_text"));
+		}
+		entity_name_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_entity_name_text"));
+		}
+		entity_desc_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_entity_desc_text"));
+		}
+		relations_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_relations_title_text"));
+		}
+		rel_one_target_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_one_target_text"));
+		}
+		rel_two_target_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_two_target_text"));
+		}
+		rel_three_target_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_rel_three_target_text"));
+		}
+		sources_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_sources_title_text"));
+		}
+		sources_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_sources_text"));
+		}
+		ask_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_explorer_ask_btn_text"));
 		}
 		sub(){
 			return [(this.Canvas()), (this.Aside())];
@@ -6255,7 +7934,7 @@ var $;
 	($.$raggu_web_chat) = class $raggu_web_chat extends ($.$bog_builderui_div) {
 		Modes_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Движок поиска"]);
+			(obj.sub) = () => ([(this.modes_label_text())]);
 			return obj;
 		}
 		Mode_local(){
@@ -6295,22 +7974,22 @@ var $;
 		}
 		Msg_user(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Кто написал гимн Норвегии и когда?"]);
+			(obj.sub) = () => ([(this.msg_user_text())]);
 			return obj;
 		}
 		Msg_assistant(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Текст гимна Норвегии написал Бьёрнстьерне Бьёрнсон в 1859 году…"]);
+			(obj.sub) = () => ([(this.msg_assistant_text())]);
 			return obj;
 		}
 		Trace_head_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["▾ Трейс ответа"]);
+			(obj.sub) = () => ([(this.trace_head_title_text())]);
 			return obj;
 		}
 		Trace_head_meta(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LocalSearch · top-k 8 · rerank ✓"]);
+			(obj.sub) = () => ([(this.trace_head_meta_text())]);
 			return obj;
 		}
 		Trace_head(){
@@ -6320,22 +7999,22 @@ var $;
 		}
 		Trace_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["СУЩНОСТИ В КОНТЕКСТЕ"]);
+			(obj.sub) = () => ([(this.trace_label_text())]);
 			return obj;
 		}
 		Trace_chip_one(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Бьёрнсон"]);
+			(obj.sub) = () => ([(this.trace_chip_one_text())]);
 			return obj;
 		}
 		Trace_chip_two(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["гимн Норвегии"]);
+			(obj.sub) = () => ([(this.trace_chip_two_text())]);
 			return obj;
 		}
 		Trace_chip_three(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["1859"]);
+			(obj.sub) = () => ([(this.trace_chip_three_text())]);
 			return obj;
 		}
 		Trace_chips(){
@@ -6349,27 +8028,27 @@ var $;
 		}
 		Trace_stat_chunks(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["chunks: 3"]);
+			(obj.sub) = () => ([(this.trace_stat_chunks_text())]);
 			return obj;
 		}
 		Trace_stat_comms(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["communities: 1"]);
+			(obj.sub) = () => ([(this.trace_stat_comms_text())]);
 			return obj;
 		}
 		Trace_stat_retr(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["retrieval 140мс"]);
+			(obj.sub) = () => ([(this.trace_stat_retr_text())]);
 			return obj;
 		}
 		Trace_stat_gen(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["gen 1.2с"]);
+			(obj.sub) = () => ([(this.trace_stat_gen_text())]);
 			return obj;
 		}
 		Trace_stat_power(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["≈0.4 Вт·ч"]);
+			(obj.sub) = () => ([(this.trace_stat_power_text())]);
 			return obj;
 		}
 		Trace_stats(){
@@ -6385,7 +8064,7 @@ var $;
 		}
 		Trace_link(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["↳ подсветить на графе"]);
+			(obj.sub) = () => ([(this.trace_link_text())]);
 			return obj;
 		}
 		Trace_body(){
@@ -6415,12 +8094,12 @@ var $;
 		}
 		Sug_one(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Кто получал Нобелевскую премию?"]);
+			(obj.sub) = () => ([(this.sug_one_text())]);
 			return obj;
 		}
 		Sug_two(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Связь Ибсена и Бьёрнсона?"]);
+			(obj.sub) = () => ([(this.sug_two_text())]);
 			return obj;
 		}
 		Suggestions(){
@@ -6430,7 +8109,7 @@ var $;
 		}
 		Input_hint(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Спросите что-нибудь про корпус…"]);
+			(obj.sub) = () => ([(this.input_hint_text())]);
 			return obj;
 		}
 		Input_spacer(){
@@ -6455,6 +8134,60 @@ var $;
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.Suggestions()), (this.Input_row())]);
 			return obj;
+		}
+		modes_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_modes_label_text"));
+		}
+		msg_user_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_msg_user_text"));
+		}
+		msg_assistant_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_msg_assistant_text"));
+		}
+		trace_head_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_head_title_text"));
+		}
+		trace_head_meta_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_head_meta_text"));
+		}
+		trace_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_label_text"));
+		}
+		trace_chip_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_one_text"));
+		}
+		trace_chip_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_two_text"));
+		}
+		trace_chip_three_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_chip_three_text"));
+		}
+		trace_stat_chunks_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_chunks_text"));
+		}
+		trace_stat_comms_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_comms_text"));
+		}
+		trace_stat_retr_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_retr_text"));
+		}
+		trace_stat_gen_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_gen_text"));
+		}
+		trace_stat_power_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_stat_power_text"));
+		}
+		trace_link_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_trace_link_text"));
+		}
+		sug_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_sug_one_text"));
+		}
+		sug_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_sug_two_text"));
+		}
+		input_hint_text(){
+			return (this.$.$mol_locale.text("$raggu_web_chat_input_hint_text"));
 		}
 		sub(){
 			return [
@@ -7010,17 +8743,17 @@ var $;
 	($.$raggu_web_dashboard) = class $raggu_web_dashboard extends ($.$bog_builderui_div) {
 		Title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Дашборд корпуса"]);
+			(obj.sub) = () => ([(this.title_text())]);
 			return obj;
 		}
 		Subtitle(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Статистика графа · качество · энергия и стоимость · тайминги и логи"]);
+			(obj.sub) = () => ([(this.subtitle_text())]);
 			return obj;
 		}
 		Card_stats_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["① Статистика графа"]);
+			(obj.sub) = () => ([(this.card_stats_label_text())]);
 			return obj;
 		}
 		Stat_nodes_val(){
@@ -7030,7 +8763,7 @@ var $;
 		}
 		Stat_nodes_lbl(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["узлов"]);
+			(obj.sub) = () => ([(this.stat_nodes_lbl_text())]);
 			return obj;
 		}
 		Stat_nodes(){
@@ -7045,7 +8778,7 @@ var $;
 		}
 		Stat_edges_lbl(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["связей"]);
+			(obj.sub) = () => ([(this.stat_edges_lbl_text())]);
 			return obj;
 		}
 		Stat_edges(){
@@ -7060,7 +8793,7 @@ var $;
 		}
 		Stat_comms_lbl(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["сообществ"]);
+			(obj.sub) = () => ([(this.stat_comms_lbl_text())]);
 			return obj;
 		}
 		Stat_comms(){
@@ -7079,7 +8812,7 @@ var $;
 		}
 		Stats_dist(){
 			const obj = new this.$.$raggu_web_dashboard_dist();
-			(obj.sub) = () => (["распределение типов сущностей"]);
+			(obj.sub) = () => ([(this.stats_dist_text())]);
 			return obj;
 		}
 		Card_stats(){
@@ -7093,7 +8826,7 @@ var $;
 		}
 		Card_quality_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["② Качество (бенчмарки)"]);
+			(obj.sub) = () => ([(this.card_quality_label_text())]);
 			return obj;
 		}
 		metric_name(id){
@@ -7122,7 +8855,7 @@ var $;
 		}
 		Quality_footer(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["RAGU vs LightRAG / HippoRAG2 / Naive"]);
+			(obj.sub) = () => ([(this.quality_footer_text())]);
 			return obj;
 		}
 		Card_quality(){
@@ -7136,7 +8869,7 @@ var $;
 		}
 		Card_energy_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["③ Энергия и стоимость"]);
+			(obj.sub) = () => ([(this.card_energy_label_text())]);
 			return obj;
 		}
 		Energy_kwh_val(){
@@ -7146,7 +8879,7 @@ var $;
 		}
 		Energy_kwh_lbl(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["кВт·ч / корпус"]);
+			(obj.sub) = () => ([(this.energy_kwh_lbl_text())]);
 			return obj;
 		}
 		Energy_kwh(){
@@ -7161,7 +8894,7 @@ var $;
 		}
 		Energy_cost_lbl(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["$ vs GPT-4 API"]);
+			(obj.sub) = () => ([(this.energy_cost_lbl_text())]);
 			return obj;
 		}
 		Energy_cost(){
@@ -7176,7 +8909,7 @@ var $;
 		}
 		Energy_note(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["кВт·ч = TDP × время × PUE", "meno-lite 7B локально vs ~40k токенов/док по тарифам gpt-4o"]);
+			(obj.sub) = () => ([(this.energy_note_text())]);
 			return obj;
 		}
 		Card_energy(){
@@ -7190,7 +8923,7 @@ var $;
 		}
 		Card_timings_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["④ Тайминги пайплайна"]);
+			(obj.sub) = () => ([(this.card_timings_label_text())]);
 			return obj;
 		}
 		stage_name(id){
@@ -7224,7 +8957,7 @@ var $;
 		}
 		Card_logs_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Логи запросов (разворачиваются в трейс)"]);
+			(obj.sub) = () => ([(this.card_logs_label_text())]);
 			return obj;
 		}
 		Log_one_time(){
@@ -7234,7 +8967,7 @@ var $;
 		}
 		Log_one_text(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["«Кто написал гимн…»"]);
+			(obj.sub) = () => ([(this.log_one_text_text())]);
 			return obj;
 		}
 		Log_one_mode(){
@@ -7244,7 +8977,7 @@ var $;
 		}
 		Log_one_dur(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["1.3с"]);
+			(obj.sub) = () => (["1.3s"]);
 			return obj;
 		}
 		Log_one_arrow(){
@@ -7270,7 +9003,7 @@ var $;
 		}
 		Log_two_text(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["«Связь Ибсена и…»"]);
+			(obj.sub) = () => ([(this.log_two_text_text())]);
 			return obj;
 		}
 		Log_two_mode(){
@@ -7280,7 +9013,7 @@ var $;
 		}
 		Log_two_dur(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["2.1с"]);
+			(obj.sub) = () => (["2.1s"]);
 			return obj;
 		}
 		Log_two_arrow(){
@@ -7325,6 +9058,57 @@ var $;
 		}
 		stages(){
 			return [];
+		}
+		title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_title_text"));
+		}
+		subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_subtitle_text"));
+		}
+		card_stats_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_stats_label_text"));
+		}
+		stat_nodes_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_nodes_lbl_text"));
+		}
+		stat_edges_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_edges_lbl_text"));
+		}
+		stat_comms_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stat_comms_lbl_text"));
+		}
+		stats_dist_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_stats_dist_text"));
+		}
+		card_quality_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_quality_label_text"));
+		}
+		quality_footer_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_quality_footer_text"));
+		}
+		card_energy_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_energy_label_text"));
+		}
+		energy_kwh_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_kwh_lbl_text"));
+		}
+		energy_cost_lbl_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_cost_lbl_text"));
+		}
+		energy_note_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_energy_note_text"));
+		}
+		card_timings_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_timings_label_text"));
+		}
+		card_logs_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_card_logs_label_text"));
+		}
+		log_one_text_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_log_one_text_text"));
+		}
+		log_two_text_text(){
+			return (this.$.$mol_locale.text("$raggu_web_dashboard_log_two_text_text"));
 		}
 		sub(){
 			return [
@@ -7402,11 +9186,11 @@ var $;
             { id: 'relevancy', name: 'Context Relevancy', value: '90.8', pct: '91%' },
         ];
         const STAGES = [
-            { id: 'chunking', name: 'Chunking', time: '1.2с', pct: '15%' },
-            { id: 'extraction', name: 'Extraction', time: '8.4с', pct: '70%' },
-            { id: 'summarization', name: 'Summarization', time: '3.1с', pct: '38%' },
-            { id: 'communities', name: 'Communities', time: '2.0с', pct: '26%' },
-            { id: 'refinement', name: 'Refinement', time: '0.6с', pct: '9%' },
+            { id: 'chunking', name: 'Chunking', time: '1.2s', pct: '15%' },
+            { id: 'extraction', name: 'Extraction', time: '8.4s', pct: '70%' },
+            { id: 'summarization', name: 'Summarization', time: '3.1s', pct: '38%' },
+            { id: 'communities', name: 'Communities', time: '2.0s', pct: '26%' },
+            { id: 'refinement', name: 'Refinement', time: '0.6s', pct: '9%' },
         ];
         class $raggu_web_dashboard extends $.$raggu_web_dashboard {
             metrics() { return METRICS; }
@@ -8156,93 +9940,6 @@ var $;
 
 
 ;
-	($.$mol_svg) = class $mol_svg extends ($.$mol_view) {
-		dom_name(){
-			return "svg";
-		}
-		dom_name_space(){
-			return "http://www.w3.org/2000/svg";
-		}
-		font_size(){
-			return 16;
-		}
-		font_family(){
-			return "";
-		}
-		style_size(){
-			return {};
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    /** State of time moment */
-    class $mol_state_time extends $mol_object {
-        static task(precision, reset) {
-            if (precision) {
-                return new $mol_after_timeout(precision, () => this.task(precision, null));
-            }
-            else {
-                return new $mol_after_frame(() => this.task(precision, null));
-            }
-        }
-        static now(precision) {
-            this.task(precision);
-            return Date.now();
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "task", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_time, "now", null);
-    $.$mol_state_time = $mol_state_time;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /** Base SVG component to display SVG images or icons. */
-        class $mol_svg extends $.$mol_svg {
-            computed_style() {
-                const win = this.$.$mol_dom_context;
-                const style = win.getComputedStyle(this.dom_node());
-                if (!style['font-size'])
-                    $mol_state_time.now(0);
-                return style;
-            }
-            font_size() {
-                return parseInt(this.computed_style()['font-size']) || 16;
-            }
-            font_family() {
-                return this.computed_style()['font-family'];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_svg.prototype, "computed_style", null);
-        __decorate([
-            $mol_mem
-        ], $mol_svg.prototype, "font_size", null);
-        __decorate([
-            $mol_mem
-        ], $mol_svg.prototype, "font_family", null);
-        $$.$mol_svg = $mol_svg;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$mol_svg_group) = class $mol_svg_group extends ($.$mol_svg) {
 		dom_name(){
 			return "g";
@@ -8663,38 +10360,6 @@ var $;
 (function ($) {
     $mol_style_attach("mol/chart/legend/legend.view.css", "[mol_chart_legend] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex-direction: row;\n\tflex: 0 1 auto;\n}\n\n[mol_chart_legend_graph_legend] {\n\tdisplay: flex;\n\tjustify-content: flex-start;\n\tflex: 1 1 8rem;\n\tpadding: .5rem;\n}\n\n[mol_chart_legend_graph_title] {\n\tmargin: 0 .25rem;\n\tflex: 1 1 auto;\n}\n\n[mol_chart_legend_graph_sample_box] {\n\tposition: relative;\n\twidth: 1.5rem;\n\tflex: none;\n}\n");
 })($ || ($ = {}));
-
-;
-	($.$mol_svg_root) = class $mol_svg_root extends ($.$mol_svg) {
-		view_box(){
-			return "0 0 100 100";
-		}
-		aspect(){
-			return "xMidYMid";
-		}
-		dom_name(){
-			return "svg";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"viewBox": (this.view_box()), 
-				"preserveAspectRatio": (this.aspect())
-			};
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/svg/root/root.view.css", "[mol_svg_root] {\n\toverflow: hidden;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
 
 ;
 	($.$mol_touch) = class $mol_touch extends ($.$mol_plugin) {
@@ -9355,13 +11020,6 @@ var $;
 	($mol_mem(($.$mol_plot_pane.prototype), "dimensions"));
 	($mol_mem(($.$mol_plot_pane.prototype), "dimensions_viewport"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_mem_cached = $mol_wire_probe;
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -10938,1339 +12596,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_mem_persist = $mol_wire_solid;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const factories = new WeakMap();
-    function factory(val) {
-        let make = factories.get(val);
-        if (make)
-            return make;
-        make = $mol_func_name_from((...args) => new val(...args), val);
-        factories.set(val, make);
-        return make;
-    }
-    const getters = new WeakMap();
-    function get_prop(host, field) {
-        let props = getters.get(host);
-        let get_val = props?.[field];
-        if (get_val)
-            return get_val;
-        get_val = (next) => {
-            if (next !== undefined)
-                host[field] = next;
-            return host[field];
-        };
-        Object.defineProperty(get_val, 'name', { value: field });
-        if (!props) {
-            props = {};
-            getters.set(host, props);
-        }
-        props[field] = get_val;
-        return get_val;
-    }
-    /**
-     * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
-     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
-     */
-    function $mol_wire_sync(obj) {
-        return new Proxy(obj, {
-            get(obj, field) {
-                let val = obj[field];
-                const temp = $mol_wire_task.getter(typeof val === 'function' ? val : get_prop(obj, field));
-                if (typeof val !== 'function')
-                    return temp(obj, []).sync();
-                return function $mol_wire_sync(...args) {
-                    const fiber = temp(obj, args);
-                    return fiber.sync();
-                };
-            },
-            set(obj, field, next) {
-                const temp = $mol_wire_task.getter(get_prop(obj, field));
-                temp(obj, [next]).sync();
-                return true;
-            },
-            construct(obj, args) {
-                const temp = $mol_wire_task.getter(factory(obj));
-                return temp(obj, args).sync();
-            },
-            apply(obj, self, args) {
-                const temp = $mol_wire_task.getter(obj);
-                return temp(self, args).sync();
-            },
-        });
-    }
-    $.$mol_wire_sync = $mol_wire_sync;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_wait_user_async() {
-        return new Promise(done => $mol_dom.addEventListener('click', function onclick() {
-            $mol_dom.removeEventListener('click', onclick);
-            done(null);
-        }));
-    }
-    $.$mol_wait_user_async = $mol_wait_user_async;
-    function $mol_wait_user() {
-        return this.$mol_wire_sync(this).$mol_wait_user_async();
-    }
-    $.$mol_wait_user = $mol_wait_user;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_storage extends $mol_object2 {
-        static native() {
-            return this.$.$mol_dom_context.navigator.storage ?? {
-                persisted: async () => false,
-                persist: async () => false,
-                estimate: async () => ({}),
-                getDirectory: async () => null,
-            };
-        }
-        static persisted(next, cache) {
-            $mol_mem_persist();
-            if (cache)
-                return Boolean(next);
-            const native = this.native();
-            if (next && !$mol_mem_cached(() => this.persisted())) {
-                this.$.$mol_wait_user_async()
-                    .then(() => native.persist())
-                    .then(actual => {
-                    setTimeout(() => this.persisted(actual, 'cache'), 5000);
-                    if (actual)
-                        this.$.$mol_log3_done({ place: `$mol_storage`, message: `Persist: Yes` });
-                    else
-                        this.$.$mol_log3_fail({ place: `$mol_storage`, message: `Persist: No` });
-                });
-            }
-            return next ?? $mol_wire_sync(native).persisted();
-        }
-        static estimate() {
-            return $mol_wire_sync(this.native() ?? {}).estimate();
-        }
-        static dir() {
-            return $mol_wire_sync(this.native()).getDirectory();
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_storage, "native", null);
-    __decorate([
-        $mol_mem
-    ], $mol_storage, "persisted", null);
-    $.$mol_storage = $mol_storage;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_state_local extends $mol_object {
-        static 'native()';
-        static native() {
-            if (this['native()'])
-                return this['native()'];
-            check: try {
-                const native = $mol_dom_context.localStorage;
-                if (!native)
-                    break check;
-                native.setItem('', '');
-                native.removeItem('');
-                return this['native()'] = native;
-            }
-            catch (error) {
-                console.warn(error);
-            }
-            return this['native()'] = {
-                getItem(key) {
-                    return this[':' + key];
-                },
-                setItem(key, value) {
-                    this[':' + key] = value;
-                },
-                removeItem(key) {
-                    this[':' + key] = void 0;
-                }
-            };
-        }
-        static changes(next) { return next; }
-        static value(key, next) {
-            this.changes();
-            if (next === void 0)
-                return JSON.parse(this.native().getItem(key) || 'null');
-            if (next === null) {
-                this.native().removeItem(key);
-            }
-            else {
-                this.native().setItem(key, JSON.stringify(next));
-                this.$.$mol_storage.persisted(true);
-            }
-            return next;
-        }
-        prefix() { return ''; }
-        value(key, next) {
-            return $mol_state_local.value(this.prefix() + '.' + key, next);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_local, "changes", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_local, "value", null);
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    self.addEventListener('storage', event => $.$mol_state_local.changes(event));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_lock extends $mol_object {
-        promise = null;
-        async wait() {
-            let next = () => { };
-            let destructed = false;
-            const task = $mol_wire_auto();
-            if (!task)
-                return next;
-            const destructor = task.destructor.bind(task);
-            task.destructor = () => {
-                destructor();
-                destructed = true;
-                next();
-            };
-            let promise;
-            do {
-                promise = this.promise;
-                await promise;
-                if (destructed)
-                    return next;
-            } while (promise !== this.promise);
-            this.promise = new Promise(done => { next = done; });
-            return next;
-        }
-        grab() { return $mol_wire_sync(this).wait(); }
-    }
-    $.$mol_lock = $mol_lock;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_compare_array(a, b) {
-        if (a === b)
-            return true;
-        if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
-            return false;
-        if (a.length !== b.length)
-            return false;
-        for (let i = 0; i < a.length; i++)
-            if (a[i] !== b[i])
-                return false;
-        return true;
-    }
-    $.$mol_compare_array = $mol_compare_array;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    const decoders = {};
-    function $mol_charset_decode(buffer, encoding = 'utf8') {
-        let decoder = decoders[encoding];
-        if (!decoder)
-            decoder = decoders[encoding] = new TextDecoder(encoding);
-        return decoder.decode(buffer);
-    }
-    $.$mol_charset_decode = $mol_charset_decode;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    let buf = new Uint8Array(2 ** 12); // 4KB Mem Page
-    /** Temporary buffer. Recursive usage isn't supported. */
-    function $mol_charset_buffer(size) {
-        if (buf.byteLength < size)
-            buf = new Uint8Array(size);
-        return buf;
-    }
-    $.$mol_charset_buffer = $mol_charset_buffer;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_charset_encode(str) {
-        const buf = $mol_charset_buffer(str.length * 3);
-        return buf.slice(0, $mol_charset_encode_to(str, buf));
-    }
-    $.$mol_charset_encode = $mol_charset_encode;
-    function $mol_charset_encode_to(str, buf, from = 0) {
-        let pos = from;
-        for (let i = 0; i < str.length; i++) {
-            let code = str.charCodeAt(i);
-            if (code < 0x80) { // ASCII - 1 octet
-                buf[pos++] = code;
-            }
-            else if (code < 0x800) { // 2 octet
-                buf[pos++] = 0xc0 | (code >> 6);
-                buf[pos++] = 0x80 | (code & 0x3f);
-            }
-            else if (code < 0xd800 || code >= 0xe000) { // 3 octet
-                buf[pos++] = 0xe0 | (code >> 12);
-                buf[pos++] = 0x80 | ((code >> 6) & 0x3f);
-                buf[pos++] = 0x80 | (code & 0x3f);
-            }
-            else { // surrogate pair
-                const point = ((code - 0xd800) << 10) + str.charCodeAt(++i) + 0x2400;
-                buf[pos++] = 0xf0 | (point >> 18);
-                buf[pos++] = 0x80 | ((point >> 12) & 0x3f);
-                buf[pos++] = 0x80 | ((point >> 6) & 0x3f);
-                buf[pos++] = 0x80 | (point & 0x3f);
-            }
-        }
-        return pos - from;
-    }
-    $.$mol_charset_encode_to = $mol_charset_encode_to;
-    function $mol_charset_encode_size(str) {
-        let size = 0;
-        for (let i = 0; i < str.length; i++) {
-            let code = str.charCodeAt(i);
-            if (code < 0x80)
-                size += 1;
-            else if (code < 0x800)
-                size += 2;
-            else if (code < 0xd800 || code >= 0xe000)
-                size += 3;
-            else
-                size += 4;
-        }
-        return size;
-    }
-    $.$mol_charset_encode_size = $mol_charset_encode_size;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_transaction extends $mol_object {
-        path() { return ''; }
-        modes() { return []; }
-        write(options) {
-            throw new Error('Not implemented');
-        }
-        read() {
-            throw new Error('Not implemented');
-        }
-        truncate(size) {
-            throw new Error('Not implemented');
-        }
-        flush() {
-            throw new Error('Not implemented');
-        }
-        close() {
-            throw new Error('Not implemented');
-        }
-        destructor() {
-            this.close();
-        }
-    }
-    $.$mol_file_transaction = $mol_file_transaction;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_base extends $mol_object {
-        static absolute(path) {
-            return this.make({
-                path: $mol_const(path)
-            });
-        }
-        static relative(path) {
-            throw new Error('Not implemented yet');
-        }
-        static base = '';
-        path() {
-            return '.';
-        }
-        parent() {
-            return this.resolve('..');
-        }
-        exists_cut() { return this.exists(); }
-        root() {
-            const path = this.path();
-            const base = this.constructor.base;
-            // Если путь выше или равен base или если parent такойже как и this - считаем это корнем
-            return base.startsWith(path) || this == this.parent();
-        }
-        stat(next, virt) {
-            const path = this.path();
-            const parent = this.parent();
-            // Отслеживать проверку наличия родительской папки не стоит до корня диска
-            // Лучше ограничить mam-ом
-            if (!this.root()) {
-                /*
-                Если parent папка удалилась, надо ресетнуть все объекты в ней на любой глубине.
-                Например, rm -rf с последующим git pull: parent папка может удалиться, потом создасться,
-                а текущая папка успеет только удалиться до момента выполнения stat.
-                Поэтому parent.exists() не запустит перевычисления, нужна именно parent.version()
-
-                Однако, parent.version() меняется не только при удалении, будет ложное срабатывание
-                С этим придется мириться, красивого решения пока нет.
-                */
-                parent.version();
-            }
-            parent.watcher();
-            if (virt)
-                return next ?? null;
-            return next ?? this.info(path);
-        }
-        static changed = new Set;
-        static frame = null;
-        static changed_add(type, path) {
-            if (/([\/\\]\.|___$)/.test(path))
-                return;
-            const file = this.relative(path.at(-1) === '/' ? path.slice(0, -1) : path);
-            // console.log(type, path)
-            // add (change): добавился файл - у parent надо обновить список sub, если он был заюзан
-            // change, unlink (rename): обновился или удалился файл - ресетим
-            // addDir (change), добавилась папка, у parent обновляем список директорий в sub
-            // дочерние ресетим
-            // unlinkDir (rename), удалилась папка, ресетим ее
-            // stat у всех дочерних обновится сам, т.к. связан с parent.version()
-            this.changed.add(file);
-            if (!this.watching)
-                return;
-            // throttle, пока события поступают не сбрасываем.
-            // аналог awaitWriteFinish из chokidar
-            // интервалы между change-сообщениями модифицируемого файла должны быть меньше watch_debounce
-            this.frame?.destructor();
-            this.frame = new this.$.$mol_after_timeout(this.watch_debounce(), () => {
-                if (!this.watching)
-                    return;
-                this.watching = false;
-                $mol_wire_async(this).flush();
-            });
-        }
-        /**
-         * Должно быть больше, чем время между событиями от вотчера при записи внешним процессом.
-         * Иначе запуск ресетов паралельно с изменением может привести к неконсистентности.
-         */
-        static watch_debounce() { return 500; }
-        static flush() {
-            // Пока flush работает, вотчер сюда не заходит, но может добавлять новые изменения
-            // на каждом перезапуске они применятся
-            // Пока run выполняется, изменения накапливаются, в конце run вызывается flush
-            // Пока применяются изменения, run должен ожидать конца flush
-            for (const file of this.changed) {
-                const parent = file.parent();
-                try {
-                    if ($mol_wire_probe(() => parent.sub()))
-                        parent.sub(null);
-                    file.reset();
-                }
-                catch (error) {
-                    if ($mol_fail_catch(error))
-                        $mol_fail_log(error);
-                }
-            }
-            this.changed.clear();
-            this.watching = true;
-            // this.watch_wd?.destructor()
-            // this.watch_wd = null
-        }
-        static watching = true;
-        static lock = new $mol_lock;
-        static watch_off(path) {
-            this.watching = false;
-            // run должен ожидать конца flush
-            this.flush();
-            this.watching = false;
-            /*
-            watch запаздывает и событие может прилететь через 3 сек после окончания сайд эффекта
-            поэтому добавляем папку, которую меняет side_effect
-            Когда дойдет до выполнения flush, он ресетнет ее
-            
-            Иначе будут лишние срабатывания
-            Например, удалили hyoo/board, watch ресетит и exists начинает отдавать false, срабатывает git clone
-            Сразу после него событие addDir еще не успело прийти,
-            на следующем перезапуске вызывается git pull, т.к.
-            с точки зрения реактивной системы hyoo/board еще не существует.
-            */
-            this.changed.add(this.absolute(path));
-        }
-        // protected static watch_wd = null as null | $mol_after_timeout
-        static unwatched(side_effect, affected_dir) {
-            // ждем, пока выполнится предыдущий unwatched
-            const unlock = this.lock.grab();
-            this.watch_off(affected_dir);
-            try {
-                const result = side_effect();
-                this.flush();
-                unlock();
-                return result;
-            }
-            catch (e) {
-                if (!$mol_promise_like(e)) {
-                    this.flush();
-                    unlock();
-                }
-                $mol_fail_hidden(e);
-            }
-        }
-        reset() {
-            this.stat(null);
-        }
-        modified() { return this.stat()?.mtime ?? null; }
-        version() {
-            const next = this.stat()?.mtime.getTime().toString(36).toUpperCase() ?? '';
-            // console.log('version', next, this.path())
-            return next;
-        }
-        info(path) { return null; }
-        ensure() { }
-        drop() { }
-        copy(to) { }
-        read() { return new Uint8Array; }
-        write(buffer) { }
-        kids() {
-            return [];
-        }
-        readable(opts) {
-            return new ReadableStream;
-        }
-        writable(opts) {
-            return new WritableStream;
-        }
-        // open( ... modes: readonly $mol_file_mode[] ) { return 0 }
-        buffer(next) {
-            // Если версия пустая - возвращаем пустой буфер
-            let readed = new Uint8Array();
-            if (next === undefined) {
-                // Если меняется версия файла, буфер надо перечитать
-                if (this.version())
-                    readed = this.read();
-            }
-            const prev = $mol_mem_cached(() => this.buffer());
-            const changed = prev === undefined || !$mol_compare_array(prev, next ?? readed);
-            if (prev !== undefined && changed) {
-                // Логируем, если повторно читаем/пишем и буфер поменялся
-                this.$.$mol_log3_rise({
-                    place: `$mol_file_node.buffer()`,
-                    message: 'Changed',
-                    path: this.relate(),
-                });
-            }
-            if (next === undefined)
-                return changed ? readed : prev;
-            // Если буфер при записи не поменялся и файл не удаляли перед этим - не записываем новую версию.
-            // Если записывать, это приведет к смене mtime и вотчер снова триггернется, даже если содержимое файла не поменялось.
-            // В этом алгоритме есть изъян.
-            // Если файл записали, потом отключили вотчер, кто-то из вне его поменял, потом включили вотчер, снова записали тот же буфер,
-            // то буфер не запишется на диск, т.к. кэш не консистентен с диском.
-            if (!changed && this.exists())
-                return prev;
-            this.parent().exists(true);
-            this.stat(this.stat_make(next.length), 'virt');
-            this.write(next);
-            return next;
-        }
-        stat_make(size) {
-            const now = new Date();
-            return {
-                type: 'file',
-                size,
-                atime: now,
-                mtime: now,
-                ctime: now,
-            };
-        }
-        clone(to) {
-            if (!this.exists())
-                return null;
-            const target = this.constructor.absolute(to);
-            try {
-                this.version();
-                target.parent().exists(true);
-                this.copy(to);
-                target.reset();
-                return target;
-            }
-            catch (error) {
-                if ($mol_fail_catch(error)) {
-                    console.error(error);
-                }
-            }
-            return null;
-        }
-        // static watch_root = ''
-        // static watcher_warned = false
-        watcher() {
-            // const constructor = this.constructor as typeof $mol_file_base
-            // if (! constructor.watcher_warned) {
-            // 	console.warn(`${constructor}.watcher() not implemented`)
-            // 	constructor.watcher_warned = true
-            // }
-            return {
-                destructor() { }
-            };
-        }
-        exists(next) {
-            const exists = Boolean(this.stat());
-            // console.log('exists current', exists, 'next', next, this.path())
-            if (next === undefined)
-                return exists;
-            if (next === exists)
-                return exists;
-            if (next) {
-                this.parent().exists(true);
-                this.ensure();
-            }
-            else {
-                this.drop();
-            }
-            this.reset();
-            return next;
-        }
-        type() {
-            return this.stat()?.type ?? '';
-        }
-        name() {
-            return this.path().replace(/^.*\//, '');
-        }
-        ext() {
-            const match = /((?:\.\w+)+)$/.exec(this.path());
-            return match ? match[1].substring(1) : '';
-        }
-        text(next, virt) {
-            // Если записываем text, и вотчер ресетнул записанный файл,
-            // то надо снова его обновить, вызвать логику, которая делала пуш в text.
-            // Например файл удалили, потом снова создали, версия поменялась - перезаписываем
-            // Если использовать version, то вновь созданный файл, через вотчер запустит свое пересоздание
-            if (next !== undefined)
-                this.exists();
-            return this.text_int(next, virt);
-        }
-        text_int(next, virt) {
-            if (virt) {
-                this.stat(this.stat_make(0), 'virt');
-                return next;
-            }
-            if (next === undefined) {
-                return $mol_charset_decode(this.buffer());
-            }
-            else {
-                const buffer = $mol_charset_encode(next);
-                this.buffer(buffer);
-                return next;
-            }
-        }
-        sub(reset) {
-            if (!this.exists())
-                return [];
-            if (this.type() !== 'dir')
-                return [];
-            this.version();
-            // Если дочерний file удалился, список надо обновить
-            return this.kids().filter(file => file.exists());
-        }
-        resolve(path) {
-            throw new Error('implement');
-        }
-        relate(base = this.constructor.relative('.')) {
-            const base_path = base.path();
-            const path = this.path();
-            return path.startsWith(base_path) ? path.slice(base_path.length) : path;
-        }
-        find(include, exclude) {
-            const found = [];
-            const sub = this.sub();
-            for (const child of sub) {
-                const child_path = child.path();
-                if (exclude && child_path.match(exclude))
-                    continue;
-                if (!include || child_path.match(include))
-                    found.push(child);
-                if (child.type() === 'dir') {
-                    const sub_child = child.find(include, exclude);
-                    for (const child of sub_child)
-                        found.push(child);
-                }
-            }
-            return found;
-        }
-        size() {
-            switch (this.type()) {
-                case 'file': return this.stat()?.size ?? 0;
-                default: return 0;
-            }
-        }
-        toJSON() {
-            return this.path();
-        }
-        open(...modes) {
-            return this.$.$mol_file_transaction.make({
-                path: () => this.path(),
-                modes: () => modes
-            });
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_file_base.prototype, "exists_cut", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "stat", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "modified", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "version", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_base.prototype, "readable", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_base.prototype, "writable", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "buffer", null);
-    __decorate([
-        $mol_action
-    ], $mol_file_base.prototype, "stat_make", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_base.prototype, "clone", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "exists", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "type", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "text_int", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "sub", null);
-    __decorate([
-        $mol_mem
-    ], $mol_file_base.prototype, "size", null);
-    __decorate([
-        $mol_action
-    ], $mol_file_base.prototype, "open", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_base, "absolute", null);
-    __decorate([
-        $mol_action
-    ], $mol_file_base, "flush", null);
-    __decorate([
-        $mol_action
-    ], $mol_file_base, "watch_off", null);
-    $.$mol_file_base = $mol_file_base;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file extends $mol_file_base {
-    }
-    $.$mol_file = $mol_file;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    let $mol_rest_code;
-    (function ($mol_rest_code) {
-        $mol_rest_code[$mol_rest_code["Continue"] = 100] = "Continue";
-        $mol_rest_code[$mol_rest_code["Switching protocols"] = 101] = "Switching protocols";
-        $mol_rest_code[$mol_rest_code["Processing"] = 102] = "Processing";
-        $mol_rest_code[$mol_rest_code["OK"] = 200] = "OK";
-        $mol_rest_code[$mol_rest_code["Created"] = 201] = "Created";
-        $mol_rest_code[$mol_rest_code["Accepted"] = 202] = "Accepted";
-        $mol_rest_code[$mol_rest_code["Non-Authoritative Information"] = 203] = "Non-Authoritative Information";
-        $mol_rest_code[$mol_rest_code["No Content"] = 204] = "No Content";
-        $mol_rest_code[$mol_rest_code["Reset Content"] = 205] = "Reset Content";
-        $mol_rest_code[$mol_rest_code["Partial Content"] = 206] = "Partial Content";
-        $mol_rest_code[$mol_rest_code["Multi Status"] = 207] = "Multi Status";
-        $mol_rest_code[$mol_rest_code["Already Reported"] = 208] = "Already Reported";
-        $mol_rest_code[$mol_rest_code["IM Used"] = 226] = "IM Used";
-        $mol_rest_code[$mol_rest_code["Multiple Choices"] = 300] = "Multiple Choices";
-        $mol_rest_code[$mol_rest_code["Moved Permanently"] = 301] = "Moved Permanently";
-        $mol_rest_code[$mol_rest_code["Found"] = 302] = "Found";
-        $mol_rest_code[$mol_rest_code["See Other"] = 303] = "See Other";
-        $mol_rest_code[$mol_rest_code["Not Modified"] = 304] = "Not Modified";
-        $mol_rest_code[$mol_rest_code["Use Proxy"] = 305] = "Use Proxy";
-        $mol_rest_code[$mol_rest_code["Temporary Redirect"] = 307] = "Temporary Redirect";
-        $mol_rest_code[$mol_rest_code["Bad Request"] = 400] = "Bad Request";
-        $mol_rest_code[$mol_rest_code["Unauthorized"] = 401] = "Unauthorized";
-        $mol_rest_code[$mol_rest_code["Payment Required"] = 402] = "Payment Required";
-        $mol_rest_code[$mol_rest_code["Forbidden"] = 403] = "Forbidden";
-        $mol_rest_code[$mol_rest_code["Not Found"] = 404] = "Not Found";
-        $mol_rest_code[$mol_rest_code["Method Not Allowed"] = 405] = "Method Not Allowed";
-        $mol_rest_code[$mol_rest_code["Not Acceptable"] = 406] = "Not Acceptable";
-        $mol_rest_code[$mol_rest_code["Proxy Authentication Required"] = 407] = "Proxy Authentication Required";
-        $mol_rest_code[$mol_rest_code["Request Timeout"] = 408] = "Request Timeout";
-        $mol_rest_code[$mol_rest_code["Conflict"] = 409] = "Conflict";
-        $mol_rest_code[$mol_rest_code["Gone"] = 410] = "Gone";
-        $mol_rest_code[$mol_rest_code["Length Required"] = 411] = "Length Required";
-        $mol_rest_code[$mol_rest_code["Precondition Failed"] = 412] = "Precondition Failed";
-        $mol_rest_code[$mol_rest_code["Request Entity Too Large"] = 413] = "Request Entity Too Large";
-        $mol_rest_code[$mol_rest_code["Request URI Too Long"] = 414] = "Request URI Too Long";
-        $mol_rest_code[$mol_rest_code["Unsupported Media Type"] = 415] = "Unsupported Media Type";
-        $mol_rest_code[$mol_rest_code["Requested Range Not Satisfiable"] = 416] = "Requested Range Not Satisfiable";
-        $mol_rest_code[$mol_rest_code["Expectation Failed"] = 417] = "Expectation Failed";
-        $mol_rest_code[$mol_rest_code["Teapot"] = 418] = "Teapot";
-        $mol_rest_code[$mol_rest_code["Unprocessable Entity"] = 422] = "Unprocessable Entity";
-        $mol_rest_code[$mol_rest_code["Locked"] = 423] = "Locked";
-        $mol_rest_code[$mol_rest_code["Failed Dependency"] = 424] = "Failed Dependency";
-        $mol_rest_code[$mol_rest_code["Upgrade Required"] = 426] = "Upgrade Required";
-        $mol_rest_code[$mol_rest_code["Precondition Required"] = 428] = "Precondition Required";
-        $mol_rest_code[$mol_rest_code["Too Many Requests"] = 429] = "Too Many Requests";
-        $mol_rest_code[$mol_rest_code["Request Header Fields Too Large"] = 431] = "Request Header Fields Too Large";
-        $mol_rest_code[$mol_rest_code["Unavailable For Legal Reasons"] = 451] = "Unavailable For Legal Reasons";
-        $mol_rest_code[$mol_rest_code["Internal Server Error"] = 500] = "Internal Server Error";
-        $mol_rest_code[$mol_rest_code["Not Implemented"] = 501] = "Not Implemented";
-        $mol_rest_code[$mol_rest_code["Bad Gateway"] = 502] = "Bad Gateway";
-        $mol_rest_code[$mol_rest_code["Service Unavailable"] = 503] = "Service Unavailable";
-        $mol_rest_code[$mol_rest_code["Gateway Timeout"] = 504] = "Gateway Timeout";
-        $mol_rest_code[$mol_rest_code["HTTP Version Not Supported"] = 505] = "HTTP Version Not Supported";
-        $mol_rest_code[$mol_rest_code["Insufficient Storage"] = 507] = "Insufficient Storage";
-        $mol_rest_code[$mol_rest_code["Loop Detected"] = 508] = "Loop Detected";
-        $mol_rest_code[$mol_rest_code["Not Extended"] = 510] = "Not Extended";
-        $mol_rest_code[$mol_rest_code["Network Authentication Required"] = 511] = "Network Authentication Required";
-        $mol_rest_code[$mol_rest_code["Network Read Timeout Error"] = 598] = "Network Read Timeout Error";
-        $mol_rest_code[$mol_rest_code["Network Connect Timeout Error"] = 599] = "Network Connect Timeout Error";
-    })($mol_rest_code = $.$mol_rest_code || ($.$mol_rest_code = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function cause_serialize(cause) {
-        return JSON.stringify(cause, null, '  ')
-            .replace(/\(/, '<')
-            .replace(/\)/, ' >');
-    }
-    function frame_normalize(frame) {
-        return (typeof frame === 'string' ? frame : cause_serialize(frame))
-            .trim()
-            .replace(/at /gm, '   at ')
-            .replace(/^(?!    +at )(.*)/gm, '    at | $1 (#)');
-    }
-    class $mol_error_mix extends AggregateError {
-        cause;
-        name = $$.$mol_func_name(this.constructor).replace(/^\$/, '') + '_Error';
-        constructor(message, cause = {}, ...errors) {
-            super(errors, message, { cause });
-            this.cause = cause;
-            const desc = Object.getOwnPropertyDescriptor(this, 'stack');
-            const stack_get = () => desc?.get?.() ?? super.stack ?? desc?.value ?? this.message;
-            Object.defineProperty(this, 'stack', {
-                get: () => stack_get() + '\n' + [
-                    this.cause ?? 'no cause',
-                    ...this.errors.flatMap(e => [
-                        String(e.stack),
-                        ...e instanceof $mol_error_mix || !e.cause ? [] : [e.cause]
-                    ])
-                ].map(frame_normalize).join('\n')
-            });
-            // в nodejs, что б не дублировалось cause в консоли
-            Object.defineProperty(this, 'cause', {
-                get: () => cause
-            });
-        }
-        static [Symbol.toPrimitive]() {
-            return this.toString();
-        }
-        static toString() {
-            return $$.$mol_func_name(this);
-        }
-        static make(...params) {
-            return new this(...params);
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function pass(data) {
-        return data;
-    }
-    function $mol_error_fence(task, fallback, loading = pass) {
-        try {
-            return task();
-        }
-        catch (error) {
-            let normalized;
-            try {
-                normalized = $mol_promise_like(error) ? loading(error) : fallback(error);
-            }
-            catch (sub_error) {
-                normalized = $mol_promise_like(sub_error) ? sub_error : new $mol_error_mix(sub_error.message, { error }, sub_error);
-            }
-            if (normalized instanceof Error || $mol_promise_like(normalized)) {
-                $mol_fail_hidden(normalized);
-            }
-            return normalized;
-        }
-    }
-    $.$mol_error_fence = $mol_error_fence;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_error_enriched(cause, cb) {
-        return $mol_error_fence(cb, e => new $mol_error_mix(e.message, cause, e));
-    }
-    $.$mol_error_enriched = $mol_error_enriched;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror');
-        if (error.length)
-            throw new Error(error[0].textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_fetch_response extends $mol_object {
-        native;
-        request;
-        status() {
-            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
-            return types[Math.floor(this.native.status / 100)];
-        }
-        code() {
-            return this.native.status;
-        }
-        ok() {
-            return this.native.ok;
-        }
-        message() {
-            return $mol_rest_code[this.code()] || `HTTP Error ${this.code()}`;
-        }
-        headers() {
-            return this.native.headers;
-        }
-        mime() {
-            return this.headers().get('content-type');
-        }
-        stream() {
-            return this.native.body;
-        }
-        text() {
-            const buffer = this.buffer();
-            const mime = this.mime() || '';
-            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
-            const decoder = new TextDecoder(charset);
-            return decoder.decode(buffer);
-        }
-        json() {
-            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).json());
-        }
-        blob() {
-            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).blob());
-        }
-        buffer() {
-            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).arrayBuffer());
-        }
-        xml() {
-            return $mol_dom_parse(this.text(), 'application/xml');
-        }
-        xhtml() {
-            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
-        }
-        html() {
-            return $mol_dom_parse(this.text(), 'text/html');
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "html", null);
-    $.$mol_fetch_response = $mol_fetch_response;
-    class $mol_fetch_request extends $mol_object {
-        native;
-        response_async() {
-            const controller = new AbortController();
-            let done = false;
-            const request = new Request(this.native, { signal: controller.signal });
-            const promise = fetch(request).finally(() => {
-                done = true;
-            });
-            return Object.assign(promise, {
-                destructor: () => {
-                    // Abort of done request breaks response parsing
-                    if (!done && !controller.signal.aborted)
-                        controller.abort();
-                },
-            });
-        }
-        response() {
-            return this.$.$mol_fetch_response.make({
-                native: $mol_wire_sync(this).response_async(),
-                request: this
-            });
-        }
-        success() {
-            const response = this.response();
-            if (response.status() === 'success')
-                return response;
-            throw new Error(response.message(), { cause: response });
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_request.prototype, "response", null);
-    $.$mol_fetch_request = $mol_fetch_request;
-    class $mol_fetch extends $mol_object {
-        static request(input, init) {
-            return this.$.$mol_fetch_request.make({
-                native: new Request(input, init)
-            });
-        }
-        static response(input, init) {
-            return this.request(input, init).response();
-        }
-        static success(input, init) {
-            return this.request(input, init).success();
-        }
-        static stream(input, init) {
-            return this.success(input, init).stream();
-        }
-        static text(input, init) {
-            return this.success(input, init).text();
-        }
-        static json(input, init) {
-            return this.success(input, init).json();
-        }
-        static blob(input, init) {
-            return this.success(input, init).blob();
-        }
-        static buffer(input, init) {
-            return this.success(input, init).buffer();
-        }
-        static xml(input, init) {
-            return this.success(input, init).xml();
-        }
-        static xhtml(input, init) {
-            return this.success(input, init).xhtml();
-        }
-        static html(input, init) {
-            return this.success(input, init).html();
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "request", null);
-    $.$mol_fetch = $mol_fetch;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_webdav extends $mol_file_base {
-        static relative(path) {
-            return this.absolute(new URL(path, this.base).toString());
-        }
-        resolve(path) {
-            let res = this.path() + '/' + path;
-            while (true) {
-                let prev = res;
-                // foo/../ -> /
-                res = res.replace(/\/[^\/.]+\/\.\.\//, '/');
-                if (prev === res)
-                    break;
-            }
-            // http://localhost/.. -> http://localhost
-            res = res.replace(/\/\.\.\/?$/, '');
-            if (res === this.path())
-                return this;
-            return this.constructor.absolute(res);
-        }
-        static headers() { return {}; }
-        headers() { return this.constructor.headers(); }
-        fetch(init) {
-            return this.$.$mol_fetch.success(this.path(), {
-                ...init,
-                headers: {
-                    ...this.headers(),
-                    ...init.headers,
-                }
-            });
-        }
-        read() {
-            try {
-                const response = this.fetch({});
-                return new Uint8Array(response.buffer());
-            }
-            catch (error) {
-                if (error instanceof Error
-                    && error.cause instanceof $mol_fetch_response
-                    && error.cause.native.status === 404)
-                    return new Uint8Array;
-                $mol_fail_hidden(error);
-            }
-        }
-        write(body) { this.fetch({ method: 'PUT', body }); }
-        ensure() { this.fetch({ method: 'MKCOL' }); }
-        drop() { this.fetch({ method: 'DELETE' }); }
-        copy(to) {
-            this.fetch({
-                method: 'COPY',
-                headers: { Destination: to }
-            });
-        }
-        kids() {
-            const response = this.fetch({ method: 'PROPFIND' });
-            const xml = response.xml();
-            const result = [];
-            for (const multistatus of xml.childNodes) {
-                if (multistatus.nodeName !== 'D:multistatus')
-                    continue;
-                for (const response of multistatus.childNodes) {
-                    let path;
-                    if (response.nodeName === 'D:href')
-                        path = response.textContent ?? '';
-                    if (!path)
-                        continue;
-                    if (response.nodeName !== 'D:propstat')
-                        continue;
-                    const stat = webdav_stat(response);
-                    const file = this.resolve(path);
-                    file.stat(stat, 'virt');
-                    result.push(file);
-                }
-            }
-            return result;
-        }
-        readable(opts) {
-            return this.fetch({
-                headers: !opts.start ? {} : {
-                    'Range': `bytes=${opts.start}-${opts.end ?? ''}`
-                }
-            }).stream() || $mol_fail(new Error('Not found'));
-        }
-        info() {
-            return this.kids().at(0)?.stat() ?? null;
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_file_webdav.prototype, "readable", null);
-    $.$mol_file_webdav = $mol_file_webdav;
-    function webdav_stat(prop_stat) {
-        const now = new Date();
-        const stat = {
-            type: 'file',
-            size: 0,
-            atime: now,
-            mtime: now,
-            ctime: now,
-        };
-        for (const prop of prop_stat.childNodes) {
-            if (prop.nodeName !== 'D:prop')
-                continue;
-            for (const value of prop.childNodes) {
-                const name = value.nodeName;
-                const text = value.textContent ?? '';
-                if (name === 'D:getcontenttype') {
-                    stat.type = text.endsWith('directory') ? 'dir' : 'file';
-                }
-                if (name === 'D:getcontentlength') {
-                    stat.size = Number(value.textContent || '0');
-                    if (Number.isNaN(stat.size))
-                        stat.size = 0;
-                }
-                if (name === 'D:getlastmodified')
-                    stat.mtime = stat.atime = new Date(text);
-                if (name === 'D:creationdate')
-                    stat.ctime = new Date(text);
-            }
-        }
-        return stat;
-    }
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_file_web extends $mol_file_webdav {
-        static base = new URL('.', $mol_dom_context.document?.currentScript?.['src'] ?? globalThis.location.href).toString();
-        // Вотчер выключен, версия всегда будет одна
-        // Если пустая строка - будет считаться, что файла нет
-        version() { return '1'; }
-        // Ворнинги подавляем, иначе в каждом приложении, загружающим локали, будет ворнинг
-        // override watcher() { return { destructor() {} }}
-        info() {
-            // Директории не поддерживаются
-            try {
-                const response = this.fetch({ method: 'HEAD' });
-                const headers = response.headers();
-                let size = Number(headers.get('Content-Length'));
-                if (Number.isNaN(size))
-                    size = 0;
-                const last = headers.get('Last-Modified');
-                const mtime = last ? new Date(last) : new Date();
-                return {
-                    type: 'file',
-                    size,
-                    mtime,
-                    atime: mtime,
-                    ctime: mtime,
-                };
-            }
-            catch (error) {
-                if (error instanceof Error
-                    && error.cause instanceof $mol_fetch_response
-                    && error.cause.native.status === 404)
-                    return null;
-                $mol_fail_hidden(error);
-            }
-        }
-    }
-    $.$mol_file_web = $mol_file_web;
-    $.$mol_file = $mol_file_web;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Localisation in $mol framework
-     * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
-     */
-    class $mol_locale extends $mol_object {
-        static lang_default() {
-            return 'en';
-        }
-        static lang(next) {
-            return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
-        }
-        static source(lang) {
-            return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
-        }
-        static texts(lang, next) {
-            if (next)
-                return next;
-            try {
-                return this.source(lang).valueOf();
-            }
-            catch (error) {
-                if ($mol_fail_catch(error)) {
-                    const def = this.lang_default();
-                    if (lang === def)
-                        throw error;
-                }
-            }
-            return {};
-        }
-        static text(key) {
-            const lang = this.lang();
-            const target = this.texts(lang)[key];
-            if (target)
-                return target;
-            this.warn(key);
-            const en = this.texts('en')[key];
-            if (!en)
-                return key;
-            return en;
-        }
-        static warn(key) {
-            console.warn(`Not translated to "${this.lang()}": ${key}`);
-            return null;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang_default", null);
-    __decorate([
-        $mol_mem
-    ], $mol_locale, "lang", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "source", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "texts", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "text", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_locale, "warn", null);
-    $.$mol_locale = $mol_locale;
-})($ || ($ = {}));
-
-;
 	($.$mol_nav) = class $mol_nav extends ($.$mol_plugin) {
 		event_key(next){
 			if(next !== undefined) return next;
@@ -12711,61 +13036,6 @@ var $;
 (function ($) {
     $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: 1.5rem;\n\t/* will-change: contents; */\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
 })($ || ($ = {}));
-
-;
-	($.$mol_svg_path) = class $mol_svg_path extends ($.$mol_svg) {
-		geometry(){
-			return "";
-		}
-		dom_name(){
-			return "path";
-		}
-		attr(){
-			return {...(super.attr()), "d": (this.geometry())};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_icon) = class $mol_icon extends ($.$mol_svg_root) {
-		path(){
-			return "";
-		}
-		Path(){
-			const obj = new this.$.$mol_svg_path();
-			(obj.geometry) = () => ((this.path()));
-			return obj;
-		}
-		view_box(){
-			return "0 0 24 24";
-		}
-		minimal_width(){
-			return 16;
-		}
-		minimal_height(){
-			return 16;
-		}
-		sub(){
-			return [(this.Path())];
-		}
-	};
-	($mol_mem(($.$mol_icon.prototype), "Path"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/icon/icon.view.css", "[mol_icon] {\n\tfill: currentColor;\n\tstroke: none;\n\twidth: 1em;\n\theight: 1.5em;\n\tflex: 0 0 auto;\n\tvertical-align: top;\n\tdisplay: inline-block;\n\tfilter: drop-shadow(0px 1px 1px var(--mol_theme_back));\n\ttransform-origin: center;\n}\n\n[mol_icon_path] {\n\ttransform-origin: center;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
 
 ;
 	($.$mol_icon_close) = class $mol_icon_close extends ($.$mol_icon) {
@@ -13484,10 +13754,18 @@ var $;
 
 ;
 	($.$raggu_web_app) = class $raggu_web_app extends ($.$bog_builderui_div) {
+		favicon_icon(){
+			const obj = new this.$.$mol_icon_graph();
+			return obj;
+		}
+		Favicon(){
+			const obj = new this.$.$bog_favicon();
+			(obj.Icon) = () => ((this.favicon_icon()));
+			return obj;
+		}
 		Sidebar(){
 			const obj = new this.$.$raggu_web_sidebar();
 			(obj.screen) = (next) => ((this.screen(next)));
-			(obj.lang) = (next) => ((this.lang(next)));
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			return obj;
 		}
@@ -13530,10 +13808,6 @@ var $;
 			if(next !== undefined) return next;
 			return "demo";
 		}
-		lang(next){
-			if(next !== undefined) return next;
-			return "RU";
-		}
 		dataset_id(next){
 			if(next !== undefined) return next;
 			return "wiki";
@@ -13544,6 +13818,9 @@ var $;
 		}
 		body(){
 			return [];
+		}
+		plugins(){
+			return [(this.Favicon())];
 		}
 		sub(){
 			return [
@@ -13571,6 +13848,8 @@ var $;
 			return obj;
 		}
 	};
+	($mol_mem(($.$raggu_web_app.prototype), "favicon_icon"));
+	($mol_mem(($.$raggu_web_app.prototype), "Favicon"));
 	($mol_mem(($.$raggu_web_app.prototype), "Sidebar"));
 	($mol_mem(($.$raggu_web_app.prototype), "open_settings"));
 	($mol_mem(($.$raggu_web_app.prototype), "Topbar"));
@@ -13580,7 +13859,6 @@ var $;
 	($mol_mem(($.$raggu_web_app.prototype), "select_dataset"));
 	($mol_mem(($.$raggu_web_app.prototype), "screen"));
 	($mol_mem(($.$raggu_web_app.prototype), "preset"));
-	($mol_mem(($.$raggu_web_app.prototype), "lang"));
 	($mol_mem(($.$raggu_web_app.prototype), "dataset_id"));
 	($mol_mem(($.$raggu_web_app.prototype), "settings_open"));
 	($mol_mem(($.$raggu_web_app.prototype), "Gallery"));
@@ -13769,7 +14047,6 @@ var $;
             }
             screen(next) { return this.arg_value('screen', next, 'gallery'); }
             preset(next) { return this.arg_value('preset', next, 'demo'); }
-            lang(next) { return this.arg_value('lang', next, 'RU'); }
             dataset_id(next) { return this.arg_value('ds', next, 'wiki'); }
         }
         __decorate([
@@ -13784,9 +14061,6 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_app.prototype, "preset", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_app.prototype, "lang", null);
         __decorate([
             $mol_mem
         ], $raggu_web_app.prototype, "dataset_id", null);
