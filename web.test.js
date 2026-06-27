@@ -3433,29 +3433,29 @@ var $;
         }
         $mol_test({
             'app.Body: $mol_scroll override is flex column'($) {
-                const rule = style_rule('$bog_ragufront_app', 'bog_ragufront_app_body');
+                const rule = style_rule('$raggu_web_app', 'raggu_web_app_body');
                 $mol_assert_equal(/display: flex/.test(rule), true);
                 $mol_assert_equal(/flex-direction: column/.test(rule), true);
             },
             'settings.Body: $mol_scroll override is flex column'($) {
-                const rule = style_rule('$bog_ragufront_settings', 'bog_ragufront_settings_body');
+                const rule = style_rule('$raggu_web_settings', 'raggu_web_settings_body');
                 $mol_assert_equal(/display: flex/.test(rule), true);
                 $mol_assert_equal(/flex-direction: column/.test(rule), true);
             },
             'settings: 6 distinct groups under Body'($) {
-                const v = $bog_ragufront_settings.make({ $ });
+                const v = $raggu_web_settings.make({ $ });
                 v.showed(true);
                 $mol_assert_equal(v.Body().sub().length, 6);
             },
             'app: every screen exists as sub-view'($) {
-                const v = $bog_ragufront_app.make({ $ });
-                $mol_assert_equal(v.Gallery() instanceof $bog_ragufront_gallery, true);
-                $mol_assert_equal(v.Explorer() instanceof $bog_ragufront_explorer, true);
-                $mol_assert_equal(v.Chat() instanceof $bog_ragufront_chat, true);
-                $mol_assert_equal(v.Dashboard() instanceof $bog_ragufront_dashboard, true);
+                const v = $raggu_web_app.make({ $ });
+                $mol_assert_equal(v.Gallery() instanceof $raggu_web_gallery, true);
+                $mol_assert_equal(v.Explorer() instanceof $raggu_web_explorer, true);
+                $mol_assert_equal(v.Chat() instanceof $raggu_web_chat, true);
+                $mol_assert_equal(v.Dashboard() instanceof $raggu_web_dashboard, true);
             },
             'app.body: switches by screen()'($) {
-                const v = $bog_ragufront_app.make({ $ });
+                const v = $raggu_web_app.make({ $ });
                 v.screen('gallery');
                 $mol_assert_equal(v.body()[0], v.Gallery());
                 v.screen('explorer');
@@ -3466,16 +3466,16 @@ var $;
                 $mol_assert_equal(v.body()[0], v.Dashboard());
             },
             'dashboard: metric and stage rows match data'($) {
-                const v = $bog_ragufront_dashboard.make({ $ });
+                const v = $raggu_web_dashboard.make({ $ });
                 $mol_assert_equal(v.Metric_rows().sub().length, 3);
                 $mol_assert_equal(v.Stage_rows().sub().length, 5);
             },
             'gallery: 6 dataset cards render'($) {
-                const v = $bog_ragufront_gallery.make({ $ });
+                const v = $raggu_web_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 6);
             },
             'url state: screen / preset / lang / dataset_id round-trip through $mol_state_arg'($) {
-                const app = $bog_ragufront_app.make({ $ });
+                const app = $raggu_web_app.make({ $ });
                 const arg = $.$mol_state_arg;
                 // defaults are NOT written to URL (kept clean)
                 $mol_assert_equal(app.screen(), 'gallery');
@@ -3494,7 +3494,7 @@ var $;
                 $mol_assert_equal(arg.value('screen'), null);
             },
             'e2e: full user flow through all screens'($) {
-                const app = $bog_ragufront_app.make({ $ });
+                const app = $raggu_web_app.make({ $ });
                 // initial: gallery screen, 6 dataset cards
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.body()[0], app.Gallery());
@@ -3541,7 +3541,7 @@ var $;
         if (typeof window !== 'undefined') {
             setTimeout(async () => {
                 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-                const app = $bog_ragufront_app.Root(0);
+                const app = $raggu_web_app.Root(0);
                 const initial = {
                     screen: app.screen(),
                     preset: app.preset(),

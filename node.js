@@ -4232,7 +4232,7 @@ var $;
 "use strict";
 
 ;
-	($.$bog_ragufront_sidebar_nav) = class $bog_ragufront_sidebar_nav extends ($.$bog_builderui_div) {
+	($.$raggu_web_sidebar_nav) = class $raggu_web_sidebar_nav extends ($.$bog_builderui_div) {
 		click(next){
 			if(next !== undefined) return next;
 			return null;
@@ -4257,7 +4257,7 @@ var $;
 			return false;
 		}
 		attr(){
-			return {...(super.attr()), "bog_ragufront_sidebar_nav_active": (this.active())};
+			return {...(super.attr()), "raggu_web_sidebar_nav_active": (this.active())};
 		}
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
@@ -4266,9 +4266,9 @@ var $;
 			return [(this.Icon()), (this.Label())];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_sidebar_nav.prototype), "click"));
-	($mol_mem(($.$bog_ragufront_sidebar_nav.prototype), "Icon"));
-	($mol_mem(($.$bog_ragufront_sidebar_nav.prototype), "Label"));
+	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "click"));
+	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "Icon"));
+	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "Label"));
 
 
 ;
@@ -4279,7 +4279,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_sidebar_nav, {
+    $mol_style_define($raggu_web_sidebar_nav, {
         flex: { direction: 'row' },
         align: { items: 'center' },
         gap: '0.625rem',
@@ -4298,7 +4298,7 @@ var $;
             textAlign: 'center',
         },
         '@': {
-            bog_ragufront_sidebar_nav_active: {
+            raggu_web_sidebar_nav_active: {
                 true: {
                     background: { color: '#ece9fb' },
                     color: '#5b5bd6',
@@ -4309,7 +4309,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_sidebar_lang) = class $bog_ragufront_sidebar_lang extends ($.$bog_builderui_div) {
+	($.$raggu_web_sidebar_lang) = class $raggu_web_sidebar_lang extends ($.$bog_builderui_div) {
 		click(next){
 			if(next !== undefined) return next;
 			return null;
@@ -4321,7 +4321,7 @@ var $;
 			return false;
 		}
 		attr(){
-			return {...(super.attr()), "bog_ragufront_sidebar_lang_active": (this.active())};
+			return {...(super.attr()), "raggu_web_sidebar_lang_active": (this.active())};
 		}
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
@@ -4330,7 +4330,7 @@ var $;
 			return [(this.label())];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_sidebar_lang.prototype), "click"));
+	($mol_mem(($.$raggu_web_sidebar_lang.prototype), "click"));
 
 
 ;
@@ -4341,7 +4341,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_sidebar_lang, {
+    $mol_style_define($raggu_web_sidebar_lang, {
         font: {
             family: 'ui-monospace, monospace',
             weight: 700,
@@ -4357,7 +4357,7 @@ var $;
         cursor: 'pointer',
         color: '#a8a29e',
         '@': {
-            bog_ragufront_sidebar_lang_active: {
+            raggu_web_sidebar_lang_active: {
                 true: {
                     background: { color: '#5b5bd6' },
                     color: '#ffffff',
@@ -4368,7 +4368,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_sidebar) = class $bog_ragufront_sidebar extends ($.$bog_builderui_div) {
+	($.$raggu_web_sidebar) = class $raggu_web_sidebar extends ($.$bog_builderui_div) {
 		Brand_logo(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => (["R"]);
@@ -4406,7 +4406,7 @@ var $;
 			return null;
 		}
 		Nav_gallery(){
-			const obj = new this.$.$bog_ragufront_sidebar_nav();
+			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("▤");
 			(obj.label) = () => ("Датасеты");
 			(obj.active) = () => ((this.is_gallery()));
@@ -4421,7 +4421,7 @@ var $;
 			return null;
 		}
 		Nav_explorer(){
-			const obj = new this.$.$bog_ragufront_sidebar_nav();
+			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("◉");
 			(obj.label) = () => ("Граф");
 			(obj.active) = () => ((this.is_explorer()));
@@ -4436,7 +4436,7 @@ var $;
 			return null;
 		}
 		Nav_chat(){
-			const obj = new this.$.$bog_ragufront_sidebar_nav();
+			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("💬");
 			(obj.label) = () => ("Чат");
 			(obj.active) = () => ((this.is_chat()));
@@ -4451,7 +4451,7 @@ var $;
 			return null;
 		}
 		Nav_dashboard(){
-			const obj = new this.$.$bog_ragufront_sidebar_nav();
+			const obj = new this.$.$raggu_web_sidebar_nav();
 			(obj.icon) = () => ("▦");
 			(obj.label) = () => ("Дашборд");
 			(obj.active) = () => ((this.is_dashboard()));
@@ -4508,7 +4508,7 @@ var $;
 			return null;
 		}
 		Lang_en(){
-			const obj = new this.$.$bog_ragufront_sidebar_lang();
+			const obj = new this.$.$raggu_web_sidebar_lang();
 			(obj.label) = () => ("EN");
 			(obj.active) = () => ((this.is_en()));
 			(obj.click) = (next) => ((this.click_en(next)));
@@ -4522,7 +4522,7 @@ var $;
 			return null;
 		}
 		Lang_ru(){
-			const obj = new this.$.$bog_ragufront_sidebar_lang();
+			const obj = new this.$.$raggu_web_sidebar_lang();
 			(obj.label) = () => ("RU");
 			(obj.active) = () => ((this.is_ru()));
 			(obj.click) = (next) => ((this.click_ru(next)));
@@ -4567,34 +4567,34 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Brand_logo"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Brand_title"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Brand_badge"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Brand"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Sections_label"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "click_gallery"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Nav_gallery"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "click_explorer"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Nav_explorer"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "click_chat"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Nav_chat"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "click_dashboard"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Nav_dashboard"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Nav"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Spacer"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Corpus_label"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Corpus_name"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Corpus_meta"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Corpus_card"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Lang_label"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "click_en"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Lang_en"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "click_ru"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Lang_ru"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Lang_row"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "Footer"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "screen"));
-	($mol_mem(($.$bog_ragufront_sidebar.prototype), "lang"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Brand_logo"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Brand_title"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Brand_badge"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Brand"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Sections_label"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "click_gallery"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Nav_gallery"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "click_explorer"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Nav_explorer"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "click_chat"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Nav_chat"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "click_dashboard"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Nav_dashboard"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Nav"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_label"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_name"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_meta"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_card"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_label"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "click_en"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_en"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "click_ru"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_ru"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_row"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Footer"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "screen"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "lang"));
 
 
 ;
@@ -4626,7 +4626,7 @@ var $;
             wiki: 'Википедия: писатели',
             own: 'Свой корпус',
         };
-        class $bog_ragufront_sidebar extends $.$bog_ragufront_sidebar {
+        class $raggu_web_sidebar extends $.$raggu_web_sidebar {
             dataset_name() {
                 return DATASET_NAMES[this.dataset_id()] ?? '';
             }
@@ -4645,23 +4645,23 @@ var $;
         }
         __decorate([
             $mol_action
-        ], $bog_ragufront_sidebar.prototype, "click_gallery", null);
+        ], $raggu_web_sidebar.prototype, "click_gallery", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_sidebar.prototype, "click_explorer", null);
+        ], $raggu_web_sidebar.prototype, "click_explorer", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_sidebar.prototype, "click_chat", null);
+        ], $raggu_web_sidebar.prototype, "click_chat", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_sidebar.prototype, "click_dashboard", null);
+        ], $raggu_web_sidebar.prototype, "click_dashboard", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_sidebar.prototype, "click_en", null);
+        ], $raggu_web_sidebar.prototype, "click_en", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_sidebar.prototype, "click_ru", null);
-        $$.$bog_ragufront_sidebar = $bog_ragufront_sidebar;
+        ], $raggu_web_sidebar.prototype, "click_ru", null);
+        $$.$raggu_web_sidebar = $raggu_web_sidebar;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -4669,7 +4669,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_sidebar, {
+    $mol_style_define($raggu_web_sidebar, {
         minWidth: '228px',
         maxWidth: '228px',
         background: { color: '#f5f4f2' },
@@ -4812,7 +4812,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_topbar_preset) = class $bog_ragufront_topbar_preset extends ($.$bog_builderui_div) {
+	($.$raggu_web_topbar_preset) = class $raggu_web_topbar_preset extends ($.$bog_builderui_div) {
 		click(next){
 			if(next !== undefined) return next;
 			return null;
@@ -4824,7 +4824,7 @@ var $;
 			return false;
 		}
 		attr(){
-			return {...(super.attr()), "bog_ragufront_topbar_preset_active": (this.active())};
+			return {...(super.attr()), "raggu_web_topbar_preset_active": (this.active())};
 		}
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
@@ -4833,7 +4833,7 @@ var $;
 			return [(this.label())];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_topbar_preset.prototype), "click"));
+	($mol_mem(($.$raggu_web_topbar_preset.prototype), "click"));
 
 
 ;
@@ -4844,7 +4844,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_topbar_preset, {
+    $mol_style_define($raggu_web_topbar_preset, {
         font: { size: '11px', weight: 600 },
         padding: {
             top: '5px',
@@ -4856,7 +4856,7 @@ var $;
         cursor: 'pointer',
         color: '#78716c',
         '@': {
-            bog_ragufront_topbar_preset_active: {
+            raggu_web_topbar_preset_active: {
                 true: {
                     background: { color: '#ffffff' },
                     color: '#44403c',
@@ -4876,7 +4876,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_topbar) = class $bog_ragufront_topbar extends ($.$bog_builderui_div) {
+	($.$raggu_web_topbar) = class $raggu_web_topbar extends ($.$bog_builderui_div) {
 		screen_title(){
 			return "";
 		}
@@ -4915,7 +4915,7 @@ var $;
 			return null;
 		}
 		Preset_fast(){
-			const obj = new this.$.$bog_ragufront_topbar_preset();
+			const obj = new this.$.$raggu_web_topbar_preset();
 			(obj.label) = () => ("⚡ Быстро");
 			(obj.active) = () => ((this.is_fast()));
 			(obj.click) = (next) => ((this.click_fast(next)));
@@ -4929,7 +4929,7 @@ var $;
 			return null;
 		}
 		Preset_accurate(){
-			const obj = new this.$.$bog_ragufront_topbar_preset();
+			const obj = new this.$.$raggu_web_topbar_preset();
 			(obj.label) = () => ("🎯 Точно");
 			(obj.active) = () => ((this.is_accurate()));
 			(obj.click) = (next) => ((this.click_accurate(next)));
@@ -4943,7 +4943,7 @@ var $;
 			return null;
 		}
 		Preset_demo(){
-			const obj = new this.$.$bog_ragufront_topbar_preset();
+			const obj = new this.$.$raggu_web_topbar_preset();
 			(obj.label) = () => ("🎬 Демо");
 			(obj.active) = () => ((this.is_demo()));
 			(obj.click) = (next) => ((this.click_demo(next)));
@@ -4994,22 +4994,22 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Title"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Subtitle"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Title_block"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Spacer"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Preset_label"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "click_fast"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Preset_fast"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "click_accurate"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Preset_accurate"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "click_demo"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Preset_demo"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Preset_group"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "open_settings"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Settings_btn"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "Export_btn"));
-	($mol_mem(($.$bog_ragufront_topbar.prototype), "preset"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Title"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Subtitle"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Title_block"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_label"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "click_fast"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_fast"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "click_accurate"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_accurate"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "click_demo"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_demo"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Preset_group"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "open_settings"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Settings_btn"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "Export_btn"));
+	($mol_mem(($.$raggu_web_topbar.prototype), "preset"));
 
 
 ;
@@ -5036,7 +5036,7 @@ var $;
             wiki: 'Википедия: писатели',
             own: 'Свой корпус',
         };
-        class $bog_ragufront_topbar extends $.$bog_ragufront_topbar {
+        class $raggu_web_topbar extends $.$raggu_web_topbar {
             screen_title() { return SCREEN_TITLES[this.screen()] ?? ''; }
             dataset_name() { return DATASET_NAMES[this.dataset_id()] ?? ''; }
             is_fast() { return this.preset() === 'fast'; }
@@ -5048,14 +5048,14 @@ var $;
         }
         __decorate([
             $mol_action
-        ], $bog_ragufront_topbar.prototype, "click_fast", null);
+        ], $raggu_web_topbar.prototype, "click_fast", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_topbar.prototype, "click_accurate", null);
+        ], $raggu_web_topbar.prototype, "click_accurate", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_topbar.prototype, "click_demo", null);
-        $$.$bog_ragufront_topbar = $bog_ragufront_topbar;
+        ], $raggu_web_topbar.prototype, "click_demo", null);
+        $$.$raggu_web_topbar = $raggu_web_topbar;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -5063,7 +5063,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_topbar, {
+    $mol_style_define($raggu_web_topbar, {
         height: '58px',
         minHeight: '58px',
         background: { color: '#ffffff' },
@@ -5343,7 +5343,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_settings_group) = class $bog_ragufront_settings_group extends ($.$bog_builderui_div) {
+	($.$raggu_web_settings_group) = class $raggu_web_settings_group extends ($.$bog_builderui_div) {
 		Step(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.step())]);
@@ -5351,7 +5351,7 @@ var $;
 		}
 		Reindex(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({"bog_ragufront_settings_group_reindex": (this.reindex())});
+			(obj.attr) = () => ({"raggu_web_settings_group_reindex": (this.reindex())});
 			(obj.sub) = () => (["требует переиндексации"]);
 			return obj;
 		}
@@ -5399,12 +5399,12 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_settings_group.prototype), "Step"));
-	($mol_mem(($.$bog_ragufront_settings_group.prototype), "Reindex"));
-	($mol_mem(($.$bog_ragufront_settings_group.prototype), "Head"));
-	($mol_mem(($.$bog_ragufront_settings_group.prototype), "Title"));
-	($mol_mem(($.$bog_ragufront_settings_group.prototype), "Opts"));
-	($mol_mem(($.$bog_ragufront_settings_group.prototype), "Control"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Step"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Reindex"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Head"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Title"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Opts"));
+	($mol_mem(($.$raggu_web_settings_group.prototype), "Control"));
 
 
 ;
@@ -5415,7 +5415,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_settings_group, {
+    $mol_style_define($raggu_web_settings_group, {
         flex: { direction: 'column' },
         Head: {
             flex: { direction: 'row' },
@@ -5445,7 +5445,7 @@ var $;
             font: { size: '9px', weight: 600 },
             display: 'none',
             '@': {
-                bog_ragufront_settings_group_reindex: {
+                raggu_web_settings_group_reindex: {
                     true: { display: 'flex' },
                 },
             },
@@ -5481,7 +5481,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_settings) = class $bog_ragufront_settings extends ($.$bog_builderui_div) {
+	($.$raggu_web_settings) = class $raggu_web_settings extends ($.$bog_builderui_div) {
 		close(next){
 			if(next !== undefined) return next;
 			return null;
@@ -5526,7 +5526,7 @@ var $;
 			return obj;
 		}
 		Group_chunking(){
-			const obj = new this.$.$bog_ragufront_settings_group();
+			const obj = new this.$.$raggu_web_settings_group();
 			(obj.step) = () => ("Шаг 1");
 			(obj.title) = () => ("Chunking");
 			(obj.opts) = () => ("Simple / SemanticText / SmartSemantic · размер · overlap");
@@ -5535,7 +5535,7 @@ var $;
 			return obj;
 		}
 		Group_extraction(){
-			const obj = new this.$.$bog_ragufront_settings_group();
+			const obj = new this.$.$raggu_web_settings_group();
 			(obj.step) = () => ("Шаг 2");
 			(obj.title) = () => ("Extraction");
 			(obj.opts) = () => ("single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель");
@@ -5544,7 +5544,7 @@ var $;
 			return obj;
 		}
 		Group_summarization(){
-			const obj = new this.$.$bog_ragufront_settings_group();
+			const obj = new this.$.$raggu_web_settings_group();
 			(obj.step) = () => ("Шаг 3");
 			(obj.title) = () => ("Summarization");
 			(obj.opts) = () => ("DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей");
@@ -5553,7 +5553,7 @@ var $;
 			return obj;
 		}
 		Group_communities(){
-			const obj = new this.$.$bog_ragufront_settings_group();
+			const obj = new this.$.$raggu_web_settings_group();
 			(obj.step) = () => ("Шаг 4");
 			(obj.title) = () => ("Communities");
 			(obj.opts) = () => ("Hierarchical Leiden (resolution, levels) · суммаризация сообществ");
@@ -5562,7 +5562,7 @@ var $;
 			return obj;
 		}
 		Group_refinement(){
-			const obj = new this.$.$bog_ragufront_settings_group();
+			const obj = new this.$.$raggu_web_settings_group();
 			(obj.step) = () => ("Шаг 5");
 			(obj.title) = () => ("Refinement");
 			(obj.opts) = () => ("RemoveIsolatedNodes и пост-обработчики");
@@ -5571,7 +5571,7 @@ var $;
 			return obj;
 		}
 		Group_search(){
-			const obj = new this.$.$bog_ragufront_settings_group();
+			const obj = new this.$.$raggu_web_settings_group();
 			(obj.step) = () => ("Шаг 6");
 			(obj.title) = () => ("Search");
 			(obj.opts) = () => ("Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k");
@@ -5601,29 +5601,29 @@ var $;
 			return false;
 		}
 		attr(){
-			return {...(super.attr()), "bog_ragufront_settings_showed": (this.showed())};
+			return {...(super.attr()), "raggu_web_settings_showed": (this.showed())};
 		}
 		sub(){
 			return [(this.Backdrop()), (this.Panel())];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_settings.prototype), "close"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Backdrop"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Header_title"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Header_sub"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Header_text"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Spacer"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Close_btn"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Header"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Group_chunking"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Group_extraction"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Group_summarization"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Group_communities"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Group_refinement"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Group_search"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Body"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "Panel"));
-	($mol_mem(($.$bog_ragufront_settings.prototype), "showed"));
+	($mol_mem(($.$raggu_web_settings.prototype), "close"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Backdrop"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header_sub"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Close_btn"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Header"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_chunking"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_extraction"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_summarization"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_communities"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_refinement"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Group_search"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Body"));
+	($mol_mem(($.$raggu_web_settings.prototype), "Panel"));
+	($mol_mem(($.$raggu_web_settings.prototype), "showed"));
 
 
 ;
@@ -5636,7 +5636,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_ragufront_settings extends $.$bog_ragufront_settings {
+        class $raggu_web_settings extends $.$raggu_web_settings {
             close() {
                 this.showed(false);
                 return null;
@@ -5644,8 +5644,8 @@ var $;
         }
         __decorate([
             $mol_action
-        ], $bog_ragufront_settings.prototype, "close", null);
-        $$.$bog_ragufront_settings = $bog_ragufront_settings;
+        ], $raggu_web_settings.prototype, "close", null);
+        $$.$raggu_web_settings = $raggu_web_settings;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -5653,7 +5653,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_settings, {
+    $mol_style_define($raggu_web_settings, {
         position: 'fixed',
         top: 0,
         left: 0,
@@ -5662,7 +5662,7 @@ var $;
         display: 'none',
         zIndex: 40,
         '@': {
-            bog_ragufront_settings_showed: {
+            raggu_web_settings_showed: {
                 true: { display: 'flex' },
             },
         },
@@ -5752,14 +5752,14 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_gallery_card_preview) = class $bog_ragufront_gallery_card_preview extends ($.$bog_builderui_div) {};
+	($.$raggu_web_gallery_card_preview) = class $raggu_web_gallery_card_preview extends ($.$bog_builderui_div) {};
 
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/ragufront/gallery/card/preview/preview.view.css", "[bog_ragufront_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
+    $mol_style_attach("raggu/web/gallery/card/preview/preview.view.css", "[raggu_web_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -5767,7 +5767,7 @@ var $;
 
 
 ;
-	($.$bog_ragufront_gallery_card) = class $bog_ragufront_gallery_card extends ($.$bog_builderui_div) {
+	($.$raggu_web_gallery_card) = class $raggu_web_gallery_card extends ($.$bog_builderui_div) {
 		click(next){
 			if(next !== undefined) return next;
 			return null;
@@ -5783,7 +5783,7 @@ var $;
 			return obj;
 		}
 		Preview(){
-			const obj = new this.$.$bog_ragufront_gallery_card_preview();
+			const obj = new this.$.$raggu_web_gallery_card_preview();
 			(obj.sub) = () => ([(this.Preview_label()), (this.Domain_badge())]);
 			return obj;
 		}
@@ -5863,16 +5863,16 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "click"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Preview_label"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Domain_badge"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Preview"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Title"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Desc"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Tag_nodes"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Tag_edges"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Tag_comms"));
-	($mol_mem(($.$bog_ragufront_gallery_card.prototype), "Tags"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "click"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Preview_label"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Domain_badge"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Preview"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Title"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Desc"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_nodes"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_edges"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tag_comms"));
+	($mol_mem(($.$raggu_web_gallery_card.prototype), "Tags"));
 
 
 ;
@@ -5885,12 +5885,12 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_ragufront_gallery_card extends $.$bog_ragufront_gallery_card {
+        class $raggu_web_gallery_card extends $.$raggu_web_gallery_card {
             tag_nodes() { return `${this.nodes()} узлов`; }
             tag_edges() { return `${this.edges()} связей`; }
             tag_comms() { return `${this.comms()} сообществ`; }
         }
-        $$.$bog_ragufront_gallery_card = $bog_ragufront_gallery_card;
+        $$.$raggu_web_gallery_card = $raggu_web_gallery_card;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -5914,7 +5914,7 @@ var $;
             right: '7px',
         },
     };
-    $mol_style_define($bog_ragufront_gallery_card, {
+    $mol_style_define($raggu_web_gallery_card, {
         background: { color: '#ffffff' },
         border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '10px' },
         padding: {
@@ -5978,7 +5978,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_gallery) = class $bog_ragufront_gallery extends ($.$bog_builderui_div) {
+	($.$raggu_web_gallery) = class $raggu_web_gallery extends ($.$bog_builderui_div) {
 		Header_title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => (["Галерея корпусов"]);
@@ -6044,7 +6044,7 @@ var $;
 			return null;
 		}
 		Card(id){
-			const obj = new this.$.$bog_ragufront_gallery_card();
+			const obj = new this.$.$raggu_web_gallery_card();
 			(obj.id) = () => ((this.card_id(id)));
 			(obj.title) = () => ((this.card_title(id)));
 			(obj.domain) = () => ((this.card_domain(id)));
@@ -6077,17 +6077,17 @@ var $;
 			return [(this.Header()), (this.Grid())];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Header_title"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Header_subtitle"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Header_text"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Spacer"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Upload_doc"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Upload_idx"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Header"));
-	($mol_mem_key(($.$bog_ragufront_gallery.prototype), "click"));
-	($mol_mem_key(($.$bog_ragufront_gallery.prototype), "Card"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "Grid"));
-	($mol_mem(($.$bog_ragufront_gallery.prototype), "select_dataset"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header_subtitle"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Upload_doc"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Upload_idx"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Header"));
+	($mol_mem_key(($.$raggu_web_gallery.prototype), "click"));
+	($mol_mem_key(($.$raggu_web_gallery.prototype), "Card"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "Grid"));
+	($mol_mem(($.$raggu_web_gallery.prototype), "select_dataset"));
 
 
 ;
@@ -6108,7 +6108,7 @@ var $;
             { id: 'wiki', title: 'Википедия: писатели', domain: 'Биографии', desc: 'Связный тематический срез: персоны, события, награды.', nodes: '2.4k', edges: '7.1k', comms: '38' },
             { id: 'own', title: '＋ Загрузить свой', domain: '—', desc: 'Документ или готовый индекс — построим граф на лету.', nodes: '—', edges: '—', comms: '—' },
         ];
-        class $bog_ragufront_gallery extends $.$bog_ragufront_gallery {
+        class $raggu_web_gallery extends $.$raggu_web_gallery {
             datasets() { return DATASETS; }
             rows() {
                 return this.datasets().map(ds => this.Card(ds.id));
@@ -6130,8 +6130,8 @@ var $;
         }
         __decorate([
             $mol_action
-        ], $bog_ragufront_gallery.prototype, "click", null);
-        $$.$bog_ragufront_gallery = $bog_ragufront_gallery;
+        ], $raggu_web_gallery.prototype, "click", null);
+        $$.$raggu_web_gallery = $raggu_web_gallery;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -6139,7 +6139,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_gallery, {
+    $mol_style_define($raggu_web_gallery, {
         flex: { direction: 'column', shrink: 1 },
         minWidth: 0,
         padding: {
@@ -6206,7 +6206,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_explorer) = class $bog_ragufront_explorer extends ($.$bog_builderui_div) {
+	($.$raggu_web_explorer) = class $raggu_web_explorer extends ($.$bog_builderui_div) {
 		Canvas_label(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
@@ -6494,57 +6494,57 @@ var $;
 			return [(this.Canvas()), (this.Aside())];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Canvas_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Canvas_bg"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Filter_search"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Filter_type"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Filter_thresh"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Filter_comm"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Filters"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_title"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_person_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_person_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_person"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_org_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_org_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_org"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_loc_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_loc_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_loc"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_event_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_event_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_event"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_date_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_date_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_date"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_work_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_work_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_work"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_law_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_law_label"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend_law"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Legend"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Canvas"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Aside_title"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Entity_dot"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Entity_name"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Entity_head"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Entity_type"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Entity_desc"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Relations_title"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_one_type"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_one_target"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_one"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_two_type"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_two_target"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_two"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_three_type"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_three_target"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Rel_three"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Sources_title"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Sources"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Ask_btn"));
-	($mol_mem(($.$bog_ragufront_explorer.prototype), "Aside"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas_bg"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_search"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_thresh"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filter_comm"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Filters"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_person"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_org"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_loc"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_event"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_date"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_work"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law_label"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend_law"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Legend"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Canvas"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Aside_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_dot"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_name"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_head"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Entity_desc"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Relations_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one_target"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_one"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two_target"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_two"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three_type"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three_target"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Rel_three"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Sources_title"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Sources"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Ask_btn"));
+	($mol_mem(($.$raggu_web_explorer.prototype), "Aside"));
 
 
 ;
@@ -6603,7 +6603,7 @@ var $;
         color: '#57534e',
         margin: { top: '2px' },
     };
-    $mol_style_define($bog_ragufront_explorer, {
+    $mol_style_define($raggu_web_explorer, {
         flex: { direction: 'row', shrink: 1 },
         minWidth: 0,
         height: '100%',
@@ -6864,7 +6864,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_chat) = class $bog_ragufront_chat extends ($.$bog_builderui_div) {
+	($.$raggu_web_chat) = class $raggu_web_chat extends ($.$bog_builderui_div) {
 		Modes_label(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => (["Движок поиска"]);
@@ -7076,42 +7076,42 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Modes_label"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Mode_local"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Mode_global"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Mode_mix"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Mode_plan"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Modes"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Modes_bar"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Msg_user"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Msg_assistant"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_head_title"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_head_meta"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_head"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_label"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_chip_one"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_chip_two"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_chip_three"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_chips"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_stat_chunks"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_stat_comms"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_stat_retr"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_stat_gen"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_stat_power"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_stats"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_link"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace_body"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Trace"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Msg_assistant_wrap"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Body"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Sug_one"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Sug_two"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Suggestions"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Input_hint"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Input_spacer"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Input_send"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Input_row"));
-	($mol_mem(($.$bog_ragufront_chat.prototype), "Footer"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Modes_label"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_local"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_global"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_mix"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Mode_plan"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Modes"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Modes_bar"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Msg_user"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Msg_assistant"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_head_title"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_head_meta"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_head"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_label"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chip_one"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chip_two"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chip_three"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_chips"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_chunks"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_comms"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_retr"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_gen"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stat_power"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_stats"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_link"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace_body"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Trace"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Msg_assistant_wrap"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Body"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Sug_one"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Sug_two"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Suggestions"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Input_hint"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Input_spacer"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Input_send"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Input_row"));
+	($mol_mem(($.$raggu_web_chat.prototype), "Footer"));
 
 
 ;
@@ -7169,7 +7169,7 @@ var $;
         font: { size: '11px' },
         color: '#78716c',
     };
-    $mol_style_define($bog_ragufront_chat, {
+    $mol_style_define($raggu_web_chat, {
         flex: { direction: 'column', shrink: 1 },
         minWidth: 0,
         height: '100%',
@@ -7387,14 +7387,14 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_dashboard_dist) = class $bog_ragufront_dashboard_dist extends ($.$bog_builderui_div) {};
+	($.$raggu_web_dashboard_dist) = class $raggu_web_dashboard_dist extends ($.$bog_builderui_div) {};
 
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("bog/ragufront/dashboard/dist/dist.view.css", "[bog_ragufront_dashboard_dist] {\n\tbackground-image: repeating-linear-gradient(90deg, #efedea 0 7px, #e7e4e0 7px 14px);\n}\n");
+    $mol_style_attach("raggu/web/dashboard/dist/dist.view.css", "[raggu_web_dashboard_dist] {\n\tbackground-image: repeating-linear-gradient(90deg, #efedea 0 7px, #e7e4e0 7px 14px);\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -7402,7 +7402,7 @@ var $;
 
 
 ;
-	($.$bog_ragufront_dashboard_metric) = class $bog_ragufront_dashboard_metric extends ($.$bog_builderui_div) {
+	($.$raggu_web_dashboard_metric) = class $raggu_web_dashboard_metric extends ($.$bog_builderui_div) {
 		Name(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.name())]);
@@ -7439,10 +7439,10 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_dashboard_metric.prototype), "Name"));
-	($mol_mem(($.$bog_ragufront_dashboard_metric.prototype), "Bar_fill"));
-	($mol_mem(($.$bog_ragufront_dashboard_metric.prototype), "Bar"));
-	($mol_mem(($.$bog_ragufront_dashboard_metric.prototype), "Value"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Name"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Bar_fill"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Bar"));
+	($mol_mem(($.$raggu_web_dashboard_metric.prototype), "Value"));
 
 
 ;
@@ -7455,14 +7455,14 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_ragufront_dashboard_metric extends $.$bog_ragufront_dashboard_metric {
+        class $raggu_web_dashboard_metric extends $.$raggu_web_dashboard_metric {
             Bar_fill() {
                 const fill = super.Bar_fill();
                 fill.style = () => ({ width: this.pct() });
                 return fill;
             }
         }
-        $$.$bog_ragufront_dashboard_metric = $bog_ragufront_dashboard_metric;
+        $$.$raggu_web_dashboard_metric = $raggu_web_dashboard_metric;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -7470,7 +7470,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_dashboard_metric, {
+    $mol_style_define($raggu_web_dashboard_metric, {
         flex: { direction: 'row' },
         align: { items: 'center' },
         gap: '10px',
@@ -7510,7 +7510,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_dashboard_stage) = class $bog_ragufront_dashboard_stage extends ($.$bog_builderui_div) {
+	($.$raggu_web_dashboard_stage) = class $raggu_web_dashboard_stage extends ($.$bog_builderui_div) {
 		Name(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.name())]);
@@ -7547,10 +7547,10 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_dashboard_stage.prototype), "Name"));
-	($mol_mem(($.$bog_ragufront_dashboard_stage.prototype), "Bar_fill"));
-	($mol_mem(($.$bog_ragufront_dashboard_stage.prototype), "Bar"));
-	($mol_mem(($.$bog_ragufront_dashboard_stage.prototype), "Time"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Name"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Bar_fill"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Bar"));
+	($mol_mem(($.$raggu_web_dashboard_stage.prototype), "Time"));
 
 
 ;
@@ -7563,14 +7563,14 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_ragufront_dashboard_stage extends $.$bog_ragufront_dashboard_stage {
+        class $raggu_web_dashboard_stage extends $.$raggu_web_dashboard_stage {
             Bar_fill() {
                 const fill = super.Bar_fill();
                 fill.style = () => ({ width: this.pct() });
                 return fill;
             }
         }
-        $$.$bog_ragufront_dashboard_stage = $bog_ragufront_dashboard_stage;
+        $$.$raggu_web_dashboard_stage = $raggu_web_dashboard_stage;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -7578,7 +7578,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_dashboard_stage, {
+    $mol_style_define($raggu_web_dashboard_stage, {
         flex: { direction: 'row' },
         align: { items: 'center' },
         gap: '10px',
@@ -7619,7 +7619,7 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_dashboard) = class $bog_ragufront_dashboard extends ($.$bog_builderui_div) {
+	($.$raggu_web_dashboard) = class $raggu_web_dashboard extends ($.$bog_builderui_div) {
 		Title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => (["Дашборд корпуса"]);
@@ -7690,7 +7690,7 @@ var $;
 			return obj;
 		}
 		Stats_dist(){
-			const obj = new this.$.$bog_ragufront_dashboard_dist();
+			const obj = new this.$.$raggu_web_dashboard_dist();
 			(obj.sub) = () => (["распределение типов сущностей"]);
 			return obj;
 		}
@@ -7718,7 +7718,7 @@ var $;
 			return "0%";
 		}
 		Metric(id){
-			const obj = new this.$.$bog_ragufront_dashboard_metric();
+			const obj = new this.$.$raggu_web_dashboard_metric();
 			(obj.name) = () => ((this.metric_name(id)));
 			(obj.value) = () => ((this.metric_value(id)));
 			(obj.pct) = () => ((this.metric_pct(id)));
@@ -7815,7 +7815,7 @@ var $;
 			return "0%";
 		}
 		Stage(id){
-			const obj = new this.$.$bog_ragufront_dashboard_stage();
+			const obj = new this.$.$raggu_web_dashboard_stage();
 			(obj.name) = () => ((this.stage_name(id)));
 			(obj.time) = () => ((this.stage_time(id)));
 			(obj.pct) = () => ((this.stage_pct(id)));
@@ -7946,56 +7946,56 @@ var $;
 			];
 		}
 	};
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Title"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Subtitle"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_stats_label"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_nodes_val"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_nodes_lbl"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_nodes"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_edges_val"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_edges_lbl"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_edges"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_comms_val"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_comms_lbl"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stat_comms"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stats_row"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stats_dist"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_stats"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_quality_label"));
-	($mol_mem_key(($.$bog_ragufront_dashboard.prototype), "Metric"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Metric_rows"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Quality_footer"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_quality"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_energy_label"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_kwh_val"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_kwh_lbl"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_kwh"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_cost_val"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_cost_lbl"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_cost"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_row"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Energy_note"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_energy"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_timings_label"));
-	($mol_mem_key(($.$bog_ragufront_dashboard.prototype), "Stage"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Stage_rows"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_timings"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_logs_label"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_one_time"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_one_text"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_one_mode"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_one_dur"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_one_arrow"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_one"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_two_time"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_two_text"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_two_mode"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_two_dur"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_two_arrow"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_two"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Log_list"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Card_logs"));
-	($mol_mem(($.$bog_ragufront_dashboard.prototype), "Grid"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Title"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Subtitle"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_stats_label"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_nodes"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_edges"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stat_comms"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stats_row"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stats_dist"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_stats"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_quality_label"));
+	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Metric"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Metric_rows"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Quality_footer"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_quality"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_energy_label"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_kwh"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost_val"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost_lbl"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_cost"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_row"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Energy_note"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_energy"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_timings_label"));
+	($mol_mem_key(($.$raggu_web_dashboard.prototype), "Stage"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Stage_rows"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_timings"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_logs_label"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_time"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_text"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_mode"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_dur"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one_arrow"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_one"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_time"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_text"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_mode"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_dur"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two_arrow"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_two"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Log_list"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Card_logs"));
+	($mol_mem(($.$raggu_web_dashboard.prototype), "Grid"));
 
 
 ;
@@ -8020,7 +8020,7 @@ var $;
             { id: 'communities', name: 'Communities', time: '2.0с', pct: '26%' },
             { id: 'refinement', name: 'Refinement', time: '0.6с', pct: '9%' },
         ];
-        class $bog_ragufront_dashboard extends $.$bog_ragufront_dashboard {
+        class $raggu_web_dashboard extends $.$raggu_web_dashboard {
             metrics() { return METRICS; }
             stages() { return STAGES; }
             metric_rows() { return this.metrics().map(m => this.Metric(m.id)); }
@@ -8034,7 +8034,7 @@ var $;
             stage_time(id) { return this.stage(id).time; }
             stage_pct(id) { return this.stage(id).pct; }
         }
-        $$.$bog_ragufront_dashboard = $bog_ragufront_dashboard;
+        $$.$raggu_web_dashboard = $raggu_web_dashboard;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -8101,7 +8101,7 @@ var $;
     const log_dur = {
         color: '#1f8a5b',
     };
-    $mol_style_define($bog_ragufront_dashboard, {
+    $mol_style_define($raggu_web_dashboard, {
         flex: { direction: 'column', shrink: 1 },
         minWidth: 0,
         padding: {
@@ -13947,9 +13947,9 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_ragufront_app) = class $bog_ragufront_app extends ($.$bog_builderui_div) {
+	($.$raggu_web_app) = class $raggu_web_app extends ($.$bog_builderui_div) {
 		Sidebar(){
-			const obj = new this.$.$bog_ragufront_sidebar();
+			const obj = new this.$.$raggu_web_sidebar();
 			(obj.screen) = (next) => ((this.screen(next)));
 			(obj.lang) = (next) => ((this.lang(next)));
 			(obj.dataset_id) = () => ((this.dataset_id()));
@@ -13960,7 +13960,7 @@ var $;
 			return null;
 		}
 		Topbar(){
-			const obj = new this.$.$bog_ragufront_topbar();
+			const obj = new this.$.$raggu_web_topbar();
 			(obj.screen) = () => ((this.screen()));
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			(obj.preset) = (next) => ((this.preset(next)));
@@ -13978,7 +13978,7 @@ var $;
 			return obj;
 		}
 		Settings(){
-			const obj = new this.$.$bog_ragufront_settings();
+			const obj = new this.$.$raggu_web_settings();
 			(obj.showed) = (next) => ((this.settings_open(next)));
 			return obj;
 		}
@@ -14017,40 +14017,40 @@ var $;
 			];
 		}
 		Gallery(){
-			const obj = new this.$.$bog_ragufront_gallery();
+			const obj = new this.$.$raggu_web_gallery();
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			(obj.select_dataset) = (next) => ((this.select_dataset(next)));
 			return obj;
 		}
 		Explorer(){
-			const obj = new this.$.$bog_ragufront_explorer();
+			const obj = new this.$.$raggu_web_explorer();
 			return obj;
 		}
 		Chat(){
-			const obj = new this.$.$bog_ragufront_chat();
+			const obj = new this.$.$raggu_web_chat();
 			return obj;
 		}
 		Dashboard(){
-			const obj = new this.$.$bog_ragufront_dashboard();
+			const obj = new this.$.$raggu_web_dashboard();
 			return obj;
 		}
 	};
-	($mol_mem(($.$bog_ragufront_app.prototype), "Sidebar"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "open_settings"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Topbar"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Body"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Main"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Settings"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "select_dataset"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "screen"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "preset"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "lang"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "dataset_id"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "settings_open"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Gallery"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Explorer"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Chat"));
-	($mol_mem(($.$bog_ragufront_app.prototype), "Dashboard"));
+	($mol_mem(($.$raggu_web_app.prototype), "Sidebar"));
+	($mol_mem(($.$raggu_web_app.prototype), "open_settings"));
+	($mol_mem(($.$raggu_web_app.prototype), "Topbar"));
+	($mol_mem(($.$raggu_web_app.prototype), "Body"));
+	($mol_mem(($.$raggu_web_app.prototype), "Main"));
+	($mol_mem(($.$raggu_web_app.prototype), "Settings"));
+	($mol_mem(($.$raggu_web_app.prototype), "select_dataset"));
+	($mol_mem(($.$raggu_web_app.prototype), "screen"));
+	($mol_mem(($.$raggu_web_app.prototype), "preset"));
+	($mol_mem(($.$raggu_web_app.prototype), "lang"));
+	($mol_mem(($.$raggu_web_app.prototype), "dataset_id"));
+	($mol_mem(($.$raggu_web_app.prototype), "settings_open"));
+	($mol_mem(($.$raggu_web_app.prototype), "Gallery"));
+	($mol_mem(($.$raggu_web_app.prototype), "Explorer"));
+	($mol_mem(($.$raggu_web_app.prototype), "Chat"));
+	($mol_mem(($.$raggu_web_app.prototype), "Dashboard"));
 
 
 ;
@@ -14162,7 +14162,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $bog_ragufront_app extends $.$bog_ragufront_app {
+        class $raggu_web_app extends $.$raggu_web_app {
             body() {
                 switch (this.screen()) {
                     case 'gallery': return [this.Gallery()];
@@ -14195,23 +14195,23 @@ var $;
         }
         __decorate([
             $mol_action
-        ], $bog_ragufront_app.prototype, "open_settings", null);
+        ], $raggu_web_app.prototype, "open_settings", null);
         __decorate([
             $mol_action
-        ], $bog_ragufront_app.prototype, "select_dataset", null);
+        ], $raggu_web_app.prototype, "select_dataset", null);
         __decorate([
             $mol_mem
-        ], $bog_ragufront_app.prototype, "screen", null);
+        ], $raggu_web_app.prototype, "screen", null);
         __decorate([
             $mol_mem
-        ], $bog_ragufront_app.prototype, "preset", null);
+        ], $raggu_web_app.prototype, "preset", null);
         __decorate([
             $mol_mem
-        ], $bog_ragufront_app.prototype, "lang", null);
+        ], $raggu_web_app.prototype, "lang", null);
         __decorate([
             $mol_mem
-        ], $bog_ragufront_app.prototype, "dataset_id", null);
-        $$.$bog_ragufront_app = $bog_ragufront_app;
+        ], $raggu_web_app.prototype, "dataset_id", null);
+        $$.$raggu_web_app = $raggu_web_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -14219,7 +14219,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($bog_ragufront_app, {
+    $mol_style_define($raggu_web_app, {
         height: '100vh',
         width: '100%',
         background: { color: '#e9e8e6' },
