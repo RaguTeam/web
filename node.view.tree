@@ -146,7 +146,7 @@ $raggu_web_sidebar $bog_builderui_div
 	sections_label_text @ \Sections
 	corpus_label_text @ \Active corpus
 	corpus_meta_text @ \2,410 nodes · 38 communities
-	lang_label_text @ \LANGUAGE
+	lang_label_text @ \LANG
 	sub /
 		<= Brand $bog_builderui_div sub /
 			<= Brand_logo $bog_builderui_div sub / \R
