@@ -1,4 +1,7 @@
 {
+	"$bog_theme_switch_dark_hint": "Тёмная",
+	"$bog_theme_switch_light_hint": "Светлая",
+	"$bog_theme_switch_system_hint": "Как в системе",
 	"$mol_search_Clear_hint": "Clear",
 	"$mol_search_hint": "Search...",
 	"$mol_select_filter_hint": "Filter..",

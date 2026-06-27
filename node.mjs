@@ -4489,81 +4489,107 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$raggu_web_sidebar_nav) = class $raggu_web_sidebar_nav extends ($.$bog_builderui_div) {
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Icon(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.icon())]);
-			return obj;
-		}
-		Label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.label())]);
-			return obj;
-		}
-		icon(){
-			return "";
-		}
-		label(){
-			return "";
-		}
-		active(){
-			return false;
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_sidebar_nav_active": (this.active())};
-		}
-		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
-		}
-		sub(){
-			return [(this.Icon()), (this.Label())];
-		}
-	};
-	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "click"));
-	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "Icon"));
-	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "Label"));
-
-
-;
 "use strict";
-
+var $;
+(function ($) {
+    /**
+     * Theme css variables
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+     */
+    $.$bog_theme = $mol_style_prop('mol_theme', [
+        'back',
+        'background',
+        'hover',
+        'card',
+        'current',
+        'special',
+        'text',
+        'control',
+        'shade',
+        'line',
+        'focus',
+        'field',
+        'image',
+        'spirit',
+    ]);
+    /**
+     * Available theme names.
+     * Add new theme to theme.css and add its name here.
+     */
+    $.$bog_theme_names = [
+        '$mol_theme_giper_smash_dark',
+        '$mol_theme_giper_smash_light',
+        '$mol_theme_light',
+        '$mol_theme_dark',
+        '$mol_theme_monefro_light',
+        '$mol_theme_monefro_dark',
+        '$mol_theme_homerent_light',
+        '$mol_theme_homerent_dark',
+        '$mol_theme_upwork',
+        '$mol_theme_ainews_light',
+        '$mol_theme_ainews_dark',
+        '$mol_theme_calm_dark',
+        '$mol_theme_calm_light',
+    ];
+})($ || ($ = {}));
 
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_define($raggu_web_sidebar_nav, {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '0.625rem',
-        padding: {
-            top: '0.5625rem',
-            bottom: '0.5625rem',
-            left: '0.6875rem',
-            right: '0.6875rem',
-        },
-        border: { radius: '7px' },
-        font: { size: '13px', weight: 600 },
-        cursor: 'pointer',
-        color: '#57534e',
-        Icon: {
-            minWidth: '18px',
-            textAlign: 'center',
-        },
-        '@': {
-            raggu_web_sidebar_nav_active: {
-                true: {
-                    background: { color: '#ece9fb' },
-                    color: '#5b5bd6',
-                },
-            },
-        },
-    });
+    $mol_style_attach("bog/theme/theme.css", ":root {\n\t--mol_theme_hue: 645deg;\n\t--mol_theme_hue_spread: 90deg;\n\t--mol_theme_background: var(--mol_theme_back);\n\n\t/* Bog theme semantic aliases */\n\t--mol_theme_primary_hue: var(--mol_theme_hue);\n\t--mol_theme_secondary_hue: calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread));\n\t--mol_theme_tertiary_hue: calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread));\n\t--mol_theme_accent_hue: calc(var(--mol_theme_hue) + 180deg);\n}\n\n:where([mol_theme]) {\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\tbackground-color: var(--mol_theme_back);\n}\n\n:root,\n[mol_theme='$mol_theme_dark'],\n:where([mol_theme='$mol_theme_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: hsl(0deg, 0%, 0%, 0.75);\n\n\t--bog_theme_back: hsl(var(--bog_theme_hue), 8%, 12%);\n\t--bog_theme_card: hsl(var(--bog_theme_hue), 15%, 18%, 0.25);\n\t--bog_theme_field: hsl(var(--bog_theme_hue), 12%, 10%, 0.25);\n\t--bog_theme_hover: hsl(var(--bog_theme_hue), 0%, 50%, 0.1);\n\n\t--bog_theme_text: hsl(var(--bog_theme_hue), 8%, 85%);\n\t--bog_theme_shade: hsl(var(--bog_theme_hue), 12%, 65%, 1);\n\t--bog_theme_line: hsl(var(--bog_theme_hue), 8%, 50%, 0.25);\n\t--bog_theme_focus: hsl(calc(var(--bog_theme_hue) + 180deg), 60%, 65%);\n\n\t--bog_theme_control: hsl(var(--bog_theme_hue), 25%, 70%);\n\t--bog_theme_current: hsl(calc(var(--bog_theme_hue) - var(--bog_theme_hue_spread)), 25%, 70%);\n\t--bog_theme_special: hsl(calc(var(--bog_theme_hue) + var(--bog_theme_hue_spread)), 25%, 70%);\n}\n@supports (color: oklch(0% 0 0deg)) {\n\t:root,\n\t[mol_theme='$mol_theme_dark'],\n\t:where([mol_theme='$mol_theme_dark']) [mol_theme] {\n\t\t--bog_theme_back: oklch(12% 0.02 var(--bog_theme_hue));\n\t\t--bog_theme_card: oklch(18% 0.03 var(--bog_theme_hue) / 0.25);\n\t\t--bog_theme_field: oklch(10% 0.015 var(--bog_theme_hue) / 0.25);\n\t\t--bog_theme_hover: oklch(70% 0 var(--bog_theme_hue) / 0.1);\n\n\t\t--bog_theme_text: oklch(85% 0.025 var(--bog_theme_hue));\n\t\t--bog_theme_shade: oklch(65% 0.035 var(--bog_theme_hue));\n\t\t--bog_theme_line: oklch(50% 0.025 var(--bog_theme_hue) / 0.25);\n\t\t--bog_theme_focus: oklch(75% 0.15 calc(var(--bog_theme_hue) + 180deg));\n\n\t\t--bog_theme_control: oklch(70% 0.06 var(--bog_theme_hue));\n\t\t--bog_theme_current: oklch(70% 0.08 calc(var(--bog_theme_hue) - var(--bog_theme_hue_spread)));\n\t\t--bog_theme_special: oklch(70% 0.08 calc(var(--bog_theme_hue) + var(--bog_theme_hue_spread)));\n\t}\n}\n\n[mol_theme='$mol_theme_light'],\n:where([mol_theme='$mol_theme_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: hsl(0deg, 0%, 100%, 0.75);\n\n\t--mol_theme_back: hsl(var(--mol_theme_hue), 0%, 100%);\n\t--mol_theme_card: hsl(var(--mol_theme_hue), 50%, 100%, 0.5);\n\t--mol_theme_field: hsl(var(--mol_theme_hue), 50%, 100%, 0.75);\n\t--mol_theme_hover: hsl(var(--mol_theme_hue), 0%, 50%, 0.1);\n\n\t--mol_theme_text: hsl(var(--mol_theme_hue), 0%, 0%);\n\t--mol_theme_shade: hsl(var(--mol_theme_hue), 0%, 40%, 1);\n\t--mol_theme_line: hsl(var(--mol_theme_hue), 0%, 50%, 0.25);\n\t--mol_theme_focus: hsl(calc(var(--mol_theme_hue) + 180deg), 100%, 40%);\n\n\t--mol_theme_control: hsl(var(--mol_theme_hue), 80%, 30%);\n\t--mol_theme_current: hsl(calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)), 80%, 30%);\n\t--mol_theme_special: hsl(calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)), 80%, 30%);\n}\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_light'],\n\t:where([mol_theme='$mol_theme_light']) [mol_theme] {\n\t\t--mol_theme_back: oklch(100% 0 var(--mol_theme_hue));\n\t\t--mol_theme_card: oklch(99% 0.01 var(--mol_theme_hue) / 0.5);\n\t\t--mol_theme_field: oklch(100% 0 var(--mol_theme_hue) / 0.5);\n\t\t--mol_theme_hover: oklch(70% 0 var(--mol_theme_hue) / 0.1);\n\n\t\t--mol_theme_text: oklch(20% 0 var(--mol_theme_hue));\n\t\t--mol_theme_shade: oklch(60% 0 var(--mol_theme_hue));\n\t\t--mol_theme_line: oklch(50% 0 var(--mol_theme_hue) / 0.25);\n\t\t--mol_theme_focus: oklch(60% 0.2 calc(var(--mol_theme_hue) + 180deg));\n\n\t\t--mol_theme_control: oklch(40% 0.15 var(--mol_theme_hue));\n\t\t--mol_theme_current: oklch(50% 0.2 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)));\n\t\t--mol_theme_special: oklch(50% 0.2 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)));\n\t}\n}\n\n:where(:root, [mol_theme='$mol_theme_dark']) [mol_theme='$mol_theme_base'] {\n\t--mol_theme_back: oklch(25% 0.075 var(--mol_theme_hue));\n\t--mol_theme_card: oklch(35% 0.1 var(--mol_theme_hue) / 0.25);\n}\n:where([mol_theme='$mol_theme_light']) [mol_theme='$mol_theme_base'] {\n\t--mol_theme_back: oklch(85% 0.075 var(--mol_theme_hue));\n\t--mol_theme_card: oklch(98% 0.03 var(--mol_theme_hue) / 0.25);\n}\n\n:where(:root, [mol_theme='$mol_theme_dark']) [mol_theme='$mol_theme_current'] {\n\t--mol_theme_back: oklch(25% 0.05 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)));\n\t--mol_theme_card: oklch(35% 0.1 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)) / 0.25);\n}\n:where([mol_theme='$mol_theme_light']) [mol_theme='$mol_theme_current'] {\n\t--mol_theme_back: oklch(85% 0.05 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)));\n\t--mol_theme_card: oklch(98% 0.03 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)) / 0.25);\n}\n\n:where(:root, [mol_theme='$mol_theme_dark']) [mol_theme='$mol_theme_special'] {\n\t--mol_theme_back: oklch(25% 0.05 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)));\n\t--mol_theme_card: oklch(35% 0.1 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)) / 0.25);\n}\n:where([mol_theme='$mol_theme_light']) [mol_theme='$mol_theme_special'] {\n\t--mol_theme_back: oklch(85% 0.05 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)));\n\t--mol_theme_card: oklch(98% 0.03 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)) / 0.25);\n}\n\n:where(:root, [mol_theme='$mol_theme_dark']) [mol_theme='$mol_theme_accent'] {\n\t--mol_theme_back: oklch(35% 0.1 calc(var(--mol_theme_hue) + 180deg));\n\t--mol_theme_card: oklch(45% 0.15 calc(var(--mol_theme_hue) + 180deg) / 0.25);\n}\n:where([mol_theme='$mol_theme_light']) [mol_theme='$mol_theme_accent'] {\n\t--mol_theme_back: oklch(83% 0.1 calc(var(--mol_theme_hue) + 180deg));\n\t--mol_theme_card: oklch(98% 0.03 calc(var(--mol_theme_hue) + 180deg) / 0.25);\n}\n\n/* Upwork theme - based on Upwork brand colors */\n[mol_theme='$mol_theme_upwork'],\n:where([mol_theme='$mol_theme_upwork']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgba(255, 255, 255, 0.75);\n\n\t/* Upwork brand colors: #73bb44 (primary green), #4fab4a (medium green), #385925 (dark green), #b5deb1 (light green) */\n\t--mol_theme_back: #ffffff;\n\t--mol_theme_card: #f9fcf7;\n\t--mol_theme_field: #ffffff;\n\t--mol_theme_hover: rgba(115, 187, 68, 0.1);\n\n\t--mol_theme_text: #4c4444;\n\t--mol_theme_shade: #6e6d7a;\n\t--mol_theme_line: rgba(115, 187, 68, 0.25);\n\t--mol_theme_focus: #73bb44;\n\n\t--mol_theme_control: #73bb44;\n\t--mol_theme_current: #4fab4a;\n\t--mol_theme_special: #385925;\n}\n\n/* Ainews dark theme - based on Ainews brand palette */\n[mol_theme='$mol_theme_ainews_dark'],\n:where([mol_theme='$mol_theme_ainews_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\n\t/* ВАЖНО: mol_* — именно их читает демка */\n\t--mol_theme_back: #3e3e3e; /* paper dark */\n\t--mol_theme_card: #4a4a4a40; /* paper-2 dark 25% */\n\t--mol_theme_field: #4c4c4c40; /* chip dark 25% */\n\t--mol_theme_hover: #5a5a5a1a; /* edge dark 10% */\n\n\t--mol_theme_text: #bcbcbc; /* ink dark */\n\t--mol_theme_shade: #909090; /* ink-muted dark */\n\t--mol_theme_line: #5a5a5a40; /* edge dark 25% */\n\t--mol_theme_focus: #a8bcff; /* accent dark */\n\n\t--mol_theme_control: #a8bcff; /* accent dark */\n\t--mol_theme_current: #c7b18c; /* accent-2 dark */\n\t--mol_theme_special: #d4bf9d; /* accent-2 lighter */\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_ainews_dark'],\n\t:where([mol_theme='$mol_theme_ainews_dark']) [mol_theme] {\n\t\t--mol_theme_back: #3e3e3e;\n\t\t--mol_theme_card: #4a4a4a40;\n\t\t--mol_theme_field: #4c4c4c40;\n\t\t--mol_theme_hover: #5a5a5a1a;\n\n\t\t--mol_theme_text: #bcbcbc;\n\t\t--mol_theme_shade: #909090;\n\t\t--mol_theme_line: #5a5a5a40;\n\t\t--mol_theme_focus: #a8bcff;\n\n\t\t--mol_theme_control: #a8bcff;\n\t\t--mol_theme_current: #c7b18c;\n\t\t--mol_theme_special: #d4bf9d;\n\t}\n}\n\n/* Ainews light theme */\n[mol_theme='$mol_theme_ainews_light'],\n:where([mol_theme='$mol_theme_ainews_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: #fbf8f1bf; /* 75% */\n\n\t--mol_theme_back: #f7f3e9; /* paper */\n\t--mol_theme_card: #fbf8f180; /* paper-2 50% */\n\t--mol_theme_field: #efe8d8bf; /* chip 75% */\n\t--mol_theme_hover: #ded7c81a; /* edge 10% */\n\n\t--mol_theme_text: #22211f; /* ink */\n\t--mol_theme_shade: #6e6a62; /* ink-muted */\n\t--mol_theme_line: #ded7c840; /* edge 25% */\n\t--mol_theme_focus: #3b5aad; /* accent */\n\n\t--mol_theme_control: #3b5aad; /* accent */\n\t--mol_theme_current: #92734b; /* accent-2 */\n\t--mol_theme_special: #c7b18c; /* accent-2 lighter */\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_ainews_light'],\n\t:where([mol_theme='$mol_theme_ainews_light']) [mol_theme] {\n\t\t--mol_theme_back: #f7f3e9;\n\t\t--mol_theme_card: #fbf8f180;\n\t\t--mol_theme_field: #efe8d8bf;\n\t\t--mol_theme_hover: #ded7c81a;\n\n\t\t--mol_theme_text: #22211f;\n\t\t--mol_theme_shade: #6e6a62;\n\t\t--mol_theme_line: #ded7c840;\n\t\t--mol_theme_focus: #3b5aad;\n\n\t\t--mol_theme_control: #3b5aad;\n\t\t--mol_theme_current: #92734b;\n\t\t--mol_theme_special: #c7b18c;\n\t}\n}\n\n/* HomeRent dark theme */\n[mol_theme='$mol_theme_homerent_dark'],\n:where([mol_theme='$mol_theme_homerent_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgba(0, 0, 0, 0.6);\n\n\t--mol_theme_back: #2f2f2f;\n\t--mol_theme_background: #f5f5f5;\n\t--mol_theme_card: #3a3a3a;\n\t--mol_theme_field: #3a3a3a;\n\t--mol_theme_hover: rgba(255, 255, 255, 0.06);\n\n\t--mol_theme_text: #f5f5f5;\n\t--mol_theme_shade: #c7c7c7;\n\t--mol_theme_line: #ffffff26;\n\t--mol_theme_focus: #8fc32b;\n\n\t--mol_theme_control: #dbe05b;\n\t--mol_theme_current: #8fc32b;\n\t--mol_theme_special: #8fc32b;\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_homerent_dark'],\n\t:where([mol_theme='$mol_theme_homerent_dark']) [mol_theme] {\n\t\t--mol_theme_back: #2f2f2f;\n\t\t--mol_theme_background: #f5f5f5;\n\t\t--mol_theme_card: #3a3a3a;\n\t\t--mol_theme_field: #3a3a3a;\n\t\t--mol_theme_hover: rgba(255, 255, 255, 0.06);\n\n\t\t--mol_theme_text: #f5f5f5;\n\t\t--mol_theme_shade: #c7c7c7;\n\t\t--mol_theme_line: #ffffff26;\n\t\t--mol_theme_focus: #8fc32b;\n\n\t\t--mol_theme_control: #dbe05b;\n\t\t--mol_theme_current: #8fc32b;\n\t\t--mol_theme_special: #8fc32b;\n\t}\n}\n\n/* HomeRent light theme */\n[mol_theme='$mol_theme_homerent_light'],\n:where([mol_theme='$mol_theme_homerent_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgba(245, 245, 245, 0.75);\n\n\t--mol_theme_back: #ffffff;\n\t--mol_theme_background: #f5f5f5;\n\t--mol_theme_card: #ffffff;\n\t--mol_theme_field: #ffffff;\n\t--mol_theme_hover: #8fc32b1a;\n\n\t--mol_theme_text: #4c4c4c;\n\t--mol_theme_shade: #707070;\n\t--mol_theme_line: #4c4c4c26;\n\t--mol_theme_focus: #8fc32b;\n\n\t--mol_theme_control: #dbe05b;\n\t--mol_theme_current: #8fc32b;\n\t--mol_theme_special: #8fc32b;\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_homerent_light'],\n\t:where([mol_theme='$mol_theme_homerent_light']) [mol_theme] {\n\t\t--mol_theme_back: #ffffff;\n\t\t--mol_theme_background: #f5f5f5;\n\t\t--mol_theme_card: #ffffff;\n\t\t--mol_theme_field: #ffffff;\n\t\t--mol_theme_hover: #8fc32b1a;\n\n\t\t--mol_theme_text: #4c4c4c;\n\t\t--mol_theme_shade: #707070;\n\t\t--mol_theme_line: #4c4c4c26;\n\t\t--mol_theme_focus: #8fc32b;\n\n\t\t--mol_theme_control: #dbe05b;\n\t\t--mol_theme_current: #8fc32b;\n\t\t--mol_theme_special: #8fc32b;\n\t}\n}\n\n/* Giper Smash dark theme - original game palette */\n[mol_theme='$mol_theme_giper_smash_dark'],\n:where([mol_theme='$mol_theme_giper_smash_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgba(0, 0, 0, 0.85);\n\n\t--mol_theme_back: #1a1a2e;\n\t--mol_theme_card: #2d2d44;\n\t--mol_theme_field: #16213e;\n\t--mol_theme_hover: rgba(118, 75, 162, 0.15);\n\n\t--mol_theme_text: #ffffff;\n\t--mol_theme_shade: #b0b0cc;\n\t--mol_theme_line: rgba(255, 255, 255, 0.12);\n\t--mol_theme_focus: #f5b041;\n\n\t--mol_theme_control: #44a08d;\n\t--mol_theme_current: #0088cc;\n\t--mol_theme_special: #764ba2;\n}\n\n/* Giper Smash light theme - bright game palette */\n[mol_theme='$mol_theme_giper_smash_light'],\n:where([mol_theme='$mol_theme_giper_smash_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgba(255, 255, 255, 0.85);\n\n\t--mol_theme_back: #f0eef5;\n\t--mol_theme_card: #ffffff;\n\t--mol_theme_field: #e8e5f0;\n\t--mol_theme_hover: rgba(118, 75, 162, 0.08);\n\n\t--mol_theme_text: #1a1a2e;\n\t--mol_theme_shade: #5c5c7a;\n\t--mol_theme_line: rgba(26, 26, 46, 0.12);\n\t--mol_theme_focus: #d4941a;\n\n\t--mol_theme_control: #2e8b73;\n\t--mol_theme_current: #0077b3;\n\t--mol_theme_special: #6a3d99;\n}\n\n/* Monefro dark theme - inspired by Monefy */\n[mol_theme='$mol_theme_monefro_dark'],\n:where([mol_theme='$mol_theme_monefro_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: rgba(0, 0, 0, 0.6);\n\n\t--mol_theme_back: #24201c;\n\t--mol_theme_card: #2c2722;\n\t--mol_theme_field: #29241f;\n\t--mol_theme_hover: rgba(255, 255, 255, 0.04);\n\n\t--mol_theme_text: #f0e7dc;\n\t--mol_theme_shade: #b5a99c;\n\t--mol_theme_line: rgba(255, 255, 255, 0.12);\n\t--mol_theme_focus: #56c78a;\n\n\t--mol_theme_control: #56c78a;\n\t--mol_theme_current: #f2776e;\n\t--mol_theme_special: #f6b04a;\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_monefro_dark'],\n\t:where([mol_theme='$mol_theme_monefro_dark']) [mol_theme] {\n\t\t--mol_theme_back: #24201c;\n\t\t--mol_theme_card: #2c2722;\n\t\t--mol_theme_field: #29241f;\n\t\t--mol_theme_hover: rgba(255, 255, 255, 0.04);\n\n\t\t--mol_theme_text: #f0e7dc;\n\t\t--mol_theme_shade: #b5a99c;\n\t\t--mol_theme_line: rgba(255, 255, 255, 0.12);\n\t\t--mol_theme_focus: #56c78a;\n\n\t\t--mol_theme_control: #56c78a;\n\t\t--mol_theme_current: #f2776e;\n\t\t--mol_theme_special: #f6b04a;\n\t}\n}\n\n/* Monefro light theme - inspired by Monefy */\n[mol_theme='$mol_theme_monefro_light'],\n:where([mol_theme='$mol_theme_monefro_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: rgba(255, 255, 255, 0.75);\n\n\t--mol_theme_back: #f6f2ea;\n\t--mol_theme_card: #ffffff;\n\t--mol_theme_field: #fff8ef;\n\t--mol_theme_hover: rgba(0, 0, 0, 0.04);\n\n\t--mol_theme_text: #3f3b36;\n\t--mol_theme_shade: #8b8278;\n\t--mol_theme_line: rgba(64, 55, 46, 0.15);\n\t--mol_theme_focus: #2f9a6a;\n\n\t--mol_theme_control: #2f9a6a;\n\t--mol_theme_current: #e85b54;\n\t--mol_theme_special: #f3a43b;\n}\n\n@supports (color: oklch(0% 0 0deg)) {\n\t[mol_theme='$mol_theme_monefro_light'],\n\t:where([mol_theme='$mol_theme_monefro_light']) [mol_theme] {\n\t\t--mol_theme_back: #f6f2ea;\n\t\t--mol_theme_card: #ffffff;\n\t\t--mol_theme_field: #fff8ef;\n\t\t--mol_theme_hover: rgba(0, 0, 0, 0.04);\n\n\t\t--mol_theme_text: #3f3b36;\n\t\t--mol_theme_shade: #8b8278;\n\t\t--mol_theme_line: rgba(64, 55, 46, 0.15);\n\t\t--mol_theme_focus: #2f9a6a;\n\n\t\t--mol_theme_control: #2f9a6a;\n\t\t--mol_theme_current: #e85b54;\n\t\t--mol_theme_special: #f3a43b;\n\t}\n}\n\n/* ═══════════════════════════════════════════════════════════════\n   Calm theme — universal working theme (draft for review)\n   Base hue: 230° (blue-gray), spread: 90°\n   Style: quiet, professional, no noise\n   ═══════════════════════════════════════════════════════════════ */\n\n/* Calm dark theme */\n[mol_theme='$mol_theme_calm_dark'],\n:where([mol_theme='$mol_theme_calm_dark']) [mol_theme] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate(180deg);\n\t--mol_theme_spirit: #000000bf;\n\t--mol_theme_hue: 230deg;\n\t--mol_theme_hue_spread: 90deg;\n\n\t--mol_theme_back: #0d1117;\n\t--mol_theme_card: #161b2240;\n\t--mol_theme_field: #0a0e1440;\n\t--mol_theme_hover: #ffffff0c;\n\n\t--mol_theme_text: #e6edf3;\n\t--mol_theme_shade: #8b949e;\n\t--mol_theme_line: #30363d;\n\t--mol_theme_focus: #d29922;\n\n\t--mol_theme_control: #2f81f7;\n\t--mol_theme_current: #3fb950;\n\t--mol_theme_special: #a371f7;\n}\n\n/* Calm light theme */\n[mol_theme='$mol_theme_calm_light'],\n:where([mol_theme='$mol_theme_calm_light']) [mol_theme] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n\t--mol_theme_spirit: #f7f8fabf;\n\t--mol_theme_hue: 230deg;\n\t--mol_theme_hue_spread: 90deg;\n\n\t--mol_theme_back: #f7f8fa;\n\t--mol_theme_card: #ffffff80;\n\t--mol_theme_field: #e8eaf0bf;\n\t--mol_theme_hover: #0000000a;\n\n\t--mol_theme_text: #1a1c23;\n\t--mol_theme_shade: #656a80;\n\t--mol_theme_line: #3a3e5026;\n\t--mol_theme_focus: #b87518;\n\n\t--mol_theme_control: #3560b8;\n\t--mol_theme_current: #28856e;\n\t--mol_theme_special: #8a4aad;\n}\n\n/* Calm dark sub-themes */\n:where([mol_theme='$mol_theme_calm_dark']) [mol_theme='$mol_theme_base'] {\n\t--mol_theme_back: #1a2840;\n\t--mol_theme_card: #243450;\n}\n:where([mol_theme='$mol_theme_calm_dark']) [mol_theme='$mol_theme_current'] {\n\t--mol_theme_back: #143028;\n\t--mol_theme_card: #1c3e3450;\n}\n:where([mol_theme='$mol_theme_calm_dark']) [mol_theme='$mol_theme_special'] {\n\t--mol_theme_back: #2a1c48;\n\t--mol_theme_card: #3a2a5c50;\n}\n:where([mol_theme='$mol_theme_calm_dark']) [mol_theme='$mol_theme_accent'] {\n\t--mol_theme_back: #3a1c2a;\n\t--mol_theme_card: #4c283a50;\n}\n\n:where([mol_theme='$mol_theme_calm_light']) [mol_theme='$mol_theme_base'] {\n\t--mol_theme_back: oklch(85% 0.075 var(--mol_theme_hue));\n\t--mol_theme_card: oklch(98% 0.03 var(--mol_theme_hue) / 0.25);\n}\n:where([mol_theme='$mol_theme_calm_light']) [mol_theme='$mol_theme_current'] {\n\t--mol_theme_back: oklch(85% 0.05 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)));\n\t--mol_theme_card: oklch(98% 0.03 calc(var(--mol_theme_hue) - var(--mol_theme_hue_spread)) / 0.25);\n}\n:where([mol_theme='$mol_theme_calm_light']) [mol_theme='$mol_theme_special'] {\n\t--mol_theme_back: oklch(85% 0.05 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)));\n\t--mol_theme_card: oklch(98% 0.03 calc(var(--mol_theme_hue) + var(--mol_theme_hue_spread)) / 0.25);\n}\n:where([mol_theme='$mol_theme_calm_light']) [mol_theme='$mol_theme_accent'] {\n\t--mol_theme_back: oklch(83% 0.1 calc(var(--mol_theme_hue) + 180deg));\n\t--mol_theme_card: oklch(98% 0.03 calc(var(--mol_theme_hue) + 180deg) / 0.25);\n}\n");
 })($ || ($ = {}));
+
+;
+	($.$bog_theme_auto) = class $bog_theme_auto extends ($.$mol_plugin) {
+		themes_default(){
+			return [];
+		}
+		theme(){
+			return "";
+		}
+		themes(){
+			return (this.themes_default());
+		}
+		theme_light(){
+			return "$mol_theme_light";
+		}
+		theme_dark(){
+			return "$mol_theme_dark";
+		}
+		mode(next){
+			if(next !== undefined) return next;
+			return "system";
+		}
+		mode_next(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		theme_next(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		theme_prev(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		theme_set(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		is_light_now(){
+			return false;
+		}
+		attr(){
+			return {"mol_theme": (this.theme())};
+		}
+	};
+	($mol_mem(($.$bog_theme_auto.prototype), "mode"));
+	($mol_mem(($.$bog_theme_auto.prototype), "mode_next"));
+	($mol_mem(($.$bog_theme_auto.prototype), "theme_next"));
+	($mol_mem(($.$bog_theme_auto.prototype), "theme_prev"));
+	($mol_mem(($.$bog_theme_auto.prototype), "theme_set"));
+
 
 ;
 "use strict";
@@ -5589,6 +5615,434 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_state_session extends $mol_object {
+        static 'native()';
+        static native() {
+            if (this['native()'])
+                return this['native()'];
+            check: try {
+                const native = $mol_dom_context.sessionStorage;
+                if (!native)
+                    break check;
+                native.setItem('', '');
+                native.removeItem('');
+                return this['native()'] = native;
+            }
+            catch (error) {
+                console.warn(error);
+            }
+            return this['native()'] = {
+                getItem(key) {
+                    return this[':' + key];
+                },
+                setItem(key, value) {
+                    this[':' + key] = value;
+                },
+                removeItem(key) {
+                    this[':' + key] = void 0;
+                }
+            };
+        }
+        static value(key, next) {
+            if (next === void 0)
+                return JSON.parse(this.native().getItem(key) || 'null');
+            if (next === null)
+                this.native().removeItem(key);
+            else
+                this.native().setItem(key, JSON.stringify(next));
+            return next;
+        }
+        prefix() { return ''; }
+        value(key, next) {
+            return $mol_state_session.value(this.prefix() + '.' + key, next);
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_session, "value", null);
+    $.$mol_state_session = $mol_state_session;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** State of arguments like `foo=bar xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix;
+        static prolog = '';
+        static separator = ' ';
+        static href(next) {
+            return next || process.argv.slice(2).join(' ');
+        }
+        static href_normal() {
+            return this.link({});
+        }
+        static dict(next) {
+            if (next !== void 0)
+                this.href(this.make_link(next));
+            var href = this.href();
+            var chunks = href.split(' ');
+            var params = {};
+            chunks.forEach(chunk => {
+                if (!chunk)
+                    return;
+                var vals = chunk.split('=').map(decodeURIComponent);
+                params[vals.shift()] = vals.join('=');
+            });
+            return params;
+        }
+        static value(key, next) {
+            if (next === void 0)
+                return this.dict()[key] ?? null;
+            this.href(this.link({ [key]: next }));
+            return next;
+        }
+        static link(next) {
+            const params = {};
+            var prev = this.dict();
+            for (var key in prev) {
+                params[key] = prev[key];
+            }
+            for (var key in next) {
+                params[key] = next[key];
+            }
+            return this.make_link(params);
+        }
+        static make_link(next) {
+            const chunks = [];
+            for (const key in next) {
+                if (next[key] !== null) {
+                    chunks.push([key, next[key]].map(encodeURIComponent).join('='));
+                }
+            }
+            return chunks.join(' ');
+        }
+        static go(next) {
+            this.href(this.link(next));
+        }
+        static commit() { }
+        constructor(prefix = '') {
+            super();
+            this.prefix = prefix;
+        }
+        value(key, next) {
+            return this.constructor.value(this.prefix + key, next);
+        }
+        sub(postfix) {
+            return new this.constructor(this.prefix + postfix + '.');
+        }
+        link(next) {
+            const prefix = this.prefix;
+            const dict = {};
+            for (var key in next) {
+                dict[prefix + key] = next[key];
+            }
+            return this.constructor.link(dict);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "href_normal", null);
+    __decorate([
+        $mol_mem
+    ], $mol_state_arg, "dict", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_state_arg, "value", null);
+    __decorate([
+        $mol_action
+    ], $mol_state_arg, "go", null);
+    $.$mol_state_arg = $mol_state_arg;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_media extends $mol_object2 {
+        static match(query, next) {
+            if (next !== undefined)
+                return next;
+            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
+            res.onchange = () => this.match(query, res.matches);
+            return res.matches;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_media, "match", null);
+    $.$mol_media = $mol_media;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function parse(theme) {
+        if (theme === 'true')
+            return true;
+        if (theme === 'false')
+            return false;
+        return null;
+    }
+    /**
+     * Switcher between light/dark themes (usually for `mol_theme_auto` plugin).
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_lights_demo
+     */
+    function $mol_lights(next) {
+        const arg = parse(this.$mol_state_arg.value('mol_lights'));
+        const base = this.$mol_media.match('(prefers-color-scheme: light)');
+        if (next === undefined) {
+            return arg ?? this.$mol_state_local.value('$mol_lights') ?? base;
+        }
+        else {
+            if (arg === null) {
+                this.$mol_state_local.value('$mol_lights', next === base ? null : next);
+            }
+            else {
+                this.$mol_state_arg.value('mol_lights', String(next));
+            }
+            return next;
+        }
+    }
+    $.$mol_lights = $mol_lights;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_theme_auto extends $.$bog_theme_auto {
+            themes_default() {
+                return this.$.$bog_theme_names;
+            }
+            /** Stores current mode in localStorage. Defaults to 'system'.
+             *  При записи дёргает класс `.bog_theme_switching` на `<html>` —
+             *  это активирует CSS-transition'ы на цветах темы.
+             */
+            mode(next) {
+                if (next !== undefined && typeof document !== 'undefined') {
+                    const root = document.documentElement;
+                    root.classList.add('bog_theme_switching');
+                    setTimeout(() => root.classList.remove('bog_theme_switching'), 350);
+                }
+                return this.$.$mol_state_local.value(`${this}.mode()`, next) ?? 'system';
+            }
+            click_step(next) {
+                return this.$.$mol_state_session.value(`${this}.click_step()`, next) ?? 0;
+            }
+            /** 3-click cycle: opposite → back → system. */
+            mode_next() {
+                const step = (this.click_step() + 1) % 3;
+                this.click_step(step);
+                if (step === 0)
+                    this.mode('system');
+                else
+                    this.mode(this.is_light_now() ? 'dark' : 'light');
+            }
+            is_light_now() {
+                const mode = this.mode();
+                if (mode === 'light')
+                    return true;
+                if (mode === 'dark')
+                    return false;
+                if (mode === 'system')
+                    return this.$.$mol_lights();
+                return this.theme().toLowerCase().includes('light');
+            }
+            theme_index(next) {
+                const stored = this.$.$mol_state_local.value(`${this}.theme_index()`, next);
+                if (stored === null && next === undefined) {
+                    return this.system_theme_index();
+                }
+                return stored ?? 0;
+            }
+            system_theme_index() {
+                const themes = this.themes();
+                const prefersLight = this.$.$mol_lights();
+                const preferredTheme = prefersLight ? this.theme_light() : this.theme_dark();
+                const index = themes.indexOf(preferredTheme);
+                return index !== -1 ? index : 0;
+            }
+            theme() {
+                const mode = this.mode();
+                if (mode === 'light')
+                    return this.theme_light();
+                if (mode === 'dark')
+                    return this.theme_dark();
+                if (mode === 'custom') {
+                    const themes = this.themes();
+                    const index = this.theme_index();
+                    if (themes.length === 0)
+                        return this.theme_light();
+                    return themes[index % themes.length];
+                }
+                // system — follow browser preference
+                return this.$.$mol_lights() ? this.theme_light() : this.theme_dark();
+            }
+            theme_next() {
+                this.mode_next();
+            }
+            theme_prev() {
+                const cycle = ['system', 'light', 'dark'];
+                const i = cycle.indexOf(this.mode());
+                this.mode(cycle[i <= 0 ? cycle.length - 1 : i - 1]);
+            }
+            /** Called by picker. Sets mode to light/dark or custom for themed palettes. */
+            theme_set(index) {
+                const themes = this.themes();
+                if (themes.length === 0)
+                    return;
+                const theme = themes[index % themes.length];
+                if (theme === this.theme_light()) {
+                    this.mode('light');
+                }
+                else if (theme === this.theme_dark()) {
+                    this.mode('dark');
+                }
+                else {
+                    this.mode('custom');
+                    this.theme_index(index % themes.length);
+                }
+                this.click_step(0);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_theme_auto.prototype, "mode", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_auto.prototype, "click_step", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_auto.prototype, "mode_next", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_auto.prototype, "is_light_now", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_auto.prototype, "theme_index", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_auto.prototype, "system_theme_index", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_auto.prototype, "theme", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_auto.prototype, "theme_next", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_auto.prototype, "theme_prev", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_auto.prototype, "theme_set", null);
+        $$.$bog_theme_auto = $bog_theme_auto;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/theme/auto/auto.view.css", ".bog_theme_switching,\n.bog_theme_switching * {\n\ttransition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, fill 300ms ease !important;\n}\n\n@media (prefers-reduced-motion: reduce) {\n\t.bog_theme_switching,\n\t.bog_theme_switching * {\n\t\ttransition: none !important;\n\t}\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_sidebar_nav) = class $raggu_web_sidebar_nav extends ($.$bog_builderui_div) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Icon(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.icon())]);
+			return obj;
+		}
+		Label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.label())]);
+			return obj;
+		}
+		icon(){
+			return "";
+		}
+		label(){
+			return "";
+		}
+		active(){
+			return false;
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_sidebar_nav_active": (this.active())};
+		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.click(next))};
+		}
+		sub(){
+			return [(this.Icon()), (this.Label())];
+		}
+	};
+	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "click"));
+	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "Icon"));
+	($mol_mem(($.$raggu_web_sidebar_nav.prototype), "Label"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_sidebar_nav, {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '0.625rem',
+        padding: {
+            top: '0.5625rem',
+            bottom: '0.5625rem',
+            left: '0.6875rem',
+            right: '0.6875rem',
+        },
+        border: { radius: '7px' },
+        font: { size: '13px', weight: 600 },
+        cursor: 'pointer',
+        color: $bog_builderui_tokens.shade,
+        Icon: {
+            minWidth: '18px',
+            textAlign: 'center',
+        },
+        '@': {
+            raggu_web_sidebar_nav_active: {
+                true: {
+                    background: { color: '#ece9fb' },
+                    color: '#5b5bd6',
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     /**
      * Localisation in $mol framework
      * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
@@ -5656,6 +6110,598 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_icon_white_balance_sunny) = class $mol_icon_white_balance_sunny extends ($.$mol_icon) {
+		path(){
+			return "M3.55 19.09L4.96 20.5L6.76 18.71L5.34 17.29M12 6C8.69 6 6 8.69 6 12S8.69 18 12 18 18 15.31 18 12C18 8.68 15.31 6 12 6M20 13H23V11H20M17.24 18.71L19.04 20.5L20.45 19.09L18.66 17.29M20.45 5L19.04 3.6L17.24 5.39L18.66 6.81M13 1H11V4H13M6.76 5.39L4.96 3.6L3.55 5L5.34 6.81L6.76 5.39M1 13H4V11H1M13 20H11V23H13";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
+		value(){
+			return null;
+		}
+		theme(){
+			return "$mol_theme_accent";
+		}
+		sub(){
+			return [(this.value())];
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Z-index values for layers
+     * https://page.hyoo.ru/#!=xthcpx_wqmiba
+     */
+    $.$mol_layer = $mol_style_prop('mol_layer', [
+        'hover',
+        'focus',
+        'speck',
+        'float',
+        'popup',
+    ]);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/layer/layer.css", ":root {\n\t--mol_layer_hover: 1;\n\t--mol_layer_focus: 2;\n\t--mol_layer_speck: 3;\n\t--mol_layer_float: 4;\n\t--mol_layer_popup: 5;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .75rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.2rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .75rem;\n\tvertical-align: sub;\n\tpadding: 0 .2rem;\n\tposition: absolute;\n\tz-index: var(--mol_layer_speck);\n\ttext-align: center;\n\tline-height: .9;\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n\tuser-select: none;\n\tbox-shadow: 0 0 3px rgba(0,0,0,.5);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$mol_button) = class $mol_button extends ($.$mol_view) {
+		event_activate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		activate(next){
+			return (this.event_activate(next));
+		}
+		clicks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_key_press(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		key_press(next){
+			return (this.event_key_press(next));
+		}
+		disabled(){
+			return false;
+		}
+		tab_index(){
+			return 0;
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		error(){
+			return "";
+		}
+		enabled(){
+			return true;
+		}
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		status(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"click": (next) => (this.activate(next)), 
+				"dblclick": (next) => (this.clicks(next)), 
+				"keydown": (next) => (this.key_press(next))
+			};
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"disabled": (this.disabled()), 
+				"role": "button", 
+				"tabindex": (this.tab_index()), 
+				"title": (this.hint_safe())
+			};
+		}
+		sub(){
+			return [(this.title())];
+		}
+		Speck(){
+			const obj = new this.$.$mol_speck();
+			(obj.value) = () => ((this.error()));
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_button.prototype), "event_activate"));
+	($mol_mem(($.$mol_button.prototype), "clicks"));
+	($mol_mem(($.$mol_button.prototype), "event_key_press"));
+	($mol_mem(($.$mol_button.prototype), "click"));
+	($mol_mem(($.$mol_button.prototype), "event_click"));
+	($mol_mem(($.$mol_button.prototype), "status"));
+	($mol_mem(($.$mol_button.prototype), "Speck"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+    * Key names code for hotkey
+    * @see [mol_hotkey](../../hotkey/hotkey.view.ts)
+    */
+    let $mol_keyboard_code;
+    (function ($mol_keyboard_code) {
+        $mol_keyboard_code[$mol_keyboard_code["backspace"] = 8] = "backspace";
+        $mol_keyboard_code[$mol_keyboard_code["tab"] = 9] = "tab";
+        $mol_keyboard_code[$mol_keyboard_code["enter"] = 13] = "enter";
+        $mol_keyboard_code[$mol_keyboard_code["shift"] = 16] = "shift";
+        $mol_keyboard_code[$mol_keyboard_code["ctrl"] = 17] = "ctrl";
+        $mol_keyboard_code[$mol_keyboard_code["alt"] = 18] = "alt";
+        $mol_keyboard_code[$mol_keyboard_code["pause"] = 19] = "pause";
+        $mol_keyboard_code[$mol_keyboard_code["capsLock"] = 20] = "capsLock";
+        $mol_keyboard_code[$mol_keyboard_code["escape"] = 27] = "escape";
+        $mol_keyboard_code[$mol_keyboard_code["space"] = 32] = "space";
+        $mol_keyboard_code[$mol_keyboard_code["pageUp"] = 33] = "pageUp";
+        $mol_keyboard_code[$mol_keyboard_code["pageDown"] = 34] = "pageDown";
+        $mol_keyboard_code[$mol_keyboard_code["end"] = 35] = "end";
+        $mol_keyboard_code[$mol_keyboard_code["home"] = 36] = "home";
+        $mol_keyboard_code[$mol_keyboard_code["left"] = 37] = "left";
+        $mol_keyboard_code[$mol_keyboard_code["up"] = 38] = "up";
+        $mol_keyboard_code[$mol_keyboard_code["right"] = 39] = "right";
+        $mol_keyboard_code[$mol_keyboard_code["down"] = 40] = "down";
+        $mol_keyboard_code[$mol_keyboard_code["insert"] = 45] = "insert";
+        $mol_keyboard_code[$mol_keyboard_code["delete"] = 46] = "delete";
+        $mol_keyboard_code[$mol_keyboard_code["key0"] = 48] = "key0";
+        $mol_keyboard_code[$mol_keyboard_code["key1"] = 49] = "key1";
+        $mol_keyboard_code[$mol_keyboard_code["key2"] = 50] = "key2";
+        $mol_keyboard_code[$mol_keyboard_code["key3"] = 51] = "key3";
+        $mol_keyboard_code[$mol_keyboard_code["key4"] = 52] = "key4";
+        $mol_keyboard_code[$mol_keyboard_code["key5"] = 53] = "key5";
+        $mol_keyboard_code[$mol_keyboard_code["key6"] = 54] = "key6";
+        $mol_keyboard_code[$mol_keyboard_code["key7"] = 55] = "key7";
+        $mol_keyboard_code[$mol_keyboard_code["key8"] = 56] = "key8";
+        $mol_keyboard_code[$mol_keyboard_code["key9"] = 57] = "key9";
+        $mol_keyboard_code[$mol_keyboard_code["A"] = 65] = "A";
+        $mol_keyboard_code[$mol_keyboard_code["B"] = 66] = "B";
+        $mol_keyboard_code[$mol_keyboard_code["C"] = 67] = "C";
+        $mol_keyboard_code[$mol_keyboard_code["D"] = 68] = "D";
+        $mol_keyboard_code[$mol_keyboard_code["E"] = 69] = "E";
+        $mol_keyboard_code[$mol_keyboard_code["F"] = 70] = "F";
+        $mol_keyboard_code[$mol_keyboard_code["G"] = 71] = "G";
+        $mol_keyboard_code[$mol_keyboard_code["H"] = 72] = "H";
+        $mol_keyboard_code[$mol_keyboard_code["I"] = 73] = "I";
+        $mol_keyboard_code[$mol_keyboard_code["J"] = 74] = "J";
+        $mol_keyboard_code[$mol_keyboard_code["K"] = 75] = "K";
+        $mol_keyboard_code[$mol_keyboard_code["L"] = 76] = "L";
+        $mol_keyboard_code[$mol_keyboard_code["M"] = 77] = "M";
+        $mol_keyboard_code[$mol_keyboard_code["N"] = 78] = "N";
+        $mol_keyboard_code[$mol_keyboard_code["O"] = 79] = "O";
+        $mol_keyboard_code[$mol_keyboard_code["P"] = 80] = "P";
+        $mol_keyboard_code[$mol_keyboard_code["Q"] = 81] = "Q";
+        $mol_keyboard_code[$mol_keyboard_code["R"] = 82] = "R";
+        $mol_keyboard_code[$mol_keyboard_code["S"] = 83] = "S";
+        $mol_keyboard_code[$mol_keyboard_code["T"] = 84] = "T";
+        $mol_keyboard_code[$mol_keyboard_code["U"] = 85] = "U";
+        $mol_keyboard_code[$mol_keyboard_code["V"] = 86] = "V";
+        $mol_keyboard_code[$mol_keyboard_code["W"] = 87] = "W";
+        $mol_keyboard_code[$mol_keyboard_code["X"] = 88] = "X";
+        $mol_keyboard_code[$mol_keyboard_code["Y"] = 89] = "Y";
+        $mol_keyboard_code[$mol_keyboard_code["Z"] = 90] = "Z";
+        $mol_keyboard_code[$mol_keyboard_code["metaLeft"] = 91] = "metaLeft";
+        $mol_keyboard_code[$mol_keyboard_code["metaRight"] = 92] = "metaRight";
+        $mol_keyboard_code[$mol_keyboard_code["select"] = 93] = "select";
+        $mol_keyboard_code[$mol_keyboard_code["numpad0"] = 96] = "numpad0";
+        $mol_keyboard_code[$mol_keyboard_code["numpad1"] = 97] = "numpad1";
+        $mol_keyboard_code[$mol_keyboard_code["numpad2"] = 98] = "numpad2";
+        $mol_keyboard_code[$mol_keyboard_code["numpad3"] = 99] = "numpad3";
+        $mol_keyboard_code[$mol_keyboard_code["numpad4"] = 100] = "numpad4";
+        $mol_keyboard_code[$mol_keyboard_code["numpad5"] = 101] = "numpad5";
+        $mol_keyboard_code[$mol_keyboard_code["numpad6"] = 102] = "numpad6";
+        $mol_keyboard_code[$mol_keyboard_code["numpad7"] = 103] = "numpad7";
+        $mol_keyboard_code[$mol_keyboard_code["numpad8"] = 104] = "numpad8";
+        $mol_keyboard_code[$mol_keyboard_code["numpad9"] = 105] = "numpad9";
+        $mol_keyboard_code[$mol_keyboard_code["multiply"] = 106] = "multiply";
+        $mol_keyboard_code[$mol_keyboard_code["add"] = 107] = "add";
+        $mol_keyboard_code[$mol_keyboard_code["subtract"] = 109] = "subtract";
+        $mol_keyboard_code[$mol_keyboard_code["decimal"] = 110] = "decimal";
+        $mol_keyboard_code[$mol_keyboard_code["divide"] = 111] = "divide";
+        $mol_keyboard_code[$mol_keyboard_code["F1"] = 112] = "F1";
+        $mol_keyboard_code[$mol_keyboard_code["F2"] = 113] = "F2";
+        $mol_keyboard_code[$mol_keyboard_code["F3"] = 114] = "F3";
+        $mol_keyboard_code[$mol_keyboard_code["F4"] = 115] = "F4";
+        $mol_keyboard_code[$mol_keyboard_code["F5"] = 116] = "F5";
+        $mol_keyboard_code[$mol_keyboard_code["F6"] = 117] = "F6";
+        $mol_keyboard_code[$mol_keyboard_code["F7"] = 118] = "F7";
+        $mol_keyboard_code[$mol_keyboard_code["F8"] = 119] = "F8";
+        $mol_keyboard_code[$mol_keyboard_code["F9"] = 120] = "F9";
+        $mol_keyboard_code[$mol_keyboard_code["F10"] = 121] = "F10";
+        $mol_keyboard_code[$mol_keyboard_code["F11"] = 122] = "F11";
+        $mol_keyboard_code[$mol_keyboard_code["F12"] = 123] = "F12";
+        $mol_keyboard_code[$mol_keyboard_code["numLock"] = 144] = "numLock";
+        $mol_keyboard_code[$mol_keyboard_code["scrollLock"] = 145] = "scrollLock";
+        $mol_keyboard_code[$mol_keyboard_code["semicolon"] = 186] = "semicolon";
+        $mol_keyboard_code[$mol_keyboard_code["equals"] = 187] = "equals";
+        $mol_keyboard_code[$mol_keyboard_code["comma"] = 188] = "comma";
+        $mol_keyboard_code[$mol_keyboard_code["dash"] = 189] = "dash";
+        $mol_keyboard_code[$mol_keyboard_code["period"] = 190] = "period";
+        $mol_keyboard_code[$mol_keyboard_code["forwardSlash"] = 191] = "forwardSlash";
+        $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
+        $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
+        $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
+        $mol_keyboard_code[$mol_keyboard_code["slashBackLeft"] = 226] = "slashBackLeft";
+        $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
+        $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
+    })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Simple button.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+         */
+        class $mol_button extends $.$mol_button {
+            disabled() {
+                return !this.enabled();
+            }
+            event_activate(next) {
+                if (!next)
+                    return;
+                if (!this.enabled())
+                    return;
+                try {
+                    this.event_click(next);
+                    this.click(next);
+                    this.status([null]);
+                }
+                catch (error) {
+                    // Calling actions from catch section, if throwing promise breaks idempotency
+                    Promise.resolve().then(() => this.status([error]));
+                    $mol_fail_hidden(error);
+                }
+            }
+            event_key_press(event) {
+                if (event.keyCode === $mol_keyboard_code.enter) {
+                    return this.activate(event);
+                }
+            }
+            tab_index() {
+                return this.enabled() ? super.tab_index() : -1;
+            }
+            error() {
+                const error = this.status()?.[0];
+                if (!error)
+                    return '';
+                if ($mol_promise_like(error)) {
+                    return $mol_fail_hidden(error);
+                }
+                return this.$.$mol_error_message(error);
+            }
+            hint_safe() {
+                try {
+                    return this.hint();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return '';
+                }
+            }
+            sub_visible() {
+                return [
+                    ...this.error() ? [this.Speck()] : [],
+                    ...this.sub(),
+                ];
+            }
+        }
+        $$.$mol_button = $mol_button;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\t-webkit-user-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_button_typed) = class $mol_button_typed extends ($.$mol_button) {
+		minimal_height(){
+			return 40;
+		}
+		minimal_width(){
+			return 40;
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n\tuser-select: none;\n\tcursor: pointer;\n\tmin-width: 2.5rem;\n\tmin-height: 2.5rem;\n}\n\n[mol_button_typed][disabled] {\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus-visible {\n\tbox-shadow: inset 0 0 0 100vmax var(--mol_theme_hover);\n}\n\n[mol_button_typed]:active {\n\tcolor: var(--mol_theme_focus);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$mol_button_minor) = class $mol_button_minor extends ($.$mol_button_typed) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor]:where(:not([disabled])) {\n\tcolor: var(--mol_theme_control);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_monitor) = class $mol_icon_monitor extends ($.$mol_icon) {
+		path(){
+			return "M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_icon_weather_night) = class $mol_icon_weather_night extends ($.$mol_icon) {
+		path(){
+			return "M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.04,6.68C3.23,9.82 3.34,14.64 6.35,17.66C9.37,20.67 14.19,20.78 17.33,17.97Z";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$bog_theme_switch) = class $bog_theme_switch extends ($.$mol_view) {
+		light_active(){
+			return false;
+		}
+		light_hint(){
+			return (this.$.$mol_locale.text("$bog_theme_switch_light_hint"));
+		}
+		set_light(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Light_icon(){
+			const obj = new this.$.$mol_icon_white_balance_sunny();
+			return obj;
+		}
+		Light(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.attr) = () => ({...(this.$.$mol_button_minor.prototype.attr.call(obj)), "bog_theme_switch_active": (this.light_active())});
+			(obj.hint) = () => ((this.light_hint()));
+			(obj.click) = (next) => ((this.set_light(next)));
+			(obj.sub) = () => ([(this.Light_icon())]);
+			return obj;
+		}
+		system_active(){
+			return false;
+		}
+		system_hint(){
+			return (this.$.$mol_locale.text("$bog_theme_switch_system_hint"));
+		}
+		set_system(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		System_icon(){
+			const obj = new this.$.$mol_icon_monitor();
+			return obj;
+		}
+		System(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.attr) = () => ({...(this.$.$mol_button_minor.prototype.attr.call(obj)), "bog_theme_switch_active": (this.system_active())});
+			(obj.hint) = () => ((this.system_hint()));
+			(obj.click) = (next) => ((this.set_system(next)));
+			(obj.sub) = () => ([(this.System_icon())]);
+			return obj;
+		}
+		dark_active(){
+			return false;
+		}
+		dark_hint(){
+			return (this.$.$mol_locale.text("$bog_theme_switch_dark_hint"));
+		}
+		set_dark(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Dark_icon(){
+			const obj = new this.$.$mol_icon_weather_night();
+			return obj;
+		}
+		Dark(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.attr) = () => ({...(this.$.$mol_button_minor.prototype.attr.call(obj)), "bog_theme_switch_active": (this.dark_active())});
+			(obj.hint) = () => ((this.dark_hint()));
+			(obj.click) = (next) => ((this.set_dark(next)));
+			(obj.sub) = () => ([(this.Dark_icon())]);
+			return obj;
+		}
+		theme_auto(){
+			const obj = new this.$.$bog_theme_auto();
+			return obj;
+		}
+		sub(){
+			return [
+				(this.Light()), 
+				(this.System()), 
+				(this.Dark())
+			];
+		}
+	};
+	($mol_mem(($.$bog_theme_switch.prototype), "set_light"));
+	($mol_mem(($.$bog_theme_switch.prototype), "Light_icon"));
+	($mol_mem(($.$bog_theme_switch.prototype), "Light"));
+	($mol_mem(($.$bog_theme_switch.prototype), "set_system"));
+	($mol_mem(($.$bog_theme_switch.prototype), "System_icon"));
+	($mol_mem(($.$bog_theme_switch.prototype), "System"));
+	($mol_mem(($.$bog_theme_switch.prototype), "set_dark"));
+	($mol_mem(($.$bog_theme_switch.prototype), "Dark_icon"));
+	($mol_mem(($.$bog_theme_switch.prototype), "Dark"));
+	($mol_mem(($.$bog_theme_switch.prototype), "theme_auto"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_theme_switch extends $.$bog_theme_switch {
+            light_active() {
+                return this.theme_auto().mode() === 'light';
+            }
+            system_active() {
+                return this.theme_auto().mode() === 'system';
+            }
+            dark_active() {
+                return this.theme_auto().mode() === 'dark';
+            }
+            set_light() {
+                this.theme_auto().mode('light');
+                return null;
+            }
+            set_system() {
+                this.theme_auto().mode('system');
+                return null;
+            }
+            set_dark() {
+                this.theme_auto().mode('dark');
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_theme_switch.prototype, "light_active", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_switch.prototype, "system_active", null);
+        __decorate([
+            $mol_mem
+        ], $bog_theme_switch.prototype, "dark_active", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_switch.prototype, "set_light", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_switch.prototype, "set_system", null);
+        __decorate([
+            $mol_action
+        ], $bog_theme_switch.prototype, "set_dark", null);
+        $$.$bog_theme_switch = $bog_theme_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_theme_switch, {
+        display: 'flex',
+        flex: { direction: 'row', shrink: 0 },
+        gap: '2px',
+        padding: { top: '3px', right: '3px', bottom: '3px', left: '3px' },
+        background: { color: $mol_theme.field },
+        border: {
+            radius: '999px',
+            width: '1px',
+            style: 'solid',
+            color: $mol_theme.line,
+        },
+        $mol_button_minor: {
+            minWidth: '2rem',
+            minHeight: '2rem',
+            padding: { top: 0, right: '0.5rem', bottom: 0, left: '0.5rem' },
+            border: { radius: '999px' },
+            background: { color: 'transparent' },
+            boxShadow: 'none',
+            color: $mol_theme.shade,
+            transition: 'background-color 200ms ease, color 200ms ease, box-shadow 200ms ease',
+            ':hover': {
+                background: { color: $mol_theme.hover },
+                boxShadow: 'none',
+                color: $mol_theme.text,
+            },
+            '[bog_theme_switch_active]': {
+                true: {
+                    background: { color: $mol_theme.back },
+                    color: $mol_theme.text,
+                    box: {
+                        shadow: [
+                            { x: 0, y: '1px', blur: '2px', spread: 0, color: '#0000001a' },
+                            { x: 0, y: '1px', blur: '1px', spread: 0, color: '#0000000d' },
+                            { inset: true, x: 0, y: 0, blur: 0, spread: '100vmax', color: '#00000022' },
+                        ],
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
 	($.$raggu_web_sidebar_lang) = class $raggu_web_sidebar_lang extends ($.$bog_builderui_div) {
 		click(next){
 			if(next !== undefined) return next;
@@ -5686,6 +6732,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_sidebar_lang, {
@@ -5702,12 +6749,12 @@ var $;
         },
         border: { radius: '5px' },
         cursor: 'pointer',
-        color: '#a8a29e',
+        color: $bog_builderui_tokens.shade,
         '@': {
             raggu_web_sidebar_lang_active: {
                 true: {
                     background: { color: '#5b5bd6' },
-                    color: '#ffffff',
+                    color: $bog_builderui_tokens.card,
                 },
             },
         },
@@ -5842,6 +6889,11 @@ var $;
 			(obj.sub) = () => ([(this.Corpus_name()), (this.Corpus_meta())]);
 			return obj;
 		}
+		Theme_switch(){
+			const obj = new this.$.$bog_theme_switch();
+			(obj.theme_auto) = () => ((this.Theme_auto()));
+			return obj;
+		}
 		Lang_label(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.lang_label_text())]);
@@ -5878,6 +6930,7 @@ var $;
 		Lang_row(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
+				(this.Theme_switch()), 
 				(this.Lang_label()), 
 				(this.Lang_en()), 
 				(this.Lang_ru())
@@ -5899,6 +6952,10 @@ var $;
 		}
 		dataset_id(){
 			return "wiki";
+		}
+		Theme_auto(){
+			const obj = new this.$.$bog_theme_auto();
+			return obj;
 		}
 		sections_label_text(){
 			return (this.$.$mol_locale.text("$raggu_web_sidebar_sections_label_text"));
@@ -5941,6 +6998,7 @@ var $;
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_name"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_meta"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Corpus_card"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Theme_switch"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_label"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "click_en"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_en"));
@@ -5949,6 +7007,7 @@ var $;
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Lang_row"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "Footer"));
 	($mol_mem(($.$raggu_web_sidebar.prototype), "screen"));
+	($mol_mem(($.$raggu_web_sidebar.prototype), "Theme_auto"));
 
 
 ;
@@ -6002,14 +7061,15 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_sidebar, {
         minWidth: '228px',
         maxWidth: '228px',
-        background: { color: '#f5f4f2' },
+        background: { color: $bog_builderui_tokens.field },
         border: {
-            right: { width: '1px', style: 'solid', color: '#d6d3d1' },
+            right: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
         },
         flex: { direction: 'column' },
         padding: {
@@ -6050,8 +7110,8 @@ var $;
                 weight: 600,
                 size: '9px',
             },
-            color: '#a8a29e',
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '4px' },
+            color: $bog_builderui_tokens.shade,
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '4px' },
             padding: {
                 top: '2px',
                 bottom: '2px',
@@ -6065,7 +7125,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
             letterSpacing: '0.8px',
             padding: {
@@ -6092,7 +7152,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
             letterSpacing: '0.8px',
             padding: {
@@ -6101,8 +7161,8 @@ var $;
             },
         },
         Corpus_card: {
-            background: { color: '#ffffff' },
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '6px' },
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
             padding: {
                 top: '0.5625rem',
                 bottom: '0.5625rem',
@@ -6121,10 +7181,11 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
         },
         Lang_row: {
             flex: { direction: 'row' },
+            flexWrap: 'wrap',
             gap: '0.375rem',
             align: { items: 'center' },
             padding: {
@@ -6140,8 +7201,18 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             marginRight: 'auto',
+        },
+        Theme_switch: {
+            padding: { top: '2px', bottom: '2px', left: '2px', right: '2px' },
+            background: { color: $bog_builderui_tokens.card },
+            border: { color: $bog_builderui_tokens.line },
+            $mol_button_minor: {
+                minWidth: '1.5rem',
+                minHeight: '1.5rem',
+                padding: { top: 0, bottom: 0, left: '0.375rem', right: '0.375rem' },
+            },
         },
     });
 })($ || ($ = {}));
@@ -6177,6 +7248,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_topbar_preset, {
@@ -6189,12 +7261,12 @@ var $;
         },
         border: { radius: '5px' },
         cursor: 'pointer',
-        color: '#78716c',
+        color: $bog_builderui_tokens.shade,
         '@': {
             raggu_web_topbar_preset_active: {
                 true: {
-                    background: { color: '#ffffff' },
-                    color: '#44403c',
+                    background: { color: $bog_builderui_tokens.card },
+                    color: $bog_builderui_tokens.text,
                     box: {
                         shadow: [{
                                 x: 0,
@@ -6404,14 +7476,15 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_topbar, {
         height: '58px',
         minHeight: '58px',
-        background: { color: '#ffffff' },
+        background: { color: $bog_builderui_tokens.card },
         border: {
-            bottom: { width: '1px', style: 'solid', color: '#d6d3d1' },
+            bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
         },
         flex: { direction: 'row' },
         align: { items: 'center' },
@@ -6432,7 +7505,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
         },
         Spacer: {
             flex: { grow: 1 },
@@ -6443,14 +7516,14 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
         },
         Preset_group: {
             flex: { direction: 'row' },
             gap: '0.25rem',
-            background: { color: '#f5f4f2' },
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '7px' },
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
             padding: {
                 top: '3px',
                 bottom: '3px',
@@ -6462,8 +7535,8 @@ var $;
             flex: { direction: 'row' },
             align: { items: 'center' },
             gap: '6px',
-            background: { color: '#ffffff' },
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '7px' },
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
             padding: {
                 top: '7px',
                 bottom: '7px',
@@ -6478,7 +7551,7 @@ var $;
             align: { items: 'center' },
             gap: '6px',
             background: { color: '#5b5bd6' },
-            color: '#ffffff',
+            color: $bog_builderui_tokens.card,
             border: { radius: '7px' },
             padding: {
                 top: '7px',
@@ -6759,6 +7832,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_settings_group, {
@@ -6802,15 +7876,15 @@ var $;
         },
         Opts: {
             font: { size: '11px' },
-            color: '#78716c',
+            color: $bog_builderui_tokens.shade,
             lineHeight: '1.5',
             margin: { top: '4px' },
         },
         Control: {
             height: '30px',
             margin: { top: '8px' },
-            border: { width: '1px', style: 'solid', color: '#e7e4e0', radius: '6px' },
-            background: { color: '#faf9f8' },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+            background: { color: $bog_builderui_tokens.back },
             align: { items: 'center' },
             padding: {
                 left: '10px',
@@ -6821,7 +7895,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
         },
     });
 })($ || ($ = {}));
@@ -6997,6 +8071,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_settings, {
@@ -7026,9 +8101,9 @@ var $;
             right: 0,
             bottom: 0,
             width: '380px',
-            background: { color: '#ffffff' },
+            background: { color: $bog_builderui_tokens.card },
             border: {
-                left: { width: '1px', style: 'solid', color: '#d6d3d1' },
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
             zIndex: 1,
             flex: { direction: 'column' },
@@ -7050,7 +8125,7 @@ var $;
                 right: '20px',
             },
             border: {
-                bottom: { width: '1px', style: 'solid', color: '#e7e4e0' },
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
             flex: { direction: 'row' },
             align: { items: 'center' },
@@ -7067,7 +8142,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             margin: { top: '2px' },
         },
         Spacer: {
@@ -7077,7 +8152,7 @@ var $;
             minWidth: '30px',
             maxWidth: '30px',
             height: '30px',
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '7px' },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
             align: { items: 'center' },
             justify: { content: 'center' },
             cursor: 'pointer',
@@ -7248,6 +8323,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     const tag_style = {
@@ -7256,8 +8332,8 @@ var $;
             weight: 600,
             size: '10px',
         },
-        color: '#57534e',
-        background: { color: '#f5f4f2' },
+        color: $bog_builderui_tokens.shade,
+        background: { color: $bog_builderui_tokens.field },
         border: { radius: '5px' },
         padding: {
             top: '3px',
@@ -7267,8 +8343,8 @@ var $;
         },
     };
     $mol_style_define($raggu_web_gallery_card, {
-        background: { color: '#ffffff' },
-        border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '10px' },
+        background: { color: $bog_builderui_tokens.card },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
         padding: {
             top: '13px',
             bottom: '13px',
@@ -7290,14 +8366,14 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
         },
         Domain_badge: {
             position: 'absolute',
             top: '8px',
             left: '8px',
-            background: { color: '#ffffff' },
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '5px' },
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
             padding: {
                 top: '2px',
                 bottom: '2px',
@@ -7305,7 +8381,7 @@ var $;
                 right: '7px',
             },
             font: { size: '10px' },
-            color: '#57534e',
+            color: $bog_builderui_tokens.shade,
         },
         Title: {
             font: { weight: 700, size: '14px' },
@@ -7313,7 +8389,7 @@ var $;
         },
         Desc: {
             font: { size: '11px' },
-            color: '#78716c',
+            color: $bog_builderui_tokens.shade,
             margin: { top: '4px' },
             lineHeight: '1.4',
         },
@@ -7504,6 +8580,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_gallery, {
@@ -7531,7 +8608,7 @@ var $;
         },
         Header_subtitle: {
             font: { size: '13px' },
-            color: '#78716c',
+            color: $bog_builderui_tokens.shade,
             margin: { top: '3px' },
         },
         Spacer: {
@@ -7546,8 +8623,8 @@ var $;
                 right: '16px',
             },
             font: { size: '12px', weight: 600 },
-            color: '#57534e',
-            background: { color: '#ffffff' },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.card },
             cursor: 'pointer',
         },
         Upload_idx: {
@@ -7559,8 +8636,8 @@ var $;
                 right: '16px',
             },
             font: { size: '12px', weight: 600 },
-            color: '#57534e',
-            background: { color: '#ffffff' },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.card },
             cursor: 'pointer',
         },
         Grid: {
@@ -7971,6 +9048,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     const { radial_gradient } = $mol_style_func;
@@ -7995,10 +9073,10 @@ var $;
             weight: 500,
             size: '10px',
         },
-        color: '#a8a29e',
+        color: $bog_builderui_tokens.shade,
     };
     const relation_card = {
-        border: { width: '1px', style: 'solid', color: '#e7e4e0', radius: '6px' },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
         padding: {
             top: '8px',
             bottom: '8px',
@@ -8018,7 +9096,7 @@ var $;
         color: '#5b5bd6',
     };
     const relation_target = {
-        color: '#57534e',
+        color: $bog_builderui_tokens.shade,
         margin: { top: '2px' },
     };
     $mol_style_define($raggu_web_explorer, {
@@ -8135,7 +9213,7 @@ var $;
                 weight: 700,
                 size: '10px',
             },
-            color: '#d6d3d1',
+            color: $bog_builderui_tokens.line,
             textTransform: 'uppercase',
             letterSpacing: '0.6px',
             margin: { bottom: '8px' },
@@ -8164,9 +9242,9 @@ var $;
         Aside: {
             minWidth: '300px',
             maxWidth: '300px',
-            background: { color: '#ffffff' },
+            background: { color: $bog_builderui_tokens.card },
             border: {
-                left: { width: '1px', style: 'solid', color: '#d6d3d1' },
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
             padding: {
                 top: '18px',
@@ -8183,7 +9261,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
             letterSpacing: '0.7px',
         },
@@ -8214,7 +9292,7 @@ var $;
         },
         Entity_desc: {
             font: { size: '12px' },
-            color: '#57534e',
+            color: $bog_builderui_tokens.shade,
             lineHeight: '1.5',
             margin: { top: '10px' },
         },
@@ -8224,7 +9302,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
             margin: { top: '18px', bottom: '8px' },
         },
@@ -8243,12 +9321,12 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
             margin: { top: '16px', bottom: '8px' },
         },
         Sources: {
-            border: { width: '1px', style: 'dashed', color: '#d6d3d1', radius: '6px' },
+            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
             padding: {
                 top: '10px',
                 bottom: '10px',
@@ -8260,8 +9338,8 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#a8a29e',
-            background: { color: '#faf9f8' },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.back },
         },
         Ask_btn: {
             margin: { top: '16px' },
@@ -8592,11 +9670,12 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     const mode_pill_inactive = {
-        background: { color: '#f5f4f2' },
-        border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '6px' },
+        background: { color: $bog_builderui_tokens.field },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
         padding: {
             top: '5px',
             bottom: '5px',
@@ -8604,7 +9683,7 @@ var $;
             right: '10px',
         },
         font: { size: '11px', weight: 600 },
-        color: '#78716c',
+        color: $bog_builderui_tokens.shade,
     };
     const chip = {
         background: { color: '#ece9fb' },
@@ -8628,10 +9707,10 @@ var $;
             weight: 500,
             size: '10px',
         },
-        color: '#78716c',
+        color: $bog_builderui_tokens.shade,
     };
     const suggestion = {
-        border: { width: '1px', style: 'dashed', color: '#c7c3bf', radius: '14px' },
+        border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
         padding: {
             top: '5px',
             bottom: '5px',
@@ -8639,7 +9718,7 @@ var $;
             right: '11px',
         },
         font: { size: '11px' },
-        color: '#78716c',
+        color: $bog_builderui_tokens.shade,
     };
     $mol_style_define($raggu_web_chat, {
         flex: { direction: 'column', shrink: 1 },
@@ -8656,7 +9735,7 @@ var $;
                 right: '22px',
             },
             border: {
-                bottom: { width: '1px', style: 'solid', color: '#e7e4e0' },
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
         },
         Modes_label: {
@@ -8665,7 +9744,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             textTransform: 'uppercase',
         },
         Modes: {
@@ -8718,8 +9797,8 @@ var $;
             flex: { direction: 'column' },
         },
         Msg_assistant: {
-            background: { color: '#ffffff' },
-            border: { width: '1px', style: 'solid', color: '#e7e4e0' },
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             borderRadius: '12px 12px 12px 3px',
             padding: {
                 top: '13px',
@@ -8729,12 +9808,12 @@ var $;
             },
             font: { size: '13px' },
             lineHeight: '1.55',
-            color: '#44403c',
+            color: $bog_builderui_tokens.text,
         },
         Trace: {
             margin: { top: '8px' },
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '9px' },
-            background: { color: '#faf9f8' },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '9px' },
+            background: { color: $bog_builderui_tokens.back },
             overflow: 'hidden',
             flex: { direction: 'column' },
         },
@@ -8755,12 +9834,12 @@ var $;
             },
             color: '#5b5bd6',
             border: {
-                bottom: { width: '1px', style: 'solid', color: '#e7e4e0' },
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
         },
         Trace_head_meta: {
             marginLeft: 'auto',
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             font: { weight: 500 },
         },
         Trace_body: {
@@ -8779,7 +9858,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
         },
         Trace_chips: {
             flex: { direction: 'row' },
@@ -8815,7 +9894,7 @@ var $;
                 right: '22px',
             },
             border: {
-                top: { width: '1px', style: 'solid', color: '#e7e4e0' },
+                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
             flex: { direction: 'column' },
         },
@@ -8830,14 +9909,14 @@ var $;
         Input_row: {
             flex: { direction: 'row' },
             align: { items: 'center' },
-            border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '10px' },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
             padding: {
                 top: '12px',
                 bottom: '12px',
                 left: '15px',
                 right: '15px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             font: { size: '13px' },
         },
         Input_spacer: {
@@ -8940,6 +10019,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_dashboard_metric, {
@@ -9048,6 +10128,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_dashboard_stage, {
@@ -9063,13 +10144,13 @@ var $;
                 weight: 600,
                 size: '11px',
             },
-            color: '#57534e',
+            color: $bog_builderui_tokens.shade,
         },
         Bar: {
             flex: { grow: 1 },
             height: '8px',
             border: { radius: '4px' },
-            background: { color: '#f5f4f2' },
+            background: { color: $bog_builderui_tokens.field },
             overflow: 'hidden',
         },
         Bar_fill: {
@@ -9082,7 +10163,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#78716c',
+            color: $bog_builderui_tokens.shade,
             minWidth: '42px',
             maxWidth: '42px',
             textAlign: 'right',
@@ -9563,6 +10644,7 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     const card_label = {
@@ -9571,13 +10653,13 @@ var $;
             weight: 600,
             size: '11px',
         },
-        color: '#a8a29e',
+        color: $bog_builderui_tokens.shade,
         textTransform: 'uppercase',
         letterSpacing: '0.6px',
     };
     const card = {
-        background: { color: '#ffffff' },
-        border: { width: '1px', style: 'solid', color: '#d6d3d1', radius: '10px' },
+        background: { color: $bog_builderui_tokens.card },
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
         padding: {
             top: '18px',
             bottom: '18px',
@@ -9595,7 +10677,7 @@ var $;
             weight: 500,
             size: '10px',
         },
-        color: '#a8a29e',
+        color: $bog_builderui_tokens.shade,
     };
     const log_row = {
         flex: { direction: 'row' },
@@ -9605,18 +10687,18 @@ var $;
             weight: 500,
             size: '11px',
         },
-        color: '#57534e',
+        color: $bog_builderui_tokens.shade,
         padding: {
             top: '8px',
             bottom: '8px',
             left: '10px',
             right: '10px',
         },
-        background: { color: '#faf9f8' },
+        background: { color: $bog_builderui_tokens.back },
         border: { radius: '6px' },
     };
     const log_time = {
-        color: '#a8a29e',
+        color: $bog_builderui_tokens.shade,
     };
     const log_text = {
         flex: { grow: 1 },
@@ -9639,7 +10721,7 @@ var $;
         },
         Subtitle: {
             font: { size: '13px' },
-            color: '#78716c',
+            color: $bog_builderui_tokens.shade,
             margin: { bottom: '20px' },
         },
         Grid: {
@@ -9683,7 +10765,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
         },
         Metric_rows: { flex: { direction: 'column' } },
         Quality_footer: {
@@ -9692,7 +10774,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#a8a29e',
+            color: $bog_builderui_tokens.shade,
             margin: { top: '12px' },
         },
         Energy_row: {
@@ -9714,10 +10796,10 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#78716c',
+            color: $bog_builderui_tokens.shade,
             lineHeight: '1.5',
-            background: { color: '#faf9f8' },
-            border: { width: '1px', style: 'dashed', color: '#d6d3d1', radius: '6px' },
+            background: { color: $bog_builderui_tokens.back },
+            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
             padding: {
                 top: '9px',
                 bottom: '9px',
@@ -9817,119 +10899,6 @@ var $;
 	};
 	($mol_mem(($.$mol_hotkey.prototype), "keydown"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-    * Key names code for hotkey
-    * @see [mol_hotkey](../../hotkey/hotkey.view.ts)
-    */
-    let $mol_keyboard_code;
-    (function ($mol_keyboard_code) {
-        $mol_keyboard_code[$mol_keyboard_code["backspace"] = 8] = "backspace";
-        $mol_keyboard_code[$mol_keyboard_code["tab"] = 9] = "tab";
-        $mol_keyboard_code[$mol_keyboard_code["enter"] = 13] = "enter";
-        $mol_keyboard_code[$mol_keyboard_code["shift"] = 16] = "shift";
-        $mol_keyboard_code[$mol_keyboard_code["ctrl"] = 17] = "ctrl";
-        $mol_keyboard_code[$mol_keyboard_code["alt"] = 18] = "alt";
-        $mol_keyboard_code[$mol_keyboard_code["pause"] = 19] = "pause";
-        $mol_keyboard_code[$mol_keyboard_code["capsLock"] = 20] = "capsLock";
-        $mol_keyboard_code[$mol_keyboard_code["escape"] = 27] = "escape";
-        $mol_keyboard_code[$mol_keyboard_code["space"] = 32] = "space";
-        $mol_keyboard_code[$mol_keyboard_code["pageUp"] = 33] = "pageUp";
-        $mol_keyboard_code[$mol_keyboard_code["pageDown"] = 34] = "pageDown";
-        $mol_keyboard_code[$mol_keyboard_code["end"] = 35] = "end";
-        $mol_keyboard_code[$mol_keyboard_code["home"] = 36] = "home";
-        $mol_keyboard_code[$mol_keyboard_code["left"] = 37] = "left";
-        $mol_keyboard_code[$mol_keyboard_code["up"] = 38] = "up";
-        $mol_keyboard_code[$mol_keyboard_code["right"] = 39] = "right";
-        $mol_keyboard_code[$mol_keyboard_code["down"] = 40] = "down";
-        $mol_keyboard_code[$mol_keyboard_code["insert"] = 45] = "insert";
-        $mol_keyboard_code[$mol_keyboard_code["delete"] = 46] = "delete";
-        $mol_keyboard_code[$mol_keyboard_code["key0"] = 48] = "key0";
-        $mol_keyboard_code[$mol_keyboard_code["key1"] = 49] = "key1";
-        $mol_keyboard_code[$mol_keyboard_code["key2"] = 50] = "key2";
-        $mol_keyboard_code[$mol_keyboard_code["key3"] = 51] = "key3";
-        $mol_keyboard_code[$mol_keyboard_code["key4"] = 52] = "key4";
-        $mol_keyboard_code[$mol_keyboard_code["key5"] = 53] = "key5";
-        $mol_keyboard_code[$mol_keyboard_code["key6"] = 54] = "key6";
-        $mol_keyboard_code[$mol_keyboard_code["key7"] = 55] = "key7";
-        $mol_keyboard_code[$mol_keyboard_code["key8"] = 56] = "key8";
-        $mol_keyboard_code[$mol_keyboard_code["key9"] = 57] = "key9";
-        $mol_keyboard_code[$mol_keyboard_code["A"] = 65] = "A";
-        $mol_keyboard_code[$mol_keyboard_code["B"] = 66] = "B";
-        $mol_keyboard_code[$mol_keyboard_code["C"] = 67] = "C";
-        $mol_keyboard_code[$mol_keyboard_code["D"] = 68] = "D";
-        $mol_keyboard_code[$mol_keyboard_code["E"] = 69] = "E";
-        $mol_keyboard_code[$mol_keyboard_code["F"] = 70] = "F";
-        $mol_keyboard_code[$mol_keyboard_code["G"] = 71] = "G";
-        $mol_keyboard_code[$mol_keyboard_code["H"] = 72] = "H";
-        $mol_keyboard_code[$mol_keyboard_code["I"] = 73] = "I";
-        $mol_keyboard_code[$mol_keyboard_code["J"] = 74] = "J";
-        $mol_keyboard_code[$mol_keyboard_code["K"] = 75] = "K";
-        $mol_keyboard_code[$mol_keyboard_code["L"] = 76] = "L";
-        $mol_keyboard_code[$mol_keyboard_code["M"] = 77] = "M";
-        $mol_keyboard_code[$mol_keyboard_code["N"] = 78] = "N";
-        $mol_keyboard_code[$mol_keyboard_code["O"] = 79] = "O";
-        $mol_keyboard_code[$mol_keyboard_code["P"] = 80] = "P";
-        $mol_keyboard_code[$mol_keyboard_code["Q"] = 81] = "Q";
-        $mol_keyboard_code[$mol_keyboard_code["R"] = 82] = "R";
-        $mol_keyboard_code[$mol_keyboard_code["S"] = 83] = "S";
-        $mol_keyboard_code[$mol_keyboard_code["T"] = 84] = "T";
-        $mol_keyboard_code[$mol_keyboard_code["U"] = 85] = "U";
-        $mol_keyboard_code[$mol_keyboard_code["V"] = 86] = "V";
-        $mol_keyboard_code[$mol_keyboard_code["W"] = 87] = "W";
-        $mol_keyboard_code[$mol_keyboard_code["X"] = 88] = "X";
-        $mol_keyboard_code[$mol_keyboard_code["Y"] = 89] = "Y";
-        $mol_keyboard_code[$mol_keyboard_code["Z"] = 90] = "Z";
-        $mol_keyboard_code[$mol_keyboard_code["metaLeft"] = 91] = "metaLeft";
-        $mol_keyboard_code[$mol_keyboard_code["metaRight"] = 92] = "metaRight";
-        $mol_keyboard_code[$mol_keyboard_code["select"] = 93] = "select";
-        $mol_keyboard_code[$mol_keyboard_code["numpad0"] = 96] = "numpad0";
-        $mol_keyboard_code[$mol_keyboard_code["numpad1"] = 97] = "numpad1";
-        $mol_keyboard_code[$mol_keyboard_code["numpad2"] = 98] = "numpad2";
-        $mol_keyboard_code[$mol_keyboard_code["numpad3"] = 99] = "numpad3";
-        $mol_keyboard_code[$mol_keyboard_code["numpad4"] = 100] = "numpad4";
-        $mol_keyboard_code[$mol_keyboard_code["numpad5"] = 101] = "numpad5";
-        $mol_keyboard_code[$mol_keyboard_code["numpad6"] = 102] = "numpad6";
-        $mol_keyboard_code[$mol_keyboard_code["numpad7"] = 103] = "numpad7";
-        $mol_keyboard_code[$mol_keyboard_code["numpad8"] = 104] = "numpad8";
-        $mol_keyboard_code[$mol_keyboard_code["numpad9"] = 105] = "numpad9";
-        $mol_keyboard_code[$mol_keyboard_code["multiply"] = 106] = "multiply";
-        $mol_keyboard_code[$mol_keyboard_code["add"] = 107] = "add";
-        $mol_keyboard_code[$mol_keyboard_code["subtract"] = 109] = "subtract";
-        $mol_keyboard_code[$mol_keyboard_code["decimal"] = 110] = "decimal";
-        $mol_keyboard_code[$mol_keyboard_code["divide"] = 111] = "divide";
-        $mol_keyboard_code[$mol_keyboard_code["F1"] = 112] = "F1";
-        $mol_keyboard_code[$mol_keyboard_code["F2"] = 113] = "F2";
-        $mol_keyboard_code[$mol_keyboard_code["F3"] = 114] = "F3";
-        $mol_keyboard_code[$mol_keyboard_code["F4"] = 115] = "F4";
-        $mol_keyboard_code[$mol_keyboard_code["F5"] = 116] = "F5";
-        $mol_keyboard_code[$mol_keyboard_code["F6"] = 117] = "F6";
-        $mol_keyboard_code[$mol_keyboard_code["F7"] = 118] = "F7";
-        $mol_keyboard_code[$mol_keyboard_code["F8"] = 119] = "F8";
-        $mol_keyboard_code[$mol_keyboard_code["F9"] = 120] = "F9";
-        $mol_keyboard_code[$mol_keyboard_code["F10"] = 121] = "F10";
-        $mol_keyboard_code[$mol_keyboard_code["F11"] = 122] = "F11";
-        $mol_keyboard_code[$mol_keyboard_code["F12"] = 123] = "F12";
-        $mol_keyboard_code[$mol_keyboard_code["numLock"] = 144] = "numLock";
-        $mol_keyboard_code[$mol_keyboard_code["scrollLock"] = 145] = "scrollLock";
-        $mol_keyboard_code[$mol_keyboard_code["semicolon"] = 186] = "semicolon";
-        $mol_keyboard_code[$mol_keyboard_code["equals"] = 187] = "equals";
-        $mol_keyboard_code[$mol_keyboard_code["comma"] = 188] = "comma";
-        $mol_keyboard_code[$mol_keyboard_code["dash"] = 189] = "dash";
-        $mol_keyboard_code[$mol_keyboard_code["period"] = 190] = "period";
-        $mol_keyboard_code[$mol_keyboard_code["forwardSlash"] = 191] = "forwardSlash";
-        $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
-        $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
-        $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
-        $mol_keyboard_code[$mol_keyboard_code["slashBackLeft"] = 226] = "slashBackLeft";
-        $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
-        $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
-    })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -10090,30 +11059,6 @@ var $;
 	($mol_mem(($.$mol_string.prototype), "Submit"));
 	($mol_mem(($.$mol_string.prototype), "selection"));
 
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Z-index values for layers
-     * https://page.hyoo.ru/#!=xthcpx_wqmiba
-     */
-    $.$mol_layer = $mol_style_prop('mol_layer', [
-        'hover',
-        'focus',
-        'speck',
-        'float',
-        'popup',
-    ]);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/layer/layer.css", ":root {\n\t--mol_layer_hover: 1;\n\t--mol_layer_focus: 2;\n\t--mol_layer_speck: 3;\n\t--mol_layer_float: 4;\n\t--mol_layer_popup: 5;\n}\n");
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -12159,231 +13104,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_speck) = class $mol_speck extends ($.$mol_view) {
-		value(){
-			return null;
-		}
-		theme(){
-			return "$mol_theme_accent";
-		}
-		sub(){
-			return [(this.value())];
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/speck/speck.view.css", "[mol_speck] {\n\tfont-size: .75rem;\n\tborder-radius: 1rem;\n\tmargin: -0.5rem -0.2rem;\n\talign-self: flex-start;\n\tmin-height: 1em;\n\tmin-width: .75rem;\n\tvertical-align: sub;\n\tpadding: 0 .2rem;\n\tposition: absolute;\n\tz-index: var(--mol_layer_speck);\n\ttext-align: center;\n\tline-height: .9;\n\tdisplay: inline-block;\n\twhite-space: nowrap;\n\ttext-overflow: ellipsis;\n\tuser-select: none;\n\tbox-shadow: 0 0 3px rgba(0,0,0,.5);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$mol_button) = class $mol_button extends ($.$mol_view) {
-		event_activate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		activate(next){
-			return (this.event_activate(next));
-		}
-		clicks(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_key_press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		key_press(next){
-			return (this.event_key_press(next));
-		}
-		disabled(){
-			return false;
-		}
-		tab_index(){
-			return 0;
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		error(){
-			return "";
-		}
-		enabled(){
-			return true;
-		}
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		status(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		event(){
-			return {
-				...(super.event()), 
-				"click": (next) => (this.activate(next)), 
-				"dblclick": (next) => (this.clicks(next)), 
-				"keydown": (next) => (this.key_press(next))
-			};
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"disabled": (this.disabled()), 
-				"role": "button", 
-				"tabindex": (this.tab_index()), 
-				"title": (this.hint_safe())
-			};
-		}
-		sub(){
-			return [(this.title())];
-		}
-		Speck(){
-			const obj = new this.$.$mol_speck();
-			(obj.value) = () => ((this.error()));
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_button.prototype), "event_activate"));
-	($mol_mem(($.$mol_button.prototype), "clicks"));
-	($mol_mem(($.$mol_button.prototype), "event_key_press"));
-	($mol_mem(($.$mol_button.prototype), "click"));
-	($mol_mem(($.$mol_button.prototype), "event_click"));
-	($mol_mem(($.$mol_button.prototype), "status"));
-	($mol_mem(($.$mol_button.prototype), "Speck"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Simple button.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
-         */
-        class $mol_button extends $.$mol_button {
-            disabled() {
-                return !this.enabled();
-            }
-            event_activate(next) {
-                if (!next)
-                    return;
-                if (!this.enabled())
-                    return;
-                try {
-                    this.event_click(next);
-                    this.click(next);
-                    this.status([null]);
-                }
-                catch (error) {
-                    // Calling actions from catch section, if throwing promise breaks idempotency
-                    Promise.resolve().then(() => this.status([error]));
-                    $mol_fail_hidden(error);
-                }
-            }
-            event_key_press(event) {
-                if (event.keyCode === $mol_keyboard_code.enter) {
-                    return this.activate(event);
-                }
-            }
-            tab_index() {
-                return this.enabled() ? super.tab_index() : -1;
-            }
-            error() {
-                const error = this.status()?.[0];
-                if (!error)
-                    return '';
-                if ($mol_promise_like(error)) {
-                    return $mol_fail_hidden(error);
-                }
-                return this.$.$mol_error_message(error);
-            }
-            hint_safe() {
-                try {
-                    return this.hint();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return '';
-                }
-            }
-            sub_visible() {
-                return [
-                    ...this.error() ? [this.Speck()] : [],
-                    ...this.sub(),
-                ];
-            }
-        }
-        $$.$mol_button = $mol_button;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\t-webkit-user-select: none;\n\tborder-radius: var(--mol_gap_round);\n\tbackground: transparent;\n\tcolor: inherit;\n}\n\n[mol_button]:where(:not(:disabled)):hover {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_button]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_button_typed) = class $mol_button_typed extends ($.$mol_button) {
-		minimal_height(){
-			return 40;
-		}
-		minimal_width(){
-			return 40;
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tgap: var(--mol_gap_space);\n\tuser-select: none;\n\tcursor: pointer;\n\tmin-width: 2.5rem;\n\tmin-height: 2.5rem;\n}\n\n[mol_button_typed][disabled] {\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus-visible {\n\tbox-shadow: inset 0 0 0 100vmax var(--mol_theme_hover);\n}\n\n[mol_button_typed]:active {\n\tcolor: var(--mol_theme_focus);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$mol_button_minor) = class $mol_button_minor extends ($.$mol_button_typed) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor]:where(:not([disabled])) {\n\tcolor: var(--mol_theme_control);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
 	($.$mol_check) = class $mol_check extends ($.$mol_button_minor) {
 		checked(next){
 			if(next !== undefined) return next;
@@ -14227,10 +14947,15 @@ var $;
 			(obj.Icon) = () => ((this.favicon_icon()));
 			return obj;
 		}
+		Theme_auto(){
+			const obj = new this.$.$bog_theme_auto();
+			return obj;
+		}
 		Sidebar(){
 			const obj = new this.$.$raggu_web_sidebar();
 			(obj.screen) = (next) => ((this.screen(next)));
 			(obj.dataset_id) = () => ((this.dataset_id()));
+			(obj.Theme_auto) = () => ((this.Theme_auto()));
 			return obj;
 		}
 		open_settings(next){
@@ -14283,8 +15008,23 @@ var $;
 		body(){
 			return [];
 		}
+		lights_mode(){
+			return "light";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"bog_builderui_lights": (this.lights_mode()), 
+				"bog_builderui_base": "stone", 
+				"bog_builderui_theme": "violet", 
+				"bog_builderui_chart": "purple", 
+				"bog_builderui_radius": "medium", 
+				"bog_builderui_font_body": "inter", 
+				"bog_builderui_font_head": "inter"
+			};
+		}
 		plugins(){
-			return [(this.Favicon())];
+			return [(this.Favicon()), (this.Theme_auto())];
 		}
 		sub(){
 			return [
@@ -14314,6 +15054,7 @@ var $;
 	};
 	($mol_mem(($.$raggu_web_app.prototype), "favicon_icon"));
 	($mol_mem(($.$raggu_web_app.prototype), "Favicon"));
+	($mol_mem(($.$raggu_web_app.prototype), "Theme_auto"));
 	($mol_mem(($.$raggu_web_app.prototype), "Sidebar"));
 	($mol_mem(($.$raggu_web_app.prototype), "open_settings"));
 	($mol_mem(($.$raggu_web_app.prototype), "Topbar"));
@@ -14334,105 +15075,6 @@ var $;
 ;
 "use strict";
 
-;
-"use strict";
-var $;
-(function ($) {
-    /** State of arguments like `foo=bar xxx` */
-    class $mol_state_arg extends $mol_object {
-        prefix;
-        static prolog = '';
-        static separator = ' ';
-        static href(next) {
-            return next || process.argv.slice(2).join(' ');
-        }
-        static href_normal() {
-            return this.link({});
-        }
-        static dict(next) {
-            if (next !== void 0)
-                this.href(this.make_link(next));
-            var href = this.href();
-            var chunks = href.split(' ');
-            var params = {};
-            chunks.forEach(chunk => {
-                if (!chunk)
-                    return;
-                var vals = chunk.split('=').map(decodeURIComponent);
-                params[vals.shift()] = vals.join('=');
-            });
-            return params;
-        }
-        static value(key, next) {
-            if (next === void 0)
-                return this.dict()[key] ?? null;
-            this.href(this.link({ [key]: next }));
-            return next;
-        }
-        static link(next) {
-            const params = {};
-            var prev = this.dict();
-            for (var key in prev) {
-                params[key] = prev[key];
-            }
-            for (var key in next) {
-                params[key] = next[key];
-            }
-            return this.make_link(params);
-        }
-        static make_link(next) {
-            const chunks = [];
-            for (const key in next) {
-                if (next[key] !== null) {
-                    chunks.push([key, next[key]].map(encodeURIComponent).join('='));
-                }
-            }
-            return chunks.join(' ');
-        }
-        static go(next) {
-            this.href(this.link(next));
-        }
-        static commit() { }
-        constructor(prefix = '') {
-            super();
-            this.prefix = prefix;
-        }
-        value(key, next) {
-            return this.constructor.value(this.prefix + key, next);
-        }
-        sub(postfix) {
-            return new this.constructor(this.prefix + postfix + '.');
-        }
-        link(next) {
-            const prefix = this.prefix;
-            const dict = {};
-            for (var key in next) {
-                dict[prefix + key] = next[key];
-            }
-            return this.constructor.link(dict);
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_state_arg, "href", null);
-    __decorate([
-        $mol_mem
-    ], $mol_state_arg, "href_normal", null);
-    __decorate([
-        $mol_mem
-    ], $mol_state_arg, "dict", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_state_arg, "value", null);
-    __decorate([
-        $mol_action
-    ], $mol_state_arg, "go", null);
-    $.$mol_state_arg = $mol_state_arg;
-})($ || ($ = {}));
-
-;
-"use strict";
-
 
 ;
 "use strict";
@@ -14449,6 +15091,9 @@ var $;
                     case 'dashboard': return [this.Dashboard()];
                 }
                 return [];
+            }
+            lights_mode() {
+                return this.Theme_auto().is_light_now() ? 'light' : 'dark';
             }
             open_settings() {
                 this.settings_open(true);
@@ -14471,6 +15116,9 @@ var $;
             dataset_id(next) { return this.arg_value('ds', next, 'wiki'); }
         }
         __decorate([
+            $mol_mem
+        ], $raggu_web_app.prototype, "lights_mode", null);
+        __decorate([
             $mol_action
         ], $raggu_web_app.prototype, "open_settings", null);
         __decorate([
@@ -14491,13 +15139,14 @@ var $;
 
 ;
 "use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
     $mol_style_define($raggu_web_app, {
         height: '100vh',
         width: '100%',
-        background: { color: '#e9e8e6' },
-        color: '#44403c',
+        background: { color: $bog_builderui_tokens.back },
+        color: $bog_builderui_tokens.text,
         overflow: 'hidden',
         font: {
             family: 'system-ui, -apple-system, sans-serif',

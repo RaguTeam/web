@@ -1768,36 +1768,22 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_sidebar_nav_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_sidebar_nav_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_sidebar_nav extends $bog_builderui_div {
-		click( next?: any ): any
-		Icon( ): $bog_builderui_div
-		Label( ): $bog_builderui_div
-		icon( ): string
-		label( ): string
-		active( ): boolean
-		attr( ): ({ 
-			'raggu_web_sidebar_nav_active': ReturnType< $raggu_web_sidebar_nav['active'] >,
-		})  & ReturnType< $bog_builderui_div['attr'] >
-		event( ): ({ 
-			click( next?: ReturnType< $raggu_web_sidebar_nav['click'] > ): ReturnType< $raggu_web_sidebar_nav['click'] >,
-		})  & ReturnType< $bog_builderui_div['event'] >
-		sub( ): readonly(any)[]
-	}
-	
+    /**
+     * Theme css variables
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+     */
+    const $bog_theme: Record<"image" | "line" | "text" | "field" | "background" | "back" | "hover" | "card" | "current" | "special" | "control" | "shade" | "focus" | "spirit", $mol_style_func<"var", unknown>>;
+    /**
+     * Available theme names.
+     * Add new theme to theme.css and add its name here.
+     */
+    const $bog_theme_names: readonly ["$mol_theme_giper_smash_dark", "$mol_theme_giper_smash_light", "$mol_theme_light", "$mol_theme_dark", "$mol_theme_monefro_light", "$mol_theme_monefro_dark", "$mol_theme_homerent_light", "$mol_theme_homerent_dark", "$mol_theme_upwork", "$mol_theme_ainews_light", "$mol_theme_ainews_dark", "$mol_theme_calm_dark", "$mol_theme_calm_light"];
+    /**
+     * Type-safe theme name
+     */
+    type $bog_theme_name = (typeof $bog_theme_names)[number];
 }
 
-//# sourceMappingURL=nav.view.tree.d.ts.map
 declare namespace $ {
 }
 
@@ -1857,11 +1843,156 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_state_session<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static value<Value>(key: string, next?: Value): Value;
+        prefix(): string;
+        value(key: string, next?: Value): Value;
+    }
+}
+
+declare namespace $ {
     /**
      * Decorates method to fiber to ensure it is executed only once inside other fiber from [mol_wire](../wire/README.md)
      * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
      */
     let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
+    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static href_normal(): string;
+        static href_absolute(): string;
+        static dict(next?: {
+            [key: string]: string | null;
+        }): Readonly<{
+            [key: string]: string;
+        }>;
+        static dict_cut(except: string[]): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string | null): string | null;
+        static link(next: Record<string, string | null>): string;
+        static prolog: string;
+        static separator: string;
+        static make_link(next: {
+            [key: string]: string | null;
+        }): string;
+        static commit(): void;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
+        static encode(str: string): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string | null;
+        sub(postfix: string): $mol_state_arg;
+        link(next: Record<string, string | null>): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_media extends $mol_object2 {
+        static match(query: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Switcher between light/dark themes (usually for `mol_theme_auto` plugin).
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_lights_demo
+     */
+    function $mol_lights(this: $, next?: boolean): boolean;
+}
+
+declare namespace $ {
+
+	export class $bog_theme_auto extends $mol_plugin {
+		themes_default( ): readonly(any)[]
+		theme( ): string
+		themes( ): ReturnType< $bog_theme_auto['themes_default'] >
+		theme_light( ): string
+		theme_dark( ): string
+		mode( next?: string ): string
+		mode_next( next?: any ): any
+		theme_next( next?: any ): any
+		theme_prev( next?: any ): any
+		theme_set( next?: any ): any
+		is_light_now( ): boolean
+		attr( ): ({ 
+			'mol_theme': ReturnType< $bog_theme_auto['theme'] >,
+		}) 
+	}
+	
+}
+
+//# sourceMappingURL=auto.view.tree.d.ts.map
+declare namespace $.$$ {
+    type $bog_theme_mode = 'light' | 'dark' | 'system' | 'custom';
+    class $bog_theme_auto extends $.$bog_theme_auto {
+        themes_default(): readonly $.$bog_theme_name[];
+        /** Stores current mode in localStorage. Defaults to 'system'.
+         *  При записи дёргает класс `.bog_theme_switching` на `<html>` —
+         *  это активирует CSS-transition'ы на цветах темы.
+         */
+        mode(next?: $bog_theme_mode): $bog_theme_mode;
+        click_step(next?: number): number;
+        /** 3-click cycle: opposite → back → system. */
+        mode_next(): void;
+        is_light_now(): any;
+        theme_index(next?: number): number;
+        system_theme_index(): number;
+        theme(): any;
+        theme_next(): void;
+        theme_prev(): void;
+        /** Called by picker. Sets mode to light/dark or custom for themed palettes. */
+        theme_set(index: number): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_sidebar_nav_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_sidebar_nav_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_sidebar_nav extends $bog_builderui_div {
+		click( next?: any ): any
+		Icon( ): $bog_builderui_div
+		Label( ): $bog_builderui_div
+		icon( ): string
+		label( ): string
+		active( ): boolean
+		attr( ): ({ 
+			'raggu_web_sidebar_nav_active': ReturnType< $raggu_web_sidebar_nav['active'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		event( ): ({ 
+			click( next?: ReturnType< $raggu_web_sidebar_nav['click'] > ): ReturnType< $raggu_web_sidebar_nav['click'] >,
+		})  & ReturnType< $bog_builderui_div['event'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=nav.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -2174,6 +2305,246 @@ declare namespace $ {
 
 declare namespace $ {
 
+	export class $mol_icon_white_balance_sunny extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=sunny.view.tree.d.ts.map
+declare namespace $ {
+    /**
+     * Z-index values for layers
+     * https://page.hyoo.ru/#!=xthcpx_wqmiba
+     */
+    let $mol_layer: Record<"float" | "hover" | "focus" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_speck extends $mol_view {
+		value( ): any
+		theme( ): string
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=speck.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
+		ReturnType< $mol_button['error'] >
+		,
+		ReturnType< $mol_speck['value'] >
+	>
+	export class $mol_button extends $mol_view {
+		event_activate( next?: any ): any
+		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
+		clicks( next?: any ): any
+		event_key_press( next?: any ): any
+		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
+		disabled( ): boolean
+		tab_index( ): number
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_button['hint'] >
+		error( ): string
+		enabled( ): boolean
+		click( next?: any ): any
+		event_click( next?: any ): any
+		status( next?: readonly(any)[] ): readonly(any)[]
+		event( ): ({ 
+			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
+			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
+			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
+		})  & ReturnType< $mol_view['event'] >
+		attr( ): ({ 
+			'disabled': ReturnType< $mol_button['disabled'] >,
+			'role': string,
+			'tabindex': ReturnType< $mol_button['tab_index'] >,
+			'title': ReturnType< $mol_button['hint_safe'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		sub( ): readonly($mol_view_content)[]
+		Speck( ): $mol_speck
+	}
+	
+}
+
+//# sourceMappingURL=button.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Simple button.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+     */
+    class $mol_button extends $.$mol_button {
+        disabled(): boolean;
+        event_activate(next: Event): void;
+        event_key_press(event: KeyboardEvent): any;
+        tab_index(): number;
+        error(): string;
+        hint_safe(): string;
+        sub_visible(): ($mol_view_content | $mol_speck)[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_typed extends $mol_button {
+		minimal_height( ): number
+		minimal_width( ): number
+	}
+	
+}
+
+//# sourceMappingURL=typed.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_minor extends $mol_button_typed {
+	}
+	
+}
+
+//# sourceMappingURL=minor.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_monitor extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=monitor.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_weather_night extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=night.view.tree.d.ts.map
+declare namespace $ {
+
+	type $mol_button_minor__attr_bog_theme_switch_1 = $mol_type_enforce<
+		({ 
+			'bog_theme_switch_active': ReturnType< $bog_theme_switch['light_active'] >,
+		})  & ReturnType< $mol_button_minor['attr'] >
+		,
+		ReturnType< $mol_button_minor['attr'] >
+	>
+	type $mol_button_minor__hint_bog_theme_switch_2 = $mol_type_enforce<
+		ReturnType< $bog_theme_switch['light_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_bog_theme_switch_3 = $mol_type_enforce<
+		ReturnType< $bog_theme_switch['set_light'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_bog_theme_switch_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_button_minor__attr_bog_theme_switch_5 = $mol_type_enforce<
+		({ 
+			'bog_theme_switch_active': ReturnType< $bog_theme_switch['system_active'] >,
+		})  & ReturnType< $mol_button_minor['attr'] >
+		,
+		ReturnType< $mol_button_minor['attr'] >
+	>
+	type $mol_button_minor__hint_bog_theme_switch_6 = $mol_type_enforce<
+		ReturnType< $bog_theme_switch['system_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_bog_theme_switch_7 = $mol_type_enforce<
+		ReturnType< $bog_theme_switch['set_system'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_bog_theme_switch_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $mol_button_minor__attr_bog_theme_switch_9 = $mol_type_enforce<
+		({ 
+			'bog_theme_switch_active': ReturnType< $bog_theme_switch['dark_active'] >,
+		})  & ReturnType< $mol_button_minor['attr'] >
+		,
+		ReturnType< $mol_button_minor['attr'] >
+	>
+	type $mol_button_minor__hint_bog_theme_switch_10 = $mol_type_enforce<
+		ReturnType< $bog_theme_switch['dark_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_bog_theme_switch_11 = $mol_type_enforce<
+		ReturnType< $bog_theme_switch['set_dark'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_bog_theme_switch_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	export class $bog_theme_switch extends $mol_view {
+		light_active( ): boolean
+		light_hint( ): string
+		set_light( next?: any ): any
+		Light_icon( ): $mol_icon_white_balance_sunny
+		Light( ): $mol_button_minor
+		system_active( ): boolean
+		system_hint( ): string
+		set_system( next?: any ): any
+		System_icon( ): $mol_icon_monitor
+		System( ): $mol_button_minor
+		dark_active( ): boolean
+		dark_hint( ): string
+		set_dark( next?: any ): any
+		Dark_icon( ): $mol_icon_weather_night
+		Dark( ): $mol_button_minor
+		theme_auto( ): $bog_theme_auto
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=switch.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_theme_switch extends $.$bog_theme_switch {
+        light_active(): boolean;
+        system_active(): boolean;
+        dark_active(): boolean;
+        set_light(): null;
+        set_system(): null;
+        set_dark(): null;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
 	export class $raggu_web_sidebar_lang extends $bog_builderui_div {
 		click( next?: any ): any
 		label( ): string
@@ -2190,6 +2561,7 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=lang.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -2325,47 +2697,52 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_sidebar_27 = $mol_type_enforce<
+	type $bog_theme_switch__theme_auto_raggu_web_sidebar_27 = $mol_type_enforce<
+		ReturnType< $raggu_web_sidebar['Theme_auto'] >
+		,
+		ReturnType< $bog_theme_switch['theme_auto'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_sidebar_28 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $raggu_web_sidebar_lang__label_raggu_web_sidebar_28 = $mol_type_enforce<
+	type $raggu_web_sidebar_lang__label_raggu_web_sidebar_29 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_sidebar_lang['label'] >
 	>
-	type $raggu_web_sidebar_lang__active_raggu_web_sidebar_29 = $mol_type_enforce<
+	type $raggu_web_sidebar_lang__active_raggu_web_sidebar_30 = $mol_type_enforce<
 		ReturnType< $raggu_web_sidebar['is_en'] >
 		,
 		ReturnType< $raggu_web_sidebar_lang['active'] >
 	>
-	type $raggu_web_sidebar_lang__click_raggu_web_sidebar_30 = $mol_type_enforce<
+	type $raggu_web_sidebar_lang__click_raggu_web_sidebar_31 = $mol_type_enforce<
 		ReturnType< $raggu_web_sidebar['click_en'] >
 		,
 		ReturnType< $raggu_web_sidebar_lang['click'] >
 	>
-	type $raggu_web_sidebar_lang__label_raggu_web_sidebar_31 = $mol_type_enforce<
+	type $raggu_web_sidebar_lang__label_raggu_web_sidebar_32 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_sidebar_lang['label'] >
 	>
-	type $raggu_web_sidebar_lang__active_raggu_web_sidebar_32 = $mol_type_enforce<
+	type $raggu_web_sidebar_lang__active_raggu_web_sidebar_33 = $mol_type_enforce<
 		ReturnType< $raggu_web_sidebar['is_ru'] >
 		,
 		ReturnType< $raggu_web_sidebar_lang['active'] >
 	>
-	type $raggu_web_sidebar_lang__click_raggu_web_sidebar_33 = $mol_type_enforce<
+	type $raggu_web_sidebar_lang__click_raggu_web_sidebar_34 = $mol_type_enforce<
 		ReturnType< $raggu_web_sidebar['click_ru'] >
 		,
 		ReturnType< $raggu_web_sidebar_lang['click'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_sidebar_34 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_sidebar_35 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_sidebar_35 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_sidebar_36 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -2395,6 +2772,7 @@ declare namespace $ {
 		Corpus_name( ): $bog_builderui_div
 		Corpus_meta( ): $bog_builderui_div
 		Corpus_card( ): $bog_builderui_div
+		Theme_switch( ): $bog_theme_switch
 		Lang_label( ): $bog_builderui_div
 		is_en( ): boolean
 		click_en( next?: any ): any
@@ -2406,6 +2784,7 @@ declare namespace $ {
 		Footer( ): $bog_builderui_div
 		screen( next?: string ): string
 		dataset_id( ): string
+		Theme_auto( ): $bog_theme_auto
 		sections_label_text( ): string
 		corpus_label_text( ): string
 		corpus_meta_text( ): string
@@ -2434,6 +2813,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -2455,6 +2835,7 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=preset.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -2596,6 +2977,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -2715,6 +3097,7 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=group.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -2952,6 +3335,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -3053,6 +3437,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -3189,6 +3574,7 @@ declare namespace $.$$ {
     export {};
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -3484,6 +3870,7 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=explorer.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -3725,6 +4112,7 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=chat.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -3776,6 +4164,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -3816,6 +4205,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -4205,6 +4595,7 @@ declare namespace $.$$ {
     export {};
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -4245,17 +4636,6 @@ declare namespace $.$$ {
         key(): { [key in keyof typeof $mol_keyboard_code]?: (event: KeyboardEvent) => void; };
         keydown(event?: KeyboardEvent): void;
     }
-}
-
-declare namespace $ {
-    /**
-     * Z-index values for layers
-     * https://page.hyoo.ru/#!=xthcpx_wqmiba
-     */
-    let $mol_layer: Record<"float" | "hover" | "focus" | "speck" | "popup", $mol_style_func<"var", unknown>>;
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -5248,103 +5628,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_speck extends $mol_view {
-		value( ): any
-		theme( ): string
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=speck.view.tree.d.ts.map
-declare namespace $ {
-
-	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
-		ReturnType< $mol_button['error'] >
-		,
-		ReturnType< $mol_speck['value'] >
-	>
-	export class $mol_button extends $mol_view {
-		event_activate( next?: any ): any
-		activate( next?: ReturnType< $mol_button['event_activate'] > ): ReturnType< $mol_button['event_activate'] >
-		clicks( next?: any ): any
-		event_key_press( next?: any ): any
-		key_press( next?: ReturnType< $mol_button['event_key_press'] > ): ReturnType< $mol_button['event_key_press'] >
-		disabled( ): boolean
-		tab_index( ): number
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_button['hint'] >
-		error( ): string
-		enabled( ): boolean
-		click( next?: any ): any
-		event_click( next?: any ): any
-		status( next?: readonly(any)[] ): readonly(any)[]
-		event( ): ({ 
-			click( next?: ReturnType< $mol_button['activate'] > ): ReturnType< $mol_button['activate'] >,
-			dblclick( next?: ReturnType< $mol_button['clicks'] > ): ReturnType< $mol_button['clicks'] >,
-			keydown( next?: ReturnType< $mol_button['key_press'] > ): ReturnType< $mol_button['key_press'] >,
-		})  & ReturnType< $mol_view['event'] >
-		attr( ): ({ 
-			'disabled': ReturnType< $mol_button['disabled'] >,
-			'role': string,
-			'tabindex': ReturnType< $mol_button['tab_index'] >,
-			'title': ReturnType< $mol_button['hint_safe'] >,
-		})  & ReturnType< $mol_view['attr'] >
-		sub( ): readonly($mol_view_content)[]
-		Speck( ): $mol_speck
-	}
-	
-}
-
-//# sourceMappingURL=button.view.tree.d.ts.map
-declare namespace $.$$ {
-    /**
-     * Simple button.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
-     */
-    class $mol_button extends $.$mol_button {
-        disabled(): boolean;
-        event_activate(next: Event): void;
-        event_key_press(event: KeyboardEvent): any;
-        tab_index(): number;
-        error(): string;
-        hint_safe(): string;
-        sub_visible(): ($mol_view_content | $mol_speck)[];
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_typed extends $mol_button {
-		minimal_height( ): number
-		minimal_width( ): number
-	}
-	
-}
-
-//# sourceMappingURL=typed.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_button_minor extends $mol_button_typed {
-	}
-	
-}
-
-//# sourceMappingURL=minor.view.tree.d.ts.map
-declare namespace $ {
     class $mol_dom_event<EventType extends Event> extends $mol_object {
         readonly native: EventType;
         constructor(native: EventType);
@@ -6159,40 +6442,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
-    class $mol_state_arg extends $mol_object {
-        prefix: string;
-        static href(next?: string): string;
-        static href_normal(): string;
-        static href_absolute(): string;
-        static dict(next?: {
-            [key: string]: string | null;
-        }): Readonly<{
-            [key: string]: string;
-        }>;
-        static dict_cut(except: string[]): {
-            [key: string]: string;
-        };
-        static value(key: string, next?: string | null): string | null;
-        static link(next: Record<string, string | null>): string;
-        static prolog: string;
-        static separator: string;
-        static make_link(next: {
-            [key: string]: string | null;
-        }): string;
-        static commit(): void;
-        static go(next: {
-            [key: string]: string | null;
-        }): void;
-        static encode(str: string): string;
-        constructor(prefix?: string);
-        value(key: string, next?: string): string | null;
-        sub(postfix: string): $mol_state_arg;
-        link(next: Record<string, string | null>): string;
-    }
-}
-
-declare namespace $ {
 
 	type $bog_favicon__Icon_raggu_web_app_1 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['favicon_icon'] >
@@ -6209,47 +6458,52 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_sidebar['dataset_id'] >
 	>
-	type $raggu_web_topbar__screen_raggu_web_app_4 = $mol_type_enforce<
+	type $raggu_web_sidebar__Theme_auto_raggu_web_app_4 = $mol_type_enforce<
+		ReturnType< $raggu_web_app['Theme_auto'] >
+		,
+		ReturnType< $raggu_web_sidebar['Theme_auto'] >
+	>
+	type $raggu_web_topbar__screen_raggu_web_app_5 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['screen'] >
 		,
 		ReturnType< $raggu_web_topbar['screen'] >
 	>
-	type $raggu_web_topbar__dataset_id_raggu_web_app_5 = $mol_type_enforce<
+	type $raggu_web_topbar__dataset_id_raggu_web_app_6 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_topbar['dataset_id'] >
 	>
-	type $raggu_web_topbar__preset_raggu_web_app_6 = $mol_type_enforce<
+	type $raggu_web_topbar__preset_raggu_web_app_7 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['preset'] >
 		,
 		ReturnType< $raggu_web_topbar['preset'] >
 	>
-	type $raggu_web_topbar__open_settings_raggu_web_app_7 = $mol_type_enforce<
+	type $raggu_web_topbar__open_settings_raggu_web_app_8 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['open_settings'] >
 		,
 		ReturnType< $raggu_web_topbar['open_settings'] >
 	>
-	type $mol_scroll__sub_raggu_web_app_8 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_app_9 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['body'] >
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_app_9 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_app_10 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $raggu_web_settings__showed_raggu_web_app_10 = $mol_type_enforce<
+	type $raggu_web_settings__showed_raggu_web_app_11 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['settings_open'] >
 		,
 		ReturnType< $raggu_web_settings['showed'] >
 	>
-	type $raggu_web_gallery__dataset_id_raggu_web_app_11 = $mol_type_enforce<
+	type $raggu_web_gallery__dataset_id_raggu_web_app_12 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_gallery['dataset_id'] >
 	>
-	type $raggu_web_gallery__select_dataset_raggu_web_app_12 = $mol_type_enforce<
+	type $raggu_web_gallery__select_dataset_raggu_web_app_13 = $mol_type_enforce<
 		ReturnType< $raggu_web_app['select_dataset'] >
 		,
 		ReturnType< $raggu_web_gallery['select_dataset'] >
@@ -6257,6 +6511,7 @@ declare namespace $ {
 	export class $raggu_web_app extends $bog_builderui_div {
 		favicon_icon( ): $mol_icon_graph
 		Favicon( ): $bog_favicon
+		Theme_auto( ): $bog_theme_auto
 		Sidebar( ): $raggu_web_sidebar
 		open_settings( next?: any ): any
 		Topbar( ): $raggu_web_topbar
@@ -6269,6 +6524,16 @@ declare namespace $ {
 		dataset_id( next?: string ): string
 		settings_open( next?: boolean ): boolean
 		body( ): readonly(any)[]
+		lights_mode( ): string
+		attr( ): ({ 
+			'bog_builderui_lights': ReturnType< $raggu_web_app['lights_mode'] >,
+			'bog_builderui_base': string,
+			'bog_builderui_theme': string,
+			'bog_builderui_chart': string,
+			'bog_builderui_radius': string,
+			'bog_builderui_font_body': string,
+			'bog_builderui_font_head': string,
+		})  & ReturnType< $bog_builderui_div['attr'] >
 		plugins( ): readonly(any)[]
 		sub( ): readonly(any)[]
 		Gallery( ): $raggu_web_gallery
@@ -6283,6 +6548,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $raggu_web_app extends $.$raggu_web_app {
         body(): $.$raggu_web_gallery[] | $raggu_web_explorer[] | $raggu_web_chat[] | $.$raggu_web_dashboard[];
+        lights_mode(): "light" | "dark";
         open_settings(): null;
         select_dataset(id: string): null;
         arg_value(key: string, next: string | undefined, fallback: string): string;
@@ -6292,6 +6558,7 @@ declare namespace $.$$ {
     }
 }
 
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
