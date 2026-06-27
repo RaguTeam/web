@@ -1,4 +1,7 @@
 {
+	"$bog_theme_switch_dark_hint": "Тёмная",
+	"$bog_theme_switch_light_hint": "Светлая",
+	"$bog_theme_switch_system_hint": "Как в системе",
 	"$mol_search_Clear_hint": "Очистить",
 	"$mol_search_hint": "Поиск..",
 	"$mol_select_filter_hint": "Фильтр..",
@@ -91,6 +94,7 @@
 	"$raggu_web_gallery_card_unit_nodes": "узлов",
 	"$raggu_web_gallery_header_subtitle_text": "Выберите готовый граф знаний или загрузите свой документ / индекс",
 	"$raggu_web_gallery_header_title_text": "Галерея корпусов",
+	"$raggu_web_gallery_upload_close_text": "✕",
 	"$raggu_web_gallery_upload_doc_text": "＋ Загрузить документ",
 	"$raggu_web_gallery_upload_error_title_text": "Загрузка отклонена",
 	"$raggu_web_gallery_upload_idx_text": "⇪ Загрузить готовый индекс",

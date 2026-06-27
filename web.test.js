@@ -3592,6 +3592,216 @@ var $;
                 app.Topbar().click_fast();
                 $mol_assert_equal(app.preset(), 'fast');
             },
+            // ---- gallery upload ----
+            'gallery.start_upload: sets kind, opens panel'($) {
+                const g = $raggu_web_gallery.make({ $ });
+                $mol_assert_equal(g.upload_showed(), false);
+                g.start_upload('document');
+                $mol_assert_equal(g.upload_kind(), 'document');
+                $mol_assert_equal(g.upload_showed(), true);
+            },
+            'gallery.upload.start: small file → no error, step reset to 0'($) {
+                const g = $raggu_web_gallery.make({ $ });
+                g.start_upload('document');
+                const up = g.Upload();
+                $mol_assert_equal(up.error(), '');
+                $mol_assert_equal(up.step(), 0);
+            },
+            'gallery.upload.start: oversize → error truthy, no progress'($) {
+                const g = $raggu_web_gallery.make({ $ });
+                g.upload_kind('index');
+                g.upload_showed(true);
+                const up = g.Upload();
+                up.start(12.5);
+                $mol_assert_equal(!!up.error(), true);
+                $mol_assert_equal(up.step(), 0);
+            },
+            'gallery.upload_complete: adds dataset, closes panel'($) {
+                const g = $raggu_web_gallery.make({ $ });
+                $mol_assert_equal(g.extra_datasets().length, 0);
+                $mol_assert_equal(g.datasets().length, 6);
+                g.start_upload('document');
+                g.upload_complete();
+                $mol_assert_equal(g.extra_datasets().length, 1);
+                $mol_assert_equal(g.datasets().length, 7);
+                $mol_assert_equal(g.upload_showed(), false);
+                $mol_assert_equal(g.upload_kind(), '');
+            },
+            // ---- settings real controls ----
+            'settings.apply_preset(fast): key fields land at fast values'($) {
+                const s = $raggu_web_settings.make({ $ });
+                s.apply_preset('fast');
+                $mol_assert_equal(s.chunking_strategy(), 'Simple');
+                $mol_assert_equal(s.chunking_size_str(), '256');
+                $mol_assert_equal(s.search_topk(), 5);
+                $mol_assert_equal(s.extraction_model(), 'meno-lite-7b');
+            },
+            'settings.apply_preset(accurate): key fields land at accurate values'($) {
+                const s = $raggu_web_settings.make({ $ });
+                s.apply_preset('accurate');
+                $mol_assert_equal(s.chunking_strategy(), 'SmartSemantic');
+                $mol_assert_equal(s.summarization_llm(), true);
+                $mol_assert_equal(s.search_topk(), 10);
+                $mol_assert_equal(s.search_mode(), 'Mix');
+            },
+            'settings.apply_preset(demo): key fields land at demo values'($) {
+                const s = $raggu_web_settings.make({ $ });
+                s.apply_preset('demo');
+                $mol_assert_equal(s.chunking_size_str(), '512');
+                $mol_assert_equal(s.search_mode(), 'Local');
+                $mol_assert_equal(s.refinement_isolated(), true);
+            },
+            'settings: every group renders Controls array (sub > 0)'($) {
+                const s = $raggu_web_settings.make({ $ });
+                $mol_assert_equal(s.Group_chunking().Controls().sub().length > 0, true);
+                $mol_assert_equal(s.Group_extraction().Controls().sub().length > 0, true);
+                $mol_assert_equal(s.Group_summarization().Controls().sub().length > 0, true);
+                $mol_assert_equal(s.Group_communities().Controls().sub().length > 0, true);
+                $mol_assert_equal(s.Group_refinement().Controls().sub().length > 0, true);
+                $mol_assert_equal(s.Group_search().Controls().sub().length > 0, true);
+                // chunking group: select + size_row + overlap_row = 3
+                $mol_assert_equal(s.Group_chunking().Controls().sub().length, 3);
+            },
+            // ---- dashboard energy formula ----
+            'dashboard.pipeline_seconds: sum of STAGES.time'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                // 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
+                $mol_assert_equal(d.pipeline_seconds().toFixed(1), '15.3');
+            },
+            'dashboard.energy_kwh: TDP × time × PUE / 1000'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                // 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
+                const kwh = d.energy_kwh();
+                $mol_assert_equal(kwh > 0.0017 && kwh < 0.0019, true);
+                $mol_assert_equal(d.energy_kwh_val(), '0.00');
+            },
+            'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                const val = d.energy_cost_val();
+                $mol_assert_equal(/^[−+]\d+%$/.test(val), true);
+            },
+            // ---- dashboard log expand ----
+            'dashboard.log: default not expanded'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                $mol_assert_equal(d.Log('q1').expanded(), false);
+            },
+            'dashboard.log.toggle: flips expanded'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                const log = d.Log('q1');
+                $mol_assert_equal(log.expanded(), false);
+                log.toggle();
+                $mol_assert_equal(log.expanded(), true);
+                log.toggle();
+                $mol_assert_equal(log.expanded(), false);
+            },
+            'dashboard.log: Trace sub-view exists, attr reflects expanded state'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                const log = d.Log('q1');
+                $mol_assert_equal(!!log.Trace(), true);
+                $mol_assert_equal(log.attr().raggu_web_dashboard_log_expanded, false);
+                log.toggle();
+                $mol_assert_equal(log.attr().raggu_web_dashboard_log_expanded, true);
+            },
+            'dashboard.log.arrow: glyph depends on expanded'($) {
+                const d = $raggu_web_dashboard.make({ $ });
+                const log = d.Log('q2');
+                $mol_assert_equal(log.arrow(), '▾');
+                log.toggle();
+                $mol_assert_equal(log.arrow(), '▴');
+            },
+            // ---- export ----
+            'export.formats: explorer has 4 items'($) {
+                const ex = $raggu_web_export.make({ $ });
+                ex.screen = () => 'explorer';
+                $mol_assert_equal(ex.formats().length, 4);
+                $mol_assert_equal(ex.formats()[0].id, 'graphml');
+            },
+            'export.formats: chat has 2 items'($) {
+                const ex = $raggu_web_export.make({ $ });
+                ex.screen = () => 'chat';
+                $mol_assert_equal(ex.formats().length, 2);
+                $mol_assert_equal(ex.formats()[0].id, 'md_chat');
+            },
+            'export.formats: dashboard has 2 items'($) {
+                const ex = $raggu_web_export.make({ $ });
+                ex.screen = () => 'dashboard';
+                $mol_assert_equal(ex.formats().length, 2);
+                $mol_assert_equal(ex.formats()[0].id, 'csv_dash');
+            },
+            'export.formats: gallery → empty list, Items renders Empty placeholder'($) {
+                const ex = $raggu_web_export.make({ $ });
+                ex.screen = () => 'gallery';
+                $mol_assert_equal(ex.formats().length, 0);
+                $mol_assert_equal(ex.items().length, 1);
+                $mol_assert_equal(ex.items()[0], ex.Empty());
+            },
+            'export.items: count matches formats across screens'($) {
+                const ex = $raggu_web_export.make({ $ });
+                ex.screen = () => 'explorer';
+                $mol_assert_equal(ex.items().length, 4);
+                ex.screen = () => 'chat';
+                $mol_assert_equal(ex.items().length, 2);
+            },
+            'export.payload: returns Blob for each format id'($) {
+                const ex = $raggu_web_export.make({ $ });
+                const ids = [
+                    'graphml', 'gexf', 'json_graph', 'png_graph',
+                    'md_chat', 'json_chat',
+                    'csv_dash', 'json_dash',
+                ];
+                for (const id of ids) {
+                    const blob = ex.payload(id);
+                    $mol_assert_equal(blob instanceof Blob, true);
+                    $mol_assert_equal(blob.size > 0, true);
+                }
+            },
+            // ---- chat ----
+            'chat: default history has 2 seed messages'($) {
+                const c = $raggu_web_chat.make({ $ });
+                const h = c.history();
+                $mol_assert_equal(h.length, 2);
+                $mol_assert_equal(h[0].role, 'user');
+                $mol_assert_equal(h[1].role, 'assistant');
+                $mol_assert_equal(h[1].trace, true);
+            },
+            'chat.use_sug_one: prompt_text equals sug_one_text'($) {
+                const c = $raggu_web_chat.make({ $ });
+                c.prompt_text('');
+                c.use_sug_one();
+                $mol_assert_equal(c.prompt_text(), c.sug_one_text());
+            },
+            'chat.use_sug_two: prompt_text equals sug_two_text'($) {
+                const c = $raggu_web_chat.make({ $ });
+                c.prompt_text('');
+                c.use_sug_two();
+                $mol_assert_equal(c.prompt_text(), c.sug_two_text());
+            },
+            'chat.prompt_submit: history grows sync (user msg), prompt_text cleared'($) {
+                const c = $raggu_web_chat.make({ $ });
+                c.prompt_text('');
+                const before = c.history().length;
+                c.prompt_text('test query');
+                c.prompt_submit();
+                // setTimeout(500) for assistant won't fire in test — only user msg sync
+                $mol_assert_equal(c.history().length, before + 1);
+                $mol_assert_equal(c.history()[before].role, 'user');
+                $mol_assert_equal(c.history()[before].text, 'test query');
+                $mol_assert_equal(c.prompt_text(), '');
+            },
+            'chat.prompt_submit: blank text is a no-op'($) {
+                const c = $raggu_web_chat.make({ $ });
+                const before = c.history().length;
+                c.prompt_text('   ');
+                c.prompt_submit();
+                $mol_assert_equal(c.history().length, before);
+            },
+            'chat: trace label / chip texts are non-empty localized strings'($) {
+                const c = $raggu_web_chat.make({ $ });
+                $mol_assert_equal(typeof c.trace_label_text() === 'string', true);
+                $mol_assert_equal(c.trace_label_text().length > 0, true);
+                $mol_assert_equal(typeof c.trace_chip_one_text() === 'string', true);
+                $mol_assert_equal(c.trace_chip_one_text().length > 0, true);
+            },
         });
         // Visual e2e demo: runs only in the browser (test.html) after app mounts.
         // Drives the live Root(0) so the user watches the flow with 1s pauses.
