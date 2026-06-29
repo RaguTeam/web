@@ -54,5 +54,5 @@
 	pack metrics git \https://github.com/b-on-g/metrics.git
 	pack tracker git \https://github.com/b-on-g/tracker.git
 	pack builderui git \https://github.com/b-on-g/builderui.git
-\/raggu/web/app
+\/raggu/web/front/app
 	deploy \/mol/offline/install
