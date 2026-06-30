@@ -15607,14 +15607,18 @@ var $;
                 }
                 if (!this.dragging)
                     return;
-                const dx = event.clientX - this.last_x;
-                const dy = event.clientY - this.last_y;
+                // Convert pixel-delta to svg-userspace-delta via CTM so pan tracks pointer 1:1
+                const svg = this.dom_node();
+                const ctm = svg.getScreenCTM();
+                if (!ctm)
+                    return;
+                const dx_px = event.clientX - this.last_x;
+                const dy_px = event.clientY - this.last_y;
                 this.last_x = event.clientX;
                 this.last_y = event.clientY;
-                const svg = this.dom_node();
-                const scale = (600 / this.zoom()) / svg.clientWidth;
-                this.pan_x(this.pan_x() - dx * scale);
-                this.pan_y(this.pan_y() - dy * scale);
+                // CTM scales: ctm.a = svg→screen x scale, ctm.d = svg→screen y scale
+                this.pan_x(this.pan_x() - dx_px / ctm.a);
+                this.pan_y(this.pan_y() - dy_px / ctm.d);
             }
             pan_end() {
                 this.dragging = false;
@@ -15623,20 +15627,18 @@ var $;
                     this.drag_id('');
                 }
             }
-            // Convert pointer client coords → svg coords accounting for current view_box.
-            // Use dom_node() rather than event.currentTarget — the latter is reset to null
-            // once event dispatch returns from inside @$mol_action's fiber.
+            // Convert pointer client coords → svg userspace via native CTM.
+            // Handles viewBox + preserveAspectRatio + zoom/pan in one step.
             client_to_svg(event) {
                 const svg = this.dom_node();
-                const rect = svg.getBoundingClientRect();
-                const z = Math.max(0.2, Math.min(5, this.zoom()));
-                const size = 600 / z;
-                const px = (event.clientX - rect.left) / rect.width;
-                const py = (event.clientY - rect.top) / rect.height;
-                return {
-                    x: -size / 2 + this.pan_x() + px * size,
-                    y: -size / 2 + this.pan_y() + py * size,
-                };
+                const ctm = svg.getScreenCTM();
+                if (!ctm)
+                    return { x: 0, y: 0 };
+                const pt = svg.createSVGPoint();
+                pt.x = event.clientX;
+                pt.y = event.clientY;
+                const local = pt.matrixTransform(ctm.inverse());
+                return { x: local.x, y: local.y };
             }
             mock() {
                 const g = build_mock();
