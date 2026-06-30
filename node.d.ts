@@ -6757,7 +6757,7 @@ declare namespace $ {
 			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] >,
 			pointermove( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_move'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_move'] >,
 			pointerup( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] >,
-			pointerleave( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] >,
+			pointercancel( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] >,
 			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['bg_click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['bg_click'] >,
 		})  & ReturnType< $mol_svg_root['event'] >
 		sub( ): readonly(any)[]
@@ -6784,6 +6784,8 @@ declare namespace $.$$ {
         relation: string;
     };
     export class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+        drag_id_raw: string;
+        drag_id(next?: string): string;
         computed_view_box(): string;
         wheel(event?: WheelEvent): void;
         dragging: boolean;
@@ -6794,8 +6796,6 @@ declare namespace $.$$ {
         start_y: number;
         readonly DRAG_THRESHOLD = 4;
         pan_start(event?: PointerEvent): void;
-        captured: boolean;
-        acquire_capture(event: PointerEvent): void;
         svg_scale(): {
             ax: number;
             ay: number;

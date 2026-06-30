@@ -15389,7 +15389,7 @@ var $;
 				"pointerdown": (next) => (this.pan_start(next)), 
 				"pointermove": (next) => (this.pan_move(next)), 
 				"pointerup": (next) => (this.pan_end(next)), 
-				"pointerleave": (next) => (this.pan_end(next)), 
+				"pointercancel": (next) => (this.pan_end(next)), 
 				"click": (next) => (this.bg_click(next))
 			};
 		}
@@ -15548,6 +15548,17 @@ var $;
             }
         }
         class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+            // Plain non-reactive field overriding the auto-gen @$mol_mem drag_id.
+            // The mem-cell version got invalidated between event-handler fibers
+            // (wire_async destroys previous fiber on each event, which appears to
+            // reset the subscribed cell back to its declared default '').
+            // Plain field persists across calls without wire interference.
+            drag_id_raw = '';
+            drag_id(next) {
+                if (next !== undefined)
+                    this.drag_id_raw = next;
+                return this.drag_id_raw;
+            }
             // Pan/zoom state — fold into reactive view_box
             computed_view_box() {
                 const z = Math.max(0.2, Math.min(5, this.zoom()));
@@ -15589,26 +15600,18 @@ var $;
                 this.start_y = event.clientY;
                 this.moved_px = 0;
                 this.just_dragged = '';
-                this.captured = false;
+                // Capture on the EVENT TARGET (the circle for node-drag, svg for pan).
+                // Pointer events keep targeting that element until release — preserves
+                // click dispatch on the circle and survives cursor leaving its bounds.
+                try {
+                    target.setPointerCapture(event.pointerId);
+                }
+                catch { }
                 if (node_id) {
                     this.drag_id(node_id);
                     return;
                 }
                 this.dragging = true;
-            }
-            // Engage pointer-capture lazily — only once the user has crossed the drag
-            // threshold. Capturing too early hijacks pointerup, which kills the click
-            // event on the circle (click dispatches to the captured svg-root instead).
-            captured = false;
-            acquire_capture(event) {
-                if (this.captured)
-                    return;
-                const svg = this.dom_node();
-                try {
-                    svg.setPointerCapture(event.pointerId);
-                    this.captured = true;
-                }
-                catch { }
             }
             // Returns svg-units per screen-pixel ratio for x/y. 1 if CTM missing.
             svg_scale() {
@@ -15634,10 +15637,6 @@ var $;
                 // Below threshold while pressing on a node — treat as pending click, don't move
                 if (this.drag_id() && this.moved_px < this.DRAG_THRESHOLD)
                     return;
-                // Crossed threshold → engage pointer capture so drag survives pointer
-                // leaving the circle. Capturing here (not in pan_start) keeps clicks
-                // functional for taps that never crossed threshold.
-                this.acquire_capture(event);
                 const { ax, ay } = this.svg_scale();
                 const dx = dx_px * ax;
                 const dy = dy_px * ay;
@@ -15656,7 +15655,6 @@ var $;
             }
             pan_end() {
                 this.dragging = false;
-                this.captured = false;
                 if (this.drag_id()) {
                     if (this.moved_px >= this.DRAG_THRESHOLD) {
                         this.just_dragged = this.drag_id();

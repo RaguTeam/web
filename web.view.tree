@@ -1238,7 +1238,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 		pointerdown?event <=> pan_start?event null
 		pointermove?event <=> pan_move?event null
 		pointerup?event <=> pan_end?event null
-		pointerleave?event <=> pan_end?event null
+		pointercancel?event <=> pan_end?event null
 		click?event <=> bg_click?event null
 	sub /
 		<= G_edges $mol_svg_group
