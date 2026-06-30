@@ -15161,8 +15161,11 @@ var $;
                     return;
                 const target = event.target;
                 const node_id = target.getAttribute('data-node-id');
-                const svg = event.currentTarget;
-                svg.setPointerCapture(event.pointerId);
+                const svg = this.dom_node();
+                try {
+                    svg.setPointerCapture(event.pointerId);
+                }
+                catch { }
                 if (node_id) {
                     this.drag_id(node_id);
                     return;
@@ -15187,7 +15190,7 @@ var $;
                 const dy = event.clientY - this.last_y;
                 this.last_x = event.clientX;
                 this.last_y = event.clientY;
-                const svg = event.currentTarget;
+                const svg = this.dom_node();
                 const scale = (600 / this.zoom()) / svg.clientWidth;
                 this.pan_x(this.pan_x() - dx * scale);
                 this.pan_y(this.pan_y() - dy * scale);
@@ -15200,8 +15203,10 @@ var $;
                 }
             }
             // Convert pointer client coords → svg coords accounting for current view_box.
+            // Use dom_node() rather than event.currentTarget — the latter is reset to null
+            // once event dispatch returns from inside @$mol_action's fiber.
             client_to_svg(event) {
-                const svg = event.currentTarget;
+                const svg = this.dom_node();
                 const rect = svg.getBoundingClientRect();
                 const z = Math.max(0.2, Math.min(5, this.zoom()));
                 const size = 600 / z;
@@ -15441,6 +15446,12 @@ var $;
         width: '100%',
         height: '100%',
         display: 'block',
+        // Disable browser default drag actions during pointer-capture:
+        // - text selection on drag
+        // - touch scroll/zoom gestures
+        // - native image drag
+        userSelect: 'none',
+        touchAction: 'none',
     });
 })($ || ($ = {}));
 
