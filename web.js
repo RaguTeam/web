@@ -14815,6 +14815,9 @@ var $;
 		node_radius(id){
 			return "6";
 		}
+		node_id(id){
+			return "";
+		}
 		node_color(id){
 			return "#7c6ce0";
 		}
@@ -14836,10 +14839,6 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
-		node_pointerdown(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
 		Node(id){
 			const obj = new this.$.$mol_svg_circle();
 			(obj.pos_x) = () => ((this.node_x(id)));
@@ -14847,6 +14846,7 @@ var $;
 			(obj.radius) = () => ((this.node_radius(id)));
 			(obj.attr) = () => ({
 				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
+				"data-node-id": (this.node_id(id)), 
 				"fill": (this.node_color(id)), 
 				"stroke": (this.node_stroke(id)), 
 				"stroke-width": (this.node_stroke_width(id)), 
@@ -14856,8 +14856,7 @@ var $;
 				...(this.$.$mol_svg_circle.prototype.event.call(obj)), 
 				"click": (next) => (this.click(id, next)), 
 				"pointerenter": (next) => (this.hover_enter(id, next)), 
-				"pointerleave": (next) => (this.hover_leave(id, next)), 
-				"pointerdown": (next) => (this.node_pointerdown(id, next))
+				"pointerleave": (next) => (this.hover_leave(id, next))
 			});
 			return obj;
 		}
@@ -15000,7 +14999,6 @@ var $;
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_enter"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_leave"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "node_pointerdown"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_nodes"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_bg"));
@@ -15161,17 +15159,17 @@ var $;
             pan_start(event) {
                 if (!event)
                     return;
-                // Node-drag in progress: pan_start should noop
-                if (this.drag_id())
-                    return;
                 const target = event.target;
-                // Skip when click started on a node circle — node_pointerdown handles it
-                if (target.tagName === 'circle')
+                const node_id = target.getAttribute('data-node-id');
+                const svg = event.currentTarget;
+                svg.setPointerCapture(event.pointerId);
+                if (node_id) {
+                    this.drag_id(node_id);
                     return;
+                }
                 this.dragging = true;
                 this.last_x = event.clientX;
                 this.last_y = event.clientY;
-                event.currentTarget.setPointerCapture(event.pointerId);
             }
             pan_move(event) {
                 if (!event)
@@ -15196,7 +15194,10 @@ var $;
             }
             pan_end() {
                 this.dragging = false;
-                this.drag_id('');
+                if (this.drag_id()) {
+                    this.just_dragged = this.drag_id();
+                    this.drag_id('');
+                }
             }
             // Convert pointer client coords → svg coords accounting for current view_box.
             client_to_svg(event) {
@@ -15210,15 +15211,6 @@ var $;
                     x: -size / 2 + this.pan_x() + px * size,
                     y: -size / 2 + this.pan_y() + py * size,
                 };
-            }
-            // Per-node pointerdown — start node drag, capture pointer on the circle itself
-            node_pointerdown(id, event) {
-                if (!event)
-                    return;
-                event.stopPropagation();
-                this.drag_id(id);
-                event.target.setPointerCapture(event.pointerId);
-                return null;
             }
             mock() {
                 const g = build_mock();
@@ -15243,6 +15235,8 @@ var $;
             pos(id) {
                 return this.positions()[id] ?? this.node_by_id()[id];
             }
+            // Used in view.tree as `data-node-id` attr so pan_start can identify node-target.
+            node_id(id) { return id; }
             // Node accessors (keyed) — return strings, SVG attrs expect string
             node_x(id) { return String(this.pos(id).x); }
             node_y(id) { return String(this.pos(id).y); }
@@ -15320,8 +15314,8 @@ var $;
             bg_click(event) {
                 if (!event)
                     return;
-                const tag = event.target.tagName;
-                if (tag === 'circle')
+                const target = event.target;
+                if (target.getAttribute('data-node-id'))
                     return;
                 this.selected_id('');
                 this.select('');
@@ -15413,9 +15407,6 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "pan_end", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "node_pointerdown", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "mock", null);

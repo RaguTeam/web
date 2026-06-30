@@ -1261,6 +1261,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 					radius <= node_radius* \6
 					attr *
 						^
+						data-node-id <= node_id* \
 						fill <= node_color* \#7c6ce0
 						stroke <= node_stroke* \transparent
 						stroke-width <= node_stroke_width* \0
@@ -1270,7 +1271,6 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						click? <=> click*? null
 						pointerenter? <=> hover_enter*? null
 						pointerleave? <=> hover_leave*? null
-						pointerdown?event <=> node_pointerdown*?event null
 		<= Tooltip $mol_svg_group
 			attr *
 				^

@@ -6505,6 +6505,7 @@ declare namespace $ {
 	>
 	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_10 = $mol_type_enforce<
 		({ 
+			'data-node-id': ReturnType< $raggu_web_front_explorer_forcegraph['node_id'] >,
 			'fill': ReturnType< $raggu_web_front_explorer_forcegraph['node_color'] >,
 			'stroke': ReturnType< $raggu_web_front_explorer_forcegraph['node_stroke'] >,
 			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['node_stroke_width'] >,
@@ -6518,7 +6519,6 @@ declare namespace $ {
 			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['click'] >,
 			pointerenter( next?: ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] >,
 			pointerleave( next?: ReturnType< $raggu_web_front_explorer_forcegraph['hover_leave'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['hover_leave'] >,
-			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['node_pointerdown'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['node_pointerdown'] >,
 		})  & ReturnType< $mol_svg_circle['event'] >
 		,
 		ReturnType< $mol_svg_circle['event'] >
@@ -6625,13 +6625,13 @@ declare namespace $ {
 		node_x( id: any): string
 		node_y( id: any): string
 		node_radius( id: any): string
+		node_id( id: any): string
 		node_color( id: any): string
 		node_stroke( id: any): string
 		node_stroke_width( id: any): string
 		click( id: any, next?: any ): any
 		hover_enter( id: any, next?: any ): any
 		hover_leave( id: any, next?: any ): any
-		node_pointerdown( id: any, next?: any ): any
 		Node( id: any): $mol_svg_circle
 		node_views( ): readonly(any)[]
 		G_nodes( ): $mol_svg_group
@@ -6701,7 +6701,6 @@ declare namespace $.$$ {
             x: number;
             y: number;
         };
-        node_pointerdown(id: string, event?: PointerEvent): null | undefined;
         mock(): {
             nodes: GraphNode[];
             edges: GraphEdge[];
@@ -6712,6 +6711,7 @@ declare namespace $.$$ {
         node_views(): $.$mol_svg_circle[];
         edge_views(): $.$mol_svg_line[];
         pos(id: string): any;
+        node_id(id: string): string;
         node_x(id: string): string;
         node_y(id: string): string;
         node_radius(id: string): string;
