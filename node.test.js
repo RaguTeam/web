@@ -14905,21 +14905,976 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_svg_line) = class $mol_svg_line extends ($.$mol_svg) {
+		from(){
+			return [];
+		}
+		to(){
+			return [];
+		}
+		from_x(){
+			return "";
+		}
+		from_y(){
+			return "";
+		}
+		to_x(){
+			return "";
+		}
+		to_y(){
+			return "";
+		}
+		dom_name(){
+			return "line";
+		}
+		pos(){
+			return [(this.from()), (this.to())];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"x1": (this.from_x()), 
+				"y1": (this.from_y()), 
+				"x2": (this.to_x()), 
+				"y2": (this.to_y())
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_line extends $.$mol_svg_line {
+            from() {
+                return this.pos()[0];
+            }
+            from_x() {
+                return this.from()[0];
+            }
+            from_y() {
+                return this.from()[1];
+            }
+            to() {
+                return this.pos()[1];
+            }
+            to_x() {
+                return this.to()[0];
+            }
+            to_y() {
+                return this.to()[1];
+            }
+        }
+        $$.$mol_svg_line = $mol_svg_line;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
+		radius(){
+			return ".5%";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		dom_name(){
+			return "circle";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"r": (this.radius()), 
+				"cx": (this.pos_x()), 
+				"cy": (this.pos_y())
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_circle extends $.$mol_svg_circle {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_circle = $mol_svg_circle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_rect) = class $mol_svg_rect extends ($.$mol_svg) {
+		width(){
+			return "0";
+		}
+		height(){
+			return "0";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		dom_name(){
+			return "rect";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"width": (this.width()), 
+				"height": (this.height()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y())
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_rect extends $.$mol_svg_rect {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_rect = $mol_svg_rect;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_text) = class $mol_svg_text extends ($.$mol_svg) {
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		align(){
+			return "middle";
+		}
+		align_hor(){
+			return (this.align());
+		}
+		align_vert(){
+			return "baseline";
+		}
+		text(){
+			return "";
+		}
+		dom_name(){
+			return "text";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y()), 
+				"text-anchor": (this.align_hor()), 
+				"alignment-baseline": (this.align_vert())
+			};
+		}
+		sub(){
+			return [(this.text())];
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_text extends $.$mol_svg_text {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_text = $mol_svg_text;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/svg/text/text.view.css", "[mol_svg_text] {\n\tfill: currentColor;\n\tstroke: none;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_explorer_forcegraph) = class $raggu_web_front_explorer_forcegraph extends ($.$mol_svg_root) {
+		computed_view_box(){
+			return "-300 -300 600 600";
+		}
+		wheel(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		pan_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		pan_move(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		pan_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		bg_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edge_x1(id){
+			return "";
+		}
+		edge_y1(id){
+			return "";
+		}
+		edge_x2(id){
+			return "";
+		}
+		edge_y2(id){
+			return "";
+		}
+		edge_color(id){
+			return "#7a7672";
+		}
+		edge_width(id){
+			return "1";
+		}
+		edge_opacity(id){
+			return "0.55";
+		}
+		Edge(id){
+			const obj = new this.$.$mol_svg_line();
+			(obj.from_x) = () => ((this.edge_x1(id)));
+			(obj.from_y) = () => ((this.edge_y1(id)));
+			(obj.to_x) = () => ((this.edge_x2(id)));
+			(obj.to_y) = () => ((this.edge_y2(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_line.prototype.attr.call(obj)), 
+				"stroke": (this.edge_color(id)), 
+				"stroke-width": (this.edge_width(id)), 
+				"stroke-opacity": (this.edge_opacity(id))
+			});
+			return obj;
+		}
+		edge_views(){
+			return [(this.Edge(id))];
+		}
+		G_edges(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.sub) = () => ((this.edge_views()));
+			return obj;
+		}
+		node_x(id){
+			return "";
+		}
+		node_y(id){
+			return "";
+		}
+		node_radius(id){
+			return "6";
+		}
+		node_color(id){
+			return "#7c6ce0";
+		}
+		node_stroke(id){
+			return "transparent";
+		}
+		node_stroke_width(id){
+			return "0";
+		}
+		click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		hover_enter(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		hover_leave(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		node_pointerdown(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Node(id){
+			const obj = new this.$.$mol_svg_circle();
+			(obj.pos_x) = () => ((this.node_x(id)));
+			(obj.pos_y) = () => ((this.node_y(id)));
+			(obj.radius) = () => ((this.node_radius(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
+				"fill": (this.node_color(id)), 
+				"stroke": (this.node_stroke(id)), 
+				"stroke-width": (this.node_stroke_width(id)), 
+				"cursor": "pointer"
+			});
+			(obj.event) = () => ({
+				...(this.$.$mol_svg_circle.prototype.event.call(obj)), 
+				"click": (next) => (this.click(id, next)), 
+				"pointerenter": (next) => (this.hover_enter(id, next)), 
+				"pointerleave": (next) => (this.hover_leave(id, next)), 
+				"pointerdown": (next) => (this.node_pointerdown(id, next))
+			});
+			return obj;
+		}
+		node_views(){
+			return [(this.Node(id))];
+		}
+		G_nodes(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.sub) = () => ((this.node_views()));
+			return obj;
+		}
+		tooltip_bg_x(){
+			return "0";
+		}
+		tooltip_bg_y(){
+			return "0";
+		}
+		tooltip_bg_w(){
+			return "0";
+		}
+		tooltip_bg_h(){
+			return "0";
+		}
+		Tooltip_bg(){
+			const obj = new this.$.$mol_svg_rect();
+			(obj.pos_x) = () => ((this.tooltip_bg_x()));
+			(obj.pos_y) = () => ((this.tooltip_bg_y()));
+			(obj.width) = () => ((this.tooltip_bg_w()));
+			(obj.height) = () => ((this.tooltip_bg_h()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_rect.prototype.attr.call(obj)), 
+				"rx": "3", 
+				"ry": "3", 
+				"fill": "#1c1b1ad9", 
+				"stroke": "#5b5bd6", 
+				"stroke-width": "1"
+			});
+			return obj;
+		}
+		tooltip_x(){
+			return "0";
+		}
+		tooltip_y(){
+			return "0";
+		}
+		tooltip_text(){
+			return "";
+		}
+		tooltip_font_size(){
+			return "11";
+		}
+		Tooltip_text(){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.tooltip_x()));
+			(obj.pos_y) = () => ((this.tooltip_y()));
+			(obj.align) = () => ("middle");
+			(obj.align_vert) = () => ("middle");
+			(obj.text) = () => ((this.tooltip_text()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"fill": "#ffffff", 
+				"font-size": (this.tooltip_font_size()), 
+				"font-weight": "600"
+			});
+			return obj;
+		}
+		tooltip_sub(){
+			return [(this.Tooltip_bg()), (this.Tooltip_text())];
+		}
+		Tooltip(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
+			(obj.sub) = () => ((this.tooltip_sub()));
+			return obj;
+		}
+		view_box(){
+			return (this.computed_view_box());
+		}
+		aspect(){
+			return "xMidYMid meet";
+		}
+		select(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		selected_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hovered_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		drag_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		pan_x(next){
+			if(next !== undefined) return next;
+			return +0;
+		}
+		pan_y(next){
+			if(next !== undefined) return next;
+			return +0;
+		}
+		zoom(next){
+			if(next !== undefined) return next;
+			return +1;
+		}
+		positions(next){
+			if(next !== undefined) return next;
+			return {};
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"wheel": (next) => (this.wheel(next)), 
+				"pointerdown": (next) => (this.pan_start(next)), 
+				"pointermove": (next) => (this.pan_move(next)), 
+				"pointerup": (next) => (this.pan_end(next)), 
+				"pointerleave": (next) => (this.pan_end(next)), 
+				"click": (next) => (this.bg_click(next))
+			};
+		}
+		sub(){
+			return [
+				(this.G_edges()), 
+				(this.G_nodes()), 
+				(this.Tooltip())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "wheel"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_start"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_move"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_end"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "bg_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edges"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_enter"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_leave"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "node_pointerdown"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_nodes"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_bg"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_text"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "select"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "drag_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_x"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_y"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "zoom"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "positions"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const RELATIONS = [
+            'MENTIONS', 'CITES', 'WORKS_AT', 'LOCATED_IN', 'INVOLVES',
+            'DATED', 'AUTHORED', 'PART_OF', 'REFERS_TO', 'CONTAINS',
+        ];
+        const TYPE_COLOR = {
+            PERSON: '#e0524f',
+            ORG: '#4f8ee0',
+            LOC: '#3fb56b',
+            EVENT: '#d97ad9',
+            DATE: '#e0a73f',
+            WORK: '#7c6ce0',
+            LAW: '#3fb8b8',
+        };
+        const TYPES = ['PERSON', 'ORG', 'LOC', 'EVENT', 'DATE', 'WORK', 'LAW'];
+        // Deterministic PRNG for stable mock graph between renders.
+        function rand(seed) {
+            let s = seed;
+            return () => {
+                s = (s * 9301 + 49297) % 233280;
+                return s / 233280;
+            };
+        }
+        function build_mock(seed = 42, n_nodes = 80, n_edges = 130) {
+            const r = rand(seed);
+            const nodes = [];
+            for (let i = 0; i < n_nodes; i++) {
+                const type = TYPES[Math.floor(r() * TYPES.length)];
+                nodes.push({
+                    id: `n${i}`,
+                    label: `${type} ${i}`,
+                    type,
+                    degree: 0,
+                    x: (r() - 0.5) * 400,
+                    y: (r() - 0.5) * 400,
+                });
+            }
+            const edges = [];
+            const seen = new Set();
+            for (let i = 0; i < n_edges; i++) {
+                let a, b, key;
+                do {
+                    a = Math.floor(r() * n_nodes);
+                    b = Math.floor(r() * n_nodes);
+                    key = a < b ? `${a}-${b}` : `${b}-${a}`;
+                } while (a === b || seen.has(key));
+                seen.add(key);
+                edges.push({
+                    id: `e${i}`,
+                    source: `n${a}`,
+                    target: `n${b}`,
+                    strength: 0.3 + r() * 0.7,
+                    relation: RELATIONS[Math.floor(r() * RELATIONS.length)],
+                });
+                nodes[a].degree++;
+                nodes[b].degree++;
+            }
+            return { nodes, edges };
+        }
+        // Fruchterman-Reingold force-directed layout.
+        // Mutates node x/y in place.
+        function layout(nodes, edges, iterations = 120) {
+            const k = 60;
+            const k2 = k * k;
+            const area = 600 * 600;
+            let temp = Math.sqrt(area) / 10;
+            for (let it = 0; it < iterations; it++) {
+                // Repulsion: O(n²)
+                const dispX = new Float64Array(nodes.length);
+                const dispY = new Float64Array(nodes.length);
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const dx = nodes[i].x - nodes[j].x;
+                        const dy = nodes[i].y - nodes[j].y;
+                        const dist2 = dx * dx + dy * dy || 0.01;
+                        const force = k2 / dist2;
+                        const fx = dx * force;
+                        const fy = dy * force;
+                        dispX[i] += fx;
+                        dispY[i] += fy;
+                        dispX[j] -= fx;
+                        dispY[j] -= fy;
+                    }
+                }
+                // Attraction along edges
+                const idx = {};
+                nodes.forEach((n, i) => idx[n.id] = i);
+                for (const e of edges) {
+                    const i = idx[e.source], j = idx[e.target];
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+                    const force = (dist * dist) / k * e.strength;
+                    const fx = (dx / dist) * force;
+                    const fy = (dy / dist) * force;
+                    dispX[i] -= fx;
+                    dispY[i] -= fy;
+                    dispX[j] += fx;
+                    dispY[j] += fy;
+                }
+                // Apply displacement, capped by temp; cool down
+                for (let i = 0; i < nodes.length; i++) {
+                    const dlen = Math.sqrt(dispX[i] ** 2 + dispY[i] ** 2) || 0.01;
+                    nodes[i].x += (dispX[i] / dlen) * Math.min(dlen, temp);
+                    nodes[i].y += (dispY[i] / dlen) * Math.min(dlen, temp);
+                    // Soft bounding to area
+                    nodes[i].x = Math.max(-280, Math.min(280, nodes[i].x));
+                    nodes[i].y = Math.max(-280, Math.min(280, nodes[i].y));
+                }
+                temp *= 0.96;
+            }
+        }
+        class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+            // Pan/zoom state — fold into reactive view_box
+            computed_view_box() {
+                const z = Math.max(0.2, Math.min(5, this.zoom()));
+                const size = 600 / z;
+                const x = -size / 2 + this.pan_x();
+                const y = -size / 2 + this.pan_y();
+                return `${x} ${y} ${size} ${size}`;
+            }
+            // Mouse-wheel zoom centered on viewport
+            wheel(event) {
+                if (!event)
+                    return;
+                event.preventDefault();
+                const factor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
+                this.zoom(this.zoom() * factor);
+            }
+            // Drag-to-pan: track last pointer position when not on a node
+            dragging = false;
+            last_x = 0;
+            last_y = 0;
+            pan_start(event) {
+                if (!event)
+                    return;
+                // Node-drag in progress: pan_start should noop
+                if (this.drag_id())
+                    return;
+                const target = event.target;
+                // Skip when click started on a node circle — node_pointerdown handles it
+                if (target.tagName === 'circle')
+                    return;
+                this.dragging = true;
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                event.currentTarget.setPointerCapture(event.pointerId);
+            }
+            pan_move(event) {
+                if (!event)
+                    return;
+                // Node drag: move the dragged node in svg-space
+                if (this.drag_id()) {
+                    const pt = this.client_to_svg(event);
+                    const id = this.drag_id();
+                    this.positions({ ...this.positions(), [id]: pt });
+                    return;
+                }
+                if (!this.dragging)
+                    return;
+                const dx = event.clientX - this.last_x;
+                const dy = event.clientY - this.last_y;
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                const svg = event.currentTarget;
+                const scale = (600 / this.zoom()) / svg.clientWidth;
+                this.pan_x(this.pan_x() - dx * scale);
+                this.pan_y(this.pan_y() - dy * scale);
+            }
+            pan_end() {
+                this.dragging = false;
+                this.drag_id('');
+            }
+            // Convert pointer client coords → svg coords accounting for current view_box.
+            client_to_svg(event) {
+                const svg = event.currentTarget;
+                const rect = svg.getBoundingClientRect();
+                const z = Math.max(0.2, Math.min(5, this.zoom()));
+                const size = 600 / z;
+                const px = (event.clientX - rect.left) / rect.width;
+                const py = (event.clientY - rect.top) / rect.height;
+                return {
+                    x: -size / 2 + this.pan_x() + px * size,
+                    y: -size / 2 + this.pan_y() + py * size,
+                };
+            }
+            // Per-node pointerdown — start node drag, capture pointer on the circle itself
+            node_pointerdown(id, event) {
+                if (!event)
+                    return;
+                event.stopPropagation();
+                this.drag_id(id);
+                event.target.setPointerCapture(event.pointerId);
+                return null;
+            }
+            mock() {
+                const g = build_mock();
+                layout(g.nodes, g.edges);
+                return g;
+            }
+            nodes() { return this.mock().nodes; }
+            edges() { return this.mock().edges; }
+            node_by_id() {
+                const m = {};
+                for (const n of this.nodes())
+                    m[n.id] = n;
+                return m;
+            }
+            node_views() {
+                return this.nodes().map(n => this.Node(n.id));
+            }
+            edge_views() {
+                return this.edges().map(e => this.Edge(e.id));
+            }
+            // Effective node position: user-dragged override OR layout output
+            pos(id) {
+                return this.positions()[id] ?? this.node_by_id()[id];
+            }
+            // Node accessors (keyed) — return strings, SVG attrs expect string
+            node_x(id) { return String(this.pos(id).x); }
+            node_y(id) { return String(this.pos(id).y); }
+            node_radius(id) {
+                const n = this.node_by_id()[id];
+                return String(4 + Math.min(n.degree, 10) * 0.7);
+            }
+            node_color(id) { return TYPE_COLOR[this.node_by_id()[id].type]; }
+            node_stroke(id) {
+                if (this.selected_id() === id)
+                    return '#ffffff';
+                if (this.hovered_id() === id)
+                    return '#ffffff';
+                return 'transparent';
+            }
+            node_stroke_width(id) {
+                if (this.selected_id() === id)
+                    return '2.5';
+                if (this.hovered_id() === id)
+                    return '1.5';
+                return '0';
+            }
+            hover_enter(id) {
+                this.hovered_id(id);
+                return null;
+            }
+            hover_leave() {
+                this.hovered_id('');
+                return null;
+            }
+            // Edge accessors (keyed)
+            edge_by_id() {
+                const m = {};
+                for (const e of this.edges())
+                    m[e.id] = e;
+                return m;
+            }
+            edge_x1(id) { return String(this.pos(this.edge_by_id()[id].source).x); }
+            edge_y1(id) { return String(this.pos(this.edge_by_id()[id].source).y); }
+            edge_x2(id) { return String(this.pos(this.edge_by_id()[id].target).x); }
+            edge_y2(id) { return String(this.pos(this.edge_by_id()[id].target).y); }
+            edge_width(id) {
+                const e = this.edge_by_id()[id];
+                const base = e.strength * 1.5 + 0.4;
+                const incident = this.hovered_id() && (e.source === this.hovered_id() || e.target === this.hovered_id())
+                    || this.selected_id() && (e.source === this.selected_id() || e.target === this.selected_id());
+                return String(incident ? base * 2 : base);
+            }
+            edge_opacity(id) {
+                const e = this.edge_by_id()[id];
+                const hid = this.hovered_id() || this.selected_id();
+                if (!hid)
+                    return '0.55';
+                return (e.source === hid || e.target === hid) ? '0.95' : '0.18';
+            }
+            edge_color(id) {
+                const e = this.edge_by_id()[id];
+                const hid = this.hovered_id() || this.selected_id();
+                if (hid && (e.source === hid || e.target === hid))
+                    return '#ffffff';
+                return '#7a7672';
+            }
+            // Suppress click that fires right after node-drag (drag_id was just released)
+            just_dragged = '';
+            click(id) {
+                if (this.just_dragged === id) {
+                    this.just_dragged = '';
+                    return null;
+                }
+                this.selected_id(id);
+                this.select(id);
+                return null;
+            }
+            // Background click (anywhere not on a node circle) → deselect
+            bg_click(event) {
+                if (!event)
+                    return;
+                const tag = event.target.tagName;
+                if (tag === 'circle')
+                    return;
+                this.selected_id('');
+                this.select('');
+                return null;
+            }
+            // Tooltip — single floating label above hovered-OR-selected node
+            active_id() { return this.hovered_id() || this.selected_id(); }
+            // Conditional sub-list — render bg+text only when an active node exists
+            tooltip_sub() {
+                return this.active_id()
+                    ? [this.Tooltip_bg(), this.Tooltip_text()]
+                    : [];
+            }
+            tooltip_text() {
+                const id = this.active_id();
+                return id ? this.node_by_id()[id].label : '';
+            }
+            tooltip_font_size() {
+                return String(Math.max(6, Math.min(12, 11 / Math.sqrt(this.zoom()))));
+            }
+            // Position tooltip above the active node, in svg space
+            tooltip_anchor() {
+                const id = this.active_id();
+                if (!id)
+                    return { x: 0, y: 0, r: 0 };
+                const r = 4 + Math.min(this.node_by_id()[id].degree, 10) * 0.7;
+                return { x: this.pos(id).x, y: this.pos(id).y, r };
+            }
+            tooltip_x() {
+                return String(this.tooltip_anchor().x);
+            }
+            // Text baseline is the middle of the bg box; sits above circle with padding
+            tooltip_y() {
+                const a = this.tooltip_anchor();
+                const fs = parseFloat(this.tooltip_font_size());
+                return String(a.y - a.r - 6 - fs * 0.7);
+            }
+            // Bg sized roughly by char-count × char-width
+            tooltip_bg_w() {
+                const text = this.tooltip_text();
+                const fs = parseFloat(this.tooltip_font_size());
+                return String(text.length * fs * 0.6 + 10);
+            }
+            tooltip_bg_h() {
+                return String(parseFloat(this.tooltip_font_size()) + 8);
+            }
+            tooltip_bg_x() {
+                return String(this.tooltip_anchor().x - parseFloat(this.tooltip_bg_w()) / 2);
+            }
+            tooltip_bg_y() {
+                const a = this.tooltip_anchor();
+                return String(a.y - a.r - 6 - parseFloat(this.tooltip_bg_h()));
+            }
+            // Selected-node helpers consumed by Aside
+            selected_node() {
+                const id = this.selected_id();
+                return id ? this.node_by_id()[id] ?? null : null;
+            }
+            selected_color() {
+                const n = this.selected_node();
+                return n ? TYPE_COLOR[n.type] : TYPE_COLOR.WORK;
+            }
+            // Edges incident to selected node, with the OTHER node's label
+            selected_relations() {
+                const id = this.selected_id();
+                if (!id)
+                    return [];
+                const idx = this.node_by_id();
+                return this.edges()
+                    .filter(e => e.source === id || e.target === id)
+                    .map(e => {
+                    const other_id = e.source === id ? e.target : e.source;
+                    return { relation: e.relation, target_label: idx[other_id].label };
+                });
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "computed_view_box", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "wheel", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_start", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_move", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_end", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "node_pointerdown", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "mock", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "hover_enter", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "hover_leave", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_by_id", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "bg_click", null);
+        $$.$raggu_web_front_explorer_forcegraph = $raggu_web_front_explorer_forcegraph;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_explorer_forcegraph, {
+        width: '100%',
+        height: '100%',
+        display: 'block',
+    });
+})($ || ($ = {}));
+
+;
 	($.$raggu_web_front_explorer) = class $raggu_web_front_explorer extends ($.$bog_builderui_div) {
-		Canvas_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				"⬡ ⬡ ⬡", 
-				"", 
-				(this.canvas_title_text()), 
-				(this.canvas_engine_text()), 
-				(this.canvas_meaning_text())
-			]);
+		Graph(){
+			const obj = new this.$.$raggu_web_front_explorer_forcegraph();
+			(obj.selected_id) = (next) => ((this.selected_id(next)));
 			return obj;
 		}
 		Canvas_bg(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Canvas_label())]);
+			(obj.sub) = () => ([(this.Graph())]);
 			return obj;
 		}
 		Filter_search(){
@@ -15087,9 +16042,12 @@ var $;
 			const obj = new this.$.$bog_builderui_div();
 			return obj;
 		}
+		entity_name(){
+			return "";
+		}
 		Entity_name(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_name_text())]);
+			(obj.sub) = () => ([(this.entity_name())]);
 			return obj;
 		}
 		Entity_head(){
@@ -15097,64 +16055,57 @@ var $;
 			(obj.sub) = () => ([(this.Entity_dot()), (this.Entity_name())]);
 			return obj;
 		}
+		entity_type(){
+			return "";
+		}
 		Entity_type(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["PERSON"]);
+			(obj.sub) = () => ([(this.entity_type())]);
 			return obj;
+		}
+		entity_desc(){
+			return "";
 		}
 		Entity_desc(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_desc_text())]);
+			(obj.sub) = () => ([(this.entity_desc())]);
 			return obj;
+		}
+		relations_title(){
+			return "";
 		}
 		Relations_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.relations_title_text())]);
+			(obj.sub) = () => ([(this.relations_title())]);
 			return obj;
 		}
-		Rel_one_type(){
+		rel_type(id){
+			return "";
+		}
+		Rel_type(id){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["WORKS_AS"]);
+			(obj.sub) = () => ([(this.rel_type(id))]);
 			return obj;
 		}
-		Rel_one_target(){
+		rel_target(id){
+			return "";
+		}
+		Rel_target(id){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_one_target_text())]);
+			(obj.sub) = () => ([(this.rel_target(id))]);
 			return obj;
 		}
-		Rel_one(){
+		Rel(id){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_one_type()), (this.Rel_one_target())]);
+			(obj.sub) = () => ([(this.Rel_type(id)), (this.Rel_target(id))]);
 			return obj;
 		}
-		Rel_two_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["AWARDED_WITH"]);
-			return obj;
+		rel_rows(){
+			return [(this.Rel(id))];
 		}
-		Rel_two_target(){
+		Relations_list(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_two_target_text())]);
-			return obj;
-		}
-		Rel_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_two_type()), (this.Rel_two_target())]);
-			return obj;
-		}
-		Rel_three_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["PLACE_OF_BIRTH"]);
-			return obj;
-		}
-		Rel_three_target(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_three_target_text())]);
-			return obj;
-		}
-		Rel_three(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_three_type()), (this.Rel_three_target())]);
+			(obj.sub) = () => ((this.rel_rows()));
 			return obj;
 		}
 		Sources_title(){
@@ -15180,23 +16131,16 @@ var $;
 				(this.Entity_type()), 
 				(this.Entity_desc()), 
 				(this.Relations_title()), 
-				(this.Rel_one()), 
-				(this.Rel_two()), 
-				(this.Rel_three()), 
+				(this.Relations_list()), 
 				(this.Sources_title()), 
 				(this.Sources()), 
 				(this.Ask_btn())
 			]);
 			return obj;
 		}
-		canvas_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_canvas_title_text"));
-		}
-		canvas_engine_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_canvas_engine_text"));
-		}
-		canvas_meaning_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_canvas_meaning_text"));
+		selected_id(next){
+			if(next !== undefined) return next;
+			return "";
 		}
 		filter_search_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_filter_search_text"));
@@ -15213,23 +16157,11 @@ var $;
 		aside_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_title_text"));
 		}
-		entity_name_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_entity_name_text"));
+		aside_empty_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_empty_text"));
 		}
-		entity_desc_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_entity_desc_text"));
-		}
-		relations_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_relations_title_text"));
-		}
-		rel_one_target_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_rel_one_target_text"));
-		}
-		rel_two_target_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_rel_two_target_text"));
-		}
-		rel_three_target_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_rel_three_target_text"));
+		relations_title_template(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_relations_title_template"));
 		}
 		sources_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_sources_title_text"));
@@ -15244,7 +16176,7 @@ var $;
 			return [(this.Canvas()), (this.Aside())];
 		}
 	};
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas_label"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Graph"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas_bg"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_search"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_type"));
@@ -15282,24 +16214,75 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_type"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_desc"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_title"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_one_type"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_one_target"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_one"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_two_type"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_two_target"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_two"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_three_type"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_three_target"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rel_three"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_type"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_target"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_list"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources_title"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
 
 
 ;
 "use strict";
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
+            // Cast to extended class to access TS-only methods (selected_node/selected_color/...)
+            graph_view() {
+                return this.Graph();
+            }
+            // Selected node, mirrors $raggu_web_front_explorer_forcegraph internals
+            selected() {
+                return this.graph_view().selected_node();
+            }
+            // Aside text — fall back to placeholder when nothing selected
+            entity_name() {
+                return this.selected()?.label ?? this.aside_empty_text();
+            }
+            entity_type() {
+                return this.selected()?.type ?? '';
+            }
+            entity_desc() {
+                const n = this.selected();
+                if (!n)
+                    return '';
+                return `Mock entity of type ${n.type}, connected to ${n.degree} other nodes.`;
+            }
+            relations_title() {
+                const n = this.selected();
+                if (!n)
+                    return '';
+                return this.relations_title_template().replace('%s', String(n.degree));
+            }
+            rels() {
+                return this.graph_view().selected_relations().slice(0, 5);
+            }
+            rel_rows() {
+                return this.rels().map((_, i) => this.Rel(i));
+            }
+            rel_type(i) { return this.rels()[i]?.relation ?? ''; }
+            rel_target(i) { return this.rels()[i]?.target_label ?? ''; }
+            // Entity_dot color reflects type of selected node
+            Entity_dot() {
+                const dot = super.Entity_dot();
+                dot.style = () => ({
+                    background: this.graph_view().selected_color(),
+                });
+                return dot;
+            }
+        }
+        $$.$raggu_web_front_explorer = $raggu_web_front_explorer;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -15378,17 +16361,6 @@ var $;
                     [radial_gradient('circle at 70% 65%, #d65b8c24, transparent 45%')],
                 ],
             },
-        },
-        Canvas_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '12px',
-            },
-            color: '#6b6864',
-            letterSpacing: '1px',
-            textAlign: 'center',
-            whiteSpace: 'pre-line',
         },
         Filters: {
             position: 'absolute',
@@ -15564,15 +16536,12 @@ var $;
             textTransform: 'uppercase',
             margin: { top: '18px', bottom: '8px' },
         },
-        Rel_one: relation_card,
-        Rel_two: relation_card,
-        Rel_three: relation_card,
-        Rel_one_type: relation_type,
-        Rel_two_type: relation_type,
-        Rel_three_type: relation_type,
-        Rel_one_target: relation_target,
-        Rel_two_target: relation_target,
-        Rel_three_target: relation_target,
+        Relations_list: {
+            flex: { direction: 'column' },
+        },
+        Rel: relation_card,
+        Rel_type: relation_type,
+        Rel_target: relation_target,
         Sources_title: {
             font: {
                 family: 'ui-monospace, monospace',

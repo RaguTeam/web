@@ -6336,10 +6336,436 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $bog_builderui_div__sub_raggu_web_front_explorer_1 = $mol_type_enforce<
-		readonly(any)[]
+	export class $mol_svg_line extends $mol_svg {
+		from( ): readonly(any)[]
+		to( ): readonly(any)[]
+		from_x( ): string
+		from_y( ): string
+		to_x( ): string
+		to_y( ): string
+		dom_name( ): string
+		pos( ): readonly(any)[]
+		attr( ): ({ 
+			'x1': ReturnType< $mol_svg_line['from_x'] >,
+			'y1': ReturnType< $mol_svg_line['from_y'] >,
+			'x2': ReturnType< $mol_svg_line['to_x'] >,
+			'y2': ReturnType< $mol_svg_line['to_y'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=line.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_svg_line extends $.$mol_svg_line {
+        from(): any;
+        from_x(): any;
+        from_y(): any;
+        to(): any;
+        to_x(): any;
+        to_y(): any;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_svg_circle extends $mol_svg {
+		radius( ): string
+		pos_x( ): string
+		pos_y( ): string
+		dom_name( ): string
+		pos( ): readonly(any)[]
+		attr( ): ({ 
+			'r': ReturnType< $mol_svg_circle['radius'] >,
+			'cx': ReturnType< $mol_svg_circle['pos_x'] >,
+			'cy': ReturnType< $mol_svg_circle['pos_y'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=circle.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_svg_circle extends $.$mol_svg_circle {
+        pos_x(): any;
+        pos_y(): any;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_svg_rect extends $mol_svg {
+		width( ): string
+		height( ): string
+		pos_x( ): string
+		pos_y( ): string
+		dom_name( ): string
+		pos( ): readonly(any)[]
+		attr( ): ({ 
+			'width': ReturnType< $mol_svg_rect['width'] >,
+			'height': ReturnType< $mol_svg_rect['height'] >,
+			'x': ReturnType< $mol_svg_rect['pos_x'] >,
+			'y': ReturnType< $mol_svg_rect['pos_y'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=rect.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_svg_rect extends $.$mol_svg_rect {
+        pos_x(): any;
+        pos_y(): any;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_svg_text extends $mol_svg {
+		pos_x( ): string
+		pos_y( ): string
+		align( ): string
+		align_hor( ): ReturnType< $mol_svg_text['align'] >
+		align_vert( ): string
+		text( ): string
+		dom_name( ): string
+		pos( ): readonly(any)[]
+		attr( ): ({ 
+			'x': ReturnType< $mol_svg_text['pos_x'] >,
+			'y': ReturnType< $mol_svg_text['pos_y'] >,
+			'text-anchor': ReturnType< $mol_svg_text['align_hor'] >,
+			'alignment-baseline': ReturnType< $mol_svg_text['align_vert'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=text.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_svg_text extends $.$mol_svg_text {
+        pos_x(): any;
+        pos_y(): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_svg_line__from_x_raggu_web_front_explorer_forcegraph_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x1'] >
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_svg_line['from_x'] >
+	>
+	type $mol_svg_line__from_y_raggu_web_front_explorer_forcegraph_2 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_y1'] >
+		,
+		ReturnType< $mol_svg_line['from_y'] >
+	>
+	type $mol_svg_line__to_x_raggu_web_front_explorer_forcegraph_3 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x2'] >
+		,
+		ReturnType< $mol_svg_line['to_x'] >
+	>
+	type $mol_svg_line__to_y_raggu_web_front_explorer_forcegraph_4 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_y2'] >
+		,
+		ReturnType< $mol_svg_line['to_y'] >
+	>
+	type $mol_svg_line__attr_raggu_web_front_explorer_forcegraph_5 = $mol_type_enforce<
+		({ 
+			'stroke': ReturnType< $raggu_web_front_explorer_forcegraph['edge_color'] >,
+			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['edge_width'] >,
+			'stroke-opacity': ReturnType< $raggu_web_front_explorer_forcegraph['edge_opacity'] >,
+		})  & ReturnType< $mol_svg_line['attr'] >
+		,
+		ReturnType< $mol_svg_line['attr'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_6 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_views'] >
+		,
+		ReturnType< $mol_svg_group['sub'] >
+	>
+	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_7 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_x'] >
+		,
+		ReturnType< $mol_svg_circle['pos_x'] >
+	>
+	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_y'] >
+		,
+		ReturnType< $mol_svg_circle['pos_y'] >
+	>
+	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_radius'] >
+		,
+		ReturnType< $mol_svg_circle['radius'] >
+	>
+	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_10 = $mol_type_enforce<
+		({ 
+			'fill': ReturnType< $raggu_web_front_explorer_forcegraph['node_color'] >,
+			'stroke': ReturnType< $raggu_web_front_explorer_forcegraph['node_stroke'] >,
+			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['node_stroke_width'] >,
+			'cursor': string,
+		})  & ReturnType< $mol_svg_circle['attr'] >
+		,
+		ReturnType< $mol_svg_circle['attr'] >
+	>
+	type $mol_svg_circle__event_raggu_web_front_explorer_forcegraph_11 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['click'] >,
+			pointerenter( next?: ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] >,
+			pointerleave( next?: ReturnType< $raggu_web_front_explorer_forcegraph['hover_leave'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['hover_leave'] >,
+			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['node_pointerdown'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['node_pointerdown'] >,
+		})  & ReturnType< $mol_svg_circle['event'] >
+		,
+		ReturnType< $mol_svg_circle['event'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_12 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_views'] >
+		,
+		ReturnType< $mol_svg_group['sub'] >
+	>
+	type $mol_svg_rect__pos_x_raggu_web_front_explorer_forcegraph_13 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_x'] >
+		,
+		ReturnType< $mol_svg_rect['pos_x'] >
+	>
+	type $mol_svg_rect__pos_y_raggu_web_front_explorer_forcegraph_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_y'] >
+		,
+		ReturnType< $mol_svg_rect['pos_y'] >
+	>
+	type $mol_svg_rect__width_raggu_web_front_explorer_forcegraph_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_w'] >
+		,
+		ReturnType< $mol_svg_rect['width'] >
+	>
+	type $mol_svg_rect__height_raggu_web_front_explorer_forcegraph_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_h'] >
+		,
+		ReturnType< $mol_svg_rect['height'] >
+	>
+	type $mol_svg_rect__attr_raggu_web_front_explorer_forcegraph_17 = $mol_type_enforce<
+		({ 
+			'rx': string,
+			'ry': string,
+			'fill': string,
+			'stroke': string,
+			'stroke-width': string,
+		})  & ReturnType< $mol_svg_rect['attr'] >
+		,
+		ReturnType< $mol_svg_rect['attr'] >
+	>
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_x'] >
+		,
+		ReturnType< $mol_svg_text['pos_x'] >
+	>
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_19 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_y'] >
+		,
+		ReturnType< $mol_svg_text['pos_y'] >
+	>
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_20 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_svg_text['align'] >
+	>
+	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_21 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_svg_text['align_vert'] >
+	>
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_22 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_text'] >
+		,
+		ReturnType< $mol_svg_text['text'] >
+	>
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_23 = $mol_type_enforce<
+		({ 
+			'fill': string,
+			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_font_size'] >,
+			'font-weight': string,
+		})  & ReturnType< $mol_svg_text['attr'] >
+		,
+		ReturnType< $mol_svg_text['attr'] >
+	>
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_24 = $mol_type_enforce<
+		({ 
+			'pointer-events': string,
+		})  & ReturnType< $mol_svg_group['attr'] >
+		,
+		ReturnType< $mol_svg_group['attr'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_25 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_sub'] >
+		,
+		ReturnType< $mol_svg_group['sub'] >
+	>
+	export class $raggu_web_front_explorer_forcegraph extends $mol_svg_root {
+		computed_view_box( ): string
+		wheel( next?: any ): any
+		pan_start( next?: any ): any
+		pan_move( next?: any ): any
+		pan_end( next?: any ): any
+		bg_click( next?: any ): any
+		edge_x1( id: any): string
+		edge_y1( id: any): string
+		edge_x2( id: any): string
+		edge_y2( id: any): string
+		edge_color( id: any): string
+		edge_width( id: any): string
+		edge_opacity( id: any): string
+		Edge( id: any): $mol_svg_line
+		edge_views( ): readonly(any)[]
+		G_edges( ): $mol_svg_group
+		node_x( id: any): string
+		node_y( id: any): string
+		node_radius( id: any): string
+		node_color( id: any): string
+		node_stroke( id: any): string
+		node_stroke_width( id: any): string
+		click( id: any, next?: any ): any
+		hover_enter( id: any, next?: any ): any
+		hover_leave( id: any, next?: any ): any
+		node_pointerdown( id: any, next?: any ): any
+		Node( id: any): $mol_svg_circle
+		node_views( ): readonly(any)[]
+		G_nodes( ): $mol_svg_group
+		tooltip_bg_x( ): string
+		tooltip_bg_y( ): string
+		tooltip_bg_w( ): string
+		tooltip_bg_h( ): string
+		Tooltip_bg( ): $mol_svg_rect
+		tooltip_x( ): string
+		tooltip_y( ): string
+		tooltip_text( ): string
+		tooltip_font_size( ): string
+		Tooltip_text( ): $mol_svg_text
+		tooltip_sub( ): readonly(any)[]
+		Tooltip( ): $mol_svg_group
+		view_box( ): ReturnType< $raggu_web_front_explorer_forcegraph['computed_view_box'] >
+		aspect( ): string
+		select( next?: any ): any
+		selected_id( next?: string ): string
+		hovered_id( next?: string ): string
+		drag_id( next?: string ): string
+		pan_x( next?: number ): number
+		pan_y( next?: number ): number
+		zoom( next?: number ): number
+		positions( next?: Record<string, any> ): Record<string, any>
+		event( ): ({ 
+			wheel( next?: ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] >,
+			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] >,
+			pointermove( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_move'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_move'] >,
+			pointerup( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] >,
+			pointerleave( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_end'] >,
+			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['bg_click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['bg_click'] >,
+		})  & ReturnType< $mol_svg_root['event'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=forcegraph.view.tree.d.ts.map
+declare namespace $.$$ {
+    type NodeType = 'PERSON' | 'ORG' | 'LOC' | 'EVENT' | 'DATE' | 'WORK' | 'LAW';
+    type GraphNode = {
+        id: string;
+        label: string;
+        type: NodeType;
+        degree: number;
+        x: number;
+        y: number;
+    };
+    type GraphEdge = {
+        id: string;
+        source: string;
+        target: string;
+        strength: number;
+        relation: string;
+    };
+    export class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+        computed_view_box(): string;
+        wheel(event?: WheelEvent): void;
+        dragging: boolean;
+        last_x: number;
+        last_y: number;
+        pan_start(event?: PointerEvent): void;
+        pan_move(event?: PointerEvent): void;
+        pan_end(): void;
+        client_to_svg(event: PointerEvent): {
+            x: number;
+            y: number;
+        };
+        node_pointerdown(id: string, event?: PointerEvent): null | undefined;
+        mock(): {
+            nodes: GraphNode[];
+            edges: GraphEdge[];
+        };
+        nodes(): GraphNode[];
+        edges(): GraphEdge[];
+        node_by_id(): Record<string, GraphNode>;
+        node_views(): $.$mol_svg_circle[];
+        edge_views(): $.$mol_svg_line[];
+        pos(id: string): any;
+        node_x(id: string): string;
+        node_y(id: string): string;
+        node_radius(id: string): string;
+        node_color(id: string): string;
+        node_stroke(id: string): "#ffffff" | "transparent";
+        node_stroke_width(id: string): "2.5" | "1.5" | "0";
+        hover_enter(id: string): null;
+        hover_leave(): null;
+        edge_by_id(): Record<string, GraphEdge>;
+        edge_x1(id: string): string;
+        edge_y1(id: string): string;
+        edge_x2(id: string): string;
+        edge_y2(id: string): string;
+        edge_width(id: string): string;
+        edge_opacity(id: string): "0.55" | "0.95" | "0.18";
+        edge_color(id: string): "#ffffff" | "#7a7672";
+        just_dragged: string;
+        click(id: string): null;
+        bg_click(event?: MouseEvent): null | undefined;
+        active_id(): string;
+        tooltip_sub(): readonly $mol_view[];
+        tooltip_text(): string;
+        tooltip_font_size(): string;
+        tooltip_anchor(): {
+            x: any;
+            y: any;
+            r: number;
+        };
+        tooltip_x(): string;
+        tooltip_y(): string;
+        tooltip_bg_w(): string;
+        tooltip_bg_h(): string;
+        tooltip_bg_x(): string;
+        tooltip_bg_y(): string;
+        selected_node(): GraphNode | null;
+        selected_color(): string;
+        selected_relations(): Array<{
+            relation: string;
+            target_label: string;
+        }>;
+    }
+    export {};
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $raggu_web_front_explorer_forcegraph__selected_id_raggu_web_front_explorer_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer['selected_id'] >
+		,
+		ReturnType< $raggu_web_front_explorer_forcegraph['selected_id'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_explorer_2 = $mol_type_enforce<
 		readonly(any)[]
@@ -6502,7 +6928,7 @@ declare namespace $ {
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_explorer_34 = $mol_type_enforce<
-		readonly(any)[]
+		ReturnType< $raggu_web_front_explorer['rel_rows'] >
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
@@ -6526,33 +6952,8 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_39 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_40 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_41 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_42 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_43 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
 	export class $raggu_web_front_explorer extends $bog_builderui_div {
-		Canvas_label( ): $bog_builderui_div
+		Graph( ): $raggu_web_front_explorer_forcegraph
 		Canvas_bg( ): $bog_builderui_div
 		Filter_search( ): $bog_builderui_div
 		Filter_type( ): $bog_builderui_div
@@ -6585,38 +6986,34 @@ declare namespace $ {
 		Canvas( ): $bog_builderui_div
 		Aside_title( ): $bog_builderui_div
 		Entity_dot( ): $bog_builderui_div
+		entity_name( ): string
 		Entity_name( ): $bog_builderui_div
 		Entity_head( ): $bog_builderui_div
+		entity_type( ): string
 		Entity_type( ): $bog_builderui_div
+		entity_desc( ): string
 		Entity_desc( ): $bog_builderui_div
+		relations_title( ): string
 		Relations_title( ): $bog_builderui_div
-		Rel_one_type( ): $bog_builderui_div
-		Rel_one_target( ): $bog_builderui_div
-		Rel_one( ): $bog_builderui_div
-		Rel_two_type( ): $bog_builderui_div
-		Rel_two_target( ): $bog_builderui_div
-		Rel_two( ): $bog_builderui_div
-		Rel_three_type( ): $bog_builderui_div
-		Rel_three_target( ): $bog_builderui_div
-		Rel_three( ): $bog_builderui_div
+		rel_type( id: any): string
+		Rel_type( id: any): $bog_builderui_div
+		rel_target( id: any): string
+		Rel_target( id: any): $bog_builderui_div
+		Rel( id: any): $bog_builderui_div
+		rel_rows( ): readonly(any)[]
+		Relations_list( ): $bog_builderui_div
 		Sources_title( ): $bog_builderui_div
 		Sources( ): $bog_builderui_div
 		Ask_btn( ): $bog_builderui_div
 		Aside( ): $bog_builderui_div
-		canvas_title_text( ): string
-		canvas_engine_text( ): string
-		canvas_meaning_text( ): string
+		selected_id( next?: string ): string
 		filter_search_text( ): string
 		filter_type_text( ): string
 		filter_thresh_text( ): string
 		filter_comm_text( ): string
 		aside_title_text( ): string
-		entity_name_text( ): string
-		entity_desc_text( ): string
-		relations_title_text( ): string
-		rel_one_target_text( ): string
-		rel_two_target_text( ): string
-		rel_three_target_text( ): string
+		aside_empty_text( ): string
+		relations_title_template( ): string
 		sources_title_text( ): string
 		sources_text( ): string
 		ask_btn_text( ): string
@@ -6626,6 +7023,32 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=explorer.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
+        graph_view(): $.$$.$raggu_web_front_explorer_forcegraph;
+        selected(): {
+            id: string;
+            label: string;
+            type: "PERSON" | "ORG" | "LOC" | "EVENT" | "DATE" | "WORK" | "LAW";
+            degree: number;
+            x: number;
+            y: number;
+        } | null;
+        entity_name(): string;
+        entity_type(): "" | ("PERSON" | "ORG" | "LOC" | "EVENT" | "DATE" | "WORK" | "LAW");
+        entity_desc(): string;
+        relations_title(): string;
+        rels(): Array<{
+            relation: string;
+            target_label: string;
+        }>;
+        rel_rows(): $bog_builderui_div[];
+        rel_type(i: number): string;
+        rel_target(i: number): string;
+        Entity_dot(): $bog_builderui_div;
+    }
+}
+
 /** @see $bog_builderui_tokens */
 declare namespace $ {
 }
@@ -8260,7 +8683,7 @@ declare namespace $ {
 //# sourceMappingURL=app.view.tree.d.ts.map
 declare namespace $.$$ {
     class $raggu_web_front_app extends $.$raggu_web_front_app {
-        body(): $.$raggu_web_front_gallery[] | $raggu_web_front_explorer[] | $.$raggu_web_front_chat[] | $.$raggu_web_front_dashboard[];
+        body(): $.$raggu_web_front_gallery[] | $.$raggu_web_front_explorer[] | $.$raggu_web_front_chat[] | $.$raggu_web_front_dashboard[];
         lights_mode(): "light" | "dark";
         open_settings(): null;
         select_dataset(id: string): null;

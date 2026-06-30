@@ -1178,33 +1178,145 @@ $raggu_web_front_gallery $bog_builderui_div
 			complete? <=> upload_complete? null
 			close? <=> upload_close? null
 
+$mol_svg_line $mol_svg
+	dom_name \line
+	pos /
+		<= from /
+		<= to /
+	attr *
+		^
+		x1 <= from_x \
+		y1 <= from_y \
+		x2 <= to_x \
+		y2 <= to_y \
+
+$mol_svg_circle $mol_svg
+	dom_name \circle
+	pos /
+	attr *
+		^
+		r <= radius \.5%
+		cx <= pos_x \
+		cy <= pos_y \
+
+$mol_svg_rect $mol_svg
+	dom_name \rect
+	pos /
+	attr *
+		^
+		width <= width \0
+		height <= height \0
+		x <= pos_x \
+		y <= pos_y \
+
+$mol_svg_text $mol_svg
+	dom_name \text
+	pos /
+	attr *
+		^
+		x <= pos_x \
+		y <= pos_y \
+		text-anchor <= align_hor <= align \middle
+		alignment-baseline <= align_vert \baseline
+	sub /
+		<= text \
+
+$raggu_web_front_explorer_forcegraph $mol_svg_root
+	view_box <= computed_view_box \-300 -300 600 600
+	aspect \xMidYMid meet
+	select?val null
+	selected_id? \
+	hovered_id? \
+	drag_id? \
+	pan_x? +0
+	pan_y? +0
+	zoom? +1
+	positions? *
+	event *
+		^
+		wheel?event <=> wheel?event null
+		pointerdown?event <=> pan_start?event null
+		pointermove?event <=> pan_move?event null
+		pointerup?event <=> pan_end?event null
+		pointerleave?event <=> pan_end?event null
+		click?event <=> bg_click?event null
+	sub /
+		<= G_edges $mol_svg_group
+			sub <= edge_views /
+				<= Edge* $mol_svg_line
+					from_x <= edge_x1* \
+					from_y <= edge_y1* \
+					to_x <= edge_x2* \
+					to_y <= edge_y2* \
+					attr *
+						^
+						stroke <= edge_color* \#7a7672
+						stroke-width <= edge_width* \1
+						stroke-opacity <= edge_opacity* \0.55
+		<= G_nodes $mol_svg_group
+			sub <= node_views /
+				<= Node* $mol_svg_circle
+					pos_x <= node_x* \
+					pos_y <= node_y* \
+					radius <= node_radius* \6
+					attr *
+						^
+						fill <= node_color* \#7c6ce0
+						stroke <= node_stroke* \transparent
+						stroke-width <= node_stroke_width* \0
+						cursor \pointer
+					event *
+						^
+						click? <=> click*? null
+						pointerenter? <=> hover_enter*? null
+						pointerleave? <=> hover_leave*? null
+						pointerdown?event <=> node_pointerdown*?event null
+		<= Tooltip $mol_svg_group
+			attr *
+				^
+				pointer-events \none
+			sub <= tooltip_sub /
+				<= Tooltip_bg $mol_svg_rect
+					pos_x <= tooltip_bg_x \0
+					pos_y <= tooltip_bg_y \0
+					width <= tooltip_bg_w \0
+					height <= tooltip_bg_h \0
+					attr *
+						^
+						rx \3
+						ry \3
+						fill \#1c1b1ad9
+						stroke \#5b5bd6
+						stroke-width \1
+				<= Tooltip_text $mol_svg_text
+					pos_x <= tooltip_x \0
+					pos_y <= tooltip_y \0
+					align \middle
+					align_vert \middle
+					text <= tooltip_text \
+					attr *
+						^
+						fill \#ffffff
+						font-size <= tooltip_font_size \11
+						font-weight \600
+
 $raggu_web_front_explorer $bog_builderui_div
-	canvas_title_text @ \INTERACTIVE KNOWLEDGE GRAPH
-	canvas_engine_text @ \Sigma.js / WebGL · force layout
-	canvas_meaning_text @ \color = NEREL type · thickness = strength
+	selected_id? \
 	filter_search_text @ \🔍 Find node…
 	filter_type_text @ \Entity type ▾
 	filter_thresh_text @ \Strength threshold ▾
 	filter_comm_text @ \◉ Communities: on
 	aside_title_text @ \Entity card
-	entity_name_text @ \Bjørnstjerne Bjørnson
-	entity_desc_text @ \Author of the Norwegian anthem (1859). Norwegian writer, Nobel Prize laureate in Literature.
-	relations_title_text @ \Relations (12)
-	rel_one_target_text @ \writer
-	rel_two_target_text @ \Nobel Prize
-	rel_three_target_text @ \Kvikne, Norway
+	aside_empty_text @ \Click a node on the graph
+	relations_title_template @ \Relations (%s)
 	sources_title_text @ \Sources (provenance)
 	sources_text @ \chunk #418 · chunk #902 …
 	ask_btn_text @ \💬 Ask about this entity
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
-				<= Canvas_label $bog_builderui_div sub /
-					\⬡ ⬡ ⬡
-					\
-					<= canvas_title_text
-					<= canvas_engine_text
-					<= canvas_meaning_text
+				<= Graph $raggu_web_front_explorer_forcegraph
+					selected_id? <=> selected_id?
 			<= Filters $bog_builderui_div sub /
 				<= Filter_search $bog_builderui_div sub / <= filter_search_text
 				<= Filter_type $bog_builderui_div sub / <= filter_type_text
@@ -1237,19 +1349,14 @@ $raggu_web_front_explorer $bog_builderui_div
 			<= Aside_title $bog_builderui_div sub / <= aside_title_text
 			<= Entity_head $bog_builderui_div sub /
 				<= Entity_dot $bog_builderui_div
-				<= Entity_name $bog_builderui_div sub / <= entity_name_text
-			<= Entity_type $bog_builderui_div sub / \PERSON
-			<= Entity_desc $bog_builderui_div sub / <= entity_desc_text
-			<= Relations_title $bog_builderui_div sub / <= relations_title_text
-			<= Rel_one $bog_builderui_div sub /
-				<= Rel_one_type $bog_builderui_div sub / \WORKS_AS
-				<= Rel_one_target $bog_builderui_div sub / <= rel_one_target_text
-			<= Rel_two $bog_builderui_div sub /
-				<= Rel_two_type $bog_builderui_div sub / \AWARDED_WITH
-				<= Rel_two_target $bog_builderui_div sub / <= rel_two_target_text
-			<= Rel_three $bog_builderui_div sub /
-				<= Rel_three_type $bog_builderui_div sub / \PLACE_OF_BIRTH
-				<= Rel_three_target $bog_builderui_div sub / <= rel_three_target_text
+				<= Entity_name $bog_builderui_div sub / <= entity_name \
+			<= Entity_type $bog_builderui_div sub / <= entity_type \
+			<= Entity_desc $bog_builderui_div sub / <= entity_desc \
+			<= Relations_title $bog_builderui_div sub / <= relations_title \
+			<= Relations_list $bog_builderui_div sub <= rel_rows /
+				<= Rel* $bog_builderui_div sub /
+					<= Rel_type* $bog_builderui_div sub / <= rel_type* \
+					<= Rel_target* $bog_builderui_div sub / <= rel_target* \
 			<= Sources_title $bog_builderui_div sub / <= sources_title_text
 			<= Sources $bog_builderui_div sub / <= sources_text
 			<= Ask_btn $bog_builderui_div sub / <= ask_btn_text
