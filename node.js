@@ -6031,8 +6031,8 @@ var $;
         '@': {
             raggu_web_front_sidebar_nav_active: {
                 true: {
-                    background: { color: '#ece9fb' },
-                    color: '#5b5bd6',
+                    background: { color: $bog_builderui_tokens.current },
+                    color: '#ffffff',
                 },
             },
         },
@@ -6753,8 +6753,8 @@ var $;
         '@': {
             raggu_web_front_sidebar_lang_active: {
                 true: {
-                    background: { color: '#5b5bd6' },
-                    color: $bog_builderui_tokens.card,
+                    background: { color: $bog_builderui_tokens.current },
+                    color: '#ffffff',
                 },
             },
         },
@@ -7093,11 +7093,11 @@ var $;
             minWidth: '26px',
             maxWidth: '26px',
             height: '26px',
-            border: { width: '2px', style: 'solid', color: '#5b5bd6', radius: '6px' },
+            border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.current, radius: '6px' },
             align: { items: 'center' },
             justify: { content: 'center' },
             font: { weight: 800, size: '14px' },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
         },
         Brand_title: {
             font: { weight: 700, size: '16px' },
@@ -11746,8 +11746,8 @@ var $;
             flex: { direction: 'row' },
             align: { items: 'center' },
             gap: '6px',
-            background: { color: '#5b5bd6' },
-            color: $bog_builderui_tokens.card,
+            background: { color: $bog_builderui_tokens.current },
+            color: '#ffffff',
             border: { radius: '7px' },
             padding: {
                 top: '7px',
@@ -12444,7 +12444,7 @@ var $;
                 weight: 700,
                 size: '10px',
             },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
             textTransform: 'uppercase',
             letterSpacing: '0.6px',
         },
@@ -15357,7 +15357,7 @@ var $;
             weight: 600,
             size: '10px',
         },
-        color: '#5b5bd6',
+        color: $bog_builderui_tokens.current,
     };
     const relation_target = {
         color: $bog_builderui_tokens.shade,
@@ -15409,7 +15409,8 @@ var $;
             maxWidth: '62%',
         },
         Filter_search: {
-            background: { color: '#ffffffe6' },
+            background: { color: $bog_builderui_tokens.field },
+            color: $bog_builderui_tokens.text,
             border: { radius: '7px' },
             padding: {
                 top: '8px',
@@ -15423,7 +15424,8 @@ var $;
             gap: '7px',
         },
         Filter_type: {
-            background: { color: '#ffffffe6' },
+            background: { color: $bog_builderui_tokens.field },
+            color: $bog_builderui_tokens.text,
             border: { radius: '7px' },
             padding: {
                 top: '8px',
@@ -15434,7 +15436,8 @@ var $;
             font: { size: '11px', weight: 600 },
         },
         Filter_thresh: {
-            background: { color: '#ffffffe6' },
+            background: { color: $bog_builderui_tokens.field },
+            color: $bog_builderui_tokens.text,
             border: { radius: '7px' },
             padding: {
                 top: '8px',
@@ -15445,7 +15448,7 @@ var $;
             font: { size: '11px', weight: 600 },
         },
         Filter_comm: {
-            background: { color: '#5b5bd6' },
+            background: { color: $bog_builderui_tokens.current },
             color: '#ffffff',
             border: { radius: '7px' },
             padding: {
@@ -15551,7 +15554,7 @@ var $;
                 weight: 600,
                 size: '10px',
             },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
             margin: { top: '6px' },
         },
         Entity_desc: {
@@ -15607,7 +15610,7 @@ var $;
         },
         Ask_btn: {
             margin: { top: '16px' },
-            background: { color: '#5b5bd6' },
+            background: { color: $bog_builderui_tokens.current },
             color: '#ffffff',
             border: { radius: '7px' },
             padding: {
@@ -17090,8 +17093,8 @@ var $;
         color: $bog_builderui_tokens.shade,
     };
     const chip = {
-        background: { color: '#ece9fb' },
-        color: '#5b5bd6',
+        background: { color: $bog_builderui_tokens.field },
+        color: $bog_builderui_tokens.current,
         border: { radius: '5px' },
         padding: {
             top: '3px',
@@ -17157,7 +17160,7 @@ var $;
             gap: '5px',
         },
         Mode_local: {
-            background: { color: '#5b5bd6' },
+            background: { color: $bog_builderui_tokens.current },
             color: '#ffffff',
             border: { radius: '6px' },
             padding: {
@@ -17203,7 +17206,7 @@ var $;
             '@': {
                 raggu_role: {
                     user: {
-                        background: { color: '#5b5bd6' },
+                        background: { color: $bog_builderui_tokens.current },
                         color: '#ffffff',
                         borderRadius: '12px 12px 3px 12px',
                         padding: {
@@ -17257,7 +17260,7 @@ var $;
                 weight: 600,
                 size: '11px',
             },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
             border: {
                 bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
             },
@@ -17309,7 +17312,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
         },
         Footer: {
             padding: {
@@ -17352,7 +17355,7 @@ var $;
             minHeight: '24px',
         },
         Input_send: {
-            background: { color: '#5b5bd6' },
+            background: { color: $bog_builderui_tokens.current },
             color: '#ffffff',
             border: { radius: '7px' },
             padding: {
@@ -17465,7 +17468,7 @@ var $;
             flex: { grow: 1 },
             height: '8px',
             border: { radius: '4px' },
-            background: { color: '#ece9fb' },
+            background: { color: $bog_builderui_tokens.field },
             position: 'relative',
             overflow: 'hidden',
         },
@@ -17474,7 +17477,7 @@ var $;
             left: 0,
             top: 0,
             bottom: 0,
-            background: { color: '#5b5bd6' },
+            background: { color: $bog_builderui_tokens.current },
         },
         Value: {
             font: {
@@ -17482,7 +17485,7 @@ var $;
                 weight: 600,
                 size: '11px',
             },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
             minWidth: '36px',
             maxWidth: '36px',
             textAlign: 'right',
@@ -17883,7 +17886,7 @@ var $;
                 weight: 500,
                 size: '10px',
             },
-            color: '#5b5bd6',
+            color: $bog_builderui_tokens.current,
         },
         '@': {
             raggu_web_front_dashboard_log_expanded: {

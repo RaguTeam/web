@@ -3810,6 +3810,29 @@ var $;
             setTimeout(async () => {
                 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
                 const app = $raggu_web_front_app.Root(0);
+                // Inject one-shot CSS for the click pulse (visual feedback for video).
+                const style = document.createElement('style');
+                style.textContent = `
+				@keyframes raggu_demo_pulse {
+					0%   { box-shadow: 0 0 0 0 #5b5bd6cc, 0 0 0 0 #5b5bd644; }
+					40%  { box-shadow: 0 0 0 6px #5b5bd600, 0 0 0 14px #5b5bd600; }
+					100% { box-shadow: 0 0 0 6px #5b5bd600, 0 0 0 14px #5b5bd600; }
+				}
+				.raggu_demo_click {
+					animation: raggu_demo_pulse 600ms ease-out;
+					position: relative;
+					z-index: 1;
+				}
+			`;
+                document.head.appendChild(style);
+                // Pulse the DOM node of a view, then invoke the action ~150ms in
+                // (so the highlight lands BEFORE the screen swap).
+                const click = (view, action) => {
+                    const node = view.dom_node();
+                    node.classList.add('raggu_demo_click');
+                    setTimeout(action, 150);
+                    setTimeout(() => node.classList.remove('raggu_demo_click'), 700);
+                };
                 const initial = {
                     screen: app.screen(),
                     preset: app.preset(),
@@ -3818,19 +3841,19 @@ var $;
                 };
                 console.log('▸ ragufront e2e visual demo: start');
                 // await sleep( 1000 )
-                app.Sidebar().click_explorer();
+                click(app.Sidebar().Nav_explorer(), () => app.Sidebar().click_explorer());
                 // await sleep( 1000 )
-                app.Sidebar().click_chat();
+                click(app.Sidebar().Nav_chat(), () => app.Sidebar().click_chat());
                 // await sleep( 1000 )
-                app.Sidebar().click_dashboard();
+                click(app.Sidebar().Nav_dashboard(), () => app.Sidebar().click_dashboard());
                 // await sleep( 1000 )
-                app.open_settings();
+                click(app.Topbar().Settings_btn(), () => app.open_settings());
                 // await sleep( 1000 )
-                app.Settings().close();
+                click(app.Settings().Close_btn(), () => app.Settings().close());
                 // await sleep( 1000 )
-                app.Sidebar().click_gallery();
+                click(app.Sidebar().Nav_gallery(), () => app.Sidebar().click_gallery());
                 // await sleep( 1000 )
-                app.Gallery().click('law');
+                click(app.Gallery().Card('law'), () => app.Gallery().click('law'));
                 // await sleep( 1000 )
                 // restore initial state so the user can interact afterwards
                 app.screen(initial.screen);
