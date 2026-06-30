@@ -6789,7 +6789,17 @@ declare namespace $.$$ {
         dragging: boolean;
         last_x: number;
         last_y: number;
+        moved_px: number;
+        start_x: number;
+        start_y: number;
+        readonly DRAG_THRESHOLD = 4;
         pan_start(event?: PointerEvent): void;
+        captured: boolean;
+        acquire_capture(event: PointerEvent): void;
+        svg_scale(): {
+            ax: number;
+            ay: number;
+        };
         pan_move(event?: PointerEvent): void;
         pan_end(): void;
         client_to_svg(event: PointerEvent): {

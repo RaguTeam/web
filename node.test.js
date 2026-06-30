@@ -15564,57 +15564,103 @@ var $;
                 const factor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
                 this.zoom(this.zoom() * factor);
             }
-            // Drag-to-pan: track last pointer position when not on a node
+            // Last pointer position (in client/screen pixels). Used by BOTH pan and node-drag
+            // as the anchor for computing pixel-delta on each pointermove.
             dragging = false;
             last_x = 0;
             last_y = 0;
+            // Total movement during the current pointer-down session, in screen pixels.
+            // Below DRAG_THRESHOLD it's a click, above it's a real drag (suppresses click).
+            moved_px = 0;
+            // Where the pointer landed at pointerdown — for total-distance computation.
+            start_x = 0;
+            start_y = 0;
+            // Minimum pixel distance to treat pointer interaction as drag (vs click).
+            // Matches the $mol_touch convention of `>= 4`.
+            DRAG_THRESHOLD = 4;
             pan_start(event) {
                 if (!event)
                     return;
                 const target = event.target;
                 const node_id = target.getAttribute('data-node-id');
-                const svg = this.dom_node();
-                try {
-                    svg.setPointerCapture(event.pointerId);
-                }
-                catch { }
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                this.start_x = event.clientX;
+                this.start_y = event.clientY;
+                this.moved_px = 0;
+                this.just_dragged = '';
+                this.captured = false;
                 if (node_id) {
                     this.drag_id(node_id);
                     return;
                 }
                 this.dragging = true;
-                this.last_x = event.clientX;
-                this.last_y = event.clientY;
+            }
+            // Engage pointer-capture lazily — only once the user has crossed the drag
+            // threshold. Capturing too early hijacks pointerup, which kills the click
+            // event on the circle (click dispatches to the captured svg-root instead).
+            captured = false;
+            acquire_capture(event) {
+                if (this.captured)
+                    return;
+                const svg = this.dom_node();
+                try {
+                    svg.setPointerCapture(event.pointerId);
+                    this.captured = true;
+                }
+                catch { }
+            }
+            // Returns svg-units per screen-pixel ratio for x/y. 1 if CTM missing.
+            svg_scale() {
+                const svg = this.dom_node();
+                const ctm = svg?.getScreenCTM?.();
+                if (!ctm || !ctm.a || !ctm.d)
+                    return { ax: 1, ay: 1 };
+                return { ax: 1 / ctm.a, ay: 1 / ctm.d };
             }
             pan_move(event) {
                 if (!event)
                     return;
-                // Node drag: move the dragged node in svg-space
+                const dx_px = event.clientX - this.last_x;
+                const dy_px = event.clientY - this.last_y;
+                if (dx_px === 0 && dy_px === 0)
+                    return;
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                // Track total distance from pointerdown to differentiate click from drag
+                const total_dx = event.clientX - this.start_x;
+                const total_dy = event.clientY - this.start_y;
+                this.moved_px = Math.sqrt(total_dx * total_dx + total_dy * total_dy);
+                // Below threshold while pressing on a node — treat as pending click, don't move
+                if (this.drag_id() && this.moved_px < this.DRAG_THRESHOLD)
+                    return;
+                // Crossed threshold → engage pointer capture so drag survives pointer
+                // leaving the circle. Capturing here (not in pan_start) keeps clicks
+                // functional for taps that never crossed threshold.
+                this.acquire_capture(event);
+                const { ax, ay } = this.svg_scale();
+                const dx = dx_px * ax;
+                const dy = dy_px * ay;
+                // Node drag: shift the dragged node by pointer delta
                 if (this.drag_id()) {
-                    const pt = this.client_to_svg(event);
                     const id = this.drag_id();
-                    this.positions({ ...this.positions(), [id]: pt });
+                    const cur = this.pos(id);
+                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
                     return;
                 }
                 if (!this.dragging)
                     return;
-                // Convert pixel-delta to svg-userspace-delta via CTM so pan tracks pointer 1:1
-                const svg = this.dom_node();
-                const ctm = svg.getScreenCTM();
-                if (!ctm)
-                    return;
-                const dx_px = event.clientX - this.last_x;
-                const dy_px = event.clientY - this.last_y;
-                this.last_x = event.clientX;
-                this.last_y = event.clientY;
-                // CTM scales: ctm.a = svg→screen x scale, ctm.d = svg→screen y scale
-                this.pan_x(this.pan_x() - dx_px / ctm.a);
-                this.pan_y(this.pan_y() - dy_px / ctm.d);
+                // Pan: opposite direction (world stays under pointer)
+                this.pan_x(this.pan_x() - dx);
+                this.pan_y(this.pan_y() - dy);
             }
             pan_end() {
                 this.dragging = false;
+                this.captured = false;
                 if (this.drag_id()) {
-                    this.just_dragged = this.drag_id();
+                    if (this.moved_px >= this.DRAG_THRESHOLD) {
+                        this.just_dragged = this.drag_id();
+                    }
                     this.drag_id('');
                 }
             }
@@ -23448,6 +23494,190 @@ var $;
         ], $mol_locale_mock, "source", null);
         $.$mol_locale = $mol_locale_mock;
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        // jsdom doesn't implement SVGSVGElement.getScreenCTM/createSVGPoint.
+        // Stub with identity-like behavior so drag math runs as it would in a real browser
+        // where 1 screen-pixel == 1 svg-unit.
+        function stub_svg(g) {
+            const svg = g.dom_node();
+            svg.getScreenCTM = () => ({
+                a: 1, b: 0, c: 0, d: 1, e: 0, f: 0,
+                inverse() { return this; },
+            });
+            svg.createSVGPoint = () => {
+                const p = { x: 0, y: 0 };
+                p.matrixTransform = (m) => ({
+                    x: m.a * p.x + m.c * p.y + m.e,
+                    y: m.b * p.x + m.d * p.y + m.f,
+                });
+                return p;
+            };
+        }
+        function pe(x, y, target) {
+            return { clientX: x, clientY: y, pointerId: 1, target: target ?? null };
+        }
+        function node_target(id) {
+            return { getAttribute: (k) => k === 'data-node-id' ? id : null };
+        }
+        $mol_test({
+            'pos(id): no override → layout coords'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const n = g.nodes()[0];
+                const p = g.pos(n.id);
+                $mol_assert_equal(p.x, n.x);
+                $mol_assert_equal(p.y, n.y);
+            },
+            // THE bug from user: 1-pixel pointer move ⇒ node travels exactly 1 pixel.
+            // If the math is broken, the node "flies" elsewhere.
+            'drag below threshold: node does NOT move (treated as pending click)'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const n = g.nodes()[7];
+                const x0 = n.x, y0 = n.y;
+                g.pan_start(pe(x0 + 5, y0 + 5, node_target(n.id)));
+                g.pan_move(pe(x0 + 5, y0 + 6)); // 1px < threshold
+                const p = g.pos(n.id);
+                $mol_assert_equal(p.x, x0);
+                $mol_assert_equal(p.y, y0);
+            },
+            'drag above threshold: node tracks pointer delta'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const n = g.nodes()[3];
+                const x0 = n.x, y0 = n.y;
+                g.pan_start(pe(0, 0, node_target(n.id)));
+                g.pan_move(pe(50, -30)); // 58px ≫ 4
+                const p = g.pos(n.id);
+                $mol_assert_equal(p.x, x0 + 50);
+                $mol_assert_equal(p.y, y0 - 30);
+            },
+            'drag multiple moves accumulate (above threshold)'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const n = g.nodes()[2];
+                const x0 = n.x, y0 = n.y;
+                g.pan_start(pe(0, 0, node_target(n.id)));
+                g.pan_move(pe(10, 10)); // 14px > 4 — kicks in
+                g.pan_move(pe(25, 15));
+                g.pan_move(pe(25, 25));
+                const p = g.pos(n.id);
+                $mol_assert_equal(p.x, x0 + 25);
+                $mol_assert_equal(p.y, y0 + 25);
+            },
+            'click without prior drag: selects'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                g.click('n3');
+                $mol_assert_equal(g.selected_id(), 'n3');
+            },
+            // THE click-vs-drag boundary: tap that didn't move past threshold MUST select
+            'click after press-without-move (tiny drag): NOT suppressed → selects'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const n = g.nodes()[0];
+                g.pan_start(pe(n.x, n.y, node_target(n.id)));
+                // User just clicked, didn't drag — pan_move never fires OR with delta < threshold
+                g.pan_move(pe(n.x + 1, n.y)); // 1 pixel < 4
+                g.pan_end();
+                $mol_assert_equal(g.just_dragged, ''); // no suppression
+                g.click(n.id);
+                $mol_assert_equal(g.selected_id(), n.id); // selects normally
+            },
+            'click after real drag (>threshold): IS suppressed'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const n = g.nodes()[0];
+                g.pan_start(pe(n.x, n.y, node_target(n.id)));
+                g.pan_move(pe(n.x + 20, n.y + 20)); // 28px ≫ 4
+                g.pan_end();
+                $mol_assert_equal(g.just_dragged, n.id);
+                g.click(n.id);
+                $mol_assert_equal(g.selected_id(), '');
+            },
+            'bg_click on empty bg → deselect'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                g.selected_id('n3');
+                g.bg_click({ target: { getAttribute: () => null } });
+                $mol_assert_equal(g.selected_id(), '');
+            },
+            'bg_click on node circle → keep selection (per-node click handles it)'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                g.selected_id('n3');
+                g.bg_click({ target: { getAttribute: (k) => k === 'data-node-id' ? 'n7' : null } });
+                $mol_assert_equal(g.selected_id(), 'n3');
+            },
+            'pan (drag on bg): camera moves opposite to pointer'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                g.pan_start(pe(0, 0, { getAttribute: () => null }));
+                $mol_assert_equal(g.drag_id(), '');
+                g.pan_move(pe(50, 30));
+                $mol_assert_equal(g.pan_x(), -50);
+                $mol_assert_equal(g.pan_y(), -30);
+            },
+            'pan_move ignores no-move (same coords)'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const n = g.nodes()[0];
+                g.pan_start(pe(10, 10, node_target(n.id)));
+                g.pan_move(pe(10, 10));
+                // Position unchanged
+                const p = g.pos(n.id);
+                $mol_assert_equal(p.x, n.x);
+                $mol_assert_equal(p.y, n.y);
+            },
+            'selected_node / selected_relations'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const n = g.nodes()[3];
+                g.selected_id(n.id);
+                $mol_assert_equal(g.selected_node()?.id, n.id);
+                $mol_assert_equal(g.selected_relations().length > 0, true);
+            },
+            // --- DOM integration: render → inspect → real events ---
+            'DOM render: every circle has data-node-id attr'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const svg = g.dom_tree();
+                const circles = svg.querySelectorAll('circle');
+                $mol_assert_equal(circles.length > 0, true);
+                let with_attr = 0;
+                circles.forEach(c => {
+                    const id = c.getAttribute('data-node-id');
+                    if (id)
+                        with_attr++;
+                });
+                $mol_assert_equal(with_attr, circles.length);
+            },
+            'DOM event flow: pointerdown on circle → drag mode'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                stub_svg(g);
+                const svg = g.dom_tree();
+                const circle = svg.querySelector('circle');
+                const id = circle.getAttribute('data-node-id');
+                $mol_assert_equal(!!id, true);
+                // Synth pointerdown event with target=circle
+                const ev = { clientX: 10, clientY: 20, pointerId: 1, target: circle };
+                g.pan_start(ev);
+                $mol_assert_equal(g.drag_id(), id);
+            },
+            'reactive: positions write → node_x reflects new value'($) {
+                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const n = g.nodes()[0];
+                const x_before = g.node_x(n.id);
+                g.positions({ [n.id]: { x: 42, y: 99 } });
+                const x_after = g.node_x(n.id);
+                const y_after = g.node_y(n.id);
+                $mol_assert_equal(x_after, '42');
+                $mol_assert_equal(y_after, '99');
+                $mol_assert_equal(x_after !== x_before, true);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 
 ;

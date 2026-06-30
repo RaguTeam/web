@@ -15573,57 +15573,103 @@ var $;
                 const factor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
                 this.zoom(this.zoom() * factor);
             }
-            // Drag-to-pan: track last pointer position when not on a node
+            // Last pointer position (in client/screen pixels). Used by BOTH pan and node-drag
+            // as the anchor for computing pixel-delta on each pointermove.
             dragging = false;
             last_x = 0;
             last_y = 0;
+            // Total movement during the current pointer-down session, in screen pixels.
+            // Below DRAG_THRESHOLD it's a click, above it's a real drag (suppresses click).
+            moved_px = 0;
+            // Where the pointer landed at pointerdown — for total-distance computation.
+            start_x = 0;
+            start_y = 0;
+            // Minimum pixel distance to treat pointer interaction as drag (vs click).
+            // Matches the $mol_touch convention of `>= 4`.
+            DRAG_THRESHOLD = 4;
             pan_start(event) {
                 if (!event)
                     return;
                 const target = event.target;
                 const node_id = target.getAttribute('data-node-id');
-                const svg = this.dom_node();
-                try {
-                    svg.setPointerCapture(event.pointerId);
-                }
-                catch { }
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                this.start_x = event.clientX;
+                this.start_y = event.clientY;
+                this.moved_px = 0;
+                this.just_dragged = '';
+                this.captured = false;
                 if (node_id) {
                     this.drag_id(node_id);
                     return;
                 }
                 this.dragging = true;
-                this.last_x = event.clientX;
-                this.last_y = event.clientY;
+            }
+            // Engage pointer-capture lazily — only once the user has crossed the drag
+            // threshold. Capturing too early hijacks pointerup, which kills the click
+            // event on the circle (click dispatches to the captured svg-root instead).
+            captured = false;
+            acquire_capture(event) {
+                if (this.captured)
+                    return;
+                const svg = this.dom_node();
+                try {
+                    svg.setPointerCapture(event.pointerId);
+                    this.captured = true;
+                }
+                catch { }
+            }
+            // Returns svg-units per screen-pixel ratio for x/y. 1 if CTM missing.
+            svg_scale() {
+                const svg = this.dom_node();
+                const ctm = svg?.getScreenCTM?.();
+                if (!ctm || !ctm.a || !ctm.d)
+                    return { ax: 1, ay: 1 };
+                return { ax: 1 / ctm.a, ay: 1 / ctm.d };
             }
             pan_move(event) {
                 if (!event)
                     return;
-                // Node drag: move the dragged node in svg-space
+                const dx_px = event.clientX - this.last_x;
+                const dy_px = event.clientY - this.last_y;
+                if (dx_px === 0 && dy_px === 0)
+                    return;
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                // Track total distance from pointerdown to differentiate click from drag
+                const total_dx = event.clientX - this.start_x;
+                const total_dy = event.clientY - this.start_y;
+                this.moved_px = Math.sqrt(total_dx * total_dx + total_dy * total_dy);
+                // Below threshold while pressing on a node — treat as pending click, don't move
+                if (this.drag_id() && this.moved_px < this.DRAG_THRESHOLD)
+                    return;
+                // Crossed threshold → engage pointer capture so drag survives pointer
+                // leaving the circle. Capturing here (not in pan_start) keeps clicks
+                // functional for taps that never crossed threshold.
+                this.acquire_capture(event);
+                const { ax, ay } = this.svg_scale();
+                const dx = dx_px * ax;
+                const dy = dy_px * ay;
+                // Node drag: shift the dragged node by pointer delta
                 if (this.drag_id()) {
-                    const pt = this.client_to_svg(event);
                     const id = this.drag_id();
-                    this.positions({ ...this.positions(), [id]: pt });
+                    const cur = this.pos(id);
+                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
                     return;
                 }
                 if (!this.dragging)
                     return;
-                // Convert pixel-delta to svg-userspace-delta via CTM so pan tracks pointer 1:1
-                const svg = this.dom_node();
-                const ctm = svg.getScreenCTM();
-                if (!ctm)
-                    return;
-                const dx_px = event.clientX - this.last_x;
-                const dy_px = event.clientY - this.last_y;
-                this.last_x = event.clientX;
-                this.last_y = event.clientY;
-                // CTM scales: ctm.a = svg→screen x scale, ctm.d = svg→screen y scale
-                this.pan_x(this.pan_x() - dx_px / ctm.a);
-                this.pan_y(this.pan_y() - dy_px / ctm.d);
+                // Pan: opposite direction (world stays under pointer)
+                this.pan_x(this.pan_x() - dx);
+                this.pan_y(this.pan_y() - dy);
             }
             pan_end() {
                 this.dragging = false;
+                this.captured = false;
                 if (this.drag_id()) {
-                    this.just_dragged = this.drag_id();
+                    if (this.moved_px >= this.DRAG_THRESHOLD) {
+                        this.just_dragged = this.drag_id();
+                    }
                     this.drag_id('');
                 }
             }
