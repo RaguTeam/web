@@ -17532,6 +17532,60 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_status) = class $mol_status extends ($.$mol_view) {
+		message(){
+			return "";
+		}
+		status(){
+			return (this.title());
+		}
+		minimal_height(){
+			return 24;
+		}
+		minimal_width(){
+			return 0;
+		}
+		sub(){
+			return [(this.message())];
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_status extends $.$mol_status {
+            message() {
+                try {
+                    return this.status() ?? null;
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        $mol_fail_hidden(error);
+                    $mol_fail_log(error);
+                    return error.message;
+                }
+            }
+        }
+        $$.$mol_status = $mol_status;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n\tflex-shrink: 1;\n\tword-wrap: break-word;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_stack) = class $mol_stack extends ($.$mol_view) {};
 
 
@@ -18680,9 +18734,17 @@ var $;
 			(obj.rows) = () => ((this.rows()));
 			return obj;
 		}
+		communication(){
+			return null;
+		}
+		Status(){
+			const obj = new this.$.$mol_status();
+			(obj.status) = () => ((this.communication()));
+			return obj;
+		}
 		Body(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Messages())]);
+			(obj.sub) = () => ([(this.Messages()), (this.Status())]);
 			return obj;
 		}
 		use_sug_one(next){
@@ -18984,6 +19046,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Modes_bar"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Messages"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Status"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_one"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_one"));
@@ -19641,14 +19704,9 @@ var $;
                 const text = this.prompt_text().trim();
                 if (!text)
                     return null;
-                const next = [...this.history(), { role: 'user', text }];
-                this.history(next);
+                this.history([...this.history(), { role: 'user', text }]);
                 this.prompt_text('');
-                if (this.mode() === 'llm') {
-                    // Real LLM через $mol_github_model — асинхронно, оборачиваем в fiber
-                    $mol_wire_async(this).llm_reply(text);
-                }
-                else {
+                if (this.mode() !== 'llm') {
                     // Мок для search-режимов
                     const mock = `${this.mock_prefix_text()} "${text}". ${this.mock_suffix_text()}`;
                     setTimeout(() => {
@@ -19658,14 +19716,39 @@ var $;
                 }
                 return null;
             }
-            llm_reply(text) {
+            // Реактивный LLM-роутер по паттерну $giper_bot.communication.
+            // Срабатывает когда история заканчивается на user-сообщение и режим llm.
+            // $mol_promise_like → перебрасываем suspension обратно в wire для retry.
+            // $mol_fail_log → реальную ошибку логируем И кладём в чат как assistant-сообщение,
+            // чтобы юзер увидел причину (429 rate-limit, 400 bad request, network).
+            communication() {
+                const history = this.history();
+                if (history.length === 0)
+                    return;
+                const last = history[history.length - 1];
+                if (last.role !== 'user')
+                    return;
+                if (this.mode() !== 'llm')
+                    return;
                 const model = this.llm().fork();
-                model.ask([text]);
-                const resp = model.response();
-                const reply = typeof resp === 'string' ? resp
-                    : resp?.reply ?? JSON.stringify(resp, null, 2);
-                this.history([...this.history(), { role: 'assistant', text: reply }]);
-                return null;
+                for (const item of history) {
+                    if (item.role === 'user')
+                        model.ask([item.text]);
+                    else
+                        model.tell([item.text]);
+                }
+                try {
+                    const resp = model.response();
+                    const reply = typeof resp === 'string' ? resp : resp?.reply ?? JSON.stringify(resp, null, 2);
+                    this.history([...history, { role: 'assistant', text: reply }]);
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    if ($mol_fail_log(error)) {
+                        this.history([...history, { role: 'assistant', text: '📛 ' + (error.message || String(error)) }]);
+                    }
+                }
             }
             use_sug_one() {
                 this.prompt_text(this.sug_one_text());
@@ -19723,8 +19806,8 @@ var $;
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
         __decorate([
-            $mol_action
-        ], $raggu_web_front_chat.prototype, "llm_reply", null);
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "communication", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "use_sug_one", null);

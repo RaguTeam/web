@@ -1405,6 +1405,13 @@ $raggu_web_front_explorer $bog_builderui_div
 				sub / <= ask_btn_text
 				event * click? <=> ask_click? null
 
+$mol_status $mol_view
+	status <= title
+	minimal_height 24
+	minimal_width 0
+	sub /
+		<= message \
+
 $mol_stack $mol_view
 
 $mol_text_code_token $mol_dimmer
@@ -1652,6 +1659,7 @@ $raggu_web_front_chat $bog_builderui_div
 		<= Body $mol_scroll
 			sub /
 				<= Messages $mol_list rows <= rows
+				<= Status $mol_status status <= communication null
 		<= Footer $bog_builderui_div sub /
 			<= Suggestions $bog_builderui_div sub /
 				<= Sug_one $bog_builderui_div
