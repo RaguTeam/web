@@ -1599,6 +1599,8 @@ $raggu_web_front_chat $bog_builderui_div
 	message_text* \
 	message_role* \
 	message_with_trace* false
+	trace_expanded* false
+	trace_toggle*? null
 	sub /
 		<= Modes_bar $bog_builderui_div sub /
 			<= Modes_label $bog_builderui_div sub / <= modes_label_text
@@ -1677,22 +1679,27 @@ $raggu_web_front_chat $bog_builderui_div
 				attr *
 					raggu_visible <= message_with_trace*
 				sub /
-					<= Message_trace_head* $bog_builderui_div sub /
-						<= Message_trace_head_title* $bog_builderui_div sub / <= trace_head_title_text
-						<= Message_trace_head_meta* $bog_builderui_div sub / <= trace_head_meta_text
-					<= Message_trace_body* $bog_builderui_div sub /
-						<= Message_trace_label* $bog_builderui_div sub / <= trace_label_text
-						<= Message_trace_chips* $bog_builderui_div sub /
-							<= Message_trace_chip_one* $bog_builderui_div sub / <= trace_chip_one_text
-							<= Message_trace_chip_two* $bog_builderui_div sub / <= trace_chip_two_text
-							<= Message_trace_chip_three* $bog_builderui_div sub / <= trace_chip_three_text
-						<= Message_trace_stats* $bog_builderui_div sub /
-							<= Message_trace_stat_chunks* $bog_builderui_div sub / <= trace_stat_chunks_text
-							<= Message_trace_stat_comms* $bog_builderui_div sub / <= trace_stat_comms_text
-							<= Message_trace_stat_retr* $bog_builderui_div sub / <= trace_stat_retr_text
-							<= Message_trace_stat_gen* $bog_builderui_div sub / <= trace_stat_gen_text
-							<= Message_trace_stat_power* $bog_builderui_div sub / <= trace_stat_power_text
-						<= Message_trace_link* $bog_builderui_div sub / <= trace_link_text
+					<= Message_trace_head* $bog_builderui_div
+						event * click? <=> trace_toggle*? null
+						sub /
+							<= Message_trace_head_title* $bog_builderui_div sub / <= trace_head_title_text
+							<= Message_trace_head_meta* $bog_builderui_div sub / <= trace_head_meta_text
+					<= Message_trace_body* $bog_builderui_div
+						attr *
+							raggu_expanded <= trace_expanded*
+						sub /
+							<= Message_trace_label* $bog_builderui_div sub / <= trace_label_text
+							<= Message_trace_chips* $bog_builderui_div sub /
+								<= Message_trace_chip_one* $bog_builderui_div sub / <= trace_chip_one_text
+								<= Message_trace_chip_two* $bog_builderui_div sub / <= trace_chip_two_text
+								<= Message_trace_chip_three* $bog_builderui_div sub / <= trace_chip_three_text
+							<= Message_trace_stats* $bog_builderui_div sub /
+								<= Message_trace_stat_chunks* $bog_builderui_div sub / <= trace_stat_chunks_text
+								<= Message_trace_stat_comms* $bog_builderui_div sub / <= trace_stat_comms_text
+								<= Message_trace_stat_retr* $bog_builderui_div sub / <= trace_stat_retr_text
+								<= Message_trace_stat_gen* $bog_builderui_div sub / <= trace_stat_gen_text
+								<= Message_trace_stat_power* $bog_builderui_div sub / <= trace_stat_power_text
+							<= Message_trace_link* $bog_builderui_div sub / <= trace_link_text
 
 $raggu_web_front_dashboard_dist $bog_builderui_div
 

@@ -10842,10 +10842,12 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_40 = $mol_type_enforce<
-		readonly(any)[]
+	type $bog_builderui_div__event_raggu_web_front_chat_40 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['trace_toggle'] > ): ReturnType< $raggu_web_front_chat['trace_toggle'] >,
+		}) 
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $bog_builderui_div['event'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_41 = $mol_type_enforce<
 		readonly(any)[]
@@ -10914,7 +10916,7 @@ declare namespace $ {
 	>
 	type $bog_builderui_div__attr_raggu_web_front_chat_54 = $mol_type_enforce<
 		({ 
-			'raggu_visible': ReturnType< $raggu_web_front_chat['message_with_trace'] >,
+			'raggu_expanded': ReturnType< $raggu_web_front_chat['trace_expanded'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['attr'] >
@@ -10926,12 +10928,24 @@ declare namespace $ {
 	>
 	type $bog_builderui_div__attr_raggu_web_front_chat_56 = $mol_type_enforce<
 		({ 
+			'raggu_visible': ReturnType< $raggu_web_front_chat['message_with_trace'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_57 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_58 = $mol_type_enforce<
+		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_57 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_59 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -10971,6 +10985,7 @@ declare namespace $ {
 		Input_row( ): $bog_builderui_div
 		Footer( ): $bog_builderui_div
 		Message_text( id: any): $bog_builderui_div
+		trace_toggle( id: any, next?: any ): any
 		Message_trace_head_title( id: any): $bog_builderui_div
 		Message_trace_head_meta( id: any): $bog_builderui_div
 		Message_trace_head( id: any): $bog_builderui_div
@@ -11020,6 +11035,7 @@ declare namespace $ {
 		message_text( id: any): string
 		message_role( id: any): string
 		message_with_trace( id: any): boolean
+		trace_expanded( id: any): boolean
 		sub( ): readonly(any)[]
 		Message( id: any): $bog_builderui_div
 	}
@@ -11056,6 +11072,8 @@ declare namespace $.$$ {
         message_text(index: number): string;
         message_role(index: number): Raggu_chat_role;
         message_with_trace(index: number): boolean;
+        trace_expanded(index: number, next?: boolean): boolean;
+        trace_toggle(index: number): null;
         prompt_submit(): null;
         llm_reply(text: string): null;
         use_sug_one(): null;

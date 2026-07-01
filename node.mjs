@@ -18747,6 +18747,10 @@ var $;
 			(obj.sub) = () => ([(this.message_text(id))]);
 			return obj;
 		}
+		trace_toggle(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Message_trace_head_title(id){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.trace_head_title_text())]);
@@ -18759,6 +18763,7 @@ var $;
 		}
 		Message_trace_head(id){
 			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.trace_toggle(id, next))});
 			(obj.sub) = () => ([(this.Message_trace_head_title(id)), (this.Message_trace_head_meta(id))]);
 			return obj;
 		}
@@ -18834,6 +18839,7 @@ var $;
 		}
 		Message_trace_body(id){
 			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({"raggu_expanded": (this.trace_expanded(id))});
 			(obj.sub) = () => ([
 				(this.Message_trace_label(id)), 
 				(this.Message_trace_chips(id)), 
@@ -18945,6 +18951,9 @@ var $;
 		message_with_trace(id){
 			return false;
 		}
+		trace_expanded(id){
+			return false;
+		}
 		sub(){
 			return [
 				(this.Modes_bar()), 
@@ -18988,6 +18997,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_row"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Footer"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_text"));
+	($mol_mem_key(($.$raggu_web_front_chat.prototype), "trace_toggle"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace_head_title"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace_head_meta"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace_head"));
@@ -19620,6 +19630,13 @@ var $;
             message_with_trace(index) {
                 return Boolean(this.history()[index]?.trace);
             }
+            trace_expanded(index, next) {
+                return next ?? false;
+            }
+            trace_toggle(index) {
+                this.trace_expanded(index, !this.trace_expanded(index));
+                return null;
+            }
             prompt_submit() {
                 const text = this.prompt_text().trim();
                 if (!text)
@@ -19696,6 +19713,12 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_chat.prototype, "dom_tree", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "trace_expanded", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "trace_toggle", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
@@ -19912,6 +19935,8 @@ var $;
             flex: { direction: 'row' },
             align: { items: 'center' },
             gap: '7px',
+            cursor: 'pointer',
+            userSelect: 'none',
             padding: {
                 top: '9px',
                 bottom: '9px',
@@ -19924,9 +19949,6 @@ var $;
                 size: '11px',
             },
             color: $bog_builderui_tokens.current,
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
         },
         Message_trace_head_meta: {
             marginLeft: 'auto',
@@ -19940,8 +19962,21 @@ var $;
                 left: '13px',
                 right: '13px',
             },
-            flex: { direction: 'column' },
             gap: '8px',
+            border: {
+                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            // По дефолту скрыт. Показываем только когда trace_expanded=true.
+            // Boolean false → mol удаляет атрибут → CSS [attr="false"] не сработает.
+            display: 'none',
+            '@': {
+                raggu_expanded: {
+                    true: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                    },
+                },
+            },
         },
         Message_trace_label: {
             font: {
