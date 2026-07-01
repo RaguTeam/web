@@ -6238,6 +6238,1485 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    enum $mol_rest_code {
+        'Continue' = 100,
+        'Switching protocols' = 101,
+        'Processing' = 102,
+        'OK' = 200,
+        'Created' = 201,
+        'Accepted' = 202,
+        'Non-Authoritative Information' = 203,
+        'No Content' = 204,
+        'Reset Content' = 205,
+        'Partial Content' = 206,
+        'Multi Status' = 207,
+        'Already Reported' = 208,
+        'IM Used' = 226,
+        'Multiple Choices' = 300,
+        'Moved Permanently' = 301,
+        'Found' = 302,
+        'See Other' = 303,
+        'Not Modified' = 304,
+        'Use Proxy' = 305,
+        'Temporary Redirect' = 307,
+        'Bad Request' = 400,
+        'Unauthorized' = 401,
+        'Payment Required' = 402,
+        'Forbidden' = 403,
+        'Not Found' = 404,
+        'Method Not Allowed' = 405,
+        'Not Acceptable' = 406,
+        'Proxy Authentication Required' = 407,
+        'Request Timeout' = 408,
+        'Conflict' = 409,
+        'Gone' = 410,
+        'Length Required' = 411,
+        'Precondition Failed' = 412,
+        'Request Entity Too Large' = 413,
+        'Request URI Too Long' = 414,
+        'Unsupported Media Type' = 415,
+        'Requested Range Not Satisfiable' = 416,
+        'Expectation Failed' = 417,
+        'Teapot' = 418,
+        'Unprocessable Entity' = 422,
+        'Locked' = 423,
+        'Failed Dependency' = 424,
+        'Upgrade Required' = 426,
+        'Precondition Required' = 428,
+        'Too Many Requests' = 429,
+        'Request Header Fields Too Large' = 431,
+        'Unavailable For Legal Reasons' = 451,
+        'Internal Server Error' = 500,
+        'Not Implemented' = 501,
+        'Bad Gateway' = 502,
+        'Service Unavailable' = 503,
+        'Gateway Timeout' = 504,
+        'HTTP Version Not Supported' = 505,
+        'Insufficient Storage' = 507,
+        'Loop Detected' = 508,
+        'Not Extended' = 510,
+        'Network Authentication Required' = 511,
+        'Network Read Timeout Error' = 598,
+        'Network Connect Timeout Error' = 599
+    }
+}
+
+declare namespace $ {
+    function $mol_error_fence<Data>(task: () => Data, fallback: (parent: Error) => Error | Data | PromiseLike<Data>, loading?: (parent: PromiseLike<Data>) => Error | Data | PromiseLike<Data>): Data;
+}
+
+declare namespace $ {
+    function $mol_error_enriched<V>(cause: {}, cb: () => V): V;
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object {
+        readonly native: Response;
+        readonly request: $mol_fetch_request;
+        status(): "unknown" | "success" | "inform" | "redirect" | "wrong" | "failed";
+        code(): number;
+        ok(): boolean;
+        message(): string;
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        text(): string;
+        json(): unknown;
+        blob(): Blob;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch_request extends $mol_object {
+        readonly native: Request;
+        response_async(): Promise<Response> & {
+            destructor: () => void;
+        };
+        response(): $mol_fetch_response;
+        success(): $mol_fetch_response;
+    }
+    class $mol_fetch extends $mol_object {
+        static request(input: RequestInfo, init?: RequestInit): $mol_fetch_request;
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static blob(input: RequestInfo, init?: RequestInit): Blob;
+        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Operation descriptor produced by the generator in `-openapi/*.ts`.
+     * Each entry carries HTTP method, route template with `{placeholders}`,
+     * plus typed `params` / `query` / `body` / `out` marker fields.
+     */
+    type $raggu_web_front_api_operation = {
+        method: string;
+        route: string;
+        params: any;
+        query: any;
+        body: any;
+        out: any;
+    };
+    /** Options passed alongside operation call. */
+    type $raggu_web_front_api_options<Op extends $raggu_web_front_api_operation> = {
+        params?: Op['params'];
+        query?: Op['query'];
+        body?: Op['body'];
+    };
+    /**
+     * Typed REST client factory for OpenAPI-generated operation descriptors.
+     *
+     * Returns a callable that takes an operation constant plus options and
+     * synchronously (via wire) returns the parsed JSON body. Any network
+     * error propagates as an exception so `$mol_view` shows an error plate.
+     *
+     * Endpoint host is baseline `http://localhost:8000` because operation `route`s
+     * already carry the `/api/v1/...` prefix from FastAPI's OpenAPI dump.
+     */
+    const $raggu_web_front_api: <Op extends $raggu_web_front_api_operation>(op: Op, opts?: $raggu_web_front_api_options<Op>) => Op["out"];
+}
+
+declare namespace $.$raggu_web_front_api_ragu {
+    /**
+     * This file was auto-generated by openapi-typescript.
+     * Do not make direct changes to the file.
+     */
+    interface paths {
+        "/api/v1/health": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Service health check */
+            get: operations["health"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/capabilities": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Runtime feature flags */
+            get: operations["capabilities"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** List preindexed datasets */
+            get: operations["list_datasets"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Get dataset details */
+            get: operations["get_dataset"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}/graph": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Get graph node-link data */
+            get: operations["get_graph"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Get entity card data */
+            get: operations["get_node"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}/neighbors": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Get a node neighborhood subgraph */
+            get: operations["get_node_neighbors"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}/graph/communities": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** List graph communities */
+            get: operations["get_communities"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}/agent/messages": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            /** Ask a question over a dataset graph */
+            post: operations["create_agent_message"];
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        "/api/v1/datasets/{dataset_id}/agent/suggestions": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** Get dataset-specific starter questions */
+            get: operations["get_agent_suggestions"];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+    }
+    type webhooks = Record<string, never>;
+    interface components {
+        schemas: {
+            /** AgentRequest */
+            AgentRequest: {
+                /**
+                 * Message
+                 * @example Who wrote the Norwegian anthem?
+                 */
+                message: string;
+                /** History */
+                history?: components["schemas"]["ChatMessage"][];
+                /**
+                 * Engine
+                 * @default local
+                 * @enum {string}
+                 */
+                engine: "local" | "global" | "naive" | "mix" | "query_plan";
+                /**
+                 * Top K
+                 * @default 8
+                 */
+                top_k: number;
+                /**
+                 * Rerank
+                 * @default true
+                 */
+                rerank: boolean;
+                /**
+                 * Include Trace
+                 * @default true
+                 */
+                include_trace: boolean;
+                /**
+                 * Locale
+                 * @default ru
+                 * @enum {string}
+                 */
+                locale: "ru" | "en";
+            };
+            /** AgentResponse */
+            AgentResponse: {
+                message: components["schemas"]["AssistantMessage"];
+            };
+            /** AnswerTrace */
+            AnswerTrace: {
+                /**
+                 * Engine
+                 * @enum {string}
+                 */
+                engine: "local" | "global" | "naive" | "mix" | "query_plan";
+                /** Top K */
+                top_k: number;
+                /** Rerank */
+                rerank: boolean;
+                /** Entities */
+                entities?: components["schemas"]["TraceEntity"][];
+                /** Relations */
+                relations?: components["schemas"]["TraceRelation"][];
+                /** Chunks */
+                chunks?: components["schemas"]["TraceChunk"][];
+                /** Communities */
+                communities?: components["schemas"]["TraceCommunity"][];
+                timings: components["schemas"]["TraceTimings"];
+                energy: components["schemas"]["TraceEnergy"];
+                highlight: components["schemas"]["GraphHighlight"];
+            };
+            /** AssistantMessage */
+            AssistantMessage: {
+                /** Id */
+                id: string;
+                /**
+                 * Role
+                 * @default assistant
+                 * @constant
+                 */
+                role: "assistant";
+                /** Content */
+                content: string;
+                /**
+                 * Created At
+                 * Format: date-time
+                 */
+                created_at: string;
+                trace?: components["schemas"]["AnswerTrace"] | null;
+            };
+            /** CapabilitiesResponse */
+            CapabilitiesResponse: {
+                /** Preindexed Datasets */
+                preindexed_datasets: boolean;
+                /** Graph Explorer */
+                graph_explorer: boolean;
+                /** Agent Chat */
+                agent_chat: boolean;
+                /** Upload Document */
+                upload_document: boolean;
+                /** Upload Index */
+                upload_index: boolean;
+                /** Live Indexing */
+                live_indexing: boolean;
+                /** Job Queue */
+                job_queue: boolean;
+                /** Gpu Worker */
+                gpu_worker: boolean;
+            };
+            /** ChatMessage */
+            ChatMessage: {
+                /**
+                 * Role
+                 * @example user
+                 * @enum {string}
+                 */
+                role: "user" | "assistant";
+                /**
+                 * Content
+                 * @example Who wrote the Norwegian anthem?
+                 */
+                content: string;
+            };
+            /** CommunitySummary */
+            CommunitySummary: {
+                /**
+                 * Id
+                 * @example wiki-c1
+                 */
+                id: string;
+                /**
+                 * Title
+                 * @example Norwegian literature
+                 */
+                title: string;
+                /** Summary */
+                summary: string;
+                /**
+                 * Level
+                 * @example 0
+                 */
+                level: number;
+                /**
+                 * Size
+                 * @example 8
+                 */
+                size: number;
+                /** Node Ids */
+                node_ids?: string[];
+            };
+            /** DatasetBadge */
+            DatasetBadge: {
+                /**
+                 * Label
+                 * @example model
+                 */
+                label: string;
+                /**
+                 * Value
+                 * @example meno-lite-7b
+                 */
+                value: string;
+            };
+            /** DatasetCard */
+            DatasetCard: {
+                /**
+                 * Id
+                 * @example wiki
+                 */
+                id: string;
+                /**
+                 * Title
+                 * @example Wikipedia topic slice
+                 */
+                title: string;
+                /**
+                 * Domain
+                 * @example Wikipedia
+                 */
+                domain: string;
+                /** Description */
+                description: string;
+                /**
+                 * Language
+                 * @enum {string}
+                 */
+                language: "ru" | "en" | "mixed";
+                /** Tags */
+                tags?: string[];
+                stats: components["schemas"]["DatasetStats"];
+                /** Badges */
+                badges?: components["schemas"]["DatasetBadge"][];
+                preview: components["schemas"]["DatasetPreview"];
+                /** Suggested Questions */
+                suggested_questions?: string[];
+            };
+            /** DatasetDetail */
+            DatasetDetail: {
+                /**
+                 * Id
+                 * @example wiki
+                 */
+                id: string;
+                /**
+                 * Title
+                 * @example Wikipedia topic slice
+                 */
+                title: string;
+                /**
+                 * Domain
+                 * @example Wikipedia
+                 */
+                domain: string;
+                /** Description */
+                description: string;
+                /**
+                 * Language
+                 * @enum {string}
+                 */
+                language: "ru" | "en" | "mixed";
+                /** Tags */
+                tags?: string[];
+                stats: components["schemas"]["DatasetStats"];
+                /** Badges */
+                badges?: components["schemas"]["DatasetBadge"][];
+                preview: components["schemas"]["DatasetPreview"];
+                /** Suggested Questions */
+                suggested_questions?: string[];
+                /**
+                 * Default Engine
+                 * @default local
+                 * @enum {string}
+                 */
+                default_engine: "local" | "global" | "naive" | "mix" | "query_plan";
+                /** Available Engines */
+                available_engines?: ("local" | "global" | "naive" | "mix" | "query_plan")[];
+                /**
+                 * Created At
+                 * Format: date-time
+                 */
+                created_at: string;
+                /**
+                 * Updated At
+                 * Format: date-time
+                 */
+                updated_at: string;
+            };
+            /** DatasetPreview */
+            DatasetPreview: {
+                /**
+                 * Kind
+                 * @default graph
+                 * @constant
+                 */
+                kind: "graph";
+                /**
+                 * Node Count
+                 * @example 80
+                 */
+                node_count: number;
+                /**
+                 * Edge Count
+                 * @example 130
+                 */
+                edge_count: number;
+                /**
+                 * Primary Entity Types
+                 * @example [
+                 *       "PERSON",
+                 *       "LAW"
+                 *     ]
+                 */
+                primary_entity_types?: string[];
+            };
+            /** DatasetStats */
+            DatasetStats: {
+                /**
+                 * Nodes
+                 * @example 2400
+                 */
+                nodes: number;
+                /**
+                 * Edges
+                 * @example 7100
+                 */
+                edges: number;
+                /**
+                 * Communities
+                 * @example 38
+                 */
+                communities: number;
+                /**
+                 * Chunks
+                 * @example 320
+                 */
+                chunks: number;
+                /**
+                 * Documents
+                 * @example 12
+                 */
+                documents: number;
+            };
+            /** ErrorDetail */
+            ErrorDetail: {
+                /**
+                 * Code
+                 * @example dataset_not_found
+                 */
+                code: string;
+                /**
+                 * Message
+                 * @example Dataset 'unknown' was not found.
+                 */
+                message: string;
+            };
+            /** ErrorResponse */
+            ErrorResponse: {
+                detail: components["schemas"]["ErrorDetail"];
+            };
+            /** GraphCommunitiesResponse */
+            GraphCommunitiesResponse: {
+                /** Dataset Id */
+                dataset_id: string;
+                /** Communities */
+                communities: components["schemas"]["CommunitySummary"][];
+            };
+            /** GraphEdge */
+            GraphEdge: {
+                /**
+                 * Id
+                 * @example wiki-e1
+                 */
+                id: string;
+                /**
+                 * Source
+                 * @example wiki-n1
+                 */
+                source: string;
+                /**
+                 * Target
+                 * @example wiki-n2
+                 */
+                target: string;
+                /**
+                 * Relation Type
+                 * @example AUTHORED
+                 */
+                relation_type: string;
+                /** Description */
+                description: string;
+                /**
+                 * Strength
+                 * @example 0.86
+                 */
+                strength: number;
+                /** Source Chunk Ids */
+                source_chunk_ids?: string[];
+            };
+            /** GraphFilters */
+            GraphFilters: {
+                /** Search */
+                search?: string | null;
+                /** Entity Types */
+                entity_types?: ("AGE" | "FAMILY" | "AWARD" | "IDEOLOGY" | "PERCENT" | "CITY" | "LANGUAGE" | "PERSON" | "COUNTRY" | "LAW" | "PRODUCT" | "CRIME" | "PENALTY" | "PROFESSION" | "DATE" | "MONEY" | "RELIGION" | "DISEASE" | "NATIONALITY" | "STATE_OR_PROV" | "ORDINAL" | "TIME" | "EVENT" | "DISTRICT" | "WORK_OF_ART" | "ORGANIZATION" | "FACILITY" | "NUMBER" | "LOCATION")[] | null;
+                /** Community Ids */
+                community_ids?: string[] | null;
+                /**
+                 * Min Strength
+                 * @default 0
+                 */
+                min_strength: number;
+            };
+            /** GraphHighlight */
+            GraphHighlight: {
+                /** Node Ids */
+                node_ids?: string[];
+                /** Edge Ids */
+                edge_ids?: string[];
+                /** Community Ids */
+                community_ids?: string[];
+            };
+            /** GraphMeta */
+            GraphMeta: {
+                /** Dataset Id */
+                dataset_id: string;
+                /** Total Nodes */
+                total_nodes: number;
+                /** Total Edges */
+                total_edges: number;
+                /** Returned Nodes */
+                returned_nodes: number;
+                /** Returned Edges */
+                returned_edges: number;
+                /** Limit */
+                limit: number;
+                filters: components["schemas"]["GraphFilters"];
+            };
+            /** GraphNode */
+            GraphNode: {
+                /**
+                 * Id
+                 * @example wiki-n1
+                 */
+                id: string;
+                /**
+                 * Label
+                 * @example Bjoernstjerne Bjoernson
+                 */
+                label: string;
+                /**
+                 * Entity Type
+                 * @enum {string}
+                 */
+                entity_type: "AGE" | "FAMILY" | "AWARD" | "IDEOLOGY" | "PERCENT" | "CITY" | "LANGUAGE" | "PERSON" | "COUNTRY" | "LAW" | "PRODUCT" | "CRIME" | "PENALTY" | "PROFESSION" | "DATE" | "MONEY" | "RELIGION" | "DISEASE" | "NATIONALITY" | "STATE_OR_PROV" | "ORDINAL" | "TIME" | "EVENT" | "DISTRICT" | "WORK_OF_ART" | "ORGANIZATION" | "FACILITY" | "NUMBER" | "LOCATION";
+                /** Description */
+                description: string;
+                /** Degree */
+                degree: number;
+                /**
+                 * Community Id
+                 * @example wiki-c1
+                 */
+                community_id?: string | null;
+                /**
+                 * X
+                 * @example -120.5
+                 */
+                x: number;
+                /**
+                 * Y
+                 * @example 82
+                 */
+                y: number;
+                /** Source Chunk Ids */
+                source_chunk_ids?: string[];
+            };
+            /** GraphResponse */
+            GraphResponse: {
+                /** Nodes */
+                nodes: components["schemas"]["GraphNode"][];
+                /** Edges */
+                edges: components["schemas"]["GraphEdge"][];
+                /** Communities */
+                communities?: components["schemas"]["CommunitySummary"][];
+                meta: components["schemas"]["GraphMeta"];
+            };
+            /** HTTPValidationError */
+            HTTPValidationError: {
+                /** Detail */
+                detail?: components["schemas"]["ValidationError"][];
+            };
+            /** HealthResponse */
+            HealthResponse: {
+                /**
+                 * Status
+                 * @example ok
+                 * @constant
+                 */
+                status: "ok";
+                /**
+                 * Service
+                 * @example ragu-web-api
+                 */
+                service: string;
+                /**
+                 * Version
+                 * @example 0.1.0
+                 */
+                version: string;
+                /**
+                 * Time
+                 * Format: date-time
+                 */
+                time: string;
+            };
+            /** NodeDetailResponse */
+            NodeDetailResponse: {
+                node: components["schemas"]["GraphNode"];
+                /** Incoming Relations */
+                incoming_relations?: components["schemas"]["NodeRelation"][];
+                /** Outgoing Relations */
+                outgoing_relations?: components["schemas"]["NodeRelation"][];
+                /** Provenance Chunks */
+                provenance_chunks?: components["schemas"]["ProvenanceChunk"][];
+            };
+            /** NodeRelation */
+            NodeRelation: {
+                /**
+                 * Id
+                 * @example wiki-e1
+                 */
+                id: string;
+                /**
+                 * Source
+                 * @example wiki-n1
+                 */
+                source: string;
+                /**
+                 * Target
+                 * @example wiki-n2
+                 */
+                target: string;
+                /**
+                 * Relation Type
+                 * @example AUTHORED
+                 */
+                relation_type: string;
+                /** Description */
+                description: string;
+                /**
+                 * Strength
+                 * @example 0.86
+                 */
+                strength: number;
+                /** Source Chunk Ids */
+                source_chunk_ids?: string[];
+                /**
+                 * Direction
+                 * @enum {string}
+                 */
+                direction: "incoming" | "outgoing";
+                /** Other Node Id */
+                other_node_id: string;
+                /** Other Node Label */
+                other_node_label: string;
+            };
+            /** ProvenanceChunk */
+            ProvenanceChunk: {
+                /**
+                 * Id
+                 * @example wiki-chunk-1
+                 */
+                id: string;
+                /** Content */
+                content: string;
+                /** Doc Id */
+                doc_id: string;
+                /** Chunk Order Idx */
+                chunk_order_idx: number;
+            };
+            /** SuggestionsResponse */
+            SuggestionsResponse: {
+                /** Dataset Id */
+                dataset_id: string;
+                /** Suggestions */
+                suggestions: string[];
+            };
+            /** TraceChunk */
+            TraceChunk: {
+                /** Id */
+                id: string;
+                /** Content */
+                content: string;
+                /** Doc Id */
+                doc_id: string;
+                /** Score */
+                score: number;
+            };
+            /** TraceCommunity */
+            TraceCommunity: {
+                /** Id */
+                id: string;
+                /** Title */
+                title: string;
+                /** Summary */
+                summary: string;
+                /** Score */
+                score: number;
+            };
+            /** TraceEnergy */
+            TraceEnergy: {
+                /** Watt Hours */
+                watt_hours: number;
+                /**
+                 * Estimated
+                 * @default true
+                 */
+                estimated: boolean;
+                /**
+                 * Formula
+                 * @default TDP * time * PUE
+                 */
+                formula: string;
+            };
+            /** TraceEntity */
+            TraceEntity: {
+                /** Id */
+                id: string;
+                /** Label */
+                label: string;
+                /**
+                 * Entity Type
+                 * @enum {string}
+                 */
+                entity_type: "AGE" | "FAMILY" | "AWARD" | "IDEOLOGY" | "PERCENT" | "CITY" | "LANGUAGE" | "PERSON" | "COUNTRY" | "LAW" | "PRODUCT" | "CRIME" | "PENALTY" | "PROFESSION" | "DATE" | "MONEY" | "RELIGION" | "DISEASE" | "NATIONALITY" | "STATE_OR_PROV" | "ORDINAL" | "TIME" | "EVENT" | "DISTRICT" | "WORK_OF_ART" | "ORGANIZATION" | "FACILITY" | "NUMBER" | "LOCATION";
+                /** Score */
+                score: number;
+            };
+            /** TraceRelation */
+            TraceRelation: {
+                /** Id */
+                id: string;
+                /** Source */
+                source: string;
+                /** Target */
+                target: string;
+                /** Relation Type */
+                relation_type: string;
+                /** Strength */
+                strength: number;
+            };
+            /** TraceTimings */
+            TraceTimings: {
+                /** Retrieval Ms */
+                retrieval_ms: number;
+                /** Generation Ms */
+                generation_ms: number;
+                /** Total Ms */
+                total_ms: number;
+            };
+            /** ValidationError */
+            ValidationError: {
+                /** Location */
+                loc: (string | number)[];
+                /** Message */
+                msg: string;
+                /** Error Type */
+                type: string;
+                /** Input */
+                input?: unknown;
+                /** Context */
+                ctx?: Record<string, never>;
+            };
+        };
+        responses: never;
+        parameters: never;
+        requestBodies: never;
+        headers: never;
+        pathItems: never;
+    }
+    type defs = Record<string, never>;
+    interface operations {
+        health: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HealthResponse"];
+                    };
+                };
+            };
+        };
+        capabilities: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CapabilitiesResponse"];
+                    };
+                };
+            };
+        };
+        list_datasets: {
+            parameters: {
+                query?: {
+                    /** @description Response locale. */
+                    locale?: "ru" | "en";
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DatasetCard"][];
+                    };
+                };
+                /** @description Dataset not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        get_dataset: {
+            parameters: {
+                query?: {
+                    /** @description Response locale. */
+                    locale?: "ru" | "en";
+                };
+                header?: never;
+                path: {
+                    dataset_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DatasetDetail"];
+                    };
+                };
+                /** @description Dataset not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        get_graph: {
+            parameters: {
+                query?: {
+                    limit?: number;
+                    search?: string | null;
+                    entity_types?: ("AGE" | "FAMILY" | "AWARD" | "IDEOLOGY" | "PERCENT" | "CITY" | "LANGUAGE" | "PERSON" | "COUNTRY" | "LAW" | "PRODUCT" | "CRIME" | "PENALTY" | "PROFESSION" | "DATE" | "MONEY" | "RELIGION" | "DISEASE" | "NATIONALITY" | "STATE_OR_PROV" | "ORDINAL" | "TIME" | "EVENT" | "DISTRICT" | "WORK_OF_ART" | "ORGANIZATION" | "FACILITY" | "NUMBER" | "LOCATION")[] | null;
+                    community_ids?: string[] | null;
+                    min_strength?: number;
+                    include_communities?: boolean;
+                };
+                header?: never;
+                path: {
+                    dataset_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GraphResponse"];
+                    };
+                };
+                /** @description Dataset or graph resource not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        get_node: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    dataset_id: string;
+                    node_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NodeDetailResponse"];
+                    };
+                };
+                /** @description Dataset or graph resource not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        get_node_neighbors: {
+            parameters: {
+                query?: {
+                    depth?: number;
+                    limit?: number;
+                    min_strength?: number;
+                };
+                header?: never;
+                path: {
+                    dataset_id: string;
+                    node_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GraphResponse"];
+                    };
+                };
+                /** @description Dataset or graph resource not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        get_communities: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    dataset_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GraphCommunitiesResponse"];
+                    };
+                };
+                /** @description Dataset or graph resource not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        create_agent_message: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    dataset_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["AgentRequest"];
+                };
+            };
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AgentResponse"];
+                    };
+                };
+                /** @description Dataset not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+        get_agent_suggestions: {
+            parameters: {
+                query?: {
+                    /** @description Response locale. */
+                    locale?: "ru" | "en";
+                };
+                header?: never;
+                path: {
+                    dataset_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SuggestionsResponse"];
+                    };
+                };
+                /** @description Dataset not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
+    }
+}
+declare namespace $ {
+    const $raggu_web_front_api_ragu_health: {
+        method: string;
+        route: string;
+        params: undefined;
+        query: undefined;
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["health"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_capabilities: {
+        method: string;
+        route: string;
+        params: undefined;
+        query: undefined;
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["capabilities"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_list_datasets: {
+        method: string;
+        route: string;
+        params: undefined;
+        query: $raggu_web_front_api_ragu.operations["list_datasets"]["parameters"]["query"];
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["list_datasets"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_get_dataset: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["get_dataset"]["parameters"]["path"];
+        query: $raggu_web_front_api_ragu.operations["get_dataset"]["parameters"]["query"];
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["get_dataset"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_get_graph: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["get_graph"]["parameters"]["path"];
+        query: $raggu_web_front_api_ragu.operations["get_graph"]["parameters"]["query"];
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["get_graph"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_get_node: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["get_node"]["parameters"]["path"];
+        query: undefined;
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["get_node"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_get_node_neighbors: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["get_node_neighbors"]["parameters"]["path"];
+        query: $raggu_web_front_api_ragu.operations["get_node_neighbors"]["parameters"]["query"];
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["get_node_neighbors"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_get_communities: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["get_communities"]["parameters"]["path"];
+        query: undefined;
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["get_communities"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_create_agent_message: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["create_agent_message"]["parameters"]["path"];
+        query: undefined;
+        body: ($raggu_web_front_api_ragu.operations["create_agent_message"]["requestBody"] extends {
+            content: {
+                "application/json": infer B;
+            };
+        } ? B : unknown);
+        out: NonNullable<$raggu_web_front_api_ragu.operations["create_agent_message"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_get_agent_suggestions: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["get_agent_suggestions"]["parameters"]["path"];
+        query: $raggu_web_front_api_ragu.operations["get_agent_suggestions"]["parameters"]["query"];
+        body: undefined;
+        out: NonNullable<$raggu_web_front_api_ragu.operations["get_agent_suggestions"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+}
+
+declare namespace $ {
 
 	type $bog_builderui_div__sub_raggu_web_front_gallery_1 = $mol_type_enforce<
 		readonly(any)[]
@@ -6402,6 +7881,8 @@ declare namespace $.$$ {
     };
     export class $raggu_web_front_gallery extends $.$raggu_web_front_gallery {
         extra_datasets(next?: DatasetStats[]): DatasetStats[];
+        mock_flag(): boolean;
+        remote_datasets(): DatasetStats[] | null;
         datasets(): DatasetStats[];
         rows(): $.$raggu_web_front_gallery_card[];
         dataset(id: string): DatasetStats;
@@ -6548,6 +8029,72 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /**
+     * Visual node bucket. The API returns a 29-value EntityType enum — we bucket it
+     * into a small palette so the graph stays readable. Anything unknown falls to WORK.
+     */
+    type $raggu_web_front_explorer_forcegraph_node_type = 'PERSON' | 'ORG' | 'LOC' | 'EVENT' | 'DATE' | 'WORK' | 'LAW';
+    type $raggu_web_front_explorer_forcegraph_node = {
+        id: string;
+        label: string;
+        type: $raggu_web_front_explorer_forcegraph_node_type;
+        degree: number;
+        x: number;
+        y: number;
+    };
+    type $raggu_web_front_explorer_forcegraph_edge = {
+        id: string;
+        source: string;
+        target: string;
+        strength: number;
+        relation: string;
+    };
+    const $raggu_web_front_explorer_forcegraph_type_color: Record<$raggu_web_front_explorer_forcegraph_node_type, string>;
+    /**
+     * Map backend EntityType (29 values) to the visual NodeType bucket (7 values).
+     * Anything unknown falls back to WORK.
+     */
+    function $raggu_web_front_explorer_forcegraph_entity_bucket(t: string): $raggu_web_front_explorer_forcegraph_node_type;
+    function $raggu_web_front_explorer_forcegraph_build_mock(seed?: number, n_nodes?: number, n_edges?: number): {
+        nodes: $raggu_web_front_explorer_forcegraph_node[];
+        edges: $raggu_web_front_explorer_forcegraph_edge[];
+    };
+    type $raggu_web_front_explorer_forcegraph_layout_params = {
+        gravity: number;
+        force_scale: number;
+        damping: number;
+        min_move: number;
+        max_speed: number;
+    };
+    /**
+     * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
+     *   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
+     *   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
+     * Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
+     */
+    function $raggu_web_front_explorer_forcegraph_tick_layout(nodes: $raggu_web_front_explorer_forcegraph_node[], edges: $raggu_web_front_explorer_forcegraph_edge[], positions: Record<string, {
+        x: number;
+        y: number;
+    }>, velocities: Record<string, {
+        vx: number;
+        vy: number;
+    }>, pinned_id: string, params: $raggu_web_front_explorer_forcegraph_layout_params): {
+        positions: Record<string, {
+            x: number;
+            y: number;
+        }>;
+        velocities: Record<string, {
+            vx: number;
+            vy: number;
+        }>;
+    };
+    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes: $raggu_web_front_explorer_forcegraph_node[]): Record<string, {
+        x: number;
+        y: number;
+    }>;
+}
+
+declare namespace $ {
 
 	type $mol_svg_line__from_x_raggu_web_front_explorer_forcegraph_1 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x1'] >
@@ -6647,9 +8194,8 @@ declare namespace $ {
 		({ 
 			'rx': string,
 			'ry': string,
-			'fill': string,
-			'stroke': string,
 			'stroke-width': string,
+			'data-forcegraph-tooltip-bg': string,
 		})  & ReturnType< $mol_svg_rect['attr'] >
 		,
 		ReturnType< $mol_svg_rect['attr'] >
@@ -6681,9 +8227,9 @@ declare namespace $ {
 	>
 	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_23 = $mol_type_enforce<
 		({ 
-			'fill': string,
 			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_font_size'] >,
 			'font-weight': string,
+			'data-forcegraph-tooltip-text': string,
 		})  & ReturnType< $mol_svg_text['attr'] >
 		,
 		ReturnType< $mol_svg_text['attr'] >
@@ -6748,11 +8294,12 @@ declare namespace $ {
 		selected_id( next?: string ): string
 		hovered_id( next?: string ): string
 		drag_id( next?: string ): string
+		nodes( ): readonly(any)[]
+		edges( ): readonly(any)[]
 		pan_x( next?: number ): number
 		pan_y( next?: number ): number
 		zoom( next?: number ): number
 		positions( next?: Record<string, any> ): Record<string, any>
-		graph_n( next?: number ): number
 		gravity( ): number
 		force_scale( ): number
 		damping( ): number
@@ -6775,54 +8322,12 @@ declare namespace $ {
 
 //# sourceMappingURL=forcegraph.view.tree.d.ts.map
 declare namespace $.$$ {
-    type NodeType = 'PERSON' | 'ORG' | 'LOC' | 'EVENT' | 'DATE' | 'WORK' | 'LAW';
-    type GraphNode = {
-        id: string;
-        label: string;
-        type: NodeType;
-        degree: number;
-        x: number;
-        y: number;
-    };
-    type GraphEdge = {
-        id: string;
-        source: string;
-        target: string;
-        strength: number;
-        relation: string;
-    };
-    export function build_mock(seed?: number, n_nodes?: number, n_edges?: number): {
-        nodes: GraphNode[];
-        edges: GraphEdge[];
-    };
-    export type LayoutParams = {
-        gravity: number;
-        force_scale: number;
-        damping: number;
-        min_move: number;
-        max_speed: number;
-    };
-    export function tick_layout(nodes: GraphNode[], edges: GraphEdge[], positions: Record<string, {
-        x: number;
-        y: number;
-    }>, velocities: Record<string, {
-        vx: number;
-        vy: number;
-    }>, pinned_id: string, params: LayoutParams): {
-        positions: Record<string, {
-            x: number;
-            y: number;
-        }>;
-        velocities: Record<string, {
-            vx: number;
-            vy: number;
-        }>;
-    };
-    export function build_initial_positions(nodes: GraphNode[], _edges: GraphEdge[]): Record<string, {
-        x: number;
-        y: number;
-    }>;
+    type GraphNode = $raggu_web_front_explorer_forcegraph_node;
+    type GraphEdge = $raggu_web_front_explorer_forcegraph_edge;
+    type LayoutParams = $raggu_web_front_explorer_forcegraph_layout_params;
     export class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+        nodes(): readonly GraphNode[];
+        edges(): readonly GraphEdge[];
         drag_id_raw: string;
         drag_id(next?: string): string;
         computed_view_box(): string;
@@ -6845,13 +8350,6 @@ declare namespace $.$$ {
             x: number;
             y: number;
         };
-        graph_n(next?: number): number;
-        mock(): {
-            nodes: GraphNode[];
-            edges: GraphEdge[];
-        };
-        nodes(): GraphNode[];
-        edges(): GraphEdge[];
         initial_positions(): Record<string, {
             x: number;
             y: number;
@@ -6930,20 +8428,20 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $raggu_web_front_explorer_forcegraph__selected_id_raggu_web_front_explorer_1 = $mol_type_enforce<
+	type $raggu_web_front_explorer_forcegraph__nodes_raggu_web_front_explorer_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer['graph_nodes'] >
+		,
+		ReturnType< $raggu_web_front_explorer_forcegraph['nodes'] >
+	>
+	type $raggu_web_front_explorer_forcegraph__edges_raggu_web_front_explorer_2 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer['graph_edges'] >
+		,
+		ReturnType< $raggu_web_front_explorer_forcegraph['edges'] >
+	>
+	type $raggu_web_front_explorer_forcegraph__selected_id_raggu_web_front_explorer_3 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer['selected_id'] >
 		,
 		ReturnType< $raggu_web_front_explorer_forcegraph['selected_id'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_explorer_4 = $mol_type_enforce<
 		readonly(any)[]
@@ -7096,7 +8594,7 @@ declare namespace $ {
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_explorer_34 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_explorer['rel_rows'] >
+		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
@@ -7106,7 +8604,7 @@ declare namespace $ {
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_explorer_36 = $mol_type_enforce<
-		readonly(any)[]
+		ReturnType< $raggu_web_front_explorer['rel_rows'] >
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
@@ -7120,7 +8618,19 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
+	type $bog_builderui_div__sub_raggu_web_front_explorer_39 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_explorer_40 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
 	export class $raggu_web_front_explorer extends $bog_builderui_div {
+		graph_nodes( ): readonly(any)[]
+		graph_edges( ): readonly(any)[]
 		Graph( ): $raggu_web_front_explorer_forcegraph
 		Canvas_bg( ): $bog_builderui_div
 		Filter_search( ): $bog_builderui_div
@@ -7174,6 +8684,7 @@ declare namespace $ {
 		Sources( ): $bog_builderui_div
 		Ask_btn( ): $bog_builderui_div
 		Aside( ): $bog_builderui_div
+		dataset_id( ): string
 		selected_id( next?: string ): string
 		filter_search_text( ): string
 		filter_type_text( ): string
@@ -7192,18 +8703,24 @@ declare namespace $ {
 
 //# sourceMappingURL=explorer.view.tree.d.ts.map
 declare namespace $.$$ {
-    class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
-        graph_view(): $.$$.$raggu_web_front_explorer_forcegraph;
-        selected(): {
-            id: string;
-            label: string;
-            type: "PERSON" | "ORG" | "LOC" | "EVENT" | "DATE" | "WORK" | "LAW";
-            degree: number;
-            x: number;
-            y: number;
+    type GraphNode = $raggu_web_front_explorer_forcegraph_node;
+    type GraphEdge = $raggu_web_front_explorer_forcegraph_edge;
+    export class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
+        mock_flag(): boolean;
+        graph_remote(): {
+            nodes: GraphNode[];
+            edges: GraphEdge[];
         } | null;
+        graph_data(): {
+            nodes: readonly GraphNode[];
+            edges: readonly GraphEdge[];
+        };
+        graph_nodes(): readonly GraphNode[];
+        graph_edges(): readonly GraphEdge[];
+        graph_view(): $.$$.$raggu_web_front_explorer_forcegraph;
+        selected(): $raggu_web_front_explorer_forcegraph_node | null;
         entity_name(): string;
-        entity_type(): "" | ("PERSON" | "ORG" | "LOC" | "EVENT" | "DATE" | "WORK" | "LAW");
+        entity_type(): "" | $raggu_web_front_explorer_forcegraph_node_type;
         entity_desc(): string;
         relations_title(): string;
         rels(): Array<{
@@ -7215,6 +8732,7 @@ declare namespace $.$$ {
         rel_target(i: number): string;
         Entity_dot(): $bog_builderui_div;
     }
+    export {};
 }
 
 /** @see $bog_builderui_tokens */
@@ -7814,94 +9332,94 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_7 = $mol_type_enforce<
+	type $mol_button_minor__hint_raggu_web_front_chat_7 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['clear_text'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_raggu_web_front_chat_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['clear_click'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_raggu_web_front_chat_9 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_10 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_list__rows_raggu_web_front_chat_8 = $mol_type_enforce<
+	type $mol_list__rows_raggu_web_front_chat_11 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_9 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_front_chat_12 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__event_raggu_web_front_chat_10 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_chat['use_sug_one'] > ): ReturnType< $raggu_web_front_chat['use_sug_one'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__event_raggu_web_front_chat_12 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_chat['use_sug_two'] > ): ReturnType< $raggu_web_front_chat['use_sug_two'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
+		ReturnType< $mol_scroll['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_13 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_textarea__hint_raggu_web_front_chat_14 = $mol_type_enforce<
+	type $bog_builderui_div__event_raggu_web_front_chat_14 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['use_sug_one'] > ): ReturnType< $raggu_web_front_chat['use_sug_one'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_chat_16 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['use_sug_two'] > ): ReturnType< $raggu_web_front_chat['use_sug_two'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_17 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_textarea__hint_raggu_web_front_chat_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['input_hint_text'] >
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_textarea__value_raggu_web_front_chat_15 = $mol_type_enforce<
+	type $mol_textarea__value_raggu_web_front_chat_19 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_text'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_textarea__submit_raggu_web_front_chat_16 = $mol_type_enforce<
+	type $mol_textarea__submit_raggu_web_front_chat_20 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_submit'] >
 		,
 		ReturnType< $mol_textarea['submit'] >
 	>
-	type $mol_button_minor__hint_raggu_web_front_chat_17 = $mol_type_enforce<
+	type $mol_button_minor__hint_raggu_web_front_chat_21 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['send_label_text'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click_raggu_web_front_chat_18 = $mol_type_enforce<
+	type $mol_button_minor__click_raggu_web_front_chat_22 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_submit'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_raggu_web_front_chat_19 = $mol_type_enforce<
+	type $mol_button_minor__sub_raggu_web_front_chat_23 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_20 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_23 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_24 = $mol_type_enforce<
 		readonly(any)[]
@@ -7978,26 +9496,46 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_39 = $mol_type_enforce<
-		({ 
-			'raggu_visible': ReturnType< $raggu_web_front_chat['message_with_trace'] >,
-		}) 
+	type $bog_builderui_div__sub_raggu_web_front_chat_39 = $mol_type_enforce<
+		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['attr'] >
+		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_40 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_41 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_41 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_42 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_43 = $mol_type_enforce<
+		({ 
+			'raggu_visible': ReturnType< $raggu_web_front_chat['message_with_trace'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_44 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_45 = $mol_type_enforce<
 		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_42 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_46 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -8009,8 +9547,11 @@ declare namespace $ {
 		Mode_mix( ): $bog_builderui_div
 		Mode_plan( ): $bog_builderui_div
 		Modes( ): $bog_builderui_div
+		clear_click( next?: any ): any
+		Clear( ): $mol_button_minor
 		Modes_bar( ): $bog_builderui_div
-		Body( ): $mol_list
+		Messages( ): $mol_list
+		Body( ): $mol_scroll
 		use_sug_one( next?: any ): any
 		Sug_one( ): $bog_builderui_div
 		use_sug_two( next?: any ): any
@@ -8061,6 +9602,7 @@ declare namespace $ {
 		seed_assistant_text( ): string
 		mock_prefix_text( ): string
 		mock_suffix_text( ): string
+		clear_text( ): string
 		rows( ): readonly(any)[]
 		message_text( id: any): string
 		message_role( id: any): string
@@ -8083,12 +9625,14 @@ declare namespace $.$$ {
         history(next?: Raggu_chat_item[]): Raggu_chat_item[];
         prompt_text(next?: string): string;
         rows(): $bog_builderui_div[];
+        dom_tree(next?: Element): Element;
         message_text(index: number): string;
         message_role(index: number): Raggu_chat_role;
         message_with_trace(index: number): boolean;
         prompt_submit(): null;
         use_sug_one(): null;
         use_sug_two(): null;
+        clear_click(): null;
     }
 }
 
@@ -8809,6 +10353,11 @@ declare namespace $ {
 		ReturnType< $raggu_web_front_app['select_dataset'] >
 		,
 		ReturnType< $raggu_web_front_gallery['select_dataset'] >
+	>
+	type $raggu_web_front_explorer__dataset_id_raggu_web_front_app_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['dataset_id'] >
+		,
+		ReturnType< $raggu_web_front_explorer['dataset_id'] >
 	>
 	export class $raggu_web_front_app extends $bog_builderui_div {
 		favicon_icon( ): $mol_icon_graph

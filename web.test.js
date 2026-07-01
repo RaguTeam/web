@@ -3450,9 +3450,19 @@ var $;
         function node_target(id) {
             return { getAttribute: (k) => k === 'data-node-id' ? id : null };
         }
+        // Factory that seeds the forcegraph with a deterministic mock via its
+        // view.tree `nodes /` and `edges /` inputs — mirrors the parent-owned
+        // data-source pattern (explorer / demo do the same).
+        function make_graph($, n_nodes = 80, n_edges = 130) {
+            const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+            const mock = $raggu_web_front_explorer_forcegraph_build_mock(42, n_nodes, n_edges);
+            g.nodes = () => mock.nodes;
+            g.edges = () => mock.edges;
+            return { g, mock };
+        }
         $mol_test({
             'pos(id): no override → layout coords'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const n = g.nodes()[0];
                 const p = g.pos(n.id);
                 $mol_assert_equal(p.x, n.x);
@@ -3460,7 +3470,7 @@ var $;
             },
             // THE bug from user: 1-pixel pointer move ⇒ node travels exactly 1 pixel.
             'drag below threshold: node does NOT move (treated as pending click)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true; // block start_sim's RAF loop from firing
                 const n = g.nodes()[7];
@@ -3473,7 +3483,7 @@ var $;
                 $mol_assert_equal(p.y, 0);
             },
             'drag above threshold: node tracks pointer delta'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true;
                 const n = g.nodes()[3];
@@ -3486,7 +3496,7 @@ var $;
                 $mol_assert_equal(p.y, -30);
             },
             'drag multiple moves accumulate (above threshold)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true;
                 const n = g.nodes()[2];
@@ -3500,13 +3510,13 @@ var $;
                 $mol_assert_equal(p.y, 25);
             },
             'click without prior drag: selects'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 g.click('n3');
                 $mol_assert_equal(g.selected_id(), 'n3');
             },
             // THE click-vs-drag boundary: tap that didn't move past threshold MUST select
             'click after press-without-move (tiny drag): NOT suppressed → selects'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 const n = g.nodes()[0];
                 g.pan_start(pe(n.x, n.y, node_target(n.id)));
@@ -3518,7 +3528,7 @@ var $;
                 $mol_assert_equal(g.selected_id(), n.id); // selects normally
             },
             'click after real drag (>threshold): IS suppressed'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 const n = g.nodes()[0];
                 g.pan_start(pe(n.x, n.y, node_target(n.id)));
@@ -3529,19 +3539,19 @@ var $;
                 $mol_assert_equal(g.selected_id(), '');
             },
             'bg_click on empty bg → deselect'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 g.selected_id('n3');
                 g.bg_click({ target: { getAttribute: () => null } });
                 $mol_assert_equal(g.selected_id(), '');
             },
             'bg_click on node circle → keep selection (per-node click handles it)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 g.selected_id('n3');
                 g.bg_click({ target: { getAttribute: (k) => k === 'data-node-id' ? 'n7' : null } });
                 $mol_assert_equal(g.selected_id(), 'n3');
             },
             'pan (drag on bg): camera moves opposite to pointer'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.pan_start(pe(0, 0, { getAttribute: () => null }));
                 $mol_assert_equal(g.drag_id(), '');
@@ -3550,7 +3560,7 @@ var $;
                 $mol_assert_equal(g.pan_y(), -30);
             },
             'pan_move ignores no-move (same coords)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true;
                 const n = g.nodes()[0];
@@ -3563,7 +3573,7 @@ var $;
                 $mol_assert_equal(p.y, 0);
             },
             'selected_node / selected_relations'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const n = g.nodes()[3];
                 g.selected_id(n.id);
                 $mol_assert_equal(g.selected_node()?.id, n.id);
@@ -3576,26 +3586,28 @@ var $;
                 const results = [];
                 const params = { gravity: 0.09, force_scale: 0.06, damping: 0.82, min_move: 0.15, max_speed: 12 };
                 for (const n of sizes) {
-                    const g = build_mock(42, n, Math.round(n * 1.6));
+                    const g = $raggu_web_front_explorer_forcegraph_build_mock(42, n, Math.round(n * 1.6));
                     const positions = {};
                     const velocities = {};
                     for (const node of g.nodes)
                         positions[node.id] = { x: node.x, y: node.y };
                     // Warm-up
-                    let state = tick_layout(g.nodes, g.edges, positions, velocities, '', params);
+                    let state = $raggu_web_front_explorer_forcegraph_tick_layout(g.nodes, g.edges, positions, velocities, '', params);
                     // 10-tick avg
                     const t0 = Date.now();
                     for (let i = 0; i < 10; i++)
-                        state = tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', params);
+                        state = $raggu_web_front_explorer_forcegraph_tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', params);
                     const tick_ms = ((Date.now() - t0) / 10).toFixed(2);
                     results.push({ n, edges: g.edges.length, tick_ms: `${tick_ms}ms` });
                 }
-                console.log('\n[forcegraph STRESS — Barnes-Hut]\n' + results.map(r => `  n=${r.n.toString().padStart(4)} edges=${r.edges.toString().padStart(5)}  tick=${r.tick_ms.padStart(8)}`).join('\n') + '\n  (60fps budget = 16.67ms/tick)\n');
+                // console.log( '\n[forcegraph STRESS — Barnes-Hut]\n' + results.map( r =>
+                // 	`  n=${ r.n.toString().padStart( 4 ) } edges=${ r.edges.toString().padStart( 5 ) }  tick=${ r.tick_ms.padStart( 8 ) }`
+                // ).join( '\n' ) + '\n  (60fps budget = 16.67ms/tick)\n' )
                 $mol_assert_equal(results.length, sizes.length);
             },
             // --- DOM integration: render → inspect → real events ---
             'DOM render: node circles carry data-node-id (Boundary is exempt)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const svg = g.dom_tree();
                 const circles = svg.querySelectorAll('circle');
                 $mol_assert_equal(circles.length > 0, true);
@@ -3607,7 +3619,7 @@ var $;
                 $mol_assert_equal(with_attr, g.nodes().length);
             },
             'DOM event flow: pointerdown on circle → drag mode'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 const svg = g.dom_tree();
                 const circle = svg.querySelector('circle[data-node-id]');
@@ -3619,7 +3631,7 @@ var $;
                 $mol_assert_equal(g.drag_id(), id);
             },
             'reactive: positions write → node_x reflects new value'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const n = g.nodes()[0];
                 const x_before = g.node_x(n.id);
                 g.positions({ [n.id]: { x: 42, y: 99 } });
@@ -3791,11 +3803,11 @@ var $;
                 app.Settings().close();
                 $mol_assert_equal(app.settings_open(), false);
                 $mol_assert_equal(app.Settings().showed(), false);
-                // user navigates back to Датасеты and clicks a card → explorer + dataset selected
+                // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
                 app.Sidebar().click_gallery();
                 $mol_assert_equal(app.screen(), 'gallery');
                 app.Gallery().click('law');
-                $mol_assert_equal(app.screen(), 'explorer');
+                $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.dataset_id(), 'law');
                 // user switches language EN — re-renders all @-strings via $mol_locale
                 app.Sidebar().click_en();
@@ -4052,7 +4064,7 @@ var $;
                     dataset_id: app.dataset_id(),
                     settings_open: app.settings_open(),
                 };
-                console.log('▸ ragufront e2e visual demo: start');
+                // console.log( '▸ ragufront e2e visual demo: start' )
                 // await sleep( 1000 )
                 click(app.Sidebar().Nav_explorer(), () => app.Sidebar().click_explorer());
                 // await sleep( 1000 )
@@ -4073,7 +4085,7 @@ var $;
                 app.preset(initial.preset);
                 app.dataset_id(initial.dataset_id);
                 app.settings_open(initial.settings_open);
-                console.log('✓ ragufront e2e visual demo: done');
+                // console.log( '✓ ragufront e2e visual demo: done' )
             }, 2000);
         }
     })($$ = $_1.$$ || ($_1.$$ = {}));

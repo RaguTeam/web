@@ -30,6 +30,7 @@
 	"$raggu_web_front_app_screen_dashboard_title": "Дашборд",
 	"$raggu_web_front_app_screen_explorer_title": "Граф знаний",
 	"$raggu_web_front_app_screen_gallery_title": "Датасеты",
+	"$raggu_web_front_chat_clear_text": "Очистить",
 	"$raggu_web_front_chat_input_hint_text": "Спросите что-нибудь про корпус…",
 	"$raggu_web_front_chat_mock_prefix_text": "Спасибо за вопрос:",
 	"$raggu_web_front_chat_mock_suffix_text": "(Mock-ответ. Реальный поиск будет на бэке.)",

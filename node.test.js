@@ -14685,6 +14685,419 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    let $mol_rest_code;
+    (function ($mol_rest_code) {
+        $mol_rest_code[$mol_rest_code["Continue"] = 100] = "Continue";
+        $mol_rest_code[$mol_rest_code["Switching protocols"] = 101] = "Switching protocols";
+        $mol_rest_code[$mol_rest_code["Processing"] = 102] = "Processing";
+        $mol_rest_code[$mol_rest_code["OK"] = 200] = "OK";
+        $mol_rest_code[$mol_rest_code["Created"] = 201] = "Created";
+        $mol_rest_code[$mol_rest_code["Accepted"] = 202] = "Accepted";
+        $mol_rest_code[$mol_rest_code["Non-Authoritative Information"] = 203] = "Non-Authoritative Information";
+        $mol_rest_code[$mol_rest_code["No Content"] = 204] = "No Content";
+        $mol_rest_code[$mol_rest_code["Reset Content"] = 205] = "Reset Content";
+        $mol_rest_code[$mol_rest_code["Partial Content"] = 206] = "Partial Content";
+        $mol_rest_code[$mol_rest_code["Multi Status"] = 207] = "Multi Status";
+        $mol_rest_code[$mol_rest_code["Already Reported"] = 208] = "Already Reported";
+        $mol_rest_code[$mol_rest_code["IM Used"] = 226] = "IM Used";
+        $mol_rest_code[$mol_rest_code["Multiple Choices"] = 300] = "Multiple Choices";
+        $mol_rest_code[$mol_rest_code["Moved Permanently"] = 301] = "Moved Permanently";
+        $mol_rest_code[$mol_rest_code["Found"] = 302] = "Found";
+        $mol_rest_code[$mol_rest_code["See Other"] = 303] = "See Other";
+        $mol_rest_code[$mol_rest_code["Not Modified"] = 304] = "Not Modified";
+        $mol_rest_code[$mol_rest_code["Use Proxy"] = 305] = "Use Proxy";
+        $mol_rest_code[$mol_rest_code["Temporary Redirect"] = 307] = "Temporary Redirect";
+        $mol_rest_code[$mol_rest_code["Bad Request"] = 400] = "Bad Request";
+        $mol_rest_code[$mol_rest_code["Unauthorized"] = 401] = "Unauthorized";
+        $mol_rest_code[$mol_rest_code["Payment Required"] = 402] = "Payment Required";
+        $mol_rest_code[$mol_rest_code["Forbidden"] = 403] = "Forbidden";
+        $mol_rest_code[$mol_rest_code["Not Found"] = 404] = "Not Found";
+        $mol_rest_code[$mol_rest_code["Method Not Allowed"] = 405] = "Method Not Allowed";
+        $mol_rest_code[$mol_rest_code["Not Acceptable"] = 406] = "Not Acceptable";
+        $mol_rest_code[$mol_rest_code["Proxy Authentication Required"] = 407] = "Proxy Authentication Required";
+        $mol_rest_code[$mol_rest_code["Request Timeout"] = 408] = "Request Timeout";
+        $mol_rest_code[$mol_rest_code["Conflict"] = 409] = "Conflict";
+        $mol_rest_code[$mol_rest_code["Gone"] = 410] = "Gone";
+        $mol_rest_code[$mol_rest_code["Length Required"] = 411] = "Length Required";
+        $mol_rest_code[$mol_rest_code["Precondition Failed"] = 412] = "Precondition Failed";
+        $mol_rest_code[$mol_rest_code["Request Entity Too Large"] = 413] = "Request Entity Too Large";
+        $mol_rest_code[$mol_rest_code["Request URI Too Long"] = 414] = "Request URI Too Long";
+        $mol_rest_code[$mol_rest_code["Unsupported Media Type"] = 415] = "Unsupported Media Type";
+        $mol_rest_code[$mol_rest_code["Requested Range Not Satisfiable"] = 416] = "Requested Range Not Satisfiable";
+        $mol_rest_code[$mol_rest_code["Expectation Failed"] = 417] = "Expectation Failed";
+        $mol_rest_code[$mol_rest_code["Teapot"] = 418] = "Teapot";
+        $mol_rest_code[$mol_rest_code["Unprocessable Entity"] = 422] = "Unprocessable Entity";
+        $mol_rest_code[$mol_rest_code["Locked"] = 423] = "Locked";
+        $mol_rest_code[$mol_rest_code["Failed Dependency"] = 424] = "Failed Dependency";
+        $mol_rest_code[$mol_rest_code["Upgrade Required"] = 426] = "Upgrade Required";
+        $mol_rest_code[$mol_rest_code["Precondition Required"] = 428] = "Precondition Required";
+        $mol_rest_code[$mol_rest_code["Too Many Requests"] = 429] = "Too Many Requests";
+        $mol_rest_code[$mol_rest_code["Request Header Fields Too Large"] = 431] = "Request Header Fields Too Large";
+        $mol_rest_code[$mol_rest_code["Unavailable For Legal Reasons"] = 451] = "Unavailable For Legal Reasons";
+        $mol_rest_code[$mol_rest_code["Internal Server Error"] = 500] = "Internal Server Error";
+        $mol_rest_code[$mol_rest_code["Not Implemented"] = 501] = "Not Implemented";
+        $mol_rest_code[$mol_rest_code["Bad Gateway"] = 502] = "Bad Gateway";
+        $mol_rest_code[$mol_rest_code["Service Unavailable"] = 503] = "Service Unavailable";
+        $mol_rest_code[$mol_rest_code["Gateway Timeout"] = 504] = "Gateway Timeout";
+        $mol_rest_code[$mol_rest_code["HTTP Version Not Supported"] = 505] = "HTTP Version Not Supported";
+        $mol_rest_code[$mol_rest_code["Insufficient Storage"] = 507] = "Insufficient Storage";
+        $mol_rest_code[$mol_rest_code["Loop Detected"] = 508] = "Loop Detected";
+        $mol_rest_code[$mol_rest_code["Not Extended"] = 510] = "Not Extended";
+        $mol_rest_code[$mol_rest_code["Network Authentication Required"] = 511] = "Network Authentication Required";
+        $mol_rest_code[$mol_rest_code["Network Read Timeout Error"] = 598] = "Network Read Timeout Error";
+        $mol_rest_code[$mol_rest_code["Network Connect Timeout Error"] = 599] = "Network Connect Timeout Error";
+    })($mol_rest_code = $.$mol_rest_code || ($.$mol_rest_code = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function pass(data) {
+        return data;
+    }
+    function $mol_error_fence(task, fallback, loading = pass) {
+        try {
+            return task();
+        }
+        catch (error) {
+            let normalized;
+            try {
+                normalized = $mol_promise_like(error) ? loading(error) : fallback(error);
+            }
+            catch (sub_error) {
+                normalized = $mol_promise_like(sub_error) ? sub_error : new $mol_error_mix(sub_error.message, { error }, sub_error);
+            }
+            if (normalized instanceof Error || $mol_promise_like(normalized)) {
+                $mol_fail_hidden(normalized);
+            }
+            return normalized;
+        }
+    }
+    $.$mol_error_fence = $mol_error_fence;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_error_enriched(cause, cb) {
+        return $mol_error_fence(cb, e => new $mol_error_mix(e.message, cause, e));
+    }
+    $.$mol_error_enriched = $mol_error_enriched;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $mol_object {
+        native;
+        request;
+        status() {
+            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
+            return types[Math.floor(this.native.status / 100)];
+        }
+        code() {
+            return this.native.status;
+        }
+        ok() {
+            return this.native.ok;
+        }
+        message() {
+            return $mol_rest_code[this.code()] || `HTTP Error ${this.code()}`;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const mime = this.mime() || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).json());
+        }
+        blob() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).blob());
+        }
+        buffer() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).arrayBuffer());
+        }
+        xml() {
+            return $mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch_request extends $mol_object {
+        native;
+        response_async() {
+            const controller = new AbortController();
+            let done = false;
+            const request = new Request(this.native, { signal: controller.signal });
+            const promise = fetch(request).finally(() => {
+                done = true;
+            });
+            return Object.assign(promise, {
+                destructor: () => {
+                    // Abort of done request breaks response parsing
+                    if (!done && !controller.signal.aborted)
+                        controller.abort();
+                },
+            });
+        }
+        response() {
+            return this.$.$mol_fetch_response.make({
+                native: $mol_wire_sync(this).response_async(),
+                request: this
+            });
+        }
+        success() {
+            const response = this.response();
+            if (response.status() === 'success')
+                return response;
+            throw new Error(response.message(), { cause: response });
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_request.prototype, "response", null);
+    $.$mol_fetch_request = $mol_fetch_request;
+    class $mol_fetch extends $mol_object {
+        static request(input, init) {
+            return this.$.$mol_fetch_request.make({
+                native: new Request(input, init)
+            });
+        }
+        static response(input, init) {
+            return this.request(input, init).response();
+        }
+        static success(input, init) {
+            return this.request(input, init).success();
+        }
+        static stream(input, init) {
+            return this.success(input, init).stream();
+        }
+        static text(input, init) {
+            return this.success(input, init).text();
+        }
+        static json(input, init) {
+            return this.success(input, init).json();
+        }
+        static blob(input, init) {
+            return this.success(input, init).blob();
+        }
+        static buffer(input, init) {
+            return this.success(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.success(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.success(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.success(input, init).html();
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "request", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** Build final URL: substitute `{placeholders}` in route, append querystring. */
+    function $raggu_web_front_api_url(endpoint, route, params, query) {
+        let path = route;
+        if (params) {
+            for (const key in params) {
+                path = path.replace(`{${key}}`, encodeURIComponent(String(params[key])));
+            }
+        }
+        const qs = [];
+        if (query) {
+            for (const key in query) {
+                const val = query[key];
+                if (val === undefined || val === null)
+                    continue;
+                if (Array.isArray(val)) {
+                    for (const item of val)
+                        qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
+                }
+                else {
+                    qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(val))}`);
+                }
+            }
+        }
+        const suffix = qs.length ? `?${qs.join('&')}` : '';
+        return `${endpoint}${path}${suffix}`;
+    }
+    /**
+     * Typed REST client factory for OpenAPI-generated operation descriptors.
+     *
+     * Returns a callable that takes an operation constant plus options and
+     * synchronously (via wire) returns the parsed JSON body. Any network
+     * error propagates as an exception so `$mol_view` shows an error plate.
+     *
+     * Endpoint host is baseline `http://localhost:8000` because operation `route`s
+     * already carry the `/api/v1/...` prefix from FastAPI's OpenAPI dump.
+     */
+    $.$raggu_web_front_api = (() => {
+        const endpoint = 'http://localhost:8000';
+        const init = {
+            credentials: 'omit',
+            cache: 'no-cache',
+        };
+        return function call(op, opts = {}) {
+            const url = $raggu_web_front_api_url(endpoint, op.route, opts.params, opts.query);
+            const req = { ...init, method: op.method };
+            if (opts.body !== undefined) {
+                req.headers = { ...(init.headers ?? {}), 'content-type': 'application/json' };
+                req.body = JSON.stringify(opts.body);
+            }
+            return $mol_fetch.json(url, req);
+        };
+    })();
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$raggu_web_front_api_ragu_health = {
+        method: "GET",
+        route: "/api/v1/health",
+        params: undefined,
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_capabilities = {
+        method: "GET",
+        route: "/api/v1/capabilities",
+        params: undefined,
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_list_datasets = {
+        method: "GET",
+        route: "/api/v1/datasets",
+        params: undefined,
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_dataset = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_graph = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_node = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}",
+        params: {},
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_node_neighbors = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}/neighbors",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_communities = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph/communities",
+        params: {},
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_create_agent_message = {
+        method: "POST",
+        route: "/api/v1/datasets/{dataset_id}/agent/messages",
+        params: {},
+        query: undefined,
+        body: {},
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_agent_suggestions = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/agent/suggestions",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
 
 
 ;
@@ -14723,8 +15136,29 @@ var $;
             extra_datasets(next) {
                 return next ?? [];
             }
+            // URL flag `?mock=1` (or node/jsdom test/prerender env — no live backend) → BUILTIN.
+            mock_flag() {
+                if (this.$.$mol_state_arg.value('mock') === '1')
+                    return true;
+                return typeof process !== 'undefined' && !!process.versions?.node;
+            }
+            // Reactive fetch of preindexed datasets. Any transport error propagates
+            // via $mol_wire so the view frame shows an error plate instead of moks.
+            remote_datasets() {
+                if (this.mock_flag())
+                    return null;
+                const cards = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_list_datasets, { query: { locale: 'ru' } });
+                return cards.map((c) => ({
+                    id: c.id,
+                    nodes: format_count(c.stats.nodes),
+                    edges: format_count(c.stats.edges),
+                    comms: String(c.stats.communities),
+                    dynamic: { title: c.title, domain: c.domain, desc: c.description },
+                }));
+            }
             datasets() {
-                return [...BUILTIN, ...this.extra_datasets()];
+                const base = this.remote_datasets() ?? BUILTIN;
+                return [...base, ...this.extra_datasets()];
             }
             rows() {
                 return this.datasets().map(ds => this.Card(ds.id));
@@ -14811,6 +15245,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_gallery.prototype, "extra_datasets", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_gallery.prototype, "remote_datasets", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_gallery.prototype, "click", null);
@@ -15302,9 +15739,8 @@ var $;
 				...(this.$.$mol_svg_rect.prototype.attr.call(obj)), 
 				"rx": "3", 
 				"ry": "3", 
-				"fill": "#1c1b1ad9", 
-				"stroke": "#5b5bd6", 
-				"stroke-width": "1"
+				"stroke-width": "1", 
+				"data-forcegraph-tooltip-bg": ""
 			});
 			return obj;
 		}
@@ -15329,9 +15765,9 @@ var $;
 			(obj.text) = () => ((this.tooltip_text()));
 			(obj.attr) = () => ({
 				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
-				"fill": "#ffffff", 
 				"font-size": (this.tooltip_font_size()), 
-				"font-weight": "600"
+				"font-weight": "600", 
+				"data-forcegraph-tooltip-text": ""
 			});
 			return obj;
 		}
@@ -15366,6 +15802,12 @@ var $;
 			if(next !== undefined) return next;
 			return "";
 		}
+		nodes(){
+			return [];
+		}
+		edges(){
+			return [];
+		}
 		pan_x(next){
 			if(next !== undefined) return next;
 			return +0;
@@ -15381,10 +15823,6 @@ var $;
 		positions(next){
 			if(next !== undefined) return next;
 			return {};
-		}
-		graph_n(next){
-			if(next !== undefined) return next;
-			return +80;
 		}
 		gravity(){
 			return +0.04;
@@ -15449,8 +15887,259 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_y"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "zoom"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "positions"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "graph_n"));
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$raggu_web_front_explorer_forcegraph_type_color = {
+        PERSON: '#e0524f',
+        ORG: '#4f8ee0',
+        LOC: '#3fb56b',
+        EVENT: '#d97ad9',
+        DATE: '#e0a73f',
+        WORK: '#7c6ce0',
+        LAW: '#3fb8b8',
+    };
+    /**
+     * Map backend EntityType (29 values) to the visual NodeType bucket (7 values).
+     * Anything unknown falls back to WORK.
+     */
+    function $raggu_web_front_explorer_forcegraph_entity_bucket(t) {
+        if (t === 'PERSON')
+            return 'PERSON';
+        if (t === 'ORGANIZATION' || t === 'FAMILY')
+            return 'ORG';
+        if (t === 'LOCATION' || t === 'CITY' || t === 'COUNTRY' || t === 'STATE_OR_PROV'
+            || t === 'DISTRICT' || t === 'FACILITY')
+            return 'LOC';
+        if (t === 'EVENT' || t === 'CRIME')
+            return 'EVENT';
+        if (t === 'DATE' || t === 'TIME' || t === 'AGE')
+            return 'DATE';
+        if (t === 'WORK_OF_ART' || t === 'PRODUCT')
+            return 'WORK';
+        if (t === 'LAW' || t === 'IDEOLOGY' || t === 'RELIGION')
+            return 'LAW';
+        return 'WORK';
+    }
+    $.$raggu_web_front_explorer_forcegraph_entity_bucket = $raggu_web_front_explorer_forcegraph_entity_bucket;
+    // --- Mock generator (kept exported: used by demo playground and stress-tests) ---
+    const RELATIONS = [
+        'MENTIONS', 'CITES', 'WORKS_AT', 'LOCATED_IN', 'INVOLVES',
+        'DATED', 'AUTHORED', 'PART_OF', 'REFERS_TO', 'CONTAINS',
+    ];
+    const TYPES = ['PERSON', 'ORG', 'LOC', 'EVENT', 'DATE', 'WORK', 'LAW'];
+    // Deterministic PRNG for stable mock graph between renders.
+    function rand(seed) {
+        let s = seed;
+        return () => {
+            s = (s * 9301 + 49297) % 233280;
+            return s / 233280;
+        };
+    }
+    function $raggu_web_front_explorer_forcegraph_build_mock(seed = 42, n_nodes = 80, n_edges = 130) {
+        const r = rand(seed);
+        const nodes = [];
+        for (let i = 0; i < n_nodes; i++) {
+            const type = TYPES[Math.floor(r() * TYPES.length)];
+            nodes.push({
+                id: `n${i}`,
+                label: `${type} ${i}`,
+                type,
+                degree: 0,
+                x: (r() - 0.5) * 400,
+                y: (r() - 0.5) * 400,
+            });
+        }
+        const edges = [];
+        const seen = new Set();
+        for (let i = 0; i < n_edges; i++) {
+            let a, b, key;
+            do {
+                a = Math.floor(r() * n_nodes);
+                b = Math.floor(r() * n_nodes);
+                key = a < b ? `${a}-${b}` : `${b}-${a}`;
+            } while (a === b || seen.has(key));
+            seen.add(key);
+            edges.push({
+                id: `e${i}`,
+                source: `n${a}`,
+                target: `n${b}`,
+                strength: 0.3 + r() * 0.7,
+                relation: RELATIONS[Math.floor(r() * RELATIONS.length)],
+            });
+            nodes[a].degree++;
+            nodes[b].degree++;
+        }
+        return { nodes, edges };
+    }
+    $.$raggu_web_front_explorer_forcegraph_build_mock = $raggu_web_front_explorer_forcegraph_build_mock;
+    const FORCE_K = 60;
+    const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
+    const THETA2 = THETA * THETA;
+    function make_cell(x0, y0, size) {
+        return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
+    }
+    function insert(cell, node, depth) {
+        cell.com_x += node.x;
+        cell.com_y += node.y;
+        cell.count++;
+        if (depth > 20)
+            return; // guard against coincident points
+        if (!cell.kids && !cell.node) {
+            cell.node = node;
+            return;
+        }
+        if (cell.node) {
+            // Was a leaf — split, push old node down, then insert new
+            const old = cell.node;
+            cell.node = undefined;
+            const h = cell.size / 2;
+            cell.kids = [
+                make_cell(cell.x0, cell.y0, h),
+                make_cell(cell.x0 + h, cell.y0, h),
+                make_cell(cell.x0, cell.y0 + h, h),
+                make_cell(cell.x0 + h, cell.y0 + h, h),
+            ];
+            insert_child(cell, old, depth + 1);
+        }
+        insert_child(cell, node, depth + 1);
+    }
+    function insert_child(cell, node, depth) {
+        const mx = cell.x0 + cell.size / 2;
+        const my = cell.y0 + cell.size / 2;
+        const idx = (node.x >= mx ? 1 : 0) + (node.y >= my ? 2 : 0);
+        insert(cell.kids[idx], node, depth);
+    }
+    function accumulate_repulsion(cell, id, x, y, k2, out) {
+        if (cell.count === 0)
+            return;
+        if (cell.node && cell.node.id === id)
+            return;
+        const cx = cell.com_x / cell.count;
+        const cy = cell.com_y / cell.count;
+        const dx = x - cx;
+        const dy = y - cy;
+        const d2 = dx * dx + dy * dy || 0.01;
+        // Barnes-Hut criterion: if cell size² is small enough vs distance², treat as one aggregate mass
+        if (!cell.kids || cell.size * cell.size < THETA2 * d2) {
+            const force = (k2 * cell.count) / d2;
+            out.dx += dx * force;
+            out.dy += dy * force;
+            return;
+        }
+        for (const kid of cell.kids)
+            accumulate_repulsion(kid, id, x, y, k2, out);
+    }
+    // Hermite smoothstep — C¹ continuous ramp from 0 at `a` to 1 at `b`.
+    function smoothstep(a, b, x) {
+        if (x <= a)
+            return 0;
+        if (x >= b)
+            return 1;
+        const t = (x - a) / (b - a);
+        return t * t * (3 - 2 * t);
+    }
+    /**
+     * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
+     *   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
+     *   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
+     * Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
+     */
+    function $raggu_web_front_explorer_forcegraph_tick_layout(nodes, edges, positions, velocities, pinned_id, params) {
+        const { gravity, force_scale, damping, min_move, max_speed } = params;
+        const k = FORCE_K;
+        const k2 = k * k;
+        const dispX = {};
+        const dispY = {};
+        // Bounds for quadtree — encompass all current node positions
+        let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
+        for (const n of nodes) {
+            const p = positions[n.id];
+            if (p.x < min_x)
+                min_x = p.x;
+            if (p.y < min_y)
+                min_y = p.y;
+            if (p.x > max_x)
+                max_x = p.x;
+            if (p.y > max_y)
+                max_y = p.y;
+        }
+        const size = Math.max(max_x - min_x, max_y - min_y) + 1;
+        const cx = (min_x + max_x) / 2;
+        const cy = (min_y + max_y) / 2;
+        const root = make_cell(cx - size / 2, cy - size / 2, size);
+        for (const n of nodes) {
+            const p = positions[n.id];
+            insert(root, { id: n.id, x: p.x, y: p.y }, 0);
+        }
+        // Repulsion — Barnes-Hut walk per node
+        for (const n of nodes) {
+            const p = positions[n.id];
+            const out = { dx: 0, dy: 0 };
+            accumulate_repulsion(root, n.id, p.x, p.y, k2, out);
+            dispX[n.id] = out.dx;
+            dispY[n.id] = out.dy;
+        }
+        // Attraction — exact, O(E)
+        for (const e of edges) {
+            const dx = positions[e.source].x - positions[e.target].x;
+            const dy = positions[e.source].y - positions[e.target].y;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+            const force = (dist * dist) / k * e.strength;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            dispX[e.source] -= fx;
+            dispY[e.source] -= fy;
+            dispX[e.target] += fx;
+            dispY[e.target] += fy;
+        }
+        // Gravity — soft radial pull toward origin
+        for (const n of nodes) {
+            const p = positions[n.id];
+            dispX[n.id] -= p.x * gravity * k;
+            dispY[n.id] -= p.y * gravity * k;
+        }
+        // Integrate: velocities accumulate + damp; position moves via smooth freeze gate.
+        const next_pos = {};
+        const next_vel = {};
+        for (const n of nodes) {
+            if (n.id === pinned_id) {
+                next_pos[n.id] = positions[n.id];
+                next_vel[n.id] = { vx: 0, vy: 0 };
+                continue;
+            }
+            const prev = velocities[n.id] || { vx: 0, vy: 0 };
+            let vx = (prev.vx + dispX[n.id] * force_scale) * damping;
+            let vy = (prev.vy + dispY[n.id] * force_scale) * damping;
+            const speed = Math.sqrt(vx * vx + vy * vy);
+            // Soft speed cap: tanh saturation.
+            if (speed > 0) {
+                const cap_scale = max_speed * Math.tanh(speed / max_speed) / speed;
+                vx *= cap_scale;
+                vy *= cap_scale;
+            }
+            // Soft freeze gate.
+            const gate = smoothstep(min_move * 0.3, min_move * 1.5, speed);
+            next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
+            next_vel[n.id] = { vx, vy };
+        }
+        return { positions: next_pos, velocities: next_vel };
+    }
+    $.$raggu_web_front_explorer_forcegraph_tick_layout = $raggu_web_front_explorer_forcegraph_tick_layout;
+    // Initial positions from mock coords — no synchronous FR pre-compute.
+    // The view auto-starts a live sim that visibly settles the graph
+    // ( Obsidian-style spring-in ).
+    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes) {
+        const positions = {};
+        for (const n of nodes)
+            positions[n.id] = { x: n.x, y: n.y };
+        return positions;
+    }
+    $.$raggu_web_front_explorer_forcegraph_initial_positions = $raggu_web_front_explorer_forcegraph_initial_positions;
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -15462,235 +16151,15 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const RELATIONS = [
-            'MENTIONS', 'CITES', 'WORKS_AT', 'LOCATED_IN', 'INVOLVES',
-            'DATED', 'AUTHORED', 'PART_OF', 'REFERS_TO', 'CONTAINS',
-        ];
-        const TYPE_COLOR = {
-            PERSON: '#e0524f',
-            ORG: '#4f8ee0',
-            LOC: '#3fb56b',
-            EVENT: '#d97ad9',
-            DATE: '#e0a73f',
-            WORK: '#7c6ce0',
-            LAW: '#3fb8b8',
-        };
-        const TYPES = ['PERSON', 'ORG', 'LOC', 'EVENT', 'DATE', 'WORK', 'LAW'];
-        // Deterministic PRNG for stable mock graph between renders.
-        function rand(seed) {
-            let s = seed;
-            return () => {
-                s = (s * 9301 + 49297) % 233280;
-                return s / 233280;
-            };
-        }
-        function build_mock(seed = 42, n_nodes = 80, n_edges = 130) {
-            const r = rand(seed);
-            const nodes = [];
-            for (let i = 0; i < n_nodes; i++) {
-                const type = TYPES[Math.floor(r() * TYPES.length)];
-                nodes.push({
-                    id: `n${i}`,
-                    label: `${type} ${i}`,
-                    type,
-                    degree: 0,
-                    x: (r() - 0.5) * 400,
-                    y: (r() - 0.5) * 400,
-                });
-            }
-            const edges = [];
-            const seen = new Set();
-            for (let i = 0; i < n_edges; i++) {
-                let a, b, key;
-                do {
-                    a = Math.floor(r() * n_nodes);
-                    b = Math.floor(r() * n_nodes);
-                    key = a < b ? `${a}-${b}` : `${b}-${a}`;
-                } while (a === b || seen.has(key));
-                seen.add(key);
-                edges.push({
-                    id: `e${i}`,
-                    source: `n${a}`,
-                    target: `n${b}`,
-                    strength: 0.3 + r() * 0.7,
-                    relation: RELATIONS[Math.floor(r() * RELATIONS.length)],
-                });
-                nodes[a].degree++;
-                nodes[b].degree++;
-            }
-            return { nodes, edges };
-        }
-        $$.build_mock = build_mock;
-        const FORCE_K = 60;
-        const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
-        const THETA2 = THETA * THETA;
-        function make_cell(x0, y0, size) {
-            return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
-        }
-        function insert(cell, node, depth) {
-            cell.com_x += node.x;
-            cell.com_y += node.y;
-            cell.count++;
-            if (depth > 20)
-                return; // guard against coincident points
-            if (!cell.kids && !cell.node) {
-                cell.node = node;
-                return;
-            }
-            if (cell.node) {
-                // Was a leaf — split, push old node down, then insert new
-                const old = cell.node;
-                cell.node = undefined;
-                const h = cell.size / 2;
-                cell.kids = [
-                    make_cell(cell.x0, cell.y0, h),
-                    make_cell(cell.x0 + h, cell.y0, h),
-                    make_cell(cell.x0, cell.y0 + h, h),
-                    make_cell(cell.x0 + h, cell.y0 + h, h),
-                ];
-                insert_child(cell, old, depth + 1);
-            }
-            insert_child(cell, node, depth + 1);
-        }
-        function insert_child(cell, node, depth) {
-            const mx = cell.x0 + cell.size / 2;
-            const my = cell.y0 + cell.size / 2;
-            const idx = (node.x >= mx ? 1 : 0) + (node.y >= my ? 2 : 0);
-            insert(cell.kids[idx], node, depth);
-        }
-        function accumulate_repulsion(cell, id, x, y, k2, out) {
-            if (cell.count === 0)
-                return;
-            if (cell.node && cell.node.id === id)
-                return;
-            const cx = cell.com_x / cell.count;
-            const cy = cell.com_y / cell.count;
-            const dx = x - cx;
-            const dy = y - cy;
-            const d2 = dx * dx + dy * dy || 0.01;
-            // Barnes-Hut criterion: if cell size² is small enough vs distance², treat as one aggregate mass
-            if (!cell.kids || cell.size * cell.size < THETA2 * d2) {
-                const force = (k2 * cell.count) / d2;
-                out.dx += dx * force;
-                out.dy += dy * force;
-                return;
-            }
-            for (const kid of cell.kids)
-                accumulate_repulsion(kid, id, x, y, k2, out);
-        }
-        // Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
-        //   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
-        //   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
-        // Gives Obsidian-style feel on drag: perturbation ripples through edges
-        // and dies via damping. Distant nodes have sub-threshold velocity →
-        // gate closes, no whole-graph shake.
-        // Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
-        // Hermite smoothstep — C¹ continuous ramp from 0 at `a` to 1 at `b`.
-        function smoothstep(a, b, x) {
-            if (x <= a)
-                return 0;
-            if (x >= b)
-                return 1;
-            const t = (x - a) / (b - a);
-            return t * t * (3 - 2 * t);
-        }
-        function tick_layout(nodes, edges, positions, velocities, pinned_id, params) {
-            const { gravity, force_scale, damping, min_move, max_speed } = params;
-            const k = FORCE_K;
-            const k2 = k * k;
-            const dispX = {};
-            const dispY = {};
-            // Bounds for quadtree — encompass all current node positions
-            let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
-            for (const n of nodes) {
-                const p = positions[n.id];
-                if (p.x < min_x)
-                    min_x = p.x;
-                if (p.y < min_y)
-                    min_y = p.y;
-                if (p.x > max_x)
-                    max_x = p.x;
-                if (p.y > max_y)
-                    max_y = p.y;
-            }
-            const size = Math.max(max_x - min_x, max_y - min_y) + 1;
-            const cx = (min_x + max_x) / 2;
-            const cy = (min_y + max_y) / 2;
-            const root = make_cell(cx - size / 2, cy - size / 2, size);
-            for (const n of nodes) {
-                const p = positions[n.id];
-                insert(root, { id: n.id, x: p.x, y: p.y }, 0);
-            }
-            // Repulsion — Barnes-Hut walk per node
-            for (const n of nodes) {
-                const p = positions[n.id];
-                const out = { dx: 0, dy: 0 };
-                accumulate_repulsion(root, n.id, p.x, p.y, k2, out);
-                dispX[n.id] = out.dx;
-                dispY[n.id] = out.dy;
-            }
-            // Attraction — exact, O(E)
-            for (const e of edges) {
-                const dx = positions[e.source].x - positions[e.target].x;
-                const dy = positions[e.source].y - positions[e.target].y;
-                const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-                const force = (dist * dist) / k * e.strength;
-                const fx = (dx / dist) * force;
-                const fy = (dy / dist) * force;
-                dispX[e.source] -= fx;
-                dispY[e.source] -= fy;
-                dispX[e.target] += fx;
-                dispY[e.target] += fy;
-            }
-            // Gravity — soft radial pull toward origin
-            for (const n of nodes) {
-                const p = positions[n.id];
-                dispX[n.id] -= p.x * gravity * k;
-                dispY[n.id] -= p.y * gravity * k;
-            }
-            // Integrate: velocities accumulate + damp; position moves via smooth freeze gate.
-            // No hard cutoffs — both the speed ceiling and freeze use C¹-continuous ramps
-            // so nodes decelerate/stop imperceptibly instead of snapping.
-            const next_pos = {};
-            const next_vel = {};
-            for (const n of nodes) {
-                if (n.id === pinned_id) {
-                    next_pos[n.id] = positions[n.id];
-                    next_vel[n.id] = { vx: 0, vy: 0 };
-                    continue;
-                }
-                const prev = velocities[n.id] || { vx: 0, vy: 0 };
-                let vx = (prev.vx + dispX[n.id] * force_scale) * damping;
-                let vy = (prev.vy + dispY[n.id] * force_scale) * damping;
-                const speed = Math.sqrt(vx * vx + vy * vy);
-                // Soft speed cap: tanh saturation. Below cap almost no effect,
-                // above cap velocity asymptotically bounded to max_speed.
-                if (speed > 0) {
-                    const cap_scale = max_speed * Math.tanh(speed / max_speed) / speed;
-                    vx *= cap_scale;
-                    vy *= cap_scale;
-                }
-                // Soft freeze gate: position change fades smoothly to zero as velocity
-                // drops below min_move. No visual snap-to-stop. Velocity itself
-                // keeps damping toward zero so eventually gate*v goes to zero too.
-                const gate = smoothstep(min_move * 0.3, min_move * 1.5, speed);
-                next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
-                next_vel[n.id] = { vx, vy };
-            }
-            return { positions: next_pos, velocities: next_vel };
-        }
-        $$.tick_layout = tick_layout;
-        // Initial random positions from mock — no synchronous FR pre-compute.
-        // The view auto-starts a live sim that visibly settles the graph
-        // ( Obsidian-style spring-in ).
-        function build_initial_positions(nodes, _edges) {
-            const positions = {};
-            for (const n of nodes)
-                positions[n.id] = { x: n.x, y: n.y };
-            return positions;
-        }
-        $$.build_initial_positions = build_initial_positions;
         class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+            // Typed accessors over view.tree's `nodes /` and `edges /` — parents
+            // (explorer / demo) feed them via `nodes <= ...` bindings.
+            nodes() {
+                return super.nodes();
+            }
+            edges() {
+                return super.edges();
+            }
             // Plain non-reactive field overriding the auto-gen @$mol_mem drag_id.
             // The mem-cell version got invalidated between event-handler fibers
             // (wire_async destroys previous fiber on each event, which appears to
@@ -15827,33 +16296,14 @@ var $;
                 const local = pt.matrixTransform(ctm.inverse());
                 return { x: local.x, y: local.y };
             }
-            // Node count via URL arg `graph_n` — e.g. `#!screen=explorer/graph_n=500`.
-            // Round-trips like other app args (null when default → removed from URL).
-            graph_n(next) {
-                const arg = this.$.$mol_state_arg;
-                const fallback = 80;
-                if (next === undefined) {
-                    const raw = arg.value('graph_n');
-                    const parsed = raw ? Number(raw) : 0;
-                    return parsed > 0 ? parsed : fallback;
-                }
-                arg.value('graph_n', next === fallback ? null : String(next));
-                return next;
-            }
-            mock() {
-                const n = this.graph_n();
-                return build_mock(42, n, Math.round(n * 1.6));
-            }
-            nodes() { return this.mock().nodes; }
-            edges() { return this.mock().edges; }
             // Lazily-computed initial FR layout — memoized so first render already shows
             // nodes settled into the circular bound, not the raw square mock coords.
             initial_positions() {
-                return build_initial_positions(this.nodes(), this.edges());
+                return $raggu_web_front_explorer_forcegraph_initial_positions(this.nodes());
             }
             // Seed positions on first read, or re-seed when the node set changes
-            // ( e.g. graph_n slider moved ) — old cell may still hold coords for a
-            // different number of nodes.
+            // (e.g. dataset switched, new fetch result arrived) — old cell may still
+            // hold coords for a different set of nodes.
             ensure_positions() {
                 let p = this.positions();
                 const nodes = this.nodes();
@@ -15880,7 +16330,7 @@ var $;
             // One sim tick.
             tick() {
                 const positions = this.ensure_positions();
-                const next = tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), this.layout_params());
+                const next = $raggu_web_front_explorer_forcegraph_tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), this.layout_params());
                 this.velocities = next.velocities;
                 this.positions(next.positions);
             }
@@ -15920,7 +16370,7 @@ var $;
             }
             // Reactive kick — reading every tunable param here means the mem cell
             // invalidates whenever any of them changes. dom_tree reads it below,
-            // so slider tweaks (and graph_n rebuilds) restart the sim automatically.
+            // so slider tweaks (and dataset switches) restart the sim automatically.
             params_kick() {
                 // Register deps on all sim inputs
                 this.gravity();
@@ -15928,7 +16378,7 @@ var $;
                 this.damping();
                 this.min_move();
                 this.max_speed();
-                this.graph_n();
+                this.nodes(); // rebuild sim on new graph
                 // Idempotent: re-arms frame budget; starts loop if it was stopped
                 this.start_sim(this.SIM_DRAG_FRAMES);
                 return null;
@@ -15979,7 +16429,9 @@ var $;
             node_radius(id) {
                 return String(this.node_radius_num(id));
             }
-            node_color(id) { return TYPE_COLOR[this.node_by_id()[id].type]; }
+            node_color(id) {
+                return $raggu_web_front_explorer_forcegraph_type_color[this.node_by_id()[id].type];
+            }
             node_stroke(id) {
                 if (this.selected_id() === id)
                     return '#ffffff';
@@ -16066,7 +16518,7 @@ var $;
             }
             tooltip_text() {
                 const id = this.active_id();
-                return id ? this.node_by_id()[id].label : '';
+                return id ? this.node_by_id()[id]?.label ?? '' : '';
             }
             tooltip_font_size() {
                 return String(Math.max(6, Math.min(12, 11 / Math.sqrt(this.zoom()))));
@@ -16110,7 +16562,9 @@ var $;
             }
             selected_color() {
                 const n = this.selected_node();
-                return n ? TYPE_COLOR[n.type] : TYPE_COLOR.WORK;
+                return n
+                    ? $raggu_web_front_explorer_forcegraph_type_color[n.type]
+                    : $raggu_web_front_explorer_forcegraph_type_color.WORK;
             }
             // Edges incident to selected node, with the OTHER node's label
             selected_relations() {
@@ -16122,7 +16576,7 @@ var $;
                     .filter(e => e.source === id || e.target === id)
                     .map(e => {
                     const other_id = e.source === id ? e.target : e.source;
-                    return { relation: e.relation, target_label: idx[other_id].label };
+                    return { relation: e.relation, target_label: idx[other_id]?.label ?? other_id };
                 });
             }
         }
@@ -16141,12 +16595,6 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "pan_end", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "graph_n", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "mock", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "initial_positions", null);
@@ -16197,12 +16645,31 @@ var $;
         userSelect: 'none',
         touchAction: 'none',
     });
+    // SVG stroke/fill don't accept $mol_style_func in the typed-prop schema,
+    // so wire tokens through raw CSS via style_attach — same trick mol_svg uses
+    // for its own text-box background. Selectors match by data-* set on the
+    // tooltip elements in view.tree.
+    $mol_style_attach('raggu/web/front/explorer/forcegraph/forcegraph.view.css', '[data-forcegraph-tooltip-bg] {\n'
+        + '\tfill: var(--bog_builderui_card);\n'
+        + '\tstroke: var(--bog_builderui_line);\n'
+        + '}\n'
+        + '[data-forcegraph-tooltip-text] {\n'
+        + '\tfill: var(--bog_builderui_text);\n'
+        + '}\n');
 })($ || ($ = {}));
 
 ;
 	($.$raggu_web_front_explorer) = class $raggu_web_front_explorer extends ($.$bog_builderui_div) {
+		graph_nodes(){
+			return [];
+		}
+		graph_edges(){
+			return [];
+		}
 		Graph(){
 			const obj = new this.$.$raggu_web_front_explorer_forcegraph();
+			(obj.nodes) = () => ((this.graph_nodes()));
+			(obj.edges) = () => ((this.graph_edges()));
 			(obj.selected_id) = (next) => ((this.selected_id(next)));
 			return obj;
 		}
@@ -16472,6 +16939,9 @@ var $;
 			]);
 			return obj;
 		}
+		dataset_id(){
+			return "";
+		}
 		selected_id(next){
 			if(next !== undefined) return next;
 			return "";
@@ -16569,7 +17039,48 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        // Default page size for the graph endpoint. The mock backend caps at 5000.
+        const GRAPH_LIMIT = 500;
         class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
+            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo.
+            // Also auto-mock in node/jsdom test/prerender env where no live backend is available.
+            mock_flag() {
+                if (this.$.$mol_state_arg.value('mock') === '1')
+                    return true;
+                return typeof process !== 'undefined' && !!process.versions?.node;
+            }
+            // Reactive live fetch. Any transport error propagates via $mol_wire so
+            // the view frame surfaces an error plate instead of silently falling back.
+            graph_remote() {
+                const id = this.dataset_id();
+                if (!id)
+                    return null;
+                if (this.mock_flag())
+                    return null;
+                const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_graph, { params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } });
+                const nodes = res.nodes.map((n) => ({
+                    id: n.id,
+                    label: n.label,
+                    type: $raggu_web_front_explorer_forcegraph_entity_bucket(n.entity_type),
+                    degree: n.degree,
+                    x: n.x,
+                    y: n.y,
+                }));
+                const edges = res.edges.map((e) => ({
+                    id: e.id,
+                    source: e.source,
+                    target: e.target,
+                    strength: e.strength,
+                    relation: e.relation_type,
+                }));
+                return { nodes, edges };
+            }
+            graph_data() {
+                return this.graph_remote()
+                    ?? $raggu_web_front_explorer_forcegraph_build_mock(42, 80, 130);
+            }
+            graph_nodes() { return this.graph_data().nodes; }
+            graph_edges() { return this.graph_data().edges; }
             // Cast to extended class to access TS-only methods (selected_node/selected_color/...)
             graph_view() {
                 return this.Graph();
@@ -16614,6 +17125,12 @@ var $;
                 return dot;
             }
         }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "graph_remote", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "graph_data", null);
         $$.$raggu_web_front_explorer = $raggu_web_front_explorer;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -17993,14 +18510,34 @@ var $;
 			]);
 			return obj;
 		}
+		clear_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Clear(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.clear_text()));
+			(obj.click) = (next) => ((this.clear_click(next)));
+			(obj.sub) = () => (["✕"]);
+			return obj;
+		}
 		Modes_bar(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Modes_label()), (this.Modes())]);
+			(obj.sub) = () => ([
+				(this.Modes_label()), 
+				(this.Modes()), 
+				(this.Clear())
+			]);
+			return obj;
+		}
+		Messages(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows()));
 			return obj;
 		}
 		Body(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.rows()));
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([(this.Messages())]);
 			return obj;
 		}
 		use_sug_one(next){
@@ -18229,6 +18766,9 @@ var $;
 		mock_suffix_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_mock_suffix_text"));
 		}
+		clear_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_clear_text"));
+		}
 		rows(){
 			return [];
 		}
@@ -18261,7 +18801,10 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_mix"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_plan"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Modes"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "clear_click"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Modes_bar"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Messages"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_one"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_one"));
@@ -18321,6 +18864,12 @@ var $;
             rows() {
                 return this.history().map((_, i) => this.Message(i));
             }
+            dom_tree(next) {
+                const node = super.dom_tree(next);
+                const body = this.Body().dom_node();
+                this.Body().scroll_top(body.scrollHeight);
+                return node;
+            }
             message_text(index) {
                 return this.history()[index]?.text ?? '';
             }
@@ -18352,6 +18901,10 @@ var $;
                 this.prompt_text(this.sug_two_text());
                 return null;
             }
+            clear_click() {
+                this.history([]);
+                return null;
+            }
         }
         __decorate([
             $mol_mem
@@ -18365,6 +18918,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "use_sug_two", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "clear_click", null);
         $$.$raggu_web_front_chat = $raggu_web_front_chat;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -18425,6 +18981,7 @@ var $;
     $mol_style_define($raggu_web_front_chat, {
         flex: { direction: 'column', shrink: 1 },
         minWidth: 0,
+        minHeight: 0,
         height: '100%',
         Modes_bar: {
             flex: { direction: 'row' },
@@ -18468,15 +19025,37 @@ var $;
         Mode_global: mode_pill_inactive,
         Mode_mix: mode_pill_inactive,
         Mode_plan: mode_pill_inactive,
+        Clear: {
+            marginLeft: 'auto',
+            minWidth: '40px',
+            height: '26px',
+            padding: {
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+            },
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+            color: $bog_builderui_tokens.shade,
+            font: { size: '14px', weight: 500 },
+            lineHeight: '1',
+        },
         Body: {
             flex: { grow: 1, direction: 'column' },
             overflow: 'auto',
+            // min-height: 0 обязателен для flex-child с overflow:auto,
+            // иначе элемент раздувается до scrollHeight и внешний контейнер скроллится вместо него.
+            minHeight: 0,
             padding: {
                 top: '22px',
                 bottom: '22px',
                 left: '22px',
                 right: '22px',
             },
+        },
+        Messages: {
             gap: '16px',
         },
         Message: {
@@ -19990,6 +20569,7 @@ var $;
 		}
 		Explorer(){
 			const obj = new this.$.$raggu_web_front_explorer();
+			(obj.dataset_id) = () => ((this.dataset_id()));
 			return obj;
 		}
 		Chat(){
@@ -20050,7 +20630,6 @@ var $;
             }
             select_dataset(id) {
                 this.dataset_id(id);
-                this.screen('explorer');
                 return null;
             }
             arg_value(key, next, fallback) {
@@ -23808,6 +24387,20 @@ var $;
 (function ($_1) {
     var $$;
     (function ($$) {
+        $mol_test({
+            async "Get and parse"($) {
+                $mol_assert_equal(await $mol_wire_async($mol_fetch).text('data:text/plain,foo'), 'foo');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
         // jsdom doesn't implement SVGSVGElement.getScreenCTM/createSVGPoint.
         // Stub with identity-like behavior so drag math runs as it would in a real browser
         // where 1 screen-pixel == 1 svg-unit.
@@ -23832,9 +24425,19 @@ var $;
         function node_target(id) {
             return { getAttribute: (k) => k === 'data-node-id' ? id : null };
         }
+        // Factory that seeds the forcegraph with a deterministic mock via its
+        // view.tree `nodes /` and `edges /` inputs — mirrors the parent-owned
+        // data-source pattern (explorer / demo do the same).
+        function make_graph($, n_nodes = 80, n_edges = 130) {
+            const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+            const mock = $raggu_web_front_explorer_forcegraph_build_mock(42, n_nodes, n_edges);
+            g.nodes = () => mock.nodes;
+            g.edges = () => mock.edges;
+            return { g, mock };
+        }
         $mol_test({
             'pos(id): no override → layout coords'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const n = g.nodes()[0];
                 const p = g.pos(n.id);
                 $mol_assert_equal(p.x, n.x);
@@ -23842,7 +24445,7 @@ var $;
             },
             // THE bug from user: 1-pixel pointer move ⇒ node travels exactly 1 pixel.
             'drag below threshold: node does NOT move (treated as pending click)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true; // block start_sim's RAF loop from firing
                 const n = g.nodes()[7];
@@ -23855,7 +24458,7 @@ var $;
                 $mol_assert_equal(p.y, 0);
             },
             'drag above threshold: node tracks pointer delta'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true;
                 const n = g.nodes()[3];
@@ -23868,7 +24471,7 @@ var $;
                 $mol_assert_equal(p.y, -30);
             },
             'drag multiple moves accumulate (above threshold)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true;
                 const n = g.nodes()[2];
@@ -23882,13 +24485,13 @@ var $;
                 $mol_assert_equal(p.y, 25);
             },
             'click without prior drag: selects'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 g.click('n3');
                 $mol_assert_equal(g.selected_id(), 'n3');
             },
             // THE click-vs-drag boundary: tap that didn't move past threshold MUST select
             'click after press-without-move (tiny drag): NOT suppressed → selects'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 const n = g.nodes()[0];
                 g.pan_start(pe(n.x, n.y, node_target(n.id)));
@@ -23900,7 +24503,7 @@ var $;
                 $mol_assert_equal(g.selected_id(), n.id); // selects normally
             },
             'click after real drag (>threshold): IS suppressed'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 const n = g.nodes()[0];
                 g.pan_start(pe(n.x, n.y, node_target(n.id)));
@@ -23911,19 +24514,19 @@ var $;
                 $mol_assert_equal(g.selected_id(), '');
             },
             'bg_click on empty bg → deselect'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 g.selected_id('n3');
                 g.bg_click({ target: { getAttribute: () => null } });
                 $mol_assert_equal(g.selected_id(), '');
             },
             'bg_click on node circle → keep selection (per-node click handles it)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 g.selected_id('n3');
                 g.bg_click({ target: { getAttribute: (k) => k === 'data-node-id' ? 'n7' : null } });
                 $mol_assert_equal(g.selected_id(), 'n3');
             },
             'pan (drag on bg): camera moves opposite to pointer'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.pan_start(pe(0, 0, { getAttribute: () => null }));
                 $mol_assert_equal(g.drag_id(), '');
@@ -23932,7 +24535,7 @@ var $;
                 $mol_assert_equal(g.pan_y(), -30);
             },
             'pan_move ignores no-move (same coords)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 g.sim_running = true;
                 const n = g.nodes()[0];
@@ -23945,7 +24548,7 @@ var $;
                 $mol_assert_equal(p.y, 0);
             },
             'selected_node / selected_relations'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const n = g.nodes()[3];
                 g.selected_id(n.id);
                 $mol_assert_equal(g.selected_node()?.id, n.id);
@@ -23958,26 +24561,28 @@ var $;
                 const results = [];
                 const params = { gravity: 0.09, force_scale: 0.06, damping: 0.82, min_move: 0.15, max_speed: 12 };
                 for (const n of sizes) {
-                    const g = build_mock(42, n, Math.round(n * 1.6));
+                    const g = $raggu_web_front_explorer_forcegraph_build_mock(42, n, Math.round(n * 1.6));
                     const positions = {};
                     const velocities = {};
                     for (const node of g.nodes)
                         positions[node.id] = { x: node.x, y: node.y };
                     // Warm-up
-                    let state = tick_layout(g.nodes, g.edges, positions, velocities, '', params);
+                    let state = $raggu_web_front_explorer_forcegraph_tick_layout(g.nodes, g.edges, positions, velocities, '', params);
                     // 10-tick avg
                     const t0 = Date.now();
                     for (let i = 0; i < 10; i++)
-                        state = tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', params);
+                        state = $raggu_web_front_explorer_forcegraph_tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', params);
                     const tick_ms = ((Date.now() - t0) / 10).toFixed(2);
                     results.push({ n, edges: g.edges.length, tick_ms: `${tick_ms}ms` });
                 }
-                console.log('\n[forcegraph STRESS — Barnes-Hut]\n' + results.map(r => `  n=${r.n.toString().padStart(4)} edges=${r.edges.toString().padStart(5)}  tick=${r.tick_ms.padStart(8)}`).join('\n') + '\n  (60fps budget = 16.67ms/tick)\n');
+                // console.log( '\n[forcegraph STRESS — Barnes-Hut]\n' + results.map( r =>
+                // 	`  n=${ r.n.toString().padStart( 4 ) } edges=${ r.edges.toString().padStart( 5 ) }  tick=${ r.tick_ms.padStart( 8 ) }`
+                // ).join( '\n' ) + '\n  (60fps budget = 16.67ms/tick)\n' )
                 $mol_assert_equal(results.length, sizes.length);
             },
             // --- DOM integration: render → inspect → real events ---
             'DOM render: node circles carry data-node-id (Boundary is exempt)'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const svg = g.dom_tree();
                 const circles = svg.querySelectorAll('circle');
                 $mol_assert_equal(circles.length > 0, true);
@@ -23989,7 +24594,7 @@ var $;
                 $mol_assert_equal(with_attr, g.nodes().length);
             },
             'DOM event flow: pointerdown on circle → drag mode'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 stub_svg(g);
                 const svg = g.dom_tree();
                 const circle = svg.querySelector('circle[data-node-id]');
@@ -24001,7 +24606,7 @@ var $;
                 $mol_assert_equal(g.drag_id(), id);
             },
             'reactive: positions write → node_x reflects new value'($) {
-                const g = $raggu_web_front_explorer_forcegraph.make({ $ });
+                const { g } = make_graph($);
                 const n = g.nodes()[0];
                 const x_before = g.node_x(n.id);
                 g.positions({ [n.id]: { x: 42, y: 99 } });
@@ -24173,11 +24778,11 @@ var $;
                 app.Settings().close();
                 $mol_assert_equal(app.settings_open(), false);
                 $mol_assert_equal(app.Settings().showed(), false);
-                // user navigates back to Датасеты and clicks a card → explorer + dataset selected
+                // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
                 app.Sidebar().click_gallery();
                 $mol_assert_equal(app.screen(), 'gallery');
                 app.Gallery().click('law');
-                $mol_assert_equal(app.screen(), 'explorer');
+                $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.dataset_id(), 'law');
                 // user switches language EN — re-renders all @-strings via $mol_locale
                 app.Sidebar().click_en();
@@ -24434,7 +25039,7 @@ var $;
                     dataset_id: app.dataset_id(),
                     settings_open: app.settings_open(),
                 };
-                console.log('▸ ragufront e2e visual demo: start');
+                // console.log( '▸ ragufront e2e visual demo: start' )
                 // await sleep( 1000 )
                 click(app.Sidebar().Nav_explorer(), () => app.Sidebar().click_explorer());
                 // await sleep( 1000 )
@@ -24455,7 +25060,7 @@ var $;
                 app.preset(initial.preset);
                 app.dataset_id(initial.dataset_id);
                 app.settings_open(initial.settings_open);
-                console.log('✓ ragufront e2e visual demo: done');
+                // console.log( '✓ ragufront e2e visual demo: done' )
             }, 2000);
         }
     })($$ = $_1.$$ || ($_1.$$ = {}));
