@@ -768,7 +768,6 @@ $bog_builderui_menu_item $mol_button_minor
 $raggu_web_front_export $mol_pop
 	screen \gallery
 	showed? false
-	align \bottom_right
 	export_btn_text @ \↓ Export
 	empty_text @ \Nothing to export
 	Anchor $bog_builderui_div
@@ -1089,6 +1088,9 @@ $raggu_web_front_gallery_upload $bog_builderui_div
 	complete? null
 	title_text @ \Indexing document
 	subtitle_text @ \Mock pipeline run · 6 stages · about 4 seconds
+	panel_title_document_text @ \Indexing document
+	panel_title_index_text @ \Uploading prebuilt index
+	error_too_large_template @ \File too large: %s MB. Limit is 10 MB.
 	step_chunking_text @ \Chunking
 	step_extraction_text @ \Extraction
 	step_summarization_text @ \Summarization
@@ -1150,6 +1152,10 @@ $raggu_web_front_gallery $bog_builderui_div
 	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
 	upload_doc_text @ \＋ Upload document
 	upload_idx_text @ \⇪ Upload prebuilt index
+	uploaded_document_title @ \Uploaded document
+	uploaded_index_title @ \Uploaded index
+	uploaded_domain @ \User upload
+	uploaded_desc @ \Mock dataset built by the demo indexing pipeline.
 	sub /
 		<= Header $bog_builderui_div sub /
 			<= Header_text $bog_builderui_div sub /
@@ -1321,6 +1327,7 @@ $raggu_web_front_explorer $bog_builderui_div
 	sources_title_text @ \Sources (provenance)
 	sources_text @ \chunk #418 · chunk #902 …
 	ask_btn_text @ \💬 Ask about this entity
+	legend_title_text @ \Entity Types
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
@@ -1334,7 +1341,7 @@ $raggu_web_front_explorer $bog_builderui_div
 				<= Filter_thresh $bog_builderui_div sub / <= filter_thresh_text
 				<= Filter_comm $bog_builderui_div sub / <= filter_comm_text
 			<= Legend $bog_builderui_div sub /
-				<= Legend_title $bog_builderui_div sub / \Entity Types
+				<= Legend_title $bog_builderui_div sub / <= legend_title_text
 				<= Legend_person $bog_builderui_div sub /
 					<= Legend_person_dot $bog_builderui_div
 					<= Legend_person_label $bog_builderui_div sub / \PERSON

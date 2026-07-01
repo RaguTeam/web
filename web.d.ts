@@ -4798,7 +4798,6 @@ declare namespace $ {
 		item_click( id: any, next?: any ): any
 		screen( ): string
 		showed( next?: boolean ): boolean
-		align( ): string
 		export_btn_text( ): string
 		empty_text( ): string
 		Anchor( ): $bog_builderui_div
@@ -6085,6 +6084,9 @@ declare namespace $ {
 		complete( next?: any ): any
 		title_text( ): string
 		subtitle_text( ): string
+		panel_title_document_text( ): string
+		panel_title_index_text( ): string
+		error_too_large_template( ): string
 		step_chunking_text( ): string
 		step_extraction_text( ): string
 		step_summarization_text( ): string
@@ -7647,6 +7649,10 @@ declare namespace $ {
 		header_subtitle_text( ): string
 		upload_doc_text( ): string
 		upload_idx_text( ): string
+		uploaded_document_title( ): string
+		uploaded_index_title( ): string
+		uploaded_domain( ): string
+		uploaded_desc( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -8483,6 +8489,7 @@ declare namespace $ {
 		sources_title_text( ): string
 		sources_text( ): string
 		ask_btn_text( ): string
+		legend_title_text( ): string
 		sub( ): readonly(any)[]
 	}
 	

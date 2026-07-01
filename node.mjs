@@ -11692,9 +11692,6 @@ var $;
 			if(next !== undefined) return next;
 			return false;
 		}
-		align(){
-			return "bottom_right";
-		}
 		export_btn_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_export_export_btn_text"));
 		}
@@ -14166,6 +14163,15 @@ var $;
 		subtitle_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_subtitle_text"));
 		}
+		panel_title_document_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_panel_title_document_text"));
+		}
+		panel_title_index_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_panel_title_index_text"));
+		}
+		error_too_large_template(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_error_too_large_template"));
+		}
 		step_chunking_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_chunking_text"));
 		}
@@ -14283,8 +14289,7 @@ var $;
                 return this.error() ? 'true' : 'false';
             }
             panel_title() {
-                const key = this.kind() === 'index' ? 'panel_title_index' : 'panel_title_document';
-                return this.$.$mol_locale.text(`$raggu_web_front_gallery_upload_${key}`) || this.title_text();
+                return this.kind() === 'index' ? this.panel_title_index_text() : this.panel_title_document_text();
             }
             body() {
                 return this.error() ? [this.Error_body()] : [this.Progress_body()];
@@ -14335,9 +14340,7 @@ var $;
                 this.error('');
                 this.step(0);
                 if (mock_file_size_mb > 10) {
-                    const tpl = this.$.$mol_locale.text('$raggu_web_front_gallery_upload_error_too_large')
-                        || 'File too large: %s MB. Limit is 10 MB.';
-                    this.error(tpl.replace('%s', mock_file_size_mb.toFixed(1)));
+                    this.error(this.error_too_large_template().replace('%s', mock_file_size_mb.toFixed(1)));
                     return;
                 }
                 this.tick(1);
@@ -14663,6 +14666,18 @@ var $;
 		}
 		upload_idx_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_idx_text"));
+		}
+		uploaded_document_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_document_title"));
+		}
+		uploaded_index_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_index_title"));
+		}
+		uploaded_domain(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_domain"));
+		}
+		uploaded_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_desc"));
 		}
 		sub(){
 			return [
@@ -15222,13 +15237,9 @@ var $;
                 const id = `up-${Date.now()}-${idx}`;
                 const seed = Date.now() + idx;
                 const stats = random_stats(seed);
-                const title_prefix = this.$.$mol_locale.text(kind === 'index'
-                    ? '$raggu_web_front_gallery_uploaded_index_title'
-                    : '$raggu_web_front_gallery_uploaded_document_title') || (kind === 'index' ? 'Uploaded index' : 'Uploaded document');
-                const domain = this.$.$mol_locale.text('$raggu_web_front_gallery_uploaded_domain')
-                    || 'User upload';
-                const desc = this.$.$mol_locale.text('$raggu_web_front_gallery_uploaded_desc')
-                    || 'Mock dataset built by the demo indexing pipeline.';
+                const title_prefix = kind === 'index' ? this.uploaded_index_title() : this.uploaded_document_title();
+                const domain = this.uploaded_domain();
+                const desc = this.uploaded_desc();
                 this.extra_datasets([
                     ...list,
                     {
@@ -16717,7 +16728,7 @@ var $;
 		}
 		Legend_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Entity Types"]);
+			(obj.sub) = () => ([(this.legend_title_text())]);
 			return obj;
 		}
 		Legend_person_dot(){
@@ -16982,6 +16993,9 @@ var $;
 		}
 		ask_btn_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_ask_btn_text"));
+		}
+		legend_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
 		}
 		sub(){
 			return [(this.Canvas()), (this.Aside())];
