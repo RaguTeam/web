@@ -18986,22 +18986,13 @@ var $;
             rows() {
                 return this.history().map((_, i) => this.Message(i));
             }
-            scroll_height() {
-                // Явная подписка на history — при новом сообщении канал инвалидируется,
-                // тянет за собой dom_tree, и scroll_top получает свежее значение.
+            // Автоскролл вниз при появлении нового сообщения.
+            // auto() вызывается $mol_view.dom_tree после render — DOM уже актуален.
+            auto() {
                 void this.history();
-                return this.Body().dom_node().scrollHeight;
-            }
-            scroll_top(next) {
                 const el = this.Body().dom_node();
-                if (next !== undefined)
-                    el.scrollTop = next;
-                return el.scrollTop;
-            }
-            dom_tree(next) {
-                const node = super.dom_tree(next);
-                this.scroll_top(this.scroll_height());
-                return node;
+                el.scrollTop = el.scrollHeight;
+                return [];
             }
             message_text(index) {
                 return this.history()[index]?.text ?? '';
@@ -19025,7 +19016,12 @@ var $;
                     return null;
                 this.history([...this.history(), { role: 'user', text }]);
                 this.prompt_text('');
-                if (this.mode() !== 'llm') {
+                if (this.mode() === 'llm') {
+                    // LLM в detached wire — не блокирует action, не мутирует state внутри fiber body,
+                    // сам ретаинится при suspension от model.response().
+                    $mol_wire_async(this).ask_llm(text);
+                }
+                else {
                     // Мок для search-режимов
                     const mock = `${this.mock_prefix_text()} "${text}". ${this.mock_suffix_text()}`;
                     setTimeout(() => {
@@ -19035,39 +19031,22 @@ var $;
                 }
                 return null;
             }
-            // true когда последнее сообщение — user и режим llm.
-            // Реактивно на history+mode. Пока true — под Messages показывается skeleton-card.
-            // После ответа last=assistant → false → скелет исчезает.
-            //
-            // Внутри дёргаем communication() — это активирует его wire-фибр.
-            // Если communication бросит suspension → Status.dom_tree поймает
-            // (он $mol_view с встроенным try/catch на suspension), остальной чат
-            // продолжает рендер, wire автоматом ретраит когда Promise резолвится.
+            // Скелет виден когда мы ждём ответа LLM: последнее сообщение = user + режим llm.
+            // Реактивно, без ловли suspension: ask_llm сам мутирует history когда ответ придёт,
+            // last=assistant → is_communicating становится false → скелет скрывается.
             is_communicating() {
                 if (this.mode() !== 'llm')
                     return false;
                 const h = this.history();
                 if (h.length === 0)
                     return false;
-                if (h[h.length - 1].role !== 'user')
-                    return false;
-                this.communication();
-                return true;
+                return h[h.length - 1].role === 'user';
             }
-            // Реактивный LLM-роутер по паттерну $giper_bot.communication.
-            // Срабатывает когда история заканчивается на user-сообщение и режим llm.
-            // $mol_promise_like → перебрасываем suspension обратно в wire для retry.
-            // $mol_fail_log → реальную ошибку логируем И кладём в чат как assistant-сообщение,
-            // чтобы юзер увидел причину (429 rate-limit, 400 bad request, network).
-            communication() {
+            // Запуск LLM в detached wire. Аргумент text — для уникальности fiber-slot
+            // в $mol_wire_async cache, чтобы разные запросы не переиспользовали один слот.
+            // model.response() кинет Promise → wire ретаинится, при resolve дожмёт ветку с writeback.
+            ask_llm(text) {
                 const history = this.history();
-                if (history.length === 0)
-                    return;
-                const last = history[history.length - 1];
-                if (last.role !== 'user')
-                    return;
-                if (this.mode() !== 'llm')
-                    return;
                 const model = this.llm().fork();
                 for (const item of history) {
                     if (item.role === 'user')
@@ -19078,13 +19057,13 @@ var $;
                 try {
                     const resp = model.response();
                     const reply = typeof resp === 'string' ? resp : resp?.reply ?? JSON.stringify(resp, null, 2);
-                    this.history([...history, { role: 'assistant', text: reply }]);
+                    this.history([...this.history(), { role: 'assistant', text: reply }]);
                 }
                 catch (error) {
                     if ($mol_promise_like(error))
                         $mol_fail_hidden(error);
                     if ($mol_fail_log(error)) {
-                        this.history([...history, { role: 'assistant', text: '📛 ' + (error.message || String(error)) }]);
+                        this.history([...this.history(), { role: 'assistant', text: '📛 ' + (error.message || String(error)) }]);
                     }
                 }
             }
@@ -19127,13 +19106,7 @@ var $;
         ], $raggu_web_front_chat.prototype, "llm", null);
         __decorate([
             $mol_mem
-        ], $raggu_web_front_chat.prototype, "scroll_height", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_chat.prototype, "scroll_top", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_chat.prototype, "dom_tree", null);
+        ], $raggu_web_front_chat.prototype, "rows", null);
         __decorate([
             $mol_mem_key
         ], $raggu_web_front_chat.prototype, "trace_expanded", null);
@@ -19143,9 +19116,6 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_chat.prototype, "communication", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "use_sug_one", null);

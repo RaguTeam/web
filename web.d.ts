@@ -10896,9 +10896,7 @@ declare namespace $.$$ {
         select_plan(): null;
         llm(): $mol_github_model;
         rows(): $bog_builderui_div[];
-        scroll_height(): number;
-        scroll_top(next?: number): number;
-        dom_tree(next?: Element): Element;
+        auto(): any;
         message_text(index: number): string;
         message_role(index: number): Raggu_chat_role;
         message_with_trace(index: number): boolean;
@@ -10906,7 +10904,7 @@ declare namespace $.$$ {
         trace_toggle(index: number): null;
         prompt_submit(): null;
         is_communicating(): boolean;
-        communication(): void;
+        ask_llm(text: string): void;
         use_sug_one(): null;
         use_sug_two(): null;
         clear_click(): null;
