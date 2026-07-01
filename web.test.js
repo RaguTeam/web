@@ -3369,6 +3369,61 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    $mol_test_mocks.push(context => {
+        class $mol_state_arg_mock extends $mol_state_arg {
+            static $ = context;
+            static href(next) { return next || ''; }
+            static go(next) {
+                this.href(this.link(next));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_state_arg_mock, "href", null);
+        __decorate([
+            $mol_action
+        ], $mol_state_arg_mock, "go", null);
+        context.$mol_state_arg = $mol_state_arg_mock;
+    });
+    $mol_test({
+        'args as dictionary'($) {
+            $.$mol_state_arg.href('#!foo=bar/xxx');
+            $mol_assert_equal($.$mol_state_arg.dict(), { foo: 'bar', xxx: '' });
+            $.$mol_state_arg.dict({ foo: null, yyy: '', lol: '123' });
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!yyy/lol=123');
+        },
+        'one value from args'($) {
+            $.$mol_state_arg.href('#!foo=bar/xxx');
+            $mol_assert_equal($.$mol_state_arg.value('foo'), 'bar');
+            $mol_assert_equal($.$mol_state_arg.value('xxx'), '');
+            $.$mol_state_arg.value('foo', 'lol');
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=lol/xxx');
+            $.$mol_state_arg.value('foo', '');
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo/xxx');
+            $.$mol_state_arg.value('foo', null);
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!xxx');
+        },
+        'nested args'($) {
+            const base = new $.$mol_state_arg('nested.');
+            class Nested extends $mol_state_arg {
+                constructor(prefix) {
+                    super(base.prefix + prefix);
+                }
+                static value = (key, next) => base.value(key, next);
+            }
+            $.$mol_state_arg.href('#!foo=bar/nested.xxx=123');
+            $mol_assert_equal(Nested.value('foo'), null);
+            $mol_assert_equal(Nested.value('xxx'), '123');
+            Nested.value('foo', 'lol');
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=bar/nested.xxx=123/nested.foo=lol');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
     var $$;
     (function ($$) {
         // jsdom doesn't implement SVGSVGElement.getScreenCTM/createSVGPoint.
@@ -3515,28 +3570,28 @@ var $;
                 $mol_assert_equal(g.selected_relations().length > 0, true);
             },
             // --- Stress test: how heavy is one force-layout tick at scale?
-            // Reports ms/tick so you can size the demo data. 60fps budget = 16.67ms/frame.
-            // 'STRESS tick_layout perf across graph sizes'( $ ) {
-            // 	const sizes = [ 80, 200, 500, 1000, 2000 ]
-            // 	const results: Array< { n: number, edges: number, tick_ms: string, init_ms: string } > = []
-            // 	for ( const n of sizes ) {
-            // 		const g = build_mock( 42, n, Math.round( n * 1.6 ) )
-            // 		// Initial layout (120 iterations)
-            // 		const t0 = Date.now()
-            // 		const positions = build_initial_positions( g.nodes, g.edges )
-            // 		const init_ms = Date.now() - t0
-            // 		// One live tick
-            // 		const t1 = Date.now()
-            // 		tick_layout( g.nodes, g.edges, positions, '', 6 )
-            // 		const tick_ms = Date.now() - t1
-            // 		results.push( { n, edges: g.edges.length, tick_ms: `${ tick_ms }ms`, init_ms: `${ init_ms }ms` } )
-            // 	}
-            // 	console.log( '\n[forcegraph STRESS]\n' + results.map( r =>
-            // 		`  n=${ r.n.toString().padStart( 4 ) } edges=${ r.edges.toString().padStart( 4 ) }  init=${ r.init_ms.padStart( 6 ) }  tick=${ r.tick_ms.padStart( 5 ) }`
-            // 	).join( '\n' ) + '\n  (60fps budget = 16.67ms/tick)\n' )
-            // 	// Sanity — even 2000 nodes should finish (no infinite loop / NaN)
-            // 	$mol_assert_equal( results.length, sizes.length )
-            // },
+            // Reports avg ms/tick (10 iters). 60fps budget = 16.67ms/frame.
+            'STRESS tick_layout perf across graph sizes'($) {
+                const sizes = [80, 200, 500, 1000, 2000, 5000];
+                const results = [];
+                for (const n of sizes) {
+                    const g = build_mock(42, n, Math.round(n * 1.6));
+                    const positions = {};
+                    for (const node of g.nodes)
+                        positions[node.id] = { x: node.x, y: node.y };
+                    // Warm-up
+                    tick_layout(g.nodes, g.edges, positions, '', 6);
+                    // 10-tick avg
+                    const t0 = Date.now();
+                    let p = positions;
+                    for (let i = 0; i < 10; i++)
+                        p = tick_layout(g.nodes, g.edges, p, '', 6);
+                    const tick_ms = ((Date.now() - t0) / 10).toFixed(2);
+                    results.push({ n, edges: g.edges.length, tick_ms: `${tick_ms}ms` });
+                }
+                console.log('\n[forcegraph STRESS — Barnes-Hut]\n' + results.map(r => `  n=${r.n.toString().padStart(4)} edges=${r.edges.toString().padStart(5)}  tick=${r.tick_ms.padStart(8)}`).join('\n') + '\n  (60fps budget = 16.67ms/tick)\n');
+                $mol_assert_equal(results.length, sizes.length);
+            },
             // --- DOM integration: render → inspect → real events ---
             'DOM render: node circles carry data-node-id (Boundary is exempt)'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
@@ -3627,61 +3682,6 @@ var $;
             $mol_assert_equal($mol_state_session.value(key), '$mol_state_session_test');
             $mol_state_session.value(key, null);
             $mol_assert_equal($mol_state_session.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push(context => {
-        class $mol_state_arg_mock extends $mol_state_arg {
-            static $ = context;
-            static href(next) { return next || ''; }
-            static go(next) {
-                this.href(this.link(next));
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_state_arg_mock, "href", null);
-        __decorate([
-            $mol_action
-        ], $mol_state_arg_mock, "go", null);
-        context.$mol_state_arg = $mol_state_arg_mock;
-    });
-    $mol_test({
-        'args as dictionary'($) {
-            $.$mol_state_arg.href('#!foo=bar/xxx');
-            $mol_assert_equal($.$mol_state_arg.dict(), { foo: 'bar', xxx: '' });
-            $.$mol_state_arg.dict({ foo: null, yyy: '', lol: '123' });
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!yyy/lol=123');
-        },
-        'one value from args'($) {
-            $.$mol_state_arg.href('#!foo=bar/xxx');
-            $mol_assert_equal($.$mol_state_arg.value('foo'), 'bar');
-            $mol_assert_equal($.$mol_state_arg.value('xxx'), '');
-            $.$mol_state_arg.value('foo', 'lol');
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=lol/xxx');
-            $.$mol_state_arg.value('foo', '');
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo/xxx');
-            $.$mol_state_arg.value('foo', null);
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!xxx');
-        },
-        'nested args'($) {
-            const base = new $.$mol_state_arg('nested.');
-            class Nested extends $mol_state_arg {
-                constructor(prefix) {
-                    super(base.prefix + prefix);
-                }
-                static value = (key, next) => base.value(key, next);
-            }
-            $.$mol_state_arg.href('#!foo=bar/nested.xxx=123');
-            $mol_assert_equal(Nested.value('foo'), null);
-            $mol_assert_equal(Nested.value('xxx'), '123');
-            Nested.value('foo', 'lol');
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=bar/nested.xxx=123/nested.foo=lol');
         },
     });
 })($ || ($ = {}));

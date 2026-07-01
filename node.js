@@ -14914,56 +14914,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
-		radius(){
-			return ".5%";
-		}
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
-		}
-		dom_name(){
-			return "circle";
-		}
-		pos(){
-			return [];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"r": (this.radius()), 
-				"cx": (this.pos_x()), 
-				"cy": (this.pos_y())
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_circle extends $.$mol_svg_circle {
-            pos_x() {
-                return this.pos()[0];
-            }
-            pos_y() {
-                return this.pos()[1];
-            }
-        }
-        $$.$mol_svg_circle = $mol_svg_circle;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
 	($.$mol_svg_line) = class $mol_svg_line extends ($.$mol_svg) {
 		from(){
 			return [];
@@ -15032,6 +14982,56 @@ var $;
             }
         }
         $$.$mol_svg_line = $mol_svg_line;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
+		radius(){
+			return ".5%";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		dom_name(){
+			return "circle";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"r": (this.radius()), 
+				"cx": (this.pos_x()), 
+				"cy": (this.pos_y())
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_circle extends $.$mol_svg_circle {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_circle = $mol_svg_circle;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -15183,23 +15183,6 @@ var $;
 		bg_click(next){
 			if(next !== undefined) return next;
 			return null;
-		}
-		boundary_stroke(){
-			return "#3a3937";
-		}
-		Boundary(){
-			const obj = new this.$.$mol_svg_circle();
-			(obj.pos_x) = () => ("0");
-			(obj.pos_y) = () => ("0");
-			(obj.radius) = () => ("280");
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
-				"fill": "none", 
-				"stroke": (this.boundary_stroke()), 
-				"stroke-width": "1", 
-				"stroke-dasharray": "4 6"
-			});
-			return obj;
 		}
 		edge_x1(id){
 			return "";
@@ -15421,7 +15404,6 @@ var $;
 		}
 		sub(){
 			return [
-				(this.Boundary()), 
 				(this.G_edges()), 
 				(this.G_nodes()), 
 				(this.Tooltip())
@@ -15433,7 +15415,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_move"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_end"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "bg_click"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Boundary"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edges"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
@@ -15523,35 +15504,106 @@ var $;
             return { nodes, edges };
         }
         $$.build_mock = build_mock;
-        const BOUND_RADIUS = 280;
+        const BOUND_RADIUS = 280; // Decorative boundary circle only; physics ignore it
         const FORCE_K = 60;
+        const THETA = 0.5; // Barnes-Hut opening angle. Smaller = more accurate, slower
+        const THETA2 = THETA * THETA;
+        // Soft radial pull toward origin — replaces the old hard-clamp bounding circle.
+        // Same idea as `gravity` in ForceAtlas2 / d3-force's forceCenter.
+        // Larger → tighter cluster; smaller → looser, may drift far.
+        const GRAVITY = 0.04;
+        function make_cell(x0, y0, size) {
+            return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
+        }
+        function insert(cell, node, depth) {
+            cell.com_x += node.x;
+            cell.com_y += node.y;
+            cell.count++;
+            if (depth > 20)
+                return; // guard against coincident points
+            if (!cell.kids && !cell.node) {
+                cell.node = node;
+                return;
+            }
+            if (cell.node) {
+                // Was a leaf — split, push old node down, then insert new
+                const old = cell.node;
+                cell.node = undefined;
+                const h = cell.size / 2;
+                cell.kids = [
+                    make_cell(cell.x0, cell.y0, h),
+                    make_cell(cell.x0 + h, cell.y0, h),
+                    make_cell(cell.x0, cell.y0 + h, h),
+                    make_cell(cell.x0 + h, cell.y0 + h, h),
+                ];
+                insert_child(cell, old, depth + 1);
+            }
+            insert_child(cell, node, depth + 1);
+        }
+        function insert_child(cell, node, depth) {
+            const mx = cell.x0 + cell.size / 2;
+            const my = cell.y0 + cell.size / 2;
+            const idx = (node.x >= mx ? 1 : 0) + (node.y >= my ? 2 : 0);
+            insert(cell.kids[idx], node, depth);
+        }
+        function accumulate_repulsion(cell, id, x, y, k2, out) {
+            if (cell.count === 0)
+                return;
+            if (cell.node && cell.node.id === id)
+                return;
+            const cx = cell.com_x / cell.count;
+            const cy = cell.com_y / cell.count;
+            const dx = x - cx;
+            const dy = y - cy;
+            const d2 = dx * dx + dy * dy || 0.01;
+            // Barnes-Hut criterion: if cell size² is small enough vs distance², treat as one aggregate mass
+            if (!cell.kids || cell.size * cell.size < THETA2 * d2) {
+                const force = (k2 * cell.count) / d2;
+                out.dx += dx * force;
+                out.dy += dy * force;
+                return;
+            }
+            for (const kid of cell.kids)
+                accumulate_repulsion(kid, id, x, y, k2, out);
+        }
         // One Fruchterman-Reingold iteration. Pure function — takes positions dict,
-        // returns updated positions. `pinned_id` (if set) stays put.
+        // returns updated positions. `pinned_id` (if set) stays put. Repulsion via
+        // Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
         function tick_layout(nodes, edges, positions, pinned_id, temp) {
             const k = FORCE_K;
             const k2 = k * k;
             const dispX = {};
             const dispY = {};
+            // Bounds for quadtree — encompass all current node positions
+            let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
             for (const n of nodes) {
-                dispX[n.id] = 0;
-                dispY[n.id] = 0;
+                const p = positions[n.id];
+                if (p.x < min_x)
+                    min_x = p.x;
+                if (p.y < min_y)
+                    min_y = p.y;
+                if (p.x > max_x)
+                    max_x = p.x;
+                if (p.y > max_y)
+                    max_y = p.y;
             }
-            // Repulsion
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const a = nodes[i].id, b = nodes[j].id;
-                    const dx = positions[a].x - positions[b].x;
-                    const dy = positions[a].y - positions[b].y;
-                    const dist2 = dx * dx + dy * dy || 0.01;
-                    const force = k2 / dist2;
-                    const fx = dx * force, fy = dy * force;
-                    dispX[a] += fx;
-                    dispY[a] += fy;
-                    dispX[b] -= fx;
-                    dispY[b] -= fy;
-                }
+            const size = Math.max(max_x - min_x, max_y - min_y) + 1;
+            const cx = (min_x + max_x) / 2;
+            const cy = (min_y + max_y) / 2;
+            const root = make_cell(cx - size / 2, cy - size / 2, size);
+            for (const n of nodes) {
+                const p = positions[n.id];
+                insert(root, { id: n.id, x: p.x, y: p.y }, 0);
             }
-            // Attraction
+            // Repulsion — Barnes-Hut walk per node
+            for (const n of nodes) {
+                const p = positions[n.id];
+                const out = { dx: 0, dy: 0 };
+                accumulate_repulsion(root, n.id, p.x, p.y, k2, out);
+                dispX[n.id] = out.dx;
+                dispY[n.id] = out.dy;
+            }
+            // Attraction — exact, O(E)
             for (const e of edges) {
                 const dx = positions[e.source].x - positions[e.target].x;
                 const dy = positions[e.source].y - positions[e.target].y;
@@ -15564,35 +15616,36 @@ var $;
                 dispX[e.target] += fx;
                 dispY[e.target] += fy;
             }
-            // Apply, capped by temp; clamp into a circle of radius BOUND_RADIUS; skip pinned
-            const out = {};
+            // Gravity — soft radial pull toward origin. Replaces hard clamp so nodes
+            // don't jitter at the boundary. Equilibrium radius emerges from balance
+            // between this and repulsion.
+            for (const n of nodes) {
+                const p = positions[n.id];
+                dispX[n.id] -= p.x * GRAVITY * k;
+                dispY[n.id] -= p.y * GRAVITY * k;
+            }
+            // Apply displacement capped by temperature. Pinned node stays put.
+            const result = {};
             for (const n of nodes) {
                 if (n.id === pinned_id) {
-                    out[n.id] = positions[n.id];
+                    result[n.id] = positions[n.id];
                     continue;
                 }
                 const dlen = Math.sqrt(dispX[n.id] ** 2 + dispY[n.id] ** 2) || 0.01;
-                let x = positions[n.id].x + (dispX[n.id] / dlen) * Math.min(dlen, temp);
-                let y = positions[n.id].y + (dispY[n.id] / dlen) * Math.min(dlen, temp);
-                const r = Math.sqrt(x * x + y * y);
-                if (r > BOUND_RADIUS) {
-                    x = x * BOUND_RADIUS / r;
-                    y = y * BOUND_RADIUS / r;
-                }
-                out[n.id] = { x, y };
+                const x = positions[n.id].x + (dispX[n.id] / dlen) * Math.min(dlen, temp);
+                const y = positions[n.id].y + (dispY[n.id] / dlen) * Math.min(dlen, temp);
+                result[n.id] = { x, y };
             }
-            return out;
+            return result;
         }
         $$.tick_layout = tick_layout;
-        function build_initial_positions(nodes, edges) {
-            let positions = {};
+        // Initial random positions from mock — no synchronous FR pre-compute.
+        // The view auto-starts a live sim that visibly settles the graph
+        // ( Obsidian-style spring-in ).
+        function build_initial_positions(nodes, _edges) {
+            const positions = {};
             for (const n of nodes)
                 positions[n.id] = { x: n.x, y: n.y };
-            let temp = 60;
-            for (let i = 0; i < 120; i++) {
-                positions = tick_layout(nodes, edges, positions, '', temp);
-                temp *= 0.96;
-            }
             return positions;
         }
         $$.build_initial_positions = build_initial_positions;
@@ -15693,21 +15746,14 @@ var $;
                 const { ax, ay } = this.svg_scale();
                 const dx = dx_px * ax;
                 const dy = dy_px * ay;
-                // Node drag: shift the dragged node by pointer delta
+                // Node drag: shift the dragged node by pointer delta. No boundary clamp —
+                // gravity in the sim brings released nodes back naturally.
                 if (this.drag_id()) {
                     // Kick off continuous sim on first real drag movement (idempotent)
                     this.start_sim();
                     const id = this.drag_id();
                     const cur = this.pos(id);
-                    let nx = cur.x + dx;
-                    let ny = cur.y + dy;
-                    // Clamp dragged node into the circular bound — keeps it inside frame
-                    const r = Math.sqrt(nx * nx + ny * ny);
-                    if (r > BOUND_RADIUS) {
-                        nx = nx * BOUND_RADIUS / r;
-                        ny = ny * BOUND_RADIUS / r;
-                    }
-                    this.positions({ ...this.positions(), [id]: { x: nx, y: ny } });
+                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
                     return;
                 }
                 if (!this.dragging)
@@ -15738,34 +15784,61 @@ var $;
                 const local = pt.matrixTransform(ctm.inverse());
                 return { x: local.x, y: local.y };
             }
+            // Node count via URL arg `graph_n` — e.g. `#!screen=explorer/graph_n=500`.
+            // Round-trips like other app args (null when default → removed from URL).
+            graph_n(next) {
+                const arg = this.$.$mol_state_arg;
+                const fallback = 80;
+                if (next === undefined) {
+                    const raw = arg.value('graph_n');
+                    const parsed = raw ? Number(raw) : 0;
+                    return parsed > 0 ? parsed : fallback;
+                }
+                arg.value('graph_n', next === fallback ? null : String(next));
+                return next;
+            }
             mock() {
-                return build_mock();
+                const n = this.graph_n();
+                return build_mock(42, n, Math.round(n * 1.6));
             }
             nodes() { return this.mock().nodes; }
             edges() { return this.mock().edges; }
-            // Initial positions seeded by full FR layout. Stored back into positions cell
-            // on first access — subsequent ticks mutate positions live.
+            // Lazily-computed initial FR layout — memoized so first render already shows
+            // nodes settled into the circular bound, not the raw square mock coords.
+            initial_positions() {
+                return build_initial_positions(this.nodes(), this.edges());
+            }
+            // Called by pan_start / tick_layout to make sure positions cell is populated
+            // before we start mutating it live.
             ensure_positions() {
                 let p = this.positions();
                 if (Object.keys(p).length === 0) {
-                    p = build_initial_positions(this.nodes(), this.edges());
+                    p = { ...this.initial_positions() };
                     this.positions(p);
                 }
                 return p;
             }
             // One sim tick — called from the RAF loop while dragging or in cooldown.
+            // Uses live sim_temp so graph cools down to imperceptible jitter and stops.
             tick() {
                 const positions = this.ensure_positions();
-                const next = tick_layout(this.nodes(), this.edges(), positions, this.drag_id(), 6);
+                const next = tick_layout(this.nodes(), this.edges(), positions, this.drag_id(), this.sim_temp);
                 this.positions(next);
             }
             // Continuous simulation loop driven by requestAnimationFrame.
-            // Runs while user is dragging; keeps running ~60 frames after release
-            // (cooldown) so the rest of the graph settles into a new equilibrium.
+            // Two modes:
+            //   - Initial spring-in: 220 frames, temp 40 → ~0.05 (imperceptible, sim stops)
+            //   - Drag settle:       90 frames, temp 10 → ~0.5 (barely visible)
+            // While user drags, cooldown is re-armed each frame so neighbors keep settling.
             sim_running = false;
-            sim_cooldown = 0;
-            SIM_COOLDOWN_FRAMES = 60;
-            start_sim() {
+            sim_frames_left = 0;
+            sim_temp = 0;
+            SIM_INITIAL_FRAMES = 220;
+            SIM_DRAG_FRAMES = 90;
+            TEMP_DECAY = 0.97;
+            start_sim(frames = this.SIM_DRAG_FRAMES, temp = 10) {
+                this.sim_frames_left = Math.max(this.sim_frames_left, frames);
+                this.sim_temp = Math.max(this.sim_temp, temp);
                 if (this.sim_running)
                     return;
                 if (typeof window === 'undefined')
@@ -15778,17 +15851,28 @@ var $;
                         this.tick();
                     }
                     catch { }
-                    if (this.drag_id())
-                        this.sim_cooldown = this.SIM_COOLDOWN_FRAMES;
-                    else
-                        this.sim_cooldown--;
-                    if (this.sim_cooldown <= 0 && !this.drag_id()) {
+                    this.sim_temp *= this.TEMP_DECAY;
+                    if (this.drag_id()) {
+                        this.sim_frames_left = Math.max(this.sim_frames_left, this.SIM_DRAG_FRAMES);
+                    }
+                    this.sim_frames_left--;
+                    if (this.sim_frames_left <= 0 && !this.drag_id()) {
                         this.sim_running = false;
                         return;
                     }
                     requestAnimationFrame(loop);
                 };
                 requestAnimationFrame(loop);
+            }
+            // Kick off the initial spring-in exactly once, on first mount.
+            initial_sim_started = false;
+            dom_tree() {
+                const tree = super.dom_tree();
+                if (!this.initial_sim_started) {
+                    this.initial_sim_started = true;
+                    this.start_sim(this.SIM_INITIAL_FRAMES, 40);
+                }
+                return tree;
             }
             node_by_id() {
                 const m = {};
@@ -15802,9 +15886,13 @@ var $;
             edge_views() {
                 return this.edges().map(e => this.Edge(e.id));
             }
-            // Effective node position: user-dragged override OR layout output
+            // Effective node position: live positions cell (drag/sim output) first,
+            // then the memoized initial FR layout, then raw mock as last resort.
             pos(id) {
-                return this.positions()[id] ?? this.node_by_id()[id];
+                const live = this.positions()[id];
+                if (live)
+                    return live;
+                return this.initial_positions()[id] ?? this.node_by_id()[id];
             }
             // Used in view.tree as `data-node-id` attr so pan_start can identify node-target.
             node_id(id) { return id; }
@@ -15980,10 +16068,19 @@ var $;
         ], $raggu_web_front_explorer_forcegraph.prototype, "pan_end", null);
         __decorate([
             $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "graph_n", null);
+        __decorate([
+            $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "mock", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "initial_positions", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "tick", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "dom_tree", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);

@@ -6431,31 +6431,6 @@ declare namespace $ {
 
 declare namespace $ {
 
-	export class $mol_svg_circle extends $mol_svg {
-		radius( ): string
-		pos_x( ): string
-		pos_y( ): string
-		dom_name( ): string
-		pos( ): readonly(any)[]
-		attr( ): ({ 
-			'r': ReturnType< $mol_svg_circle['radius'] >,
-			'cx': ReturnType< $mol_svg_circle['pos_x'] >,
-			'cy': ReturnType< $mol_svg_circle['pos_y'] >,
-		})  & ReturnType< $mol_svg['attr'] >
-	}
-	
-}
-
-//# sourceMappingURL=circle.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_svg_circle extends $.$mol_svg_circle {
-        pos_x(): any;
-        pos_y(): any;
-    }
-}
-
-declare namespace $ {
-
 	export class $mol_svg_line extends $mol_svg {
 		from( ): readonly(any)[]
 		to( ): readonly(any)[]
@@ -6484,6 +6459,31 @@ declare namespace $.$$ {
         to(): any;
         to_x(): any;
         to_y(): any;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_svg_circle extends $mol_svg {
+		radius( ): string
+		pos_x( ): string
+		pos_y( ): string
+		dom_name( ): string
+		pos( ): readonly(any)[]
+		attr( ): ({ 
+			'r': ReturnType< $mol_svg_circle['radius'] >,
+			'cx': ReturnType< $mol_svg_circle['pos_x'] >,
+			'cy': ReturnType< $mol_svg_circle['pos_y'] >,
+		})  & ReturnType< $mol_svg['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=circle.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_svg_circle extends $.$mol_svg_circle {
+        pos_x(): any;
+        pos_y(): any;
     }
 }
 
@@ -6549,52 +6549,27 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_1 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_svg_circle['pos_x'] >
-	>
-	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_2 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_svg_circle['pos_y'] >
-	>
-	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_3 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_svg_circle['radius'] >
-	>
-	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_4 = $mol_type_enforce<
-		({ 
-			'fill': string,
-			'stroke': ReturnType< $raggu_web_front_explorer_forcegraph['boundary_stroke'] >,
-			'stroke-width': string,
-			'stroke-dasharray': string,
-		})  & ReturnType< $mol_svg_circle['attr'] >
-		,
-		ReturnType< $mol_svg_circle['attr'] >
-	>
-	type $mol_svg_line__from_x_raggu_web_front_explorer_forcegraph_5 = $mol_type_enforce<
+	type $mol_svg_line__from_x_raggu_web_front_explorer_forcegraph_1 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x1'] >
 		,
 		ReturnType< $mol_svg_line['from_x'] >
 	>
-	type $mol_svg_line__from_y_raggu_web_front_explorer_forcegraph_6 = $mol_type_enforce<
+	type $mol_svg_line__from_y_raggu_web_front_explorer_forcegraph_2 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_y1'] >
 		,
 		ReturnType< $mol_svg_line['from_y'] >
 	>
-	type $mol_svg_line__to_x_raggu_web_front_explorer_forcegraph_7 = $mol_type_enforce<
+	type $mol_svg_line__to_x_raggu_web_front_explorer_forcegraph_3 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x2'] >
 		,
 		ReturnType< $mol_svg_line['to_x'] >
 	>
-	type $mol_svg_line__to_y_raggu_web_front_explorer_forcegraph_8 = $mol_type_enforce<
+	type $mol_svg_line__to_y_raggu_web_front_explorer_forcegraph_4 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_y2'] >
 		,
 		ReturnType< $mol_svg_line['to_y'] >
 	>
-	type $mol_svg_line__attr_raggu_web_front_explorer_forcegraph_9 = $mol_type_enforce<
+	type $mol_svg_line__attr_raggu_web_front_explorer_forcegraph_5 = $mol_type_enforce<
 		({ 
 			'stroke': ReturnType< $raggu_web_front_explorer_forcegraph['edge_color'] >,
 			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['edge_width'] >,
@@ -6603,27 +6578,27 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_line['attr'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_10 = $mol_type_enforce<
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_6 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_views'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
-	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_11 = $mol_type_enforce<
+	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_7 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_x'] >
 		,
 		ReturnType< $mol_svg_circle['pos_x'] >
 	>
-	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_12 = $mol_type_enforce<
+	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_8 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_y'] >
 		,
 		ReturnType< $mol_svg_circle['pos_y'] >
 	>
-	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_13 = $mol_type_enforce<
+	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_9 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_radius'] >
 		,
 		ReturnType< $mol_svg_circle['radius'] >
 	>
-	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_14 = $mol_type_enforce<
+	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_10 = $mol_type_enforce<
 		({ 
 			'data-node-id': ReturnType< $raggu_web_front_explorer_forcegraph['node_id'] >,
 			'fill': ReturnType< $raggu_web_front_explorer_forcegraph['node_color'] >,
@@ -6634,7 +6609,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_circle['attr'] >
 	>
-	type $mol_svg_circle__event_raggu_web_front_explorer_forcegraph_15 = $mol_type_enforce<
+	type $mol_svg_circle__event_raggu_web_front_explorer_forcegraph_11 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['click'] >,
 			pointerenter( next?: ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] >,
@@ -6643,32 +6618,32 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_circle['event'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_16 = $mol_type_enforce<
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_12 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_views'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
-	type $mol_svg_rect__pos_x_raggu_web_front_explorer_forcegraph_17 = $mol_type_enforce<
+	type $mol_svg_rect__pos_x_raggu_web_front_explorer_forcegraph_13 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_x'] >
 		,
 		ReturnType< $mol_svg_rect['pos_x'] >
 	>
-	type $mol_svg_rect__pos_y_raggu_web_front_explorer_forcegraph_18 = $mol_type_enforce<
+	type $mol_svg_rect__pos_y_raggu_web_front_explorer_forcegraph_14 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_y'] >
 		,
 		ReturnType< $mol_svg_rect['pos_y'] >
 	>
-	type $mol_svg_rect__width_raggu_web_front_explorer_forcegraph_19 = $mol_type_enforce<
+	type $mol_svg_rect__width_raggu_web_front_explorer_forcegraph_15 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_w'] >
 		,
 		ReturnType< $mol_svg_rect['width'] >
 	>
-	type $mol_svg_rect__height_raggu_web_front_explorer_forcegraph_20 = $mol_type_enforce<
+	type $mol_svg_rect__height_raggu_web_front_explorer_forcegraph_16 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_h'] >
 		,
 		ReturnType< $mol_svg_rect['height'] >
 	>
-	type $mol_svg_rect__attr_raggu_web_front_explorer_forcegraph_21 = $mol_type_enforce<
+	type $mol_svg_rect__attr_raggu_web_front_explorer_forcegraph_17 = $mol_type_enforce<
 		({ 
 			'rx': string,
 			'ry': string,
@@ -6679,32 +6654,32 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_rect['attr'] >
 	>
-	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_22 = $mol_type_enforce<
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_x'] >
 		,
 		ReturnType< $mol_svg_text['pos_x'] >
 	>
-	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_23 = $mol_type_enforce<
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_19 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_y'] >
 		,
 		ReturnType< $mol_svg_text['pos_y'] >
 	>
-	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_24 = $mol_type_enforce<
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_20 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align'] >
 	>
-	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_25 = $mol_type_enforce<
+	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_21 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align_vert'] >
 	>
-	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_26 = $mol_type_enforce<
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_22 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_text'] >
 		,
 		ReturnType< $mol_svg_text['text'] >
 	>
-	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_27 = $mol_type_enforce<
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_23 = $mol_type_enforce<
 		({ 
 			'fill': string,
 			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_font_size'] >,
@@ -6713,14 +6688,14 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['attr'] >
 	>
-	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_28 = $mol_type_enforce<
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_24 = $mol_type_enforce<
 		({ 
 			'pointer-events': string,
 		})  & ReturnType< $mol_svg_group['attr'] >
 		,
 		ReturnType< $mol_svg_group['attr'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_29 = $mol_type_enforce<
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_25 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_sub'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
@@ -6732,8 +6707,6 @@ declare namespace $ {
 		pan_move( next?: any ): any
 		pan_end( next?: any ): any
 		bg_click( next?: any ): any
-		boundary_stroke( ): string
-		Boundary( ): $mol_svg_circle
 		edge_x1( id: any): string
 		edge_y1( id: any): string
 		edge_x2( id: any): string
@@ -6821,7 +6794,7 @@ declare namespace $.$$ {
         x: number;
         y: number;
     }>;
-    export function build_initial_positions(nodes: GraphNode[], edges: GraphEdge[]): Record<string, {
+    export function build_initial_positions(nodes: GraphNode[], _edges: GraphEdge[]): Record<string, {
         x: number;
         y: number;
     }>;
@@ -6848,21 +6821,31 @@ declare namespace $.$$ {
             x: number;
             y: number;
         };
+        graph_n(next?: number): number;
         mock(): {
             nodes: GraphNode[];
             edges: GraphEdge[];
         };
         nodes(): GraphNode[];
         edges(): GraphEdge[];
+        initial_positions(): Record<string, {
+            x: number;
+            y: number;
+        }>;
         ensure_positions(): Record<string, {
             x: number;
             y: number;
         }>;
         tick(): void;
         sim_running: boolean;
-        sim_cooldown: number;
-        readonly SIM_COOLDOWN_FRAMES = 60;
-        start_sim(): void;
+        sim_frames_left: number;
+        sim_temp: number;
+        readonly SIM_INITIAL_FRAMES = 220;
+        readonly SIM_DRAG_FRAMES = 90;
+        readonly TEMP_DECAY = 0.97;
+        start_sim(frames?: number, temp?: number): void;
+        initial_sim_started: boolean;
+        dom_tree(): Element;
         node_by_id(): Record<string, GraphNode>;
         node_views(): $.$mol_svg_circle[];
         edge_views(): $.$mol_svg_line[];
