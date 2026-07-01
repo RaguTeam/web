@@ -10900,6 +10900,7 @@ declare namespace $.$$ {
         message_text(index: number): string;
         message_role(index: number): Raggu_chat_role;
         message_with_trace(index: number): boolean;
+        Message_trace(index: number): any;
         trace_expanded(index: number, next?: boolean): boolean;
         trace_toggle(index: number): null;
         prompt_submit(): null;

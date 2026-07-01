@@ -19683,7 +19683,14 @@ var $;
                 return this.history()[index]?.role ?? 'user';
             }
             message_with_trace(index) {
-                return Boolean(this.history()[index]?.trace);
+                return index % 2 !== 0;
+            }
+            // Условный рендер trace-блока: чётные индексы (user) без trace, нечётные (assistant) с trace.
+            // Возвращаем null → mol_view.render() пропускает пустой child в sub-массиве.
+            Message_trace(index) {
+                if (!this.message_with_trace(index))
+                    return null;
+                return super.Message_trace(index);
             }
             trace_expanded(index, next) {
                 return next ?? false;
@@ -19789,6 +19796,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_chat.prototype, "rows", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "Message_trace", null);
         __decorate([
             $mol_mem_key
         ], $raggu_web_front_chat.prototype, "trace_expanded", null);
@@ -20040,13 +20050,6 @@ var $;
             background: { color: $bog_builderui_tokens.back },
             overflow: 'hidden',
             flex: { direction: 'column' },
-            '@': {
-                raggu_visible: {
-                    false: {
-                        display: 'none',
-                    },
-                },
-            },
         },
         Message_trace_head: {
             flex: { direction: 'row' },
