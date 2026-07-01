@@ -6695,10 +6695,19 @@ declare namespace $.$$ {
     export function tick_layout(nodes: GraphNode[], edges: GraphEdge[], positions: Record<string, {
         x: number;
         y: number;
-    }>, pinned_id: string, temp: number): Record<string, {
-        x: number;
-        y: number;
-    }>;
+    }>, velocities: Record<string, {
+        vx: number;
+        vy: number;
+    }>, pinned_id: string, damping: number): {
+        positions: Record<string, {
+            x: number;
+            y: number;
+        }>;
+        velocities: Record<string, {
+            vx: number;
+            vy: number;
+        }>;
+    };
     export function build_initial_positions(nodes: GraphNode[], _edges: GraphEdge[]): Record<string, {
         x: number;
         y: number;
@@ -6741,14 +6750,16 @@ declare namespace $.$$ {
             x: number;
             y: number;
         }>;
+        velocities: Record<string, {
+            vx: number;
+            vy: number;
+        }>;
         tick(): void;
         sim_running: boolean;
         sim_frames_left: number;
-        sim_temp: number;
-        readonly SIM_INITIAL_FRAMES = 220;
-        readonly SIM_DRAG_FRAMES = 90;
-        readonly TEMP_DECAY = 0.97;
-        start_sim(frames?: number, temp?: number): void;
+        readonly SIM_INITIAL_FRAMES = 260;
+        readonly SIM_DRAG_FRAMES = 60;
+        start_sim(frames?: number): void;
         initial_sim_started: boolean;
         dom_tree(): Element;
         node_by_id(): Record<string, GraphNode>;

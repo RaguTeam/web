@@ -3577,15 +3577,15 @@ var $;
                 for (const n of sizes) {
                     const g = build_mock(42, n, Math.round(n * 1.6));
                     const positions = {};
+                    const velocities = {};
                     for (const node of g.nodes)
                         positions[node.id] = { x: node.x, y: node.y };
                     // Warm-up
-                    tick_layout(g.nodes, g.edges, positions, '', 6);
+                    let state = tick_layout(g.nodes, g.edges, positions, velocities, '', 0.82);
                     // 10-tick avg
                     const t0 = Date.now();
-                    let p = positions;
                     for (let i = 0; i < 10; i++)
-                        p = tick_layout(g.nodes, g.edges, p, '', 6);
+                        state = tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', 0.82);
                     const tick_ms = ((Date.now() - t0) / 10).toFixed(2);
                     results.push({ n, edges: g.edges.length, tick_ms: `${tick_ms}ms` });
                 }

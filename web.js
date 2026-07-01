@@ -15083,14 +15083,13 @@ var $;
             return { nodes, edges };
         }
         $$.build_mock = build_mock;
-        const BOUND_RADIUS = 280; // Decorative boundary circle only; physics ignore it
         const FORCE_K = 60;
-        const THETA = 0.5; // Barnes-Hut opening angle. Smaller = more accurate, slower
+        const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
         const THETA2 = THETA * THETA;
         // Soft radial pull toward origin — replaces the old hard-clamp bounding circle.
         // Same idea as `gravity` in ForceAtlas2 / d3-force's forceCenter.
         // Larger → tighter cluster; smaller → looser, may drift far.
-        const GRAVITY = 0.04;
+        const GRAVITY = 0.09;
         function make_cell(x0, y0, size) {
             return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
         }
@@ -15145,10 +15144,17 @@ var $;
             for (const kid of cell.kids)
                 accumulate_repulsion(kid, id, x, y, k2, out);
         }
-        // One Fruchterman-Reingold iteration. Pure function — takes positions dict,
-        // returns updated positions. `pinned_id` (if set) stays put. Repulsion via
-        // Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
-        function tick_layout(nodes, edges, positions, pinned_id, temp) {
+        // Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
+        //   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
+        //   p[i] += v[i]  (only if |v| >= MIN_MOVE)         ← threshold cuts jitter
+        // Gives Obsidian-style feel on drag: perturbation ripples through edges
+        // and dies via damping. Distant nodes have sub-threshold velocity →
+        // freeze completely, no whole-graph shake.
+        // Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
+        const MIN_MOVE = 0.15; // sub-pixel jitter cutoff
+        const FORCE_SCALE = 0.06; // force → acceleration scale
+        const MAX_SPEED = 12; // per-tick velocity cap; prevents explosions
+        function tick_layout(nodes, edges, positions, velocities, pinned_id, damping) {
             const k = FORCE_K;
             const k2 = k * k;
             const dispX = {};
@@ -15195,27 +15201,38 @@ var $;
                 dispX[e.target] += fx;
                 dispY[e.target] += fy;
             }
-            // Gravity — soft radial pull toward origin. Replaces hard clamp so nodes
-            // don't jitter at the boundary. Equilibrium radius emerges from balance
-            // between this and repulsion.
+            // Gravity — soft radial pull toward origin
             for (const n of nodes) {
                 const p = positions[n.id];
                 dispX[n.id] -= p.x * GRAVITY * k;
                 dispY[n.id] -= p.y * GRAVITY * k;
             }
-            // Apply displacement capped by temperature. Pinned node stays put.
-            const result = {};
+            // Integrate: velocities accumulate + damp; position moves only if v ≥ threshold
+            const next_pos = {};
+            const next_vel = {};
             for (const n of nodes) {
                 if (n.id === pinned_id) {
-                    result[n.id] = positions[n.id];
+                    next_pos[n.id] = positions[n.id];
+                    next_vel[n.id] = { vx: 0, vy: 0 };
                     continue;
                 }
-                const dlen = Math.sqrt(dispX[n.id] ** 2 + dispY[n.id] ** 2) || 0.01;
-                const x = positions[n.id].x + (dispX[n.id] / dlen) * Math.min(dlen, temp);
-                const y = positions[n.id].y + (dispY[n.id] / dlen) * Math.min(dlen, temp);
-                result[n.id] = { x, y };
+                const prev = velocities[n.id] || { vx: 0, vy: 0 };
+                let vx = (prev.vx + dispX[n.id] * FORCE_SCALE) * damping;
+                let vy = (prev.vy + dispY[n.id] * FORCE_SCALE) * damping;
+                const speed = Math.sqrt(vx * vx + vy * vy);
+                if (speed > MAX_SPEED) {
+                    vx = vx * MAX_SPEED / speed;
+                    vy = vy * MAX_SPEED / speed;
+                }
+                if (Math.abs(vx) < MIN_MOVE && Math.abs(vy) < MIN_MOVE) {
+                    next_pos[n.id] = positions[n.id];
+                    next_vel[n.id] = { vx: 0, vy: 0 };
+                    continue;
+                }
+                next_pos[n.id] = { x: positions[n.id].x + vx, y: positions[n.id].y + vy };
+                next_vel[n.id] = { vx, vy };
             }
-            return result;
+            return { positions: next_pos, velocities: next_vel };
         }
         $$.tick_layout = tick_layout;
         // Initial random positions from mock — no synchronous FR pre-compute.
@@ -15397,27 +15414,28 @@ var $;
                 }
                 return p;
             }
-            // One sim tick — called from the RAF loop while dragging or in cooldown.
-            // Uses live sim_temp so graph cools down to imperceptible jitter and stops.
+            // Per-node velocity — the state that makes drags ripple through edges
+            // then die via damping instead of shaking the whole graph each frame.
+            velocities = {};
+            // One sim tick. Damping controls how fast momentum bleeds off:
+            //   0.6 → aggressive (settles fast, less overshoot)
+            //   0.85 → springy (Obsidian-ish feel)
             tick() {
                 const positions = this.ensure_positions();
-                const next = tick_layout(this.nodes(), this.edges(), positions, this.drag_id(), this.sim_temp);
-                this.positions(next);
+                const next = tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), 0.82);
+                this.velocities = next.velocities;
+                this.positions(next.positions);
             }
             // Continuous simulation loop driven by requestAnimationFrame.
-            // Two modes:
-            //   - Initial spring-in: 220 frames, temp 40 → ~0.05 (imperceptible, sim stops)
-            //   - Drag settle:       90 frames, temp 10 → ~0.5 (barely visible)
-            // While user drags, cooldown is re-armed each frame so neighbors keep settling.
+            // Runs until frame budget exhausted AND no drag is active. While the
+            // user is dragging, budget is re-armed each frame so neighbors keep
+            // settling smoothly around the moved node.
             sim_running = false;
             sim_frames_left = 0;
-            sim_temp = 0;
-            SIM_INITIAL_FRAMES = 220;
-            SIM_DRAG_FRAMES = 90;
-            TEMP_DECAY = 0.97;
-            start_sim(frames = this.SIM_DRAG_FRAMES, temp = 10) {
+            SIM_INITIAL_FRAMES = 260;
+            SIM_DRAG_FRAMES = 60;
+            start_sim(frames = this.SIM_DRAG_FRAMES) {
                 this.sim_frames_left = Math.max(this.sim_frames_left, frames);
-                this.sim_temp = Math.max(this.sim_temp, temp);
                 if (this.sim_running)
                     return;
                 if (typeof window === 'undefined')
@@ -15430,7 +15448,6 @@ var $;
                         this.tick();
                     }
                     catch { }
-                    this.sim_temp *= this.TEMP_DECAY;
                     if (this.drag_id()) {
                         this.sim_frames_left = Math.max(this.sim_frames_left, this.SIM_DRAG_FRAMES);
                     }
@@ -15449,7 +15466,7 @@ var $;
                 const tree = super.dom_tree();
                 if (!this.initial_sim_started) {
                     this.initial_sim_started = true;
-                    this.start_sim(this.SIM_INITIAL_FRAMES, 40);
+                    this.start_sim(this.SIM_INITIAL_FRAMES);
                 }
                 return tree;
             }
