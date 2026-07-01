@@ -1579,7 +1579,7 @@ $raggu_web_front_chat $bog_builderui_div
 	mock_prefix_text @ \Thanks for the question:
 	mock_suffix_text @ \(Mock response. Real retrieval will be wired to the backend.)
 	clear_text @ \Clear
-	mode_llm_text @ \LLM
+	mode_llm_text @ \$Mol LLM
 	mode_local_text @ \LocalSearch
 	mode_global_text @ \Global
 	mode_mix_text @ \Mix

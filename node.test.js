@@ -19573,7 +19573,14 @@ var $;
             select_mix() { this.mode('mix'); return null; }
             select_plan() { this.mode('plan'); return null; }
             llm() {
-                return $mol_github_model.make({ $: this.$ });
+                // GitHub Models API forces response_format: json_object и требует чтобы
+                // слово "json" присутствовало в messages — иначе 400 Bad Request.
+                // Инструктируем модель отвечать одним JSON-полем reply, чтобы потом
+                // вытащить чистый текст.
+                return $mol_github_model.make({
+                    $: this.$,
+                    rules: () => 'Ты русскоязычный чат-ассистент. Отвечай ВСЕГДА строго валидным JSON вида {"reply": "<твой ответ обычным текстом>"}. Никаких других полей, никаких префиксов, только этот JSON.',
+                });
             }
             rows() {
                 return this.history().map((_, i) => this.Message(i));
@@ -19629,7 +19636,8 @@ var $;
                 const model = this.llm().fork();
                 model.ask([text]);
                 const resp = model.response();
-                const reply = typeof resp === 'string' ? resp : JSON.stringify(resp, null, 2);
+                const reply = typeof resp === 'string' ? resp
+                    : resp?.reply ?? JSON.stringify(resp, null, 2);
                 this.history([...this.history(), { role: 'assistant', text: reply }]);
                 return null;
             }
