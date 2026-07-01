@@ -3758,12 +3758,12 @@ var $;
                 $mol_assert_equal(v.Metric_rows().sub().length, 3);
                 $mol_assert_equal(v.Stage_rows().sub().length, 5);
             },
-            'gallery: 6 dataset cards render'($) {
+            'gallery: BUILTIN mock renders one card (law)'($) {
                 // No live backend in node tests → force ?mock=1 so remote_datasets returns null
                 // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
                 $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_gallery.make({ $ });
-                $mol_assert_equal(v.Grid().sub().length, 6);
+                $mol_assert_equal(v.Grid().sub().length, 1);
             },
             'url state: screen / preset / dataset_id round-trip through $mol_state_arg'($) {
                 const app = $raggu_web_front_app.make({ $ });
@@ -3792,12 +3792,12 @@ var $;
             'e2e: full user flow through all screens'($) {
                 $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
-                // initial: gallery screen, 6 dataset cards
+                // initial: gallery screen, BUILTIN mock has just one card (law)
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.body()[0], app.Gallery());
-                $mol_assert_equal(app.Gallery().Grid().sub().length, 6);
+                $mol_assert_equal(app.Gallery().Grid().sub().length, 1);
                 // user picks dataset first — иначе body() держит Gallery
-                app.dataset_id('wiki');
+                app.dataset_id('law');
                 // user clicks "Граф" in sidebar → explorer
                 app.Sidebar().click_explorer();
                 $mol_assert_equal(app.screen(), 'explorer');
@@ -3859,11 +3859,11 @@ var $;
                 $.$mol_state_arg.value('mock', '1');
                 const g = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(g.extra_datasets().length, 0);
-                $mol_assert_equal(g.datasets().length, 6);
+                $mol_assert_equal(g.datasets().length, 1);
                 g.start_upload('document');
                 g.upload_complete();
                 $mol_assert_equal(g.extra_datasets().length, 1);
-                $mol_assert_equal(g.datasets().length, 7);
+                $mol_assert_equal(g.datasets().length, 2);
                 $mol_assert_equal(g.upload_showed(), false);
                 $mol_assert_equal(g.upload_kind(), '');
             },

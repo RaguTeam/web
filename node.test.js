@@ -6882,12 +6882,9 @@ var $;
 			(obj.sub) = () => ([(this.corpus_label_text())]);
 			return obj;
 		}
-		dataset_name(){
-			return "";
-		}
 		Corpus_name(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.dataset_name())]);
+			(obj.sub) = () => ([(this.dataset_title())]);
 			return obj;
 		}
 		Corpus_meta(){
@@ -6964,6 +6961,9 @@ var $;
 		dataset_id(){
 			return "wiki";
 		}
+		dataset_title(){
+			return "";
+		}
 		Theme_auto(){
 			const obj = new this.$.$bog_theme_auto();
 			return obj;
@@ -7032,9 +7032,6 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_sidebar extends $.$raggu_web_front_sidebar {
-            dataset_name() {
-                return this.$.$mol_locale.text(`$raggu_web_front_app_dataset_${this.dataset_id()}_title`) || '';
-            }
             is_gallery() { return this.screen() === 'gallery'; }
             is_explorer() { return this.screen() === 'explorer'; }
             is_chat() { return this.screen() === 'chat'; }
@@ -12046,20 +12043,14 @@ ${CHAT.answer}
 
 ;
 	($.$raggu_web_front_topbar) = class $raggu_web_front_topbar extends ($.$bog_builderui_div) {
-		screen_title(){
-			return "";
-		}
 		Title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.screen_title())]);
 			return obj;
 		}
-		dataset_name(){
-			return "";
-		}
 		Subtitle(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.dataset_name())]);
+			(obj.sub) = () => ([(this.dataset_title())]);
 			return obj;
 		}
 		Title_block(){
@@ -12148,6 +12139,12 @@ ${CHAT.answer}
 		dataset_id(){
 			return "wiki";
 		}
+		dataset_title(){
+			return "";
+		}
+		screen_title(){
+			return "";
+		}
 		preset(next){
 			if(next !== undefined) return next;
 			return "demo";
@@ -12207,12 +12204,6 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
-            screen_title() {
-                return this.$.$mol_locale.text(`$raggu_web_front_app_screen_${this.screen()}_title`) || '';
-            }
-            dataset_name() {
-                return this.$.$mol_locale.text(`$raggu_web_front_app_dataset_${this.dataset_id()}_title`) || '';
-            }
             is_fast() { return this.preset() === 'fast'; }
             is_accurate() { return this.preset() === 'accurate'; }
             is_demo() { return this.preset() === 'demo'; }
@@ -14709,6 +14700,15 @@ var $;
 		uploaded_desc(){
 			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_desc"));
 		}
+		dataset_law_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_title"));
+		}
+		dataset_law_domain(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_domain"));
+		}
+		dataset_law_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_desc"));
+		}
 		sub(){
 			return [
 				(this.Header()), 
@@ -15160,13 +15160,10 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        // Только один статичный мок — на нём показываем схему локализации через view.tree @.
+        // Реальные датасеты приходят с бэка через remote_datasets и несут dynamic-строки.
         const BUILTIN = [
             { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
-            { id: 'un', nodes: '9.1k', edges: '27k', comms: '96' },
-            { id: 'papers', nodes: '1.2k', edges: '3.4k', comms: '24' },
-            { id: 'medical', nodes: '6.7k', edges: '19k', comms: '71' },
-            { id: 'wiki', nodes: '2.4k', edges: '7.1k', comms: '38' },
-            { id: 'own', nodes: '—', edges: '—', comms: '—' },
         ];
         function format_count(n) {
             if (n >= 1000) {
@@ -15218,22 +15215,33 @@ var $;
             dataset(id) {
                 return this.datasets().find(d => d.id === id) ?? BUILTIN[0];
             }
-            dataset_text(id, suffix) {
-                return this.$.$mol_locale.text(`$raggu_web_front_app_dataset_${id}_${suffix}`) || '';
-            }
             card_id(id) { return id; }
             card_active(id) { return id === this.dataset_id(); }
+            // Бэк-датасеты кладут title/domain/desc в dynamic — рендерим напрямую.
+            // Единственный мок 'law' резолвится через @-объявленные строки view.tree.
             card_title(id) {
                 const ds = this.dataset(id);
-                return ds.dynamic?.title ?? this.dataset_text(id, 'title');
+                if (ds.dynamic)
+                    return ds.dynamic.title;
+                if (id === 'law')
+                    return this.dataset_law_title();
+                return '';
             }
             card_domain(id) {
                 const ds = this.dataset(id);
-                return ds.dynamic?.domain ?? this.dataset_text(id, 'domain');
+                if (ds.dynamic)
+                    return ds.dynamic.domain;
+                if (id === 'law')
+                    return this.dataset_law_domain();
+                return '';
             }
             card_desc(id) {
                 const ds = this.dataset(id);
-                return ds.dynamic?.desc ?? this.dataset_text(id, 'desc');
+                if (ds.dynamic)
+                    return ds.dynamic.desc;
+                if (id === 'law')
+                    return this.dataset_law_desc();
+                return '';
             }
             card_nodes(id) { return this.dataset(id).nodes; }
             card_edges(id) { return this.dataset(id).edges; }
@@ -20556,12 +20564,19 @@ var $;
 			const obj = new this.$.$bog_theme_auto();
 			return obj;
 		}
+		dataset_title(){
+			return "";
+		}
 		Sidebar(){
 			const obj = new this.$.$raggu_web_front_sidebar();
 			(obj.screen) = (next) => ((this.screen(next)));
 			(obj.dataset_id) = () => ((this.dataset_id()));
+			(obj.dataset_title) = () => ((this.dataset_title()));
 			(obj.Theme_auto) = () => ((this.Theme_auto()));
 			return obj;
+		}
+		screen_title(){
+			return "";
 		}
 		open_settings(next){
 			if(next !== undefined) return next;
@@ -20571,6 +20586,8 @@ var $;
 			const obj = new this.$.$raggu_web_front_topbar();
 			(obj.screen) = () => ((this.screen()));
 			(obj.dataset_id) = () => ((this.dataset_id()));
+			(obj.dataset_title) = () => ((this.dataset_title()));
+			(obj.screen_title) = () => ((this.screen_title()));
 			(obj.preset) = (next) => ((this.preset(next)));
 			(obj.open_settings) = (next) => ((this.open_settings(next)));
 			return obj;
@@ -20619,6 +20636,18 @@ var $;
 		}
 		lights_mode(){
 			return "light";
+		}
+		screen_gallery_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_gallery_title"));
+		}
+		screen_explorer_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_explorer_title"));
+		}
+		screen_chat_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_chat_title"));
+		}
+		screen_dashboard_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_dashboard_title"));
 		}
 		attr(){
 			return {
@@ -20720,6 +20749,21 @@ var $;
             ask_chat() {
                 this.screen('chat');
                 return null;
+            }
+            screen_title() {
+                switch (this.screen()) {
+                    case 'gallery': return this.screen_gallery_title();
+                    case 'explorer': return this.screen_explorer_title();
+                    case 'chat': return this.screen_chat_title();
+                    case 'dashboard': return this.screen_dashboard_title();
+                }
+                return '';
+            }
+            dataset_title() {
+                const id = this.dataset_id();
+                if (!id)
+                    return '';
+                return this.Gallery().card_title(id);
             }
             arg_value(key, next, fallback) {
                 const arg = this.$.$mol_state_arg;
@@ -24825,12 +24869,12 @@ var $;
                 $mol_assert_equal(v.Metric_rows().sub().length, 3);
                 $mol_assert_equal(v.Stage_rows().sub().length, 5);
             },
-            'gallery: 6 dataset cards render'($) {
+            'gallery: BUILTIN mock renders one card (law)'($) {
                 // No live backend in node tests → force ?mock=1 so remote_datasets returns null
                 // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
                 $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_gallery.make({ $ });
-                $mol_assert_equal(v.Grid().sub().length, 6);
+                $mol_assert_equal(v.Grid().sub().length, 1);
             },
             'url state: screen / preset / dataset_id round-trip through $mol_state_arg'($) {
                 const app = $raggu_web_front_app.make({ $ });
@@ -24859,12 +24903,12 @@ var $;
             'e2e: full user flow through all screens'($) {
                 $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
-                // initial: gallery screen, 6 dataset cards
+                // initial: gallery screen, BUILTIN mock has just one card (law)
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.body()[0], app.Gallery());
-                $mol_assert_equal(app.Gallery().Grid().sub().length, 6);
+                $mol_assert_equal(app.Gallery().Grid().sub().length, 1);
                 // user picks dataset first — иначе body() держит Gallery
-                app.dataset_id('wiki');
+                app.dataset_id('law');
                 // user clicks "Граф" in sidebar → explorer
                 app.Sidebar().click_explorer();
                 $mol_assert_equal(app.screen(), 'explorer');
@@ -24926,11 +24970,11 @@ var $;
                 $.$mol_state_arg.value('mock', '1');
                 const g = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(g.extra_datasets().length, 0);
-                $mol_assert_equal(g.datasets().length, 6);
+                $mol_assert_equal(g.datasets().length, 1);
                 g.start_upload('document');
                 g.upload_complete();
                 $mol_assert_equal(g.extra_datasets().length, 1);
-                $mol_assert_equal(g.datasets().length, 7);
+                $mol_assert_equal(g.datasets().length, 2);
                 $mol_assert_equal(g.upload_showed(), false);
                 $mol_assert_equal(g.upload_kind(), '');
             },

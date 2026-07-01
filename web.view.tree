@@ -144,6 +144,7 @@ $raggu_web_front_sidebar_lang $bog_builderui_div
 $raggu_web_front_sidebar $bog_builderui_div
 	screen? \gallery
 	dataset_id \wiki
+	dataset_title \
 	Theme_auto $bog_theme_auto
 	sections_label_text @ \Sections
 	corpus_label_text @ \Active corpus
@@ -183,7 +184,7 @@ $raggu_web_front_sidebar $bog_builderui_div
 		<= Footer $bog_builderui_div sub /
 			<= Corpus_label $bog_builderui_div sub / <= corpus_label_text
 			<= Corpus_card $bog_builderui_div sub /
-				<= Corpus_name $bog_builderui_div sub / <= dataset_name \
+				<= Corpus_name $bog_builderui_div sub / <= dataset_title
 				<= Corpus_meta $bog_builderui_div sub / <= corpus_meta_text
 			<= Lang_row $bog_builderui_div sub /
 				<= Theme_switch $bog_theme_switch
@@ -790,6 +791,8 @@ $raggu_web_front_export $mol_pop
 $raggu_web_front_topbar $bog_builderui_div
 	screen \gallery
 	dataset_id \wiki
+	dataset_title \
+	screen_title \
 	preset? \demo
 	open_settings? null
 	preset_label_text @ \Preset
@@ -799,8 +802,8 @@ $raggu_web_front_topbar $bog_builderui_div
 	preset_demo_label @ \🎬 Demo
 	sub /
 		<= Title_block $bog_builderui_div sub /
-			<= Title $bog_builderui_div sub / <= screen_title \
-			<= Subtitle $bog_builderui_div sub / <= dataset_name \
+			<= Title $bog_builderui_div sub / <= screen_title
+			<= Subtitle $bog_builderui_div sub / <= dataset_title
 		<= Spacer $bog_builderui_div
 		<= Preset_label $bog_builderui_div sub / <= preset_label_text
 		<= Preset_group $bog_builderui_div sub /
@@ -1165,6 +1168,9 @@ $raggu_web_front_gallery $bog_builderui_div
 	uploaded_index_title @ \Uploaded index
 	uploaded_domain @ \User upload
 	uploaded_desc @ \Mock dataset built by the demo indexing pipeline.
+	dataset_law_title @ \Russian Codes & Laws
+	dataset_law_domain @ \Law
+	dataset_law_desc @ \Network of norms, references, bodies and concepts of Russian law.
 	sub /
 		<= Header $bog_builderui_div sub /
 			<= Header_text $bog_builderui_div sub /
@@ -1780,6 +1786,10 @@ $raggu_web_front_app $bog_builderui_div
 	settings_open? false
 	body /
 	lights_mode \light
+	screen_gallery_title @ \Datasets
+	screen_explorer_title @ \Knowledge graph
+	screen_chat_title @ \Chat with agent
+	screen_dashboard_title @ \Dashboard
 	attr *
 		^
 		bog_builderui_lights <= lights_mode
@@ -1797,11 +1807,14 @@ $raggu_web_front_app $bog_builderui_div
 		<= Sidebar $raggu_web_front_sidebar
 			screen? <=> screen?
 			dataset_id <= dataset_id
+			dataset_title <= dataset_title \
 			Theme_auto <= Theme_auto
 		<= Main $bog_builderui_div sub /
 			<= Topbar $raggu_web_front_topbar
 				screen <= screen
 				dataset_id <= dataset_id
+				dataset_title <= dataset_title \
+				screen_title <= screen_title \
 				preset? <=> preset?
 				open_settings? <=> open_settings? null
 			<= Body $mol_scroll sub <= body

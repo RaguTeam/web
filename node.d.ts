@@ -2881,7 +2881,6 @@ declare namespace $ {
 		Nav( ): $bog_builderui_div
 		Spacer( ): $bog_builderui_div
 		Corpus_label( ): $bog_builderui_div
-		dataset_name( ): string
 		Corpus_name( ): $bog_builderui_div
 		Corpus_meta( ): $bog_builderui_div
 		Corpus_card( ): $bog_builderui_div
@@ -2897,6 +2896,7 @@ declare namespace $ {
 		Footer( ): $bog_builderui_div
 		screen( next?: string ): string
 		dataset_id( ): string
+		dataset_title( ): string
 		Theme_auto( ): $bog_theme_auto
 		sections_label_text( ): string
 		corpus_label_text( ): string
@@ -2910,7 +2910,6 @@ declare namespace $ {
 //# sourceMappingURL=sidebar.view.tree.d.ts.map
 declare namespace $.$$ {
     class $raggu_web_front_sidebar extends $.$raggu_web_front_sidebar {
-        dataset_name(): string;
         is_gallery(): boolean;
         is_explorer(): boolean;
         is_chat(): boolean;
@@ -5040,9 +5039,7 @@ declare namespace $ {
 		ReturnType< $raggu_web_front_export['screen'] >
 	>
 	export class $raggu_web_front_topbar extends $bog_builderui_div {
-		screen_title( ): string
 		Title( ): $bog_builderui_div
-		dataset_name( ): string
 		Subtitle( ): $bog_builderui_div
 		Title_block( ): $bog_builderui_div
 		Spacer( ): $bog_builderui_div
@@ -5062,6 +5059,8 @@ declare namespace $ {
 		Export( ): $raggu_web_front_export
 		screen( ): string
 		dataset_id( ): string
+		dataset_title( ): string
+		screen_title( ): string
 		preset( next?: string ): string
 		preset_label_text( ): string
 		settings_btn_text( ): string
@@ -5076,8 +5075,6 @@ declare namespace $ {
 //# sourceMappingURL=topbar.view.tree.d.ts.map
 declare namespace $.$$ {
     class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
-        screen_title(): string;
-        dataset_name(): string;
         is_fast(): boolean;
         is_accurate(): boolean;
         is_demo(): boolean;
@@ -7895,6 +7892,9 @@ declare namespace $ {
 		uploaded_index_title( ): string
 		uploaded_domain( ): string
 		uploaded_desc( ): string
+		dataset_law_title( ): string
+		dataset_law_domain( ): string
+		dataset_law_desc( ): string
 		sub( ): readonly(any)[]
 	}
 	
@@ -7921,7 +7921,6 @@ declare namespace $.$$ {
         datasets(): DatasetStats[];
         rows(): $.$raggu_web_front_gallery_card[];
         dataset(id: string): DatasetStats;
-        dataset_text(id: string, suffix: string): string;
         card_id(id: string): string;
         card_active(id: string): boolean;
         card_title(id: string): string;
@@ -10351,62 +10350,77 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_sidebar['dataset_id'] >
 	>
-	type $raggu_web_front_sidebar__Theme_auto_raggu_web_front_app_4 = $mol_type_enforce<
+	type $raggu_web_front_sidebar__dataset_title_raggu_web_front_app_4 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['dataset_title'] >
+		,
+		ReturnType< $raggu_web_front_sidebar['dataset_title'] >
+	>
+	type $raggu_web_front_sidebar__Theme_auto_raggu_web_front_app_5 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['Theme_auto'] >
 		,
 		ReturnType< $raggu_web_front_sidebar['Theme_auto'] >
 	>
-	type $raggu_web_front_topbar__screen_raggu_web_front_app_5 = $mol_type_enforce<
+	type $raggu_web_front_topbar__screen_raggu_web_front_app_6 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['screen'] >
 		,
 		ReturnType< $raggu_web_front_topbar['screen'] >
 	>
-	type $raggu_web_front_topbar__dataset_id_raggu_web_front_app_6 = $mol_type_enforce<
+	type $raggu_web_front_topbar__dataset_id_raggu_web_front_app_7 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_front_topbar['dataset_id'] >
 	>
-	type $raggu_web_front_topbar__preset_raggu_web_front_app_7 = $mol_type_enforce<
+	type $raggu_web_front_topbar__dataset_title_raggu_web_front_app_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['dataset_title'] >
+		,
+		ReturnType< $raggu_web_front_topbar['dataset_title'] >
+	>
+	type $raggu_web_front_topbar__screen_title_raggu_web_front_app_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['screen_title'] >
+		,
+		ReturnType< $raggu_web_front_topbar['screen_title'] >
+	>
+	type $raggu_web_front_topbar__preset_raggu_web_front_app_10 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['preset'] >
 		,
 		ReturnType< $raggu_web_front_topbar['preset'] >
 	>
-	type $raggu_web_front_topbar__open_settings_raggu_web_front_app_8 = $mol_type_enforce<
+	type $raggu_web_front_topbar__open_settings_raggu_web_front_app_11 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['open_settings'] >
 		,
 		ReturnType< $raggu_web_front_topbar['open_settings'] >
 	>
-	type $mol_scroll__sub_raggu_web_front_app_9 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_front_app_12 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['body'] >
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_app_10 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_app_13 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $raggu_web_front_settings__showed_raggu_web_front_app_11 = $mol_type_enforce<
+	type $raggu_web_front_settings__showed_raggu_web_front_app_14 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['settings_open'] >
 		,
 		ReturnType< $raggu_web_front_settings['showed'] >
 	>
-	type $raggu_web_front_gallery__dataset_id_raggu_web_front_app_12 = $mol_type_enforce<
+	type $raggu_web_front_gallery__dataset_id_raggu_web_front_app_15 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_front_gallery['dataset_id'] >
 	>
-	type $raggu_web_front_gallery__select_dataset_raggu_web_front_app_13 = $mol_type_enforce<
+	type $raggu_web_front_gallery__select_dataset_raggu_web_front_app_16 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['select_dataset'] >
 		,
 		ReturnType< $raggu_web_front_gallery['select_dataset'] >
 	>
-	type $raggu_web_front_explorer__dataset_id_raggu_web_front_app_14 = $mol_type_enforce<
+	type $raggu_web_front_explorer__dataset_id_raggu_web_front_app_17 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_front_explorer['dataset_id'] >
 	>
-	type $raggu_web_front_explorer__ask_click_raggu_web_front_app_15 = $mol_type_enforce<
+	type $raggu_web_front_explorer__ask_click_raggu_web_front_app_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['ask_chat'] >
 		,
 		ReturnType< $raggu_web_front_explorer['ask_click'] >
@@ -10415,7 +10429,9 @@ declare namespace $ {
 		favicon_icon( ): $mol_icon_graph
 		Favicon( ): $bog_favicon
 		Theme_auto( ): $bog_theme_auto
+		dataset_title( ): string
 		Sidebar( ): $raggu_web_front_sidebar
+		screen_title( ): string
 		open_settings( next?: any ): any
 		Topbar( ): $raggu_web_front_topbar
 		Body( ): $mol_scroll
@@ -10429,6 +10445,10 @@ declare namespace $ {
 		settings_open( next?: boolean ): boolean
 		body( ): readonly(any)[]
 		lights_mode( ): string
+		screen_gallery_title( ): string
+		screen_explorer_title( ): string
+		screen_chat_title( ): string
+		screen_dashboard_title( ): string
 		attr( ): ({ 
 			'bog_builderui_lights': ReturnType< $raggu_web_front_app['lights_mode'] >,
 			'bog_builderui_base': string,
@@ -10456,6 +10476,8 @@ declare namespace $.$$ {
         open_settings(): null;
         select_dataset(id: string): null;
         ask_chat(): null;
+        screen_title(): string;
+        dataset_title(): string;
         arg_value(key: string, next: string | undefined, fallback: string): string;
         screen(next?: string): string;
         preset(next?: string): string;
