@@ -15572,9 +15572,18 @@ var $;
         // and dies via damping. Distant nodes have sub-threshold velocity →
         // freeze completely, no whole-graph shake.
         // Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
-        const MIN_MOVE = 0.15; // sub-pixel jitter cutoff
+        const MIN_MOVE = 0.15; // where the soft freeze gate reaches ~half
         const FORCE_SCALE = 0.06; // force → acceleration scale
-        const MAX_SPEED = 12; // per-tick velocity cap; prevents explosions
+        const MAX_SPEED = 12; // soft velocity ceiling (tanh saturation)
+        // Hermite smoothstep — C¹ continuous ramp from 0 at `a` to 1 at `b`.
+        function smoothstep(a, b, x) {
+            if (x <= a)
+                return 0;
+            if (x >= b)
+                return 1;
+            const t = (x - a) / (b - a);
+            return t * t * (3 - 2 * t);
+        }
         function tick_layout(nodes, edges, positions, velocities, pinned_id, damping) {
             const k = FORCE_K;
             const k2 = k * k;
@@ -15628,7 +15637,9 @@ var $;
                 dispX[n.id] -= p.x * GRAVITY * k;
                 dispY[n.id] -= p.y * GRAVITY * k;
             }
-            // Integrate: velocities accumulate + damp; position moves only if v ≥ threshold
+            // Integrate: velocities accumulate + damp; position moves via smooth freeze gate.
+            // No hard cutoffs — both the speed ceiling and freeze use C¹-continuous ramps
+            // so nodes decelerate/stop imperceptibly instead of snapping.
             const next_pos = {};
             const next_vel = {};
             for (const n of nodes) {
@@ -15641,16 +15652,18 @@ var $;
                 let vx = (prev.vx + dispX[n.id] * FORCE_SCALE) * damping;
                 let vy = (prev.vy + dispY[n.id] * FORCE_SCALE) * damping;
                 const speed = Math.sqrt(vx * vx + vy * vy);
-                if (speed > MAX_SPEED) {
-                    vx = vx * MAX_SPEED / speed;
-                    vy = vy * MAX_SPEED / speed;
+                // Soft speed cap: tanh saturation. Below cap almost no effect,
+                // above cap velocity asymptotically bounded to MAX_SPEED.
+                if (speed > 0) {
+                    const cap_scale = MAX_SPEED * Math.tanh(speed / MAX_SPEED) / speed;
+                    vx *= cap_scale;
+                    vy *= cap_scale;
                 }
-                if (Math.abs(vx) < MIN_MOVE && Math.abs(vy) < MIN_MOVE) {
-                    next_pos[n.id] = positions[n.id];
-                    next_vel[n.id] = { vx: 0, vy: 0 };
-                    continue;
-                }
-                next_pos[n.id] = { x: positions[n.id].x + vx, y: positions[n.id].y + vy };
+                // Soft freeze gate: position change fades smoothly to zero as velocity
+                // drops below MIN_MOVE. No visual snap-to-stop. Velocity itself
+                // keeps damping toward zero so eventually gate*v goes to zero too.
+                const gate = smoothstep(MIN_MOVE * 0.3, MIN_MOVE * 1.5, speed);
+                next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
                 next_vel[n.id] = { vx, vy };
             }
             return { positions: next_pos, velocities: next_vel };
@@ -15686,12 +15699,14 @@ var $;
                 const y = -size / 2 + this.pan_y();
                 return `${x} ${y} ${size} ${size}`;
             }
-            // Mouse-wheel zoom centered on viewport
+            // Wheel / trackpad-pinch zoom.
+            // Uses exp( -deltaY × sensitivity ) so many small deltaY events (trackpad
+            // pinch) compose smoothly instead of stacking as 10% discrete jumps.
             wheel(event) {
                 if (!event)
                     return;
                 event.preventDefault();
-                const factor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
+                const factor = Math.exp(-event.deltaY * 0.005);
                 this.zoom(this.zoom() * factor);
             }
             // Last pointer position (in client/screen pixels). Used by BOTH pan and node-drag
