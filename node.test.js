@@ -15401,6 +15401,12 @@ var $;
 		max_speed(){
 			return +12;
 		}
+		node_size_base(){
+			return +4;
+		}
+		node_size_growth(){
+			return +0.7;
+		}
 		event(){
 			return {
 				...(super.event()), 
@@ -15845,12 +15851,15 @@ var $;
             initial_positions() {
                 return build_initial_positions(this.nodes(), this.edges());
             }
-            // Called by pan_start / tick_layout to make sure positions cell is populated
-            // before we start mutating it live.
+            // Seed positions on first read, or re-seed when the node set changes
+            // ( e.g. graph_n slider moved ) — old cell may still hold coords for a
+            // different number of nodes.
             ensure_positions() {
                 let p = this.positions();
-                if (Object.keys(p).length === 0) {
+                const nodes = this.nodes();
+                if (Object.keys(p).length !== nodes.length) {
                     p = { ...this.initial_positions() };
+                    this.velocities = {};
                     this.positions(p);
                 }
                 return p;
@@ -15909,9 +15918,25 @@ var $;
                 };
                 requestAnimationFrame(loop);
             }
+            // Reactive kick — reading every tunable param here means the mem cell
+            // invalidates whenever any of them changes. dom_tree reads it below,
+            // so slider tweaks (and graph_n rebuilds) restart the sim automatically.
+            params_kick() {
+                // Register deps on all sim inputs
+                this.gravity();
+                this.force_scale();
+                this.damping();
+                this.min_move();
+                this.max_speed();
+                this.graph_n();
+                // Idempotent: re-arms frame budget; starts loop if it was stopped
+                this.start_sim(this.SIM_DRAG_FRAMES);
+                return null;
+            }
             // Kick off the initial spring-in exactly once, on first mount.
             initial_sim_started = false;
             dom_tree() {
+                this.params_kick();
                 const tree = super.dom_tree();
                 if (!this.initial_sim_started) {
                     this.initial_sim_started = true;
@@ -15944,9 +15969,14 @@ var $;
             // Node accessors (keyed) — return strings, SVG attrs expect string
             node_x(id) { return String(this.pos(id).x); }
             node_y(id) { return String(this.pos(id).y); }
-            node_radius(id) {
+            // radius = base + growth * degree. Both configurable, no upper cap
+            // so heavily-connected nodes visually dominate.
+            node_radius_num(id) {
                 const n = this.node_by_id()[id];
-                return String(4 + Math.min(n.degree, 10) * 0.7);
+                return this.node_size_base() + this.node_size_growth() * n.degree;
+            }
+            node_radius(id) {
+                return String(this.node_radius_num(id));
             }
             node_color(id) { return TYPE_COLOR[this.node_by_id()[id].type]; }
             node_stroke(id) {
@@ -16045,8 +16075,7 @@ var $;
                 const id = this.active_id();
                 if (!id)
                     return { x: 0, y: 0, r: 0 };
-                const r = 4 + Math.min(this.node_by_id()[id].degree, 10) * 0.7;
-                return { x: this.pos(id).x, y: this.pos(id).y, r };
+                return { x: this.pos(id).x, y: this.pos(id).y, r: this.node_radius_num(id) };
             }
             tooltip_x() {
                 return String(this.tooltip_anchor().x);
@@ -16123,6 +16152,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "tick", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "params_kick", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "dom_tree", null);

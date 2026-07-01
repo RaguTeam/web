@@ -6663,6 +6663,8 @@ declare namespace $ {
 		damping( ): number
 		min_move( ): number
 		max_speed( ): number
+		node_size_base( ): number
+		node_size_growth( ): number
 		event( ): ({ 
 			wheel( next?: ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] >,
 			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] >,
@@ -6774,6 +6776,7 @@ declare namespace $.$$ {
         readonly SIM_INITIAL_FRAMES = 260;
         readonly SIM_DRAG_FRAMES = 60;
         start_sim(frames?: number): void;
+        params_kick(): null;
         initial_sim_started: boolean;
         dom_tree(): Element;
         node_by_id(): Record<string, GraphNode>;
@@ -6783,6 +6786,7 @@ declare namespace $.$$ {
         node_id(id: string): string;
         node_x(id: string): string;
         node_y(id: string): string;
+        node_radius_num(id: string): number;
         node_radius(id: string): string;
         node_color(id: string): string;
         node_stroke(id: string): "#ffffff" | "transparent";

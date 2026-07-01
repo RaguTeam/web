@@ -1238,6 +1238,8 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	damping +0.82
 	min_move +0.15
 	max_speed +12
+	node_size_base +4
+	node_size_growth +0.7
 	event *
 		^
 		wheel?event <=> wheel?event null
