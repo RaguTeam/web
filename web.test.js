@@ -3404,41 +3404,45 @@ var $;
                 $mol_assert_equal(p.y, n.y);
             },
             // THE bug from user: 1-pixel pointer move ⇒ node travels exactly 1 pixel.
-            // If the math is broken, the node "flies" elsewhere.
             'drag below threshold: node does NOT move (treated as pending click)'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
                 stub_svg(g);
+                g.sim_running = true; // block start_sim's RAF loop from firing
                 const n = g.nodes()[7];
-                const x0 = n.x, y0 = n.y;
-                g.pan_start(pe(x0 + 5, y0 + 5, node_target(n.id)));
-                g.pan_move(pe(x0 + 5, y0 + 6)); // 1px < threshold
+                g.pan_start(pe(0, 0, node_target(n.id)));
+                // Pin to origin to avoid layout-seeded position interfering
+                g.positions({ ...g.positions(), [n.id]: { x: 0, y: 0 } });
+                g.pan_move(pe(0, 1)); // 1px < threshold
                 const p = g.pos(n.id);
-                $mol_assert_equal(p.x, x0);
-                $mol_assert_equal(p.y, y0);
+                $mol_assert_equal(p.x, 0);
+                $mol_assert_equal(p.y, 0);
             },
             'drag above threshold: node tracks pointer delta'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
                 stub_svg(g);
+                g.sim_running = true;
                 const n = g.nodes()[3];
-                const x0 = n.x, y0 = n.y;
                 g.pan_start(pe(0, 0, node_target(n.id)));
+                // Pin to origin so (+50, -30) won't hit the circular clamp at radius 280
+                g.positions({ ...g.positions(), [n.id]: { x: 0, y: 0 } });
                 g.pan_move(pe(50, -30)); // 58px ≫ 4
                 const p = g.pos(n.id);
-                $mol_assert_equal(p.x, x0 + 50);
-                $mol_assert_equal(p.y, y0 - 30);
+                $mol_assert_equal(p.x, 50);
+                $mol_assert_equal(p.y, -30);
             },
             'drag multiple moves accumulate (above threshold)'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
                 stub_svg(g);
+                g.sim_running = true;
                 const n = g.nodes()[2];
-                const x0 = n.x, y0 = n.y;
                 g.pan_start(pe(0, 0, node_target(n.id)));
+                g.positions({ ...g.positions(), [n.id]: { x: 0, y: 0 } });
                 g.pan_move(pe(10, 10)); // 14px > 4 — kicks in
                 g.pan_move(pe(25, 15));
                 g.pan_move(pe(25, 25));
                 const p = g.pos(n.id);
-                $mol_assert_equal(p.x, x0 + 25);
-                $mol_assert_equal(p.y, y0 + 25);
+                $mol_assert_equal(p.x, 25);
+                $mol_assert_equal(p.y, 25);
             },
             'click without prior drag: selects'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
@@ -3493,13 +3497,15 @@ var $;
             'pan_move ignores no-move (same coords)'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
                 stub_svg(g);
+                g.sim_running = true;
                 const n = g.nodes()[0];
                 g.pan_start(pe(10, 10, node_target(n.id)));
+                g.positions({ ...g.positions(), [n.id]: { x: 0, y: 0 } });
                 g.pan_move(pe(10, 10));
                 // Position unchanged
                 const p = g.pos(n.id);
-                $mol_assert_equal(p.x, n.x);
-                $mol_assert_equal(p.y, n.y);
+                $mol_assert_equal(p.x, 0);
+                $mol_assert_equal(p.y, 0);
             },
             'selected_node / selected_relations'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
@@ -3508,25 +3514,47 @@ var $;
                 $mol_assert_equal(g.selected_node()?.id, n.id);
                 $mol_assert_equal(g.selected_relations().length > 0, true);
             },
+            // --- Stress test: how heavy is one force-layout tick at scale?
+            // Reports ms/tick so you can size the demo data. 60fps budget = 16.67ms/frame.
+            // 'STRESS tick_layout perf across graph sizes'( $ ) {
+            // 	const sizes = [ 80, 200, 500, 1000, 2000 ]
+            // 	const results: Array< { n: number, edges: number, tick_ms: string, init_ms: string } > = []
+            // 	for ( const n of sizes ) {
+            // 		const g = build_mock( 42, n, Math.round( n * 1.6 ) )
+            // 		// Initial layout (120 iterations)
+            // 		const t0 = Date.now()
+            // 		const positions = build_initial_positions( g.nodes, g.edges )
+            // 		const init_ms = Date.now() - t0
+            // 		// One live tick
+            // 		const t1 = Date.now()
+            // 		tick_layout( g.nodes, g.edges, positions, '', 6 )
+            // 		const tick_ms = Date.now() - t1
+            // 		results.push( { n, edges: g.edges.length, tick_ms: `${ tick_ms }ms`, init_ms: `${ init_ms }ms` } )
+            // 	}
+            // 	console.log( '\n[forcegraph STRESS]\n' + results.map( r =>
+            // 		`  n=${ r.n.toString().padStart( 4 ) } edges=${ r.edges.toString().padStart( 4 ) }  init=${ r.init_ms.padStart( 6 ) }  tick=${ r.tick_ms.padStart( 5 ) }`
+            // 	).join( '\n' ) + '\n  (60fps budget = 16.67ms/tick)\n' )
+            // 	// Sanity — even 2000 nodes should finish (no infinite loop / NaN)
+            // 	$mol_assert_equal( results.length, sizes.length )
+            // },
             // --- DOM integration: render → inspect → real events ---
-            'DOM render: every circle has data-node-id attr'($) {
+            'DOM render: node circles carry data-node-id (Boundary is exempt)'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
                 const svg = g.dom_tree();
                 const circles = svg.querySelectorAll('circle');
                 $mol_assert_equal(circles.length > 0, true);
                 let with_attr = 0;
                 circles.forEach(c => {
-                    const id = c.getAttribute('data-node-id');
-                    if (id)
+                    if (c.getAttribute('data-node-id'))
                         with_attr++;
                 });
-                $mol_assert_equal(with_attr, circles.length);
+                $mol_assert_equal(with_attr, g.nodes().length);
             },
             'DOM event flow: pointerdown on circle → drag mode'($) {
                 const g = $raggu_web_front_explorer_forcegraph.make({ $ });
                 stub_svg(g);
                 const svg = g.dom_tree();
-                const circle = svg.querySelector('circle');
+                const circle = svg.querySelector('circle[data-node-id]');
                 const id = circle.getAttribute('data-node-id');
                 $mol_assert_equal(!!id, true);
                 // Synth pointerdown event with target=circle

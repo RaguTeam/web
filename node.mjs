@@ -14914,6 +14914,56 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
+		radius(){
+			return ".5%";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		dom_name(){
+			return "circle";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"r": (this.radius()), 
+				"cx": (this.pos_x()), 
+				"cy": (this.pos_y())
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_circle extends $.$mol_svg_circle {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_circle = $mol_svg_circle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$mol_svg_line) = class $mol_svg_line extends ($.$mol_svg) {
 		from(){
 			return [];
@@ -14982,56 +15032,6 @@ var $;
             }
         }
         $$.$mol_svg_line = $mol_svg_line;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
-		radius(){
-			return ".5%";
-		}
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
-		}
-		dom_name(){
-			return "circle";
-		}
-		pos(){
-			return [];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"r": (this.radius()), 
-				"cx": (this.pos_x()), 
-				"cy": (this.pos_y())
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_circle extends $.$mol_svg_circle {
-            pos_x() {
-                return this.pos()[0];
-            }
-            pos_y() {
-                return this.pos()[1];
-            }
-        }
-        $$.$mol_svg_circle = $mol_svg_circle;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -15183,6 +15183,23 @@ var $;
 		bg_click(next){
 			if(next !== undefined) return next;
 			return null;
+		}
+		boundary_stroke(){
+			return "#3a3937";
+		}
+		Boundary(){
+			const obj = new this.$.$mol_svg_circle();
+			(obj.pos_x) = () => ("0");
+			(obj.pos_y) = () => ("0");
+			(obj.radius) = () => ("280");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
+				"fill": "none", 
+				"stroke": (this.boundary_stroke()), 
+				"stroke-width": "1", 
+				"stroke-dasharray": "4 6"
+			});
+			return obj;
 		}
 		edge_x1(id){
 			return "";
@@ -15404,6 +15421,7 @@ var $;
 		}
 		sub(){
 			return [
+				(this.Boundary()), 
 				(this.G_edges()), 
 				(this.G_nodes()), 
 				(this.Tooltip())
@@ -15415,6 +15433,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_move"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_end"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "bg_click"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Boundary"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edges"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
@@ -15503,59 +15522,80 @@ var $;
             }
             return { nodes, edges };
         }
-        // Fruchterman-Reingold force-directed layout.
-        // Mutates node x/y in place.
-        function layout(nodes, edges, iterations = 120) {
-            const k = 60;
+        $$.build_mock = build_mock;
+        const BOUND_RADIUS = 280;
+        const FORCE_K = 60;
+        // One Fruchterman-Reingold iteration. Pure function — takes positions dict,
+        // returns updated positions. `pinned_id` (if set) stays put.
+        function tick_layout(nodes, edges, positions, pinned_id, temp) {
+            const k = FORCE_K;
             const k2 = k * k;
-            const area = 600 * 600;
-            let temp = Math.sqrt(area) / 10;
-            for (let it = 0; it < iterations; it++) {
-                // Repulsion: O(n²)
-                const dispX = new Float64Array(nodes.length);
-                const dispY = new Float64Array(nodes.length);
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const dx = nodes[i].x - nodes[j].x;
-                        const dy = nodes[i].y - nodes[j].y;
-                        const dist2 = dx * dx + dy * dy || 0.01;
-                        const force = k2 / dist2;
-                        const fx = dx * force;
-                        const fy = dy * force;
-                        dispX[i] += fx;
-                        dispY[i] += fy;
-                        dispX[j] -= fx;
-                        dispY[j] -= fy;
-                    }
+            const dispX = {};
+            const dispY = {};
+            for (const n of nodes) {
+                dispX[n.id] = 0;
+                dispY[n.id] = 0;
+            }
+            // Repulsion
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const a = nodes[i].id, b = nodes[j].id;
+                    const dx = positions[a].x - positions[b].x;
+                    const dy = positions[a].y - positions[b].y;
+                    const dist2 = dx * dx + dy * dy || 0.01;
+                    const force = k2 / dist2;
+                    const fx = dx * force, fy = dy * force;
+                    dispX[a] += fx;
+                    dispY[a] += fy;
+                    dispX[b] -= fx;
+                    dispY[b] -= fy;
                 }
-                // Attraction along edges
-                const idx = {};
-                nodes.forEach((n, i) => idx[n.id] = i);
-                for (const e of edges) {
-                    const i = idx[e.source], j = idx[e.target];
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-                    const force = (dist * dist) / k * e.strength;
-                    const fx = (dx / dist) * force;
-                    const fy = (dy / dist) * force;
-                    dispX[i] -= fx;
-                    dispY[i] -= fy;
-                    dispX[j] += fx;
-                    dispY[j] += fy;
+            }
+            // Attraction
+            for (const e of edges) {
+                const dx = positions[e.source].x - positions[e.target].x;
+                const dy = positions[e.source].y - positions[e.target].y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+                const force = (dist * dist) / k * e.strength;
+                const fx = (dx / dist) * force;
+                const fy = (dy / dist) * force;
+                dispX[e.source] -= fx;
+                dispY[e.source] -= fy;
+                dispX[e.target] += fx;
+                dispY[e.target] += fy;
+            }
+            // Apply, capped by temp; clamp into a circle of radius BOUND_RADIUS; skip pinned
+            const out = {};
+            for (const n of nodes) {
+                if (n.id === pinned_id) {
+                    out[n.id] = positions[n.id];
+                    continue;
                 }
-                // Apply displacement, capped by temp; cool down
-                for (let i = 0; i < nodes.length; i++) {
-                    const dlen = Math.sqrt(dispX[i] ** 2 + dispY[i] ** 2) || 0.01;
-                    nodes[i].x += (dispX[i] / dlen) * Math.min(dlen, temp);
-                    nodes[i].y += (dispY[i] / dlen) * Math.min(dlen, temp);
-                    // Soft bounding to area
-                    nodes[i].x = Math.max(-280, Math.min(280, nodes[i].x));
-                    nodes[i].y = Math.max(-280, Math.min(280, nodes[i].y));
+                const dlen = Math.sqrt(dispX[n.id] ** 2 + dispY[n.id] ** 2) || 0.01;
+                let x = positions[n.id].x + (dispX[n.id] / dlen) * Math.min(dlen, temp);
+                let y = positions[n.id].y + (dispY[n.id] / dlen) * Math.min(dlen, temp);
+                const r = Math.sqrt(x * x + y * y);
+                if (r > BOUND_RADIUS) {
+                    x = x * BOUND_RADIUS / r;
+                    y = y * BOUND_RADIUS / r;
                 }
+                out[n.id] = { x, y };
+            }
+            return out;
+        }
+        $$.tick_layout = tick_layout;
+        function build_initial_positions(nodes, edges) {
+            let positions = {};
+            for (const n of nodes)
+                positions[n.id] = { x: n.x, y: n.y };
+            let temp = 60;
+            for (let i = 0; i < 120; i++) {
+                positions = tick_layout(nodes, edges, positions, '', temp);
                 temp *= 0.96;
             }
+            return positions;
         }
+        $$.build_initial_positions = build_initial_positions;
         class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
             // Plain non-reactive field overriding the auto-gen @$mol_mem drag_id.
             // The mem-cell version got invalidated between event-handler fibers
@@ -15618,6 +15658,10 @@ var $;
                 catch { }
                 if (node_id) {
                     this.drag_id(node_id);
+                    // Ensure initial positions are seeded before drag starts
+                    this.ensure_positions();
+                    // Don't start simulation here — wait until pan_move crosses threshold,
+                    // so a pure click doesn't trigger force-sim "shaking".
                     return;
                 }
                 this.dragging = true;
@@ -15651,9 +15695,19 @@ var $;
                 const dy = dy_px * ay;
                 // Node drag: shift the dragged node by pointer delta
                 if (this.drag_id()) {
+                    // Kick off continuous sim on first real drag movement (idempotent)
+                    this.start_sim();
                     const id = this.drag_id();
                     const cur = this.pos(id);
-                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
+                    let nx = cur.x + dx;
+                    let ny = cur.y + dy;
+                    // Clamp dragged node into the circular bound — keeps it inside frame
+                    const r = Math.sqrt(nx * nx + ny * ny);
+                    if (r > BOUND_RADIUS) {
+                        nx = nx * BOUND_RADIUS / r;
+                        ny = ny * BOUND_RADIUS / r;
+                    }
+                    this.positions({ ...this.positions(), [id]: { x: nx, y: ny } });
                     return;
                 }
                 if (!this.dragging)
@@ -15685,12 +15739,57 @@ var $;
                 return { x: local.x, y: local.y };
             }
             mock() {
-                const g = build_mock();
-                layout(g.nodes, g.edges);
-                return g;
+                return build_mock();
             }
             nodes() { return this.mock().nodes; }
             edges() { return this.mock().edges; }
+            // Initial positions seeded by full FR layout. Stored back into positions cell
+            // on first access — subsequent ticks mutate positions live.
+            ensure_positions() {
+                let p = this.positions();
+                if (Object.keys(p).length === 0) {
+                    p = build_initial_positions(this.nodes(), this.edges());
+                    this.positions(p);
+                }
+                return p;
+            }
+            // One sim tick — called from the RAF loop while dragging or in cooldown.
+            tick() {
+                const positions = this.ensure_positions();
+                const next = tick_layout(this.nodes(), this.edges(), positions, this.drag_id(), 6);
+                this.positions(next);
+            }
+            // Continuous simulation loop driven by requestAnimationFrame.
+            // Runs while user is dragging; keeps running ~60 frames after release
+            // (cooldown) so the rest of the graph settles into a new equilibrium.
+            sim_running = false;
+            sim_cooldown = 0;
+            SIM_COOLDOWN_FRAMES = 60;
+            start_sim() {
+                if (this.sim_running)
+                    return;
+                if (typeof window === 'undefined')
+                    return;
+                this.sim_running = true;
+                const loop = () => {
+                    if (!this.sim_running)
+                        return;
+                    try {
+                        this.tick();
+                    }
+                    catch { }
+                    if (this.drag_id())
+                        this.sim_cooldown = this.SIM_COOLDOWN_FRAMES;
+                    else
+                        this.sim_cooldown--;
+                    if (this.sim_cooldown <= 0 && !this.drag_id()) {
+                        this.sim_running = false;
+                        return;
+                    }
+                    requestAnimationFrame(loop);
+                };
+                requestAnimationFrame(loop);
+            }
             node_by_id() {
                 const m = {};
                 for (const n of this.nodes())
@@ -15882,6 +15981,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "mock", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "tick", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);
@@ -16401,7 +16503,7 @@ var $;
         Canvas: {
             flex: { grow: 1, shrink: 1, direction: 'column' },
             position: 'relative',
-            background: { color: '#1c1b1a' },
+            background: { color: $bog_builderui_tokens.back },
             minWidth: 0,
         },
         Canvas_bg: {

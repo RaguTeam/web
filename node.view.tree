@@ -1178,6 +1178,15 @@ $raggu_web_front_gallery $bog_builderui_div
 			complete? <=> upload_complete? null
 			close? <=> upload_close? null
 
+$mol_svg_circle $mol_svg
+	dom_name \circle
+	pos /
+	attr *
+		^
+		r <= radius \.5%
+		cx <= pos_x \
+		cy <= pos_y \
+
 $mol_svg_line $mol_svg
 	dom_name \line
 	pos /
@@ -1189,15 +1198,6 @@ $mol_svg_line $mol_svg
 		y1 <= from_y \
 		x2 <= to_x \
 		y2 <= to_y \
-
-$mol_svg_circle $mol_svg
-	dom_name \circle
-	pos /
-	attr *
-		^
-		r <= radius \.5%
-		cx <= pos_x \
-		cy <= pos_y \
 
 $mol_svg_rect $mol_svg
 	dom_name \rect
@@ -1241,6 +1241,16 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 		pointercancel?event <=> pan_end?event null
 		click?event <=> bg_click?event null
 	sub /
+		<= Boundary $mol_svg_circle
+			pos_x \0
+			pos_y \0
+			radius \280
+			attr *
+				^
+				fill \none
+				stroke <= boundary_stroke \#3a3937
+				stroke-width \1
+				stroke-dasharray \4 6
 		<= G_edges $mol_svg_group
 			sub <= edge_views /
 				<= Edge* $mol_svg_line
