@@ -16842,57 +16842,32 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_status) = class $mol_status extends ($.$mol_view) {
-		message(){
-			return "";
-		}
-		status(){
-			return (this.title());
-		}
-		minimal_height(){
-			return 24;
-		}
-		minimal_width(){
-			return 0;
-		}
-		sub(){
-			return [(this.message())];
+	($.$bog_builderui_skeleton) = class $bog_builderui_skeleton extends ($.$bog_builderui_div) {
+		attr(){
+			return {"mol_view_error": "Promise"};
 		}
 	};
 
 
 ;
 "use strict";
-
-
-;
-"use strict";
 var $;
 (function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_status extends $.$mol_status {
-            message() {
-                try {
-                    return this.status() ?? null;
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        $mol_fail_hidden(error);
-                    $mol_fail_log(error);
-                    return error.message;
-                }
-            }
-        }
-        $$.$mol_status = $mol_status;
-    })($$ = $.$$ || ($.$$ = {}));
+    $mol_style_attach("bog/builderui/skeleton/skeleton.view.css", "");
 })($ || ($ = {}));
 
 ;
 "use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n\tflex-shrink: 1;\n\tword-wrap: break-word;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
+    $mol_style_define($bog_builderui_skeleton, {
+        minHeight: '1rem',
+    });
 })($ || ($ = {}));
 
 ;
@@ -18052,17 +18027,39 @@ var $;
 			(obj.rows) = () => ((this.rows()));
 			return obj;
 		}
-		communication(){
-			return null;
+		is_communicating(){
+			return false;
+		}
+		Skel_line_one(){
+			const obj = new this.$.$bog_builderui_skeleton();
+			return obj;
+		}
+		Skel_line_two(){
+			const obj = new this.$.$bog_builderui_skeleton();
+			return obj;
+		}
+		Skel_line_three(){
+			const obj = new this.$.$bog_builderui_skeleton();
+			return obj;
 		}
 		Status(){
-			const obj = new this.$.$mol_status();
-			(obj.status) = () => ((this.communication()));
+			const obj = new this.$.$bog_builderui_card();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_card.prototype.attr.call(obj)), "raggu_loading": (this.is_communicating())});
+			(obj.sub) = () => ([
+				(this.Skel_line_one()), 
+				(this.Skel_line_two()), 
+				(this.Skel_line_three())
+			]);
+			return obj;
+		}
+		Body_flow(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Messages()), (this.Status())]);
 			return obj;
 		}
 		Body(){
 			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Messages()), (this.Status())]);
+			(obj.sub) = () => ([(this.Body_flow())]);
 			return obj;
 		}
 		use_sug_one(next){
@@ -18364,7 +18361,11 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Modes_bar"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Messages"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_one"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_two"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_three"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Status"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Body_flow"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_one"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_one"));
@@ -19034,6 +19035,25 @@ var $;
                 }
                 return null;
             }
+            // true когда последнее сообщение — user и режим llm.
+            // Реактивно на history+mode. Пока true — под Messages показывается skeleton-card.
+            // После ответа last=assistant → false → скелет исчезает.
+            //
+            // Внутри дёргаем communication() — это активирует его wire-фибр.
+            // Если communication бросит suspension → Status.dom_tree поймает
+            // (он $mol_view с встроенным try/catch на suspension), остальной чат
+            // продолжает рендер, wire автоматом ретраит когда Promise резолвится.
+            is_communicating() {
+                if (this.mode() !== 'llm')
+                    return false;
+                const h = this.history();
+                if (h.length === 0)
+                    return false;
+                if (h[h.length - 1].role !== 'user')
+                    return false;
+                this.communication();
+                return true;
+            }
             // Реактивный LLM-роутер по паттерну $giper_bot.communication.
             // Срабатывает когда история заканчивается на user-сообщение и режим llm.
             // $mol_promise_like → перебрасываем suspension обратно в wire для retry.
@@ -19268,6 +19288,50 @@ var $;
                 left: '22px',
                 right: '22px',
             },
+        },
+        Body_flow: {
+            flex: { direction: 'column' },
+            gap: '16px',
+        },
+        Status: {
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            borderRadius: '12px 12px 12px 3px',
+            padding: {
+                top: '13px',
+                bottom: '13px',
+                left: '16px',
+                right: '16px',
+            },
+            maxWidth: '78%',
+            align: { self: 'flex-start' },
+            flex: { direction: 'column' },
+            gap: '10px',
+            // По дефолту скрыт. attr raggu_loading=true → показываем скелет.
+            // Boolean false → mol удаляет атрибут → [attr="true"] селектор ниже включает display.
+            display: 'none',
+            '@': {
+                raggu_loading: {
+                    true: {
+                        display: 'flex',
+                    },
+                },
+            },
+        },
+        Skel_line_one: {
+            height: '12px',
+            borderRadius: '4px',
+            minWidth: '260px',
+        },
+        Skel_line_two: {
+            height: '12px',
+            borderRadius: '4px',
+            minWidth: '320px',
+        },
+        Skel_line_three: {
+            height: '12px',
+            borderRadius: '4px',
+            minWidth: '200px',
         },
         Messages: {
             gap: '16px',

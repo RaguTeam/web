@@ -259,7 +259,7 @@
     "$mol_svg_rect",
     "$mol_svg_text",
     "$raggu_web_front_chat",
-    "$mol_status",
+    "$bog_builderui_skeleton",
     "$mol_textarea",
     "$mol_stack",
     "$mol_syntax2",

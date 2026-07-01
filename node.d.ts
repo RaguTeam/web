@@ -8791,24 +8791,20 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
 
-	export class $mol_status extends $mol_view {
-		message( ): string
-		status( ): ReturnType< $mol_status['title'] >
-		minimal_height( ): number
-		minimal_width( ): number
-		sub( ): readonly(any)[]
+declare namespace $ {
+
+	export class $bog_builderui_skeleton extends $bog_builderui_div {
+		attr( ): ({ 
+			'mol_view_error': string,
+		}) 
 	}
 	
 }
 
-//# sourceMappingURL=status.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_status extends $.$mol_status {
-        message(): any;
-    }
-}
-
+//# sourceMappingURL=skeleton.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -10775,27 +10771,27 @@ declare namespace $ {
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $mol_status__status_raggu_web_front_chat_23 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_chat['communication'] >
+	type $bog_builderui_card__attr_raggu_web_front_chat_23 = $mol_type_enforce<
+		({ 
+			'raggu_loading': ReturnType< $raggu_web_front_chat['is_communicating'] >,
+		})  & ReturnType< $bog_builderui_card['attr'] >
 		,
-		ReturnType< $mol_status['status'] >
+		ReturnType< $bog_builderui_card['attr'] >
 	>
-	type $mol_scroll__sub_raggu_web_front_chat_24 = $mol_type_enforce<
+	type $bog_builderui_card__sub_raggu_web_front_chat_24 = $mol_type_enforce<
 		readonly(any)[]
 		,
-		ReturnType< $mol_scroll['sub'] >
+		ReturnType< $bog_builderui_card['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_25 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_chat_26 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_chat['use_sug_one'] > ): ReturnType< $raggu_web_front_chat['use_sug_one'] >,
-		}) 
+	type $mol_scroll__sub_raggu_web_front_chat_26 = $mol_type_enforce<
+		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['event'] >
+		ReturnType< $mol_scroll['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_27 = $mol_type_enforce<
 		readonly(any)[]
@@ -10804,7 +10800,7 @@ declare namespace $ {
 	>
 	type $bog_builderui_div__event_raggu_web_front_chat_28 = $mol_type_enforce<
 		({ 
-			click( next?: ReturnType< $raggu_web_front_chat['use_sug_two'] > ): ReturnType< $raggu_web_front_chat['use_sug_two'] >,
+			click( next?: ReturnType< $raggu_web_front_chat['use_sug_one'] > ): ReturnType< $raggu_web_front_chat['use_sug_one'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['event'] >
@@ -10814,45 +10810,47 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_textarea__hint_raggu_web_front_chat_30 = $mol_type_enforce<
+	type $bog_builderui_div__event_raggu_web_front_chat_30 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['use_sug_two'] > ): ReturnType< $raggu_web_front_chat['use_sug_two'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_31 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_textarea__hint_raggu_web_front_chat_32 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['input_hint_text'] >
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_textarea__value_raggu_web_front_chat_31 = $mol_type_enforce<
+	type $mol_textarea__value_raggu_web_front_chat_33 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_text'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_textarea__submit_raggu_web_front_chat_32 = $mol_type_enforce<
+	type $mol_textarea__submit_raggu_web_front_chat_34 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_submit'] >
 		,
 		ReturnType< $mol_textarea['submit'] >
 	>
-	type $mol_button_minor__hint_raggu_web_front_chat_33 = $mol_type_enforce<
+	type $mol_button_minor__hint_raggu_web_front_chat_35 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['send_label_text'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click_raggu_web_front_chat_34 = $mol_type_enforce<
+	type $mol_button_minor__click_raggu_web_front_chat_36 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_submit'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_raggu_web_front_chat_35 = $mol_type_enforce<
+	type $mol_button_minor__sub_raggu_web_front_chat_37 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_36 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_37 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_38 = $mol_type_enforce<
 		readonly(any)[]
@@ -10869,22 +10867,22 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_chat_41 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_chat['trace_toggle'] > ): ReturnType< $raggu_web_front_chat['trace_toggle'] >,
-		}) 
+	type $bog_builderui_div__sub_raggu_web_front_chat_41 = $mol_type_enforce<
+		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['event'] >
+		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_42 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_43 = $mol_type_enforce<
-		readonly(any)[]
+	type $bog_builderui_div__event_raggu_web_front_chat_43 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['trace_toggle'] > ): ReturnType< $raggu_web_front_chat['trace_toggle'] >,
+		}) 
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $bog_builderui_div['event'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_44 = $mol_type_enforce<
 		readonly(any)[]
@@ -10941,12 +10939,10 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_55 = $mol_type_enforce<
-		({ 
-			'raggu_expanded': ReturnType< $raggu_web_front_chat['trace_expanded'] >,
-		}) 
+	type $bog_builderui_div__sub_raggu_web_front_chat_55 = $mol_type_enforce<
+		readonly(any)[]
 		,
-		ReturnType< $bog_builderui_div['attr'] >
+		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_56 = $mol_type_enforce<
 		readonly(any)[]
@@ -10955,7 +10951,7 @@ declare namespace $ {
 	>
 	type $bog_builderui_div__attr_raggu_web_front_chat_57 = $mol_type_enforce<
 		({ 
-			'raggu_visible': ReturnType< $raggu_web_front_chat['message_with_trace'] >,
+			'raggu_expanded': ReturnType< $raggu_web_front_chat['trace_expanded'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['attr'] >
@@ -10967,12 +10963,24 @@ declare namespace $ {
 	>
 	type $bog_builderui_div__attr_raggu_web_front_chat_59 = $mol_type_enforce<
 		({ 
+			'raggu_visible': ReturnType< $raggu_web_front_chat['message_with_trace'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_60 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_61 = $mol_type_enforce<
+		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_60 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_62 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -10999,8 +11007,12 @@ declare namespace $ {
 		Clear( ): $mol_button_minor
 		Modes_bar( ): $bog_builderui_div
 		Messages( ): $mol_list
-		communication( ): any
-		Status( ): $mol_status
+		is_communicating( ): boolean
+		Skel_line_one( ): $bog_builderui_skeleton
+		Skel_line_two( ): $bog_builderui_skeleton
+		Skel_line_three( ): $bog_builderui_skeleton
+		Status( ): $bog_builderui_card
+		Body_flow( ): $bog_builderui_div
 		Body( ): $mol_scroll
 		use_sug_one( next?: any ): any
 		Sug_one( ): $bog_builderui_div
@@ -11104,6 +11116,7 @@ declare namespace $.$$ {
         trace_expanded(index: number, next?: boolean): boolean;
         trace_toggle(index: number): null;
         prompt_submit(): null;
+        is_communicating(): boolean;
         communication(): void;
         use_sug_one(): null;
         use_sug_two(): null;

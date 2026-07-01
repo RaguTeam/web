@@ -1405,12 +1405,9 @@ $raggu_web_front_explorer $bog_builderui_div
 				sub / <= ask_btn_text
 				event * click? <=> ask_click? null
 
-$mol_status $mol_view
-	status <= title
-	minimal_height 24
-	minimal_width 0
-	sub /
-		<= message \
+$bog_builderui_skeleton $bog_builderui_div
+	attr *
+		mol_view_error \Promise
 
 $mol_stack $mol_view
 
@@ -1658,8 +1655,16 @@ $raggu_web_front_chat $bog_builderui_div
 				sub / \✕
 		<= Body $mol_scroll
 			sub /
-				<= Messages $mol_list rows <= rows
-				<= Status $mol_status status <= communication null
+				<= Body_flow $bog_builderui_div sub /
+					<= Messages $mol_list rows <= rows
+					<= Status $bog_builderui_card
+						attr *
+							^
+							raggu_loading <= is_communicating false
+						sub /
+							<= Skel_line_one $bog_builderui_skeleton
+							<= Skel_line_two $bog_builderui_skeleton
+							<= Skel_line_three $bog_builderui_skeleton
 		<= Footer $bog_builderui_div sub /
 			<= Suggestions $bog_builderui_div sub /
 				<= Sug_one $bog_builderui_div
