@@ -6752,6 +6752,12 @@ declare namespace $ {
 		pan_y( next?: number ): number
 		zoom( next?: number ): number
 		positions( next?: Record<string, any> ): Record<string, any>
+		graph_n( next?: number ): number
+		gravity( ): number
+		force_scale( ): number
+		damping( ): number
+		min_move( ): number
+		max_speed( ): number
 		event( ): ({ 
 			wheel( next?: ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] >,
 			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] >,
@@ -6787,13 +6793,20 @@ declare namespace $.$$ {
         nodes: GraphNode[];
         edges: GraphEdge[];
     };
+    export type LayoutParams = {
+        gravity: number;
+        force_scale: number;
+        damping: number;
+        min_move: number;
+        max_speed: number;
+    };
     export function tick_layout(nodes: GraphNode[], edges: GraphEdge[], positions: Record<string, {
         x: number;
         y: number;
     }>, velocities: Record<string, {
         vx: number;
         vy: number;
-    }>, pinned_id: string, damping: number): {
+    }>, pinned_id: string, params: LayoutParams): {
         positions: Record<string, {
             x: number;
             y: number;
@@ -6849,6 +6862,7 @@ declare namespace $.$$ {
             vx: number;
             vy: number;
         }>;
+        layout_params(): LayoutParams;
         tick(): void;
         sim_running: boolean;
         sim_frames_left: number;

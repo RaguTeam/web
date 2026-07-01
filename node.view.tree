@@ -1232,6 +1232,12 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	pan_y? +0
 	zoom? +1
 	positions? *
+	graph_n? +80
+	gravity +0.04
+	force_scale +0.06
+	damping +0.82
+	min_move +0.15
+	max_speed +12
 	event *
 		^
 		wheel?event <=> wheel?event null

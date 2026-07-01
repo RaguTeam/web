@@ -15391,6 +15391,25 @@ var $;
 			if(next !== undefined) return next;
 			return {};
 		}
+		graph_n(next){
+			if(next !== undefined) return next;
+			return +80;
+		}
+		gravity(){
+			return +0.04;
+		}
+		force_scale(){
+			return +0.06;
+		}
+		damping(){
+			return +0.82;
+		}
+		min_move(){
+			return +0.15;
+		}
+		max_speed(){
+			return +12;
+		}
 		event(){
 			return {
 				...(super.event()), 
@@ -15433,6 +15452,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_y"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "zoom"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "positions"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "graph_n"));
 
 
 ;
@@ -15507,10 +15527,6 @@ var $;
         const FORCE_K = 60;
         const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
         const THETA2 = THETA * THETA;
-        // Soft radial pull toward origin — replaces the old hard-clamp bounding circle.
-        // Same idea as `gravity` in ForceAtlas2 / d3-force's forceCenter.
-        // Larger → tighter cluster; smaller → looser, may drift far.
-        const GRAVITY = 0.09;
         function make_cell(x0, y0, size) {
             return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
         }
@@ -15567,14 +15583,11 @@ var $;
         }
         // Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
         //   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
-        //   p[i] += v[i]  (only if |v| >= MIN_MOVE)         ← threshold cuts jitter
+        //   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
         // Gives Obsidian-style feel on drag: perturbation ripples through edges
         // and dies via damping. Distant nodes have sub-threshold velocity →
-        // freeze completely, no whole-graph shake.
+        // gate closes, no whole-graph shake.
         // Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
-        const MIN_MOVE = 0.15; // where the soft freeze gate reaches ~half
-        const FORCE_SCALE = 0.06; // force → acceleration scale
-        const MAX_SPEED = 12; // soft velocity ceiling (tanh saturation)
         // Hermite smoothstep — C¹ continuous ramp from 0 at `a` to 1 at `b`.
         function smoothstep(a, b, x) {
             if (x <= a)
@@ -15584,7 +15597,8 @@ var $;
             const t = (x - a) / (b - a);
             return t * t * (3 - 2 * t);
         }
-        function tick_layout(nodes, edges, positions, velocities, pinned_id, damping) {
+        function tick_layout(nodes, edges, positions, velocities, pinned_id, params) {
+            const { gravity, force_scale, damping, min_move, max_speed } = params;
             const k = FORCE_K;
             const k2 = k * k;
             const dispX = {};
@@ -15634,8 +15648,8 @@ var $;
             // Gravity — soft radial pull toward origin
             for (const n of nodes) {
                 const p = positions[n.id];
-                dispX[n.id] -= p.x * GRAVITY * k;
-                dispY[n.id] -= p.y * GRAVITY * k;
+                dispX[n.id] -= p.x * gravity * k;
+                dispY[n.id] -= p.y * gravity * k;
             }
             // Integrate: velocities accumulate + damp; position moves via smooth freeze gate.
             // No hard cutoffs — both the speed ceiling and freeze use C¹-continuous ramps
@@ -15649,20 +15663,20 @@ var $;
                     continue;
                 }
                 const prev = velocities[n.id] || { vx: 0, vy: 0 };
-                let vx = (prev.vx + dispX[n.id] * FORCE_SCALE) * damping;
-                let vy = (prev.vy + dispY[n.id] * FORCE_SCALE) * damping;
+                let vx = (prev.vx + dispX[n.id] * force_scale) * damping;
+                let vy = (prev.vy + dispY[n.id] * force_scale) * damping;
                 const speed = Math.sqrt(vx * vx + vy * vy);
                 // Soft speed cap: tanh saturation. Below cap almost no effect,
-                // above cap velocity asymptotically bounded to MAX_SPEED.
+                // above cap velocity asymptotically bounded to max_speed.
                 if (speed > 0) {
-                    const cap_scale = MAX_SPEED * Math.tanh(speed / MAX_SPEED) / speed;
+                    const cap_scale = max_speed * Math.tanh(speed / max_speed) / speed;
                     vx *= cap_scale;
                     vy *= cap_scale;
                 }
                 // Soft freeze gate: position change fades smoothly to zero as velocity
-                // drops below MIN_MOVE. No visual snap-to-stop. Velocity itself
+                // drops below min_move. No visual snap-to-stop. Velocity itself
                 // keeps damping toward zero so eventually gate*v goes to zero too.
-                const gate = smoothstep(MIN_MOVE * 0.3, MIN_MOVE * 1.5, speed);
+                const gate = smoothstep(min_move * 0.3, min_move * 1.5, speed);
                 next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
                 next_vel[n.id] = { vx, vy };
             }
@@ -15853,12 +15867,20 @@ var $;
             // Per-node velocity — the state that makes drags ripple through edges
             // then die via damping instead of shaking the whole graph each frame.
             velocities = {};
-            // One sim tick. Damping controls how fast momentum bleeds off:
-            //   0.6 → aggressive (settles fast, less overshoot)
-            //   0.85 → springy (Obsidian-ish feel)
+            // Bundle the tunable params ( declared as view.tree props with defaults ).
+            layout_params() {
+                return {
+                    gravity: this.gravity(),
+                    force_scale: this.force_scale(),
+                    damping: this.damping(),
+                    min_move: this.min_move(),
+                    max_speed: this.max_speed(),
+                };
+            }
+            // One sim tick.
             tick() {
                 const positions = this.ensure_positions();
-                const next = tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), 0.82);
+                const next = tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), this.layout_params());
                 this.velocities = next.velocities;
                 this.positions(next.positions);
             }

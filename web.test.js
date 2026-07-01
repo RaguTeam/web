@@ -3574,6 +3574,7 @@ var $;
             'STRESS tick_layout perf across graph sizes'($) {
                 const sizes = [80, 200, 500, 1000, 2000, 5000];
                 const results = [];
+                const params = { gravity: 0.09, force_scale: 0.06, damping: 0.82, min_move: 0.15, max_speed: 12 };
                 for (const n of sizes) {
                     const g = build_mock(42, n, Math.round(n * 1.6));
                     const positions = {};
@@ -3581,11 +3582,11 @@ var $;
                     for (const node of g.nodes)
                         positions[node.id] = { x: node.x, y: node.y };
                     // Warm-up
-                    let state = tick_layout(g.nodes, g.edges, positions, velocities, '', 0.82);
+                    let state = tick_layout(g.nodes, g.edges, positions, velocities, '', params);
                     // 10-tick avg
                     const t0 = Date.now();
                     for (let i = 0; i < 10; i++)
-                        state = tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', 0.82);
+                        state = tick_layout(g.nodes, g.edges, state.positions, state.velocities, '', params);
                     const tick_ms = ((Date.now() - t0) / 10).toFixed(2);
                     results.push({ n, edges: g.edges.length, tick_ms: `${tick_ms}ms` });
                 }
