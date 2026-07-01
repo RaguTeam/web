@@ -3751,6 +3751,9 @@ var $;
                 $mol_assert_equal(v.Stage_rows().sub().length, 5);
             },
             'gallery: 6 dataset cards render'($) {
+                // No live backend in node tests → force ?mock=1 so remote_datasets returns null
+                // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
+                $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 6);
             },
@@ -3779,6 +3782,7 @@ var $;
                 $mol_assert_equal($.$mol_locale.lang(), 'ru');
             },
             'e2e: full user flow through all screens'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
                 // initial: gallery screen, 6 dataset cards
                 $mol_assert_equal(app.screen(), 'gallery');
@@ -3842,6 +3846,7 @@ var $;
                 $mol_assert_equal(up.step(), 0);
             },
             'gallery.upload_complete: adds dataset, closes panel'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const g = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(g.extra_datasets().length, 0);
                 $mol_assert_equal(g.datasets().length, 6);

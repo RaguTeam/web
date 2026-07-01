@@ -15136,11 +15136,9 @@ var $;
             extra_datasets(next) {
                 return next ?? [];
             }
-            // URL flag `?mock=1` (or node/jsdom test/prerender env — no live backend) → BUILTIN.
+            // URL flag `?mock=1` → BUILTIN.
             mock_flag() {
-                if (this.$.$mol_state_arg.value('mock') === '1')
-                    return true;
-                return typeof process !== 'undefined' && !!process.versions?.node;
+                return this.$.$mol_state_arg.value('mock') === '1';
             }
             // Reactive fetch of preindexed datasets. Any transport error propagates
             // via $mol_wire so the view frame shows an error plate instead of moks.
@@ -17042,12 +17040,10 @@ var $;
         // Default page size for the graph endpoint. The mock backend caps at 5000.
         const GRAPH_LIMIT = 500;
         class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
-            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo.
-            // Also auto-mock in node/jsdom test/prerender env where no live backend is available.
+            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo
+            // and jsdom tests where no live backend is available.
             mock_flag() {
-                if (this.$.$mol_state_arg.value('mock') === '1')
-                    return true;
-                return typeof process !== 'undefined' && !!process.versions?.node;
+                return this.$.$mol_state_arg.value('mock') === '1';
             }
             // Reactive live fetch. Any transport error propagates via $mol_wire so
             // the view frame surfaces an error plate instead of silently falling back.
@@ -24726,6 +24722,9 @@ var $;
                 $mol_assert_equal(v.Stage_rows().sub().length, 5);
             },
             'gallery: 6 dataset cards render'($) {
+                // No live backend in node tests → force ?mock=1 so remote_datasets returns null
+                // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
+                $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 6);
             },
@@ -24754,6 +24753,7 @@ var $;
                 $mol_assert_equal($.$mol_locale.lang(), 'ru');
             },
             'e2e: full user flow through all screens'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
                 // initial: gallery screen, 6 dataset cards
                 $mol_assert_equal(app.screen(), 'gallery');
@@ -24817,6 +24817,7 @@ var $;
                 $mol_assert_equal(up.step(), 0);
             },
             'gallery.upload_complete: adds dataset, closes panel'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const g = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(g.extra_datasets().length, 0);
                 $mol_assert_equal(g.datasets().length, 6);

@@ -15145,11 +15145,9 @@ var $;
             extra_datasets(next) {
                 return next ?? [];
             }
-            // URL flag `?mock=1` (or node/jsdom test/prerender env — no live backend) → BUILTIN.
+            // URL flag `?mock=1` → BUILTIN.
             mock_flag() {
-                if (this.$.$mol_state_arg.value('mock') === '1')
-                    return true;
-                return typeof process !== 'undefined' && !!process.versions?.node;
+                return this.$.$mol_state_arg.value('mock') === '1';
             }
             // Reactive fetch of preindexed datasets. Any transport error propagates
             // via $mol_wire so the view frame shows an error plate instead of moks.
@@ -17051,12 +17049,10 @@ var $;
         // Default page size for the graph endpoint. The mock backend caps at 5000.
         const GRAPH_LIMIT = 500;
         class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
-            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo.
-            // Also auto-mock in node/jsdom test/prerender env where no live backend is available.
+            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo
+            // and jsdom tests where no live backend is available.
             mock_flag() {
-                if (this.$.$mol_state_arg.value('mock') === '1')
-                    return true;
-                return typeof process !== 'undefined' && !!process.versions?.node;
+                return this.$.$mol_state_arg.value('mock') === '1';
             }
             // Reactive live fetch. Any transport error propagates via $mol_wire so
             // the view frame surfaces an error plate instead of silently falling back.
