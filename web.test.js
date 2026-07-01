@@ -4042,21 +4042,6 @@ var $;
                 $mol_assert_equal(typeof c.trace_chip_one_text() === 'string', true);
                 $mol_assert_equal(c.trace_chip_one_text().length > 0, true);
             },
-            // $mol_state_arg — статический класс, все .value() выше писали в реальный URL.
-            // В test.html тесты бегают в том же контексте что и живой app, поэтому без
-            // финального cleanup юзер видит артефакты ?mock=1&ds=law&preset=fast в URL.
-            // Тесты бегают в порядке объявления → этот последний.
-            'zz cleanup: reset $mol_state_arg URL after tests'($) {
-                const arg = $.$mol_state_arg;
-                arg.value('mock', null);
-                arg.value('screen', null);
-                arg.value('preset', null);
-                arg.value('ds', null);
-                $mol_assert_equal(arg.value('mock'), null);
-                $mol_assert_equal(arg.value('screen'), null);
-                $mol_assert_equal(arg.value('preset'), null);
-                $mol_assert_equal(arg.value('ds'), null);
-            },
         });
         // Visual e2e demo: runs only in the browser (test.html) after app mounts.
         // Drives the live Root(0) so the user watches the flow with 1s pauses.
@@ -4110,12 +4095,16 @@ var $;
                 // await sleep( 1000 )
                 click(app.Gallery().Card('law'), () => app.Gallery().click('law'));
                 // await sleep( 1000 )
-                // restore initial state so the user can interact afterwards
-                app.screen(initial.screen);
-                app.preset(initial.preset);
-                app.dataset_id(initial.dataset_id);
-                app.settings_open(initial.settings_open);
-                // console.log( '✓ ragufront e2e visual demo: done' )
+                // Все click(...) выше шедулят setTimeout(action, 150) — если запустить
+                // restore/dict({}) сейчас же, отложенные click-actions выполнятся ПОСЛЕ
+                // и перезапишут URL. Ждём пока последний setTimeout(150) отработает.
+                setTimeout(() => {
+                    app.screen(initial.screen);
+                    app.preset(initial.preset);
+                    app.dataset_id(initial.dataset_id);
+                    app.settings_open(initial.settings_open);
+                    $.$mol_state_arg.dict({});
+                }, 200);
             }, 2000);
         }
     })($$ = $_1.$$ || ($_1.$$ = {}));
