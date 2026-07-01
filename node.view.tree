@@ -50,10 +50,12 @@ $raggu_web_front_sidebar_nav $bog_builderui_div
 	icon \
 	label \
 	active false
+	disabled false
 	click? null
 	attr *
 		^
 		raggu_web_front_sidebar_nav_active <= active
+		raggu_web_front_sidebar_nav_disabled <= disabled
 	event *
 		^
 		click? <=> click? null
@@ -163,16 +165,19 @@ $raggu_web_front_sidebar $bog_builderui_div
 				icon \◉
 				label @ \Graph
 				active <= is_explorer false
+				disabled <= no_dataset false
 				click? <=> click_explorer? null
 			<= Nav_chat $raggu_web_front_sidebar_nav
 				icon \💬
 				label @ \Chat
 				active <= is_chat false
+				disabled <= no_dataset false
 				click? <=> click_chat? null
 			<= Nav_dashboard $raggu_web_front_sidebar_nav
 				icon \▦
 				label @ \Dashboard
 				active <= is_dashboard false
+				disabled <= no_dataset false
 				click? <=> click_dashboard? null
 		<= Spacer $bog_builderui_div
 		<= Footer $bog_builderui_div sub /
@@ -1053,8 +1058,12 @@ $raggu_web_front_gallery_card $bog_builderui_div
 	nodes \
 	edges \
 	comms \
+	active false
 	click? null
 	preview_label_text @ \graph preview
+	attr *
+		^
+		raggu_web_front_gallery_card_active <= active
 	event *
 		^
 		click? <=> click? null
@@ -1177,6 +1186,7 @@ $raggu_web_front_gallery $bog_builderui_div
 				nodes <= card_nodes* \
 				edges <= card_edges* \
 				comms <= card_comms* \
+				active <= card_active* false
 				click? <=> click*? null
 		<= Upload $raggu_web_front_gallery_upload
 			showed? <=> upload_showed? false
@@ -1317,6 +1327,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 $raggu_web_front_explorer $bog_builderui_div
 	dataset_id \
 	selected_id? \
+	ask_click? null
 	filter_search_text @ \🔍 Find node…
 	filter_type_text @ \Entity type ▾
 	filter_thresh_text @ \Strength threshold ▾
@@ -1377,7 +1388,9 @@ $raggu_web_front_explorer $bog_builderui_div
 					<= Rel_target* $bog_builderui_div sub / <= rel_target* \
 			<= Sources_title $bog_builderui_div sub / <= sources_title_text
 			<= Sources $bog_builderui_div sub / <= sources_text
-			<= Ask_btn $bog_builderui_div sub / <= ask_btn_text
+			<= Ask_btn $bog_builderui_div
+				sub / <= ask_btn_text
+				event * click? <=> ask_click? null
 
 $mol_stack $mol_view
 
@@ -1763,7 +1776,7 @@ $raggu_web_front_dashboard $bog_builderui_div
 $raggu_web_front_app $bog_builderui_div
 	screen? \gallery
 	preset? \demo
-	dataset_id? \wiki
+	dataset_id? \
 	settings_open? false
 	body /
 	lights_mode \light
@@ -1799,5 +1812,6 @@ $raggu_web_front_app $bog_builderui_div
 		select_dataset? <=> select_dataset? null
 	Explorer $raggu_web_front_explorer
 		dataset_id <= dataset_id
+		ask_click? <=> ask_chat? null
 	Chat $raggu_web_front_chat
 	Dashboard $raggu_web_front_dashboard

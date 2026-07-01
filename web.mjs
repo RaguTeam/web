@@ -4619,8 +4619,15 @@ var $;
 		active(){
 			return false;
 		}
+		disabled(){
+			return false;
+		}
 		attr(){
-			return {...(super.attr()), "raggu_web_front_sidebar_nav_active": (this.active())};
+			return {
+				...(super.attr()), 
+				"raggu_web_front_sidebar_nav_active": (this.active()), 
+				"raggu_web_front_sidebar_nav_disabled": (this.disabled())
+			};
 		}
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
@@ -4666,6 +4673,13 @@ var $;
                 true: {
                     background: { color: $bog_builderui_tokens.current },
                     color: '#ffffff',
+                },
+            },
+            raggu_web_front_sidebar_nav_disabled: {
+                true: {
+                    opacity: 0.4,
+                    cursor: 'not-allowed',
+                    pointerEvents: 'none',
                 },
             },
         },
@@ -6389,6 +6403,9 @@ var $;
 		is_explorer(){
 			return false;
 		}
+		no_dataset(){
+			return false;
+		}
 		click_explorer(next){
 			if(next !== undefined) return next;
 			return null;
@@ -6398,6 +6415,7 @@ var $;
 			(obj.icon) = () => ("◉");
 			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_explorer_label")));
 			(obj.active) = () => ((this.is_explorer()));
+			(obj.disabled) = () => ((this.no_dataset()));
 			(obj.click) = (next) => ((this.click_explorer(next)));
 			return obj;
 		}
@@ -6413,6 +6431,7 @@ var $;
 			(obj.icon) = () => ("💬");
 			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_chat_label")));
 			(obj.active) = () => ((this.is_chat()));
+			(obj.disabled) = () => ((this.no_dataset()));
 			(obj.click) = (next) => ((this.click_chat(next)));
 			return obj;
 		}
@@ -6428,6 +6447,7 @@ var $;
 			(obj.icon) = () => ("▦");
 			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_dashboard_label")));
 			(obj.active) = () => ((this.is_dashboard()));
+			(obj.disabled) = () => ((this.no_dataset()));
 			(obj.click) = (next) => ((this.click_dashboard(next)));
 			return obj;
 		}
@@ -6607,6 +6627,7 @@ var $;
             is_explorer() { return this.screen() === 'explorer'; }
             is_chat() { return this.screen() === 'chat'; }
             is_dashboard() { return this.screen() === 'dashboard'; }
+            no_dataset() { return !this.dataset_id(); }
             is_en() { return this.$.$mol_locale.lang() === 'en'; }
             is_ru() { return this.$.$mol_locale.lang() === 'ru'; }
             click_gallery() { this.screen('gallery'); return null; }
@@ -13409,8 +13430,14 @@ var $;
 		comms(){
 			return "";
 		}
+		active(){
+			return false;
+		}
 		preview_label_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_gallery_card_preview_label_text"));
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_front_gallery_card_active": (this.active())};
 		}
 		event(){
 			return {...(super.event()), "click": (next) => (this.click(next))};
@@ -13481,15 +13508,23 @@ var $;
     };
     $mol_style_define($raggu_web_front_gallery_card, {
         background: { color: $bog_builderui_tokens.card },
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
+        border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
         padding: {
-            top: '13px',
-            bottom: '13px',
-            left: '13px',
-            right: '13px',
+            top: '12px',
+            bottom: '12px',
+            left: '12px',
+            right: '12px',
         },
         flex: { direction: 'column' },
         cursor: 'pointer',
+        '@': {
+            raggu_web_front_gallery_card_active: {
+                true: {
+                    border: { color: $bog_builderui_tokens.current },
+                    background: { color: $bog_builderui_tokens.field },
+                },
+            },
+        },
         Preview: {
             height: '118px',
             border: { radius: '7px' },
@@ -14176,6 +14211,9 @@ var $;
 		card_comms(id){
 			return "";
 		}
+		card_active(id){
+			return false;
+		}
 		click(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -14189,6 +14227,7 @@ var $;
 			(obj.nodes) = () => ((this.card_nodes(id)));
 			(obj.edges) = () => ((this.card_edges(id)));
 			(obj.comms) = () => ((this.card_comms(id)));
+			(obj.active) = () => ((this.card_active(id)));
 			(obj.click) = (next) => ((this.click(id, next)));
 			return obj;
 		}
@@ -14502,6 +14541,7 @@ var $;
                 return this.$.$mol_locale.text(`$raggu_web_front_app_dataset_${id}_${suffix}`) || '';
             }
             card_id(id) { return id; }
+            card_active(id) { return id === this.dataset_id(); }
             card_title(id) {
                 const ds = this.dataset(id);
                 return ds.dynamic?.title ?? this.dataset_text(id, 'title');
@@ -16247,9 +16287,14 @@ var $;
 			(obj.sub) = () => ([(this.sources_text())]);
 			return obj;
 		}
+		ask_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Ask_btn(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.ask_btn_text())]);
+			(obj.event) = () => ({"click": (next) => (this.ask_click(next))});
 			return obj;
 		}
 		Aside(){
@@ -16355,6 +16400,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_list"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources_title"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "ask_click"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
@@ -19875,6 +19921,10 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		ask_chat(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		screen(next){
 			if(next !== undefined) return next;
 			return "gallery";
@@ -19885,7 +19935,7 @@ var $;
 		}
 		dataset_id(next){
 			if(next !== undefined) return next;
-			return "wiki";
+			return "";
 		}
 		settings_open(next){
 			if(next !== undefined) return next;
@@ -19928,6 +19978,7 @@ var $;
 		Explorer(){
 			const obj = new this.$.$raggu_web_front_explorer();
 			(obj.dataset_id) = () => ((this.dataset_id()));
+			(obj.ask_click) = (next) => ((this.ask_chat(next)));
 			return obj;
 		}
 		Chat(){
@@ -19949,6 +20000,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Settings"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "select_dataset"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "ask_chat"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "screen"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "preset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "dataset_id"));
@@ -19971,7 +20023,9 @@ var $;
     (function ($$) {
         class $raggu_web_front_app extends $.$raggu_web_front_app {
             body() {
-                switch (this.screen()) {
+                // Без выбранного датасета всегда показываем Gallery — остальные экраны бессмысленны.
+                const s = this.dataset_id() ? this.screen() : 'gallery';
+                switch (s) {
                     case 'gallery': return [this.Gallery()];
                     case 'explorer': return [this.Explorer()];
                     case 'chat': return [this.Chat()];
@@ -19990,6 +20044,10 @@ var $;
                 this.dataset_id(id);
                 return null;
             }
+            ask_chat() {
+                this.screen('chat');
+                return null;
+            }
             arg_value(key, next, fallback) {
                 const arg = this.$.$mol_state_arg;
                 if (next === undefined)
@@ -19999,7 +20057,7 @@ var $;
             }
             screen(next) { return this.arg_value('screen', next, 'gallery'); }
             preset(next) { return this.arg_value('preset', next, 'demo'); }
-            dataset_id(next) { return this.arg_value('ds', next, 'wiki'); }
+            dataset_id(next) { return this.arg_value('ds', next, ''); }
         }
         __decorate([
             $mol_mem
@@ -20010,6 +20068,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "select_dataset", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_app.prototype, "ask_chat", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "screen", null);

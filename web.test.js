@@ -3736,6 +3736,8 @@ var $;
             },
             'app.body: switches by screen()'($) {
                 const v = $raggu_web_front_app.make({ $ });
+                // body() forces Gallery when no dataset selected — задать датасет чтобы проверить остальные экраны
+                v.dataset_id('wiki');
                 v.screen('gallery');
                 $mol_assert_equal(v.body()[0], v.Gallery());
                 v.screen('explorer');
@@ -3744,6 +3746,12 @@ var $;
                 $mol_assert_equal(v.body()[0], v.Chat());
                 v.screen('dashboard');
                 $mol_assert_equal(v.body()[0], v.Dashboard());
+            },
+            'app.body: forces Gallery when no dataset selected'($) {
+                const v = $raggu_web_front_app.make({ $ });
+                v.screen('explorer');
+                $mol_assert_equal(v.dataset_id(), '');
+                $mol_assert_equal(v.body()[0], v.Gallery());
             },
             'dashboard: metric and stage rows match data'($) {
                 const v = $raggu_web_front_dashboard.make({ $ });
@@ -3788,6 +3796,8 @@ var $;
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.body()[0], app.Gallery());
                 $mol_assert_equal(app.Gallery().Grid().sub().length, 6);
+                // user picks dataset first — иначе body() держит Gallery
+                app.dataset_id('wiki');
                 // user clicks "Граф" in sidebar → explorer
                 app.Sidebar().click_explorer();
                 $mol_assert_equal(app.screen(), 'explorer');
@@ -4031,6 +4041,21 @@ var $;
                 $mol_assert_equal(c.trace_label_text().length > 0, true);
                 $mol_assert_equal(typeof c.trace_chip_one_text() === 'string', true);
                 $mol_assert_equal(c.trace_chip_one_text().length > 0, true);
+            },
+            // $mol_state_arg — статический класс, все .value() выше писали в реальный URL.
+            // В test.html тесты бегают в том же контексте что и живой app, поэтому без
+            // финального cleanup юзер видит артефакты ?mock=1&ds=law&preset=fast в URL.
+            // Тесты бегают в порядке объявления → этот последний.
+            'zz cleanup: reset $mol_state_arg URL after tests'($) {
+                const arg = $.$mol_state_arg;
+                arg.value('mock', null);
+                arg.value('screen', null);
+                arg.value('preset', null);
+                arg.value('ds', null);
+                $mol_assert_equal(arg.value('mock'), null);
+                $mol_assert_equal(arg.value('screen'), null);
+                $mol_assert_equal(arg.value('preset'), null);
+                $mol_assert_equal(arg.value('ds'), null);
             },
         });
         // Visual e2e demo: runs only in the browser (test.html) after app mounts.
