@@ -18565,29 +18565,80 @@ var $;
 			(obj.sub) = () => ([(this.modes_label_text())]);
 			return obj;
 		}
+		is_llm(){
+			return false;
+		}
+		select_llm(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Mode_llm(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.mode_llm_text())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_chat_mode_active": (this.is_llm())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.select_llm(next))});
+			return obj;
+		}
+		is_local(){
+			return false;
+		}
+		select_local(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Mode_local(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LocalSearch"]);
+			(obj.sub) = () => ([(this.mode_local_text())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_chat_mode_active": (this.is_local())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.select_local(next))});
 			return obj;
+		}
+		is_global(){
+			return false;
+		}
+		select_global(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Mode_global(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Global"]);
+			(obj.sub) = () => ([(this.mode_global_text())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_chat_mode_active": (this.is_global())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.select_global(next))});
 			return obj;
+		}
+		is_mix(){
+			return false;
+		}
+		select_mix(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Mode_mix(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Mix"]);
+			(obj.sub) = () => ([(this.mode_mix_text())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_chat_mode_active": (this.is_mix())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.select_mix(next))});
 			return obj;
+		}
+		is_plan(){
+			return false;
+		}
+		select_plan(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Mode_plan(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["QueryPlan"]);
+			(obj.sub) = () => ([(this.mode_plan_text())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_chat_mode_active": (this.is_plan())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.select_plan(next))});
 			return obj;
 		}
 		Modes(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
+				(this.Mode_llm()), 
 				(this.Mode_local()), 
 				(this.Mode_global()), 
 				(this.Mode_mix()), 
@@ -18854,6 +18905,25 @@ var $;
 		clear_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_clear_text"));
 		}
+		mode_llm_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_mode_llm_text"));
+		}
+		mode_local_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_mode_local_text"));
+		}
+		mode_global_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_mode_global_text"));
+		}
+		mode_mix_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_mode_mix_text"));
+		}
+		mode_plan_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_mode_plan_text"));
+		}
+		mode(next){
+			if(next !== undefined) return next;
+			return "llm";
+		}
 		rows(){
 			return [];
 		}
@@ -18881,9 +18951,15 @@ var $;
 		}
 	};
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Modes_label"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "select_llm"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_llm"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "select_local"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_local"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "select_global"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_global"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "select_mix"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_mix"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "select_plan"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Mode_plan"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Modes"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "clear_click"));
@@ -18920,8 +18996,545 @@ var $;
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace_link"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace_body"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "mode"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message"));
 
+
+;
+"use strict";
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_setup(value, config) {
+        return Object.assign(value, {
+            config,
+            Value: null
+        });
+    }
+    $.$mol_data_setup = $mol_data_setup;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for record of given fields with by its runtypes and returns expected type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_record_demo
+     */
+    function $mol_data_record(sub) {
+        return $mol_data_setup((val) => {
+            let res = {};
+            for (const field in sub) {
+                try {
+                    res[field] =
+                        sub[field](val[field]);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            }
+            return res;
+        }, sub);
+    }
+    $.$mol_data_record = $mol_data_record;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_data_error extends $mol_error_mix {
+    }
+    $.$mol_data_error = $mol_data_error;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for equality to given value and returns expected type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_const_demo
+     */
+    function $mol_data_const(ref) {
+        return $mol_data_setup((val) => {
+            if ($mol_compare_deep(val, ref))
+                return ref;
+            return $mol_fail(new $mol_data_error(`${JSON.stringify(val)} is not ${JSON.stringify(ref)}`));
+        }, ref);
+    }
+    $.$mol_data_const = $mol_data_const;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for string and returns string type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_string_demo
+     */
+    $.$mol_data_string = (val) => {
+        if (typeof val === 'string')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a string`));
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for some of given runtype or throws error.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_variant_demo
+     */
+    function $mol_data_variant(...sub) {
+        return $mol_data_setup((val) => {
+            const errors = [];
+            for (const type of sub) {
+                let hidden = $.$mol_fail_hidden;
+                try {
+                    $.$mol_fail = $.$mol_fail_hidden;
+                    return type(val);
+                }
+                catch (error) {
+                    $.$mol_fail = hidden;
+                    if (error instanceof $mol_data_error) {
+                        errors.push(error);
+                    }
+                    else {
+                        return $mol_fail_hidden(error);
+                    }
+                }
+            }
+            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, {}, ...errors));
+        }, sub);
+    }
+    $.$mol_data_variant = $mol_data_variant;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for array of given runtype and returns expected type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_array_demo
+     */
+    function $mol_data_array(sub) {
+        return $mol_data_setup((val) => {
+            if (!Array.isArray(val))
+                return $mol_fail(new $mol_data_error(`${val} is not an array`));
+            return val.map((item, index) => {
+                try {
+                    return sub(item);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${index}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            });
+        }, sub);
+    }
+    $.$mol_data_array = $mol_data_array;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for null or passing given runtype.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_nullable_demo
+     */
+    function $mol_data_nullable(sub) {
+        return $mol_data_setup((val) => {
+            if (val === null)
+                return null;
+            return sub(val);
+        }, sub);
+    }
+    $.$mol_data_nullable = $mol_data_nullable;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for undefined or passing given runtype.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_optional_demo
+     */
+    function $mol_data_optional(sub, fallback) {
+        return $mol_data_setup((val) => {
+            if (val === undefined) {
+                return fallback?.();
+            }
+            return sub(val);
+        }, { sub, fallback });
+    }
+    $.$mol_data_optional = $mol_data_optional;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_array_shuffle(array) {
+        const res = new Array(array.length);
+        for (let i = 0; i < res.length; ++i) {
+            const j = Math.floor(Math.random() * (i + 1));
+            if (i !== j)
+                res[i] = res[j];
+            res[j] = array[i];
+        }
+        return res;
+    }
+    $.$mol_array_shuffle = $mol_array_shuffle;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_array_shuffle_sync = $mol_wire_sync($mol_array_shuffle);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    // Make new tokens: https://github.com/settings/personal-access-tokens/new?name=$mol_github_model&user_models=read
+    $.$mol_github_model_keys = [
+        '11AADME3A07jh1teLjee8r_O7MKyAF8rbdIlhk4OwsJHaCnh4CjDNxn1nLNAvW2Hy6OSTIYABWQyp0rOHt',
+        '11AADME3A0q6w8EFz9G9aa_byqEpTuWUa63PKoSAwN1eVi2GyGJ4SxYhm9OhAc2DCTANK2ULBQpQgUu6D9',
+        '11AADME3A0RsfJpmuZfl4r_Nw6G3v7vDgnrqDxmlgF6Gyj9YawDfTqatNUxhwPjzWwYYGIORGETiUtMOmR',
+        '11AADME3A0meTYzVZaOtJF_LrdN2tIDycZHDBN3560V3S2ZWpo07uATZON0XUYF2ZFFC3X2OHSwdUcVfUe',
+        '11AADME3A0myGzFwrNHkV0_InRujMNsqM7cLUWDvKCW5GRy2waC7fHXuSJdzW0mrwvX7VP4I2MoGXRXF6w',
+        '11AADME3A0LF4GM8Qam5xH_LFLHQqgcmudC8eyKLEqc4l5xDPcplSxAcEA3j8BO4MYTAE6FOROqFIuhGfR',
+        '11AADME3A0KUqaRrYVSMzf_rYLJd83byQ1HN8KOIzVnHPBvW6VPei911NJgPucm1hRETR55VB3mdyw2ezI',
+        '11AADME3A0exOKaaQLYR2b_2JKJDHVAWxoqRPlGcugBHNapcZWT9awRic8iBmgOirXRVC5X7ILtz6KDffv',
+        '11AADME3A071WbELDi8THV_v3dkQtbYpSGjUXeWT6dAiPBf5a5b0KDr0E029T6P4CsZOOYO3DPpopBkodL',
+        '11AADME3A0L5oFWUKk62fr_Dcbcn1ZcNBwWaLfbHzlgueGcxBEO5FoOieoowhJ6Q1zIWIIYZBG7XI16O4H',
+        '11ABRVBSY0f8VzkzaCnFmy_PMfBlJqT7DuvxfzbYRUlLOZJenEqBvNpGP7uQKCDOaO6ZKS4DFCG0qYxy2I',
+        '11ABRVBSY0no18F8ngCYoa_60v1HSbYVeEZ2d3tf1ix2Kq7G8ZRYaFFiHImNxERTkqJ5CWMQ6VmjH7ic86',
+        '11ABRVBSY0acYIFJ0b9cAV_0wPJI2JxZgLYasswZjIUMQqxnYcRAUEG68xtsh9uQtNZDYU37IS5GBobX8v',
+        '11ABRVBSY0KhLO9yDqoqMM_B328qDB5kCHqgAJNw3q1MW48gHQ9XYAnnRQFlXkE1MQGX3S5TOK6k4od8C8',
+        '11ABRVBSY04TXJfmvdflXC_o9UQLVNWbPWzaqaaZll9fFn9QLAZotSwi18clpeaaYkTQEHQSW3yvrSAsCb',
+        '11ABRVBSY0n7osgrVkUT0l_PQadBMEjSXLOGZGwuu5wVXydSnwxboWUAxAIdXgXP9hRVQOKM5UNsJaKk0M',
+        '11ABRVBSY0Zctkh9fg9Cpl_nqCk5TSio22hgtvAWqYzGvlsfaIH9e66ery772pkCW0C7EJA7HJrPGxIYQy',
+        '11ABRVBSY0XbD5DK094oOY_8mmeflfbf4mu48bWk7OFQvrxxPXp5gFCxO5PUokPwsw2LZRC6DZSujLHCVt',
+        '11ABRVBSY0AGZyClxdqZDx_gseo5RI9HKRPvlQtRFmmR5An2jaRna9glpzv40wi7MZCCCDAVIWk3l1Nwp9',
+        '11ABRVBSY0SvjU9l1d7DXU_LOZfXdIZuupZCmu1FA4NGUOy572G8ZJ6pzYyzu9RsWfG7HLRMLYIIIE54Mp',
+        '11AACDCYQ0R6jhkMIx4zY4_OlEwnePW3UFhkNsJuyAweBPsHtqlhBW7WD69mWjuuYTTAYOTX7KL4WK1Yg7',
+        '11AACDCYQ0Ai0LkLKrp9kE_D10SuqSODWeGWvA4Rgux6ZXs2AEwl3IqpElNGRI7JG0ZIGVKV5RaUDAchxe',
+        '11AACDCYQ0c94yhWtZq2HX_YFms0ToLulxGTnr80ndTsHZIOfNMl8QdLmoKL75fZ3oK6JN3NOKsnxMZ1qu',
+        '11AACDCYQ0DkrjD2bmmKpL_PcrQXvrbiEnJl0oazFx70p9wdCXd2rP5DhazexPAcygLGKIOQRXeeCXsP7B',
+        '11AACDCYQ0IMIYCLcX3xrO_901enZ0EKxk48giaCI7vkIHZgdOpqrvPyHiF4t02klvCLI7OVRE3uqJ3PKf',
+        '11AACDCYQ0WIjNWbjdJclE_KKiTwAIGNcbpPIO6SJfBxbuUVixxug7QH5KPRcMXAYv3ZOROGOVFvj4GzzG',
+        '11AACDCYQ0tKWudX3T6T6l_wGiLSmI6aYR7Wf5ZXFukZdPuUL7lpGpBIzkm8CSxcaoJQT7GDAU2PtnWWDj',
+        '11AACDCYQ0Ocm4JD37TfHG_0KPjGl3ucMm4ozREvzF1QNY3UECaZNh3SiY49AUzJgGNITGLVH2LdHhz7PT',
+        '11AACDCYQ0R5HgcrZOxDwc_dgCK0jETB27GYYCmh1YMfdE5dPuLNZ1DLiIDi2tQnr0IGUX5WFRNa9oTaSw',
+        '11AZC2M3A02nw2Q86BPmYQ_yl2RFA1RXRuEVWU0ufTjBXl12SvUWyeZxZ9cbZRuind6QWI65J4tXbAfF2p',
+        '11AZC2M3A0gcGTDvExPjEL_m1itogjz24QDTxT0zJTpDJmyZ3sSKO1UXapXfw7q0BLMUIOXP3SB7zRfavu',
+        '11AZC2M3A0Y1oDGiEjDZ1g_t5ry6SPyckVwZvBQvBke09QbNMF8rG1TXdcops2BiDmKDYKOOCV58edg7VY',
+        '11AZC2M3A00bI3vc5JPaA2_MZGbctgtp5KEdBD2dYVW7MaQ2Fqiw8UrIpHKZp8xnczJGHTTJQPa9QxXjrc',
+        '11AZC2M3A0fGlQkvashsda_CuaNQlzrajBrj82VlUzZQ67Qgq9X3QudJ9S3SM3wnzvNIQRQARZoClezK3C',
+        '11AZC2M3A06Zat4wc9fotV_0gdnr4cGXfzD2wTkBIr5QYyj3ErxgMcHJerQb81AtnqBSYKBHIEzBXbqzQr',
+        '11AZC2M3A0V1JUeQY0eOov_rrWyENLMO5Sxa4IEPbZMLippdb8TQi531bmfJQBBaCfQHIC5PQFFwUp49DW',
+        '11AZC2M3A0G89rDbsh2k20_l6kEuOm10kV86RGIp1s5wQ1n6kLe0WFgeCHLthnGNSyDSIBNNC6Q7kjGrem',
+        '11AZC2M3A0tAUQ7dX2dnaI_hvDm1d0lxDpHXkYx1khtJyidfjREBvg2qssXurwxihAHBEMII5T7l5WrXI9',
+        '11AZC2M3A0VPRCdsbErhom_W0wrECR4sbXQZLlG966rsb1G65pOXJGbk4uaV0zUNpMZPDBW5DSTZyRTCJy',
+        '11AZC2M3A06fZVQGXETeaM_KIU5iEeb6UtpBrGZMOG6kQc1r32A5Xh1uxAMdmZRwkHICW2HJMAHcv236fa',
+        '11AZC2M3A0QyPnQfDarLu5_x6eKghOwMB3yX2KPPVGvD3PKKuY5QiK7gJ4eoPiYCSwOBQVU2P6EOzN75xf',
+        '11AZC2M3A0VW9BdSxec56G_P3YnEAFXcC7IMauK8nhxHwFNS09AgIisAuy9Kft19o2LAHR5RXQyMHIl9yQ',
+        '11AZC2M3A0P4o9D1flcC0S_f2NS5FSSogJoFsocKShuv4m7ghDBamKRgPvPqACGEejJRU2BBE2gymGHhk1',
+        '11AZC2M3A0cI704OJ5EVfc_8c1ggPeodHoWEY8lMHH9cvKLGyGvGbgzW7tr4V7E5ITT7RDCHJYzNZoXxGF',
+        '11AZC2M3A0yFNB07z5VFbp_RtEMVMcdKpfFgn0ls2v3hlcJDsIs6v7e64TXSW2muOK5RPKAJ3WxdZS2vzT',
+        '11AZC2M3A06KL2qd1GmlIB_a7tt0VJaKLybMxJLdJ6JPk6iBgNaECXJsFd5FyCl4nSSQT3QSG4ETLYFOwj',
+        '11AZC2M3A0Ui6RqKCiBn6X_6S4OnreMp6Au5JSRwfcWop1SiHV9ooFsBHhYkFEiErAQYHDENGGzLmL1aD9',
+        '11AZC2M3A0hk74xKy52Egx_jYVCEjt9jpT2peCB0qT7JrnSX1a075ZASxKTzaV3KeqTTV5A7SRNxkaElKn',
+        '11AZC2M3A021XEPByvPlBg_rKr4RNMcfeflEKrL5qGxDieXMKLlf4S6FWvtUUzIYaoOK63JXVBv8XPAfi5',
+        '11AZC2M3A0yK6fYUgjj79M_5yu4OE4RdeFk8IoY3kcOC1xemTvjB1B8tOzA1KPmqQSX37EDQIOIuRjf9jF',
+    ].map(str => `github_pat_${str}`);
+    $.$mol_github_model_polyglots = [
+        // 'openai/gpt-4.1', // 50/D too slow
+        // 'openai/gpt-4o', // 50/D bad resp
+        'openai/gpt-4.1-mini', // 150/D
+        // 'openai/gpt-4o-mini', // 150/D bad resp
+        // 'openai/gpt-4.1-nano', // 150/D bad resp
+    ];
+    const Text = $mol_data_record({
+        type: $mol_data_const('text'),
+        text: $mol_data_string,
+    });
+    const Image = $mol_data_record({
+        type: $mol_data_const('image_url'),
+        image_url: $mol_data_record({
+            url: $mol_data_string,
+        }),
+    });
+    const Content_item = $mol_data_variant(Text, Image);
+    const Content = $mol_data_variant($mol_data_string, $mol_data_array(Content_item));
+    const System = $mol_data_record({
+        role: $mol_data_const('system'),
+        content: Content,
+    });
+    const Assistant = $mol_data_record({
+        role: $mol_data_const('assistant'),
+        content: $mol_data_nullable(Content),
+        tool_calls: $mol_data_optional($mol_data_array($mol_data_record({
+            type: $mol_data_const('function'),
+            id: $mol_data_string,
+            function: $mol_data_record({
+                name: $mol_data_string,
+                arguments: $mol_data_string,
+            }),
+        }))),
+    });
+    const User = $mol_data_record({
+        role: $mol_data_const('user'),
+        content: Content,
+    });
+    const Tool = $mol_data_record({
+        role: $mol_data_const('tool'),
+        // name: $mol_data_string,
+        tool_call_id: $mol_data_string,
+        content: Content,
+    });
+    const Message = $mol_data_variant(System, Assistant, User, Tool);
+    const Resp = $mol_data_record({
+        choices: $mol_data_array($mol_data_record({
+            message: Assistant,
+        })),
+    });
+    const RespFail = $mol_data_record({
+        error: $mol_data_record({
+            message: $mol_data_string,
+        }),
+    });
+    function bloat_content(val) {
+        if (typeof val !== 'string')
+            val = JSON.stringify(val);
+        else if (val.startsWith('data:'))
+            return { type: 'image_url', image_url: { url: val } };
+        return { type: 'text', text: val };
+    }
+    /**
+     * Github hosted LLM API.
+     */
+    class $mol_github_model extends $mol_object {
+        // STATIC STATE
+        /** Model names from https://github.com/marketplace/models */
+        names() {
+            return this.$.$mol_github_model_polyglots;
+        }
+        /** System rules */
+        rules() {
+            return '';
+        }
+        /** List of callable functions */
+        tools() {
+            return new Map();
+        }
+        // DYNAMIC STATE
+        /** Actual system state */
+        state(next) {
+            $mol_wire_solid();
+            return next ?? [];
+        }
+        /** Additional model query params */
+        params(next) {
+            $mol_wire_solid();
+            return next ?? {};
+        }
+        /** Dialog history */
+        history(next) {
+            $mol_wire_solid();
+            return next ?? [];
+        }
+        // ACTIONS
+        /** Independent copy of current state. */
+        fork() {
+            const fork = $mol_github_model.make({
+                // static state
+                names: $mol_const(this.names()),
+                rules: $mol_const(this.rules()),
+                tools: $mol_const(this.tools()),
+                state: () => this.state(),
+            });
+            // dynamic state
+            fork.params(this.params());
+            fork.history(this.history());
+            return fork;
+        }
+        /** One-shot stateless prompting */
+        shot(prompt, context, params) {
+            const fork = this.fork();
+            if (params)
+                fork.params({ ...this.params(), ...params });
+            if (context)
+                fork.tell(context);
+            fork.ask(prompt);
+            return fork.response();
+        }
+        /** Add user prompt */
+        ask(chunks) {
+            this.history([
+                ...this.history(),
+                {
+                    role: "user",
+                    content: chunks.map(bloat_content),
+                }
+            ]);
+            return this;
+        }
+        /** Add assistant context */
+        tell(chunks) {
+            this.history([
+                ...this.history(),
+                {
+                    role: "assistant",
+                    content: chunks.map(bloat_content),
+                }
+            ]);
+            return this;
+        }
+        /** Add tools answer */
+        answer(id, chunks) {
+            const history = this.history();
+            const index = 1 + history.findIndex(msg => msg.role === 'tool' && msg.tool_call_id === id);
+            if (!index)
+                this.$.$mol_fail(new Error('Wrong tool call id', { cause: id }));
+            this.history([
+                ...history.slice(0, index),
+                {
+                    role: "tool",
+                    tool_call_id: id,
+                    content: chunks.map(bloat_content),
+                },
+                ...history.slice(index),
+            ]);
+            return this;
+        }
+        // INFERENCE
+        request_body(model) {
+            return JSON.stringify({
+                model,
+                stream: false,
+                response_format: { type: 'json_object' },
+                messages: [
+                    { role: 'system', content: this.rules() },
+                    ...this.history(),
+                    { role: 'system', content: this.state().map(bloat_content) },
+                ],
+                tools: [...this.tools()].map(([name, info]) => ({
+                    type: "function",
+                    function: {
+                        name,
+                        description: info.descr,
+                        strict: true,
+                        parameters: info.params,
+                    },
+                })),
+                ...this.params(),
+            });
+        }
+        request(model, key) {
+            return Resp(this.$.$mol_fetch.json(`https://models.github.ai/inference/chat/completions`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + key,
+                    'Content-Type': 'application/json',
+                },
+                body: this.request_body(model)
+            }));
+        }
+        /** Last response from LLM */
+        response() {
+            const history = this.history();
+            const last = history.at(-1);
+            if (last?.role !== 'user')
+                return null;
+            const models = this.$.$mol_array_shuffle_sync(this.names());
+            const keys = this.$.$mol_array_shuffle_sync($.$mol_github_model_keys);
+            for (const model of models)
+                for (const key of keys) {
+                    try {
+                        const resp = this.request(model, key);
+                        const message = resp.choices[0].message;
+                        this.history([...history, message]);
+                        if (typeof message.content === 'string')
+                            return JSON.parse(message.content);
+                        return message.content;
+                    }
+                    catch (error) {
+                        const resp = error.cause;
+                        if (!resp)
+                            return $mol_fail_hidden(error);
+                        if (resp.code() === 429)
+                            continue; // rate limit
+                        if (resp.code() === 400) {
+                            const message = RespFail(resp.json()).error.message;
+                            this.history([...history, { role: 'system', content: '📛 ' + message }]);
+                            $mol_fail(new Error(message));
+                        }
+                        $mol_fail_hidden(error);
+                    }
+                }
+            return this.$.$mol_fail(new Error('No alive token'));
+        }
+    }
+    __decorate([
+        $mol_memo.method
+    ], $mol_github_model.prototype, "names", null);
+    __decorate([
+        $mol_memo.method
+    ], $mol_github_model.prototype, "tools", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "state", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "params", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "history", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "fork", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "shot", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "ask", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "tell", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "answer", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_github_model.prototype, "request_body", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "response", null);
+    $.$mol_github_model = $mol_github_model;
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -18945,6 +19558,22 @@ var $;
             }
             prompt_text(next) {
                 return this.$.$mol_state_session.value('$raggu_web_front_chat.prompt_text', next) ?? '';
+            }
+            mode(next) {
+                return this.$.$mol_state_session.value('$raggu_web_front_chat.mode', next) ?? 'llm';
+            }
+            is_llm() { return this.mode() === 'llm'; }
+            is_local() { return this.mode() === 'local'; }
+            is_global() { return this.mode() === 'global'; }
+            is_mix() { return this.mode() === 'mix'; }
+            is_plan() { return this.mode() === 'plan'; }
+            select_llm() { this.mode('llm'); return null; }
+            select_local() { this.mode('local'); return null; }
+            select_global() { this.mode('global'); return null; }
+            select_mix() { this.mode('mix'); return null; }
+            select_plan() { this.mode('plan'); return null; }
+            llm() {
+                return $mol_github_model.make({ $: this.$ });
             }
             rows() {
                 return this.history().map((_, i) => this.Message(i));
@@ -18982,11 +19611,26 @@ var $;
                 const next = [...this.history(), { role: 'user', text }];
                 this.history(next);
                 this.prompt_text('');
-                const mock = `${this.mock_prefix_text()} "${text}". ${this.mock_suffix_text()}`;
-                setTimeout(() => {
-                    const cur = this.history();
-                    this.history([...cur, { role: 'assistant', text: mock, trace: true }]);
-                }, 500);
+                if (this.mode() === 'llm') {
+                    // Real LLM через $mol_github_model — асинхронно, оборачиваем в fiber
+                    $mol_wire_async(this).llm_reply(text);
+                }
+                else {
+                    // Мок для search-режимов
+                    const mock = `${this.mock_prefix_text()} "${text}". ${this.mock_suffix_text()}`;
+                    setTimeout(() => {
+                        const cur = this.history();
+                        this.history([...cur, { role: 'assistant', text: mock, trace: true }]);
+                    }, 500);
+                }
+                return null;
+            }
+            llm_reply(text) {
+                const model = this.llm().fork();
+                model.ask([text]);
+                const resp = model.response();
+                const reply = typeof resp === 'string' ? resp : JSON.stringify(resp, null, 2);
+                this.history([...this.history(), { role: 'assistant', text: reply }]);
                 return null;
             }
             use_sug_one() {
@@ -19007,6 +19651,27 @@ var $;
         ], $raggu_web_front_chat.prototype, "history", null);
         __decorate([
             $mol_mem
+        ], $raggu_web_front_chat.prototype, "mode", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "select_llm", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "select_local", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "select_global", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "select_mix", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "select_plan", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "llm", null);
+        __decorate([
+            $mol_mem
         ], $raggu_web_front_chat.prototype, "scroll_height", null);
         __decorate([
             $mol_mem
@@ -19017,6 +19682,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "llm_reply", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "use_sug_one", null);
@@ -19035,7 +19703,7 @@ var $;
 /** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    const mode_pill_inactive = {
+    const mode_pill = {
         background: { color: $bog_builderui_tokens.field },
         border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
         padding: {
@@ -19046,6 +19714,16 @@ var $;
         },
         font: { size: '11px', weight: 600 },
         color: $bog_builderui_tokens.shade,
+        cursor: 'pointer',
+        '@': {
+            raggu_chat_mode_active: {
+                true: {
+                    background: { color: $bog_builderui_tokens.current },
+                    color: '#ffffff',
+                    border: { color: $bog_builderui_tokens.current },
+                },
+            },
+        },
     };
     const chip = {
         background: { color: $bog_builderui_tokens.field },
@@ -19115,21 +19793,11 @@ var $;
             flex: { direction: 'row' },
             gap: '5px',
         },
-        Mode_local: {
-            background: { color: $bog_builderui_tokens.current },
-            color: '#ffffff',
-            border: { radius: '6px' },
-            padding: {
-                top: '5px',
-                bottom: '5px',
-                left: '10px',
-                right: '10px',
-            },
-            font: { size: '11px', weight: 600 },
-        },
-        Mode_global: mode_pill_inactive,
-        Mode_mix: mode_pill_inactive,
-        Mode_plan: mode_pill_inactive,
+        Mode_llm: mode_pill,
+        Mode_local: mode_pill,
+        Mode_global: mode_pill,
+        Mode_mix: mode_pill,
+        Mode_plan: mode_pill,
         Clear: {
             marginLeft: 'auto',
             minWidth: '40px',
@@ -24827,6 +25495,235 @@ var $;
             $mol_assert_equal($mol_state_session.value(key), '$mol_state_session_test');
             $mol_state_session.value(key, null);
             $mol_assert_equal($mol_state_session.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'config by value'() {
+            const N = $mol_data_setup((a) => a, 5);
+            $mol_assert_equal(N.config, 5);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for number and returns number type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_number_demo
+     */
+    $.$mol_data_number = (val) => {
+        if (typeof val === 'number')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a number`));
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is number'() {
+            $mol_data_number(0);
+        },
+        'Is not number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number('x');
+            }, 'x is not a number');
+        },
+        'Is object number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number(new Number(''));
+            }, '0 is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is string'() {
+            $mol_data_string('');
+        },
+        'Is not string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(0);
+            }, '0 is not a string');
+        },
+        'Is object string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(new String('x'));
+            }, 'x is not a string');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Fit to record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0 });
+        },
+        'Extends record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0, name: 'Jin' });
+        },
+        // 'Recursive record' () {
+        // 	const User = $mol_data_record({
+        // 		name : $mol_data_string ,
+        // 		get kids() { return $mol_data_array( User ) } ,
+        // 	})
+        // 	User({
+        // 		name : 'Jin' ,
+        // 		kids : [
+        // 			{
+        // 				name : 'John' ,
+        // 				kids : [] ,
+        // 			}
+        // 		] ,
+        // 	})
+        // } ,
+        'Shrinks record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
+                User({ age: 0 });
+            }, '["name"] undefined is not a string');
+        },
+        'Shrinks deep record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
+                User({ wife: {} });
+            }, '["wife"] ["age"] undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'is same number'() {
+            const Nan = $mol_data_const(Number.NaN);
+            Nan(Number.NaN);
+        },
+        'is equal object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            Tags({ tags: ['deep', 'equals'] });
+        },
+        'is different number'() {
+            const Five = $mol_data_const(5);
+            $mol_assert_fail(() => Five(6), '6 is not 5');
+        },
+        'is different object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is first'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)(0);
+        },
+        'Is second'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)('');
+        },
+        'Is false'() {
+            $mol_assert_fail(() => {
+                $mol_data_variant($mol_data_number, $mol_data_string)(false);
+            }, 'false is not any of variants');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty array'() {
+            $mol_data_array($mol_data_number)([]);
+        },
+        'Is array'() {
+            $mol_data_array($mol_data_number)([1, 2]);
+        },
+        'Is not array'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
+            }, '[object Object] is not an array');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)([1, '1']);
+            }, '[1] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
+            }, '[1] [2] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is null'() {
+            $mol_data_nullable($mol_data_number)(null);
+        },
+        'Is not null'() {
+            $mol_data_nullable($mol_data_number)(0);
+        },
+        'Is undefined'() {
+            $mol_assert_fail(() => {
+                const Type = $mol_data_nullable($mol_data_number);
+                Type(undefined);
+            }, 'undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const Age = $mol_data_optional($mol_data_number);
+    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
+    $mol_test({
+        'Is not present'() {
+            $mol_assert_equal(Age(undefined), undefined);
+        },
+        'Is present'() {
+            $mol_assert_equal(Age(0), 0);
+        },
+        'Fallbacked'() {
+            $mol_assert_equal(Age_or_zero(undefined), 0);
+        },
+        'Is null'() {
+            $mol_assert_fail(() => Age(null), 'null is not a number');
         },
     });
 })($ || ($ = {}));

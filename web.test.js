@@ -3701,6 +3701,235 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'config by value'() {
+            const N = $mol_data_setup((a) => a, 5);
+            $mol_assert_equal(N.config, 5);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /**
+     * Checks for number and returns number type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_number_demo
+     */
+    $.$mol_data_number = (val) => {
+        if (typeof val === 'number')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a number`));
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is number'() {
+            $mol_data_number(0);
+        },
+        'Is not number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number('x');
+            }, 'x is not a number');
+        },
+        'Is object number'() {
+            $mol_assert_fail(() => {
+                $mol_data_number(new Number(''));
+            }, '0 is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is string'() {
+            $mol_data_string('');
+        },
+        'Is not string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(0);
+            }, '0 is not a string');
+        },
+        'Is object string'() {
+            $mol_assert_fail(() => {
+                $mol_data_string(new String('x'));
+            }, 'x is not a string');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Fit to record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0 });
+        },
+        'Extends record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0, name: 'Jin' });
+        },
+        // 'Recursive record' () {
+        // 	const User = $mol_data_record({
+        // 		name : $mol_data_string ,
+        // 		get kids() { return $mol_data_array( User ) } ,
+        // 	})
+        // 	User({
+        // 		name : 'Jin' ,
+        // 		kids : [
+        // 			{
+        // 				name : 'John' ,
+        // 				kids : [] ,
+        // 			}
+        // 		] ,
+        // 	})
+        // } ,
+        'Shrinks record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
+                User({ age: 0 });
+            }, '["name"] undefined is not a string');
+        },
+        'Shrinks deep record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
+                User({ wife: {} });
+            }, '["wife"] ["age"] undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'is same number'() {
+            const Nan = $mol_data_const(Number.NaN);
+            Nan(Number.NaN);
+        },
+        'is equal object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            Tags({ tags: ['deep', 'equals'] });
+        },
+        'is different number'() {
+            const Five = $mol_data_const(5);
+            $mol_assert_fail(() => Five(6), '6 is not 5');
+        },
+        'is different object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is first'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)(0);
+        },
+        'Is second'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)('');
+        },
+        'Is false'() {
+            $mol_assert_fail(() => {
+                $mol_data_variant($mol_data_number, $mol_data_string)(false);
+            }, 'false is not any of variants');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty array'() {
+            $mol_data_array($mol_data_number)([]);
+        },
+        'Is array'() {
+            $mol_data_array($mol_data_number)([1, 2]);
+        },
+        'Is not array'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
+            }, '[object Object] is not an array');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)([1, '1']);
+            }, '[1] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
+            }, '[1] [2] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is null'() {
+            $mol_data_nullable($mol_data_number)(null);
+        },
+        'Is not null'() {
+            $mol_data_nullable($mol_data_number)(0);
+        },
+        'Is undefined'() {
+            $mol_assert_fail(() => {
+                const Type = $mol_data_nullable($mol_data_number);
+                Type(undefined);
+            }, 'undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const Age = $mol_data_optional($mol_data_number);
+    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
+    $mol_test({
+        'Is not present'() {
+            $mol_assert_equal(Age(undefined), undefined);
+        },
+        'Is present'() {
+            $mol_assert_equal(Age(0), 0);
+        },
+        'Fallbacked'() {
+            $mol_assert_equal(Age_or_zero(undefined), 0);
+        },
+        'Is null'() {
+            $mol_assert_fail(() => Age(null), 'null is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
 var $;
 (function ($_1) {
     var $$;

@@ -56,3 +56,4 @@
 	pack builderui git \https://github.com/b-on-g/builderui.git
 \/raggu/web/front/app
 	deploy \/mol/offline/install
+	deploy \/raggu/web/front/assets

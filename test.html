@@ -5,13 +5,47 @@
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<title>RAGU — Live Demo</title>
-		<meta name="description" content="GraphRAG-движок: интерактивный граф знаний, чат с трейсом, бенчмарки качества и энергоэффективности." />
+		<meta name="theme-color" content="#1c1b1a" />
+		<meta name="color-scheme" content="dark light" />
+		<meta name="author" content="RAGU Team" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<link rel="canonical" href="https://raguteam.github.io/web/" />
+
+		<title>RAGU — GraphRAG Live Demo</title>
+		<meta name="description" content="GraphRAG-движок: интерактивный граф знаний, чат-агент с трейсом ответа, бенчмарки качества и энергоэффективности на корпусах документов." />
+		<meta name="keywords" content="GraphRAG, knowledge graph, retrieval-augmented generation, RAG, LLM, семантический поиск, граф знаний" />
+
+		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="RAGU" />
 		<meta property="og:title" content="RAGU — GraphRAG Live Demo" />
 		<meta property="og:description" content="Интерактивный граф знаний + чат-агент с трейсом ответа на корпусах документов." />
+		<meta property="og:url" content="https://raguteam.github.io/web/" />
+		<meta property="og:locale" content="ru_RU" />
+		<meta property="og:locale:alternate" content="en_US" />
+		<meta property="og:image" content="https://raguteam.github.io/web/raggu/web/front/assets/ragu.jpg" />
+		<meta property="og:image:alt" content="RAGU — GraphRAG live demo screenshot" />
+
+		<!-- Twitter / X -->
 		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="RAGU — GraphRAG Live Demo" />
+		<meta name="twitter:description" content="Интерактивный граф знаний + чат-агент с трейсом ответа на корпусах документов." />
+		<meta name="twitter:image" content="https://raguteam.github.io/web/raggu/web/front/assets/ragu.jpg" />
+
+		<!-- Structured data — helps search engines understand this is a demo app -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "SoftwareApplication",
+			"name": "RAGU",
+			"description": "GraphRAG demo — interactive knowledge graph, chat agent with reasoning trace, quality and energy benchmarks.",
+			"url": "https://raguteam.github.io/web/",
+			"applicationCategory": "DeveloperApplication",
+			"operatingSystem": "Any",
+			"inLanguage": ["ru", "en"],
+			"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+		}
+		</script>
 	</head>
 	<body mol_view_root>
 		<div mol_view_root="$raggu_web_front_app">

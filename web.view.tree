@@ -1579,11 +1579,22 @@ $raggu_web_front_chat $bog_builderui_div
 	mock_prefix_text @ \Thanks for the question:
 	mock_suffix_text @ \(Mock response. Real retrieval will be wired to the backend.)
 	clear_text @ \Clear
+	mode_llm_text @ \LLM
+	mode_local_text @ \LocalSearch
+	mode_global_text @ \Global
+	mode_mix_text @ \Mix
+	mode_plan_text @ \QueryPlan
+	mode? \llm
 	prompt_text? \
 	prompt_submit? null
 	use_sug_one? null
 	use_sug_two? null
 	clear_click? null
+	select_llm? null
+	select_local? null
+	select_global? null
+	select_mix? null
+	select_plan? null
 	rows /
 	message_text* \
 	message_role* \
@@ -1592,10 +1603,46 @@ $raggu_web_front_chat $bog_builderui_div
 		<= Modes_bar $bog_builderui_div sub /
 			<= Modes_label $bog_builderui_div sub / <= modes_label_text
 			<= Modes $bog_builderui_div sub /
-				<= Mode_local $bog_builderui_div sub / \LocalSearch
-				<= Mode_global $bog_builderui_div sub / \Global
-				<= Mode_mix $bog_builderui_div sub / \Mix
-				<= Mode_plan $bog_builderui_div sub / \QueryPlan
+				<= Mode_llm $bog_builderui_div
+					sub / <= mode_llm_text
+					attr *
+						^
+						raggu_chat_mode_active <= is_llm false
+					event *
+						^
+						click? <=> select_llm? null
+				<= Mode_local $bog_builderui_div
+					sub / <= mode_local_text
+					attr *
+						^
+						raggu_chat_mode_active <= is_local false
+					event *
+						^
+						click? <=> select_local? null
+				<= Mode_global $bog_builderui_div
+					sub / <= mode_global_text
+					attr *
+						^
+						raggu_chat_mode_active <= is_global false
+					event *
+						^
+						click? <=> select_global? null
+				<= Mode_mix $bog_builderui_div
+					sub / <= mode_mix_text
+					attr *
+						^
+						raggu_chat_mode_active <= is_mix false
+					event *
+						^
+						click? <=> select_mix? null
+				<= Mode_plan $bog_builderui_div
+					sub / <= mode_plan_text
+					attr *
+						^
+						raggu_chat_mode_active <= is_plan false
+					event *
+						^
+						click? <=> select_plan? null
 			<= Clear $mol_button_minor
 				hint <= clear_text
 				click? <=> clear_click? null
