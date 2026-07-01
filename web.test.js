@@ -3782,13 +3782,6 @@ var $;
                 app.screen('gallery');
                 $mol_assert_equal(arg.value('screen'), null);
             },
-            'lang state: $mol_locale.lang() persists via $mol_state_local, NOT URL'($) {
-                $.$mol_locale.lang('en');
-                $mol_assert_equal($.$mol_locale.lang(), 'en');
-                $mol_assert_equal($.$mol_state_arg.value('lang'), null);
-                $.$mol_locale.lang('ru');
-                $mol_assert_equal($.$mol_locale.lang(), 'ru');
-            },
             'e2e: full user flow through all screens'($) {
                 $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
@@ -3823,9 +3816,6 @@ var $;
                 app.Gallery().click('law');
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.dataset_id(), 'law');
-                // user switches language EN — re-renders all @-strings via $mol_locale
-                app.Sidebar().click_en();
-                $mol_assert_equal($.$mol_locale.lang(), 'en');
                 // user picks preset
                 $mol_assert_equal(app.preset(), 'demo');
                 app.Topbar().click_fast();

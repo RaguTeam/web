@@ -8527,6 +8527,13 @@ declare namespace $ {
 		sources_text( ): string
 		ask_btn_text( ): string
 		legend_title_text( ): string
+		legend_person_label_text( ): string
+		legend_org_label_text( ): string
+		legend_loc_label_text( ): string
+		legend_event_label_text( ): string
+		legend_date_label_text( ): string
+		legend_work_label_text( ): string
+		legend_law_label_text( ): string
 		sub( ): readonly(any)[]
 	}
 	

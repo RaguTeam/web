@@ -16785,7 +16785,7 @@ var $;
 		}
 		Legend_person_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["PERSON"]);
+			(obj.sub) = () => ([(this.legend_person_label_text())]);
 			return obj;
 		}
 		Legend_person(){
@@ -16799,7 +16799,7 @@ var $;
 		}
 		Legend_org_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["ORGANIZATION"]);
+			(obj.sub) = () => ([(this.legend_org_label_text())]);
 			return obj;
 		}
 		Legend_org(){
@@ -16813,7 +16813,7 @@ var $;
 		}
 		Legend_loc_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LOCATION"]);
+			(obj.sub) = () => ([(this.legend_loc_label_text())]);
 			return obj;
 		}
 		Legend_loc(){
@@ -16827,7 +16827,7 @@ var $;
 		}
 		Legend_event_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["EVENT"]);
+			(obj.sub) = () => ([(this.legend_event_label_text())]);
 			return obj;
 		}
 		Legend_event(){
@@ -16841,7 +16841,7 @@ var $;
 		}
 		Legend_date_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["DATE"]);
+			(obj.sub) = () => ([(this.legend_date_label_text())]);
 			return obj;
 		}
 		Legend_date(){
@@ -16855,7 +16855,7 @@ var $;
 		}
 		Legend_work_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["WORK_OF_ART"]);
+			(obj.sub) = () => ([(this.legend_work_label_text())]);
 			return obj;
 		}
 		Legend_work(){
@@ -16869,7 +16869,7 @@ var $;
 		}
 		Legend_law_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["LAW"]);
+			(obj.sub) = () => ([(this.legend_law_label_text())]);
 			return obj;
 		}
 		Legend_law(){
@@ -17049,6 +17049,27 @@ var $;
 		}
 		legend_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
+		}
+		legend_person_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_person_label_text"));
+		}
+		legend_org_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_org_label_text"));
+		}
+		legend_loc_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_loc_label_text"));
+		}
+		legend_event_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_event_label_text"));
+		}
+		legend_date_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_date_label_text"));
+		}
+		legend_work_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_work_label_text"));
+		}
+		legend_law_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_law_label_text"));
 		}
 		sub(){
 			return [(this.Canvas()), (this.Aside())];

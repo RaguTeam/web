@@ -1345,6 +1345,13 @@ $raggu_web_front_explorer $bog_builderui_div
 	sources_text @ \chunk #418 · chunk #902 …
 	ask_btn_text @ \💬 Ask about this entity
 	legend_title_text @ \Entity Types
+	legend_person_label_text @ \PERSON
+	legend_org_label_text @ \ORGANIZATION
+	legend_loc_label_text @ \LOCATION
+	legend_event_label_text @ \EVENT
+	legend_date_label_text @ \DATE
+	legend_work_label_text @ \WORK_OF_ART
+	legend_law_label_text @ \LAW
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
@@ -1361,25 +1368,25 @@ $raggu_web_front_explorer $bog_builderui_div
 				<= Legend_title $bog_builderui_div sub / <= legend_title_text
 				<= Legend_person $bog_builderui_div sub /
 					<= Legend_person_dot $bog_builderui_div
-					<= Legend_person_label $bog_builderui_div sub / \PERSON
+					<= Legend_person_label $bog_builderui_div sub / <= legend_person_label_text
 				<= Legend_org $bog_builderui_div sub /
 					<= Legend_org_dot $bog_builderui_div
-					<= Legend_org_label $bog_builderui_div sub / \ORGANIZATION
+					<= Legend_org_label $bog_builderui_div sub / <= legend_org_label_text
 				<= Legend_loc $bog_builderui_div sub /
 					<= Legend_loc_dot $bog_builderui_div
-					<= Legend_loc_label $bog_builderui_div sub / \LOCATION
+					<= Legend_loc_label $bog_builderui_div sub / <= legend_loc_label_text
 				<= Legend_event $bog_builderui_div sub /
 					<= Legend_event_dot $bog_builderui_div
-					<= Legend_event_label $bog_builderui_div sub / \EVENT
+					<= Legend_event_label $bog_builderui_div sub / <= legend_event_label_text
 				<= Legend_date $bog_builderui_div sub /
 					<= Legend_date_dot $bog_builderui_div
-					<= Legend_date_label $bog_builderui_div sub / \DATE
+					<= Legend_date_label $bog_builderui_div sub / <= legend_date_label_text
 				<= Legend_work $bog_builderui_div sub /
 					<= Legend_work_dot $bog_builderui_div
-					<= Legend_work_label $bog_builderui_div sub / \WORK_OF_ART
+					<= Legend_work_label $bog_builderui_div sub / <= legend_work_label_text
 				<= Legend_law $bog_builderui_div sub /
 					<= Legend_law_dot $bog_builderui_div
-					<= Legend_law_label $bog_builderui_div sub / \LAW
+					<= Legend_law_label $bog_builderui_div sub / <= legend_law_label_text
 		<= Aside $bog_builderui_div sub /
 			<= Aside_title $bog_builderui_div sub / <= aside_title_text
 			<= Entity_head $bog_builderui_div sub /
