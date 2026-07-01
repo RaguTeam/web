@@ -18187,10 +18187,21 @@ var $;
             rows() {
                 return this.history().map((_, i) => this.Message(i));
             }
+            scroll_height() {
+                // Явная подписка на history — при новом сообщении канал инвалидируется,
+                // тянет за собой dom_tree, и scroll_top получает свежее значение.
+                void this.history();
+                return this.Body().dom_node().scrollHeight;
+            }
+            scroll_top(next) {
+                const el = this.Body().dom_node();
+                if (next !== undefined)
+                    el.scrollTop = next;
+                return el.scrollTop;
+            }
             dom_tree(next) {
                 const node = super.dom_tree(next);
-                const body = this.Body().dom_node();
-                this.Body().scroll_top(body.scrollHeight);
+                this.scroll_top(this.scroll_height());
                 return node;
             }
             message_text(index) {
@@ -18232,6 +18243,15 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_chat.prototype, "history", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "scroll_height", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "scroll_top", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "dom_tree", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
@@ -18549,6 +18569,7 @@ var $;
             border: { width: 0 },
             background: { color: 'transparent' },
             minHeight: '24px',
+            color: $bog_builderui_tokens.text
         },
         Input_send: {
             background: { color: $bog_builderui_tokens.current },

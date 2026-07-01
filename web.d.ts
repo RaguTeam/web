@@ -9414,6 +9414,8 @@ declare namespace $.$$ {
         history(next?: Raggu_chat_item[]): Raggu_chat_item[];
         prompt_text(next?: string): string;
         rows(): $bog_builderui_div[];
+        scroll_height(): number;
+        scroll_top(next?: number): number;
         dom_tree(next?: Element): Element;
         message_text(index: number): string;
         message_role(index: number): Raggu_chat_role;
