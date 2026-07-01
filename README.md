@@ -62,6 +62,18 @@ node raggu/web/front/app/-/node.test.js
 
 Должно вывести `All tests passed`. Текущий счёт — **283** (структурные snapshot'ы, e2e-flow через view-API, URL state, CSS rule intent, новые фичи).
 
+### Backend API
+
+`back/` — отдельный FastAPI gateway с Pydantic v2-схемами и Swagger/OpenAPI-контрактом для Gallery, Explorer и Agent. Сейчас это mock-first API на детерминированных данных: live-индексация, Redis/RQ/Celery, GPU worker и Yandex Cloud-флоу намеренно не реализуются.
+
+```bash
+cd web/back
+python -m pip install -e ".[dev]"
+uvicorn ragu_web_api.main:app --reload --port 8000
+```
+
+Swagger UI: **http://localhost:8000/docs**. Все API-ручки находятся под `/api/v1`; upload/job/live-indexing endpoints отсутствуют, их доступность отражается через `GET /api/v1/capabilities`.
+
 ## CI / Deploy
 
 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml):
@@ -107,7 +119,7 @@ raggu/web/                        # umbrella repo (RaguTeam/web)
 │   ├── settings/
 │   │   └── group/               #     шаг пайплайна (step + title + opts + controls)
 │   └── export/                  #   $mol_pop с меню форматов per-screen
-├── back/                         # FastAPI + предындексы (TBD)
+├── back/                         # FastAPI API Gateway + Pydantic schemas + mock fixtures
 ├── docs/                         # концепция + роадмап (shared)
 ├── .github/workflows/deploy.yml  # gh-pages CI (front)
 ├── README.md                     # этот файл
