@@ -15414,7 +15414,7 @@ var $;
 			return +4;
 		}
 		node_size_growth(){
-			return +0.7;
+			return +1.5;
 		}
 		event(){
 			return {
@@ -15978,8 +15978,9 @@ var $;
             // Node accessors (keyed) — return strings, SVG attrs expect string
             node_x(id) { return String(this.pos(id).x); }
             node_y(id) { return String(this.pos(id).y); }
-            // radius = base + growth * degree. Both configurable, no upper cap
-            // so heavily-connected nodes visually dominate.
+            // radius = base + growth * degree. Linear scale — hubs visually dominate,
+            // which is what we want for a demo graph where the whole point is spotting
+            // the well-connected nodes at a glance.
             node_radius_num(id) {
                 const n = this.node_by_id()[id];
                 return this.node_size_base() + this.node_size_growth() * n.degree;
