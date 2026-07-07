@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
+	export class $bog_norweb_front_topbar extends $.$bog_norweb_front_topbar {
 
 		is_fast() { return this.preset() === 'fast' }
 		is_accurate() { return this.preset() === 'accurate' }

@@ -1,55 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
 
-	const mode_pill = {
-		background: { color: $bog_builderui_tokens.field },
-		border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-		padding: {
-			top: '5px',
-			bottom: '5px',
-			left: '10px',
-			right: '10px',
-		},
-		font: { size: '11px', weight: 600 },
-		color: $bog_builderui_tokens.shade,
-		cursor: 'pointer',
-		'@': {
-			raggu_chat_mode_active: {
-				true: {
-					background: { color: $bog_builderui_tokens.current },
-					color: '#ffffff',
-					border: { color: $bog_builderui_tokens.current },
-				},
-			},
-		},
-	} as const
-
-	const chip = {
-		background: { color: $bog_builderui_tokens.field },
-		color: $bog_builderui_tokens.current,
-		border: { radius: '5px' },
-		padding: {
-			top: '3px',
-			bottom: '3px',
-			left: '8px',
-			right: '8px',
-		},
-		font: {
-			family: 'ui-monospace, monospace',
-			weight: 600,
-			size: '10px',
-		},
-	} as const
-
-	const trace_stat = {
-		font: {
-			family: 'ui-monospace, monospace',
-			weight: 500,
-			size: '10px',
-		},
-		color: $bog_builderui_tokens.shade,
-	} as const
-
 	const suggestion = {
 		border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
 		padding: {
@@ -63,44 +14,11 @@ namespace $ {
 		cursor: 'pointer',
 	} as const
 
-	$mol_style_define( $raggu_web_front_chat, {
+	$mol_style_define( $bog_norweb_front_chat, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
 		minHeight: 0,
 		height: '100%',
-
-		Modes_bar: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			gap: '9px',
-			padding: {
-				top: '14px',
-				bottom: '14px',
-				left: '22px',
-				right: '22px',
-			},
-			border: {
-				bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-			},
-		},
-		Modes_label: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 600,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.shade,
-			textTransform: 'uppercase',
-		},
-		Modes: {
-			flex: { direction: 'row' },
-			gap: '5px',
-		},
-		Mode_llm: mode_pill,
-		Mode_local: mode_pill,
-		Mode_global: mode_pill,
-		Mode_mix: mode_pill,
-		Mode_plan: mode_pill,
 
 		Clear: {
 			marginLeft: 'auto',
@@ -227,93 +145,30 @@ namespace $ {
 				},
 			},
 		},
-		Message_trace: {
-			margin: { top: '8px' },
-			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '9px' },
-			background: { color: $bog_builderui_tokens.back },
-			overflow: 'hidden',
-			flex: { direction: 'column' },
-		},
-		Message_trace_head: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			gap: '7px',
-			cursor: 'pointer',
-			userSelect: 'none',
-			padding: {
-				top: '9px',
-				bottom: '9px',
-				left: '13px',
-				right: '13px',
-			},
+
+		Message_badge: {
+			display: 'none',
+			alignSelf: 'flex-start',
+			margin: { top: '6px' },
 			font: {
 				family: 'ui-monospace, monospace',
 				weight: 600,
-				size: '11px',
+				size: '10px',
 			},
-			color: $bog_builderui_tokens.current,
-		},
-		Message_trace_head_meta: {
-			marginLeft: 'auto',
-			color: $bog_builderui_tokens.shade,
-			font: { weight: 500 },
-		},
-		Message_trace_body: {
+			color: '#8a6d1b',
+			background: { color: '#f5c84226' },
+			border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '5px' },
 			padding: {
-				top: '11px',
-				bottom: '11px',
-				left: '13px',
-				right: '13px',
+				top: '2px',
+				bottom: '2px',
+				left: '7px',
+				right: '7px',
 			},
-			gap: '8px',
-			border: {
-				top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-			},
-			// По дефолту скрыт. Показываем только когда trace_expanded=true.
-			// Boolean false → mol удаляет атрибут → CSS [attr="false"] не сработает.
-			display: 'none',
 			'@': {
-				raggu_expanded: {
-					true: {
-						display: 'flex',
-						flexDirection: 'column',
-					},
+				raggu_off_graph: {
+					true: { display: 'flex' },
 				},
 			},
-		},
-		Message_trace_label: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 600,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.shade,
-		},
-		Message_trace_chips: {
-			flex: { direction: 'row' },
-			flexWrap: 'wrap',
-			gap: '5px',
-		},
-		Message_trace_chip_one: chip,
-		Message_trace_chip_two: chip,
-		Message_trace_chip_three: chip,
-		Message_trace_stats: {
-			flex: { direction: 'row' },
-			gap: '14px',
-			margin: { top: '2px' },
-		},
-		Message_trace_stat_chunks: trace_stat,
-		Message_trace_stat_comms: trace_stat,
-		Message_trace_stat_retr: trace_stat,
-		Message_trace_stat_gen: trace_stat,
-		Message_trace_stat_power: trace_stat,
-		Message_trace_link: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 500,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.current,
 		},
 
 		Footer: {
@@ -333,6 +188,7 @@ namespace $ {
 			flexWrap: 'wrap',
 			gap: '7px',
 			margin: { bottom: '10px' },
+			align: { items: 'center' },
 		},
 		Sug_one: suggestion,
 		Sug_two: suggestion,

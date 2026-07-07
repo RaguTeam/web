@@ -1,7 +1,7 @@
-from ragu_web_api.services.mock_repository import MockRepository
+from ragu_web_api.services.index_repository import IndexRepository
 
-repository = MockRepository()
+repository = IndexRepository()
 
 
-def get_repository() -> MockRepository:
+def get_repository() -> IndexRepository:
     return repository

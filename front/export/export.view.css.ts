@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_export, {
+	$mol_style_define( $bog_norweb_front_export, {
 		Anchor: {
 			display: 'flex',
 			flex: { direction: 'row' },

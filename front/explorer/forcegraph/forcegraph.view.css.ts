@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_explorer_forcegraph, {
+	$mol_style_define( $bog_norweb_front_explorer_forcegraph, {
 		width: '100%',
 		height: '100%',
 		display: 'block',
@@ -16,7 +16,7 @@ namespace $ {
 	// so wire tokens through raw CSS via style_attach — same trick mol_svg uses
 	// for its own text-box background. Selectors match by data-* set on the
 	// tooltip elements in view.tree.
-	$mol_style_attach( 'raggu/web/front/explorer/forcegraph/forcegraph.view.css',
+	$mol_style_attach( 'bog/norweb/front/explorer/forcegraph/forcegraph.view.css',
 		'[data-forcegraph-tooltip-bg] {\n'
 		+ '\tfill: var(--bog_builderui_card);\n'
 		+ '\tstroke: var(--bog_builderui_line);\n'

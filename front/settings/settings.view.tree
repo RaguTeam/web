@@ -1,9 +1,9 @@
-$raggu_web_front_settings $bog_builderui_div
+$bog_norweb_front_settings $bog_builderui_div
 	showed? false
 	close? null
 	attr *
 		^
-		raggu_web_front_settings_showed <= showed?
+		bog_norweb_front_settings_showed <= showed?
 	sub /
 		<= Backdrop $bog_builderui_div
 			event * click? <=> close? null
@@ -27,7 +27,7 @@ $raggu_web_front_settings $bog_builderui_div
 					<= Preset_demo $bog_builderui_button
 						title @ \🎬 Demo
 						click? <=> preset_demo? null
-				<= Group_chunking $raggu_web_front_settings_group
+				<= Group_chunking $bog_norweb_front_settings_group
 					step \Шаг 1
 					title \Chunking
 					opts \Simple / SemanticText / SmartSemantic · размер · overlap
@@ -49,7 +49,7 @@ $raggu_web_front_settings $bog_builderui_div
 							<= Chunking_overlap_input $bog_builderui_field
 								type \number
 								value? <=> chunking_overlap_str? \64
-				<= Group_extraction $raggu_web_front_settings_group
+				<= Group_extraction $bog_norweb_front_settings_group
 					step \Шаг 2
 					title \Extraction
 					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
@@ -73,7 +73,7 @@ $raggu_web_front_settings $bog_builderui_div
 								BM25 @ \ICL BM25
 								hybrid @ \ICL hybrid
 								random @ \ICL random
-				<= Group_summarization $raggu_web_front_settings_group
+				<= Group_summarization $bog_norweb_front_settings_group
 					step \Шаг 3
 					title \Summarization
 					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
@@ -85,7 +85,7 @@ $raggu_web_front_settings $bog_builderui_div
 						<= Summarization_llm $mol_check_box
 							checked? <=> summarization_llm? false
 							title @ \LLM summarization
-				<= Group_communities $raggu_web_front_settings_group
+				<= Group_communities $bog_norweb_front_settings_group
 					step \Шаг 4
 					title \Communities
 					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
@@ -103,7 +103,7 @@ $raggu_web_front_settings $bog_builderui_div
 							min 5
 							max 20
 							step 1
-				<= Group_refinement $raggu_web_front_settings_group
+				<= Group_refinement $bog_norweb_front_settings_group
 					step \Шаг 5
 					title \Refinement
 					opts \RemoveIsolatedNodes и пост-обработчики
@@ -112,7 +112,7 @@ $raggu_web_front_settings $bog_builderui_div
 						<= Refinement_isolated $mol_check_box
 							checked? <=> refinement_isolated? false
 							title @ \RemoveIsolatedNodes
-				<= Group_search $raggu_web_front_settings_group
+				<= Group_search $bog_norweb_front_settings_group
 					step \Шаг 6
 					title \Search
 					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k

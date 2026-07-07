@@ -1,4 +1,4 @@
-$raggu_web_front_export $mol_pop
+$bog_norweb_front_export $mol_pop
 	screen \gallery
 	showed? false
 	export_btn_text @ \↓ Export

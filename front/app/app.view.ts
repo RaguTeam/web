@@ -1,9 +1,10 @@
 namespace $.$$ {
 
-	export class $raggu_web_front_app extends $.$raggu_web_front_app {
+	export class $bog_norweb_front_app extends $.$bog_norweb_front_app {
 
 		body() {
-			// Без выбранного датасета всегда показываем Gallery — остальные экраны бессмысленны.
+			// Сводка не зависит от датасета, для остальных экранов без него показываем Gallery.
+			if( this.screen() === 'summary' ) return [ this.Summary() ]
 			const s = this.dataset_id() ? this.screen() : 'gallery'
 			switch( s ) {
 				case 'gallery': return [ this.Gallery() ]
@@ -14,9 +15,34 @@ namespace $.$$ {
 			return []
 		}
 
+		// Буклетный UX на телефоне: при смене раздела доскролливаем горизонтальный
+		// снап к контенту. На десктопе скролла нет — вызов безвреден.
+		// Таймаут вместо after_tick: на первом рендере layout ещё не готов
+		// и scrollWidth равен clientWidth.
+		override auto() {
+			void this.screen()
+			new this.$.$mol_after_timeout( 100, () => {
+				const root = this.dom_node() as HTMLElement
+				const main = this.Main().dom_node() as HTMLElement
+				if( !root || !main ) return
+				if( root.scrollWidth <= root.clientWidth ) return
+				root.scroll( {
+					left: main.offsetLeft + main.offsetWidth - root.clientWidth,
+					behavior: 'smooth',
+				} )
+			} )
+			return [] as any
+		}
+
 		@$mol_mem
 		lights_mode() {
 			return this.Theme_auto().is_light_now() ? 'light' : 'dark'
+		}
+
+		// Попап деталей сводки рендерим на уровне app: внутри Body его ломает
+		// contain:content у скролла — fixed-оверлей позиционируется не от вьюпорта.
+		Summary_popup() {
+			return this.Summary().Detail()
 		}
 
 		@$mol_action
@@ -33,7 +59,13 @@ namespace $.$$ {
 
 		@$mol_action
 		ask_chat() {
+			// Переносим выбранную в графе сущность в чат: переключаем экран и
+			// сразу кладём заготовку вопроса про неё в поле ввода.
+			const node = ( this.Explorer() as $.$$.$bog_norweb_front_explorer ).selected()
 			this.screen( 'chat' )
+			if( node?.label ) {
+				this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )
+			}
 			return null
 		}
 
@@ -43,6 +75,7 @@ namespace $.$$ {
 				case 'explorer': return this.screen_explorer_title()
 				case 'chat': return this.screen_chat_title()
 				case 'dashboard': return this.screen_dashboard_title()
+				case 'summary': return this.screen_summary_title()
 			}
 			return ''
 		}

@@ -1,4 +1,4 @@
-$raggu_web_front_dashboard $bog_builderui_div
+$bog_norweb_front_dashboard $bog_builderui_div
 	metrics /
 	stages /
 	logs /
@@ -36,11 +36,11 @@ $raggu_web_front_dashboard $bog_builderui_div
 					<= Stat_comms $bog_builderui_div sub /
 						<= Stat_comms_val $bog_builderui_div sub / \38
 						<= Stat_comms_lbl $bog_builderui_div sub / <= stat_comms_lbl_text
-				<= Stats_dist $raggu_web_front_dashboard_dist sub / <= stats_dist_text
+				<= Stats_dist $bog_norweb_front_dashboard_dist sub / <= stats_dist_text
 			<= Card_quality $bog_builderui_div sub /
 				<= Card_quality_label $bog_builderui_div sub / <= card_quality_label_text
 				<= Metric_rows $bog_builderui_div sub <= metric_rows /
-					<= Metric* $raggu_web_front_dashboard_metric
+					<= Metric* $bog_norweb_front_dashboard_metric
 						name <= metric_name* \
 						value <= metric_value* \
 						pct <= metric_pct* \0%
@@ -59,14 +59,14 @@ $raggu_web_front_dashboard $bog_builderui_div
 			<= Card_timings $bog_builderui_div sub /
 				<= Card_timings_label $bog_builderui_div sub / <= card_timings_label_text
 				<= Stage_rows $bog_builderui_div sub <= stage_rows /
-					<= Stage* $raggu_web_front_dashboard_stage
+					<= Stage* $bog_norweb_front_dashboard_stage
 						name <= stage_name* \
 						time <= stage_time* \
 						pct <= stage_pct* \0%
 			<= Card_logs $bog_builderui_div sub /
 				<= Card_logs_label $bog_builderui_div sub / <= card_logs_label_text
 				<= Log_list $bog_builderui_div sub <= log_rows /
-					<= Log* $raggu_web_front_dashboard_log
+					<= Log* $bog_norweb_front_dashboard_log
 						time <= log_time* \
 						text <= log_text* \
 						mode <= log_mode* \

@@ -1,6 +1,6 @@
 namespace $ {
 
-	$mol_style_define( $raggu_web_front_explorer_forcegraph_demo, {
+	$mol_style_define( $bog_norweb_front_explorer_forcegraph_demo, {
 		flex: { direction: 'row' },
 		width: '100%',
 		height: '100vh',
@@ -43,7 +43,7 @@ namespace $ {
 
 	} )
 
-	$mol_style_define( $raggu_web_front_explorer_forcegraph_demo_row, {
+	$mol_style_define( $bog_norweb_front_explorer_forcegraph_demo_row, {
 		flex: { direction: 'column' },
 		gap: '4px',
 		padding: {

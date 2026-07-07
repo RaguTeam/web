@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_gallery_upload, {
+	$mol_style_define( $bog_norweb_front_gallery_upload, {
 		position: 'fixed',
 		top: 0,
 		left: 0,
@@ -11,7 +11,7 @@ namespace $ {
 		justify: { content: 'center' },
 		align: { items: 'center' },
 		'@': {
-			raggu_web_front_gallery_upload_showed: {
+			bog_norweb_front_gallery_upload_showed: {
 				true: { display: 'flex' },
 			},
 		},
@@ -108,7 +108,7 @@ namespace $ {
 			font: { size: '13px' },
 			color: $bog_builderui_tokens.shade,
 			'@': {
-				raggu_web_front_gallery_upload_step_status: {
+				bog_norweb_front_gallery_upload_step_status: {
 					active: {
 						background: { color: $bog_builderui_tokens.field },
 						color: $bog_builderui_tokens.text,

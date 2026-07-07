@@ -17,6 +17,17 @@ namespace $ {
 		padding: {
 			top: '2px',
 			bottom: '2px',
+			left: '4px',
+			right: '4px',
+		},
+		cursor: 'pointer',
+		border: { radius: '5px' },
+		'@': {
+			bog_norweb_front_explorer_legend_on: {
+				true: {
+					background: { color: '#ffffff26' },
+				},
+			},
 		},
 	} as const
 
@@ -56,7 +67,7 @@ namespace $ {
 		margin: { top: '2px' },
 	} as const
 
-	$mol_style_define( $raggu_web_front_explorer, {
+	$mol_style_define( $bog_norweb_front_explorer, {
 		flex: { direction: 'row', shrink: 1 },
 		minWidth: 0,
 		height: '100%',
@@ -94,7 +105,7 @@ namespace $ {
 		Filter_search: {
 			background: { color: $bog_builderui_tokens.field },
 			color: $bog_builderui_tokens.text,
-			border: { radius: '7px' },
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
 			padding: {
 				top: '8px',
 				bottom: '8px',
@@ -102,45 +113,7 @@ namespace $ {
 				right: '11px',
 			},
 			font: { size: '11px', weight: 600 },
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			gap: '7px',
-		},
-		Filter_type: {
-			background: { color: $bog_builderui_tokens.field },
-			color: $bog_builderui_tokens.text,
-			border: { radius: '7px' },
-			padding: {
-				top: '8px',
-				bottom: '8px',
-				left: '11px',
-				right: '11px',
-			},
-			font: { size: '11px', weight: 600 },
-		},
-		Filter_thresh: {
-			background: { color: $bog_builderui_tokens.field },
-			color: $bog_builderui_tokens.text,
-			border: { radius: '7px' },
-			padding: {
-				top: '8px',
-				bottom: '8px',
-				left: '11px',
-				right: '11px',
-			},
-			font: { size: '11px', weight: 600 },
-		},
-		Filter_comm: {
-			background: { color: $bog_builderui_tokens.current },
-			color: '#ffffff',
-			border: { radius: '7px' },
-			padding: {
-				top: '8px',
-				bottom: '8px',
-				left: '11px',
-				right: '11px',
-			},
-			font: { size: '11px', weight: 600 },
+			width: '200px',
 		},
 
 		Legend: {
@@ -155,7 +128,9 @@ namespace $ {
 				left: '13px',
 				right: '13px',
 			},
-			width: '150px',
+			width: '184px',
+			maxHeight: $mol_style_func.calc( '100% - 28px' ),
+			overflow: 'auto',
 			flex: { direction: 'column' },
 		},
 		Legend_title: {
@@ -169,31 +144,52 @@ namespace $ {
 			letterSpacing: '0.6px',
 			margin: { bottom: '8px' },
 		},
-		Legend_person: legend_row,
-		Legend_org: legend_row,
-		Legend_loc: legend_row,
-		Legend_event: legend_row,
-		Legend_date: legend_row,
-		Legend_work: legend_row,
-		Legend_law: legend_row,
-		Legend_person_dot: { ...dot_base, background: { color: '#e0524f' } },
-		Legend_org_dot: { ...dot_base, background: { color: '#4f8ee0' } },
-		Legend_loc_dot: { ...dot_base, background: { color: '#3fb56b' } },
-		Legend_event_dot: { ...dot_base, background: { color: '#d97ad9' } },
-		Legend_date_dot: { ...dot_base, background: { color: '#e0a73f' } },
-		Legend_work_dot: { ...dot_base, background: { color: '#7c6ce0' } },
-		Legend_law_dot: { ...dot_base, background: { color: '#3fb8b8' } },
-		Legend_person_label: legend_label,
-		Legend_org_label: legend_label,
-		Legend_loc_label: legend_label,
-		Legend_event_label: legend_label,
-		Legend_date_label: legend_label,
-		Legend_work_label: legend_label,
-		Legend_law_label: legend_label,
+		Legend_list: {
+			flex: { direction: 'column' },
+		},
+		Legend_row: legend_row,
+		Legend_dot: dot_base,
+		Legend_label: {
+			...legend_label,
+			flex: { grow: 1 },
+			overflow: 'hidden',
+			whiteSpace: 'nowrap',
+			textOverflow: 'ellipsis',
+		},
+		Legend_count: {
+			...legend_label,
+			color: '#8a8a8a',
+		},
+
+		Mock_badge: {
+			display: 'none',
+			position: 'absolute',
+			bottom: '14px',
+			left: '14px',
+			font: {
+				family: 'ui-monospace, monospace',
+				weight: 600,
+				size: '11px',
+			},
+			color: '#8a6d1b',
+			background: { color: '#f5c84226' },
+			border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '6px' },
+			padding: {
+				top: '3px',
+				bottom: '3px',
+				left: '8px',
+				right: '8px',
+			},
+			'@': {
+				bog_norweb_front_explorer_mock_badge_showed: {
+					true: { display: 'flex' },
+				},
+			},
+		},
 
 		Aside: {
-			minWidth: '300px',
-			maxWidth: '300px',
+			minWidth: '240px',
+			maxWidth: '240px',
 			background: { color: $bog_builderui_tokens.card },
 			border: {
 				left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
@@ -306,6 +302,28 @@ namespace $ {
 			textAlign: 'center',
 			font: { size: '12px', weight: 600 },
 			cursor: 'pointer',
+		},
+
+		'@media': {
+			'(max-width: 720px)': {
+				flex: { direction: 'column' },
+				overflow: 'auto',
+				Canvas: {
+					minHeight: '55vh',
+				},
+				Aside: {
+					minWidth: 0,
+					maxWidth: '100%',
+					border: {
+						left: { width: 0 },
+						top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+					},
+					overflow: 'visible',
+				},
+				Filters: {
+					maxWidth: $mol_style_func.calc( '100% - 28px' ),
+				},
+			},
 		},
 	} )
 }

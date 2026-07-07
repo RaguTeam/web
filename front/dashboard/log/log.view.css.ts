@@ -10,7 +10,7 @@ namespace $ {
 		color: $bog_builderui_tokens.shade,
 	} as const
 
-	$mol_style_define( $raggu_web_front_dashboard_log, {
+	$mol_style_define( $bog_norweb_front_dashboard_log, {
 		flex: { direction: 'column' },
 		border: { radius: '6px' },
 		overflow: 'hidden',
@@ -96,7 +96,7 @@ namespace $ {
 		},
 
 		'@': {
-			raggu_web_front_dashboard_log_expanded: {
+			bog_norweb_front_dashboard_log_expanded: {
 				true: {
 					Trace: {
 						display: 'flex',

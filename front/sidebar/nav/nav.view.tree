@@ -1,4 +1,4 @@
-$raggu_web_front_sidebar_nav $bog_builderui_div
+$bog_norweb_front_sidebar_nav $bog_builderui_div
 	icon \
 	label \
 	active false
@@ -6,8 +6,8 @@ $raggu_web_front_sidebar_nav $bog_builderui_div
 	click? null
 	attr *
 		^
-		raggu_web_front_sidebar_nav_active <= active
-		raggu_web_front_sidebar_nav_disabled <= disabled
+		bog_norweb_front_sidebar_nav_active <= active
+		bog_norweb_front_sidebar_nav_disabled <= disabled
 	event *
 		^
 		click? <=> click? null

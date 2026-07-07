@@ -1,4 +1,4 @@
-$raggu_web_front_gallery_upload $bog_builderui_div
+$bog_norweb_front_gallery_upload $bog_builderui_div
 	showed? false
 	kind \document
 	step? 0
@@ -25,7 +25,7 @@ $raggu_web_front_gallery_upload $bog_builderui_div
 	step_rows /
 	attr *
 		^
-		raggu_web_front_gallery_upload_showed <= showed?
+		bog_norweb_front_gallery_upload_showed <= showed?
 	sub /
 		<= Backdrop $bog_builderui_div
 			event * click? <=> close? null
@@ -56,7 +56,7 @@ $raggu_web_front_gallery_upload $bog_builderui_div
 	Step* $bog_builderui_div
 		attr *
 			^
-			raggu_web_front_gallery_upload_step_status <= step_status* \pending
+			bog_norweb_front_gallery_upload_step_status <= step_status* \pending
 		sub /
 			<= Step_marker* $bog_builderui_div sub / <= step_marker_text* \○
 			<= Step_name* $bog_builderui_div sub / <= step_name_text* \

@@ -1,0 +1,50 @@
+$bog_norweb_front_summary $bog_builderui_div
+	opened? \
+	header_title_text @ \Solution overview
+	header_subtitle_text @ \Key technologies of the pipeline — click a card for details
+	more_text @ \Details →
+	ragu_badge @ \GraphRAG engine
+	ragu_desc @ \Open-source GraphRAG engine: builds a knowledge graph from documents and answers questions with sources.
+	ragu_fact_1 @ \Indexing pipeline: chunking → entity and relation extraction → community summarization → search index.
+	ragu_fact_2 @ \Combines local graph search, global community summaries and a vector index.
+	ragu_fact_3 @ \Fully open stack, runs on-premise — data stays inside the contour.
+	mol_badge @ \Frontend
+	mol_desc @ \This interface is built with $mol — a reactive TypeScript framework with lazy rendering.
+	mol_fact_1 @ \Lazy rendering out of the box: a knowledge graph with thousands of nodes stays responsive.
+	mol_fact_2 @ \Tiny bundle and zero runtime dependencies.
+	mol_fact_3 @ \UI source code is open.
+	menolite_badge @ \LLM
+	menolite_desc @ \Open LLM (bond005/meno-lite-0.1) used for entity and relation extraction.
+	menolite_fact_1 @ \Open weights on Hugging Face — fits the open-source stack requirement.
+	menolite_fact_2 @ \Extracts typed entities and relations from Russian scientific text.
+	menolite_fact_3 @ \Used at indexing time; answers are generated with the same open stack.
+	nerel_badge @ \Annotation schema
+	nerel_desc @ \NEREL schema (29 entity types, 49 relation types) extended with materials-science domain types.
+	nerel_fact_1 @ \Domain entities added: MATERIAL, PROCESS, EQUIPMENT, PROPERTY, EXPERIMENT, PUBLICATION, EXPERT, FACILITY.
+	nerel_fact_2 @ \Domain relations added: USES_MATERIAL, OPERATES_AT_CONDITION, PRODUCES_OUTPUT, DESCRIBED_IN, VALIDATED_BY, CONTRADICTS.
+	nerel_fact_3 @ \The schema lives at prompt level — extends without model retraining.
+	ocr_badge @ \Preprocessing
+	ocr_desc @ \Document preprocessing: PDF and DOCX are converted to clean text before indexing.
+	ocr_fact_1 @ \A 93-page, 7 MB PDF is extracted in about 4 minutes.
+	ocr_fact_2 @ \Tables are preserved; images, XLSX and PPTX are next in line.
+	sub /
+		<= Header $bog_builderui_div sub /
+			<= Header_title $bog_builderui_div sub / <= header_title_text
+			<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
+		<= Grid $bog_builderui_div sub <= rows /
+			<= Card* $bog_norweb_front_summary_card
+				icon <= card_icon* \
+				badge <= card_badge* \
+				title <= card_title* \
+				desc <= card_desc* \
+				more <= more_text
+				click? <=> click*? null
+	Detail $bog_norweb_front_summary_detail
+		showed <= detail_showed false
+		icon <= opened_icon \
+		badge <= opened_badge \
+		title <= opened_title \
+		facts <= opened_facts /
+		links <= opened_links /
+		image <= opened_image \
+		close? <=> close? null

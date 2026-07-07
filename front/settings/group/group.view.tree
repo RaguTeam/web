@@ -1,4 +1,4 @@
-$raggu_web_front_settings_group $bog_builderui_div
+$bog_norweb_front_settings_group $bog_builderui_div
 	step \
 	title \
 	opts \
@@ -9,7 +9,7 @@ $raggu_web_front_settings_group $bog_builderui_div
 		<= Head $bog_builderui_div sub /
 			<= Step $bog_builderui_div sub / <= step
 			<= Reindex $bog_builderui_div
-				attr * raggu_web_front_settings_group_reindex <= reindex
+				attr * bog_norweb_front_settings_group_reindex <= reindex
 				sub / <= reindex_text
 		<= Title $bog_builderui_div sub / <= title
 		<= Opts $bog_builderui_div sub / <= opts

@@ -12,7 +12,7 @@ namespace $.$$ {
 	type StepKey = typeof STEP_KEYS[ number ]
 	type StepStatus = 'pending' | 'active' | 'done'
 
-	export class $raggu_web_front_gallery_upload extends $.$raggu_web_front_gallery_upload {
+	export class $bog_norweb_front_gallery_upload extends $.$bog_norweb_front_gallery_upload {
 
 		@$mol_mem
 		step( next?: number ): number {

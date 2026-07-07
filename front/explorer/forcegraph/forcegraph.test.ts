@@ -3,7 +3,7 @@ namespace $.$$ {
 	// jsdom doesn't implement SVGSVGElement.getScreenCTM/createSVGPoint.
 	// Stub with identity-like behavior so drag math runs as it would in a real browser
 	// where 1 screen-pixel == 1 svg-unit.
-	function stub_svg( g: $raggu_web_front_explorer_forcegraph ) {
+	function stub_svg( g: $bog_norweb_front_explorer_forcegraph ) {
 		const svg = g.dom_node() as unknown as SVGSVGElement & {
 			getScreenCTM: () => DOMMatrix
 			createSVGPoint: () => DOMPoint
@@ -34,8 +34,8 @@ namespace $.$$ {
 	// view.tree `nodes /` and `edges /` inputs — mirrors the parent-owned
 	// data-source pattern (explorer / demo do the same).
 	function make_graph( $: any, n_nodes = 80, n_edges = 130 ) {
-		const g = $raggu_web_front_explorer_forcegraph.make( { $ } )
-		const mock = $raggu_web_front_explorer_forcegraph_build_mock( 42, n_nodes, n_edges )
+		const g = $bog_norweb_front_explorer_forcegraph.make( { $ } )
+		const mock = $bog_norweb_front_explorer_forcegraph_build_mock( 42, n_nodes, n_edges )
 		;( g as any ).nodes = () => mock.nodes
 		;( g as any ).edges = () => mock.edges
 		return { g, mock }
@@ -181,15 +181,15 @@ namespace $.$$ {
 			const results: Array< { n: number, edges: number, tick_ms: string } > = []
 			const params = { gravity: 0.09, force_scale: 0.06, damping: 0.82, min_move: 0.15, max_speed: 12 }
 			for ( const n of sizes ) {
-				const g = $raggu_web_front_explorer_forcegraph_build_mock( 42, n, Math.round( n * 1.6 ) )
+				const g = $bog_norweb_front_explorer_forcegraph_build_mock( 42, n, Math.round( n * 1.6 ) )
 				const positions: Record< string, { x: number, y: number } > = {}
 				const velocities: Record< string, { vx: number, vy: number } > = {}
 				for ( const node of g.nodes ) positions[ node.id ] = { x: node.x, y: node.y }
 				// Warm-up
-				let state = $raggu_web_front_explorer_forcegraph_tick_layout( g.nodes, g.edges, positions, velocities, '', params )
+				let state = $bog_norweb_front_explorer_forcegraph_tick_layout( g.nodes, g.edges, positions, velocities, '', params )
 				// 10-tick avg
 				const t0 = Date.now()
-				for ( let i = 0; i < 10; i++ ) state = $raggu_web_front_explorer_forcegraph_tick_layout( g.nodes, g.edges, state.positions, state.velocities, '', params )
+				for ( let i = 0; i < 10; i++ ) state = $bog_norweb_front_explorer_forcegraph_tick_layout( g.nodes, g.edges, state.positions, state.velocities, '', params )
 				const tick_ms = ( ( Date.now() - t0 ) / 10 ).toFixed( 2 )
 				results.push( { n, edges: g.edges.length, tick_ms: `${ tick_ms }ms` } )
 			}

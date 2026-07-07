@@ -14,18 +14,18 @@ namespace $.$$ {
 
 	const FORMATS: Record<string, FormatDef[]> = {
 		explorer: [
-			{ id: 'graphml', label_key: '$raggu_web_front_export_fmt_graphml', fallback: 'GraphML (.xml)', ext: 'xml', mime: 'application/xml' },
-			{ id: 'gexf', label_key: '$raggu_web_front_export_fmt_gexf', fallback: 'GEXF (.gexf)', ext: 'gexf', mime: 'application/xml' },
-			{ id: 'json_graph', label_key: '$raggu_web_front_export_fmt_json_graph', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
-			{ id: 'png_graph', label_key: '$raggu_web_front_export_fmt_png_graph', fallback: 'PNG (.png)', ext: 'png', mime: 'image/png' },
+			{ id: 'graphml', label_key: '$bog_norweb_front_export_fmt_graphml', fallback: 'GraphML (.xml)', ext: 'xml', mime: 'application/xml' },
+			{ id: 'gexf', label_key: '$bog_norweb_front_export_fmt_gexf', fallback: 'GEXF (.gexf)', ext: 'gexf', mime: 'application/xml' },
+			{ id: 'json_graph', label_key: '$bog_norweb_front_export_fmt_json_graph', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
+			{ id: 'png_graph', label_key: '$bog_norweb_front_export_fmt_png_graph', fallback: 'PNG (.png)', ext: 'png', mime: 'image/png' },
 		],
 		chat: [
-			{ id: 'md_chat', label_key: '$raggu_web_front_export_fmt_md_chat', fallback: 'Markdown (.md)', ext: 'md', mime: 'text/markdown' },
-			{ id: 'json_chat', label_key: '$raggu_web_front_export_fmt_json_chat', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
+			{ id: 'md_chat', label_key: '$bog_norweb_front_export_fmt_md_chat', fallback: 'Markdown (.md)', ext: 'md', mime: 'text/markdown' },
+			{ id: 'json_chat', label_key: '$bog_norweb_front_export_fmt_json_chat', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
 		],
 		dashboard: [
-			{ id: 'csv_dash', label_key: '$raggu_web_front_export_fmt_csv_dash', fallback: 'CSV (.csv)', ext: 'csv', mime: 'text/csv' },
-			{ id: 'json_dash', label_key: '$raggu_web_front_export_fmt_json_dash', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
+			{ id: 'csv_dash', label_key: '$bog_norweb_front_export_fmt_csv_dash', fallback: 'CSV (.csv)', ext: 'csv', mime: 'text/csv' },
+			{ id: 'json_dash', label_key: '$bog_norweb_front_export_fmt_json_dash', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
 		],
 		gallery: [],
 	}
@@ -205,7 +205,7 @@ ${ CHAT.answer }
 		return JSON.stringify( { metrics: METRICS, stages: STAGES }, null, '\t' )
 	}
 
-	export class $raggu_web_front_export extends $.$raggu_web_front_export {
+	export class $bog_norweb_front_export extends $.$bog_norweb_front_export {
 
 		@$mol_action
 		toggle() {

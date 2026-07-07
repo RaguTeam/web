@@ -1,10 +1,13 @@
-$raggu_web_front_explorer_forcegraph $mol_svg_root
+$bog_norweb_front_explorer_forcegraph $mol_svg_root
 	view_box <= computed_view_box \-300 -300 600 600
 	aspect \xMidYMid meet
 	select?val null
 	selected_id? \
 	hovered_id? \
 	drag_id? \
+	search \
+	filter_type \
+	graph_key \
 	nodes /
 	edges /
 	pan_x? +0
@@ -49,6 +52,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						^
 						data-node-id <= node_id* \
 						fill <= node_color* \#7c6ce0
+						fill-opacity <= node_opacity* \1
 						stroke <= node_stroke* \transparent
 						stroke-width <= node_stroke_width* \0
 						cursor \pointer

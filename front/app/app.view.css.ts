@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_app, {
+	$mol_style_define( $bog_norweb_front_app, {
 		height: '100vh',
 		width: '100%',
 		background: { color: $bog_builderui_tokens.back },

@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_sidebar_lang, {
+	$mol_style_define( $bog_norweb_front_sidebar_lang, {
 		font: {
 			family: 'ui-monospace, monospace',
 			weight: 700,
@@ -16,7 +16,7 @@ namespace $ {
 		cursor: 'pointer',
 		color: $bog_builderui_tokens.shade,
 		'@': {
-			raggu_web_front_sidebar_lang_active: {
+			bog_norweb_front_sidebar_lang_active: {
 				true: {
 					background: { color: $bog_builderui_tokens.current },
 					color: '#ffffff',

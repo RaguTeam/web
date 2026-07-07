@@ -1,0 +1,40 @@
+$bog_norweb_front_summary_detail $bog_builderui_div
+	showed false
+	icon \
+	badge \
+	title \
+	image \
+	facts /
+	links /
+	body /
+	close? null
+	attr *
+		^
+		bog_norweb_front_summary_detail_showed <= showed
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Icon $bog_builderui_div sub / <= icon
+				<= Header_text $bog_builderui_div sub /
+					<= Title $bog_builderui_div sub / <= title
+					<= Badge $bog_builderui_div sub / <= badge
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Content $bog_builderui_div sub <= body
+	Image $mol_image
+		uri <= image
+	Fact* $bog_builderui_div sub /
+		<= Fact_marker* $bog_builderui_div sub / \—
+		<= Fact_text* $bog_builderui_div sub / <= fact* \
+	Links $bog_builderui_div sub <= link_rows /
+	Link* $mol_link
+		uri <= link_uri* \
+		title <= link_label* \
+		attr *
+			^
+			target \_blank

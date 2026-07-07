@@ -4,37 +4,7 @@ from pydantic import Field
 
 from ragu_web_api.schemas.common import APIModel
 
-EntityType = Literal[
-    "AGE",
-    "FAMILY",
-    "AWARD",
-    "IDEOLOGY",
-    "PERCENT",
-    "CITY",
-    "LANGUAGE",
-    "PERSON",
-    "COUNTRY",
-    "LAW",
-    "PRODUCT",
-    "CRIME",
-    "PENALTY",
-    "PROFESSION",
-    "DATE",
-    "MONEY",
-    "RELIGION",
-    "DISEASE",
-    "NATIONALITY",
-    "STATE_OR_PROV",
-    "ORDINAL",
-    "TIME",
-    "EVENT",
-    "DISTRICT",
-    "WORK_OF_ART",
-    "ORGANIZATION",
-    "FACILITY",
-    "NUMBER",
-    "LOCATION",
-]
+EntityType = str
 
 
 class GraphNode(APIModel):
