@@ -3987,12 +3987,12 @@ var $;
                 $mol_assert_equal(v.Metric_rows().sub().length, 3);
                 $mol_assert_equal(v.Stage_rows().sub().length, 5);
             },
-            'gallery: BUILTIN mock renders one card (law)'($) {
+            'gallery: BUILTIN mock renders two cards (law, wiki)'($) {
                 // No live backend in node tests → force ?mock=1 so remote_datasets returns null
                 // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
                 $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_gallery.make({ $ });
-                $mol_assert_equal(v.Grid().sub().length, 1);
+                $mol_assert_equal(v.Grid().sub().length, 2);
             },
             'url state: screen / preset / dataset_id round-trip through $mol_state_arg'($) {
                 const app = $raggu_web_front_app.make({ $ });
@@ -4014,10 +4014,10 @@ var $;
             'e2e: full user flow through all screens'($) {
                 $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
-                // initial: gallery screen, BUILTIN mock has just one card (law)
+                // initial: gallery screen, BUILTIN mock has two cards (law, wiki)
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.body()[0], app.Gallery());
-                $mol_assert_equal(app.Gallery().Grid().sub().length, 1);
+                $mol_assert_equal(app.Gallery().Grid().sub().length, 2);
                 // user picks dataset first — иначе body() держит Gallery
                 app.dataset_id('law');
                 // user clicks "Граф" in topbar → explorer

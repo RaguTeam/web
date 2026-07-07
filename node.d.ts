@@ -8215,6 +8215,9 @@ declare namespace $ {
 		dataset_law_title( ): string
 		dataset_law_domain( ): string
 		dataset_law_desc( ): string
+		dataset_wiki_title( ): string
+		dataset_wiki_domain( ): string
+		dataset_wiki_desc( ): string
 		sub( ): readonly(any)[]
 	}
 	

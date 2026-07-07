@@ -6766,6 +6766,9 @@ var $;
             },
             border: { radius: '7px' },
             cursor: 'pointer',
+            ':hover': {
+                background: { color: $bog_builderui_tokens.card },
+            },
             '@': {
                 raggu_web_front_sidebar_dataset_active: {
                     true: {
@@ -6775,9 +6778,13 @@ var $;
                                     x: 0,
                                     y: 0,
                                     blur: 0,
-                                    spread: '1px',
-                                    color: $bog_builderui_tokens.line,
+                                    spread: '1.5px',
+                                    color: $bog_builderui_tokens.current,
                                 }],
+                        },
+                        // Имя активного корпуса — в акцент, эффект виден и без рамки
+                        Dataset_name: {
+                            color: $bog_builderui_tokens.current,
                         },
                     },
                 },
@@ -14793,6 +14800,15 @@ var $;
 		dataset_law_desc(){
 			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_desc"));
 		}
+		dataset_wiki_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_title"));
+		}
+		dataset_wiki_domain(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_domain"));
+		}
+		dataset_wiki_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_desc"));
+		}
 		sub(){
 			return [
 				(this.Header()), 
@@ -15003,10 +15019,11 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        // Только один статичный мок — на нём показываем схему локализации через view.tree @.
+        // Статичные моки — на них показываем схему локализации через view.tree @.
         // Реальные датасеты приходят с бэка через remote_datasets и несут dynamic-строки.
         const BUILTIN = [
             { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
+            { id: 'wiki', nodes: '2.41k', edges: '9.1k', comms: '38' },
         ];
         function format_count(n) {
             if (n >= 1000) {
@@ -15074,13 +15091,15 @@ var $;
             card_id(id) { return id; }
             card_active(id) { return id === this.dataset_id(); }
             // Бэк-датасеты кладут title/domain/desc в dynamic — рендерим напрямую.
-            // Единственный мок 'law' резолвится через @-объявленные строки view.tree.
+            // Моки 'law' и 'wiki' резолвятся через @-объявленные строки view.tree.
             card_title(id) {
                 const ds = this.dataset(id);
                 if (ds.dynamic)
                     return ds.dynamic.title;
                 if (id === 'law')
                     return this.dataset_law_title();
+                if (id === 'wiki')
+                    return this.dataset_wiki_title();
                 return '';
             }
             card_domain(id) {
@@ -15089,6 +15108,8 @@ var $;
                     return ds.dynamic.domain;
                 if (id === 'law')
                     return this.dataset_law_domain();
+                if (id === 'wiki')
+                    return this.dataset_wiki_domain();
                 return '';
             }
             card_desc(id) {
@@ -15097,6 +15118,8 @@ var $;
                     return ds.dynamic.desc;
                 if (id === 'law')
                     return this.dataset_law_desc();
+                if (id === 'wiki')
+                    return this.dataset_wiki_desc();
                 return '';
             }
             card_nodes(id) { return this.dataset(id).nodes; }
