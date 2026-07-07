@@ -46,7 +46,24 @@ $bog_theme_auto $mol_plugin
 	is_light_now false
 	attr * mol_theme <= theme \
 
-$raggu_web_front_sidebar_nav $bog_builderui_div
+$mol_image $mol_view
+	dom_name \img
+	attr *any
+		^
+		src <= uri \
+		title <= hint
+		alt <= title \
+		loading <= loading \lazy
+		decoding <= decoding \async
+		crossOrigin <= cors null
+		width <= natural_width 0
+		height <= natural_height 0
+	event *any
+		load? <=> load? null
+	minimal_width 16
+	minimal_height 16
+
+$bog_norweb_front_sidebar_nav $bog_builderui_div
 	icon \
 	label \
 	active false
@@ -54,8 +71,8 @@ $raggu_web_front_sidebar_nav $bog_builderui_div
 	click? null
 	attr *
 		^
-		raggu_web_front_sidebar_nav_active <= active
-		raggu_web_front_sidebar_nav_disabled <= disabled
+		bog_norweb_front_sidebar_nav_active <= active
+		bog_norweb_front_sidebar_nav_disabled <= disabled
 	event *
 		^
 		click? <=> click? null
@@ -129,19 +146,19 @@ $bog_theme_switch $mol_view
 			sub /
 				<= Dark_icon $mol_icon_weather_night
 
-$raggu_web_front_sidebar_lang $bog_builderui_div
+$bog_norweb_front_sidebar_lang $bog_builderui_div
 	label \
 	active false
 	click? null
 	attr *
 		^
-		raggu_web_front_sidebar_lang_active <= active
+		bog_norweb_front_sidebar_lang_active <= active
 	event *
 		^
 		click? <=> click? null
 	sub / <= label
 
-$raggu_web_front_sidebar $bog_builderui_div
+$bog_norweb_front_sidebar $bog_builderui_div
 	screen? \gallery
 	dataset_id \wiki
 	dataset_title \
@@ -152,34 +169,41 @@ $raggu_web_front_sidebar $bog_builderui_div
 	lang_label_text @ \LANG
 	sub /
 		<= Brand $bog_builderui_div sub /
-			<= Brand_logo $bog_builderui_div sub / \R
-			<= Brand_title $bog_builderui_div sub / \RAGU
+			<= Brand_logo $mol_image
+				uri \bog/norweb/front/assets/nornickel_mark.png
+				title \Nornickel
+			<= Brand_title $bog_builderui_div sub / \Nornickel
 			<= Brand_badge $bog_builderui_div sub / \demo
 		<= Sections_label $bog_builderui_div sub / <= sections_label_text
 		<= Nav $bog_builderui_div sub /
-			<= Nav_gallery $raggu_web_front_sidebar_nav
+			<= Nav_gallery $bog_norweb_front_sidebar_nav
 				icon \▤
 				label @ \Datasets
 				active <= is_gallery false
 				click? <=> click_gallery? null
-			<= Nav_explorer $raggu_web_front_sidebar_nav
+			<= Nav_explorer $bog_norweb_front_sidebar_nav
 				icon \◉
 				label @ \Graph
 				active <= is_explorer false
 				disabled <= no_dataset false
 				click? <=> click_explorer? null
-			<= Nav_chat $raggu_web_front_sidebar_nav
+			<= Nav_chat $bog_norweb_front_sidebar_nav
 				icon \💬
 				label @ \Chat
 				active <= is_chat false
 				disabled <= no_dataset false
 				click? <=> click_chat? null
-			<= Nav_dashboard $raggu_web_front_sidebar_nav
+			<= Nav_dashboard $bog_norweb_front_sidebar_nav
 				icon \▦
 				label @ \Dashboard
 				active <= is_dashboard false
 				disabled <= no_dataset false
 				click? <=> click_dashboard? null
+			<= Nav_summary $bog_norweb_front_sidebar_nav
+				icon \✦
+				label @ \Summary
+				active <= is_summary false
+				click? <=> click_summary? null
 		<= Spacer $bog_builderui_div
 		<= Footer $bog_builderui_div sub /
 			<= Corpus_label $bog_builderui_div sub / <= corpus_label_text
@@ -190,22 +214,22 @@ $raggu_web_front_sidebar $bog_builderui_div
 				<= Theme_switch $bog_theme_switch
 					theme_auto <= Theme_auto
 				<= Lang_label $bog_builderui_div sub / <= lang_label_text
-				<= Lang_en $raggu_web_front_sidebar_lang
+				<= Lang_en $bog_norweb_front_sidebar_lang
 					label \EN
 					active <= is_en false
 					click? <=> click_en? null
-				<= Lang_ru $raggu_web_front_sidebar_lang
+				<= Lang_ru $bog_norweb_front_sidebar_lang
 					label \RU
 					active <= is_ru false
 					click? <=> click_ru? null
 
-$raggu_web_front_topbar_preset $bog_builderui_div
+$bog_norweb_front_topbar_preset $bog_builderui_div
 	label \
 	active false
 	click? null
 	attr *
 		^
-		raggu_web_front_topbar_preset_active <= active
+		bog_norweb_front_topbar_preset_active <= active
 	event *
 		^
 		click? <=> click? null
@@ -771,7 +795,7 @@ $bog_builderui_menu $bog_builderui_card
 
 $bog_builderui_menu_item $mol_button_minor
 
-$raggu_web_front_export $mol_pop
+$bog_norweb_front_export $mol_pop
 	screen \gallery
 	showed? false
 	export_btn_text @ \↓ Export
@@ -788,7 +812,7 @@ $raggu_web_front_export $mol_pop
 	Empty $bog_builderui_div
 		sub / <= empty_text
 
-$raggu_web_front_topbar $bog_builderui_div
+$bog_norweb_front_topbar $bog_builderui_div
 	screen \gallery
 	dataset_id \wiki
 	dataset_title \
@@ -807,22 +831,22 @@ $raggu_web_front_topbar $bog_builderui_div
 		<= Spacer $bog_builderui_div
 		<= Preset_label $bog_builderui_div sub / <= preset_label_text
 		<= Preset_group $bog_builderui_div sub /
-			<= Preset_fast $raggu_web_front_topbar_preset
+			<= Preset_fast $bog_norweb_front_topbar_preset
 				label <= preset_fast_label
 				active <= is_fast false
 				click? <=> click_fast? null
-			<= Preset_accurate $raggu_web_front_topbar_preset
+			<= Preset_accurate $bog_norweb_front_topbar_preset
 				label <= preset_accurate_label
 				active <= is_accurate false
 				click? <=> click_accurate? null
-			<= Preset_demo $raggu_web_front_topbar_preset
+			<= Preset_demo $bog_norweb_front_topbar_preset
 				label <= preset_demo_label
 				active <= is_demo false
 				click? <=> click_demo? null
 		<= Settings_btn $bog_builderui_div
 			event * click? <=> open_settings? null
 			sub / <= settings_btn_text
-		<= Export $raggu_web_front_export
+		<= Export $bog_norweb_front_export
 			screen <= screen
 
 $bog_builderui_button $mol_button_minor
@@ -833,7 +857,7 @@ $bog_builderui_button $mol_button_minor
 		^
 		bog_builderui_button_variant <= variant
 
-$raggu_web_front_settings_group $bog_builderui_div
+$bog_norweb_front_settings_group $bog_builderui_div
 	step \
 	title \
 	opts \
@@ -844,7 +868,7 @@ $raggu_web_front_settings_group $bog_builderui_div
 		<= Head $bog_builderui_div sub /
 			<= Step $bog_builderui_div sub / <= step
 			<= Reindex $bog_builderui_div
-				attr * raggu_web_front_settings_group_reindex <= reindex
+				attr * bog_norweb_front_settings_group_reindex <= reindex
 				sub / <= reindex_text
 		<= Title $bog_builderui_div sub / <= title
 		<= Opts $bog_builderui_div sub / <= opts
@@ -911,12 +935,12 @@ $rise_range_value $mol_view
 
 $bog_builderui_slider $rise_range
 
-$raggu_web_front_settings $bog_builderui_div
+$bog_norweb_front_settings $bog_builderui_div
 	showed? false
 	close? null
 	attr *
 		^
-		raggu_web_front_settings_showed <= showed?
+		bog_norweb_front_settings_showed <= showed?
 	sub /
 		<= Backdrop $bog_builderui_div
 			event * click? <=> close? null
@@ -940,7 +964,7 @@ $raggu_web_front_settings $bog_builderui_div
 					<= Preset_demo $bog_builderui_button
 						title @ \🎬 Demo
 						click? <=> preset_demo? null
-				<= Group_chunking $raggu_web_front_settings_group
+				<= Group_chunking $bog_norweb_front_settings_group
 					step \Шаг 1
 					title \Chunking
 					opts \Simple / SemanticText / SmartSemantic · размер · overlap
@@ -962,7 +986,7 @@ $raggu_web_front_settings $bog_builderui_div
 							<= Chunking_overlap_input $bog_builderui_field
 								type \number
 								value? <=> chunking_overlap_str? \64
-				<= Group_extraction $raggu_web_front_settings_group
+				<= Group_extraction $bog_norweb_front_settings_group
 					step \Шаг 2
 					title \Extraction
 					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
@@ -986,7 +1010,7 @@ $raggu_web_front_settings $bog_builderui_div
 								BM25 @ \ICL BM25
 								hybrid @ \ICL hybrid
 								random @ \ICL random
-				<= Group_summarization $raggu_web_front_settings_group
+				<= Group_summarization $bog_norweb_front_settings_group
 					step \Шаг 3
 					title \Summarization
 					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
@@ -998,7 +1022,7 @@ $raggu_web_front_settings $bog_builderui_div
 						<= Summarization_llm $mol_check_box
 							checked? <=> summarization_llm? false
 							title @ \LLM summarization
-				<= Group_communities $raggu_web_front_settings_group
+				<= Group_communities $bog_norweb_front_settings_group
 					step \Шаг 4
 					title \Communities
 					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
@@ -1016,7 +1040,7 @@ $raggu_web_front_settings $bog_builderui_div
 							min 5
 							max 20
 							step 1
-				<= Group_refinement $raggu_web_front_settings_group
+				<= Group_refinement $bog_norweb_front_settings_group
 					step \Шаг 5
 					title \Refinement
 					opts \RemoveIsolatedNodes и пост-обработчики
@@ -1025,7 +1049,7 @@ $raggu_web_front_settings $bog_builderui_div
 						<= Refinement_isolated $mol_check_box
 							checked? <=> refinement_isolated? false
 							title @ \RemoveIsolatedNodes
-				<= Group_search $raggu_web_front_settings_group
+				<= Group_search $bog_norweb_front_settings_group
 					step \Шаг 6
 					title \Search
 					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
@@ -1051,9 +1075,9 @@ $raggu_web_front_settings $bog_builderui_div
 							max 50
 							step 1
 
-$raggu_web_front_gallery_card_preview $bog_builderui_div
+$bog_norweb_front_gallery_card_preview $bog_builderui_div
 
-$raggu_web_front_gallery_card $bog_builderui_div
+$bog_norweb_front_gallery_card $bog_builderui_div
 	id \
 	title \
 	domain \
@@ -1066,12 +1090,12 @@ $raggu_web_front_gallery_card $bog_builderui_div
 	preview_label_text @ \graph preview
 	attr *
 		^
-		raggu_web_front_gallery_card_active <= active
+		bog_norweb_front_gallery_card_active <= active
 	event *
 		^
 		click? <=> click? null
 	sub /
-		<= Preview $raggu_web_front_gallery_card_preview sub /
+		<= Preview $bog_norweb_front_gallery_card_preview sub /
 			<= Preview_label $bog_builderui_div sub / <= preview_label_text
 			<= Domain_badge $bog_builderui_div sub / <= domain
 		<= Title $bog_builderui_div sub / <= title
@@ -1090,7 +1114,7 @@ $bog_builderui_progress $mol_view
 		value <= value 50
 		max <= max 100
 
-$raggu_web_front_gallery_upload $bog_builderui_div
+$bog_norweb_front_gallery_upload $bog_builderui_div
 	showed? false
 	kind \document
 	step? 0
@@ -1117,7 +1141,7 @@ $raggu_web_front_gallery_upload $bog_builderui_div
 	step_rows /
 	attr *
 		^
-		raggu_web_front_gallery_upload_showed <= showed?
+		bog_norweb_front_gallery_upload_showed <= showed?
 	sub /
 		<= Backdrop $bog_builderui_div
 			event * click? <=> close? null
@@ -1148,12 +1172,12 @@ $raggu_web_front_gallery_upload $bog_builderui_div
 	Step* $bog_builderui_div
 		attr *
 			^
-			raggu_web_front_gallery_upload_step_status <= step_status* \pending
+			bog_norweb_front_gallery_upload_step_status <= step_status* \pending
 		sub /
 			<= Step_marker* $bog_builderui_div sub / <= step_marker_text* \○
 			<= Step_name* $bog_builderui_div sub / <= step_name_text* \
 
-$raggu_web_front_gallery $bog_builderui_div
+$bog_norweb_front_gallery $bog_builderui_div
 	dataset_id \wiki
 	select_dataset? null
 	datasets /
@@ -1162,6 +1186,7 @@ $raggu_web_front_gallery $bog_builderui_div
 	upload_close? null
 	header_title_text @ \Corpus gallery
 	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
+	mock_badge_text @ \⚠ Mock data — backend is not connected
 	upload_doc_text @ \＋ Upload document
 	upload_idx_text @ \⇪ Upload prebuilt index
 	uploaded_document_title @ \Uploaded document
@@ -1176,6 +1201,11 @@ $raggu_web_front_gallery $bog_builderui_div
 			<= Header_text $bog_builderui_div sub /
 				<= Header_title $bog_builderui_div sub / <= header_title_text
 				<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
+				<= Mock_badge $bog_builderui_div
+					attr *
+						^
+						bog_norweb_front_gallery_mock_badge_showed <= is_mock false
+					sub / <= mock_badge_text
 			<= Spacer $bog_builderui_div
 			<= Upload_doc $bog_builderui_div
 				sub / <= upload_doc_text
@@ -1184,7 +1214,7 @@ $raggu_web_front_gallery $bog_builderui_div
 				sub / <= upload_idx_text
 				event * click? <=> upload_idx_click? null
 		<= Grid $bog_builderui_div sub <= rows /
-			<= Card* $raggu_web_front_gallery_card
+			<= Card* $bog_norweb_front_gallery_card
 				id <= card_id* \
 				title <= card_title* \
 				domain <= card_domain* \
@@ -1194,7 +1224,7 @@ $raggu_web_front_gallery $bog_builderui_div
 				comms <= card_comms* \
 				active <= card_active* false
 				click? <=> click*? null
-		<= Upload $raggu_web_front_gallery_upload
+		<= Upload $bog_norweb_front_gallery_upload
 			showed? <=> upload_showed? false
 			kind <= upload_kind?
 			complete? <=> upload_complete? null
@@ -1243,13 +1273,16 @@ $mol_svg_text $mol_svg
 	sub /
 		<= text \
 
-$raggu_web_front_explorer_forcegraph $mol_svg_root
+$bog_norweb_front_explorer_forcegraph $mol_svg_root
 	view_box <= computed_view_box \-300 -300 600 600
 	aspect \xMidYMid meet
 	select?val null
 	selected_id? \
 	hovered_id? \
 	drag_id? \
+	search \
+	filter_type \
+	graph_key \
 	nodes /
 	edges /
 	pan_x? +0
@@ -1294,6 +1327,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						^
 						data-node-id <= node_id* \
 						fill <= node_color* \#7c6ce0
+						fill-opacity <= node_opacity* \1
 						stroke <= node_stroke* \transparent
 						stroke-width <= node_stroke_width* \0
 						cursor \pointer
@@ -1330,14 +1364,13 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						font-weight \600
 						data-forcegraph-tooltip-text \
 
-$raggu_web_front_explorer $bog_builderui_div
+$bog_norweb_front_explorer $bog_builderui_div
 	dataset_id \
 	selected_id? \
+	search? \
+	type_filter? \
 	ask_click? null
 	filter_search_text @ \🔍 Find node…
-	filter_type_text @ \Entity type ▾
-	filter_thresh_text @ \Strength threshold ▾
-	filter_comm_text @ \◉ Communities: on
 	aside_title_text @ \Entity card
 	aside_empty_text @ \Click a node on the graph
 	relations_title_template @ \Relations (%s)
@@ -1345,48 +1378,44 @@ $raggu_web_front_explorer $bog_builderui_div
 	sources_text @ \chunk #418 · chunk #902 …
 	ask_btn_text @ \💬 Ask about this entity
 	legend_title_text @ \Entity Types
-	legend_person_label_text @ \PERSON
-	legend_org_label_text @ \ORGANIZATION
-	legend_loc_label_text @ \LOCATION
-	legend_event_label_text @ \EVENT
-	legend_date_label_text @ \DATE
-	legend_work_label_text @ \WORK_OF_ART
-	legend_law_label_text @ \LAW
+	legend_label* \
+	legend_count* \
+	legend_active* false
+	legend_click*? null
+	mock_badge_text @ \⚠ Mock data — backend is not connected
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
-				<= Graph $raggu_web_front_explorer_forcegraph
+				<= Graph $bog_norweb_front_explorer_forcegraph
+					graph_key <= dataset_id
 					nodes <= graph_nodes /
 					edges <= graph_edges /
 					selected_id? <=> selected_id?
+					search <= search?
+					filter_type <= type_filter?
 			<= Filters $bog_builderui_div sub /
-				<= Filter_search $bog_builderui_div sub / <= filter_search_text
-				<= Filter_type $bog_builderui_div sub / <= filter_type_text
-				<= Filter_thresh $bog_builderui_div sub / <= filter_thresh_text
-				<= Filter_comm $bog_builderui_div sub / <= filter_comm_text
+				<= Filter_search $mol_string
+					hint <= filter_search_text
+					value? <=> search?
 			<= Legend $bog_builderui_div sub /
 				<= Legend_title $bog_builderui_div sub / <= legend_title_text
-				<= Legend_person $bog_builderui_div sub /
-					<= Legend_person_dot $bog_builderui_div
-					<= Legend_person_label $bog_builderui_div sub / <= legend_person_label_text
-				<= Legend_org $bog_builderui_div sub /
-					<= Legend_org_dot $bog_builderui_div
-					<= Legend_org_label $bog_builderui_div sub / <= legend_org_label_text
-				<= Legend_loc $bog_builderui_div sub /
-					<= Legend_loc_dot $bog_builderui_div
-					<= Legend_loc_label $bog_builderui_div sub / <= legend_loc_label_text
-				<= Legend_event $bog_builderui_div sub /
-					<= Legend_event_dot $bog_builderui_div
-					<= Legend_event_label $bog_builderui_div sub / <= legend_event_label_text
-				<= Legend_date $bog_builderui_div sub /
-					<= Legend_date_dot $bog_builderui_div
-					<= Legend_date_label $bog_builderui_div sub / <= legend_date_label_text
-				<= Legend_work $bog_builderui_div sub /
-					<= Legend_work_dot $bog_builderui_div
-					<= Legend_work_label $bog_builderui_div sub / <= legend_work_label_text
-				<= Legend_law $bog_builderui_div sub /
-					<= Legend_law_dot $bog_builderui_div
-					<= Legend_law_label $bog_builderui_div sub / <= legend_law_label_text
+				<= Legend_list $bog_builderui_div sub <= legend_rows /
+					<= Legend_row* $bog_builderui_div
+						attr *
+							^
+							bog_norweb_front_explorer_legend_on <= legend_active* false
+						event *
+							^
+							click? <=> legend_click*? null
+						sub /
+							<= Legend_dot* $bog_builderui_div
+							<= Legend_label* $bog_builderui_div sub / <= legend_label* \
+							<= Legend_count* $bog_builderui_div sub / <= legend_count* \
+			<= Mock_badge $bog_builderui_div
+				attr *
+					^
+					bog_norweb_front_explorer_mock_badge_showed <= is_mock false
+				sub / <= mock_badge_text
 		<= Aside $bog_builderui_div sub /
 			<= Aside_title $bog_builderui_div sub / <= aside_title_text
 			<= Entity_head $bog_builderui_div sub /
@@ -1560,99 +1589,26 @@ $mol_textarea_edit $mol_string
 		^
 		scrollTop 0
 
-$raggu_web_front_chat $bog_builderui_div
-	modes_label_text @ \Search engine
-	trace_head_title_text @ \▾ Answer trace
-	trace_head_meta_text @ \LocalSearch · top-k 8 · rerank ✓
-	trace_label_text @ \ENTITIES IN CONTEXT
-	trace_chip_one_text @ \Bjørnson
-	trace_chip_two_text @ \Norwegian anthem
-	trace_chip_three_text @ \1859
-	trace_stat_chunks_text @ \chunks: 3
-	trace_stat_comms_text @ \communities: 1
-	trace_stat_retr_text @ \retrieval 140ms
-	trace_stat_gen_text @ \gen 1.2s
-	trace_stat_power_text @ \≈0.4 Wh
-	trace_link_text @ \↳ highlight on graph
+$bog_norweb_front_chat $bog_builderui_div
+	dataset_id \
 	sug_one_text @ \Who received the Nobel Prize?
 	sug_two_text @ \Connection between Ibsen and Bjørnson?
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send
 	seed_user_text @ \Who wrote the Norwegian anthem and when?
 	seed_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
-	mock_prefix_text @ \Thanks for the question:
-	mock_suffix_text @ \(Mock response. Real retrieval will be wired to the backend.)
 	clear_text @ \Clear
-	mode_llm_text @ \$Mol LLM
-	mode_local_text @ \LocalSearch
-	mode_global_text @ \Global
-	mode_mix_text @ \Mix
-	mode_plan_text @ \QueryPlan
-	mode? \llm
+	off_graph_text @ \⚠ Off-graph answer (LLM without retrieval)
 	prompt_text? \
 	prompt_submit? null
 	use_sug_one? null
 	use_sug_two? null
 	clear_click? null
-	select_llm? null
-	select_local? null
-	select_global? null
-	select_mix? null
-	select_plan? null
 	rows /
 	message_text* \
 	message_role* \
-	message_with_trace* false
-	trace_expanded* false
-	trace_toggle*? null
+	message_off_graph* false
 	sub /
-		<= Modes_bar $bog_builderui_div sub /
-			<= Modes_label $bog_builderui_div sub / <= modes_label_text
-			<= Modes $bog_builderui_div sub /
-				<= Mode_llm $bog_builderui_div
-					sub / <= mode_llm_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_llm false
-					event *
-						^
-						click? <=> select_llm? null
-				<= Mode_local $bog_builderui_div
-					sub / <= mode_local_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_local false
-					event *
-						^
-						click? <=> select_local? null
-				<= Mode_global $bog_builderui_div
-					sub / <= mode_global_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_global false
-					event *
-						^
-						click? <=> select_global? null
-				<= Mode_mix $bog_builderui_div
-					sub / <= mode_mix_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_mix false
-					event *
-						^
-						click? <=> select_mix? null
-				<= Mode_plan $bog_builderui_div
-					sub / <= mode_plan_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_plan false
-					event *
-						^
-						click? <=> select_plan? null
-			<= Clear $mol_button_minor
-				hint <= clear_text
-				click? <=> clear_click? null
-				sub / \✕
 		<= Body $mol_scroll
 			sub /
 				<= Body_flow $bog_builderui_div sub /
@@ -1673,6 +1629,10 @@ $raggu_web_front_chat $bog_builderui_div
 				<= Sug_two $bog_builderui_div
 					sub / <= sug_two_text
 					event * click? <=> use_sug_two? null
+				<= Clear $mol_button_minor
+					hint <= clear_text
+					click? <=> clear_click? null
+					sub / \✕
 			<= Input_row $bog_builderui_div sub /
 				<= Prompt $mol_textarea
 					hint <= input_hint_text
@@ -1687,36 +1647,20 @@ $raggu_web_front_chat $bog_builderui_div
 			^
 			raggu_role <= message_role*
 		sub /
-			<= Message_text* $bog_builderui_div sub / <= message_text*
-			<= Message_trace* $bog_builderui_div
+			<= Message_text* $bog_builderui_div
 				attr *
-					raggu_visible <= message_with_trace*
-				sub /
-					<= Message_trace_head* $bog_builderui_div
-						event * click? <=> trace_toggle*? null
-						sub /
-							<= Message_trace_head_title* $bog_builderui_div sub / <= trace_head_title_text
-							<= Message_trace_head_meta* $bog_builderui_div sub / <= trace_head_meta_text
-					<= Message_trace_body* $bog_builderui_div
-						attr *
-							raggu_expanded <= trace_expanded*
-						sub /
-							<= Message_trace_label* $bog_builderui_div sub / <= trace_label_text
-							<= Message_trace_chips* $bog_builderui_div sub /
-								<= Message_trace_chip_one* $bog_builderui_div sub / <= trace_chip_one_text
-								<= Message_trace_chip_two* $bog_builderui_div sub / <= trace_chip_two_text
-								<= Message_trace_chip_three* $bog_builderui_div sub / <= trace_chip_three_text
-							<= Message_trace_stats* $bog_builderui_div sub /
-								<= Message_trace_stat_chunks* $bog_builderui_div sub / <= trace_stat_chunks_text
-								<= Message_trace_stat_comms* $bog_builderui_div sub / <= trace_stat_comms_text
-								<= Message_trace_stat_retr* $bog_builderui_div sub / <= trace_stat_retr_text
-								<= Message_trace_stat_gen* $bog_builderui_div sub / <= trace_stat_gen_text
-								<= Message_trace_stat_power* $bog_builderui_div sub / <= trace_stat_power_text
-							<= Message_trace_link* $bog_builderui_div sub / <= trace_link_text
+					^
+					raggu_role <= message_role*
+				sub / <= message_text*
+			<= Message_badge* $bog_builderui_div
+				attr *
+					^
+					raggu_off_graph <= message_off_graph*
+				sub / <= off_graph_text
 
-$raggu_web_front_dashboard_dist $bog_builderui_div
+$bog_norweb_front_dashboard_dist $bog_builderui_div
 
-$raggu_web_front_dashboard_metric $bog_builderui_div
+$bog_norweb_front_dashboard_metric $bog_builderui_div
 	name \
 	value \
 	pct \0%
@@ -1726,7 +1670,7 @@ $raggu_web_front_dashboard_metric $bog_builderui_div
 			<= Bar_fill $bog_builderui_div
 		<= Value $bog_builderui_div sub / <= value
 
-$raggu_web_front_dashboard_stage $bog_builderui_div
+$bog_norweb_front_dashboard_stage $bog_builderui_div
 	name \
 	time \
 	pct \0%
@@ -1736,7 +1680,7 @@ $raggu_web_front_dashboard_stage $bog_builderui_div
 			<= Bar_fill $bog_builderui_div
 		<= Time $bog_builderui_div sub / <= time
 
-$raggu_web_front_dashboard_log $bog_builderui_div
+$bog_norweb_front_dashboard_log $bog_builderui_div
 	time \
 	text \
 	mode \
@@ -1752,7 +1696,7 @@ $raggu_web_front_dashboard_log $bog_builderui_div
 	arrow \▾
 	attr *
 		^
-		raggu_web_front_dashboard_log_expanded <= expanded? false
+		bog_norweb_front_dashboard_log_expanded <= expanded? false
 	sub /
 		<= Head $bog_builderui_div sub /
 			event * click? <=> toggle? null
@@ -1771,7 +1715,7 @@ $raggu_web_front_dashboard_log $bog_builderui_div
 				<= Trace_stat_power $bog_builderui_div sub / <= power
 			<= Trace_link $bog_builderui_div sub / <= trace_link
 
-$raggu_web_front_dashboard $bog_builderui_div
+$bog_norweb_front_dashboard $bog_builderui_div
 	metrics /
 	stages /
 	logs /
@@ -1809,11 +1753,11 @@ $raggu_web_front_dashboard $bog_builderui_div
 					<= Stat_comms $bog_builderui_div sub /
 						<= Stat_comms_val $bog_builderui_div sub / \38
 						<= Stat_comms_lbl $bog_builderui_div sub / <= stat_comms_lbl_text
-				<= Stats_dist $raggu_web_front_dashboard_dist sub / <= stats_dist_text
+				<= Stats_dist $bog_norweb_front_dashboard_dist sub / <= stats_dist_text
 			<= Card_quality $bog_builderui_div sub /
 				<= Card_quality_label $bog_builderui_div sub / <= card_quality_label_text
 				<= Metric_rows $bog_builderui_div sub <= metric_rows /
-					<= Metric* $raggu_web_front_dashboard_metric
+					<= Metric* $bog_norweb_front_dashboard_metric
 						name <= metric_name* \
 						value <= metric_value* \
 						pct <= metric_pct* \0%
@@ -1832,14 +1776,14 @@ $raggu_web_front_dashboard $bog_builderui_div
 			<= Card_timings $bog_builderui_div sub /
 				<= Card_timings_label $bog_builderui_div sub / <= card_timings_label_text
 				<= Stage_rows $bog_builderui_div sub <= stage_rows /
-					<= Stage* $raggu_web_front_dashboard_stage
+					<= Stage* $bog_norweb_front_dashboard_stage
 						name <= stage_name* \
 						time <= stage_time* \
 						pct <= stage_pct* \0%
 			<= Card_logs $bog_builderui_div sub /
 				<= Card_logs_label $bog_builderui_div sub / <= card_logs_label_text
 				<= Log_list $bog_builderui_div sub <= log_rows /
-					<= Log* $raggu_web_front_dashboard_log
+					<= Log* $bog_norweb_front_dashboard_log
 						time <= log_time* \
 						text <= log_text* \
 						mode <= log_mode* \
@@ -1853,7 +1797,139 @@ $raggu_web_front_dashboard $bog_builderui_div
 						trace_label <= trace_label_text
 						trace_link <= trace_link_text
 
-$raggu_web_front_app $bog_builderui_div
+$bog_norweb_front_summary_card $bog_builderui_div
+	icon \
+	badge \
+	title \
+	desc \
+	more \
+	click? null
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Head $bog_builderui_div sub /
+			<= Icon $bog_builderui_div sub / <= icon
+			<= Spacer $bog_builderui_div
+			<= Badge $bog_builderui_div sub / <= badge
+		<= Title $bog_builderui_div sub / <= title
+		<= Desc $bog_builderui_div sub / <= desc
+		<= More $bog_builderui_div sub / <= more
+
+$mol_link $mol_view
+	uri \
+	dom_name \a
+	uri_off \
+	uri_native null
+	external false
+	attr *
+		^
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+		rel <= relation \
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click? <=> click? <=> event_click? null
+
+$bog_norweb_front_summary_detail $bog_builderui_div
+	showed false
+	icon \
+	badge \
+	title \
+	image \
+	facts /
+	links /
+	body /
+	close? null
+	attr *
+		^
+		bog_norweb_front_summary_detail_showed <= showed
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Icon $bog_builderui_div sub / <= icon
+				<= Header_text $bog_builderui_div sub /
+					<= Title $bog_builderui_div sub / <= title
+					<= Badge $bog_builderui_div sub / <= badge
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Content $bog_builderui_div sub <= body
+	Image $mol_image
+		uri <= image
+	Fact* $bog_builderui_div sub /
+		<= Fact_marker* $bog_builderui_div sub / \—
+		<= Fact_text* $bog_builderui_div sub / <= fact* \
+	Links $bog_builderui_div sub <= link_rows /
+	Link* $mol_link
+		uri <= link_uri* \
+		title <= link_label* \
+		attr *
+			^
+			target \_blank
+
+$bog_norweb_front_summary $bog_builderui_div
+	opened? \
+	header_title_text @ \Solution overview
+	header_subtitle_text @ \Key technologies of the pipeline — click a card for details
+	more_text @ \Details →
+	ragu_badge @ \GraphRAG engine
+	ragu_desc @ \Open-source GraphRAG engine: builds a knowledge graph from documents and answers questions with sources.
+	ragu_fact_1 @ \Indexing pipeline: chunking → entity and relation extraction → community summarization → search index.
+	ragu_fact_2 @ \Combines local graph search, global community summaries and a vector index.
+	ragu_fact_3 @ \Fully open stack, runs on-premise — data stays inside the contour.
+	mol_badge @ \Frontend
+	mol_desc @ \This interface is built with $mol — a reactive TypeScript framework with lazy rendering.
+	mol_fact_1 @ \Lazy rendering out of the box: a knowledge graph with thousands of nodes stays responsive.
+	mol_fact_2 @ \Tiny bundle and zero runtime dependencies.
+	mol_fact_3 @ \UI source code is open.
+	menolite_badge @ \LLM
+	menolite_desc @ \Open LLM (bond005/meno-lite-0.1) used for entity and relation extraction.
+	menolite_fact_1 @ \Open weights on Hugging Face — fits the open-source stack requirement.
+	menolite_fact_2 @ \Extracts typed entities and relations from Russian scientific text.
+	menolite_fact_3 @ \Used at indexing time; answers are generated with the same open stack.
+	nerel_badge @ \Annotation schema
+	nerel_desc @ \NEREL schema (29 entity types, 49 relation types) extended with materials-science domain types.
+	nerel_fact_1 @ \Domain entities added: MATERIAL, PROCESS, EQUIPMENT, PROPERTY, EXPERIMENT, PUBLICATION, EXPERT, FACILITY.
+	nerel_fact_2 @ \Domain relations added: USES_MATERIAL, OPERATES_AT_CONDITION, PRODUCES_OUTPUT, DESCRIBED_IN, VALIDATED_BY, CONTRADICTS.
+	nerel_fact_3 @ \The schema lives at prompt level — extends without model retraining.
+	ocr_badge @ \Preprocessing
+	ocr_desc @ \Document preprocessing: PDF and DOCX are converted to clean text before indexing.
+	ocr_fact_1 @ \A 93-page, 7 MB PDF is extracted in about 4 minutes.
+	ocr_fact_2 @ \Tables are preserved; images, XLSX and PPTX are next in line.
+	sub /
+		<= Header $bog_builderui_div sub /
+			<= Header_title $bog_builderui_div sub / <= header_title_text
+			<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
+		<= Grid $bog_builderui_div sub <= rows /
+			<= Card* $bog_norweb_front_summary_card
+				icon <= card_icon* \
+				badge <= card_badge* \
+				title <= card_title* \
+				desc <= card_desc* \
+				more <= more_text
+				click? <=> click*? null
+	Detail $bog_norweb_front_summary_detail
+		showed <= detail_showed false
+		icon <= opened_icon \
+		badge <= opened_badge \
+		title <= opened_title \
+		facts <= opened_facts /
+		links <= opened_links /
+		image <= opened_image \
+		close? <=> close? null
+
+$bog_norweb_front_app $bog_builderui_div
 	screen? \gallery
 	preset? \demo
 	dataset_id? \
@@ -1864,6 +1940,8 @@ $raggu_web_front_app $bog_builderui_div
 	screen_explorer_title @ \Knowledge graph
 	screen_chat_title @ \Chat with agent
 	screen_dashboard_title @ \Dashboard
+	screen_summary_title @ \Solution overview
+	ask_entity_template @ \Tell me about the entity «%s» from the knowledge graph.
 	attr *
 		^
 		bog_builderui_lights <= lights_mode
@@ -1878,13 +1956,13 @@ $raggu_web_front_app $bog_builderui_div
 			Icon <= favicon_icon $mol_icon_graph
 		<= Theme_auto $bog_theme_auto
 	sub /
-		<= Sidebar $raggu_web_front_sidebar
+		<= Sidebar $bog_norweb_front_sidebar
 			screen? <=> screen?
 			dataset_id <= dataset_id
 			dataset_title <= dataset_title \
 			Theme_auto <= Theme_auto
 		<= Main $bog_builderui_div sub /
-			<= Topbar $raggu_web_front_topbar
+			<= Topbar $bog_norweb_front_topbar
 				screen <= screen
 				dataset_id <= dataset_id
 				dataset_title <= dataset_title \
@@ -1892,13 +1970,16 @@ $raggu_web_front_app $bog_builderui_div
 				preset? <=> preset?
 				open_settings? <=> open_settings? null
 			<= Body $mol_scroll sub <= body
-		<= Settings $raggu_web_front_settings
+		<= Settings $bog_norweb_front_settings
 			showed? <=> settings_open?
-	Gallery $raggu_web_front_gallery
+		<= Summary_popup $mol_view
+	Gallery $bog_norweb_front_gallery
 		dataset_id <= dataset_id
 		select_dataset? <=> select_dataset? null
-	Explorer $raggu_web_front_explorer
+	Explorer $bog_norweb_front_explorer
 		dataset_id <= dataset_id
 		ask_click? <=> ask_chat? null
-	Chat $raggu_web_front_chat
-	Dashboard $raggu_web_front_dashboard
+	Chat $bog_norweb_front_chat
+		dataset_id <= dataset_id
+	Dashboard $bog_norweb_front_dashboard
+	Summary $bog_norweb_front_summary
