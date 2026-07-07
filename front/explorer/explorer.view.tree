@@ -1,12 +1,14 @@
 $raggu_web_front_explorer $bog_builderui_div
 	dataset_id \
 	selected_id? \
+	selected_edge_id? \
 	search? \
 	type_filter? \
 	ask_click? null
 	filter_search_text @ \🔍 Find node…
 	aside_title_text @ \Entity card
-	aside_empty_text @ \Click a node on the graph
+	aside_relation_title_text @ \Relation card
+	aside_empty_text @ \Click a node or an edge
 	relations_title_template @ \Relations (%s)
 	sources_title_text @ \Sources (provenance)
 	sources_text @ \chunk #418 · chunk #902 …
@@ -25,6 +27,7 @@ $raggu_web_front_explorer $bog_builderui_div
 					nodes <= graph_nodes /
 					edges <= graph_edges /
 					selected_id? <=> selected_id?
+					selected_edge_id? <=> selected_edge_id?
 					search <= search?
 					filter_type <= type_filter?
 			<= Filters $bog_builderui_div sub /
@@ -51,7 +54,7 @@ $raggu_web_front_explorer $bog_builderui_div
 					raggu_web_front_explorer_mock_badge_showed <= is_mock false
 				sub / <= mock_badge_text
 		<= Aside $bog_builderui_div sub /
-			<= Aside_title $bog_builderui_div sub / <= aside_title_text
+			<= Aside_title $bog_builderui_div sub / <= aside_title \
 			<= Entity_head $bog_builderui_div sub /
 				<= Entity_dot $bog_builderui_div
 				<= Entity_name $bog_builderui_div sub / <= entity_name \

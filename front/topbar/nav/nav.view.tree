@@ -1,0 +1,16 @@
+$raggu_web_front_topbar_nav $bog_builderui_div
+	icon \
+	hint \
+	active false
+	disabled false
+	click? null
+	attr *
+		^
+		title <= hint
+		raggu_web_front_topbar_nav_active <= active
+		raggu_web_front_topbar_nav_disabled <= disabled
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Icon $bog_builderui_div sub / <= icon

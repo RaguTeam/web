@@ -1,0 +1,15 @@
+{
+	"$raggu_web_front_help_title_text": "Как пользоваться RAGU",
+	"$raggu_web_front_help_subtitle_text": "что делает каждый раздел",
+	"$raggu_web_front_help_intro_text": "RAGU строит граф знаний по вашим документам и отвечает на вопросы по нему. Порядок работы: выберите датасет, изучите его граф, спросите агента.",
+	"$raggu_web_front_help_Section_gallery_title": "Датасеты",
+	"$raggu_web_front_help_Section_gallery_desc": "Заранее проиндексированные наборы документов. Выберите один для работы или загрузите свои документы — RAGU проиндексирует их в граф знаний.",
+	"$raggu_web_front_help_Section_explorer_title": "Граф",
+	"$raggu_web_front_help_Section_explorer_desc": "Сущности, извлечённые из документов, и связи между ними. Таскайте узлы, зумируйте колесом, кликните по узлу или связи, чтобы открыть карточку.",
+	"$raggu_web_front_help_Section_chat_title": "Чат",
+	"$raggu_web_front_help_Section_chat_desc": "Задавайте вопросы обычным языком — агент отвечает по графу знаний активного датасета и указывает источники.",
+	"$raggu_web_front_help_Section_dashboard_title": "Дашборд",
+	"$raggu_web_front_help_Section_dashboard_desc": "Статистика индексации: этапы и тайминги, размер графа, метрики качества и логи.",
+	"$raggu_web_front_help_Section_summary_title": "Сводка",
+	"$raggu_web_front_help_Section_summary_desc": "Обзор решения RAGU: из чего оно состоит и как части связаны между собой."
+}

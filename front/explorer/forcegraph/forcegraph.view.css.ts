@@ -24,5 +24,20 @@ namespace $ {
 		+ '[data-forcegraph-tooltip-text] {\n'
 		+ '\tfill: var(--bog_builderui_text);\n'
 		+ '}\n'
+		// Halo (paint-order: stroke) отделяет подписи от линий графа под ними.
+		+ '[data-forcegraph-node-label] {\n'
+		+ '\tfill: var(--bog_builderui_text);\n'
+		+ '\tpaint-order: stroke;\n'
+		+ '\tstroke: var(--bog_builderui_back);\n'
+		+ '\tstroke-width: 2px;\n'
+		+ '\tstroke-opacity: 0.7;\n'
+		+ '}\n'
+		+ '[data-forcegraph-edge-label] {\n'
+		+ '\tfill: var(--bog_builderui_shade);\n'
+		+ '\tpaint-order: stroke;\n'
+		+ '\tstroke: var(--bog_builderui_back);\n'
+		+ '\tstroke-width: 2px;\n'
+		+ '\tstroke-opacity: 0.6;\n'
+		+ '}\n'
 	)
 }

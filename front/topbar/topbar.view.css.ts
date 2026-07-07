@@ -15,8 +15,23 @@ namespace $ {
 			right: '1.25rem',
 		},
 
+		Nav: {
+			flex: { direction: 'row' },
+			gap: '0.125rem',
+			background: { color: $bog_builderui_tokens.field },
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+			padding: {
+				top: '3px',
+				bottom: '3px',
+				left: '3px',
+				right: '3px',
+			},
+		},
+
 		Title_block: {
 			flex: { direction: 'column' },
+			align: { items: 'center' },
+			textAlign: 'center',
 		},
 		Title: {
 			font: { weight: 700, size: '15px' },
@@ -30,6 +45,9 @@ namespace $ {
 			color: $bog_builderui_tokens.shade,
 		},
 
+		Spacer_left: {
+			flex: { grow: 1 },
+		},
 		Spacer: {
 			flex: { grow: 1 },
 		},
@@ -57,6 +75,22 @@ namespace $ {
 			},
 		},
 
+		Help_btn: {
+			flex: { direction: 'row' },
+			align: { items: 'center' },
+			gap: '6px',
+			background: { color: $bog_builderui_tokens.card },
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+			padding: {
+				top: '7px',
+				bottom: '7px',
+				left: '12px',
+				right: '12px',
+			},
+			font: { size: '12px', weight: 600 },
+			cursor: 'pointer',
+		},
+
 		Settings_btn: {
 			flex: { direction: 'row' },
 			align: { items: 'center' },
@@ -73,8 +107,10 @@ namespace $ {
 			cursor: 'pointer',
 		},
 
+		// Навигация + центрированный заголовок + пресеты не влезают уже на
+		// ноутбучных ширинах, поэтому враппим сильно раньше, чем раньше (720).
 		'@media': {
-			'(max-width: 720px)': {
+			'(max-width: 1200px)': {
 				height: 'auto',
 				minHeight: '58px',
 				flexWrap: 'wrap',

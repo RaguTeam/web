@@ -1,31 +1,22 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_sidebar_nav, {
-		flex: { direction: 'row' },
+	$mol_style_define( $raggu_web_front_topbar_nav, {
 		align: { items: 'center' },
-		gap: '0.625rem',
-		padding: {
-			top: '0.5625rem',
-			bottom: '0.5625rem',
-			left: '0.6875rem',
-			right: '0.6875rem',
-		},
+		justify: { content: 'center' },
+		minWidth: '34px',
+		minHeight: '34px',
 		border: { radius: '7px' },
-		font: { size: '13px', weight: 600 },
+		font: { size: '15px' },
 		cursor: 'pointer',
 		color: $bog_builderui_tokens.shade,
-		Icon: {
-			minWidth: '18px',
-			textAlign: 'center',
-		},
 		'@': {
-			raggu_web_front_sidebar_nav_active: {
+			raggu_web_front_topbar_nav_active: {
 				true: {
 					background: { color: $bog_builderui_tokens.current },
 					color: '#ffffff',
 				},
 			},
-			raggu_web_front_sidebar_nav_disabled: {
+			raggu_web_front_topbar_nav_disabled: {
 				true: {
 					opacity: 0.4,
 					cursor: 'not-allowed',

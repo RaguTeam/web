@@ -1,0 +1,11 @@
+$raggu_web_front_help_section $bog_builderui_div
+	icon \
+	title \
+	desc \
+	media /
+	sub /
+		<= Icon $bog_builderui_div sub / <= icon
+		<= Text $bog_builderui_div sub /
+			<= Title $bog_builderui_div sub / <= title
+			<= Desc $bog_builderui_div sub / <= desc
+			<= Media $bog_builderui_div sub <= media

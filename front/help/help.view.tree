@@ -1,0 +1,43 @@
+$raggu_web_front_help $bog_builderui_div
+	showed? false
+	close? null
+	title_text @ \How to use RAGU
+	subtitle_text @ \what each section does
+	intro_text @ \RAGU builds a knowledge graph from your documents and answers questions over it. The workflow: pick a dataset, explore its graph, ask the agent.
+	attr *
+		^
+		raggu_web_front_help_showed <= showed?
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Header_text $bog_builderui_div sub /
+					<= Header_title $bog_builderui_div sub / <= title_text
+					<= Header_sub $bog_builderui_div sub / <= subtitle_text
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Intro $bog_builderui_div sub / <= intro_text
+				<= Section_gallery $raggu_web_front_help_section
+					icon \▤
+					title @ \Datasets
+					desc @ \Pre-indexed document collections. Pick one to work with, or upload your own documents — RAGU will index them into a knowledge graph.
+				<= Section_explorer $raggu_web_front_help_section
+					icon \◉
+					title @ \Graph
+					desc @ \Entities extracted from the documents and relations between them. Drag nodes, zoom with the wheel, click a node or an edge to see its card.
+				<= Section_chat $raggu_web_front_help_section
+					icon \💬
+					title @ \Chat
+					desc @ \Ask questions in natural language — the agent answers using the knowledge graph of the active dataset and cites its sources.
+				<= Section_dashboard $raggu_web_front_help_section
+					icon \▦
+					title @ \Dashboard
+					desc @ \Indexing pipeline stats: stages and timings, graph size, quality metrics and logs.
+				<= Section_summary $raggu_web_front_help_section
+					icon \✦
+					title @ \Summary
+					desc @ \Overview of the RAGU solution: what it consists of and how the pieces fit together.

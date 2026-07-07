@@ -5,6 +5,7 @@
 	"$raggu_web_front_app_screen_dashboard_title": "Дашборд",
 	"$raggu_web_front_app_screen_summary_title": "Сводка решения",
 	"$raggu_web_front_app_ask_entity_template": "Расскажи про сущность «%s» из графа знаний.",
+	"$raggu_web_front_app_ask_relation_template": "Расскажи про связь «%s» из графа знаний.",
 	"$bog_theme_switch_light_hint": "Светлая",
 	"$bog_theme_switch_system_hint": "Как в системе",
 	"$bog_theme_switch_dark_hint": "Тёмная"

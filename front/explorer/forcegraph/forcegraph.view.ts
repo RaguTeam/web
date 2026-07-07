@@ -394,25 +394,142 @@ namespace $.$$ {
 		edge_y1( id: string ) { return String( this.pos( this.edge_by_id()[ id ].source ).y ) }
 		edge_x2( id: string ) { return String( this.pos( this.edge_by_id()[ id ].target ).x ) }
 		edge_y2( id: string ) { return String( this.pos( this.edge_by_id()[ id ].target ).y ) }
+		// Used in view.tree as `data-edge-id` attr — mirrors node_id.
+		edge_id( id: string ) { return id }
+
+		// Edge is "active" when hovered or selected directly (not via incident node).
+		edge_active( id: string ) {
+			return this.hovered_edge_id() === id || this.selected_edge_id() === id
+		}
+
 		edge_width( id: string ) {
 			const e = this.edge_by_id()[ id ]
 			const base = e.strength * 1.5 + 0.4
+			if ( this.edge_active( id ) ) return String( base * 2.5 )
 			const incident = this.hovered_id() && ( e.source === this.hovered_id() || e.target === this.hovered_id() )
 				|| this.selected_id() && ( e.source === this.selected_id() || e.target === this.selected_id() )
 			return String( incident ? base * 2 : base )
 		}
 		edge_opacity( id: string ) {
 			const e = this.edge_by_id()[ id ]
+			if ( this.edge_active( id ) ) return '0.95'
 			if ( this.filter_active() && !( this.node_matches( e.source ) && this.node_matches( e.target ) ) ) return '0.08'
 			const hid = this.hovered_id() || this.selected_id()
 			if ( !hid ) return '0.55'
 			return ( e.source === hid || e.target === hid ) ? '0.95' : '0.18'
 		}
 		edge_color( id: string ) {
+			if ( this.edge_active( id ) ) return '#ffffff'
 			const e = this.edge_by_id()[ id ]
 			const hid = this.hovered_id() || this.selected_id()
 			if ( hid && ( e.source === hid || e.target === hid ) ) return '#ffffff'
 			return '#7a7672'
+		}
+
+		@$mol_action
+		edge_hover_enter( id: string ) {
+			this.hovered_edge_id( id )
+			return null
+		}
+
+		@$mol_action
+		edge_hover_leave() {
+			this.hovered_edge_id( '' )
+			return null
+		}
+
+		// Клик по ребру (линии или подписи) выбирает связь и снимает выбор узла —
+		// aside показывает либо карточку сущности, либо карточку связи.
+		@$mol_action
+		edge_click( id: string ) {
+			if ( this.moved_px >= this.DRAG_THRESHOLD ) return null
+			this.selected_edge_id( id )
+			this.selected_id( '' )
+			return null
+		}
+
+		selected_edge(): GraphEdge | null {
+			const id = this.selected_edge_id()
+			return id ? this.edge_by_id()[ id ] ?? null : null
+		}
+
+		// ---- always-on labels ----
+
+		node_label_views() {
+			return this.nodes().map( n => this.Node_label( n.id ) )
+		}
+		edge_label_views() {
+			return this.edges().map( e => this.Edge_label( e.id ) )
+		}
+
+		// Font sizes live in svg units, so they shrink on zoom-out. sqrt easing
+		// (same as tooltip) keeps labels from ballooning when zoomed in close.
+		node_label_font_size() {
+			return String( Math.max( 4, Math.min( 14, 10 / Math.sqrt( this.zoom() ) ) ) )
+		}
+		edge_label_font_size() {
+			return String( Math.max( 3, Math.min( 11, 8 / Math.sqrt( this.zoom() ) ) ) )
+		}
+
+		node_label_x( id: string ) { return String( this.pos( id ).x ) }
+		node_label_y( id: string ) {
+			const fs = parseFloat( this.node_label_font_size() )
+			return String( this.pos( id ).y + this.node_radius_num( id ) + fs + 2 )
+		}
+
+		// «Когда места хватает»: подпись растёт из видимого размера узла на экране
+		// (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
+		node_label_vis( id: string ): number {
+			const r_px = this.node_radius_num( id ) * this.zoom()
+			return Math.max( 0, Math.min( 1, ( r_px - 7 ) / 3 ) )
+		}
+
+		node_label_text( id: string ) {
+			if ( this.active_id() === id ) return '' // tooltip уже показывает label
+			if ( !this.node_matches( id ) ) return ''
+			if ( this.node_label_vis( id ) <= 0 ) return ''
+			return this.node_by_id()[ id ]?.label ?? ''
+		}
+
+		node_label_opacity( id: string ) {
+			return String( this.node_label_vis( id ) * 0.85 )
+		}
+
+		edge_label_mid( id: string ) {
+			const e = this.edge_by_id()[ id ]
+			const a = this.pos( e.source )
+			const b = this.pos( e.target )
+			return { x: ( a.x + b.x ) / 2, y: ( a.y + b.y ) / 2 }
+		}
+		edge_label_x( id: string ) { return String( this.edge_label_mid( id ).x ) }
+		edge_label_y( id: string ) { return String( this.edge_label_mid( id ).y ) }
+
+		// Подпись ребра рисуем, только когда текст влезает в свободную длину ребра
+		// (за вычетом кружков узлов). Активное ребро подписываем всегда.
+		edge_label_text( id: string ) {
+			const e = this.edge_by_id()[ id ]
+			const rel = e?.relation ?? ''
+			if ( !rel ) return ''
+			if ( this.edge_active( id ) ) return rel
+			if ( this.filter_active() && !( this.node_matches( e.source ) && this.node_matches( e.target ) ) ) return ''
+			const fs = parseFloat( this.edge_label_font_size() )
+			if ( fs * this.zoom() < 4 ) return '' // на экране будет нечитаемая пыль
+			const a = this.pos( e.source )
+			const b = this.pos( e.target )
+			const len = Math.hypot( b.x - a.x, b.y - a.y )
+				- this.node_radius_num( e.source ) - this.node_radius_num( e.target )
+			const need = rel.length * fs * 0.62 + fs * 2
+			return len >= need ? rel : ''
+		}
+
+		edge_label_opacity( id: string ) {
+			if ( this.edge_active( id ) ) return '1'
+			const hid = this.hovered_id() || this.selected_id()
+			if ( hid ) {
+				const e = this.edge_by_id()[ id ]
+				return ( e.source === hid || e.target === hid ) ? '0.95' : '0.25'
+			}
+			return '0.75'
 		}
 
 		// Suppress click that fires right after node-drag (drag_id was just released)
@@ -425,17 +542,20 @@ namespace $.$$ {
 				return null
 			}
 			this.selected_id( id )
+			this.selected_edge_id( '' )
 			this.select( id )
 			return null
 		}
 
-		// Background click (anywhere not on a node circle) → deselect
+		// Background click (anywhere not on a node circle or an edge) → deselect
 		@$mol_action
 		bg_click( event?: MouseEvent ) {
 			if ( !event ) return
 			const target = event.target as Element
 			if ( target.getAttribute( 'data-node-id' ) ) return
+			if ( target.getAttribute( 'data-edge-id' ) ) return
 			this.selected_id( '' )
+			this.selected_edge_id( '' )
 			this.select( '' )
 			return null
 		}

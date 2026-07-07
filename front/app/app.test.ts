@@ -107,17 +107,17 @@ namespace $.$$ {
 			// user picks dataset first — иначе body() держит Gallery
 			app.dataset_id( 'law' )
 
-			// user clicks "Граф" in sidebar → explorer
-			app.Sidebar().click_explorer()
+			// user clicks "Граф" in topbar → explorer
+			app.Topbar().click_explorer()
 			$mol_assert_equal( app.screen(), 'explorer' )
 			$mol_assert_equal( app.body()[0], app.Explorer() )
 
 			// user clicks "Чат" → chat
-			app.Sidebar().click_chat()
+			app.Topbar().click_chat()
 			$mol_assert_equal( app.screen(), 'chat' )
 
 			// user clicks "Дашборд" → dashboard
-			app.Sidebar().click_dashboard()
+			app.Topbar().click_dashboard()
 			$mol_assert_equal( app.screen(), 'dashboard' )
 
 			// user clicks "⚙ Настройки" in topbar → slide-over opens with 6 groups
@@ -132,7 +132,7 @@ namespace $.$$ {
 			$mol_assert_equal( app.Settings().showed(), false )
 
 			// user navigates back to Датасеты and clicks a card → dataset selected, screen stays
-			app.Sidebar().click_gallery()
+			app.Topbar().click_gallery()
 			$mol_assert_equal( app.screen(), 'gallery' )
 			app.Gallery().click( 'law' )
 			$mol_assert_equal( app.screen(), 'gallery' )

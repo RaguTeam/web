@@ -1,16 +1,48 @@
 $raggu_web_front_topbar $bog_builderui_div
-	screen \gallery
+	screen? \gallery
 	dataset_id \wiki
 	dataset_title \
 	screen_title \
 	preset? \demo
 	open_settings? null
+	open_help? null
 	preset_label_text @ \Preset
 	settings_btn_text @ \⚙ Settings
+	help_btn_text @ \? Help
 	preset_fast_label @ \⚡ Fast
 	preset_accurate_label @ \🎯 Accurate
 	preset_demo_label @ \🎬 Demo
 	sub /
+		<= Nav $bog_builderui_div sub /
+			<= Nav_gallery $raggu_web_front_topbar_nav
+				icon \▤
+				hint @ \Datasets
+				active <= is_gallery false
+				click? <=> click_gallery? null
+			<= Nav_explorer $raggu_web_front_topbar_nav
+				icon \◉
+				hint @ \Graph
+				active <= is_explorer false
+				disabled <= no_dataset false
+				click? <=> click_explorer? null
+			<= Nav_chat $raggu_web_front_topbar_nav
+				icon \💬
+				hint @ \Chat
+				active <= is_chat false
+				disabled <= no_dataset false
+				click? <=> click_chat? null
+			<= Nav_dashboard $raggu_web_front_topbar_nav
+				icon \▦
+				hint @ \Dashboard
+				active <= is_dashboard false
+				disabled <= no_dataset false
+				click? <=> click_dashboard? null
+			<= Nav_summary $raggu_web_front_topbar_nav
+				icon \✦
+				hint @ \Summary
+				active <= is_summary false
+				click? <=> click_summary? null
+		<= Spacer_left $bog_builderui_div
 		<= Title_block $bog_builderui_div sub /
 			<= Title $bog_builderui_div sub / <= screen_title
 			<= Subtitle $bog_builderui_div sub / <= dataset_title
@@ -29,6 +61,9 @@ $raggu_web_front_topbar $bog_builderui_div
 				label <= preset_demo_label
 				active <= is_demo false
 				click? <=> click_demo? null
+		<= Help_btn $bog_builderui_div
+			event * click? <=> open_help? null
+			sub / <= help_btn_text
 		<= Settings_btn $bog_builderui_div
 			event * click? <=> open_settings? null
 			sub / <= settings_btn_text

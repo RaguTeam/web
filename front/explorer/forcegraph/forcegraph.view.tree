@@ -4,6 +4,8 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	select?val null
 	selected_id? \
 	hovered_id? \
+	selected_edge_id? \
+	hovered_edge_id? \
 	drag_id? \
 	search \
 	filter_type \
@@ -39,9 +41,36 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 					to_y <= edge_y2* \
 					attr *
 						^
+						data-edge-id <= edge_id* \
 						stroke <= edge_color* \#7a7672
 						stroke-width <= edge_width* \1
 						stroke-opacity <= edge_opacity* \0.55
+						cursor \pointer
+					event *
+						^
+						click? <=> edge_click*? null
+						pointerenter? <=> edge_hover_enter*? null
+						pointerleave? <=> edge_hover_leave*? null
+		<= G_edge_labels $mol_svg_group
+			sub <= edge_label_views /
+				<= Edge_label* $mol_svg_text
+					pos_x <= edge_label_x* \
+					pos_y <= edge_label_y* \
+					align \middle
+					align_vert \middle
+					text <= edge_label_text* \
+					attr *
+						^
+						data-edge-id <= edge_id* \
+						data-forcegraph-edge-label \
+						font-size <= edge_label_font_size \8
+						fill-opacity <= edge_label_opacity* \0.75
+						cursor \pointer
+					event *
+						^
+						click? <=> edge_click*? null
+						pointerenter? <=> edge_hover_enter*? null
+						pointerleave? <=> edge_hover_leave*? null
 		<= G_nodes $mol_svg_group
 			sub <= node_views /
 				<= Node* $mol_svg_circle
@@ -61,6 +90,21 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						click? <=> click*? null
 						pointerenter? <=> hover_enter*? null
 						pointerleave? <=> hover_leave*? null
+		<= G_node_labels $mol_svg_group
+			attr *
+				^
+				pointer-events \none
+			sub <= node_label_views /
+				<= Node_label* $mol_svg_text
+					pos_x <= node_label_x* \
+					pos_y <= node_label_y* \
+					align \middle
+					text <= node_label_text* \
+					attr *
+						^
+						data-forcegraph-node-label \
+						font-size <= node_label_font_size \10
+						fill-opacity <= node_label_opacity* \1
 		<= Tooltip $mol_svg_group
 			attr *
 				^

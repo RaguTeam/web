@@ -68,6 +68,30 @@ namespace $ {
 	}
 
 	/**
+	 * Детали ребра — симметрично get_node. На бэке ручки ПОКА НЕТ, дескриптор
+	 * написан руками под согласованный контракт. Когда бэк добавит её в
+	 * openapi.json, генератор создаст одноимённую константу в ragu.openapi.ts —
+	 * тогда эту удалить (билд сам напомнит конфликтом имён). Фронт до тех пор
+	 * фолбэчится на данные из get_graph.
+	 */
+	export const $raggu_web_front_api_ragu_get_edge = {
+		method: 'get',
+		route: '/api/v1/datasets/{dataset_id}/graph/edges/{edge_id}',
+		params: {} as { dataset_id: string, edge_id: string },
+		query: {} as Record< string, never >,
+		body: undefined as never,
+		out: {} as {
+			id: string
+			source: string
+			target: string
+			relation_type: string
+			description: string
+			strength?: number
+			chunk_ids?: string[]
+		},
+	}
+
+	/**
 	 * Typed REST client factory for OpenAPI-generated operation descriptors.
 	 *
 	 * Returns a callable that takes an operation constant plus options and

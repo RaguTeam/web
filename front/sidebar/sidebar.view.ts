@@ -2,22 +2,20 @@ namespace $.$$ {
 
 	export class $raggu_web_front_sidebar extends $.$raggu_web_front_sidebar {
 
-		is_gallery() { return this.screen() === 'gallery' }
-		is_explorer() { return this.screen() === 'explorer' }
-		is_chat() { return this.screen() === 'chat' }
-		is_dashboard() { return this.screen() === 'dashboard' }
-		is_summary() { return this.screen() === 'summary' }
+		dataset_rows() {
+			return this.dataset_ids().map( ( id: string ) => this.Dataset_row( id ) )
+		}
 
-		no_dataset() { return !this.dataset_id() }
+		dataset_active( id: string ) { return id === this.dataset_id() }
+
+		@$mol_action
+		dataset_click( id: string ) {
+			this.select_dataset( id )
+			return null
+		}
 
 		is_en() { return this.$.$mol_locale.lang() === 'en' }
 		is_ru() { return this.$.$mol_locale.lang() === 'ru' }
-
-		@$mol_action click_gallery() { this.screen( 'gallery' ); return null }
-		@$mol_action click_explorer() { this.screen( 'explorer' ); return null }
-		@$mol_action click_chat() { this.screen( 'chat' ); return null }
-		@$mol_action click_dashboard() { this.screen( 'dashboard' ); return null }
-		@$mol_action click_summary() { this.screen( 'summary' ); return null }
 
 		@$mol_action click_en() { this.$.$mol_locale.lang( 'en' ); return null }
 		@$mol_action click_ru() { this.$.$mol_locale.lang( 'ru' ); return null }

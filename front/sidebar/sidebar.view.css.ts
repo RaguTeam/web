@@ -57,7 +57,7 @@ namespace $ {
 			},
 		},
 
-		Sections_label: {
+		Datasets_label: {
 			font: {
 				family: 'ui-monospace, monospace',
 				weight: 600,
@@ -74,55 +74,61 @@ namespace $ {
 			},
 		},
 
-		Nav: {
+		Datasets: {
+			flex: { grow: 1, shrink: 1 },
+			minHeight: 0,
+		},
+		Dataset_list: {
 			flex: { direction: 'column' },
 			gap: '0.25rem',
 		},
-
-		Spacer: {
-			flex: { grow: 1 },
-		},
-
-		Footer: {
+		Dataset_row: {
 			flex: { direction: 'column' },
-			gap: '0.625rem',
-		},
-		Corpus_label: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 600,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.shade,
-			textTransform: 'uppercase',
-			letterSpacing: '0.8px',
+			gap: '0.125rem',
 			padding: {
-				left: '0.375rem',
-				right: '0.375rem',
-			},
-		},
-		Corpus_card: {
-			background: { color: $bog_builderui_tokens.card },
-			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-			padding: {
-				top: '0.5625rem',
-				bottom: '0.5625rem',
+				top: '0.5rem',
+				bottom: '0.5rem',
 				left: '0.6875rem',
 				right: '0.6875rem',
 			},
-			flex: { direction: 'column' },
-			gap: '0.1875rem',
+			border: { radius: '7px' },
+			cursor: 'pointer',
+			'@': {
+				raggu_web_front_sidebar_dataset_active: {
+					true: {
+						background: { color: $bog_builderui_tokens.card },
+						box: {
+							shadow: [ {
+								x: 0,
+								y: 0,
+								blur: 0,
+								spread: '1px',
+								color: $bog_builderui_tokens.line,
+							} ],
+						},
+					},
+				},
+			},
 		},
-		Corpus_name: {
+		Dataset_name: {
 			font: { weight: 600, size: '13px' },
+			overflow: 'hidden',
+			textOverflow: 'ellipsis',
+			whiteSpace: 'nowrap',
 		},
-		Corpus_meta: {
+		Dataset_meta: {
 			font: {
 				family: 'ui-monospace, monospace',
 				weight: 500,
 				size: '10px',
 			},
 			color: $bog_builderui_tokens.shade,
+		},
+
+		Footer: {
+			flex: { direction: 'column' },
+			gap: '0.625rem',
+			padding: { top: '0.625rem' },
 		},
 
 		Lang_row: {

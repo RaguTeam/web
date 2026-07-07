@@ -20,6 +20,8 @@ namespace $ {
 		target: string
 		strength: number
 		relation: string
+		/** Human description from the backend's GraphEdge; empty for mocks. */
+		description?: string
 	}
 
 	// Distinct, theme-agnostic categorical palette. Assigned to types

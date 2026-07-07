@@ -50,6 +50,7 @@ namespace $.$$ {
 					target: e.target,
 					strength: e.strength,
 					relation: e.relation_type,
+					description: e.description ?? '',
 				} ) )
 				const result = { nodes, edges }
 				$raggu_web_front_explorer_graph_cache.set( id, result )
@@ -133,16 +134,58 @@ namespace $.$$ {
 			return this.graph_view().selected_node()
 		}
 
+		// Selected edge — aside shows a relation card instead of an entity card
+		selected_edge() {
+			return this.graph_view().selected_edge()
+		}
+
+		node_label( id: string ) {
+			return this.graph_nodes().find( n => n.id === id )?.label ?? id
+		}
+
+		aside_title() {
+			return this.selected_edge() ? this.aside_relation_title_text() : this.aside_title_text()
+		}
+
 		// Aside text — fall back to placeholder when nothing selected
 		entity_name() {
+			const edge = this.selected_edge()
+			if ( edge ) return edge.relation || '—'
 			return this.selected()?.label ?? this.aside_empty_text()
 		}
 
 		entity_type() {
+			const edge = this.selected_edge()
+			if ( edge ) return `${ this.node_label( edge.source ) } → ${ this.node_label( edge.target ) }`
 			return this.selected()?.type ?? ''
 		}
 
+		// Описание ребра с бэка: ручки get_edge на бэке пока нет, поэтому любая
+		// ошибка (404 в т.ч.) тихо фолбэчится на description из get_graph.
+		@$mol_mem
+		edge_remote_desc(): string | null {
+			const edge = this.selected_edge()
+			const id = this.dataset_id()
+			if ( !edge || !id || this.mock_flag() ) return null
+			try {
+				const res = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_get_edge,
+					{ params: { dataset_id: id, edge_id: edge.id } },
+				)
+				return res.description || null
+			} catch( error ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				return null
+			}
+		}
+
 		entity_desc() {
+			const edge = this.selected_edge()
+			if ( edge ) {
+				return this.edge_remote_desc()
+					?? ( edge.description
+						|| `${ this.node_label( edge.source ) } — ${ edge.relation } — ${ this.node_label( edge.target ) }` )
+			}
 			const n = this.selected()
 			if ( !n ) return ''
 			return `Mock entity of type ${ n.type }, connected to ${ n.degree } other nodes.`
@@ -155,6 +198,7 @@ namespace $.$$ {
 		}
 
 		rels(): Array< { relation: string, target_label: string } > {
+			if ( this.selected_edge() ) return []
 			return this.graph_view().selected_relations().slice( 0, 5 )
 		}
 
@@ -165,11 +209,11 @@ namespace $.$$ {
 		rel_type( i: number ) { return this.rels()[ i ]?.relation ?? '' }
 		rel_target( i: number ) { return this.rels()[ i ]?.target_label ?? '' }
 
-		// Entity_dot color reflects type of selected node
+		// Entity_dot color reflects type of selected node; neutral for an edge
 		Entity_dot() {
 			const dot = super.Entity_dot()
 			dot.style = () => ( {
-				background: this.graph_view().selected_color(),
+				background: this.selected_edge() ? '#7a7672' : this.graph_view().selected_color(),
 			} )
 			return dot
 		}

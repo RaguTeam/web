@@ -52,6 +52,27 @@ namespace $.$$ {
 		}
 
 		@$mol_action
+		open_help() {
+			this.help_open( true )
+			return null
+		}
+
+		// Gallery владеет фетчем списка датасетов — сайдбар получает данные
+		// через эти прокси, чтобы не дублировать remote_datasets.
+		dataset_ids() {
+			return this.Gallery().datasets().map( ( ds: any ) => ds.id as string )
+		}
+
+		sidebar_dataset_name( id: string ) {
+			return this.Gallery().card_title( id )
+		}
+
+		sidebar_dataset_meta( id: string ) {
+			const g = this.Gallery()
+			return `⬡ ${ g.card_nodes( id ) } · ⇄ ${ g.card_edges( id ) }`
+		}
+
+		@$mol_action
 		select_dataset( id: string ) {
 			this.dataset_id( id )
 			return null
@@ -59,11 +80,16 @@ namespace $.$$ {
 
 		@$mol_action
 		ask_chat() {
-			// Переносим выбранную в графе сущность в чат: переключаем экран и
-			// сразу кладём заготовку вопроса про неё в поле ввода.
-			const node = ( this.Explorer() as $.$$.$raggu_web_front_explorer ).selected()
+			// Переносим выбранное в графе (сущность или связь) в чат: переключаем
+			// экран и сразу кладём заготовку вопроса в поле ввода.
+			const explorer = this.Explorer() as $.$$.$raggu_web_front_explorer
+			const node = explorer.selected()
+			const edge = explorer.selected_edge()
 			this.screen( 'chat' )
-			if( node?.label ) {
+			if( edge ) {
+				const label = `${ explorer.node_label( edge.source ) } ${ edge.relation } ${ explorer.node_label( edge.target ) }`
+				this.Chat().prompt_text( this.ask_relation_template().replace( '%s', label ) )
+			} else if( node?.label ) {
 				this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )
 			}
 			return null
