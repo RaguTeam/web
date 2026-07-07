@@ -93,6 +93,9 @@ namespace $ {
 			},
 			border: { radius: '7px' },
 			cursor: 'pointer',
+			':hover': {
+				background: { color: $bog_builderui_tokens.card },
+			},
 			'@': {
 				raggu_web_front_sidebar_dataset_active: {
 					true: {
@@ -102,9 +105,13 @@ namespace $ {
 								x: 0,
 								y: 0,
 								blur: 0,
-								spread: '1px',
-								color: $bog_builderui_tokens.line,
+								spread: '1.5px',
+								color: $bog_builderui_tokens.current,
 							} ],
+						},
+						// Имя активного корпуса — в акцент, эффект виден и без рамки
+						Dataset_name: {
+							color: $bog_builderui_tokens.current,
 						},
 					},
 				},

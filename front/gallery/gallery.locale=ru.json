@@ -10,5 +10,8 @@
 	"$raggu_web_front_gallery_uploaded_desc": "Мок-датасет, построенный демо-пайплайном индексации.",
 	"$raggu_web_front_gallery_dataset_law_title": "Кодексы и законы РФ",
 	"$raggu_web_front_gallery_dataset_law_domain": "Право",
-	"$raggu_web_front_gallery_dataset_law_desc": "Сеть норм, отсылок, органов и понятий российского права."
+	"$raggu_web_front_gallery_dataset_law_desc": "Сеть норм, отсылок, органов и понятий российского права.",
+	"$raggu_web_front_gallery_dataset_wiki_title": "Википедия: наука",
+	"$raggu_web_front_gallery_dataset_wiki_domain": "Энциклопедия",
+	"$raggu_web_front_gallery_dataset_wiki_desc": "Учёные, открытия, институции и связи между ними."
 }

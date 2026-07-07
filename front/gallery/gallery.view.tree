@@ -17,6 +17,9 @@ $raggu_web_front_gallery $bog_builderui_div
 	dataset_law_title @ \Russian Codes & Laws
 	dataset_law_domain @ \Law
 	dataset_law_desc @ \Network of norms, references, bodies and concepts of Russian law.
+	dataset_wiki_title @ \Wikipedia: Science
+	dataset_wiki_domain @ \Encyclopedia
+	dataset_wiki_desc @ \Scientists, discoveries, institutions and how they are connected.
 	sub /
 		<= Header $bog_builderui_div sub /
 			<= Header_text $bog_builderui_div sub /

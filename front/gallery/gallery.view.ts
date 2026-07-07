@@ -9,10 +9,11 @@ namespace $.$$ {
 		dynamic?: { title: string; domain: string; desc: string }
 	}
 
-	// Только один статичный мок — на нём показываем схему локализации через view.tree @.
+	// Статичные моки — на них показываем схему локализации через view.tree @.
 	// Реальные датасеты приходят с бэка через remote_datasets и несут dynamic-строки.
 	const BUILTIN: readonly DatasetStats[] = [
 		{ id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
+		{ id: 'wiki', nodes: '2.41k', edges: '9.1k', comms: '38' },
 	]
 
 	function format_count( n: number ): string {
@@ -95,11 +96,12 @@ namespace $.$$ {
 		card_active( id: string ) { return id === this.dataset_id() }
 
 		// Бэк-датасеты кладут title/domain/desc в dynamic — рендерим напрямую.
-		// Единственный мок 'law' резолвится через @-объявленные строки view.tree.
+		// Моки 'law' и 'wiki' резолвятся через @-объявленные строки view.tree.
 		card_title( id: string ) {
 			const ds = this.dataset( id )
 			if( ds.dynamic ) return ds.dynamic.title
 			if( id === 'law' ) return this.dataset_law_title()
+			if( id === 'wiki' ) return this.dataset_wiki_title()
 			return ''
 		}
 
@@ -107,6 +109,7 @@ namespace $.$$ {
 			const ds = this.dataset( id )
 			if( ds.dynamic ) return ds.dynamic.domain
 			if( id === 'law' ) return this.dataset_law_domain()
+			if( id === 'wiki' ) return this.dataset_wiki_domain()
 			return ''
 		}
 
@@ -114,6 +117,7 @@ namespace $.$$ {
 			const ds = this.dataset( id )
 			if( ds.dynamic ) return ds.dynamic.desc
 			if( id === 'law' ) return this.dataset_law_desc()
+			if( id === 'wiki' ) return this.dataset_wiki_desc()
 			return ''
 		}
 
