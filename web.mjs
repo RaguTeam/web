@@ -4595,95 +4595,196 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$raggu_web_front_sidebar_nav) = class $raggu_web_front_sidebar_nav extends ($.$bog_builderui_div) {
-		click(next){
+	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
+		tabindex(){
+			return -1;
+		}
+		event_scroll(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		Icon(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.icon())]);
-			return obj;
+		scroll_top(next){
+			if(next !== undefined) return next;
+			return 0;
 		}
-		Label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.label())]);
-			return obj;
-		}
-		icon(){
-			return "";
-		}
-		label(){
-			return "";
-		}
-		active(){
-			return false;
-		}
-		disabled(){
-			return false;
+		scroll_left(next){
+			if(next !== undefined) return next;
+			return 0;
 		}
 		attr(){
-			return {
-				...(super.attr()), 
-				"raggu_web_front_sidebar_nav_active": (this.active()), 
-				"raggu_web_front_sidebar_nav_disabled": (this.disabled())
-			};
+			return {...(super.attr()), "tabindex": (this.tabindex())};
 		}
 		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
-		}
-		sub(){
-			return [(this.Icon()), (this.Label())];
+			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
 		}
 	};
-	($mol_mem(($.$raggu_web_front_sidebar_nav.prototype), "click"));
-	($mol_mem(($.$raggu_web_front_sidebar_nav.prototype), "Icon"));
-	($mol_mem(($.$raggu_web_front_sidebar_nav.prototype), "Label"));
+	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
+	($mol_mem(($.$mol_scroll.prototype), "scroll_top"));
+	($mol_mem(($.$mol_scroll.prototype), "scroll_left"));
 
 
 ;
 "use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    $mol_style_define($raggu_web_front_sidebar_nav, {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '0.625rem',
-        padding: {
-            top: '0.5625rem',
-            bottom: '0.5625rem',
-            left: '0.6875rem',
-            right: '0.6875rem',
-        },
-        border: { radius: '7px' },
-        font: { size: '13px', weight: 600 },
-        cursor: 'pointer',
-        color: $bog_builderui_tokens.shade,
-        Icon: {
-            minWidth: '18px',
-            textAlign: 'center',
-        },
-        '@': {
-            raggu_web_front_sidebar_nav_active: {
-                true: {
-                    background: { color: $bog_builderui_tokens.current },
-                    color: '#ffffff',
+    class $mol_dom_listener extends $mol_object {
+        _node;
+        _event;
+        _handler;
+        _config;
+        constructor(_node, _event, _handler, _config = { passive: true }) {
+            super();
+            this._node = _node;
+            this._event = _event;
+            this._handler = _handler;
+            this._config = _config;
+            this._node.addEventListener(this._event, this._handler, this._config);
+        }
+        destructor() {
+            this._node.removeEventListener(this._event, this._handler, this._config);
+            super.destructor();
+        }
+    }
+    $.$mol_dom_listener = $mol_dom_listener;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_print extends $mol_object {
+        static before() {
+            return new $mol_dom_listener(this.$.$mol_dom_context, 'beforeprint', () => {
+                this.active(true);
+            });
+        }
+        static after() {
+            return new $mol_dom_listener(this.$.$mol_dom_context, 'afterprint', () => {
+                this.active(false);
+            });
+        }
+        static active(next) {
+            this.before();
+            this.after();
+            return next || false;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_print, "before", null);
+    __decorate([
+        $mol_mem
+    ], $mol_print, "after", null);
+    __decorate([
+        $mol_mem
+    ], $mol_print, "active", null);
+    $.$mol_print = $mol_print;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Scrolling pane.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_scroll_demo
+         */
+        class $mol_scroll extends $.$mol_scroll {
+            scroll_top(next, cache) {
+                const el = this.dom_node();
+                if (next !== undefined && !cache)
+                    el.scrollTop = next;
+                return el.scrollTop;
+            }
+            scroll_left(next, cache) {
+                const el = this.dom_node();
+                if (next !== undefined && !cache)
+                    el.scrollLeft = next;
+                return el.scrollLeft;
+            }
+            event_scroll(next) {
+                const el = this.dom_node();
+                this.scroll_left(el.scrollLeft, 'cache');
+                this.scroll_top(el.scrollTop, 'cache');
+            }
+            minimal_height() {
+                return this.$.$mol_print.active() ? null : 0;
+            }
+            minimal_width() {
+                return this.$.$mol_print.active() ? null : 0;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_scroll.prototype, "scroll_top", null);
+        __decorate([
+            $mol_mem
+        ], $mol_scroll.prototype, "scroll_left", null);
+        $$.$mol_scroll = $mol_scroll;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { per, rem, px } = $mol_style_unit;
+        $mol_style_define($mol_scroll, {
+            display: 'grid',
+            overflow: 'auto',
+            flex: {
+                direction: 'column',
+                grow: 1,
+                shrink: 1,
+                // basis: 0,
+            },
+            outline: 'none',
+            align: {
+                self: 'stretch',
+                items: 'flex-start',
+            },
+            boxSizing: 'border-box',
+            willChange: 'scroll-position',
+            scroll: {
+                padding: [rem(.75), 0],
+            },
+            maxHeight: per(100),
+            maxWidth: per(100),
+            webkitOverflowScrolling: 'touch',
+            contain: 'content',
+            '>': {
+                $mol_view: {
+                    // transform: 'translateZ(0)', // enforce gpu scroll in all agents
+                    gridArea: '1/1',
                 },
             },
-            raggu_web_front_sidebar_nav_disabled: {
-                true: {
-                    opacity: 0.4,
-                    cursor: 'not-allowed',
-                    pointerEvents: 'none',
+            '::before': {
+                display: 'none',
+            },
+            '::after': {
+                display: 'none',
+            },
+            '::-webkit-scrollbar': {
+                width: rem(.25),
+                height: rem(.25),
+            },
+            '@media': {
+                'print': {
+                    overflow: 'hidden',
+                    contain: 'none',
+                    maxHeight: 'unset',
                 },
             },
-        },
-    });
+        });
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -6380,125 +6481,46 @@ var $;
 			]);
 			return obj;
 		}
-		Sections_label(){
+		Datasets_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sections_label_text())]);
+			(obj.sub) = () => ([(this.datasets_label_text())]);
 			return obj;
 		}
-		is_gallery(){
+		dataset_active(id){
 			return false;
 		}
-		click_gallery(next){
+		dataset_click(id, next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		Nav_gallery(){
-			const obj = new this.$.$raggu_web_front_sidebar_nav();
-			(obj.icon) = () => ("▤");
-			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_gallery_label")));
-			(obj.active) = () => ((this.is_gallery()));
-			(obj.click) = (next) => ((this.click_gallery(next)));
-			return obj;
-		}
-		is_explorer(){
-			return false;
-		}
-		no_dataset(){
-			return false;
-		}
-		click_explorer(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_explorer(){
-			const obj = new this.$.$raggu_web_front_sidebar_nav();
-			(obj.icon) = () => ("◉");
-			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_explorer_label")));
-			(obj.active) = () => ((this.is_explorer()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_explorer(next)));
-			return obj;
-		}
-		is_chat(){
-			return false;
-		}
-		click_chat(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_chat(){
-			const obj = new this.$.$raggu_web_front_sidebar_nav();
-			(obj.icon) = () => ("💬");
-			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_chat_label")));
-			(obj.active) = () => ((this.is_chat()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_chat(next)));
-			return obj;
-		}
-		is_dashboard(){
-			return false;
-		}
-		click_dashboard(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_dashboard(){
-			const obj = new this.$.$raggu_web_front_sidebar_nav();
-			(obj.icon) = () => ("▦");
-			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_dashboard_label")));
-			(obj.active) = () => ((this.is_dashboard()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_dashboard(next)));
-			return obj;
-		}
-		is_summary(){
-			return false;
-		}
-		click_summary(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_summary(){
-			const obj = new this.$.$raggu_web_front_sidebar_nav();
-			(obj.icon) = () => ("✦");
-			(obj.label) = () => ((this.$.$mol_locale.text("$raggu_web_front_sidebar_Nav_summary_label")));
-			(obj.active) = () => ((this.is_summary()));
-			(obj.click) = (next) => ((this.click_summary(next)));
-			return obj;
-		}
-		Nav(){
+		Dataset_name(id){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Nav_gallery()), 
-				(this.Nav_explorer()), 
-				(this.Nav_chat()), 
-				(this.Nav_dashboard()), 
-				(this.Nav_summary())
-			]);
+			(obj.sub) = () => ([(this.dataset_name(id))]);
 			return obj;
 		}
-		Spacer(){
+		Dataset_meta(id){
 			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.dataset_meta(id))]);
 			return obj;
 		}
-		Corpus_label(){
+		Dataset_row(id){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.corpus_label_text())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_sidebar_dataset_active": (this.dataset_active(id))});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.dataset_click(id, next))});
+			(obj.sub) = () => ([(this.Dataset_name(id)), (this.Dataset_meta(id))]);
 			return obj;
 		}
-		Corpus_name(){
+		dataset_rows(){
+			return [(this.Dataset_row(id))];
+		}
+		Dataset_list(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.dataset_title())]);
+			(obj.sub) = () => ((this.dataset_rows()));
 			return obj;
 		}
-		Corpus_meta(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.corpus_meta_text())]);
-			return obj;
-		}
-		Corpus_card(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Corpus_name()), (this.Corpus_meta())]);
+		Datasets(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([(this.Dataset_list())]);
 			return obj;
 		}
 		Theme_switch(){
@@ -6551,45 +6573,40 @@ var $;
 		}
 		Footer(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Corpus_label()), 
-				(this.Corpus_card()), 
-				(this.Lang_row())
-			]);
+			(obj.sub) = () => ([(this.Lang_row())]);
 			return obj;
 		}
-		screen(next){
-			if(next !== undefined) return next;
-			return "gallery";
-		}
 		dataset_id(){
-			return "wiki";
-		}
-		dataset_title(){
 			return "";
+		}
+		dataset_ids(){
+			return [];
+		}
+		select_dataset(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Theme_auto(){
 			const obj = new this.$.$bog_theme_auto();
 			return obj;
 		}
-		sections_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_sidebar_sections_label_text"));
-		}
-		corpus_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_sidebar_corpus_label_text"));
-		}
-		corpus_meta_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_sidebar_corpus_meta_text"));
+		datasets_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_sidebar_datasets_label_text"));
 		}
 		lang_label_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_sidebar_lang_label_text"));
 		}
+		dataset_name(id){
+			return "";
+		}
+		dataset_meta(id){
+			return "";
+		}
 		sub(){
 			return [
 				(this.Brand()), 
-				(this.Sections_label()), 
-				(this.Nav()), 
-				(this.Spacer()), 
+				(this.Datasets_label()), 
+				(this.Datasets()), 
 				(this.Footer())
 			];
 		}
@@ -6598,23 +6615,13 @@ var $;
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Brand_title"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Brand_badge"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Brand"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Sections_label"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "click_gallery"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Nav_gallery"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "click_explorer"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Nav_explorer"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "click_chat"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Nav_chat"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "click_dashboard"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Nav_dashboard"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "click_summary"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Nav_summary"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Nav"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Corpus_label"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Corpus_name"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Corpus_meta"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Corpus_card"));
+	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Datasets_label"));
+	($mol_mem_key(($.$raggu_web_front_sidebar.prototype), "dataset_click"));
+	($mol_mem_key(($.$raggu_web_front_sidebar.prototype), "Dataset_name"));
+	($mol_mem_key(($.$raggu_web_front_sidebar.prototype), "Dataset_meta"));
+	($mol_mem_key(($.$raggu_web_front_sidebar.prototype), "Dataset_row"));
+	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Dataset_list"));
+	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Datasets"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Theme_switch"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Lang_label"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "click_en"));
@@ -6623,7 +6630,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Lang_ru"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Lang_row"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Footer"));
-	($mol_mem(($.$raggu_web_front_sidebar.prototype), "screen"));
+	($mol_mem(($.$raggu_web_front_sidebar.prototype), "select_dataset"));
 	($mol_mem(($.$raggu_web_front_sidebar.prototype), "Theme_auto"));
 
 
@@ -6638,37 +6645,22 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_sidebar extends $.$raggu_web_front_sidebar {
-            is_gallery() { return this.screen() === 'gallery'; }
-            is_explorer() { return this.screen() === 'explorer'; }
-            is_chat() { return this.screen() === 'chat'; }
-            is_dashboard() { return this.screen() === 'dashboard'; }
-            is_summary() { return this.screen() === 'summary'; }
-            no_dataset() { return !this.dataset_id(); }
+            dataset_rows() {
+                return this.dataset_ids().map((id) => this.Dataset_row(id));
+            }
+            dataset_active(id) { return id === this.dataset_id(); }
+            dataset_click(id) {
+                this.select_dataset(id);
+                return null;
+            }
             is_en() { return this.$.$mol_locale.lang() === 'en'; }
             is_ru() { return this.$.$mol_locale.lang() === 'ru'; }
-            click_gallery() { this.screen('gallery'); return null; }
-            click_explorer() { this.screen('explorer'); return null; }
-            click_chat() { this.screen('chat'); return null; }
-            click_dashboard() { this.screen('dashboard'); return null; }
-            click_summary() { this.screen('summary'); return null; }
             click_en() { this.$.$mol_locale.lang('en'); return null; }
             click_ru() { this.$.$mol_locale.lang('ru'); return null; }
         }
         __decorate([
             $mol_action
-        ], $raggu_web_front_sidebar.prototype, "click_gallery", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_sidebar.prototype, "click_explorer", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_sidebar.prototype, "click_chat", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_sidebar.prototype, "click_dashboard", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_sidebar.prototype, "click_summary", null);
+        ], $raggu_web_front_sidebar.prototype, "dataset_click", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_sidebar.prototype, "click_en", null);
@@ -6739,7 +6731,7 @@ var $;
                 right: '5px',
             },
         },
-        Sections_label: {
+        Datasets_label: {
             font: {
                 family: 'ui-monospace, monospace',
                 weight: 600,
@@ -6755,53 +6747,60 @@ var $;
                 right: '0.375rem',
             },
         },
-        Nav: {
+        Datasets: {
+            flex: { grow: 1, shrink: 1 },
+            minHeight: 0,
+        },
+        Dataset_list: {
             flex: { direction: 'column' },
             gap: '0.25rem',
         },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Footer: {
+        Dataset_row: {
             flex: { direction: 'column' },
-            gap: '0.625rem',
-        },
-        Corpus_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            letterSpacing: '0.8px',
+            gap: '0.125rem',
             padding: {
-                left: '0.375rem',
-                right: '0.375rem',
-            },
-        },
-        Corpus_card: {
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-            padding: {
-                top: '0.5625rem',
-                bottom: '0.5625rem',
+                top: '0.5rem',
+                bottom: '0.5rem',
                 left: '0.6875rem',
                 right: '0.6875rem',
             },
-            flex: { direction: 'column' },
-            gap: '0.1875rem',
+            border: { radius: '7px' },
+            cursor: 'pointer',
+            '@': {
+                raggu_web_front_sidebar_dataset_active: {
+                    true: {
+                        background: { color: $bog_builderui_tokens.card },
+                        box: {
+                            shadow: [{
+                                    x: 0,
+                                    y: 0,
+                                    blur: 0,
+                                    spread: '1px',
+                                    color: $bog_builderui_tokens.line,
+                                }],
+                        },
+                    },
+                },
+            },
         },
-        Corpus_name: {
+        Dataset_name: {
             font: { weight: 600, size: '13px' },
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
         },
-        Corpus_meta: {
+        Dataset_meta: {
             font: {
                 family: 'ui-monospace, monospace',
                 weight: 500,
                 size: '10px',
             },
             color: $bog_builderui_tokens.shade,
+        },
+        Footer: {
+            flex: { direction: 'column' },
+            gap: '0.625rem',
+            padding: { top: '0.625rem' },
         },
         Lang_row: {
             flex: { direction: 'row' },
@@ -6832,6 +6831,84 @@ var $;
                 minWidth: '1.5rem',
                 minHeight: '1.5rem',
                 padding: { top: 0, bottom: 0, left: '0.375rem', right: '0.375rem' },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_topbar_nav) = class $raggu_web_front_topbar_nav extends ($.$bog_builderui_div) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Icon(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.icon())]);
+			return obj;
+		}
+		icon(){
+			return "";
+		}
+		hint(){
+			return "";
+		}
+		active(){
+			return false;
+		}
+		disabled(){
+			return false;
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"title": (this.hint()), 
+				"raggu_web_front_topbar_nav_active": (this.active()), 
+				"raggu_web_front_topbar_nav_disabled": (this.disabled())
+			};
+		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.click(next))};
+		}
+		sub(){
+			return [(this.Icon())];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_topbar_nav.prototype), "click"));
+	($mol_mem(($.$raggu_web_front_topbar_nav.prototype), "Icon"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_topbar_nav, {
+        align: { items: 'center' },
+        justify: { content: 'center' },
+        minWidth: '34px',
+        minHeight: '34px',
+        border: { radius: '7px' },
+        font: { size: '15px' },
+        cursor: 'pointer',
+        color: $bog_builderui_tokens.shade,
+        '@': {
+            raggu_web_front_topbar_nav_active: {
+                true: {
+                    background: { color: $bog_builderui_tokens.current },
+                    color: '#ffffff',
+                },
+            },
+            raggu_web_front_topbar_nav_disabled: {
+                true: {
+                    opacity: 0.4,
+                    cursor: 'not-allowed',
+                    pointerEvents: 'none',
+                },
             },
         },
     });
@@ -7135,199 +7212,6 @@ var $;
 		}
 	};
 
-
-;
-	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
-		tabindex(){
-			return -1;
-		}
-		event_scroll(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		scroll_top(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		scroll_left(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		attr(){
-			return {...(super.attr()), "tabindex": (this.tabindex())};
-		}
-		event(){
-			return {...(super.event()), "scroll": (next) => (this.event_scroll(next))};
-		}
-	};
-	($mol_mem(($.$mol_scroll.prototype), "event_scroll"));
-	($mol_mem(($.$mol_scroll.prototype), "scroll_top"));
-	($mol_mem(($.$mol_scroll.prototype), "scroll_left"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_dom_listener extends $mol_object {
-        _node;
-        _event;
-        _handler;
-        _config;
-        constructor(_node, _event, _handler, _config = { passive: true }) {
-            super();
-            this._node = _node;
-            this._event = _event;
-            this._handler = _handler;
-            this._config = _config;
-            this._node.addEventListener(this._event, this._handler, this._config);
-        }
-        destructor() {
-            this._node.removeEventListener(this._event, this._handler, this._config);
-            super.destructor();
-        }
-    }
-    $.$mol_dom_listener = $mol_dom_listener;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_print extends $mol_object {
-        static before() {
-            return new $mol_dom_listener(this.$.$mol_dom_context, 'beforeprint', () => {
-                this.active(true);
-            });
-        }
-        static after() {
-            return new $mol_dom_listener(this.$.$mol_dom_context, 'afterprint', () => {
-                this.active(false);
-            });
-        }
-        static active(next) {
-            this.before();
-            this.after();
-            return next || false;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_print, "before", null);
-    __decorate([
-        $mol_mem
-    ], $mol_print, "after", null);
-    __decorate([
-        $mol_mem
-    ], $mol_print, "active", null);
-    $.$mol_print = $mol_print;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Scrolling pane.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_scroll_demo
-         */
-        class $mol_scroll extends $.$mol_scroll {
-            scroll_top(next, cache) {
-                const el = this.dom_node();
-                if (next !== undefined && !cache)
-                    el.scrollTop = next;
-                return el.scrollTop;
-            }
-            scroll_left(next, cache) {
-                const el = this.dom_node();
-                if (next !== undefined && !cache)
-                    el.scrollLeft = next;
-                return el.scrollLeft;
-            }
-            event_scroll(next) {
-                const el = this.dom_node();
-                this.scroll_left(el.scrollLeft, 'cache');
-                this.scroll_top(el.scrollTop, 'cache');
-            }
-            minimal_height() {
-                return this.$.$mol_print.active() ? null : 0;
-            }
-            minimal_width() {
-                return this.$.$mol_print.active() ? null : 0;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_scroll.prototype, "scroll_top", null);
-        __decorate([
-            $mol_mem
-        ], $mol_scroll.prototype, "scroll_left", null);
-        $$.$mol_scroll = $mol_scroll;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { per, rem, px } = $mol_style_unit;
-        $mol_style_define($mol_scroll, {
-            display: 'grid',
-            overflow: 'auto',
-            flex: {
-                direction: 'column',
-                grow: 1,
-                shrink: 1,
-                // basis: 0,
-            },
-            outline: 'none',
-            align: {
-                self: 'stretch',
-                items: 'flex-start',
-            },
-            boxSizing: 'border-box',
-            willChange: 'scroll-position',
-            scroll: {
-                padding: [rem(.75), 0],
-            },
-            maxHeight: per(100),
-            maxWidth: per(100),
-            webkitOverflowScrolling: 'touch',
-            contain: 'content',
-            '>': {
-                $mol_view: {
-                    // transform: 'translateZ(0)', // enforce gpu scroll in all agents
-                    gridArea: '1/1',
-                },
-            },
-            '::before': {
-                display: 'none',
-            },
-            '::after': {
-                display: 'none',
-            },
-            '::-webkit-scrollbar': {
-                width: rem(.25),
-                height: rem(.25),
-            },
-            '@media': {
-                'print': {
-                    overflow: 'hidden',
-                    contain: 'none',
-                    maxHeight: 'unset',
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -11654,6 +11538,102 @@ ${CHAT.answer}
 
 ;
 	($.$raggu_web_front_topbar) = class $raggu_web_front_topbar extends ($.$bog_builderui_div) {
+		is_gallery(){
+			return false;
+		}
+		click_gallery(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_gallery(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("▤");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_gallery_hint")));
+			(obj.active) = () => ((this.is_gallery()));
+			(obj.click) = (next) => ((this.click_gallery(next)));
+			return obj;
+		}
+		is_explorer(){
+			return false;
+		}
+		no_dataset(){
+			return false;
+		}
+		click_explorer(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_explorer(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("◉");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_explorer_hint")));
+			(obj.active) = () => ((this.is_explorer()));
+			(obj.disabled) = () => ((this.no_dataset()));
+			(obj.click) = (next) => ((this.click_explorer(next)));
+			return obj;
+		}
+		is_chat(){
+			return false;
+		}
+		click_chat(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_chat(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("💬");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_chat_hint")));
+			(obj.active) = () => ((this.is_chat()));
+			(obj.disabled) = () => ((this.no_dataset()));
+			(obj.click) = (next) => ((this.click_chat(next)));
+			return obj;
+		}
+		is_dashboard(){
+			return false;
+		}
+		click_dashboard(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_dashboard(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("▦");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_dashboard_hint")));
+			(obj.active) = () => ((this.is_dashboard()));
+			(obj.disabled) = () => ((this.no_dataset()));
+			(obj.click) = (next) => ((this.click_dashboard(next)));
+			return obj;
+		}
+		is_summary(){
+			return false;
+		}
+		click_summary(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_summary(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("✦");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_summary_hint")));
+			(obj.active) = () => ((this.is_summary()));
+			(obj.click) = (next) => ((this.click_summary(next)));
+			return obj;
+		}
+		Nav(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Nav_gallery()), 
+				(this.Nav_explorer()), 
+				(this.Nav_chat()), 
+				(this.Nav_dashboard()), 
+				(this.Nav_summary())
+			]);
+			return obj;
+		}
+		Spacer_left(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
 		Title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.screen_title())]);
@@ -11729,6 +11709,16 @@ ${CHAT.answer}
 			]);
 			return obj;
 		}
+		open_help(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Help_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.open_help(next))});
+			(obj.sub) = () => ([(this.help_btn_text())]);
+			return obj;
+		}
 		open_settings(next){
 			if(next !== undefined) return next;
 			return null;
@@ -11744,7 +11734,8 @@ ${CHAT.answer}
 			(obj.screen) = () => ((this.screen()));
 			return obj;
 		}
-		screen(){
+		screen(next){
+			if(next !== undefined) return next;
 			return "gallery";
 		}
 		dataset_id(){
@@ -11766,6 +11757,9 @@ ${CHAT.answer}
 		settings_btn_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_topbar_settings_btn_text"));
 		}
+		help_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_topbar_help_btn_text"));
+		}
 		preset_fast_label(){
 			return (this.$.$mol_locale.text("$raggu_web_front_topbar_preset_fast_label"));
 		}
@@ -11777,15 +11771,30 @@ ${CHAT.answer}
 		}
 		sub(){
 			return [
+				(this.Nav()), 
+				(this.Spacer_left()), 
 				(this.Title_block()), 
 				(this.Spacer()), 
 				(this.Preset_label()), 
 				(this.Preset_group()), 
+				(this.Help_btn()), 
 				(this.Settings_btn()), 
 				(this.Export())
 			];
 		}
 	};
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_gallery"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_gallery"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_explorer"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_explorer"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_chat"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_chat"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_dashboard"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_dashboard"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_summary"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_summary"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer_left"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Subtitle"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title_block"));
@@ -11798,9 +11807,12 @@ ${CHAT.answer}
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_demo"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_demo"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_group"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_settings"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Settings_btn"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Export"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "screen"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "preset"));
 
 
@@ -11815,6 +11827,17 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
+            is_gallery() { return this.screen() === 'gallery'; }
+            is_explorer() { return this.screen() === 'explorer'; }
+            is_chat() { return this.screen() === 'chat'; }
+            is_dashboard() { return this.screen() === 'dashboard'; }
+            is_summary() { return this.screen() === 'summary'; }
+            no_dataset() { return !this.dataset_id(); }
+            click_gallery() { this.screen('gallery'); return null; }
+            click_explorer() { this.screen('explorer'); return null; }
+            click_chat() { this.screen('chat'); return null; }
+            click_dashboard() { this.screen('dashboard'); return null; }
+            click_summary() { this.screen('summary'); return null; }
             is_fast() { return this.preset() === 'fast'; }
             is_accurate() { return this.preset() === 'accurate'; }
             is_demo() { return this.preset() === 'demo'; }
@@ -11822,6 +11845,21 @@ var $;
             click_accurate() { this.preset('accurate'); return null; }
             click_demo() { this.preset('demo'); return null; }
         }
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_gallery", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_explorer", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_chat", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_dashboard", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_summary", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_topbar.prototype, "click_fast", null);
@@ -11854,8 +11892,22 @@ var $;
             left: '1.25rem',
             right: '1.25rem',
         },
+        Nav: {
+            flex: { direction: 'row' },
+            gap: '0.125rem',
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '3px',
+                bottom: '3px',
+                left: '3px',
+                right: '3px',
+            },
+        },
         Title_block: {
             flex: { direction: 'column' },
+            align: { items: 'center' },
+            textAlign: 'center',
         },
         Title: {
             font: { weight: 700, size: '15px' },
@@ -11867,6 +11919,9 @@ var $;
                 size: '10px',
             },
             color: $bog_builderui_tokens.shade,
+        },
+        Spacer_left: {
+            flex: { grow: 1 },
         },
         Spacer: {
             flex: { grow: 1 },
@@ -11892,6 +11947,21 @@ var $;
                 right: '3px',
             },
         },
+        Help_btn: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '6px',
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '7px',
+                bottom: '7px',
+                left: '12px',
+                right: '12px',
+            },
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+        },
         Settings_btn: {
             flex: { direction: 'row' },
             align: { items: 'center' },
@@ -11907,8 +11977,10 @@ var $;
             font: { size: '12px', weight: 600 },
             cursor: 'pointer',
         },
+        // Навигация + центрированный заголовок + пресеты не влезают уже на
+        // ноутбучных ширинах, поэтому враппим сильно раньше, чем раньше (720).
         '@media': {
-            '(max-width: 720px)': {
+            '(max-width: 1200px)': {
                 height: 'auto',
                 minHeight: '58px',
                 flexWrap: 'wrap',
@@ -13366,6 +13438,370 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$raggu_web_front_help_section) = class $raggu_web_front_help_section extends ($.$bog_builderui_div) {
+		Icon(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.icon())]);
+			return obj;
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		Desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.desc())]);
+			return obj;
+		}
+		Media(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.media()));
+			return obj;
+		}
+		Text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Title()), 
+				(this.Desc()), 
+				(this.Media())
+			]);
+			return obj;
+		}
+		icon(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		desc(){
+			return "";
+		}
+		media(){
+			return [];
+		}
+		sub(){
+			return [(this.Icon()), (this.Text())];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Icon"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Title"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Desc"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Media"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Text"));
+
+
+;
+"use strict";
+
+
+;
+	($.$raggu_web_front_help) = class $raggu_web_front_help extends ($.$bog_builderui_div) {
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Backdrop(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			return obj;
+		}
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title_text())]);
+			return obj;
+		}
+		Header_sub(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.subtitle_text())]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_title()), (this.Header_sub())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Close_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			(obj.sub) = () => (["✕"]);
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Header_text()), 
+				(this.Spacer()), 
+				(this.Close_btn())
+			]);
+			return obj;
+		}
+		Intro(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.intro_text())]);
+			return obj;
+		}
+		Section_gallery(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("▤");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_gallery_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_gallery_desc")));
+			return obj;
+		}
+		Section_explorer(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("◉");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_desc")));
+			return obj;
+		}
+		Section_chat(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("💬");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_desc")));
+			return obj;
+		}
+		Section_dashboard(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("▦");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_desc")));
+			return obj;
+		}
+		Section_summary(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("✦");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_summary_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_summary_desc")));
+			return obj;
+		}
+		Body(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([
+				(this.Intro()), 
+				(this.Section_gallery()), 
+				(this.Section_explorer()), 
+				(this.Section_chat()), 
+				(this.Section_dashboard()), 
+				(this.Section_summary())
+			]);
+			return obj;
+		}
+		Panel(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header()), (this.Body())]);
+			return obj;
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_help_title_text"));
+		}
+		subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_help_subtitle_text"));
+		}
+		intro_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_help_intro_text"));
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_front_help_showed": (this.showed())};
+		}
+		sub(){
+			return [(this.Backdrop()), (this.Panel())];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_help.prototype), "close"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Backdrop"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header_sub"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Close_btn"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Intro"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_gallery"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_explorer"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_chat"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_dashboard"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_summary"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Body"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Panel"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "showed"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_help extends $.$raggu_web_front_help {
+            close() {
+                this.showed(false);
+                return null;
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_help.prototype, "close", null);
+        $$.$raggu_web_front_help = $raggu_web_front_help;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_help, {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'none',
+        zIndex: 40,
+        '@': {
+            raggu_web_front_help_showed: {
+                true: { display: 'flex' },
+            },
+        },
+        Backdrop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: { color: '#1c1b1a59' },
+        },
+        Panel: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: '420px',
+            maxWidth: '100vw',
+            background: { color: $bog_builderui_tokens.card },
+            border: {
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            zIndex: 1,
+            flex: { direction: 'column' },
+            box: {
+                shadow: [{
+                        x: '-12px',
+                        y: 0,
+                        blur: '40px',
+                        spread: 0,
+                        color: '#0000001f',
+                    }],
+            },
+        },
+        Header: {
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '20px',
+                right: '20px',
+            },
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '0.75rem',
+        },
+        Header_text: {
+            flex: { direction: 'column' },
+            gap: '0.125rem',
+        },
+        Header_title: {
+            font: { weight: 700, size: '15px' },
+        },
+        Header_sub: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Close_btn: {
+            cursor: 'pointer',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '14px' },
+            padding: {
+                top: '4px',
+                bottom: '4px',
+                left: '8px',
+                right: '8px',
+            },
+            border: { radius: '6px' },
+        },
+        Body: {
+            // $mol_scroll по умолчанию grid — дети лягут друг на друга (1/1)
+            display: 'flex',
+            flex: { grow: 1, shrink: 1, direction: 'column' },
+            minHeight: 0,
+            padding: {
+                top: '16px',
+                bottom: '16px',
+                left: '20px',
+                right: '20px',
+            },
+            gap: '1rem',
+        },
+        Intro: {
+            font: { size: '13px' },
+            lineHeight: '1.5',
+            color: $bog_builderui_tokens.shade,
+        },
+    });
+    $mol_style_define($raggu_web_front_help_section, {
+        flex: { direction: 'row' },
+        gap: '0.75rem',
+        align: { items: 'flex-start' },
+        Icon: {
+            minWidth: '30px',
+            maxWidth: '30px',
+            height: '30px',
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            font: { size: '14px' },
+        },
+        Text: {
+            flex: { direction: 'column', shrink: 1 },
+            gap: '0.25rem',
+            minWidth: 0,
+        },
+        Title: {
+            font: { weight: 700, size: '13px' },
+        },
+        Desc: {
+            font: { size: '12px' },
+            lineHeight: '1.5',
+            color: $bog_builderui_tokens.shade,
+        },
+    });
+})($ || ($ = {}));
+
+;
 	($.$raggu_web_front_gallery_card_preview) = class $raggu_web_front_gallery_card_preview extends ($.$bog_builderui_div) {};
 
 
@@ -14390,76 +14826,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    /** Build final URL: substitute `{placeholders}` in route, append querystring. */
-    function $raggu_web_front_api_url(endpoint, route, params, query) {
-        let path = route;
-        if (params) {
-            for (const key in params) {
-                path = path.replace(`{${key}}`, encodeURIComponent(String(params[key])));
-            }
-        }
-        const qs = [];
-        if (query) {
-            for (const key in query) {
-                const val = query[key];
-                if (val === undefined || val === null)
-                    continue;
-                if (Array.isArray(val)) {
-                    for (const item of val)
-                        qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
-                }
-                else {
-                    qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(val))}`);
-                }
-            }
-        }
-        const suffix = qs.length ? `?${qs.join('&')}` : '';
-        return `${endpoint}${path}${suffix}`;
-    }
-    /**
-     * Backend base URL — the ONE line to change when the backend is deployed.
-     * No path suffix here: operation `route`s already carry `/api/v1/...`
-     * from FastAPI's OpenAPI dump.
-     */
-    $.$raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org';
-    /**
-     * Effective endpoint: the `?api=<url>` app argument overrides the default,
-     * so a freshly deployed backend can be pointed at WITHOUT a rebuild —
-     * e.g. `...test.html#!api=https%3A%2F%2Fback.example.com`.
-     * Reactive: reads propagate via $mol_state_arg, so changing the arg refetches.
-     */
-    function $raggu_web_front_api_endpoint() {
-        return $mol_state_arg.value('api') || $.$raggu_web_front_api_endpoint_default;
-    }
-    $.$raggu_web_front_api_endpoint = $raggu_web_front_api_endpoint;
-    /**
-     * Typed REST client factory for OpenAPI-generated operation descriptors.
-     *
-     * Returns a callable that takes an operation constant plus options and
-     * synchronously (via wire) returns the parsed JSON body. Any network
-     * error propagates as an exception so `$mol_view` shows an error plate.
-     */
-    $.$raggu_web_front_api = (() => {
-        const init = {
-            credentials: 'omit',
-            cache: 'no-cache',
-        };
-        return function call(op, opts = {}) {
-            const url = $raggu_web_front_api_url($raggu_web_front_api_endpoint(), op.route, opts.params, opts.query);
-            const req = { ...init, method: op.method };
-            if (opts.body !== undefined) {
-                req.headers = { ...(init.headers ?? {}), 'content-type': 'application/json' };
-                req.body = JSON.stringify(opts.body);
-            }
-            return $mol_fetch.json(url, req);
-        };
-    })();
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     $.$raggu_web_front_api_ragu_health = {
         method: "GET",
         route: "/api/v1/health",
@@ -14540,6 +14906,91 @@ var $;
         body: undefined,
         out: {},
     };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** Build final URL: substitute `{placeholders}` in route, append querystring. */
+    function $raggu_web_front_api_url(endpoint, route, params, query) {
+        let path = route;
+        if (params) {
+            for (const key in params) {
+                path = path.replace(`{${key}}`, encodeURIComponent(String(params[key])));
+            }
+        }
+        const qs = [];
+        if (query) {
+            for (const key in query) {
+                const val = query[key];
+                if (val === undefined || val === null)
+                    continue;
+                if (Array.isArray(val)) {
+                    for (const item of val)
+                        qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
+                }
+                else {
+                    qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(val))}`);
+                }
+            }
+        }
+        const suffix = qs.length ? `?${qs.join('&')}` : '';
+        return `${endpoint}${path}${suffix}`;
+    }
+    /**
+     * Backend base URL — the ONE line to change when the backend is deployed.
+     * No path suffix here: operation `route`s already carry `/api/v1/...`
+     * from FastAPI's OpenAPI dump.
+     */
+    $.$raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org';
+    /**
+     * Effective endpoint: the `?api=<url>` app argument overrides the default,
+     * so a freshly deployed backend can be pointed at WITHOUT a rebuild —
+     * e.g. `...test.html#!api=https%3A%2F%2Fback.example.com`.
+     * Reactive: reads propagate via $mol_state_arg, so changing the arg refetches.
+     */
+    function $raggu_web_front_api_endpoint() {
+        return $mol_state_arg.value('api') || $.$raggu_web_front_api_endpoint_default;
+    }
+    $.$raggu_web_front_api_endpoint = $raggu_web_front_api_endpoint;
+    /**
+     * Детали ребра — симметрично get_node. На бэке ручки ПОКА НЕТ, дескриптор
+     * написан руками под согласованный контракт. Когда бэк добавит её в
+     * openapi.json, генератор создаст одноимённую константу в ragu.openapi.ts —
+     * тогда эту удалить (билд сам напомнит конфликтом имён). Фронт до тех пор
+     * фолбэчится на данные из get_graph.
+     */
+    $.$raggu_web_front_api_ragu_get_edge = {
+        method: 'get',
+        route: '/api/v1/datasets/{dataset_id}/graph/edges/{edge_id}',
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    /**
+     * Typed REST client factory for OpenAPI-generated operation descriptors.
+     *
+     * Returns a callable that takes an operation constant plus options and
+     * synchronously (via wire) returns the parsed JSON body. Any network
+     * error propagates as an exception so `$mol_view` shows an error plate.
+     */
+    $.$raggu_web_front_api = (() => {
+        const init = {
+            credentials: 'omit',
+            cache: 'no-cache',
+        };
+        return function call(op, opts = {}) {
+            const url = $raggu_web_front_api_url($raggu_web_front_api_endpoint(), op.route, opts.params, opts.query);
+            const req = { ...init, method: op.method };
+            if (opts.body !== undefined) {
+                req.headers = { ...(init.headers ?? {}), 'content-type': 'application/json' };
+                req.body = JSON.stringify(opts.body);
+            }
+            return $mol_fetch.json(url, req);
+        };
+    })();
 })($ || ($ = {}));
 
 ;
@@ -14910,6 +15361,76 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_svg_text) = class $mol_svg_text extends ($.$mol_svg) {
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		align(){
+			return "middle";
+		}
+		align_hor(){
+			return (this.align());
+		}
+		align_vert(){
+			return "baseline";
+		}
+		text(){
+			return "";
+		}
+		dom_name(){
+			return "text";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y()), 
+				"text-anchor": (this.align_hor()), 
+				"alignment-baseline": (this.align_vert())
+			};
+		}
+		sub(){
+			return [(this.text())];
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_text extends $.$mol_svg_text {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_text = $mol_svg_text;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/svg/text/text.view.css", "[mol_svg_text] {\n\tfill: currentColor;\n\tstroke: none;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
 		radius(){
 			return ".5%";
@@ -15014,76 +15535,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_svg_text) = class $mol_svg_text extends ($.$mol_svg) {
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
-		}
-		align(){
-			return "middle";
-		}
-		align_hor(){
-			return (this.align());
-		}
-		align_vert(){
-			return "baseline";
-		}
-		text(){
-			return "";
-		}
-		dom_name(){
-			return "text";
-		}
-		pos(){
-			return [];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"x": (this.pos_x()), 
-				"y": (this.pos_y()), 
-				"text-anchor": (this.align_hor()), 
-				"alignment-baseline": (this.align_vert())
-			};
-		}
-		sub(){
-			return [(this.text())];
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_text extends $.$mol_svg_text {
-            pos_x() {
-                return this.pos()[0];
-            }
-            pos_y() {
-                return this.pos()[1];
-            }
-        }
-        $$.$mol_svg_text = $mol_svg_text;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/svg/text/text.view.css", "[mol_svg_text] {\n\tfill: currentColor;\n\tstroke: none;\n}\n");
-})($ || ($ = {}));
-
-;
 	($.$raggu_web_front_explorer_forcegraph) = class $raggu_web_front_explorer_forcegraph extends ($.$mol_svg_root) {
 		computed_view_box(){
 			return "-300 -300 600 600";
@@ -15120,6 +15571,9 @@ var $;
 		edge_y2(id){
 			return "";
 		}
+		edge_id(id){
+			return "";
+		}
 		edge_color(id){
 			return "#7a7672";
 		}
@@ -15129,6 +15583,18 @@ var $;
 		edge_opacity(id){
 			return "0.55";
 		}
+		edge_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edge_hover_enter(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edge_hover_leave(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Edge(id){
 			const obj = new this.$.$mol_svg_line();
 			(obj.from_x) = () => ((this.edge_x1(id)));
@@ -15137,9 +15603,17 @@ var $;
 			(obj.to_y) = () => ((this.edge_y2(id)));
 			(obj.attr) = () => ({
 				...(this.$.$mol_svg_line.prototype.attr.call(obj)), 
+				"data-edge-id": (this.edge_id(id)), 
 				"stroke": (this.edge_color(id)), 
 				"stroke-width": (this.edge_width(id)), 
-				"stroke-opacity": (this.edge_opacity(id))
+				"stroke-opacity": (this.edge_opacity(id)), 
+				"cursor": "pointer"
+			});
+			(obj.event) = () => ({
+				...(this.$.$mol_svg_line.prototype.event.call(obj)), 
+				"click": (next) => (this.edge_click(id, next)), 
+				"pointerenter": (next) => (this.edge_hover_enter(id, next)), 
+				"pointerleave": (next) => (this.edge_hover_leave(id, next))
 			});
 			return obj;
 		}
@@ -15149,6 +15623,52 @@ var $;
 		G_edges(){
 			const obj = new this.$.$mol_svg_group();
 			(obj.sub) = () => ((this.edge_views()));
+			return obj;
+		}
+		edge_label_x(id){
+			return "";
+		}
+		edge_label_y(id){
+			return "";
+		}
+		edge_label_text(id){
+			return "";
+		}
+		edge_label_font_size(){
+			return "8";
+		}
+		edge_label_opacity(id){
+			return "0.75";
+		}
+		Edge_label(id){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.edge_label_x(id)));
+			(obj.pos_y) = () => ((this.edge_label_y(id)));
+			(obj.align) = () => ("middle");
+			(obj.align_vert) = () => ("middle");
+			(obj.text) = () => ((this.edge_label_text(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"data-edge-id": (this.edge_id(id)), 
+				"data-forcegraph-edge-label": "", 
+				"font-size": (this.edge_label_font_size()), 
+				"fill-opacity": (this.edge_label_opacity(id)), 
+				"cursor": "pointer"
+			});
+			(obj.event) = () => ({
+				...(this.$.$mol_svg_text.prototype.event.call(obj)), 
+				"click": (next) => (this.edge_click(id, next)), 
+				"pointerenter": (next) => (this.edge_hover_enter(id, next)), 
+				"pointerleave": (next) => (this.edge_hover_leave(id, next))
+			});
+			return obj;
+		}
+		edge_label_views(){
+			return [(this.Edge_label(id))];
+		}
+		G_edge_labels(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.sub) = () => ((this.edge_label_views()));
 			return obj;
 		}
 		node_x(id){
@@ -15215,6 +15735,44 @@ var $;
 		G_nodes(){
 			const obj = new this.$.$mol_svg_group();
 			(obj.sub) = () => ((this.node_views()));
+			return obj;
+		}
+		node_label_x(id){
+			return "";
+		}
+		node_label_y(id){
+			return "";
+		}
+		node_label_text(id){
+			return "";
+		}
+		node_label_font_size(){
+			return "10";
+		}
+		node_label_opacity(id){
+			return "1";
+		}
+		Node_label(id){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.node_label_x(id)));
+			(obj.pos_y) = () => ((this.node_label_y(id)));
+			(obj.align) = () => ("middle");
+			(obj.text) = () => ((this.node_label_text(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"data-forcegraph-node-label": "", 
+				"font-size": (this.node_label_font_size()), 
+				"fill-opacity": (this.node_label_opacity(id))
+			});
+			return obj;
+		}
+		node_label_views(){
+			return [(this.Node_label(id))];
+		}
+		G_node_labels(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
+			(obj.sub) = () => ((this.node_label_views()));
 			return obj;
 		}
 		tooltip_bg_x(){
@@ -15298,6 +15856,14 @@ var $;
 			if(next !== undefined) return next;
 			return "";
 		}
+		selected_edge_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hovered_edge_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
 		drag_id(next){
 			if(next !== undefined) return next;
 			return "";
@@ -15368,7 +15934,9 @@ var $;
 		sub(){
 			return [
 				(this.G_edges()), 
+				(this.G_edge_labels()), 
 				(this.G_nodes()), 
+				(this.G_node_labels()), 
 				(this.Tooltip())
 			];
 		}
@@ -15378,19 +15946,28 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_move"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_end"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "bg_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_hover_enter"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_hover_leave"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edges"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge_label"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edge_labels"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_enter"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_leave"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_nodes"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node_label"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_node_labels"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_bg"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_text"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "select"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_id"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_edge_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_edge_id"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "drag_id"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_x"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_y"));
@@ -16021,15 +16598,25 @@ var $;
             edge_y1(id) { return String(this.pos(this.edge_by_id()[id].source).y); }
             edge_x2(id) { return String(this.pos(this.edge_by_id()[id].target).x); }
             edge_y2(id) { return String(this.pos(this.edge_by_id()[id].target).y); }
+            // Used in view.tree as `data-edge-id` attr — mirrors node_id.
+            edge_id(id) { return id; }
+            // Edge is "active" when hovered or selected directly (not via incident node).
+            edge_active(id) {
+                return this.hovered_edge_id() === id || this.selected_edge_id() === id;
+            }
             edge_width(id) {
                 const e = this.edge_by_id()[id];
                 const base = e.strength * 1.5 + 0.4;
+                if (this.edge_active(id))
+                    return String(base * 2.5);
                 const incident = this.hovered_id() && (e.source === this.hovered_id() || e.target === this.hovered_id())
                     || this.selected_id() && (e.source === this.selected_id() || e.target === this.selected_id());
                 return String(incident ? base * 2 : base);
             }
             edge_opacity(id) {
                 const e = this.edge_by_id()[id];
+                if (this.edge_active(id))
+                    return '0.95';
                 if (this.filter_active() && !(this.node_matches(e.source) && this.node_matches(e.target)))
                     return '0.08';
                 const hid = this.hovered_id() || this.selected_id();
@@ -16038,11 +16625,111 @@ var $;
                 return (e.source === hid || e.target === hid) ? '0.95' : '0.18';
             }
             edge_color(id) {
+                if (this.edge_active(id))
+                    return '#ffffff';
                 const e = this.edge_by_id()[id];
                 const hid = this.hovered_id() || this.selected_id();
                 if (hid && (e.source === hid || e.target === hid))
                     return '#ffffff';
                 return '#7a7672';
+            }
+            edge_hover_enter(id) {
+                this.hovered_edge_id(id);
+                return null;
+            }
+            edge_hover_leave() {
+                this.hovered_edge_id('');
+                return null;
+            }
+            // Клик по ребру (линии или подписи) выбирает связь и снимает выбор узла —
+            // aside показывает либо карточку сущности, либо карточку связи.
+            edge_click(id) {
+                if (this.moved_px >= this.DRAG_THRESHOLD)
+                    return null;
+                this.selected_edge_id(id);
+                this.selected_id('');
+                return null;
+            }
+            selected_edge() {
+                const id = this.selected_edge_id();
+                return id ? this.edge_by_id()[id] ?? null : null;
+            }
+            // ---- always-on labels ----
+            node_label_views() {
+                return this.nodes().map(n => this.Node_label(n.id));
+            }
+            edge_label_views() {
+                return this.edges().map(e => this.Edge_label(e.id));
+            }
+            // Font sizes live in svg units, so they shrink on zoom-out. sqrt easing
+            // (same as tooltip) keeps labels from ballooning when zoomed in close.
+            node_label_font_size() {
+                return String(Math.max(4, Math.min(14, 10 / Math.sqrt(this.zoom()))));
+            }
+            edge_label_font_size() {
+                return String(Math.max(3, Math.min(11, 8 / Math.sqrt(this.zoom()))));
+            }
+            node_label_x(id) { return String(this.pos(id).x); }
+            node_label_y(id) {
+                const fs = parseFloat(this.node_label_font_size());
+                return String(this.pos(id).y + this.node_radius_num(id) + fs + 2);
+            }
+            // «Когда места хватает»: подпись растёт из видимого размера узла на экране
+            // (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
+            node_label_vis(id) {
+                const r_px = this.node_radius_num(id) * this.zoom();
+                return Math.max(0, Math.min(1, (r_px - 7) / 3));
+            }
+            node_label_text(id) {
+                if (this.active_id() === id)
+                    return ''; // tooltip уже показывает label
+                if (!this.node_matches(id))
+                    return '';
+                if (this.node_label_vis(id) <= 0)
+                    return '';
+                return this.node_by_id()[id]?.label ?? '';
+            }
+            node_label_opacity(id) {
+                return String(this.node_label_vis(id) * 0.85);
+            }
+            edge_label_mid(id) {
+                const e = this.edge_by_id()[id];
+                const a = this.pos(e.source);
+                const b = this.pos(e.target);
+                return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+            }
+            edge_label_x(id) { return String(this.edge_label_mid(id).x); }
+            edge_label_y(id) { return String(this.edge_label_mid(id).y); }
+            // Подпись ребра рисуем, только когда текст влезает в свободную длину ребра
+            // (за вычетом кружков узлов). Активное ребро подписываем всегда.
+            edge_label_text(id) {
+                const e = this.edge_by_id()[id];
+                const rel = e?.relation ?? '';
+                if (!rel)
+                    return '';
+                if (this.edge_active(id))
+                    return rel;
+                if (this.filter_active() && !(this.node_matches(e.source) && this.node_matches(e.target)))
+                    return '';
+                const fs = parseFloat(this.edge_label_font_size());
+                if (fs * this.zoom() < 4)
+                    return ''; // на экране будет нечитаемая пыль
+                const a = this.pos(e.source);
+                const b = this.pos(e.target);
+                const len = Math.hypot(b.x - a.x, b.y - a.y)
+                    - this.node_radius_num(e.source) - this.node_radius_num(e.target);
+                const need = rel.length * fs * 0.62 + fs * 2;
+                return len >= need ? rel : '';
+            }
+            edge_label_opacity(id) {
+                if (this.edge_active(id))
+                    return '1';
+                const hid = this.hovered_id() || this.selected_id();
+                if (hid) {
+                    const e = this.edge_by_id()[id];
+                    return (e.source === hid || e.target === hid) ? '0.95' : '0.25';
+                }
+                return '0.75';
             }
             // Suppress click that fires right after node-drag (drag_id was just released)
             just_dragged = '';
@@ -16052,17 +16739,21 @@ var $;
                     return null;
                 }
                 this.selected_id(id);
+                this.selected_edge_id('');
                 this.select(id);
                 return null;
             }
-            // Background click (anywhere not on a node circle) → deselect
+            // Background click (anywhere not on a node circle or an edge) → deselect
             bg_click(event) {
                 if (!event)
                     return;
                 const target = event.target;
                 if (target.getAttribute('data-node-id'))
                     return;
+                if (target.getAttribute('data-edge-id'))
+                    return;
                 this.selected_id('');
+                this.selected_edge_id('');
                 this.select('');
                 return null;
             }
@@ -16177,6 +16868,15 @@ var $;
         ], $raggu_web_front_explorer_forcegraph.prototype, "edge_by_id", null);
         __decorate([
             $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_hover_enter", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_hover_leave", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_click", null);
+        __decorate([
+            $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "click", null);
         __decorate([
             $mol_action
@@ -16211,6 +16911,21 @@ var $;
         + '}\n'
         + '[data-forcegraph-tooltip-text] {\n'
         + '\tfill: var(--bog_builderui_text);\n'
+        + '}\n'
+        // Halo (paint-order: stroke) отделяет подписи от линий графа под ними.
+        + '[data-forcegraph-node-label] {\n'
+        + '\tfill: var(--bog_builderui_text);\n'
+        + '\tpaint-order: stroke;\n'
+        + '\tstroke: var(--bog_builderui_back);\n'
+        + '\tstroke-width: 2px;\n'
+        + '\tstroke-opacity: 0.7;\n'
+        + '}\n'
+        + '[data-forcegraph-edge-label] {\n'
+        + '\tfill: var(--bog_builderui_shade);\n'
+        + '\tpaint-order: stroke;\n'
+        + '\tstroke: var(--bog_builderui_back);\n'
+        + '\tstroke-width: 2px;\n'
+        + '\tstroke-opacity: 0.6;\n'
         + '}\n');
 })($ || ($ = {}));
 
@@ -16228,6 +16943,7 @@ var $;
 			(obj.nodes) = () => ((this.graph_nodes()));
 			(obj.edges) = () => ((this.graph_edges()));
 			(obj.selected_id) = (next) => ((this.selected_id(next)));
+			(obj.selected_edge_id) = (next) => ((this.selected_edge_id(next)));
 			(obj.search) = () => ((this.search()));
 			(obj.filter_type) = () => ((this.type_filter()));
 			return obj;
@@ -16323,9 +17039,12 @@ var $;
 			]);
 			return obj;
 		}
+		aside_title(){
+			return "";
+		}
 		Aside_title(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.aside_title_text())]);
+			(obj.sub) = () => ([(this.aside_title())]);
 			return obj;
 		}
 		Entity_dot(){
@@ -16440,6 +17159,10 @@ var $;
 			if(next !== undefined) return next;
 			return "";
 		}
+		selected_edge_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
 		search(next){
 			if(next !== undefined) return next;
 			return "";
@@ -16453,6 +17176,9 @@ var $;
 		}
 		aside_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_title_text"));
+		}
+		aside_relation_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_relation_title_text"));
 		}
 		aside_empty_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_empty_text"));
@@ -16510,6 +17236,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_edge_id"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "search"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "type_filter"));
 
@@ -16566,6 +17293,7 @@ var $;
                         target: e.target,
                         strength: e.strength,
                         relation: e.relation_type,
+                        description: e.description ?? '',
                     }));
                     const result = { nodes, edges };
                     $raggu_web_front_explorer_graph_cache.set(id, result);
@@ -16637,14 +17365,53 @@ var $;
             selected() {
                 return this.graph_view().selected_node();
             }
+            // Selected edge — aside shows a relation card instead of an entity card
+            selected_edge() {
+                return this.graph_view().selected_edge();
+            }
+            node_label(id) {
+                return this.graph_nodes().find(n => n.id === id)?.label ?? id;
+            }
+            aside_title() {
+                return this.selected_edge() ? this.aside_relation_title_text() : this.aside_title_text();
+            }
             // Aside text — fall back to placeholder when nothing selected
             entity_name() {
+                const edge = this.selected_edge();
+                if (edge)
+                    return edge.relation || '—';
                 return this.selected()?.label ?? this.aside_empty_text();
             }
             entity_type() {
+                const edge = this.selected_edge();
+                if (edge)
+                    return `${this.node_label(edge.source)} → ${this.node_label(edge.target)}`;
                 return this.selected()?.type ?? '';
             }
+            // Описание ребра с бэка: ручки get_edge на бэке пока нет, поэтому любая
+            // ошибка (404 в т.ч.) тихо фолбэчится на description из get_graph.
+            edge_remote_desc() {
+                const edge = this.selected_edge();
+                const id = this.dataset_id();
+                if (!edge || !id || this.mock_flag())
+                    return null;
+                try {
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_edge, { params: { dataset_id: id, edge_id: edge.id } });
+                    return res.description || null;
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    return null;
+                }
+            }
             entity_desc() {
+                const edge = this.selected_edge();
+                if (edge) {
+                    return this.edge_remote_desc()
+                        ?? (edge.description
+                            || `${this.node_label(edge.source)} — ${edge.relation} — ${this.node_label(edge.target)}`);
+                }
                 const n = this.selected();
                 if (!n)
                     return '';
@@ -16657,6 +17424,8 @@ var $;
                 return this.relations_title_template().replace('%s', String(n.degree));
             }
             rels() {
+                if (this.selected_edge())
+                    return [];
                 return this.graph_view().selected_relations().slice(0, 5);
             }
             rel_rows() {
@@ -16664,11 +17433,11 @@ var $;
             }
             rel_type(i) { return this.rels()[i]?.relation ?? ''; }
             rel_target(i) { return this.rels()[i]?.target_label ?? ''; }
-            // Entity_dot color reflects type of selected node
+            // Entity_dot color reflects type of selected node; neutral for an edge
             Entity_dot() {
                 const dot = super.Entity_dot();
                 dot.style = () => ({
-                    background: this.graph_view().selected_color(),
+                    background: this.selected_edge() ? '#7a7672' : this.graph_view().selected_color(),
                 });
                 return dot;
             }
@@ -16685,6 +17454,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer.prototype, "graph_data", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "edge_remote_desc", null);
         $$.$raggu_web_front_explorer = $raggu_web_front_explorer;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -21636,16 +22408,31 @@ var $;
 			const obj = new this.$.$bog_theme_auto();
 			return obj;
 		}
-		dataset_title(){
+		dataset_ids(){
+			return [];
+		}
+		sidebar_dataset_name(id){
 			return "";
+		}
+		sidebar_dataset_meta(id){
+			return "";
+		}
+		select_dataset(next){
+			if(next !== undefined) return next;
+			return null;
 		}
 		Sidebar(){
 			const obj = new this.$.$raggu_web_front_sidebar();
-			(obj.screen) = (next) => ((this.screen(next)));
 			(obj.dataset_id) = () => ((this.dataset_id()));
-			(obj.dataset_title) = () => ((this.dataset_title()));
+			(obj.dataset_ids) = () => ((this.dataset_ids()));
+			(obj.dataset_name) = (id) => ((this.sidebar_dataset_name(id)));
+			(obj.dataset_meta) = (id) => ((this.sidebar_dataset_meta(id)));
+			(obj.select_dataset) = (next) => ((this.select_dataset(next)));
 			(obj.Theme_auto) = () => ((this.Theme_auto()));
 			return obj;
+		}
+		dataset_title(){
+			return "";
 		}
 		screen_title(){
 			return "";
@@ -21654,14 +22441,19 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		open_help(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Topbar(){
 			const obj = new this.$.$raggu_web_front_topbar();
-			(obj.screen) = () => ((this.screen()));
+			(obj.screen) = (next) => ((this.screen(next)));
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			(obj.dataset_title) = () => ((this.dataset_title()));
 			(obj.screen_title) = () => ((this.screen_title()));
 			(obj.preset) = (next) => ((this.preset(next)));
 			(obj.open_settings) = (next) => ((this.open_settings(next)));
+			(obj.open_help) = (next) => ((this.open_help(next)));
 			return obj;
 		}
 		Body(){
@@ -21679,13 +22471,14 @@ var $;
 			(obj.showed) = (next) => ((this.settings_open(next)));
 			return obj;
 		}
+		Help(){
+			const obj = new this.$.$raggu_web_front_help();
+			(obj.showed) = (next) => ((this.help_open(next)));
+			return obj;
+		}
 		Summary_popup(){
 			const obj = new this.$.$mol_view();
 			return obj;
-		}
-		select_dataset(next){
-			if(next !== undefined) return next;
-			return null;
 		}
 		ask_chat(next){
 			if(next !== undefined) return next;
@@ -21704,6 +22497,10 @@ var $;
 			return "";
 		}
 		settings_open(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		help_open(next){
 			if(next !== undefined) return next;
 			return false;
 		}
@@ -21731,6 +22528,9 @@ var $;
 		ask_entity_template(){
 			return (this.$.$mol_locale.text("$raggu_web_front_app_ask_entity_template"));
 		}
+		ask_relation_template(){
+			return (this.$.$mol_locale.text("$raggu_web_front_app_ask_relation_template"));
+		}
 		attr(){
 			return {
 				...(super.attr()), 
@@ -21751,6 +22551,7 @@ var $;
 				(this.Sidebar()), 
 				(this.Main()), 
 				(this.Settings()), 
+				(this.Help()), 
 				(this.Summary_popup())
 			];
 		}
@@ -21783,19 +22584,22 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "favicon_icon"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Favicon"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Theme_auto"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "select_dataset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Sidebar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "open_settings"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "open_help"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Topbar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Settings"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "Help"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Summary_popup"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "select_dataset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "ask_chat"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "screen"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "preset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "dataset_id"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "settings_open"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "help_open"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Gallery"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Explorer"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Chat"));
@@ -21859,16 +22663,38 @@ var $;
                 this.settings_open(true);
                 return null;
             }
+            open_help() {
+                this.help_open(true);
+                return null;
+            }
+            // Gallery владеет фетчем списка датасетов — сайдбар получает данные
+            // через эти прокси, чтобы не дублировать remote_datasets.
+            dataset_ids() {
+                return this.Gallery().datasets().map((ds) => ds.id);
+            }
+            sidebar_dataset_name(id) {
+                return this.Gallery().card_title(id);
+            }
+            sidebar_dataset_meta(id) {
+                const g = this.Gallery();
+                return `⬡ ${g.card_nodes(id)} · ⇄ ${g.card_edges(id)}`;
+            }
             select_dataset(id) {
                 this.dataset_id(id);
                 return null;
             }
             ask_chat() {
-                // Переносим выбранную в графе сущность в чат: переключаем экран и
-                // сразу кладём заготовку вопроса про неё в поле ввода.
-                const node = this.Explorer().selected();
+                // Переносим выбранное в графе (сущность или связь) в чат: переключаем
+                // экран и сразу кладём заготовку вопроса в поле ввода.
+                const explorer = this.Explorer();
+                const node = explorer.selected();
+                const edge = explorer.selected_edge();
                 this.screen('chat');
-                if (node?.label) {
+                if (edge) {
+                    const label = `${explorer.node_label(edge.source)} ${edge.relation} ${explorer.node_label(edge.target)}`;
+                    this.Chat().prompt_text(this.ask_relation_template().replace('%s', label));
+                }
+                else if (node?.label) {
                     this.Chat().prompt_text(this.ask_entity_template().replace('%s', node.label));
                 }
                 return null;
@@ -21906,6 +22732,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "open_settings", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_app.prototype, "open_help", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "select_dataset", null);
