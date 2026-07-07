@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $bog_norweb_front_summary_card, {
+	$mol_style_define( $raggu_web_front_summary_card, {
 		background: { color: $bog_builderui_tokens.card },
 		border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
 		padding: {

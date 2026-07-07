@@ -23,7 +23,7 @@ namespace $ {
 		cursor: 'pointer',
 		border: { radius: '5px' },
 		'@': {
-			bog_norweb_front_explorer_legend_on: {
+			raggu_web_front_explorer_legend_on: {
 				true: {
 					background: { color: '#ffffff26' },
 				},
@@ -67,7 +67,7 @@ namespace $ {
 		margin: { top: '2px' },
 	} as const
 
-	$mol_style_define( $bog_norweb_front_explorer, {
+	$mol_style_define( $raggu_web_front_explorer, {
 		flex: { direction: 'row', shrink: 1 },
 		minWidth: 0,
 		height: '100%',
@@ -181,7 +181,7 @@ namespace $ {
 				right: '8px',
 			},
 			'@': {
-				bog_norweb_front_explorer_mock_badge_showed: {
+				raggu_web_front_explorer_mock_badge_showed: {
 					true: { display: 'flex' },
 				},
 			},

@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $bog_norweb_front_settings, {
+	$mol_style_define( $raggu_web_front_settings, {
 		position: 'fixed',
 		top: 0,
 		left: 0,
@@ -9,7 +9,7 @@ namespace $ {
 		display: 'none',
 		zIndex: 40,
 		'@': {
-			bog_norweb_front_settings_showed: {
+			raggu_web_front_settings_showed: {
 				true: { display: 'flex' },
 			},
 		},

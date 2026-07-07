@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $bog_norweb_front_app extends $.$bog_norweb_front_app {
+	export class $raggu_web_front_app extends $.$raggu_web_front_app {
 
 		body() {
 			// Сводка не зависит от датасета, для остальных экранов без него показываем Gallery.
@@ -61,7 +61,7 @@ namespace $.$$ {
 		ask_chat() {
 			// Переносим выбранную в графе сущность в чат: переключаем экран и
 			// сразу кладём заготовку вопроса про неё в поле ввода.
-			const node = ( this.Explorer() as $.$$.$bog_norweb_front_explorer ).selected()
+			const node = ( this.Explorer() as $.$$.$raggu_web_front_explorer ).selected()
 			this.screen( 'chat' )
 			if( node?.label ) {
 				this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )

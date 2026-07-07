@@ -3,18 +3,18 @@ namespace $ {
 	// Node type is the raw entity_type string from the backend — schemas differ
 	// per domain (NEREL, medical, …), so we don't bucket to a fixed enum anymore.
 	// Colors come from a deterministic palette keyed by the string itself.
-	export type $bog_norweb_front_explorer_forcegraph_node_type = string
+	export type $raggu_web_front_explorer_forcegraph_node_type = string
 
-	export type $bog_norweb_front_explorer_forcegraph_node = {
+	export type $raggu_web_front_explorer_forcegraph_node = {
 		id: string
 		label: string
-		type: $bog_norweb_front_explorer_forcegraph_node_type
+		type: $raggu_web_front_explorer_forcegraph_node_type
 		degree: number
 		x: number
 		y: number
 	}
 
-	export type $bog_norweb_front_explorer_forcegraph_edge = {
+	export type $raggu_web_front_explorer_forcegraph_edge = {
 		id: string
 		source: string
 		target: string
@@ -24,7 +24,7 @@ namespace $ {
 
 	// Distinct, theme-agnostic categorical palette. Assigned to types
 	// deterministically so the same type always gets the same color.
-	const $bog_norweb_front_explorer_forcegraph_palette = [
+	const $raggu_web_front_explorer_forcegraph_palette = [
 		'#e0524f', '#4f8ee0', '#3fb56b', '#d97ad9', '#e0a73f',
 		'#7c6ce0', '#3fb8b8', '#e07a4f', '#7ab54f', '#4f6ce0',
 		'#d94f7a', '#b8873f', '#4fb8a0', '#a04fe0', '#8ea04f',
@@ -32,7 +32,7 @@ namespace $ {
 
 	// Fixed colors for well-known NEREL buckets — keeps the mock graph's
 	// legend stable. Unknown types fall through to the hashed palette.
-	const $bog_norweb_front_explorer_forcegraph_known_color: Record< string, string > = {
+	const $raggu_web_front_explorer_forcegraph_known_color: Record< string, string > = {
 		PERSON: '#e0524f',
 		ORG: '#4f8ee0',
 		LOC: '#3fb56b',
@@ -43,15 +43,15 @@ namespace $ {
 	}
 
 	/** Deterministic color for any entity_type string. */
-	export function $bog_norweb_front_explorer_forcegraph_type_color( type: string ): string {
+	export function $raggu_web_front_explorer_forcegraph_type_color( type: string ): string {
 		if ( !type ) return '#8a8a8a'
-		const known = $bog_norweb_front_explorer_forcegraph_known_color[ type ]
+		const known = $raggu_web_front_explorer_forcegraph_known_color[ type ]
 		if ( known ) return known
 		let hash = 0
 		for ( let i = 0; i < type.length; i++ ) {
 			hash = ( hash * 31 + type.charCodeAt( i ) ) | 0
 		}
-		const palette = $bog_norweb_front_explorer_forcegraph_palette
+		const palette = $raggu_web_front_explorer_forcegraph_palette
 		return palette[ Math.abs( hash ) % palette.length ]
 	}
 
@@ -62,7 +62,7 @@ namespace $ {
 		'DATED', 'AUTHORED', 'PART_OF', 'REFERS_TO', 'CONTAINS',
 	]
 
-	const TYPES: $bog_norweb_front_explorer_forcegraph_node_type[] =
+	const TYPES: $raggu_web_front_explorer_forcegraph_node_type[] =
 		[ 'PERSON', 'ORG', 'LOC', 'EVENT', 'DATE', 'WORK', 'LAW' ]
 
 	// Deterministic PRNG for stable mock graph between renders.
@@ -74,14 +74,14 @@ namespace $ {
 		}
 	}
 
-	export function $bog_norweb_front_explorer_forcegraph_build_mock(
+	export function $raggu_web_front_explorer_forcegraph_build_mock(
 		seed = 42, n_nodes = 80, n_edges = 130,
 	): {
-		nodes: $bog_norweb_front_explorer_forcegraph_node[],
-		edges: $bog_norweb_front_explorer_forcegraph_edge[],
+		nodes: $raggu_web_front_explorer_forcegraph_node[],
+		edges: $raggu_web_front_explorer_forcegraph_edge[],
 	} {
 		const r = rand( seed )
-		const nodes: $bog_norweb_front_explorer_forcegraph_node[] = []
+		const nodes: $raggu_web_front_explorer_forcegraph_node[] = []
 		for ( let i = 0; i < n_nodes; i++ ) {
 			const type = TYPES[ Math.floor( r() * TYPES.length ) ]
 			nodes.push( {
@@ -93,7 +93,7 @@ namespace $ {
 				y: ( r() - 0.5 ) * 400,
 			} )
 		}
-		const edges: $bog_norweb_front_explorer_forcegraph_edge[] = []
+		const edges: $raggu_web_front_explorer_forcegraph_edge[] = []
 		const seen = new Set< string >()
 		for ( let i = 0; i < n_edges; i++ ) {
 			let a: number, b: number, key: string
@@ -120,7 +120,7 @@ namespace $ {
 
 	// Tunable physics params — passed into tick_layout every tick.
 	// Defaults come from view.tree; demo playground overrides via bindings.
-	export type $bog_norweb_front_explorer_forcegraph_layout_params = {
+	export type $raggu_web_front_explorer_forcegraph_layout_params = {
 		gravity: number       // radial pull toward origin (ForceAtlas2 `gravity`)
 		force_scale: number   // force → per-tick acceleration factor
 		damping: number       // velocity persistence per tick (0..1, higher = springier)
@@ -209,13 +209,13 @@ namespace $ {
 	 *   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
 	 * Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
 	 */
-	export function $bog_norweb_front_explorer_forcegraph_tick_layout(
-		nodes: $bog_norweb_front_explorer_forcegraph_node[],
-		edges: $bog_norweb_front_explorer_forcegraph_edge[],
+	export function $raggu_web_front_explorer_forcegraph_tick_layout(
+		nodes: $raggu_web_front_explorer_forcegraph_node[],
+		edges: $raggu_web_front_explorer_forcegraph_edge[],
 		positions: Record< string, { x: number, y: number } >,
 		velocities: Record< string, { vx: number, vy: number } >,
 		pinned_id: string,
-		params: $bog_norweb_front_explorer_forcegraph_layout_params,
+		params: $raggu_web_front_explorer_forcegraph_layout_params,
 	): {
 		positions: Record< string, { x: number, y: number } >,
 		velocities: Record< string, { vx: number, vy: number } >,
@@ -300,8 +300,8 @@ namespace $ {
 	// Initial positions from mock coords — no synchronous FR pre-compute.
 	// The view auto-starts a live sim that visibly settles the graph
 	// ( Obsidian-style spring-in ).
-	export function $bog_norweb_front_explorer_forcegraph_initial_positions(
-		nodes: $bog_norweb_front_explorer_forcegraph_node[],
+	export function $raggu_web_front_explorer_forcegraph_initial_positions(
+		nodes: $raggu_web_front_explorer_forcegraph_node[],
 	): Record< string, { x: number, y: number } > {
 		const positions: Record< string, { x: number, y: number } > = {}
 		for ( const n of nodes ) positions[ n.id ] = { x: n.x, y: n.y }

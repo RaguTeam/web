@@ -20,12 +20,12 @@ indexes/
 
 If `RAGU_INDEXES_DIR` points directly to a single index folder, that folder is
 served as one dataset. Without `RAGU_INDEXES_DIR`, the backend looks for the
-local `RAGU/indexes` folder next to `norweb`.
+local `RAGU/indexes` folder next to `raggu/web`.
 
 ## Run
 
 ```bash
-cd norweb/back
+cd raggu/web/back
 python -m pip install -e ".[dev]"
 uvicorn ragu_web_api.main:app --reload --port 8000
 ```
@@ -70,7 +70,7 @@ actions.
 ## Tests
 
 ```bash
-uv run --project norweb/back pytest norweb/back/tests
+uv run --project raggu/web/back pytest raggu/web/back/tests
 ```
 
 ## OpenAPI spec

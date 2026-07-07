@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $bog_norweb_front_summary_detail extends $.$bog_norweb_front_summary_detail {
+	export class $raggu_web_front_summary_detail extends $.$raggu_web_front_summary_detail {
 
 		body() {
 			return [

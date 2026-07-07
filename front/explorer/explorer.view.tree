@@ -1,4 +1,4 @@
-$bog_norweb_front_explorer $bog_builderui_div
+$raggu_web_front_explorer $bog_builderui_div
 	dataset_id \
 	selected_id? \
 	search? \
@@ -20,7 +20,7 @@ $bog_norweb_front_explorer $bog_builderui_div
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
-				<= Graph $bog_norweb_front_explorer_forcegraph
+				<= Graph $raggu_web_front_explorer_forcegraph
 					graph_key <= dataset_id
 					nodes <= graph_nodes /
 					edges <= graph_edges /
@@ -37,7 +37,7 @@ $bog_norweb_front_explorer $bog_builderui_div
 					<= Legend_row* $bog_builderui_div
 						attr *
 							^
-							bog_norweb_front_explorer_legend_on <= legend_active* false
+							raggu_web_front_explorer_legend_on <= legend_active* false
 						event *
 							^
 							click? <=> legend_click*? null
@@ -48,7 +48,7 @@ $bog_norweb_front_explorer $bog_builderui_div
 			<= Mock_badge $bog_builderui_div
 				attr *
 					^
-					bog_norweb_front_explorer_mock_badge_showed <= is_mock false
+					raggu_web_front_explorer_mock_badge_showed <= is_mock false
 				sub / <= mock_badge_text
 		<= Aside $bog_builderui_div sub /
 			<= Aside_title $bog_builderui_div sub / <= aside_title_text

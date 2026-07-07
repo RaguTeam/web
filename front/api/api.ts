@@ -5,7 +5,7 @@ namespace $ {
 	 * Each entry carries HTTP method, route template with `{placeholders}`,
 	 * plus typed `params` / `query` / `body` / `out` marker fields.
 	 */
-	export type $bog_norweb_front_api_operation = {
+	export type $raggu_web_front_api_operation = {
 		method: string
 		route: string
 		params: any
@@ -15,14 +15,14 @@ namespace $ {
 	}
 
 	/** Options passed alongside operation call. */
-	export type $bog_norweb_front_api_options< Op extends $bog_norweb_front_api_operation > = {
+	export type $raggu_web_front_api_options< Op extends $raggu_web_front_api_operation > = {
 		params?: Op[ 'params' ]
 		query?: Op[ 'query' ]
 		body?: Op[ 'body' ]
 	}
 
 	/** Build final URL: substitute `{placeholders}` in route, append querystring. */
-	function $bog_norweb_front_api_url(
+	function $raggu_web_front_api_url(
 		endpoint: string,
 		route: string,
 		params: Record< string, any > | undefined,
@@ -55,7 +55,7 @@ namespace $ {
 	 * No path suffix here: operation `route`s already carry `/api/v1/...`
 	 * from FastAPI's OpenAPI dump.
 	 */
-	export const $bog_norweb_front_api_endpoint_default = 'https://ragu-back.duckdns.org'
+	export const $raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org'
 
 	/**
 	 * Effective endpoint: the `?api=<url>` app argument overrides the default,
@@ -63,8 +63,8 @@ namespace $ {
 	 * e.g. `...test.html#!api=https%3A%2F%2Fback.example.com`.
 	 * Reactive: reads propagate via $mol_state_arg, so changing the arg refetches.
 	 */
-	export function $bog_norweb_front_api_endpoint(): string {
-		return $mol_state_arg.value( 'api' ) || $bog_norweb_front_api_endpoint_default
+	export function $raggu_web_front_api_endpoint(): string {
+		return $mol_state_arg.value( 'api' ) || $raggu_web_front_api_endpoint_default
 	}
 
 	/**
@@ -74,16 +74,16 @@ namespace $ {
 	 * synchronously (via wire) returns the parsed JSON body. Any network
 	 * error propagates as an exception so `$mol_view` shows an error plate.
 	 */
-	export const $bog_norweb_front_api = ( () => {
+	export const $raggu_web_front_api = ( () => {
 		const init: RequestInit = {
 			credentials: 'omit',
 			cache: 'no-cache',
 		}
-		return function call< Op extends $bog_norweb_front_api_operation >(
+		return function call< Op extends $raggu_web_front_api_operation >(
 			op: Op,
-			opts: $bog_norweb_front_api_options< Op > = {},
+			opts: $raggu_web_front_api_options< Op > = {},
 		): Op[ 'out' ] {
-			const url = $bog_norweb_front_api_url( $bog_norweb_front_api_endpoint(), op.route, opts.params, opts.query )
+			const url = $raggu_web_front_api_url( $raggu_web_front_api_endpoint(), op.route, opts.params, opts.query )
 			const req: RequestInit = { ... init, method: op.method }
 			if ( opts.body !== undefined ) {
 				req.headers = { ... ( init.headers ?? {} ), 'content-type': 'application/json' }

@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $bog_norweb_front_sidebar extends $.$bog_norweb_front_sidebar {
+	export class $raggu_web_front_sidebar extends $.$raggu_web_front_sidebar {
 
 		is_gallery() { return this.screen() === 'gallery' }
 		is_explorer() { return this.screen() === 'explorer' }

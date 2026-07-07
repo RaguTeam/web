@@ -812,7 +812,7 @@ def _read_dotenv(path: Path) -> dict[str, str]:
 
 
 def _resolve_indexes_root(env: dict[str, str]) -> Path:
-    configured = env.get("RAGU_INDEXES_DIR") or env.get("NORWEB_INDEXES_DIR")
+    configured = env.get("RAGU_INDEXES_DIR")
     if configured:
         return Path(configured).expanduser().resolve()
 

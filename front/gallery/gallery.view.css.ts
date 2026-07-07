@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $bog_norweb_front_gallery, {
+	$mol_style_define( $raggu_web_front_gallery, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
 		padding: {
@@ -48,7 +48,7 @@ namespace $ {
 			},
 			margin: { top: '8px' },
 			'@': {
-				bog_norweb_front_gallery_mock_badge_showed: {
+				raggu_web_front_gallery_mock_badge_showed: {
 					true: { display: 'flex' },
 				},
 			},

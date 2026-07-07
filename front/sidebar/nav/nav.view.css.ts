@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $bog_norweb_front_sidebar_nav, {
+	$mol_style_define( $raggu_web_front_sidebar_nav, {
 		flex: { direction: 'row' },
 		align: { items: 'center' },
 		gap: '0.625rem',
@@ -19,13 +19,13 @@ namespace $ {
 			textAlign: 'center',
 		},
 		'@': {
-			bog_norweb_front_sidebar_nav_active: {
+			raggu_web_front_sidebar_nav_active: {
 				true: {
 					background: { color: $bog_builderui_tokens.current },
 					color: '#ffffff',
 				},
 			},
-			bog_norweb_front_sidebar_nav_disabled: {
+			raggu_web_front_sidebar_nav_disabled: {
 				true: {
 					opacity: 0.4,
 					cursor: 'not-allowed',

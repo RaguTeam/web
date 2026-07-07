@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $bog_norweb_front_summary, {
+	$mol_style_define( $raggu_web_front_summary, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
 		padding: {

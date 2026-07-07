@@ -14,7 +14,7 @@ namespace $ {
 		cursor: 'pointer',
 	} as const
 
-	$mol_style_define( $bog_norweb_front_chat, {
+	$mol_style_define( $raggu_web_front_chat, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
 		minHeight: 0,

@@ -1,4 +1,4 @@
-$bog_norweb_front_explorer_forcegraph $mol_svg_root
+$raggu_web_front_explorer_forcegraph $mol_svg_root
 	view_box <= computed_view_box \-300 -300 600 600
 	aspect \xMidYMid meet
 	select?val null

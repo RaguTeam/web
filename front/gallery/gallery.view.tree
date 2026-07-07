@@ -1,4 +1,4 @@
-$bog_norweb_front_gallery $bog_builderui_div
+$raggu_web_front_gallery $bog_builderui_div
 	dataset_id \wiki
 	select_dataset? null
 	datasets /
@@ -25,7 +25,7 @@ $bog_norweb_front_gallery $bog_builderui_div
 				<= Mock_badge $bog_builderui_div
 					attr *
 						^
-						bog_norweb_front_gallery_mock_badge_showed <= is_mock false
+						raggu_web_front_gallery_mock_badge_showed <= is_mock false
 					sub / <= mock_badge_text
 			<= Spacer $bog_builderui_div
 			<= Upload_doc $bog_builderui_div
@@ -35,7 +35,7 @@ $bog_norweb_front_gallery $bog_builderui_div
 				sub / <= upload_idx_text
 				event * click? <=> upload_idx_click? null
 		<= Grid $bog_builderui_div sub <= rows /
-			<= Card* $bog_norweb_front_gallery_card
+			<= Card* $raggu_web_front_gallery_card
 				id <= card_id* \
 				title <= card_title* \
 				domain <= card_domain* \
@@ -45,7 +45,7 @@ $bog_norweb_front_gallery $bog_builderui_div
 				comms <= card_comms* \
 				active <= card_active* false
 				click? <=> click*? null
-		<= Upload $bog_norweb_front_gallery_upload
+		<= Upload $raggu_web_front_gallery_upload
 			showed? <=> upload_showed? false
 			kind <= upload_kind?
 			complete? <=> upload_complete? null

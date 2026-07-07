@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $bog_norweb_front_topbar, {
+	$mol_style_define( $raggu_web_front_topbar, {
 		height: '58px',
 		minHeight: '58px',
 		background: { color: $bog_builderui_tokens.card },

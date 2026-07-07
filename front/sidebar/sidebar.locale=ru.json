@@ -1,11 +1,11 @@
 {
-	"$bog_norweb_front_sidebar_sections_label_text": "Разделы",
-	"$bog_norweb_front_sidebar_corpus_label_text": "Активный корпус",
-	"$bog_norweb_front_sidebar_corpus_meta_text": "2 410 узлов · 38 сообществ",
-	"$bog_norweb_front_sidebar_lang_label_text": "ЯЗЫК",
-	"$bog_norweb_front_sidebar_Nav_gallery_label": "Датасеты",
-	"$bog_norweb_front_sidebar_Nav_explorer_label": "Граф",
-	"$bog_norweb_front_sidebar_Nav_chat_label": "Чат",
-	"$bog_norweb_front_sidebar_Nav_dashboard_label": "Дашборд",
-	"$bog_norweb_front_sidebar_Nav_summary_label": "Сводка"
+	"$raggu_web_front_sidebar_sections_label_text": "Разделы",
+	"$raggu_web_front_sidebar_corpus_label_text": "Активный корпус",
+	"$raggu_web_front_sidebar_corpus_meta_text": "2 410 узлов · 38 сообществ",
+	"$raggu_web_front_sidebar_lang_label_text": "ЯЗЫК",
+	"$raggu_web_front_sidebar_Nav_gallery_label": "Датасеты",
+	"$raggu_web_front_sidebar_Nav_explorer_label": "Граф",
+	"$raggu_web_front_sidebar_Nav_chat_label": "Чат",
+	"$raggu_web_front_sidebar_Nav_dashboard_label": "Дашборд",
+	"$raggu_web_front_sidebar_Nav_summary_label": "Сводка"
 }

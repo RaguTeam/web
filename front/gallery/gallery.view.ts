@@ -35,7 +35,7 @@ namespace $.$$ {
 		}
 	}
 
-	export class $bog_norweb_front_gallery extends $.$bog_norweb_front_gallery {
+	export class $raggu_web_front_gallery extends $.$raggu_web_front_gallery {
 
 		@$mol_mem
 		extra_datasets( next?: DatasetStats[] ): DatasetStats[] {
@@ -54,8 +54,8 @@ namespace $.$$ {
 		remote_datasets(): DatasetStats[] | null {
 			if ( this.mock_flag() ) return null
 			try {
-				const cards = this.$.$bog_norweb_front_api(
-					$bog_norweb_front_api_ragu_list_datasets,
+				const cards = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_list_datasets,
 					{ query: { locale: 'ru' } },
 				)
 				return cards.map( ( c: any ) => ( {
@@ -149,7 +149,7 @@ namespace $.$$ {
 		start_upload( kind: 'document' | 'index' ) {
 			this.upload_kind( kind )
 			this.upload_showed( true )
-			;( this.Upload() as $.$$.$bog_norweb_front_gallery_upload ).start( this.mock_file_size( kind ) )
+			;( this.Upload() as $.$$.$raggu_web_front_gallery_upload ).start( this.mock_file_size( kind ) )
 			return null
 		}
 

@@ -1,4 +1,4 @@
-$bog_norweb_front_sidebar $bog_builderui_div
+$raggu_web_front_sidebar $bog_builderui_div
 	screen? \gallery
 	dataset_id \wiki
 	dataset_title \
@@ -9,37 +9,35 @@ $bog_norweb_front_sidebar $bog_builderui_div
 	lang_label_text @ \LANG
 	sub /
 		<= Brand $bog_builderui_div sub /
-			<= Brand_logo $mol_image
-				uri \bog/norweb/front/assets/nornickel_mark.png
-				title \Nornickel
-			<= Brand_title $bog_builderui_div sub / \Nornickel
+			<= Brand_logo $bog_builderui_div sub / \R
+			<= Brand_title $bog_builderui_div sub / \RAGU
 			<= Brand_badge $bog_builderui_div sub / \demo
 		<= Sections_label $bog_builderui_div sub / <= sections_label_text
 		<= Nav $bog_builderui_div sub /
-			<= Nav_gallery $bog_norweb_front_sidebar_nav
+			<= Nav_gallery $raggu_web_front_sidebar_nav
 				icon \▤
 				label @ \Datasets
 				active <= is_gallery false
 				click? <=> click_gallery? null
-			<= Nav_explorer $bog_norweb_front_sidebar_nav
+			<= Nav_explorer $raggu_web_front_sidebar_nav
 				icon \◉
 				label @ \Graph
 				active <= is_explorer false
 				disabled <= no_dataset false
 				click? <=> click_explorer? null
-			<= Nav_chat $bog_norweb_front_sidebar_nav
+			<= Nav_chat $raggu_web_front_sidebar_nav
 				icon \💬
 				label @ \Chat
 				active <= is_chat false
 				disabled <= no_dataset false
 				click? <=> click_chat? null
-			<= Nav_dashboard $bog_norweb_front_sidebar_nav
+			<= Nav_dashboard $raggu_web_front_sidebar_nav
 				icon \▦
 				label @ \Dashboard
 				active <= is_dashboard false
 				disabled <= no_dataset false
 				click? <=> click_dashboard? null
-			<= Nav_summary $bog_norweb_front_sidebar_nav
+			<= Nav_summary $raggu_web_front_sidebar_nav
 				icon \✦
 				label @ \Summary
 				active <= is_summary false
@@ -54,11 +52,11 @@ $bog_norweb_front_sidebar $bog_builderui_div
 				<= Theme_switch $bog_theme_switch
 					theme_auto <= Theme_auto
 				<= Lang_label $bog_builderui_div sub / <= lang_label_text
-				<= Lang_en $bog_norweb_front_sidebar_lang
+				<= Lang_en $raggu_web_front_sidebar_lang
 					label \EN
 					active <= is_en false
 					click? <=> click_en? null
-				<= Lang_ru $bog_norweb_front_sidebar_lang
+				<= Lang_ru $raggu_web_front_sidebar_lang
 					label \RU
 					active <= is_ru false
 					click? <=> click_ru? null

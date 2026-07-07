@@ -1,4 +1,4 @@
-$bog_norweb_front_summary $bog_builderui_div
+$raggu_web_front_summary $bog_builderui_div
 	opened? \
 	header_title_text @ \Solution overview
 	header_subtitle_text @ \Key technologies of the pipeline — click a card for details
@@ -32,14 +32,14 @@ $bog_norweb_front_summary $bog_builderui_div
 			<= Header_title $bog_builderui_div sub / <= header_title_text
 			<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
 		<= Grid $bog_builderui_div sub <= rows /
-			<= Card* $bog_norweb_front_summary_card
+			<= Card* $raggu_web_front_summary_card
 				icon <= card_icon* \
 				badge <= card_badge* \
 				title <= card_title* \
 				desc <= card_desc* \
 				more <= more_text
 				click? <=> click*? null
-	Detail $bog_norweb_front_summary_detail
+	Detail $raggu_web_front_summary_detail
 		showed <= detail_showed false
 		icon <= opened_icon \
 		badge <= opened_badge \

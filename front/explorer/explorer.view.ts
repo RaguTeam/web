@@ -1,7 +1,7 @@
 namespace $.$$ {
 
-	type GraphNode = $bog_norweb_front_explorer_forcegraph_node
-	type GraphEdge = $bog_norweb_front_explorer_forcegraph_edge
+	type GraphNode = $raggu_web_front_explorer_forcegraph_node
+	type GraphEdge = $raggu_web_front_explorer_forcegraph_edge
 
 	// Default page size for the graph endpoint. The mock backend caps at 5000.
 	const GRAPH_LIMIT = 500
@@ -9,9 +9,9 @@ namespace $.$$ {
 	// Module-scoped cache keyed by dataset_id. Survives component remount:
 	// switching tabs drops the @$mol_mem cell's subscribers and resets it, so
 	// without this every return to the graph re-fetches and re-runs the layout.
-	const $bog_norweb_front_explorer_graph_cache = new Map< string, { nodes: GraphNode[], edges: GraphEdge[] } >()
+	const $raggu_web_front_explorer_graph_cache = new Map< string, { nodes: GraphNode[], edges: GraphEdge[] } >()
 
-	export class $bog_norweb_front_explorer extends $.$bog_norweb_front_explorer {
+	export class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
 
 		// URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo
 		// and jsdom tests where no live backend is available.
@@ -29,11 +29,11 @@ namespace $.$$ {
 			if ( this.mock_flag() ) return null
 			// Возврат на вкладку не должен снова дёргать бэк — отдаём тот же объект,
 			// стабильная identity сохраняет раскладку графа.
-			const cached = $bog_norweb_front_explorer_graph_cache.get( id )
+			const cached = $raggu_web_front_explorer_graph_cache.get( id )
 			if ( cached ) return cached
 			try {
-				const res = this.$.$bog_norweb_front_api(
-					$bog_norweb_front_api_ragu_get_graph,
+				const res = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_get_graph,
 					{ params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } },
 				)
 				const nodes: GraphNode[] = res.nodes.map( (n: any) => ( {
@@ -52,7 +52,7 @@ namespace $.$$ {
 					relation: e.relation_type,
 				} ) )
 				const result = { nodes, edges }
-				$bog_norweb_front_explorer_graph_cache.set( id, result )
+				$raggu_web_front_explorer_graph_cache.set( id, result )
 				return result
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
@@ -100,7 +100,7 @@ namespace $.$$ {
 			const dot = super.Legend_dot( i )
 			const type = this.legend_entries()[ i ]?.type ?? ''
 			dot.style = () => ( {
-				background: $bog_norweb_front_explorer_forcegraph_type_color( type ),
+				background: $raggu_web_front_explorer_forcegraph_type_color( type ),
 			} )
 			return dot
 		}
@@ -117,7 +117,7 @@ namespace $.$$ {
 		@$mol_mem
 		graph_data(): { nodes: readonly GraphNode[], edges: readonly GraphEdge[] } {
 			return this.graph_remote()
-				?? $bog_norweb_front_explorer_forcegraph_build_mock( 42, 80, 130 )
+				?? $raggu_web_front_explorer_forcegraph_build_mock( 42, 80, 130 )
 		}
 
 		graph_nodes(): readonly GraphNode[] { return this.graph_data().nodes }
@@ -125,10 +125,10 @@ namespace $.$$ {
 
 		// Cast to extended class to access TS-only methods (selected_node/selected_color/...)
 		graph_view() {
-			return this.Graph() as $.$$.$bog_norweb_front_explorer_forcegraph
+			return this.Graph() as $.$$.$raggu_web_front_explorer_forcegraph
 		}
 
-		// Selected node, mirrors $bog_norweb_front_explorer_forcegraph internals
+		// Selected node, mirrors $raggu_web_front_explorer_forcegraph internals
 		selected() {
 			return this.graph_view().selected_node()
 		}

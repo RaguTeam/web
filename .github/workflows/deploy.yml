@@ -1,4 +1,4 @@
-name: $bog_norweb_front_app
+name: $raggu_web_front_app
 
 permissions: write-all
 
@@ -21,20 +21,20 @@ jobs:
         steps:
             - uses: hyoo-ru/mam_build@master2
               with:
-                  package: "bog/norweb"
+                  package: "raggu/web"
                   modules: 'front/app'
 
             - name: Deploy main
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
-                  folder: "bog/norweb/front/app/-"
+                  folder: "raggu/web/front/app/-"
 
             - name: Deploy feature branch
               if: startsWith(github.ref, 'refs/heads/feature/')
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
-                  folder: "bog/norweb/front/app/-"
+                  folder: "raggu/web/front/app/-"
                   target-folder: ${{ github.ref_name }}
 
     cleanup:

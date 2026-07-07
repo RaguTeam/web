@@ -1,4 +1,4 @@
-$bog_norweb_front_summary_detail $bog_builderui_div
+$raggu_web_front_summary_detail $bog_builderui_div
 	showed false
 	icon \
 	badge \
@@ -10,7 +10,7 @@ $bog_norweb_front_summary_detail $bog_builderui_div
 	close? null
 	attr *
 		^
-		bog_norweb_front_summary_detail_showed <= showed
+		raggu_web_front_summary_detail_showed <= showed
 	sub /
 		<= Backdrop $bog_builderui_div
 			event * click? <=> close? null

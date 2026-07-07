@@ -2,7 +2,7 @@ namespace $.$$ {
 
 	type TechLink = { label: string, uri: string }
 
-	export class $bog_norweb_front_summary extends $.$bog_norweb_front_summary {
+	export class $raggu_web_front_summary extends $.$raggu_web_front_summary {
 
 		ids() {
 			return [ 'ragu', 'mol', 'menolite', 'nerel', 'ocr' ]
@@ -73,7 +73,7 @@ namespace $.$$ {
 					{ label: 'github.com/RaguTeam/RAGU', uri: 'https://github.com/RaguTeam/RAGU' },
 				]
 				case 'mol': return [
-					{ label: 'github.com/b-on-g/norweb', uri: 'https://github.com/b-on-g/norweb' },
+					{ label: 'github.com/RaguTeam/web', uri: 'https://github.com/RaguTeam/web' },
 					{ label: 'mol.hyoo.ru', uri: 'https://mol.hyoo.ru/' },
 				]
 				case 'menolite': return [
@@ -91,7 +91,7 @@ namespace $.$$ {
 
 		card_image( id: string ) {
 			// Архитектура RAGU из статьи, лежит в assets и деплоится через meta.tree.
-			if( id === 'ragu' ) return 'bog/norweb/front/assets/ragu.jpg'
+			if( id === 'ragu' ) return 'raggu/web/front/assets/ragu.jpg'
 			return ''
 		}
 

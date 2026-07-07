@@ -9,14 +9,14 @@ namespace $.$$ {
 		off_graph?: boolean
 	}
 
-	export class $bog_norweb_front_chat extends $.$bog_norweb_front_chat {
+	export class $raggu_web_front_chat extends $.$raggu_web_front_chat {
 
 		// История привязана к dataset_id — у каждого корпуса своя ветка чата.
 		// Иначе фолбэк-плашка, полученная на одном датасете (напр. мок без бэка),
 		// висела бы на сообщениях другого, где бэк отвечает через граф.
 		@ $mol_mem
 		history( next?: Raggu_chat_item[] ): Raggu_chat_item[] {
-			const key = `$bog_norweb_front_chat.history@${ this.dataset_id() || '' }`
+			const key = `$raggu_web_front_chat.history@${ this.dataset_id() || '' }`
 			const stored = this.$.$mol_state_session.value( key, next as any ) as Raggu_chat_item[] | null
 			if( stored ) return stored
 			return [
@@ -26,7 +26,7 @@ namespace $.$$ {
 		}
 
 		override prompt_text( next?: string ) {
-			return this.$.$mol_state_session.value( '$bog_norweb_front_chat.prompt_text', next ) ?? ''
+			return this.$.$mol_state_session.value( '$raggu_web_front_chat.prompt_text', next ) ?? ''
 		}
 
 		@ $mol_mem
@@ -99,7 +99,7 @@ namespace $.$$ {
 					return this.ask_backend( text )
 				} catch( error: any ) {
 					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-					console.error( '[norweb chat] GraphRAG backend failed, falling back to direct LLM:', error )
+					console.error( '[raggu chat] GraphRAG backend failed, falling back to direct LLM:', error )
 					// провалились в фолбэк ниже
 				}
 			}
@@ -112,8 +112,8 @@ namespace $.$$ {
 			const history = this.history()
 				.slice( 0, -1 )
 				.map( m => ( { role: m.role, content: m.text } ) )
-			const resp = this.$.$bog_norweb_front_api(
-				$bog_norweb_front_api_ragu_create_agent_message,
+			const resp = this.$.$raggu_web_front_api(
+				$raggu_web_front_api_ragu_create_agent_message,
 				{
 					params: { dataset_id: this.dataset_id() },
 					body: {
@@ -139,8 +139,8 @@ namespace $.$$ {
 			const id = this.dataset_id()
 			if( !id ) return ''
 			try {
-				const res = this.$.$bog_norweb_front_api(
-					$bog_norweb_front_api_ragu_get_graph,
+				const res = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_get_graph,
 					{ params: { dataset_id: id }, query: { limit: 200 } },
 				)
 				const labels = ( res as any ).nodes

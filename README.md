@@ -29,7 +29,7 @@ GraphRAG-движок с UI: интерактивный граф знаний, �
 
 ## Запуск
 
-Это MAM-пакет, не самостоятельный npm-проект. Подключается к [MAM-репо](https://github.com/hyoo-ru/mam) как подпапка `bog/norweb`.
+Это MAM-пакет, не самостоятельный npm-проект. Подключается к [MAM-репо](https://github.com/hyoo-ru/mam) как подпапка `raggu/web`.
 
 ### Локально через MAM dev-server
 
@@ -37,27 +37,27 @@ GraphRAG-движок с UI: интерактивный граф знаний, �
 # в корне MAM-репо
 git clone https://github.com/hyoo-ru/mam.git
 cd mam
-git clone https://github.com/RaguTeam/web.git bog/norweb
+git clone https://github.com/RaguTeam/web.git raggu/web
 npm install
 npx mam start
 ```
 
-Открыть: **http://localhost:9080/bog/norweb/front/app/-/test.html**
+Открыть: **http://localhost:9080/raggu/web/front/app/-/test.html**
 
 Dev-сервер на лету пересобирает при изменении любого `.view.tree` / `.view.ts` / `.view.css.ts` / `.locale=*.json`.
 
 ### Сборка standalone
 
 ```bash
-npx mam bog/norweb/front/app
+npx mam raggu/web/front/app
 ```
 
-Артефакт: `bog/norweb/front/app/-/` — статичная сборка для деплоя (index.html + web.js + web.css + локали).
+Артефакт: `raggu/web/front/app/-/` — статичная сборка для деплоя (index.html + web.js + web.css + локали).
 
 ### Тесты
 
 ```bash
-node bog/norweb/front/app/-/node.test.js
+node raggu/web/front/app/-/node.test.js
 ```
 
 Должно вывести `All tests passed`. Текущий счёт — **283** (структурные snapshot'ы, e2e-flow через view-API, URL state, CSS rule intent, новые фичи).
@@ -88,7 +88,7 @@ Swagger UI: **http://localhost:8000/docs**. Все API-ручки находят
 ## Структура
 
 ```
-bog/norweb/                        # umbrella repo (RaguTeam/web)
+raggu/web/                        # umbrella repo (RaguTeam/web)
 ├── front/                        # all UI code (mol/MAM)
 │   ├── app/                     #   root mol-module, маршрутизация экранов
 │   │   ├── app.view.tree        #     композиция UI
