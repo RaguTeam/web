@@ -1,4 +1,4 @@
-$raggu_web_front_topbar $bog_builderui_div
+$bog_norweb_front_topbar $bog_builderui_div
 	screen \gallery
 	dataset_id \wiki
 	dataset_title \
@@ -17,20 +17,20 @@ $raggu_web_front_topbar $bog_builderui_div
 		<= Spacer $bog_builderui_div
 		<= Preset_label $bog_builderui_div sub / <= preset_label_text
 		<= Preset_group $bog_builderui_div sub /
-			<= Preset_fast $raggu_web_front_topbar_preset
+			<= Preset_fast $bog_norweb_front_topbar_preset
 				label <= preset_fast_label
 				active <= is_fast false
 				click? <=> click_fast? null
-			<= Preset_accurate $raggu_web_front_topbar_preset
+			<= Preset_accurate $bog_norweb_front_topbar_preset
 				label <= preset_accurate_label
 				active <= is_accurate false
 				click? <=> click_accurate? null
-			<= Preset_demo $raggu_web_front_topbar_preset
+			<= Preset_demo $bog_norweb_front_topbar_preset
 				label <= preset_demo_label
 				active <= is_demo false
 				click? <=> click_demo? null
 		<= Settings_btn $bog_builderui_div
 			event * click? <=> open_settings? null
 			sub / <= settings_btn_text
-		<= Export $raggu_web_front_export
+		<= Export $bog_norweb_front_export
 			screen <= screen

@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, Query
 from ragu_web_api.schemas.agent import AgentRequest, AgentResponse, SuggestionsResponse
 from ragu_web_api.schemas.common import ErrorResponse, Locale
 from ragu_web_api.services.dependencies import get_repository
-from ragu_web_api.services.mock_repository import MockRepository
+from ragu_web_api.services.index_repository import IndexRepository
 
 router = APIRouter(
     prefix="/datasets/{dataset_id}/agent",
@@ -22,9 +22,9 @@ router = APIRouter(
 async def create_agent_message(
     dataset_id: str,
     request: AgentRequest,
-    repository: Annotated[MockRepository, Depends(get_repository)],
+    repository: Annotated[IndexRepository, Depends(get_repository)],
 ) -> AgentResponse:
-    return repository.answer(dataset_id=dataset_id, request=request)
+    return await repository.answer(dataset_id=dataset_id, request=request)
 
 
 @router.get(
@@ -34,7 +34,7 @@ async def create_agent_message(
 )
 async def get_agent_suggestions(
     dataset_id: str,
-    repository: Annotated[MockRepository, Depends(get_repository)],
+    repository: Annotated[IndexRepository, Depends(get_repository)],
     locale: Annotated[Locale, Query(description="Response locale.")] = "ru",
 ) -> SuggestionsResponse:
     return repository.get_suggestions(dataset_id=dataset_id, locale=locale)

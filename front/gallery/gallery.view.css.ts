@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_gallery, {
+	$mol_style_define( $bog_norweb_front_gallery, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
 		padding: {
@@ -28,6 +28,30 @@ namespace $ {
 			font: { size: '13px' },
 			color: $bog_builderui_tokens.shade,
 			margin: { top: '3px' },
+		},
+		Mock_badge: {
+			display: 'none',
+			alignSelf: 'flex-start',
+			font: {
+				family: 'ui-monospace, monospace',
+				weight: 600,
+				size: '11px',
+			},
+			color: '#8a6d1b',
+			background: { color: '#f5c84226' },
+			border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '6px' },
+			padding: {
+				top: '3px',
+				bottom: '3px',
+				left: '8px',
+				right: '8px',
+			},
+			margin: { top: '8px' },
+			'@': {
+				bog_norweb_front_gallery_mock_badge_showed: {
+					true: { display: 'flex' },
+				},
+			},
 		},
 		Spacer: {
 			flex: { grow: 1 },
@@ -64,6 +88,17 @@ namespace $ {
 			gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
 			gap: '16px',
 			minWidth: 0,
+		},
+
+		'@media': {
+			'(max-width: 720px)': {
+				padding: {
+					top: '1rem',
+					bottom: '1rem',
+					left: '0.75rem',
+					right: '0.75rem',
+				},
+			},
 		},
 	} )
 }

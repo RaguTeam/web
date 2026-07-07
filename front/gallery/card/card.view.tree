@@ -1,4 +1,4 @@
-$raggu_web_front_gallery_card $bog_builderui_div
+$bog_norweb_front_gallery_card $bog_builderui_div
 	id \
 	title \
 	domain \
@@ -11,12 +11,12 @@ $raggu_web_front_gallery_card $bog_builderui_div
 	preview_label_text @ \graph preview
 	attr *
 		^
-		raggu_web_front_gallery_card_active <= active
+		bog_norweb_front_gallery_card_active <= active
 	event *
 		^
 		click? <=> click? null
 	sub /
-		<= Preview $raggu_web_front_gallery_card_preview sub /
+		<= Preview $bog_norweb_front_gallery_card_preview sub /
 			<= Preview_label $bog_builderui_div sub / <= preview_label_text
 			<= Domain_badge $bog_builderui_div sub / <= domain
 		<= Title $bog_builderui_div sub / <= title

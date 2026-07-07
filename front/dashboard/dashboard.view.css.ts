@@ -37,7 +37,7 @@ namespace $ {
 		color: $bog_builderui_tokens.shade,
 	} as const
 
-	$mol_style_define( $raggu_web_front_dashboard, {
+	$mol_style_define( $bog_norweb_front_dashboard, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
 		padding: {

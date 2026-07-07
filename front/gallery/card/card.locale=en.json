@@ -1,5 +1,5 @@
 {
-	"$raggu_web_front_gallery_card_unit_nodes": "nodes",
-	"$raggu_web_front_gallery_card_unit_edges": "edges",
-	"$raggu_web_front_gallery_card_unit_comms": "communities"
+	"$bog_norweb_front_gallery_card_unit_nodes": "nodes",
+	"$bog_norweb_front_gallery_card_unit_edges": "edges",
+	"$bog_norweb_front_gallery_card_unit_comms": "communities"
 }

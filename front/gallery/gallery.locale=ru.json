@@ -1,13 +1,14 @@
 {
-	"$raggu_web_front_gallery_header_title_text": "Галерея корпусов",
-	"$raggu_web_front_gallery_header_subtitle_text": "Выберите готовый граф знаний или загрузите свой документ / индекс",
-	"$raggu_web_front_gallery_upload_doc_text": "＋ Загрузить документ",
-	"$raggu_web_front_gallery_upload_idx_text": "⇪ Загрузить готовый индекс",
-	"$raggu_web_front_gallery_uploaded_document_title": "Загруженный документ",
-	"$raggu_web_front_gallery_uploaded_index_title": "Загруженный индекс",
-	"$raggu_web_front_gallery_uploaded_domain": "Пользовательская загрузка",
-	"$raggu_web_front_gallery_uploaded_desc": "Мок-датасет, построенный демо-пайплайном индексации.",
-	"$raggu_web_front_gallery_dataset_law_title": "Кодексы и законы РФ",
-	"$raggu_web_front_gallery_dataset_law_domain": "Право",
-	"$raggu_web_front_gallery_dataset_law_desc": "Сеть норм, отсылок, органов и понятий российского права."
+	"$bog_norweb_front_gallery_header_title_text": "Галерея корпусов",
+	"$bog_norweb_front_gallery_header_subtitle_text": "Выберите готовый граф знаний или загрузите свой документ / индекс",
+	"$bog_norweb_front_gallery_mock_badge_text": "⚠ Мок-данные — бэкенд не подключён",
+	"$bog_norweb_front_gallery_upload_doc_text": "＋ Загрузить документ",
+	"$bog_norweb_front_gallery_upload_idx_text": "⇪ Загрузить готовый индекс",
+	"$bog_norweb_front_gallery_uploaded_document_title": "Загруженный документ",
+	"$bog_norweb_front_gallery_uploaded_index_title": "Загруженный индекс",
+	"$bog_norweb_front_gallery_uploaded_domain": "Пользовательская загрузка",
+	"$bog_norweb_front_gallery_uploaded_desc": "Мок-датасет, построенный демо-пайплайном индексации.",
+	"$bog_norweb_front_gallery_dataset_law_title": "Кодексы и законы РФ",
+	"$bog_norweb_front_gallery_dataset_law_domain": "Право",
+	"$bog_norweb_front_gallery_dataset_law_desc": "Сеть норм, отсылок, органов и понятий российского права."
 }

@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_settings_group, {
+	$mol_style_define( $bog_norweb_front_settings_group, {
 		flex: { direction: 'column' },
 
 		Head: {
@@ -31,7 +31,7 @@ namespace $ {
 			font: { size: '9px', weight: 600 },
 			display: 'none',
 			'@': {
-				raggu_web_front_settings_group_reindex: {
+				bog_norweb_front_settings_group_reindex: {
 					true: { display: 'flex' },
 				},
 			},

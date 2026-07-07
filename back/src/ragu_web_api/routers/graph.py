@@ -10,7 +10,7 @@ from ragu_web_api.schemas.graph import (
     NodeDetailResponse,
 )
 from ragu_web_api.services.dependencies import get_repository
-from ragu_web_api.services.mock_repository import MockRepository
+from ragu_web_api.services.index_repository import IndexRepository
 
 router = APIRouter(
     prefix="/datasets/{dataset_id}/graph",
@@ -26,7 +26,7 @@ router = APIRouter(
 )
 async def get_graph(
     dataset_id: str,
-    repository: Annotated[MockRepository, Depends(get_repository)],
+    repository: Annotated[IndexRepository, Depends(get_repository)],
     limit: Annotated[int, Query(ge=1, le=5000)] = 500,
     search: Annotated[str | None, Query(min_length=1)] = None,
     entity_types: Annotated[list[EntityType] | None, Query()] = None,
@@ -53,7 +53,7 @@ async def get_graph(
 async def get_node(
     dataset_id: str,
     node_id: str,
-    repository: Annotated[MockRepository, Depends(get_repository)],
+    repository: Annotated[IndexRepository, Depends(get_repository)],
 ) -> NodeDetailResponse:
     return repository.get_node_detail(dataset_id=dataset_id, node_id=node_id)
 
@@ -66,7 +66,7 @@ async def get_node(
 async def get_node_neighbors(
     dataset_id: str,
     node_id: str,
-    repository: Annotated[MockRepository, Depends(get_repository)],
+    repository: Annotated[IndexRepository, Depends(get_repository)],
     depth: Annotated[int, Query(ge=1, le=3)] = 1,
     limit: Annotated[int, Query(ge=1, le=1000)] = 100,
     min_strength: Annotated[float, Query(ge=0.0, le=1.0)] = 0.0,
@@ -87,6 +87,6 @@ async def get_node_neighbors(
 )
 async def get_communities(
     dataset_id: str,
-    repository: Annotated[MockRepository, Depends(get_repository)],
+    repository: Annotated[IndexRepository, Depends(get_repository)],
 ) -> GraphCommunitiesResponse:
     return repository.get_communities(dataset_id=dataset_id)

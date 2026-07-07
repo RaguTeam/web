@@ -1,6 +1,6 @@
 {
-	"$raggu_web_front_gallery_card_preview_label_text": "превью графа",
-	"$raggu_web_front_gallery_card_unit_nodes": "узлов",
-	"$raggu_web_front_gallery_card_unit_edges": "связей",
-	"$raggu_web_front_gallery_card_unit_comms": "сообществ"
+	"$bog_norweb_front_gallery_card_preview_label_text": "превью графа",
+	"$bog_norweb_front_gallery_card_unit_nodes": "узлов",
+	"$bog_norweb_front_gallery_card_unit_edges": "связей",
+	"$bog_norweb_front_gallery_card_unit_comms": "сообществ"
 }

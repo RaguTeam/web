@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	type $raggu_web_front_settings_preset_values = {
+	type $bog_norweb_front_settings_preset_values = {
 		chunking_strategy: string
 		chunking_size: number
 		chunking_overlap: number
@@ -17,7 +17,7 @@ namespace $.$$ {
 		search_topk: number
 	}
 
-	const $raggu_web_front_settings_presets: Record< string, $raggu_web_front_settings_preset_values > = {
+	const $bog_norweb_front_settings_presets: Record< string, $bog_norweb_front_settings_preset_values > = {
 		fast: {
 			chunking_strategy: 'Simple',
 			chunking_size: 256,
@@ -68,7 +68,7 @@ namespace $.$$ {
 		},
 	}
 
-	export class $raggu_web_front_settings extends $.$raggu_web_front_settings {
+	export class $bog_norweb_front_settings extends $.$bog_norweb_front_settings {
 
 		@$mol_action
 		close() {
@@ -98,7 +98,7 @@ namespace $.$$ {
 
 		@$mol_action
 		apply_preset( name: string ) {
-			const values = $raggu_web_front_settings_presets[ name ]
+			const values = $bog_norweb_front_settings_presets[ name ]
 			if( !values ) return null
 			this.chunking_strategy( values.chunking_strategy )
 			this.chunking_size_str( String( values.chunking_size ) )
@@ -121,54 +121,54 @@ namespace $.$$ {
 
 		@$mol_mem
 		chunking_strategy( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.chunking_strategy', next ?? null ) ?? 'SmartSemantic'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.chunking_strategy', next ?? null ) ?? 'SmartSemantic'
 		}
 
 		@$mol_mem
 		chunking_size_str( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.chunking_size_str', next ?? null ) ?? '512'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.chunking_size_str', next ?? null ) ?? '512'
 		}
 
 		@$mol_mem
 		chunking_overlap_str( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.chunking_overlap_str', next ?? null ) ?? '64'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.chunking_overlap_str', next ?? null ) ?? '64'
 		}
 
 		@$mol_mem
 		extraction_mode( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.extraction_mode', next ?? null ) ?? 'two-stage'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.extraction_mode', next ?? null ) ?? 'two-stage'
 		}
 
 		@$mol_mem
 		extraction_model( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.extraction_model', next ?? null ) ?? 'meno-lite-7b'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.extraction_model', next ?? null ) ?? 'meno-lite-7b'
 		}
 
 		@$mol_mem
 		extraction_icl( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.extraction_icl', next ?? null ) ?? 'hybrid'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.extraction_icl', next ?? null ) ?? 'hybrid'
 		}
 
 		@$mol_mem
 		summarization_dbscan( next?: boolean ): boolean {
-			const v = this.$.$mol_state_local.value( '$raggu_web_front_settings.summarization_dbscan', next ?? null )
+			const v = this.$.$mol_state_local.value( '$bog_norweb_front_settings.summarization_dbscan', next ?? null )
 			return v ?? true
 		}
 
 		@$mol_mem
 		summarization_llm( next?: boolean ): boolean {
-			const v = this.$.$mol_state_local.value( '$raggu_web_front_settings.summarization_llm', next ?? null )
+			const v = this.$.$mol_state_local.value( '$bog_norweb_front_settings.summarization_llm', next ?? null )
 			return v ?? false
 		}
 
 		@$mol_mem
 		communities_algo( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.communities_algo', next ?? null ) ?? 'Leiden'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.communities_algo', next ?? null ) ?? 'Leiden'
 		}
 
 		@$mol_mem
 		communities_resolution_x10( next?: number ): number {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.communities_resolution_x10', next ?? null ) ?? 10
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.communities_resolution_x10', next ?? null ) ?? 10
 		}
 
 		communities_resolution_label(): string {
@@ -177,24 +177,24 @@ namespace $.$$ {
 
 		@$mol_mem
 		refinement_isolated( next?: boolean ): boolean {
-			const v = this.$.$mol_state_local.value( '$raggu_web_front_settings.refinement_isolated', next ?? null )
+			const v = this.$.$mol_state_local.value( '$bog_norweb_front_settings.refinement_isolated', next ?? null )
 			return v ?? true
 		}
 
 		@$mol_mem
 		search_mode( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.search_mode', next ?? null ) ?? 'Local'
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.search_mode', next ?? null ) ?? 'Local'
 		}
 
 		@$mol_mem
 		search_rerank( next?: boolean ): boolean {
-			const v = this.$.$mol_state_local.value( '$raggu_web_front_settings.search_rerank', next ?? null )
+			const v = this.$.$mol_state_local.value( '$bog_norweb_front_settings.search_rerank', next ?? null )
 			return v ?? true
 		}
 
 		@$mol_mem
 		search_topk( next?: number ): number {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.search_topk', next ?? null ) ?? 8
+			return this.$.$mol_state_local.value( '$bog_norweb_front_settings.search_topk', next ?? null ) ?? 8
 		}
 
 		search_topk_label(): string {

@@ -1,0 +1,26 @@
+/* Буклетный UX на телефоне (как в $mol_book2): сайдбар и контент — снап-страницы
+   горизонтального скролла. Свайп вправо открывает меню, выбор раздела доскролливает
+   обратно к контенту (см. auto() в app.view.ts).
+   Селекторы задвоены/вложены, чтобы перебить базовые правила из app.view.css.ts. */
+@media (max-width: 720px) {
+
+	[bog_norweb_front_app][bog_norweb_front_app] {
+		overflow-x: auto;
+		overflow-y: hidden;
+		scroll-snap-type: x mandatory;
+	}
+
+	[bog_norweb_front_app] > [bog_norweb_front_app_sidebar] {
+		min-width: 84vw;
+		max-width: 84vw;
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+	}
+
+	[bog_norweb_front_app] > [bog_norweb_front_app_main] {
+		min-width: 100vw;
+		scroll-snap-align: end;
+		scroll-snap-stop: always;
+	}
+
+}

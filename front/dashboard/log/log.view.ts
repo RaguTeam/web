@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $raggu_web_front_dashboard_log extends $.$raggu_web_front_dashboard_log {
+	export class $bog_norweb_front_dashboard_log extends $.$bog_norweb_front_dashboard_log {
 
 		@$mol_action
 		toggle( next?: Event | null ) {

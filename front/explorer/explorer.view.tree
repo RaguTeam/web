@@ -1,11 +1,10 @@
-$raggu_web_front_explorer $bog_builderui_div
+$bog_norweb_front_explorer $bog_builderui_div
 	dataset_id \
 	selected_id? \
+	search? \
+	type_filter? \
 	ask_click? null
 	filter_search_text @ \🔍 Find node…
-	filter_type_text @ \Entity type ▾
-	filter_thresh_text @ \Strength threshold ▾
-	filter_comm_text @ \◉ Communities: on
 	aside_title_text @ \Entity card
 	aside_empty_text @ \Click a node on the graph
 	relations_title_template @ \Relations (%s)
@@ -13,48 +12,44 @@ $raggu_web_front_explorer $bog_builderui_div
 	sources_text @ \chunk #418 · chunk #902 …
 	ask_btn_text @ \💬 Ask about this entity
 	legend_title_text @ \Entity Types
-	legend_person_label_text @ \PERSON
-	legend_org_label_text @ \ORGANIZATION
-	legend_loc_label_text @ \LOCATION
-	legend_event_label_text @ \EVENT
-	legend_date_label_text @ \DATE
-	legend_work_label_text @ \WORK_OF_ART
-	legend_law_label_text @ \LAW
+	legend_label* \
+	legend_count* \
+	legend_active* false
+	legend_click*? null
+	mock_badge_text @ \⚠ Mock data — backend is not connected
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
-				<= Graph $raggu_web_front_explorer_forcegraph
+				<= Graph $bog_norweb_front_explorer_forcegraph
+					graph_key <= dataset_id
 					nodes <= graph_nodes /
 					edges <= graph_edges /
 					selected_id? <=> selected_id?
+					search <= search?
+					filter_type <= type_filter?
 			<= Filters $bog_builderui_div sub /
-				<= Filter_search $bog_builderui_div sub / <= filter_search_text
-				<= Filter_type $bog_builderui_div sub / <= filter_type_text
-				<= Filter_thresh $bog_builderui_div sub / <= filter_thresh_text
-				<= Filter_comm $bog_builderui_div sub / <= filter_comm_text
+				<= Filter_search $mol_string
+					hint <= filter_search_text
+					value? <=> search?
 			<= Legend $bog_builderui_div sub /
 				<= Legend_title $bog_builderui_div sub / <= legend_title_text
-				<= Legend_person $bog_builderui_div sub /
-					<= Legend_person_dot $bog_builderui_div
-					<= Legend_person_label $bog_builderui_div sub / <= legend_person_label_text
-				<= Legend_org $bog_builderui_div sub /
-					<= Legend_org_dot $bog_builderui_div
-					<= Legend_org_label $bog_builderui_div sub / <= legend_org_label_text
-				<= Legend_loc $bog_builderui_div sub /
-					<= Legend_loc_dot $bog_builderui_div
-					<= Legend_loc_label $bog_builderui_div sub / <= legend_loc_label_text
-				<= Legend_event $bog_builderui_div sub /
-					<= Legend_event_dot $bog_builderui_div
-					<= Legend_event_label $bog_builderui_div sub / <= legend_event_label_text
-				<= Legend_date $bog_builderui_div sub /
-					<= Legend_date_dot $bog_builderui_div
-					<= Legend_date_label $bog_builderui_div sub / <= legend_date_label_text
-				<= Legend_work $bog_builderui_div sub /
-					<= Legend_work_dot $bog_builderui_div
-					<= Legend_work_label $bog_builderui_div sub / <= legend_work_label_text
-				<= Legend_law $bog_builderui_div sub /
-					<= Legend_law_dot $bog_builderui_div
-					<= Legend_law_label $bog_builderui_div sub / <= legend_law_label_text
+				<= Legend_list $bog_builderui_div sub <= legend_rows /
+					<= Legend_row* $bog_builderui_div
+						attr *
+							^
+							bog_norweb_front_explorer_legend_on <= legend_active* false
+						event *
+							^
+							click? <=> legend_click*? null
+						sub /
+							<= Legend_dot* $bog_builderui_div
+							<= Legend_label* $bog_builderui_div sub / <= legend_label* \
+							<= Legend_count* $bog_builderui_div sub / <= legend_count* \
+			<= Mock_badge $bog_builderui_div
+				attr *
+					^
+					bog_norweb_front_explorer_mock_badge_showed <= is_mock false
+				sub / <= mock_badge_text
 		<= Aside $bog_builderui_div sub /
 			<= Aside_title $bog_builderui_div sub / <= aside_title_text
 			<= Entity_head $bog_builderui_div sub /

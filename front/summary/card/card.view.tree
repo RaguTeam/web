@@ -1,0 +1,18 @@
+$bog_norweb_front_summary_card $bog_builderui_div
+	icon \
+	badge \
+	title \
+	desc \
+	more \
+	click? null
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Head $bog_builderui_div sub /
+			<= Icon $bog_builderui_div sub / <= icon
+			<= Spacer $bog_builderui_div
+			<= Badge $bog_builderui_div sub / <= badge
+		<= Title $bog_builderui_div sub / <= title
+		<= Desc $bog_builderui_div sub / <= desc
+		<= More $bog_builderui_div sub / <= more

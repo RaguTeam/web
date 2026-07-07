@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_topbar_preset, {
+	$mol_style_define( $bog_norweb_front_topbar_preset, {
 		font: { size: '11px', weight: 600 },
 		padding: {
 			top: '5px',
@@ -12,7 +12,7 @@ namespace $ {
 		cursor: 'pointer',
 		color: $bog_builderui_tokens.shade,
 		'@': {
-			raggu_web_front_topbar_preset_active: {
+			bog_norweb_front_topbar_preset_active: {
 				true: {
 					background: { color: $bog_builderui_tokens.card },
 					color: $bog_builderui_tokens.text,

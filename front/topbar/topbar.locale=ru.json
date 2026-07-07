@@ -1,7 +1,7 @@
 {
-	"$raggu_web_front_topbar_preset_label_text": "Пресет",
-	"$raggu_web_front_topbar_settings_btn_text": "⚙ Настройки",
-	"$raggu_web_front_topbar_preset_fast_label": "⚡ Быстро",
-	"$raggu_web_front_topbar_preset_accurate_label": "🎯 Точно",
-	"$raggu_web_front_topbar_preset_demo_label": "🎬 Демо"
+	"$bog_norweb_front_topbar_preset_label_text": "Пресет",
+	"$bog_norweb_front_topbar_settings_btn_text": "⚙ Настройки",
+	"$bog_norweb_front_topbar_preset_fast_label": "⚡ Быстро",
+	"$bog_norweb_front_topbar_preset_accurate_label": "🎯 Точно",
+	"$bog_norweb_front_topbar_preset_demo_label": "🎬 Демо"
 }

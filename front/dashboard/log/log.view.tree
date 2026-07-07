@@ -1,4 +1,4 @@
-$raggu_web_front_dashboard_log $bog_builderui_div
+$bog_norweb_front_dashboard_log $bog_builderui_div
 	time \
 	text \
 	mode \
@@ -14,7 +14,7 @@ $raggu_web_front_dashboard_log $bog_builderui_div
 	arrow \▾
 	attr *
 		^
-		raggu_web_front_dashboard_log_expanded <= expanded? false
+		bog_norweb_front_dashboard_log_expanded <= expanded? false
 	sub /
 		<= Head $bog_builderui_div sub /
 			event * click? <=> toggle? null

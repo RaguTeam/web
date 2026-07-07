@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_topbar, {
+	$mol_style_define( $bog_norweb_front_topbar, {
 		height: '58px',
 		minHeight: '58px',
 		background: { color: $bog_builderui_tokens.card },
@@ -71,6 +71,21 @@ namespace $ {
 			},
 			font: { size: '12px', weight: 600 },
 			cursor: 'pointer',
+		},
+
+		'@media': {
+			'(max-width: 720px)': {
+				height: 'auto',
+				minHeight: '58px',
+				flexWrap: 'wrap',
+				gap: '0.5rem',
+				padding: {
+					top: '8px',
+					bottom: '8px',
+					left: '0.75rem',
+					right: '0.75rem',
+				},
+			},
 		},
 
 	} )

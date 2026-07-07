@@ -1,23 +1,35 @@
 #!/usr/bin/env node
 /**
- * Regenerates raggu/web/front/api/ragu.openapi.ts from openapi.json.
+ * Regenerates bog/norweb/front/api/ragu.openapi.ts from openapi.json.
  *
  * 1. Runs `openapi-typescript` on the spec to get the raw types block,
- *    wraps it in `namespace $.$raggu_web_front_api_ragu { ... }`.
+ *    wraps it in `namespace $.$bog_norweb_front_api_ragu { ... }`.
  * 2. Iterates operations in the spec and emits per-op descriptor consts
  *    (`{ method, route, params, query, body, out }`) that the runtime
  *    client at `api.ts` calls.
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { execSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 
 const HERE = dirname( fileURLToPath( import.meta.url ) )
 const REPO_ROOT = resolve( HERE, '../../../..' )
-const SPEC = resolve( REPO_ROOT, 'raggu/web/back/openapi.json' )
-const OUT = resolve( REPO_ROOT, 'raggu/web/front/api/ragu.openapi.ts' )
-const NS = '$raggu_web_front_api_ragu'
+const TARGETS = [
+	{
+		spec: resolve( REPO_ROOT, 'bog/norweb/back/openapi.json' ),
+		out: resolve( REPO_ROOT, 'bog/norweb/front/api/ragu.openapi.ts' ),
+	},
+	{
+		spec: resolve( HERE, '../openapi.json' ),
+		out: resolve( HERE, '../../front/api/ragu.openapi.ts' ),
+	},
+]
+const TARGET = TARGETS.find( item => existsSync( item.spec ) )
+if ( !TARGET ) throw new Error( 'Cannot find norweb/back/openapi.json' )
+const SPEC = TARGET.spec
+const OUT = TARGET.out
+const NS = '$bog_norweb_front_api_ragu'
 
 const spec = JSON.parse( readFileSync( SPEC, 'utf8' ) )
 

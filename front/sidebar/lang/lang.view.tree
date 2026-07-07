@@ -1,10 +1,10 @@
-$raggu_web_front_sidebar_lang $bog_builderui_div
+$bog_norweb_front_sidebar_lang $bog_builderui_div
 	label \
 	active false
 	click? null
 	attr *
 		^
-		raggu_web_front_sidebar_lang_active <= active
+		bog_norweb_front_sidebar_lang_active <= active
 	event *
 		^
 		click? <=> click? null

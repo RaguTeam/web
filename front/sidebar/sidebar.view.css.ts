@@ -1,6 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
-	$mol_style_define( $raggu_web_front_sidebar, {
+	$mol_style_define( $bog_norweb_front_sidebar, {
 		minWidth: '228px',
 		maxWidth: '228px',
 		background: { color: $bog_builderui_tokens.field },
@@ -30,11 +30,6 @@ namespace $ {
 			minWidth: '26px',
 			maxWidth: '26px',
 			height: '26px',
-			border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.current, radius: '6px' },
-			align: { items: 'center' },
-			justify: { content: 'center' },
-			font: { weight: 800, size: '14px' },
-			color: $bog_builderui_tokens.current,
 		},
 		Brand_title: {
 			font: { weight: 700, size: '16px' },

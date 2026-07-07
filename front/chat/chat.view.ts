@@ -5,41 +5,29 @@ namespace $.$$ {
 	export type Raggu_chat_item = {
 		role: Raggu_chat_role
 		text: string
-		trace?: boolean
+		/** Отвечено фолбэком (прямой LLM без графа), а не GraphRAG-бэком. */
+		off_graph?: boolean
 	}
 
-	export class $raggu_web_front_chat extends $.$raggu_web_front_chat {
+	export class $bog_norweb_front_chat extends $.$bog_norweb_front_chat {
 
+		// История привязана к dataset_id — у каждого корпуса своя ветка чата.
+		// Иначе фолбэк-плашка, полученная на одном датасете (напр. мок без бэка),
+		// висела бы на сообщениях другого, где бэк отвечает через граф.
 		@ $mol_mem
 		history( next?: Raggu_chat_item[] ): Raggu_chat_item[] {
-			const stored = this.$.$mol_state_session.value( '$raggu_web_front_chat.history', next as any ) as Raggu_chat_item[] | null
+			const key = `$bog_norweb_front_chat.history@${ this.dataset_id() || '' }`
+			const stored = this.$.$mol_state_session.value( key, next as any ) as Raggu_chat_item[] | null
 			if( stored ) return stored
 			return [
 				{ role: 'user', text: this.seed_user_text() },
-				{ role: 'assistant', text: this.seed_assistant_text(), trace: true },
+				{ role: 'assistant', text: this.seed_assistant_text() },
 			]
 		}
 
 		override prompt_text( next?: string ) {
-			return this.$.$mol_state_session.value( '$raggu_web_front_chat.prompt_text', next ) ?? ''
+			return this.$.$mol_state_session.value( '$bog_norweb_front_chat.prompt_text', next ) ?? ''
 		}
-
-		@ $mol_mem
-		override mode( next?: string ): string {
-			return this.$.$mol_state_session.value( '$raggu_web_front_chat.mode', next ) ?? 'llm'
-		}
-
-		is_llm() { return this.mode() === 'llm' }
-		is_local() { return this.mode() === 'local' }
-		is_global() { return this.mode() === 'global' }
-		is_mix() { return this.mode() === 'mix' }
-		is_plan() { return this.mode() === 'plan' }
-
-		@ $mol_action override select_llm() { this.mode( 'llm' ); return null }
-		@ $mol_action override select_local() { this.mode( 'local' ); return null }
-		@ $mol_action override select_global() { this.mode( 'global' ); return null }
-		@ $mol_action override select_mix() { this.mode( 'mix' ); return null }
-		@ $mol_action override select_plan() { this.mode( 'plan' ); return null }
 
 		@ $mol_mem
 		llm() {
@@ -75,27 +63,8 @@ namespace $.$$ {
 			return this.history()[ index ]?.role ?? 'user'
 		}
 
-		message_with_trace( index: number ) {
-			return index % 2 !== 0
-		}
-
-		// Условный рендер trace-блока: чётные индексы (user) без trace, нечётные (assistant) с trace.
-		// Возвращаем null → mol_view.render() пропускает пустой child в sub-массиве.
-		@ $mol_mem_key
-		override Message_trace( index: number ): any {
-			if( !this.message_with_trace( index ) ) return null
-			return super.Message_trace( index )
-		}
-
-		@ $mol_mem_key
-		override trace_expanded( index: number, next?: boolean ): boolean {
-			return next ?? false
-		}
-
-		@ $mol_action
-		override trace_toggle( index: number ) {
-			this.trace_expanded( index, !this.trace_expanded( index ) )
-			return null
+		message_off_graph( index: number ) {
+			return this.history()[ index ]?.off_graph ?? false
 		}
 
 		@ $mol_action
@@ -104,37 +73,96 @@ namespace $.$$ {
 			if( !text ) return null
 			this.history( [ ... this.history(), { role: 'user', text } ] )
 			this.prompt_text( '' )
-			if( this.mode() === 'llm' ) {
-				// LLM в detached wire — не блокирует action, не мутирует state внутри fiber body,
-				// сам ретаинится при suspension от model.response().
-				$mol_wire_async( this ).ask_llm( text )
-			} else {
-				// Мок для search-режимов
-				const mock = `${ this.mock_prefix_text() } "${ text }". ${ this.mock_suffix_text() }`
-				setTimeout( () => {
-					const cur = this.history()
-					this.history( [ ... cur, { role: 'assistant', text: mock, trace: true } ] )
-				}, 500 )
-			}
+			// Ответ в detached wire — не блокирует action, не мутирует state внутри fiber body,
+			// сам ретаинится при suspension от fetch/model.
+			$mol_wire_async( this ).ask( text )
 			return null
 		}
 
-		// Скелет виден когда мы ждём ответа LLM: последнее сообщение = user + режим llm.
-		// Реактивно, без ловли suspension: ask_llm сам мутирует history когда ответ придёт,
+		// Скелет виден когда мы ждём ответа: последнее сообщение = user.
+		// Реактивно, без ловли suspension: ask сам мутирует history когда ответ придёт,
 		// last=assistant → is_communicating становится false → скелет скрывается.
 		is_communicating(): boolean {
-			if( this.mode() !== 'llm' ) return false
 			const h = this.history()
 			if( h.length === 0 ) return false
 			return h[ h.length - 1 ].role === 'user'
 		}
 
-		// Запуск LLM в detached wire. Аргумент text — для уникальности fiber-slot
-		// в $mol_wire_async cache, чтобы разные запросы не переиспользовали один слот.
-		// model.response() кинет Promise → wire ретаинится, при resolve дожмёт ветку с writeback.
+		// Роутинг ответа. Аргумент text — для уникальности fiber-slot в
+		// $mol_wire_async cache. Основной путь — GraphRAG-агент на бэке RAGU:
+		// он сам достаёт контекст из графа знаний и подмешивает его перед
+		// генерацией. Если датасет не выбран или бэк недоступен — фолбэк на
+		// прямой LLM, чтобы демо не умирало.
+		ask( text: string ) {
+			if( this.dataset_id() ) {
+				try {
+					return this.ask_backend( text )
+				} catch( error: any ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+					console.error( '[norweb chat] GraphRAG backend failed, falling back to direct LLM:', error )
+					// провалились в фолбэк ниже
+				}
+			}
+			this.ask_llm( text )
+		}
+
+		// GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
+		// графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
+		ask_backend( text: string ) {
+			const history = this.history()
+				.slice( 0, -1 )
+				.map( m => ( { role: m.role, content: m.text } ) )
+			const resp = this.$.$bog_norweb_front_api(
+				$bog_norweb_front_api_ragu_create_agent_message,
+				{
+					params: { dataset_id: this.dataset_id() },
+					body: {
+						message: text,
+						history,
+						engine: 'local',
+						top_k: 15,
+						rerank: true,
+						include_trace: false,
+						locale: this.$.$mol_locale.lang() === 'en' ? 'en' : 'ru',
+					},
+				},
+			)
+			const reply = ( resp as any )?.message?.content ?? ''
+			this.history( [ ... this.history(), { role: 'assistant', text: reply } ] )
+		}
+
+		// Лёгкий контекст для фолбэка: сущности графа (лейбл + тип, топ по degree)
+		// прямо с бэка. Полноценного RAG-ретривала тут нет, но модель хотя бы
+		// «видит» какие сущности есть в корпусе и отвечает ближе к теме.
+		// Возвращает '' если графа нет (мок без бэка) — тогда чистый LLM.
+		graph_context(): string {
+			const id = this.dataset_id()
+			if( !id ) return ''
+			try {
+				const res = this.$.$bog_norweb_front_api(
+					$bog_norweb_front_api_ragu_get_graph,
+					{ params: { dataset_id: id }, query: { limit: 200 } },
+				)
+				const labels = ( res as any ).nodes
+					.slice()
+					.sort( ( a: any, b: any ) => ( b.degree ?? 0 ) - ( a.degree ?? 0 ) )
+					.slice( 0, 60 )
+					.map( ( n: any ) => `${ n.label } (${ n.entity_type })` )
+				if( !labels.length ) return ''
+				return `Ключевые сущности из графа знаний этого корпуса: ${ labels.join( '; ' ) }. Отвечай, опираясь на них, если вопрос по теме корпуса.`
+			} catch( error: any ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				return ''
+			}
+		}
+
+		// Фолбэк: прямой LLM. Если удаётся достать граф с бэка — подмешиваем
+		// сущности как контекст, чтобы ответ был ближе к корпусу.
 		ask_llm( text: string ) {
 			const history = this.history()
+			const context = this.graph_context()
 			const model = this.llm().fork()
+			if( context ) model.tell( [ context ] )
 			for( const item of history ) {
 				if( item.role === 'user' ) model.ask( [ item.text ] )
 				else model.tell( [ item.text ] )
@@ -142,15 +170,14 @@ namespace $.$$ {
 			try {
 				const resp = model.response() as { reply?: string } | string
 				const reply = typeof resp === 'string' ? resp : resp?.reply ?? JSON.stringify( resp, null, 2 )
-				this.history( [ ... this.history(), { role: 'assistant', text: reply } ] )
+				this.history( [ ... this.history(), { role: 'assistant', text: reply, off_graph: true } ] )
 			} catch( error: any ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 				if( $mol_fail_log( error ) ) {
-					this.history( [ ... this.history(), { role: 'assistant', text: '📛 ' + ( error.message || String( error ) ) } ] )
+					this.history( [ ... this.history(), { role: 'assistant', text: '📛 ' + ( error.message || String( error ) ), off_graph: true } ] )
 				}
 			}
 		}
-
 
 		@ $mol_action
 		override use_sug_one() {

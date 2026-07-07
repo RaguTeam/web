@@ -67,7 +67,7 @@ namespace $.$$ {
 		return parseFloat( trimmed ) || 0
 	}
 
-	export class $raggu_web_front_dashboard extends $.$raggu_web_front_dashboard {
+	export class $bog_norweb_front_dashboard extends $.$bog_norweb_front_dashboard {
 
 		metrics() { return METRICS as readonly Metric[] as Metric[] }
 		stages() { return STAGES as readonly Stage[] as Stage[] }

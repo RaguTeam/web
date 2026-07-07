@@ -17,7 +17,7 @@ namespace $ {
 		},
 	} as const
 
-	$mol_style_define( $raggu_web_front_gallery_card, {
+	$mol_style_define( $bog_norweb_front_gallery_card, {
 		background: { color: $bog_builderui_tokens.card },
 		border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
 		padding: {
@@ -29,7 +29,7 @@ namespace $ {
 		flex: { direction: 'column' },
 		cursor: 'pointer',
 		'@': {
-			raggu_web_front_gallery_card_active: {
+			bog_norweb_front_gallery_card_active: {
 				true: {
 					border: { color: $bog_builderui_tokens.current },
 					background: { color: $bog_builderui_tokens.field },

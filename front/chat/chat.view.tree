@@ -1,96 +1,23 @@
-$raggu_web_front_chat $bog_builderui_div
-	modes_label_text @ \Search engine
-	trace_head_title_text @ \▾ Answer trace
-	trace_head_meta_text @ \LocalSearch · top-k 8 · rerank ✓
-	trace_label_text @ \ENTITIES IN CONTEXT
-	trace_chip_one_text @ \Bjørnson
-	trace_chip_two_text @ \Norwegian anthem
-	trace_chip_three_text @ \1859
-	trace_stat_chunks_text @ \chunks: 3
-	trace_stat_comms_text @ \communities: 1
-	trace_stat_retr_text @ \retrieval 140ms
-	trace_stat_gen_text @ \gen 1.2s
-	trace_stat_power_text @ \≈0.4 Wh
-	trace_link_text @ \↳ highlight on graph
+$bog_norweb_front_chat $bog_builderui_div
+	dataset_id \
 	sug_one_text @ \Who received the Nobel Prize?
 	sug_two_text @ \Connection between Ibsen and Bjørnson?
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send
 	seed_user_text @ \Who wrote the Norwegian anthem and when?
 	seed_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
-	mock_prefix_text @ \Thanks for the question:
-	mock_suffix_text @ \(Mock response. Real retrieval will be wired to the backend.)
 	clear_text @ \Clear
-	mode_llm_text @ \$Mol LLM
-	mode_local_text @ \LocalSearch
-	mode_global_text @ \Global
-	mode_mix_text @ \Mix
-	mode_plan_text @ \QueryPlan
-	mode? \llm
+	off_graph_text @ \⚠ Off-graph answer (LLM without retrieval)
 	prompt_text? \
 	prompt_submit? null
 	use_sug_one? null
 	use_sug_two? null
 	clear_click? null
-	select_llm? null
-	select_local? null
-	select_global? null
-	select_mix? null
-	select_plan? null
 	rows /
 	message_text* \
 	message_role* \
-	message_with_trace* false
-	trace_expanded* false
-	trace_toggle*? null
+	message_off_graph* false
 	sub /
-		<= Modes_bar $bog_builderui_div sub /
-			<= Modes_label $bog_builderui_div sub / <= modes_label_text
-			<= Modes $bog_builderui_div sub /
-				<= Mode_llm $bog_builderui_div
-					sub / <= mode_llm_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_llm false
-					event *
-						^
-						click? <=> select_llm? null
-				<= Mode_local $bog_builderui_div
-					sub / <= mode_local_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_local false
-					event *
-						^
-						click? <=> select_local? null
-				<= Mode_global $bog_builderui_div
-					sub / <= mode_global_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_global false
-					event *
-						^
-						click? <=> select_global? null
-				<= Mode_mix $bog_builderui_div
-					sub / <= mode_mix_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_mix false
-					event *
-						^
-						click? <=> select_mix? null
-				<= Mode_plan $bog_builderui_div
-					sub / <= mode_plan_text
-					attr *
-						^
-						raggu_chat_mode_active <= is_plan false
-					event *
-						^
-						click? <=> select_plan? null
-			<= Clear $mol_button_minor
-				hint <= clear_text
-				click? <=> clear_click? null
-				sub / \✕
 		<= Body $mol_scroll
 			sub /
 				<= Body_flow $bog_builderui_div sub /
@@ -111,6 +38,10 @@ $raggu_web_front_chat $bog_builderui_div
 				<= Sug_two $bog_builderui_div
 					sub / <= sug_two_text
 					event * click? <=> use_sug_two? null
+				<= Clear $mol_button_minor
+					hint <= clear_text
+					click? <=> clear_click? null
+					sub / \✕
 			<= Input_row $bog_builderui_div sub /
 				<= Prompt $mol_textarea
 					hint <= input_hint_text
@@ -125,29 +56,13 @@ $raggu_web_front_chat $bog_builderui_div
 			^
 			raggu_role <= message_role*
 		sub /
-			<= Message_text* $bog_builderui_div sub / <= message_text*
-			<= Message_trace* $bog_builderui_div
+			<= Message_text* $bog_builderui_div
 				attr *
-					raggu_visible <= message_with_trace*
-				sub /
-					<= Message_trace_head* $bog_builderui_div
-						event * click? <=> trace_toggle*? null
-						sub /
-							<= Message_trace_head_title* $bog_builderui_div sub / <= trace_head_title_text
-							<= Message_trace_head_meta* $bog_builderui_div sub / <= trace_head_meta_text
-					<= Message_trace_body* $bog_builderui_div
-						attr *
-							raggu_expanded <= trace_expanded*
-						sub /
-							<= Message_trace_label* $bog_builderui_div sub / <= trace_label_text
-							<= Message_trace_chips* $bog_builderui_div sub /
-								<= Message_trace_chip_one* $bog_builderui_div sub / <= trace_chip_one_text
-								<= Message_trace_chip_two* $bog_builderui_div sub / <= trace_chip_two_text
-								<= Message_trace_chip_three* $bog_builderui_div sub / <= trace_chip_three_text
-							<= Message_trace_stats* $bog_builderui_div sub /
-								<= Message_trace_stat_chunks* $bog_builderui_div sub / <= trace_stat_chunks_text
-								<= Message_trace_stat_comms* $bog_builderui_div sub / <= trace_stat_comms_text
-								<= Message_trace_stat_retr* $bog_builderui_div sub / <= trace_stat_retr_text
-								<= Message_trace_stat_gen* $bog_builderui_div sub / <= trace_stat_gen_text
-								<= Message_trace_stat_power* $bog_builderui_div sub / <= trace_stat_power_text
-							<= Message_trace_link* $bog_builderui_div sub / <= trace_link_text
+					^
+					raggu_role <= message_role*
+				sub / <= message_text*
+			<= Message_badge* $bog_builderui_div
+				attr *
+					^
+					raggu_off_graph <= message_off_graph*
+				sub / <= off_graph_text

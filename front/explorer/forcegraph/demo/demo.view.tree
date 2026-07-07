@@ -1,4 +1,4 @@
-$raggu_web_front_explorer_forcegraph_demo $mol_example_small
+$bog_norweb_front_explorer_forcegraph_demo $mol_example_small
 	title \Forcegraph physics playground
 	plugins /
 		<= Theme $mol_theme_auto
@@ -13,7 +13,7 @@ $raggu_web_front_explorer_forcegraph_demo $mol_example_small
 	sub /
 		<= Canvas $mol_view
 			sub /
-				<= Graph $raggu_web_front_explorer_forcegraph
+				<= Graph $bog_norweb_front_explorer_forcegraph
 					nodes <= graph_nodes /
 					edges <= graph_edges /
 					gravity <= gravity
@@ -27,56 +27,56 @@ $raggu_web_front_explorer_forcegraph_demo $mol_example_small
 			sub /
 				<= Panel_title $mol_view
 					sub / \Physics playground
-				<= Row_n $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_n $bog_norweb_front_explorer_forcegraph_demo_row
 					label \nodes
 					info \graph size (rebuild on change)
 					step +10
 					value_min +10
 					value_max +2000
 					value?val <=> graph_n?val
-				<= Row_gravity $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_gravity $bog_norweb_front_explorer_forcegraph_demo_row
 					label \gravity
 					info \radial pull toward center
 					step +0.005
 					value_min +0
 					value_max +0.3
 					value?val <=> gravity?val
-				<= Row_force $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_force $bog_norweb_front_explorer_forcegraph_demo_row
 					label \force_scale
 					info \how sharply force becomes velocity
 					step +0.005
 					value_min +0
 					value_max +0.3
 					value?val <=> force_scale?val
-				<= Row_damping $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_damping $bog_norweb_front_explorer_forcegraph_demo_row
 					label \damping
 					info \momentum bleed (higher = springier)
 					step +0.01
 					value_min +0.4
 					value_max +0.98
 					value?val <=> damping?val
-				<= Row_min_move $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_min_move $bog_norweb_front_explorer_forcegraph_demo_row
 					label \min_move
 					info \soft freeze gate midpoint
 					step +0.01
 					value_min +0
 					value_max +1
 					value?val <=> min_move?val
-				<= Row_max_speed $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_max_speed $bog_norweb_front_explorer_forcegraph_demo_row
 					label \max_speed
 					info \tanh-saturated velocity ceiling
 					step +1
 					value_min +1
 					value_max +60
 					value?val <=> max_speed?val
-				<= Row_size_base $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_size_base $bog_norweb_front_explorer_forcegraph_demo_row
 					label \node_size_base
 					info \base radius (px), 0 degree
 					step +0.5
 					value_min +1
 					value_max +20
 					value?val <=> node_size_base?val
-				<= Row_size_growth $raggu_web_front_explorer_forcegraph_demo_row
+				<= Row_size_growth $bog_norweb_front_explorer_forcegraph_demo_row
 					label \node_size_growth
 					info \radius added per connection
 					step +0.1
@@ -94,7 +94,7 @@ $raggu_web_front_explorer_forcegraph_demo $mol_example_small
 	aspects /
 		\Widget/Graph
 
-$raggu_web_front_explorer_forcegraph_demo_row $mol_view
+$bog_norweb_front_explorer_forcegraph_demo_row $mol_view
 	label \
 	info \
 	step +1

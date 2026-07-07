@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "RAGU Web API Gateway",
-    "summary": "Typed API contract for the RAGU web demo.",
-    "description": "Mock-first FastAPI gateway for Gallery, Graph Explorer, and Agent screens. Live indexing, job queues, GPU workers, and cloud-specific flows are intentionally not exposed.",
+    "summary": "FastAPI gateway for preindexed RAGU graphs.",
+    "description": "FastAPI gateway for dataset selection, graph exploration, and question answering over existing RAGU index folders. Live indexing, job queues, and GPU workers are intentionally not exposed.",
     "version": "0.1.0"
   },
   "paths": {
@@ -235,37 +235,6 @@
                 {
                   "type": "array",
                   "items": {
-                    "enum": [
-                      "AGE",
-                      "FAMILY",
-                      "AWARD",
-                      "IDEOLOGY",
-                      "PERCENT",
-                      "CITY",
-                      "LANGUAGE",
-                      "PERSON",
-                      "COUNTRY",
-                      "LAW",
-                      "PRODUCT",
-                      "CRIME",
-                      "PENALTY",
-                      "PROFESSION",
-                      "DATE",
-                      "MONEY",
-                      "RELIGION",
-                      "DISEASE",
-                      "NATIONALITY",
-                      "STATE_OR_PROV",
-                      "ORDINAL",
-                      "TIME",
-                      "EVENT",
-                      "DISTRICT",
-                      "WORK_OF_ART",
-                      "ORGANIZATION",
-                      "FACILITY",
-                      "NUMBER",
-                      "LOCATION"
-                    ],
                     "type": "string"
                   }
                 },
@@ -1475,38 +1444,7 @@
             "anyOf": [
               {
                 "items": {
-                  "type": "string",
-                  "enum": [
-                    "AGE",
-                    "FAMILY",
-                    "AWARD",
-                    "IDEOLOGY",
-                    "PERCENT",
-                    "CITY",
-                    "LANGUAGE",
-                    "PERSON",
-                    "COUNTRY",
-                    "LAW",
-                    "PRODUCT",
-                    "CRIME",
-                    "PENALTY",
-                    "PROFESSION",
-                    "DATE",
-                    "MONEY",
-                    "RELIGION",
-                    "DISEASE",
-                    "NATIONALITY",
-                    "STATE_OR_PROV",
-                    "ORDINAL",
-                    "TIME",
-                    "EVENT",
-                    "DISTRICT",
-                    "WORK_OF_ART",
-                    "ORGANIZATION",
-                    "FACILITY",
-                    "NUMBER",
-                    "LOCATION"
-                  ]
+                  "type": "string"
                 },
                 "type": "array"
               },
@@ -1634,37 +1572,6 @@
           },
           "entity_type": {
             "type": "string",
-            "enum": [
-              "AGE",
-              "FAMILY",
-              "AWARD",
-              "IDEOLOGY",
-              "PERCENT",
-              "CITY",
-              "LANGUAGE",
-              "PERSON",
-              "COUNTRY",
-              "LAW",
-              "PRODUCT",
-              "CRIME",
-              "PENALTY",
-              "PROFESSION",
-              "DATE",
-              "MONEY",
-              "RELIGION",
-              "DISEASE",
-              "NATIONALITY",
-              "STATE_OR_PROV",
-              "ORDINAL",
-              "TIME",
-              "EVENT",
-              "DISTRICT",
-              "WORK_OF_ART",
-              "ORGANIZATION",
-              "FACILITY",
-              "NUMBER",
-              "LOCATION"
-            ],
             "title": "Entity Type"
           },
           "description": {
@@ -2084,37 +1991,6 @@
           },
           "entity_type": {
             "type": "string",
-            "enum": [
-              "AGE",
-              "FAMILY",
-              "AWARD",
-              "IDEOLOGY",
-              "PERCENT",
-              "CITY",
-              "LANGUAGE",
-              "PERSON",
-              "COUNTRY",
-              "LAW",
-              "PRODUCT",
-              "CRIME",
-              "PENALTY",
-              "PROFESSION",
-              "DATE",
-              "MONEY",
-              "RELIGION",
-              "DISEASE",
-              "NATIONALITY",
-              "STATE_OR_PROV",
-              "ORDINAL",
-              "TIME",
-              "EVENT",
-              "DISTRICT",
-              "WORK_OF_ART",
-              "ORGANIZATION",
-              "FACILITY",
-              "NUMBER",
-              "LOCATION"
-            ],
             "title": "Entity Type"
           },
           "score": {
@@ -2246,7 +2122,7 @@
     },
     {
       "name": "Datasets",
-      "description": "Preindexed dataset gallery contract."
+      "description": "Discovered preindexed RAGU datasets."
     },
     {
       "name": "Graph Explorer",

@@ -1,4 +1,4 @@
-name: $raggu_web_front_app
+name: $bog_norweb_front_app
 
 permissions: write-all
 
@@ -12,6 +12,7 @@ concurrency:
     group: deploy-${{ github.ref }}
     cancel-in-progress: true
 
+
 jobs:
     build:
         if: github.event_name != 'delete'
@@ -20,20 +21,20 @@ jobs:
         steps:
             - uses: hyoo-ru/mam_build@master2
               with:
-                  package: "raggu/web"
+                  package: "bog/norweb"
                   modules: 'front/app'
 
             - name: Deploy main
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
-                  folder: "raggu/web/front/app/-"
+                  folder: "bog/norweb/front/app/-"
 
             - name: Deploy feature branch
               if: startsWith(github.ref, 'refs/heads/feature/')
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
-                  folder: "raggu/web/front/app/-"
+                  folder: "bog/norweb/front/app/-"
                   target-folder: ${{ github.ref_name }}
 
     cleanup:
