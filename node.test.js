@@ -7102,6 +7102,11 @@ var $;
             left: '0.875rem',
             right: '0.875rem',
         },
+        '@': {
+            raggu_web_front_sidebar_hidden: {
+                true: { display: 'none' },
+            },
+        },
         Brand: {
             flex: { direction: 'row' },
             align: { items: 'center' },
@@ -7166,6 +7171,14 @@ var $;
         Dataset_list: {
             flex: { direction: 'column' },
             gap: '0.25rem',
+            // Рамка активной строки — box-shadow, торчит наружу; без отступов
+            // её срезает overflow скролла
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '3px',
+                right: '3px',
+            },
         },
         Dataset_row: {
             flex: { direction: 'column' },
@@ -11957,6 +11970,17 @@ ${CHAT.answer}
 
 ;
 	($.$raggu_web_front_topbar) = class $raggu_web_front_topbar extends ($.$bog_builderui_div) {
+		toggle_sidebar(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Sidebar_btn(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("◫");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Sidebar_btn_hint")));
+			(obj.click) = (next) => ((this.toggle_sidebar(next)));
+			return obj;
+		}
 		is_gallery(){
 			return false;
 		}
@@ -12049,6 +12073,16 @@ ${CHAT.answer}
 			]);
 			return obj;
 		}
+		open_help(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Help_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.open_help(next))});
+			(obj.sub) = () => ([(this.help_btn_text())]);
+			return obj;
+		}
 		Spacer_left(){
 			const obj = new this.$.$bog_builderui_div();
 			return obj;
@@ -12128,16 +12162,6 @@ ${CHAT.answer}
 			]);
 			return obj;
 		}
-		open_help(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Help_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.open_help(next))});
-			(obj.sub) = () => ([(this.help_btn_text())]);
-			return obj;
-		}
 		open_settings(next){
 			if(next !== undefined) return next;
 			return null;
@@ -12190,18 +12214,21 @@ ${CHAT.answer}
 		}
 		sub(){
 			return [
+				(this.Sidebar_btn()), 
 				(this.Nav()), 
+				(this.Help_btn()), 
 				(this.Spacer_left()), 
 				(this.Title_block()), 
 				(this.Spacer()), 
 				(this.Preset_label()), 
 				(this.Preset_group()), 
-				(this.Help_btn()), 
 				(this.Settings_btn()), 
 				(this.Export())
 			];
 		}
 	};
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "toggle_sidebar"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Sidebar_btn"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_gallery"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_gallery"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_explorer"));
@@ -12213,6 +12240,8 @@ ${CHAT.answer}
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_summary"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_summary"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer_left"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Subtitle"));
@@ -12226,8 +12255,6 @@ ${CHAT.answer}
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_demo"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_demo"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_group"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_settings"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Settings_btn"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Export"));
@@ -16578,6 +16605,9 @@ var $;
 		filter_type(){
 			return "";
 		}
+		filter_relation(){
+			return "";
+		}
 		graph_key(){
 			return "";
 		}
@@ -17248,13 +17278,13 @@ var $;
             node_color(id) {
                 return $raggu_web_front_explorer_forcegraph_type_color(this.node_by_id()[id].type);
             }
-            // Фильтры подсветки: поиск по label и/или тип из легенды. Непустой фильтр
-            // приглушает узлы и рёбра, которые не матчатся.
+            // Фильтры подсветки: поиск по label, тип узла и/или тип связи из легенд.
+            // Непустой фильтр приглушает узлы и рёбра, которые не матчатся.
             search_lc() {
                 return this.search().trim().toLowerCase();
             }
             filter_active() {
-                return Boolean(this.search_lc() || this.filter_type());
+                return Boolean(this.search_lc() || this.filter_type() || this.filter_relation());
             }
             node_matches(id) {
                 const n = this.node_by_id()[id];
@@ -17264,9 +17294,37 @@ var $;
                 const s = this.search_lc();
                 if (s && !(n?.label ?? '').toLowerCase().includes(s))
                     return false;
+                // Фильтр по типу связи подсвечивает концы матчащихся рёбер
+                const r = this.filter_relation();
+                if (r && !this.node_has_relation(id, r))
+                    return false;
                 return true;
             }
+            relation_nodes() {
+                const m = {};
+                for (const e of this.edges()) {
+                    ;
+                    (m[e.relation] ??= new Set()).add(e.source);
+                    m[e.relation].add(e.target);
+                }
+                return m;
+            }
+            node_has_relation(id, rel) {
+                return this.relation_nodes()[rel]?.has(id) ?? false;
+            }
+            // Наведённое/выбранное ребро — его концы ведут себя как hovered-узлы.
+            active_edge() {
+                const id = this.hovered_edge_id() || this.selected_edge_id();
+                return id ? this.edge_by_id()[id] ?? null : null;
+            }
+            edge_endpoint(id) {
+                const e = this.active_edge();
+                return Boolean(e && (e.source === id || e.target === id));
+            }
             node_opacity(id) {
+                // Активное ребро затемняет всё, кроме своих концов — как hover узла
+                if (this.active_edge())
+                    return this.edge_endpoint(id) ? '1' : '0.25';
                 return this.node_matches(id) ? '1' : '0.12';
             }
             node_stroke(id) {
@@ -17274,12 +17332,16 @@ var $;
                     return '#ffffff';
                 if (this.hovered_id() === id)
                     return '#ffffff';
+                if (this.edge_endpoint(id))
+                    return '#ffffff';
                 return 'transparent';
             }
             node_stroke_width(id) {
                 if (this.selected_id() === id)
                     return '2.5';
                 if (this.hovered_id() === id)
+                    return '1.5';
+                if (this.edge_endpoint(id))
                     return '1.5';
                 return '0';
             }
@@ -17317,11 +17379,21 @@ var $;
                     || this.selected_id() && (e.source === this.selected_id() || e.target === this.selected_id());
                 return String(incident ? base * 2 : base);
             }
+            edge_matches(id) {
+                const e = this.edge_by_id()[id];
+                const r = this.filter_relation();
+                if (r && e.relation !== r)
+                    return false;
+                return this.node_matches(e.source) && this.node_matches(e.target);
+            }
             edge_opacity(id) {
                 const e = this.edge_by_id()[id];
                 if (this.edge_active(id))
                     return '0.95';
-                if (this.filter_active() && !(this.node_matches(e.source) && this.node_matches(e.target)))
+                // Активное ребро приглушает все остальные — как hover узла
+                if (this.active_edge())
+                    return '0.12';
+                if (this.filter_active() && !this.edge_matches(id))
                     return '0.08';
                 const hid = this.hovered_id() || this.selected_id();
                 if (!hid)
@@ -17387,6 +17459,9 @@ var $;
             node_label_text(id) {
                 if (this.active_id() === id)
                     return ''; // tooltip уже показывает label
+                // Концы активного ребра подписываем всегда — видно, что оно связывает
+                if (this.edge_endpoint(id))
+                    return this.node_by_id()[id]?.label ?? '';
                 if (!this.node_matches(id))
                     return '';
                 if (this.node_label_vis(id) <= 0)
@@ -17394,6 +17469,8 @@ var $;
                 return this.node_by_id()[id]?.label ?? '';
             }
             node_label_opacity(id) {
+                if (this.edge_endpoint(id))
+                    return '1';
                 return String(this.node_label_vis(id) * 0.85);
             }
             edge_label_mid(id) {
@@ -17413,7 +17490,9 @@ var $;
                     return '';
                 if (this.edge_active(id))
                     return rel;
-                if (this.filter_active() && !(this.node_matches(e.source) && this.node_matches(e.target)))
+                if (this.active_edge())
+                    return ''; // не шумим подписями вокруг активного ребра
+                if (this.filter_active() && !this.edge_matches(id))
                     return '';
                 const fs = parseFloat(this.edge_label_font_size());
                 if (fs * this.zoom() < 4)
@@ -17562,6 +17641,9 @@ var $;
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);
         __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "relation_nodes", null);
+        __decorate([
             $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "hover_enter", null);
         __decorate([
@@ -17650,6 +17732,7 @@ var $;
 			(obj.selected_edge_id) = (next) => ((this.selected_edge_id(next)));
 			(obj.search) = () => ((this.search()));
 			(obj.filter_type) = () => ((this.type_filter()));
+			(obj.filter_relation) = () => ((this.rel_filter()));
 			return obj;
 		}
 		Canvas_bg(){
@@ -17668,9 +17751,27 @@ var $;
 			(obj.sub) = () => ([(this.Filter_search())]);
 			return obj;
 		}
+		legend_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Legend_title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.legend_title_text())]);
+			return obj;
+		}
+		legend_caret(){
+			return "▾";
+		}
+		Legend_caret(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.legend_caret())]);
+			return obj;
+		}
+		Legend_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.legend_toggle(next))});
+			(obj.sub) = () => ([(this.Legend_title()), (this.Legend_caret())]);
 			return obj;
 		}
 		legend_active(id){
@@ -17721,7 +17822,80 @@ var $;
 		}
 		Legend(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend_title()), (this.Legend_list())]);
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.legend_collapsed())});
+			(obj.sub) = () => ([(this.Legend_head()), (this.Legend_list())]);
+			return obj;
+		}
+		rels_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Rels_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rels_title_text())]);
+			return obj;
+		}
+		rels_caret(){
+			return "▾";
+		}
+		Rels_caret(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rels_caret())]);
+			return obj;
+		}
+		Rels_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.rels_toggle(next))});
+			(obj.sub) = () => ([(this.Rels_title()), (this.Rels_caret())]);
+			return obj;
+		}
+		rel_legend_active(id){
+			return false;
+		}
+		rel_legend_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		rel_legend_label(id){
+			return "";
+		}
+		Rel_row_label(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_legend_label(id))]);
+			return obj;
+		}
+		rel_legend_count(id){
+			return "";
+		}
+		Rel_row_count(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_legend_count(id))]);
+			return obj;
+		}
+		Rel_row(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_legend_on": (this.rel_legend_active(id))});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.rel_legend_click(id, next))});
+			(obj.sub) = () => ([(this.Rel_row_label(id)), (this.Rel_row_count(id))]);
+			return obj;
+		}
+		rel_legend_rows(){
+			return [(this.Rel_row(id))];
+		}
+		Rels_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.rel_legend_rows()));
+			return obj;
+		}
+		Rels(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.rels_collapsed())});
+			(obj.sub) = () => ([(this.Rels_head()), (this.Rels_list())]);
+			return obj;
+		}
+		Legends(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend()), (this.Rels())]);
 			return obj;
 		}
 		is_mock(){
@@ -17738,9 +17912,22 @@ var $;
 			(obj.sub) = () => ([
 				(this.Canvas_bg()), 
 				(this.Filters()), 
-				(this.Legend()), 
+				(this.Legends()), 
 				(this.Mock_badge())
 			]);
+			return obj;
+		}
+		aside_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		aside_caret(){
+			return "⟩";
+		}
+		Aside_toggle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.aside_toggle(next))});
+			(obj.sub) = () => ([(this.aside_caret())]);
 			return obj;
 		}
 		aside_title(){
@@ -17749,6 +17936,11 @@ var $;
 		Aside_title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.aside_title())]);
+			return obj;
+		}
+		Aside_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Aside_toggle()), (this.Aside_title())]);
 			return obj;
 		}
 		Entity_dot(){
@@ -17841,10 +18033,9 @@ var $;
 			(obj.event) = () => ({"click": (next) => (this.ask_click(next))});
 			return obj;
 		}
-		Aside(){
+		Aside_body(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
-				(this.Aside_title()), 
 				(this.Entity_head()), 
 				(this.Entity_type()), 
 				(this.Entity_desc()), 
@@ -17854,6 +18045,12 @@ var $;
 				(this.Sources()), 
 				(this.Ask_btn())
 			]);
+			return obj;
+		}
+		Aside(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_aside_collapsed": (this.aside_collapsed())});
+			(obj.sub) = () => ([(this.Aside_head()), (this.Aside_body())]);
 			return obj;
 		}
 		dataset_id(){
@@ -17874,6 +18071,22 @@ var $;
 		type_filter(next){
 			if(next !== undefined) return next;
 			return "";
+		}
+		rel_filter(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		legend_collapsed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		rels_collapsed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		aside_collapsed(next){
+			if(next !== undefined) return next;
+			return false;
 		}
 		filter_search_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_filter_search_text"));
@@ -17902,6 +18115,9 @@ var $;
 		legend_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
 		}
+		rels_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_rels_title_text"));
+		}
 		mock_badge_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_mock_badge_text"));
 		}
@@ -17913,7 +18129,10 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas_bg"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_search"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filters"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "legend_toggle"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_title"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_caret"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_head"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "legend_click"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_dot"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_label"));
@@ -17921,9 +18140,23 @@ var $;
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_row"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_list"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "rels_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_title"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_caret"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_head"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "rel_legend_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row_label"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row_count"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_list"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legends"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Mock_badge"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_toggle"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_title"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_head"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_dot"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_name"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_head"));
@@ -17938,11 +18171,16 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "ask_click"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_body"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_edge_id"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "search"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "type_filter"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "rel_filter"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "legend_collapsed"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "rels_collapsed"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_collapsed"));
 
 
 ;
@@ -18055,6 +18293,55 @@ var $;
                 this.type_filter(this.type_filter() === t ? '' : t);
                 return null;
             }
+            // Легенда типов связей — симметрична легенде сущностей, но по рёбрам.
+            rel_entries() {
+                const counts = {};
+                for (const e of this.graph_edges()) {
+                    counts[e.relation] = (counts[e.relation] ?? 0) + 1;
+                }
+                return Object.entries(counts)
+                    .map(([type, count]) => ({ type, count }))
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 12);
+            }
+            rel_legend_rows() {
+                return this.rel_entries().map((_, i) => this.Rel_row(i));
+            }
+            rel_legend_label(i) {
+                return this.rel_entries()[i]?.type ?? '';
+            }
+            rel_legend_count(i) {
+                return String(this.rel_entries()[i]?.count ?? '');
+            }
+            // Тип отношения наведённого/выбранного ребра — подсвечиваем его строку
+            active_relation() {
+                return this.graph_view().active_edge()?.relation ?? '';
+            }
+            rel_legend_active(i) {
+                const t = this.rel_entries()[i]?.type ?? '';
+                return this.rel_filter() === t || this.active_relation() === t;
+            }
+            rel_legend_click(i) {
+                const t = this.rel_entries()[i]?.type ?? '';
+                this.rel_filter(this.rel_filter() === t ? '' : t);
+                return null;
+            }
+            // Сворачивание легенд и правой панели — больше места графу
+            legend_caret() { return this.legend_collapsed() ? '▸' : '▾'; }
+            rels_caret() { return this.rels_collapsed() ? '▸' : '▾'; }
+            aside_caret() { return this.aside_collapsed() ? '⟨' : '⟩'; }
+            legend_toggle() {
+                this.legend_collapsed(!this.legend_collapsed());
+                return null;
+            }
+            rels_toggle() {
+                this.rels_collapsed(!this.rels_collapsed());
+                return null;
+            }
+            aside_toggle() {
+                this.aside_collapsed(!this.aside_collapsed());
+                return null;
+            }
             graph_data() {
                 return this.graph_remote()
                     ?? $raggu_web_front_explorer_forcegraph_build_mock(42, 80, 130);
@@ -18157,6 +18444,21 @@ var $;
         ], $raggu_web_front_explorer.prototype, "legend_click", null);
         __decorate([
             $mol_mem
+        ], $raggu_web_front_explorer.prototype, "rel_entries", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "rel_legend_click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "legend_toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "rels_toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "aside_toggle", null);
+        __decorate([
+            $mol_mem
         ], $raggu_web_front_explorer.prototype, "graph_data", null);
         __decorate([
             $mol_mem
@@ -18204,6 +18506,46 @@ var $;
             size: '10px',
         },
         color: $bog_builderui_tokens.shade,
+    };
+    // Общий каркас панелек-легенд поверх канвы. Сворачивание: атрибут
+    // raggu_web_front_explorer_panel_collapsed прячет список, остаётся шапка.
+    const legend_panel = {
+        background: { color: '#1c1b1ae6' },
+        border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
+        padding: {
+            top: '11px',
+            bottom: '11px',
+            left: '13px',
+            right: '13px',
+        },
+        flex: { direction: 'column', shrink: 1 },
+        minHeight: 0,
+    };
+    const legend_head = {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '8px',
+        cursor: 'pointer',
+    };
+    const legend_title = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 700,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.line,
+        textTransform: 'uppercase',
+        letterSpacing: '0.6px',
+        flex: { grow: 1 },
+    };
+    const legend_caret = {
+        color: '#8a8a8a',
+        font: { size: '10px' },
+    };
+    const legend_list = {
+        flex: { direction: 'column' },
+        overflow: 'auto',
+        margin: { top: '8px' },
     };
     const relation_card = {
         border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
@@ -18276,37 +18618,29 @@ var $;
             font: { size: '11px', weight: 600 },
             width: '200px',
         },
-        Legend: {
+        Legends: {
             position: 'absolute',
             top: '14px',
             right: '14px',
-            background: { color: '#1c1b1ae6' },
-            border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
-            padding: {
-                top: '11px',
-                bottom: '11px',
-                left: '13px',
-                right: '13px',
-            },
             width: '184px',
             maxHeight: $mol_style_func.calc('100% - 28px'),
-            overflow: 'auto',
             flex: { direction: 'column' },
+            gap: '8px',
         },
-        Legend_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 700,
-                size: '10px',
+        Legend: {
+            ...legend_panel,
+            '@': {
+                raggu_web_front_explorer_panel_collapsed: {
+                    true: {
+                        Legend_list: { display: 'none' },
+                    },
+                },
             },
-            color: $bog_builderui_tokens.line,
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
-            margin: { bottom: '8px' },
         },
-        Legend_list: {
-            flex: { direction: 'column' },
-        },
+        Legend_head: legend_head,
+        Legend_title: legend_title,
+        Legend_caret: legend_caret,
+        Legend_list: legend_list,
         Legend_row: legend_row,
         Legend_dot: dot_base,
         Legend_label: {
@@ -18317,6 +18651,32 @@ var $;
             textOverflow: 'ellipsis',
         },
         Legend_count: {
+            ...legend_label,
+            color: '#8a8a8a',
+        },
+        Rels: {
+            ...legend_panel,
+            '@': {
+                raggu_web_front_explorer_panel_collapsed: {
+                    true: {
+                        Rels_list: { display: 'none' },
+                    },
+                },
+            },
+        },
+        Rels_head: legend_head,
+        Rels_title: legend_title,
+        Rels_caret: legend_caret,
+        Rels_list: legend_list,
+        Rel_row: legend_row,
+        Rel_row_label: {
+            ...legend_label,
+            flex: { grow: 1 },
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+        },
+        Rel_row_count: {
             ...legend_label,
             color: '#8a8a8a',
         },
@@ -18359,6 +18719,46 @@ var $;
                 right: '18px',
             },
             overflow: 'auto',
+            flex: { direction: 'column' },
+            // Свёрнутая панель — узкая полоска с шевроном, граф забирает ширину
+            '@': {
+                raggu_web_front_explorer_aside_collapsed: {
+                    true: {
+                        minWidth: '34px',
+                        maxWidth: '34px',
+                        padding: {
+                            top: '10px',
+                            bottom: '10px',
+                            left: '4px',
+                            right: '4px',
+                        },
+                        Aside_title: { display: 'none' },
+                        Aside_body: { display: 'none' },
+                    },
+                },
+            },
+        },
+        Aside_head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+        },
+        Aside_toggle: {
+            cursor: 'pointer',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '13px', weight: 600 },
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '8px',
+                right: '8px',
+            },
+            border: { radius: '5px' },
+            ':hover': {
+                background: { color: $bog_builderui_tokens.field },
+            },
+        },
+        Aside_body: {
             flex: { direction: 'column' },
         },
         Aside_title: {
@@ -23104,6 +23504,9 @@ var $;
 			const obj = new this.$.$bog_theme_auto();
 			return obj;
 		}
+		sidebar_hidden(){
+			return false;
+		}
 		dataset_ids(){
 			return [];
 		}
@@ -23119,6 +23522,7 @@ var $;
 		}
 		Sidebar(){
 			const obj = new this.$.$raggu_web_front_sidebar();
+			(obj.attr) = () => ({...(this.$.$raggu_web_front_sidebar.prototype.attr.call(obj)), "raggu_web_front_sidebar_hidden": (this.sidebar_hidden())});
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			(obj.dataset_ids) = () => ((this.dataset_ids()));
 			(obj.dataset_name) = (id) => ((this.sidebar_dataset_name(id)));
@@ -23141,6 +23545,10 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		toggle_sidebar(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Topbar(){
 			const obj = new this.$.$raggu_web_front_topbar();
 			(obj.screen) = (next) => ((this.screen(next)));
@@ -23150,6 +23558,7 @@ var $;
 			(obj.preset) = (next) => ((this.preset(next)));
 			(obj.open_settings) = (next) => ((this.open_settings(next)));
 			(obj.open_help) = (next) => ((this.open_help(next)));
+			(obj.toggle_sidebar) = (next) => ((this.toggle_sidebar(next)));
 			return obj;
 		}
 		Body(){
@@ -23197,6 +23606,10 @@ var $;
 			return false;
 		}
 		help_open(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		sidebar_collapsed(next){
 			if(next !== undefined) return next;
 			return false;
 		}
@@ -23284,6 +23697,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Sidebar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "open_settings"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "open_help"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "toggle_sidebar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Topbar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
@@ -23296,6 +23710,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "dataset_id"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "settings_open"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "help_open"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "sidebar_collapsed"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Gallery"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Explorer"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Chat"));
@@ -23361,6 +23776,11 @@ var $;
             }
             open_help() {
                 this.help_open(true);
+                return null;
+            }
+            sidebar_hidden() { return this.sidebar_collapsed(); }
+            toggle_sidebar() {
+                this.sidebar_collapsed(!this.sidebar_collapsed());
                 return null;
             }
             // Gallery владеет фетчем списка датасетов — сайдбар получает данные
@@ -23431,6 +23851,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "open_help", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_app.prototype, "toggle_sidebar", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "select_dataset", null);
