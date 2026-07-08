@@ -9,6 +9,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	drag_id? \
 	search \
 	filter_type \
+	filter_relation \
 	graph_key \
 	nodes /
 	edges /

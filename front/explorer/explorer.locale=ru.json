@@ -8,5 +8,6 @@
 	"$raggu_web_front_explorer_sources_text": "chunk #418 · chunk #902 …",
 	"$raggu_web_front_explorer_ask_btn_text": "💬 Спросить про эту сущность",
 	"$raggu_web_front_explorer_legend_title_text": "Типы сущностей",
+	"$raggu_web_front_explorer_rels_title_text": "Типы связей",
 	"$raggu_web_front_explorer_mock_badge_text": "⚠ Мок-данные — бэкенд не подключён"
 }

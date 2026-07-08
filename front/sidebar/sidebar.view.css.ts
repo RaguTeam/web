@@ -14,6 +14,11 @@ namespace $ {
 			left: '0.875rem',
 			right: '0.875rem',
 		},
+		'@': {
+			raggu_web_front_sidebar_hidden: {
+				true: { display: 'none' },
+			},
+		},
 
 		Brand: {
 			flex: { direction: 'row' },
@@ -81,6 +86,14 @@ namespace $ {
 		Dataset_list: {
 			flex: { direction: 'column' },
 			gap: '0.25rem',
+			// Рамка активной строки — box-shadow, торчит наружу; без отступов
+			// её срезает overflow скролла
+			padding: {
+				top: '2px',
+				bottom: '2px',
+				left: '3px',
+				right: '3px',
+			},
 		},
 		Dataset_row: {
 			flex: { direction: 'column' },

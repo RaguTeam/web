@@ -57,6 +57,14 @@ namespace $.$$ {
 			return null
 		}
 
+		sidebar_hidden() { return this.sidebar_collapsed() }
+
+		@$mol_action
+		toggle_sidebar() {
+			this.sidebar_collapsed( !this.sidebar_collapsed() )
+			return null
+		}
+
 		// Gallery владеет фетчем списка датасетов — сайдбар получает данные
 		// через эти прокси, чтобы не дублировать remote_datasets.
 		dataset_ids() {

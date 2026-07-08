@@ -4,6 +4,10 @@ $raggu_web_front_explorer $bog_builderui_div
 	selected_edge_id? \
 	search? \
 	type_filter? \
+	rel_filter? \
+	legend_collapsed? false
+	rels_collapsed? false
+	aside_collapsed? false
 	ask_click? null
 	filter_search_text @ \🔍 Find node…
 	aside_title_text @ \Entity card
@@ -18,6 +22,11 @@ $raggu_web_front_explorer $bog_builderui_div
 	legend_count* \
 	legend_active* false
 	legend_click*? null
+	rels_title_text @ \Relation Types
+	rel_legend_label* \
+	rel_legend_count* \
+	rel_legend_active* false
+	rel_legend_click*? null
 	mock_badge_text @ \⚠ Mock data — backend is not connected
 	sub /
 		<= Canvas $bog_builderui_div sub /
@@ -30,43 +39,87 @@ $raggu_web_front_explorer $bog_builderui_div
 					selected_edge_id? <=> selected_edge_id?
 					search <= search?
 					filter_type <= type_filter?
+					filter_relation <= rel_filter?
 			<= Filters $bog_builderui_div sub /
 				<= Filter_search $mol_string
 					hint <= filter_search_text
 					value? <=> search?
-			<= Legend $bog_builderui_div sub /
-				<= Legend_title $bog_builderui_div sub / <= legend_title_text
-				<= Legend_list $bog_builderui_div sub <= legend_rows /
-					<= Legend_row* $bog_builderui_div
-						attr *
-							^
-							raggu_web_front_explorer_legend_on <= legend_active* false
-						event *
-							^
-							click? <=> legend_click*? null
-						sub /
-							<= Legend_dot* $bog_builderui_div
-							<= Legend_label* $bog_builderui_div sub / <= legend_label* \
-							<= Legend_count* $bog_builderui_div sub / <= legend_count* \
+			<= Legends $bog_builderui_div sub /
+				<= Legend $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_explorer_panel_collapsed <= legend_collapsed?
+					sub /
+						<= Legend_head $bog_builderui_div
+							event *
+								^
+								click? <=> legend_toggle? null
+							sub /
+								<= Legend_title $bog_builderui_div sub / <= legend_title_text
+								<= Legend_caret $bog_builderui_div sub / <= legend_caret \▾
+						<= Legend_list $bog_builderui_div sub <= legend_rows /
+							<= Legend_row* $bog_builderui_div
+								attr *
+									^
+									raggu_web_front_explorer_legend_on <= legend_active* false
+								event *
+									^
+									click? <=> legend_click*? null
+								sub /
+									<= Legend_dot* $bog_builderui_div
+									<= Legend_label* $bog_builderui_div sub / <= legend_label* \
+									<= Legend_count* $bog_builderui_div sub / <= legend_count* \
+				<= Rels $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_explorer_panel_collapsed <= rels_collapsed?
+					sub /
+						<= Rels_head $bog_builderui_div
+							event *
+								^
+								click? <=> rels_toggle? null
+							sub /
+								<= Rels_title $bog_builderui_div sub / <= rels_title_text
+								<= Rels_caret $bog_builderui_div sub / <= rels_caret \▾
+						<= Rels_list $bog_builderui_div sub <= rel_legend_rows /
+							<= Rel_row* $bog_builderui_div
+								attr *
+									^
+									raggu_web_front_explorer_legend_on <= rel_legend_active* false
+								event *
+									^
+									click? <=> rel_legend_click*? null
+								sub /
+									<= Rel_row_label* $bog_builderui_div sub / <= rel_legend_label* \
+									<= Rel_row_count* $bog_builderui_div sub / <= rel_legend_count* \
 			<= Mock_badge $bog_builderui_div
 				attr *
 					^
 					raggu_web_front_explorer_mock_badge_showed <= is_mock false
 				sub / <= mock_badge_text
-		<= Aside $bog_builderui_div sub /
-			<= Aside_title $bog_builderui_div sub / <= aside_title \
-			<= Entity_head $bog_builderui_div sub /
-				<= Entity_dot $bog_builderui_div
-				<= Entity_name $bog_builderui_div sub / <= entity_name \
-			<= Entity_type $bog_builderui_div sub / <= entity_type \
-			<= Entity_desc $bog_builderui_div sub / <= entity_desc \
-			<= Relations_title $bog_builderui_div sub / <= relations_title \
-			<= Relations_list $bog_builderui_div sub <= rel_rows /
-				<= Rel* $bog_builderui_div sub /
-					<= Rel_type* $bog_builderui_div sub / <= rel_type* \
-					<= Rel_target* $bog_builderui_div sub / <= rel_target* \
-			<= Sources_title $bog_builderui_div sub / <= sources_title_text
-			<= Sources $bog_builderui_div sub / <= sources_text
-			<= Ask_btn $bog_builderui_div
-				sub / <= ask_btn_text
-				event * click? <=> ask_click? null
+		<= Aside $bog_builderui_div
+			attr *
+				^
+				raggu_web_front_explorer_aside_collapsed <= aside_collapsed?
+			sub /
+				<= Aside_head $bog_builderui_div sub /
+					<= Aside_toggle $bog_builderui_div
+						event * click? <=> aside_toggle? null
+						sub / <= aside_caret \⟩
+					<= Aside_title $bog_builderui_div sub / <= aside_title \
+				<= Aside_body $bog_builderui_div sub /
+					<= Entity_head $bog_builderui_div sub /
+						<= Entity_dot $bog_builderui_div
+						<= Entity_name $bog_builderui_div sub / <= entity_name \
+					<= Entity_type $bog_builderui_div sub / <= entity_type \
+					<= Entity_desc $bog_builderui_div sub / <= entity_desc \
+					<= Relations_title $bog_builderui_div sub / <= relations_title \
+					<= Relations_list $bog_builderui_div sub <= rel_rows /
+						<= Rel* $bog_builderui_div sub /
+							<= Rel_type* $bog_builderui_div sub / <= rel_type* \
+							<= Rel_target* $bog_builderui_div sub / <= rel_target* \
+					<= Sources_title $bog_builderui_div sub / <= sources_title_text
+					<= Sources $bog_builderui_div sub / <= sources_text
+					<= Ask_btn $bog_builderui_div
+						sub / <= ask_btn_text
+						event * click? <=> ask_click? null

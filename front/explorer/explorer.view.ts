@@ -115,6 +115,67 @@ namespace $.$$ {
 			return null
 		}
 
+		// Легенда типов связей — симметрична легенде сущностей, но по рёбрам.
+		@$mol_mem
+		rel_entries(): Array< { type: string, count: number } > {
+			const counts: Record< string, number > = {}
+			for( const e of this.graph_edges() ) {
+				counts[ e.relation ] = ( counts[ e.relation ] ?? 0 ) + 1
+			}
+			return Object.entries( counts )
+				.map( ( [ type, count ] ) => ( { type, count } ) )
+				.sort( ( a, b ) => b.count - a.count )
+				.slice( 0, 12 )
+		}
+
+		rel_legend_rows() {
+			return this.rel_entries().map( ( _, i ) => this.Rel_row( i ) )
+		}
+
+		rel_legend_label( i: number ) {
+			return this.rel_entries()[ i ]?.type ?? ''
+		}
+		rel_legend_count( i: number ) {
+			return String( this.rel_entries()[ i ]?.count ?? '' )
+		}
+
+		// Тип отношения наведённого/выбранного ребра — подсвечиваем его строку
+		active_relation() {
+			return this.graph_view().active_edge()?.relation ?? ''
+		}
+		rel_legend_active( i: number ) {
+			const t = this.rel_entries()[ i ]?.type ?? ''
+			return this.rel_filter() === t || this.active_relation() === t
+		}
+
+		@$mol_action
+		rel_legend_click( i: number ) {
+			const t = this.rel_entries()[ i ]?.type ?? ''
+			this.rel_filter( this.rel_filter() === t ? '' : t )
+			return null
+		}
+
+		// Сворачивание легенд и правой панели — больше места графу
+		legend_caret() { return this.legend_collapsed() ? '▸' : '▾' }
+		rels_caret() { return this.rels_collapsed() ? '▸' : '▾' }
+		aside_caret() { return this.aside_collapsed() ? '⟨' : '⟩' }
+
+		@$mol_action
+		legend_toggle() {
+			this.legend_collapsed( !this.legend_collapsed() )
+			return null
+		}
+		@$mol_action
+		rels_toggle() {
+			this.rels_collapsed( !this.rels_collapsed() )
+			return null
+		}
+		@$mol_action
+		aside_toggle() {
+			this.aside_collapsed( !this.aside_collapsed() )
+			return null
+		}
+
 		@$mol_mem
 		graph_data(): { nodes: readonly GraphNode[], edges: readonly GraphEdge[] } {
 			return this.graph_remote()

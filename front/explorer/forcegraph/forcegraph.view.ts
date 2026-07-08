@@ -340,13 +340,13 @@ namespace $.$$ {
 			return $raggu_web_front_explorer_forcegraph_type_color( this.node_by_id()[ id ].type )
 		}
 
-		// Фильтры подсветки: поиск по label и/или тип из легенды. Непустой фильтр
-		// приглушает узлы и рёбра, которые не матчатся.
+		// Фильтры подсветки: поиск по label, тип узла и/или тип связи из легенд.
+		// Непустой фильтр приглушает узлы и рёбра, которые не матчатся.
 		search_lc() {
 			return this.search().trim().toLowerCase()
 		}
 		filter_active() {
-			return Boolean( this.search_lc() || this.filter_type() )
+			return Boolean( this.search_lc() || this.filter_type() || this.filter_relation() )
 		}
 		node_matches( id: string ) {
 			const n = this.node_by_id()[ id ]
@@ -354,19 +354,50 @@ namespace $.$$ {
 			if( t && n?.type !== t ) return false
 			const s = this.search_lc()
 			if( s && !( n?.label ?? '' ).toLowerCase().includes( s ) ) return false
+			// Фильтр по типу связи подсвечивает концы матчащихся рёбер
+			const r = this.filter_relation()
+			if( r && !this.node_has_relation( id, r ) ) return false
 			return true
 		}
+
+		@$mol_mem
+		relation_nodes(): Record< string, Set< string > > {
+			const m: Record< string, Set< string > > = {}
+			for( const e of this.edges() ) {
+				;( m[ e.relation ] ??= new Set() ).add( e.source )
+				m[ e.relation ].add( e.target )
+			}
+			return m
+		}
+		node_has_relation( id: string, rel: string ) {
+			return this.relation_nodes()[ rel ]?.has( id ) ?? false
+		}
+
+		// Наведённое/выбранное ребро — его концы ведут себя как hovered-узлы.
+		active_edge(): GraphEdge | null {
+			const id = this.hovered_edge_id() || this.selected_edge_id()
+			return id ? this.edge_by_id()[ id ] ?? null : null
+		}
+		edge_endpoint( id: string ) {
+			const e = this.active_edge()
+			return Boolean( e && ( e.source === id || e.target === id ) )
+		}
+
 		node_opacity( id: string ) {
+			// Активное ребро затемняет всё, кроме своих концов — как hover узла
+			if ( this.active_edge() ) return this.edge_endpoint( id ) ? '1' : '0.25'
 			return this.node_matches( id ) ? '1' : '0.12'
 		}
 		node_stroke( id: string ) {
 			if ( this.selected_id() === id ) return '#ffffff'
 			if ( this.hovered_id() === id ) return '#ffffff'
+			if ( this.edge_endpoint( id ) ) return '#ffffff'
 			return 'transparent'
 		}
 		node_stroke_width( id: string ) {
 			if ( this.selected_id() === id ) return '2.5'
 			if ( this.hovered_id() === id ) return '1.5'
+			if ( this.edge_endpoint( id ) ) return '1.5'
 			return '0'
 		}
 
@@ -410,10 +441,18 @@ namespace $.$$ {
 				|| this.selected_id() && ( e.source === this.selected_id() || e.target === this.selected_id() )
 			return String( incident ? base * 2 : base )
 		}
+		edge_matches( id: string ) {
+			const e = this.edge_by_id()[ id ]
+			const r = this.filter_relation()
+			if ( r && e.relation !== r ) return false
+			return this.node_matches( e.source ) && this.node_matches( e.target )
+		}
 		edge_opacity( id: string ) {
 			const e = this.edge_by_id()[ id ]
 			if ( this.edge_active( id ) ) return '0.95'
-			if ( this.filter_active() && !( this.node_matches( e.source ) && this.node_matches( e.target ) ) ) return '0.08'
+			// Активное ребро приглушает все остальные — как hover узла
+			if ( this.active_edge() ) return '0.12'
+			if ( this.filter_active() && !this.edge_matches( id ) ) return '0.08'
 			const hid = this.hovered_id() || this.selected_id()
 			if ( !hid ) return '0.55'
 			return ( e.source === hid || e.target === hid ) ? '0.95' : '0.18'
@@ -486,12 +525,15 @@ namespace $.$$ {
 
 		node_label_text( id: string ) {
 			if ( this.active_id() === id ) return '' // tooltip уже показывает label
+			// Концы активного ребра подписываем всегда — видно, что оно связывает
+			if ( this.edge_endpoint( id ) ) return this.node_by_id()[ id ]?.label ?? ''
 			if ( !this.node_matches( id ) ) return ''
 			if ( this.node_label_vis( id ) <= 0 ) return ''
 			return this.node_by_id()[ id ]?.label ?? ''
 		}
 
 		node_label_opacity( id: string ) {
+			if ( this.edge_endpoint( id ) ) return '1'
 			return String( this.node_label_vis( id ) * 0.85 )
 		}
 
@@ -511,7 +553,8 @@ namespace $.$$ {
 			const rel = e?.relation ?? ''
 			if ( !rel ) return ''
 			if ( this.edge_active( id ) ) return rel
-			if ( this.filter_active() && !( this.node_matches( e.source ) && this.node_matches( e.target ) ) ) return ''
+			if ( this.active_edge() ) return '' // не шумим подписями вокруг активного ребра
+			if ( this.filter_active() && !this.edge_matches( id ) ) return ''
 			const fs = parseFloat( this.edge_label_font_size() )
 			if ( fs * this.zoom() < 4 ) return '' // на экране будет нечитаемая пыль
 			const a = this.pos( e.source )

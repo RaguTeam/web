@@ -40,6 +40,51 @@ namespace $ {
 		color: $bog_builderui_tokens.shade,
 	} as const
 
+	// Общий каркас панелек-легенд поверх канвы. Сворачивание: атрибут
+	// raggu_web_front_explorer_panel_collapsed прячет список, остаётся шапка.
+	const legend_panel = {
+		background: { color: '#1c1b1ae6' },
+		border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
+		padding: {
+			top: '11px',
+			bottom: '11px',
+			left: '13px',
+			right: '13px',
+		},
+		flex: { direction: 'column', shrink: 1 },
+		minHeight: 0,
+	} as const
+
+	const legend_head = {
+		flex: { direction: 'row' },
+		align: { items: 'center' },
+		gap: '8px',
+		cursor: 'pointer',
+	} as const
+
+	const legend_title = {
+		font: {
+			family: 'ui-monospace, monospace',
+			weight: 700,
+			size: '10px',
+		},
+		color: $bog_builderui_tokens.line,
+		textTransform: 'uppercase',
+		letterSpacing: '0.6px',
+		flex: { grow: 1 },
+	} as const
+
+	const legend_caret = {
+		color: '#8a8a8a',
+		font: { size: '10px' },
+	} as const
+
+	const legend_list = {
+		flex: { direction: 'column' },
+		overflow: 'auto',
+		margin: { top: '8px' },
+	} as const
+
 	const relation_card = {
 		border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
 		padding: {
@@ -116,37 +161,29 @@ namespace $ {
 			width: '200px',
 		},
 
-		Legend: {
+		Legends: {
 			position: 'absolute',
 			top: '14px',
 			right: '14px',
-			background: { color: '#1c1b1ae6' },
-			border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
-			padding: {
-				top: '11px',
-				bottom: '11px',
-				left: '13px',
-				right: '13px',
-			},
 			width: '184px',
 			maxHeight: $mol_style_func.calc( '100% - 28px' ),
-			overflow: 'auto',
 			flex: { direction: 'column' },
+			gap: '8px',
 		},
-		Legend_title: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 700,
-				size: '10px',
+		Legend: {
+			...legend_panel,
+			'@': {
+				raggu_web_front_explorer_panel_collapsed: {
+					true: {
+						Legend_list: { display: 'none' },
+					},
+				},
 			},
-			color: $bog_builderui_tokens.line,
-			textTransform: 'uppercase',
-			letterSpacing: '0.6px',
-			margin: { bottom: '8px' },
 		},
-		Legend_list: {
-			flex: { direction: 'column' },
-		},
+		Legend_head: legend_head,
+		Legend_title: legend_title,
+		Legend_caret: legend_caret,
+		Legend_list: legend_list,
 		Legend_row: legend_row,
 		Legend_dot: dot_base,
 		Legend_label: {
@@ -157,6 +194,33 @@ namespace $ {
 			textOverflow: 'ellipsis',
 		},
 		Legend_count: {
+			...legend_label,
+			color: '#8a8a8a',
+		},
+
+		Rels: {
+			...legend_panel,
+			'@': {
+				raggu_web_front_explorer_panel_collapsed: {
+					true: {
+						Rels_list: { display: 'none' },
+					},
+				},
+			},
+		},
+		Rels_head: legend_head,
+		Rels_title: legend_title,
+		Rels_caret: legend_caret,
+		Rels_list: legend_list,
+		Rel_row: legend_row,
+		Rel_row_label: {
+			...legend_label,
+			flex: { grow: 1 },
+			overflow: 'hidden',
+			whiteSpace: 'nowrap',
+			textOverflow: 'ellipsis',
+		},
+		Rel_row_count: {
 			...legend_label,
 			color: '#8a8a8a',
 		},
@@ -201,6 +265,46 @@ namespace $ {
 				right: '18px',
 			},
 			overflow: 'auto',
+			flex: { direction: 'column' },
+			// Свёрнутая панель — узкая полоска с шевроном, граф забирает ширину
+			'@': {
+				raggu_web_front_explorer_aside_collapsed: {
+					true: {
+						minWidth: '34px',
+						maxWidth: '34px',
+						padding: {
+							top: '10px',
+							bottom: '10px',
+							left: '4px',
+							right: '4px',
+						},
+						Aside_title: { display: 'none' },
+						Aside_body: { display: 'none' },
+					},
+				},
+			},
+		},
+		Aside_head: {
+			flex: { direction: 'row' },
+			align: { items: 'center' },
+			gap: '8px',
+		},
+		Aside_toggle: {
+			cursor: 'pointer',
+			color: $bog_builderui_tokens.shade,
+			font: { size: '13px', weight: 600 },
+			padding: {
+				top: '2px',
+				bottom: '2px',
+				left: '8px',
+				right: '8px',
+			},
+			border: { radius: '5px' },
+			':hover': {
+				background: { color: $bog_builderui_tokens.field },
+			},
+		},
+		Aside_body: {
 			flex: { direction: 'column' },
 		},
 		Aside_title: {

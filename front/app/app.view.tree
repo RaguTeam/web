@@ -4,6 +4,7 @@ $raggu_web_front_app $bog_builderui_div
 	dataset_id? \
 	settings_open? false
 	help_open? false
+	sidebar_collapsed? false
 	body /
 	lights_mode \light
 	screen_gallery_title @ \Datasets
@@ -28,6 +29,9 @@ $raggu_web_front_app $bog_builderui_div
 		<= Theme_auto $bog_theme_auto
 	sub /
 		<= Sidebar $raggu_web_front_sidebar
+			attr *
+				^
+				raggu_web_front_sidebar_hidden <= sidebar_hidden false
 			dataset_id <= dataset_id
 			dataset_ids <= dataset_ids /
 			dataset_name* <= sidebar_dataset_name* \
@@ -43,6 +47,7 @@ $raggu_web_front_app $bog_builderui_div
 				preset? <=> preset?
 				open_settings? <=> open_settings? null
 				open_help? <=> open_help? null
+				toggle_sidebar? <=> toggle_sidebar? null
 			<= Body $mol_scroll sub <= body
 		<= Settings $raggu_web_front_settings
 			showed? <=> settings_open?
