@@ -691,7 +691,7 @@
               "query_plan"
             ],
             "title": "Engine",
-            "default": "local"
+            "default": "mix"
           },
           "top_k": {
             "type": "integer",
@@ -1162,7 +1162,7 @@
               "query_plan"
             ],
             "title": "Default Engine",
-            "default": "local"
+            "default": "mix"
           },
           "available_engines": {
             "items": {

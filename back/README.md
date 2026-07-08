@@ -42,11 +42,20 @@ export YANDEX_FOLDER_ID=...
 export YANDEX_API_KEY=...
 export YANDEX_LLM_MODEL=yandexgpt-5-pro
 export YANDEX_BASE_URL=https://ai.api.cloud.yandex.net/v1
+
+export LOCAL_EMBEDDER_URL=http://localhost:8001/v1
+export EMBEDDER_API_KEY=unused
+export EMBEDDER_MODEL_NAME=intfloat/multilingual-e5-large
 ```
 
 The LLM variables are optional. If they are missing, `/agent/messages` still
 returns graph retrieval results with a clear fallback message instead of calling
 an external model.
+
+Search uses RAGU `MixSearchEngine` over the selected prebuilt index when
+`EMBEDDER_MODEL_NAME` and an OpenAI-compatible embedding endpoint are configured.
+The endpoint can be provided through `LOCAL_EMBEDDER_URL` or `EMBEDDER_BASE_URL`;
+without it the API falls back to the lightweight local keyword retrieval.
 
 ## API
 

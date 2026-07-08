@@ -119,7 +119,7 @@ namespace $.$$ {
 					body: {
 						message: text,
 						history,
-						engine: 'local',
+						engine: 'mix',
 						top_k: 15,
 						rerank: true,
 						include_trace: false,
