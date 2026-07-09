@@ -52,7 +52,7 @@ class MockRepository:
         dataset = self._dataset_card(dataset_id, locale)
         return DatasetDetail(
             **dataset.model_dump(),
-            default_engine="local",
+            default_engine="mix",
             available_engines=list(ENGINES),
             created_at=CREATED_AT,
             updated_at=UPDATED_AT,

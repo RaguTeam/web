@@ -16,7 +16,7 @@ class ChatMessage(APIModel):
 class AgentRequest(APIModel):
     message: str = Field(min_length=1, examples=["Who wrote the Norwegian anthem?"])
     history: list[ChatMessage] = Field(default_factory=list)
-    engine: SearchEngine = "local"
+    engine: SearchEngine = "mix"
     top_k: int = Field(default=8, ge=1, le=50)
     rerank: bool = True
     include_trace: bool = True
