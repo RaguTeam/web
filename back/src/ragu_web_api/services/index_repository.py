@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import math
 import os
 import re
@@ -54,6 +55,7 @@ from ragu_web_api.schemas.graph import (
 
 REQUIRED_INDEX_FILES = ("knowledge_graph.gml", "kv_chunks.json")
 TOKEN_RE = re.compile(r"[A-Za-zА-Яа-яЁё0-9_]{3,}")
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -74,6 +76,18 @@ class RetrievalResult:
     edges: list[tuple[GraphEdge, float]]
     chunks: list[tuple[ProvenanceChunk, float]]
     communities: list[tuple[CommunitySummary, float]]
+
+
+@dataclass(frozen=True)
+class RaguEmbedderConfig:
+    api_key: str | None
+    base_url: str | None
+    model_name: str | None
+    provider: str
+
+    @property
+    def is_configured(self) -> bool:
+        return bool(self.model_name and (self.api_key or self.base_url))
 
 
 @dataclass
@@ -139,6 +153,90 @@ class OpenAICompatibleLLM:
         return response.choices[0].message.content or ""
 
 
+class RaguMixSearchAdapter:
+    def __init__(self, config: RaguEmbedderConfig) -> None:
+        self.config = config
+        self._engines: dict[str, Any] = {}
+
+    async def search(self, index: LoadedIndex, query: str, top_k: int) -> RetrievalResult | None:
+        if not self.config.is_configured:
+            return None
+        if not _is_ragu_vector_index(index.definition.path):
+            return None
+
+        engine = self._engines.get(index.definition.id)
+        if engine is None:
+            engine = self._build_engine(index.definition)
+            self._engines[index.definition.id] = engine
+
+        result = await engine.a_search(query, top_k=top_k)
+        return _retrieval_from_ragu_mix(index, result, top_k)
+
+    def _build_engine(self, definition: IndexDefinition) -> Any:
+        try:
+            from ragu import KnowledgeGraph, LocalSearchEngine, MixSearchEngine, NaiveSearchEngine, Settings
+            from ragu.graph.index import StorageArguments
+            from ragu.models.embedder import EmbedderOpenAI
+            from ragu.models.openai import CachedAsyncOpenAI
+        except Exception as exc:
+            raise RuntimeError(f"RAGU search package is unavailable: {exc}") from exc
+
+        embedding_dim = _ragu_embedding_dim(definition.path)
+        if embedding_dim is None:
+            raise RuntimeError(f"RAGU vector index at '{definition.path}' has no embedding_dim.")
+
+        Settings.storage_folder = str(definition.path)
+        Settings.language = _ragu_language(definition.language)
+
+        client = CachedAsyncOpenAI(
+            base_url=self.config.base_url,
+            api_key=self.config.api_key or "unused",
+            rate_max_simultaneous=4,
+            rate_max_per_minute=240,
+            retry_times_sec=None,
+            embed_timeout=30.0,
+        )
+        embedder = EmbedderOpenAI(
+            client=client,
+            model_name=self.config.model_name,
+            dim=embedding_dim,
+            batch_size=32,
+            max_concurrent_batches=2,
+        )
+
+        knowledge_graph = KnowledgeGraph(
+            llm=_RaguSearchOnlyLLM(),
+            embedder=embedder,
+            storage_settings=StorageArguments(),
+            language=Settings.language,
+        )
+        engines = [
+            LocalSearchEngine(
+                llm=_RaguSearchOnlyLLM(),
+                knowledge_graph=knowledge_graph,
+                embedder=embedder,
+                language=Settings.language,
+            ),
+            NaiveSearchEngine(
+                llm=_RaguSearchOnlyLLM(),
+                knowledge_graph=knowledge_graph,
+                embedder=embedder,
+                language=Settings.language,
+            ),
+        ]
+        return MixSearchEngine(
+            llm=_RaguSearchOnlyLLM(),
+            engines=engines,
+            allow_partial_failures=True,
+            language=Settings.language,
+        )
+
+
+class _RaguSearchOnlyLLM:
+    async def chat_completion(self, *_args: Any, **_kwargs: Any) -> str:
+        raise RuntimeError("RAGU LLM generation is disabled in the web API search adapter.")
+
+
 class IndexRepository:
     def __init__(
         self,
@@ -150,6 +248,7 @@ class IndexRepository:
         self._definitions = self._discover_indexes()
         self._loaded: dict[str, LoadedIndex] = {}
         self._llm = OpenAICompatibleLLM(llm_config or _llm_config_from_env(env))
+        self._ragu_search = RaguMixSearchAdapter(_ragu_embedder_config_from_env(env))
 
     def list_datasets(self, locale: Locale = "ru") -> list[DatasetCard]:
         return [self._dataset_card(item, locale) for item in self._definitions.values()]
@@ -159,7 +258,7 @@ class IndexRepository:
         dataset = self._dataset_card(definition, locale)
         return DatasetDetail(
             **dataset.model_dump(),
-            default_engine="naive",
+            default_engine="mix",
             available_engines=["naive", "local", "global", "mix", "query_plan"],
             created_at=definition.created_at,
             updated_at=definition.updated_at,
@@ -301,7 +400,7 @@ class IndexRepository:
         index = self._load_index(dataset_id)
 
         retrieval_start = time.perf_counter()
-        retrieval = self._retrieve(index, request.message, request.top_k)
+        retrieval = await self._retrieve_with_ragu(index, request)
         retrieval_ms = int((time.perf_counter() - retrieval_start) * 1000)
 
         generation_start = time.perf_counter()
@@ -605,6 +704,20 @@ class IndexRepository:
             other_node_label=other_node.label,
         )
 
+    async def _retrieve_with_ragu(self, index: LoadedIndex, request: AgentRequest) -> RetrievalResult:
+        try:
+            retrieval = await self._ragu_search.search(index, request.message, request.top_k)
+        except Exception as exc:
+            LOGGER.warning(
+                "RAGU MixSearchEngine failed for dataset '%s'; falling back to local retrieval: %s",
+                index.definition.id,
+                exc,
+            )
+            retrieval = None
+        if retrieval is None or not (retrieval.nodes or retrieval.chunks):
+            return self._retrieve(index, request.message, request.top_k)
+        return retrieval
+
     def _retrieve(self, index: LoadedIndex, query: str, top_k: int) -> RetrievalResult:
         terms = _query_terms(query)
         chunk_scores = _rank_items(
@@ -856,6 +969,161 @@ def _llm_config_from_env(env: dict[str, str]) -> LLMConfig:
     )
 
 
+def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
+    base_url = (
+        env.get("EMBEDDER_BASE_URL")
+        or env.get("LOCAL_EMBEDDER_URL")
+        or env.get("OPENAI_BASE_URL")
+        or env.get("LLM_BASE_URL")
+    )
+    api_key = (
+        env.get("EMBEDDER_API_KEY")
+        or env.get("OPENAI_API_KEY")
+        or env.get("LLM_API_KEY")
+    )
+    model_name = (
+        env.get("EMBEDDER_MODEL_NAME")
+        or env.get("OPENAI_EMBEDDING_MODEL")
+        or env.get("OPENAI_EMBEDDER_MODEL")
+        or env.get("LLM_EMBEDDER_MODEL")
+    )
+    return RaguEmbedderConfig(
+        api_key=api_key,
+        base_url=base_url,
+        model_name=model_name,
+        provider="OpenAI-compatible embeddings" if model_name else "not configured",
+    )
+
+
+def _is_ragu_vector_index(path: Path) -> bool:
+    return all(
+        (path / filename).exists()
+        for filename in ("knowledge_graph.gml", "kv_chunks.json", "vdb_entity.json", "vdb_chunk.json")
+    )
+
+
+def _ragu_embedding_dim(path: Path) -> int | None:
+    for filename in ("vdb_entity.json", "vdb_chunk.json"):
+        try:
+            value = _read_json_object(path / filename).get("embedding_dim")
+        except FileNotFoundError:
+            continue
+        dim = _safe_int(value, 0)
+        if dim > 0:
+            return dim
+    return None
+
+
+def _ragu_language(language: str) -> str:
+    return "russian" if language == "ru" else "english"
+
+
+def _retrieval_from_ragu_mix(index: LoadedIndex, ragu_retrieve: Any, top_k: int) -> RetrievalResult:
+    edge_by_id = {edge.id: edge for edge in index.edges}
+    nodes_by_id: dict[str, tuple[GraphNode, float]] = {}
+    edges_by_id: dict[str, tuple[GraphEdge, float]] = {}
+    chunks_by_id: dict[str, tuple[ProvenanceChunk, float]] = {}
+    communities_by_id: dict[str, tuple[CommunitySummary, float]] = {}
+
+    for child_retrieve in _ragu_child_retrieves(ragu_retrieve):
+        child_result = getattr(child_retrieve, "result", None)
+        if child_result is None:
+            continue
+
+        entity_scores = _ragu_metric_scores(child_retrieve, "entities", "relevance_score")
+        for entity in getattr(child_result, "entities", []) or []:
+            node_id = str(getattr(entity, "id", ""))
+            node = index.node_by_id.get(node_id)
+            if node is not None:
+                _put_scored(nodes_by_id, node.id, node, entity_scores.get(node_id, 1.0))
+
+        for relation in getattr(child_result, "relations", []) or []:
+            edge_id = str(getattr(relation, "id", ""))
+            edge = edge_by_id.get(edge_id)
+            if edge is not None:
+                _put_scored(edges_by_id, edge.id, edge, _safe_float(getattr(relation, "relation_strength", 1.0), 1.0))
+
+        chunk_scores = _ragu_metric_scores(child_retrieve, "chunks", "score")
+        result_chunks = getattr(child_result, "chunks", []) or []
+        result_scores = list(getattr(child_result, "scores", []) or [])
+        for idx, chunk in enumerate(result_chunks):
+            chunk_id = str(getattr(chunk, "id", ""))
+            provenance_chunk = index.chunk_by_id.get(chunk_id)
+            if provenance_chunk is None:
+                continue
+            score = chunk_scores.get(chunk_id)
+            if score is None and idx < len(result_scores):
+                score = _safe_float(result_scores[idx], 1.0)
+            _put_scored(chunks_by_id, provenance_chunk.id, provenance_chunk, score or 1.0)
+
+        for summary in getattr(child_result, "summaries", []) or []:
+            community_id = str(getattr(summary, "id", ""))
+            community = index.community_by_id.get(community_id)
+            if community is not None:
+                _put_scored(communities_by_id, community.id, community, 1.0)
+
+    for chunk, score in list(chunks_by_id.values())[:top_k]:
+        for node in index.nodes_by_chunk.get(chunk.id, [])[:top_k]:
+            _put_scored(nodes_by_id, node.id, node, score * 0.9)
+        for edge in index.edges_by_chunk.get(chunk.id, [])[:top_k]:
+            _put_scored(edges_by_id, edge.id, edge, score * 0.9)
+
+    if not communities_by_id:
+        for node, score in nodes_by_id.values():
+            if node.community_id and node.community_id in index.community_by_id:
+                community = index.community_by_id[node.community_id]
+                _put_scored(communities_by_id, community.id, community, score)
+
+    return RetrievalResult(
+        nodes=sorted(
+            nodes_by_id.values(),
+            key=lambda item: (-item[1], -item[0].degree, item[0].label.casefold()),
+        )[:top_k],
+        edges=sorted(
+            edges_by_id.values(),
+            key=lambda item: (-item[1], -item[0].strength, item[0].id),
+        )[:top_k],
+        chunks=sorted(
+            chunks_by_id.values(),
+            key=lambda item: (-item[1], item[0].id),
+        )[:top_k],
+        communities=sorted(
+            communities_by_id.values(),
+            key=lambda item: (-item[1], -item[0].size, item[0].id),
+        )[:top_k],
+    )
+
+
+def _ragu_child_retrieves(ragu_retrieve: Any) -> list[Any]:
+    result = getattr(ragu_retrieve, "result", None)
+    children = getattr(result, "results", None)
+    if isinstance(children, list):
+        return children
+    return [ragu_retrieve]
+
+
+def _ragu_metric_scores(retrieve: Any, key: str, score_key: str) -> dict[str, float]:
+    metrics = getattr(retrieve, "metrics", {}) or {}
+    items = metrics.get(key, []) if isinstance(metrics, dict) else []
+    scores: dict[str, float] = {}
+    if not isinstance(items, list):
+        return scores
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        item_id = item.get("id")
+        if item_id is None:
+            continue
+        scores[str(item_id)] = _safe_float(item.get(score_key), 1.0)
+    return scores
+
+
+def _put_scored(target: dict[str, tuple[Any, float]], key: str, item: Any, score: float) -> None:
+    current = target.get(key)
+    if current is None or score > current[1]:
+        target[key] = (item, score)
+
+
 def _index_candidates(root: Path) -> list[Path]:
     if _is_index_dir(root):
         return [root]
@@ -1037,6 +1305,13 @@ def _description_for_definition(definition: IndexDefinition, locale: Locale) -> 
 def _safe_int(value: Any, default: int = 0) -> int:
     try:
         return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _safe_float(value: Any, default: float = 0.0) -> float:
+    try:
+        return float(value)
     except (TypeError, ValueError):
         return default
 

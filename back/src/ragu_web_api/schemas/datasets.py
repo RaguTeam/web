@@ -43,7 +43,7 @@ class DatasetCard(APIModel):
 
 
 class DatasetDetail(DatasetCard):
-    default_engine: SearchEngine = "local"
+    default_engine: SearchEngine = "mix"
     available_engines: list[SearchEngine] = Field(
         default_factory=lambda: ["local", "global", "naive", "mix", "query_plan"]
     )

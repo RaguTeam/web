@@ -9,8 +9,10 @@ description = "FastAPI gateway contract for the RAGU web demo"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi>=0.115.0",
+    "graph-ragu>=0.0.3",
     "openai>=2.32.0",
     "pydantic>=2.8.0",
+    "ragu>=0.1.56",
     "uvicorn[standard]>=0.30.0",
 ]
 
