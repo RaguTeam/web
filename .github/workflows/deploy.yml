@@ -19,25 +19,10 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout MAM
-              uses: actions/checkout@v4
+            - uses: hyoo-ru/mam_build@master2
               with:
-                  repository: hyoo-ru/mam
-                  ref: master
-
-            - name: Checkout package
-              uses: actions/checkout@v4
-              with:
-                  path: raggu/web
-
-            - name: Install MAM dependencies
-              run: |
-                  npm install --omit=optional
-                  # MAM calls convertCompilerOptionsFromJson; keep TypeScript on a version that exposes it.
-                  npm install --save-exact --omit=optional typescript@6.0.3
-
-            - name: Build front app
-              run: npm start raggu/web/front/app
+                  package: "raggu/web"
+                  modules: 'front/app'
 
             - name: Deploy main
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
@@ -72,3 +57,4 @@ jobs:
                     git commit -m "Clean up preview for deleted branch: $BRANCH_NAME"
                     git push
                   fi
+
