@@ -58,6 +58,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
+            "https://raguteam.github.io",
             "https://b-on-g.github.io",
             "http://localhost:9080",
             "http://127.0.0.1:9080",
