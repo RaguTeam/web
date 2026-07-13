@@ -8439,6 +8439,8 @@ declare namespace $ {
         k_scale?: number;
         /** Затухание (alpha-cooling как в d3-force): множитель сил 1 → 0. Гасит осцилляции вокруг равновесия — без него плотный граф дребезжит, пока не кончится бюджет кадров. */
         heat?: number;
+        /** Радиусы узлов (svg-юниты) для расталкивания перекрытий — без них кружки наезжают друг на друга. */
+        radii?: Record<string, number>;
     };
     /**
      * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
@@ -8461,8 +8463,10 @@ declare namespace $ {
             vx: number;
             vy: number;
         }>;
+        /** Максимальный сдвиг узла коллизиями за этот тик — 0 когда перекрытий нет. */
+        collide_peak: number;
     };
-    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes: $raggu_web_front_explorer_forcegraph_node[]): Record<string, {
+    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes: $raggu_web_front_explorer_forcegraph_node[], radii?: Record<string, number>): Record<string, {
         x: number;
         y: number;
     }>;
@@ -8872,6 +8876,7 @@ declare namespace $.$$ {
         sim_frames_left: number;
         sim_ticks: number;
         peak_speed: number;
+        collide_peak: number;
         frame_flip: boolean;
         readonly SIM_INITIAL_FRAMES = 260;
         readonly SIM_DRAG_FRAMES = 60;
@@ -8896,6 +8901,7 @@ declare namespace $.$$ {
         node_y(id: string): string;
         node_radius_num(id: string): number;
         node_radius(id: string): string;
+        node_radii(): Record<string, number>;
         node_color(id: string): string;
         search_lc(): string;
         filter_active(): boolean;

@@ -16809,6 +16809,83 @@ var $;
     const FORCE_K = 60;
     const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
     const THETA2 = THETA * THETA;
+    // Один жёсткий проход разрешения коллизий: каждую пересекающуюся пару
+    // раздвигаем до касания (по половине перекрытия каждому). Пары ищем через
+    // spatial grid с ячейкой в максимальный диаметр — O(N × соседи), не O(N²).
+    // Мутирует positions на месте; возвращает максимальный сдвиг за проход —
+    // 0 означает «перекрытий не осталось».
+    function $raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, pinned_id) {
+        const pad = 1.5;
+        let max_r = 0;
+        for (const n of nodes) {
+            const r = radii[n.id] ?? 0;
+            if (r > max_r)
+                max_r = r;
+        }
+        const cell = Math.max(1, max_r * 2 + pad);
+        const grid = new Map();
+        for (const n of nodes) {
+            const p = positions[n.id];
+            const key = `${Math.floor(p.x / cell)}:${Math.floor(p.y / cell)}`;
+            const list = grid.get(key);
+            if (list)
+                list.push(n.id);
+            else
+                grid.set(key, [n.id]);
+        }
+        let peak = 0;
+        for (const n of nodes) {
+            const p = positions[n.id];
+            const r1 = radii[n.id] ?? 0;
+            const cx = Math.floor(p.x / cell);
+            const cy = Math.floor(p.y / cell);
+            for (let gx = cx - 1; gx <= cx + 1; gx++)
+                for (let gy = cy - 1; gy <= cy + 1; gy++) {
+                    const list = grid.get(`${gx}:${gy}`);
+                    if (!list)
+                        continue;
+                    for (const other of list) {
+                        if (other <= n.id)
+                            continue; // каждую пару считаем один раз
+                        const q = positions[other];
+                        const min_d = r1 + (radii[other] ?? 0) + pad;
+                        let dx = q.x - p.x;
+                        let dy = q.y - p.y;
+                        const d2 = dx * dx + dy * dy;
+                        if (d2 >= min_d * min_d)
+                            continue;
+                        let d = Math.sqrt(d2);
+                        if (d < 0.01) {
+                            dx = min_d;
+                            dy = 0;
+                            d = min_d;
+                        } // совпали — разводим по x
+                        const push = (min_d - d) / d * 0.5;
+                        const fx = dx * push;
+                        const fy = dy * push;
+                        const move = Math.sqrt(fx * fx + fy * fy);
+                        if (move > peak)
+                            peak = move;
+                        // Перетаскиваемый узел не двигаем — вся поправка соседу
+                        if (n.id === pinned_id) {
+                            q.x += fx * 2;
+                            q.y += fy * 2;
+                        }
+                        else if (other === pinned_id) {
+                            p.x -= fx * 2;
+                            p.y -= fy * 2;
+                        }
+                        else {
+                            p.x -= fx;
+                            p.y -= fy;
+                            q.x += fx;
+                            q.y += fy;
+                        }
+                    }
+                }
+        }
+        return peak;
+    }
     function make_cell(x0, y0, size) {
         return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
     }
@@ -16957,7 +17034,19 @@ var $;
             next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
             next_vel[n.id] = { vx, vy };
         }
-        return { positions: next_pos, velocities: next_vel };
+        // Коллизии: жёстко продавливаем непересечение. Один проход раздвигает
+        // пары до касания, цепочки (раздвинули пару — наехали на третьего)
+        // дожимаются повторными проходами. Пружины не успевают слепить узлы
+        // обратно — на экран каждый тик уходит уже разрешённое состояние.
+        let collide_peak = 0;
+        if (params.radii) {
+            collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id);
+            for (let i = 0; i < 2; i++) {
+                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id) < 0.05)
+                    break;
+            }
+        }
+        return { positions: next_pos, velocities: next_vel, collide_peak };
     }
     $.$raggu_web_front_explorer_forcegraph_tick_layout = $raggu_web_front_explorer_forcegraph_tick_layout;
     // Initial positions from mock coords — no synchronous FR pre-compute.
@@ -16966,7 +17055,7 @@ var $;
     // Бэковые раскладки приходят в произвольном масштабе (у medical — тысячи
     // юнитов), а камера и гравитация живут в мире 600×600 вокруг нуля —
     // нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
-    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes) {
+    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes, radii) {
         let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
         for (const n of nodes) {
             if (n.x < min_x)
@@ -16985,6 +17074,13 @@ var $;
         const positions = {};
         for (const n of nodes)
             positions[n.id] = { x: (n.x - cx) * scale, y: (n.y - cy) * scale };
+        // Продавливаем коллизии ещё до первого кадра — граф ни на миг
+        // не рисуется слипшимся.
+        if (radii)
+            for (let i = 0; i < 40; i++) {
+                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, '') < 0.05)
+                    break;
+            }
         return positions;
     }
     $.$raggu_web_front_explorer_forcegraph_initial_positions = $raggu_web_front_explorer_forcegraph_initial_positions;
@@ -17152,7 +17248,7 @@ var $;
             // Lazily-computed initial FR layout — memoized so first render already shows
             // nodes settled into the circular bound, not the raw square mock coords.
             initial_positions() {
-                return $raggu_web_front_explorer_forcegraph_initial_positions(this.nodes());
+                return $raggu_web_front_explorer_forcegraph_initial_positions(this.nodes(), this.node_radii());
             }
             // Seed positions on first read, or re-seed when the node set changes
             // (e.g. dataset switched, new fetch result arrived) — old cell may still
@@ -17192,6 +17288,8 @@ var $;
                     k_scale: this.size_scale(),
                     // Затухание: силы гаснут со временем симуляции, дребезг умирает
                     heat: this.sim_alpha,
+                    // Радиусы для расталкивания — кружки не наезжают друг на друга
+                    radii: this.node_radii(),
                 };
             }
             // One sim tick.
@@ -17208,6 +17306,7 @@ var $;
                         peak = speed;
                 }
                 this.peak_speed = peak;
+                this.collide_peak = next.collide_peak;
                 this.positions(next.positions);
                 // Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
                 const key = this.graph_key();
@@ -17222,6 +17321,7 @@ var $;
             sim_frames_left = 0;
             sim_ticks = 0;
             peak_speed = Infinity;
+            collide_peak = 0;
             frame_flip = false;
             SIM_INITIAL_FRAMES = 260;
             SIM_DRAG_FRAMES = 60;
@@ -17249,6 +17349,7 @@ var $;
                 this.sim_ticks = 0;
                 this.sim_alpha = heat;
                 this.peak_speed = Infinity;
+                this.collide_peak = Infinity;
                 const loop = () => {
                     if (!this.sim_running)
                         return;
@@ -17260,21 +17361,31 @@ var $;
                         requestAnimationFrame(loop);
                         return;
                     }
+                    // Пока данные с бэка грузятся, tick кидает wire-promise. Такие
+                    // кадры не считаем ни тиками, ни затуханием — иначе симуляция
+                    // «остывает» и глохнет до прихода данных, оставив наезды узлов.
+                    let ok = true;
                     try {
                         this.tick();
                     }
-                    catch { }
-                    this.sim_ticks++;
-                    this.sim_alpha = Math.max(0, this.sim_alpha * this.ALPHA_DECAY);
+                    catch {
+                        ok = false;
+                    }
+                    if (ok) {
+                        this.sim_ticks++;
+                        this.sim_alpha = Math.max(0, this.sim_alpha * this.ALPHA_DECAY);
+                    }
                     if (this.drag_id()) {
                         this.sim_frames_left = Math.max(this.sim_frames_left, this.drag_frames());
                         this.sim_alpha = Math.max(this.sim_alpha, this.ALPHA_DRAG);
                     }
                     this.sim_frames_left--;
                     // Граф осел (всё ниже порога заморозки) либо остыл (alpha на нуле) —
-                    // дожигать бюджет кадров незачем
-                    const settled = this.sim_ticks > 15
-                        && (this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN);
+                    // дожигать бюджет кадров незачем. Но пока коллизии заметно
+                    // раздвигают узлы, не глохнем — иначе останутся перекрытия.
+                    const settled = ok && this.sim_ticks > 15
+                        && (this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN)
+                        && this.collide_peak < 0.4;
                     if ((this.sim_frames_left <= 0 || settled) && !this.drag_id()) {
                         this.sim_running = false;
                         return;
@@ -17364,6 +17475,13 @@ var $;
             }
             node_radius(id) {
                 return String(this.node_radius_num(id));
+            }
+            // Карта радиусов для коллизий в симуляции — в svg-юнитах, как позиции
+            node_radii() {
+                const m = {};
+                for (const n of this.nodes())
+                    m[n.id] = this.node_radius_num(n.id);
+                return m;
             }
             node_color(id) {
                 return $raggu_web_front_explorer_forcegraph_type_color(this.node_by_id()[id].type);
@@ -17781,6 +17899,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "node_radii", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "relation_nodes", null);
