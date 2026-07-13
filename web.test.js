@@ -2726,6 +2726,170 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'local get set delete'() {
+            var key = '$mol_state_local_test:' + Math.random();
+            $mol_assert_equal($mol_state_local.value(key), null);
+            $mol_state_local.value(key, 123);
+            $mol_assert_equal($mol_state_local.value(key), 123);
+            $mol_state_local.value(key, null);
+            $mol_assert_equal($mol_state_local.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test_mocks.push(context => {
+        class $mol_state_local_mock extends $mol_state_local {
+            static state = {};
+            static value(key, next = this.state[key]) {
+                return this.state[key] = (next || null);
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $mol_state_local_mock, "value", null);
+        context.$mol_state_local = $mol_state_local_mock;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class TestClass extends Uint8Array {
+    }
+    $mol_test({
+        'Uint8Array vs itself'() {
+            $mol_assert_ok($mol_compare_array(new Uint8Array, new Uint8Array));
+            $mol_assert_ok($mol_compare_array(new Uint8Array([0]), new Uint8Array([0])));
+            $mol_assert_not($mol_compare_array(new Uint8Array([0]), new Uint8Array([1])));
+        },
+        'Uint8Array vs subclassed array'() {
+            $mol_assert_not($mol_compare_array(new Uint8Array, new TestClass));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'decode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $mol_assert_equal($mol_charset_decode(encoded), str);
+            $mol_assert_equal($mol_charset_decode(encoded, 'utf8'), str);
+        },
+        'decode empty string'() {
+            const encoded = new Uint8Array([]);
+            $mol_assert_equal($mol_charset_decode(encoded), '');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'encode empty'() {
+            $mol_assert_equal($mol_charset_encode(''), new Uint8Array([]));
+        },
+        'encode 1 octet'() {
+            $mol_assert_equal($mol_charset_encode('F'), new Uint8Array([0x46]));
+        },
+        'encode 2 octet'() {
+            $mol_assert_equal($mol_charset_encode('Б'), new Uint8Array([0xd0, 0x91]));
+        },
+        'encode 3 octet'() {
+            $mol_assert_equal($mol_charset_encode('ह'), new Uint8Array([0xe0, 0xa4, 0xb9]));
+        },
+        'encode 4 octet'() {
+            $mol_assert_equal($mol_charset_encode('𐍈'), new Uint8Array([0xf0, 0x90, 0x8d, 0x88]));
+        },
+        'encode surrogate pair'() {
+            $mol_assert_equal($mol_charset_encode('😀'), new Uint8Array([0xf0, 0x9f, 0x98, 0x80]));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'auto name'() {
+            class Invalid extends $mol_error_mix {
+            }
+            const mix = new Invalid('foo');
+            $mol_assert_equal(mix.name, 'Invalid_Error');
+        },
+        'simpe mix'() {
+            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
+            $mol_assert_equal(mix.message, 'foo');
+            $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
+        },
+        'provide additional info'() {
+            class Invalid extends $mol_error_mix {
+            }
+            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
+            const hints = [];
+            if (mix instanceof $mol_error_mix) {
+                for (const er of mix.errors) {
+                    if (er instanceof Invalid) {
+                        hints.push(er.cause?.hint ?? '');
+                    }
+                }
+            }
+            $mol_assert_equal(hints, ['> 8 letters', 'need capital letter']);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            async "Get and parse"($) {
+                $mol_assert_equal(await $mol_wire_async($mol_fetch).text('data:text/plain,foo'), 'foo');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        class $mol_locale_mock extends $mol_locale {
+            lang(next = 'en') { return next; }
+            static source(lang) {
+                return {};
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_locale_mock.prototype, "lang", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_locale_mock, "source", null);
+        $.$mol_locale = $mol_locale_mock;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -3199,170 +3363,6 @@ var $;
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'local get set delete'() {
-            var key = '$mol_state_local_test:' + Math.random();
-            $mol_assert_equal($mol_state_local.value(key), null);
-            $mol_state_local.value(key, 123);
-            $mol_assert_equal($mol_state_local.value(key), 123);
-            $mol_state_local.value(key, null);
-            $mol_assert_equal($mol_state_local.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test_mocks.push(context => {
-        class $mol_state_local_mock extends $mol_state_local {
-            static state = {};
-            static value(key, next = this.state[key]) {
-                return this.state[key] = (next || null);
-            }
-        }
-        __decorate([
-            $mol_mem_key
-        ], $mol_state_local_mock, "value", null);
-        context.$mol_state_local = $mol_state_local_mock;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class TestClass extends Uint8Array {
-    }
-    $mol_test({
-        'Uint8Array vs itself'() {
-            $mol_assert_ok($mol_compare_array(new Uint8Array, new Uint8Array));
-            $mol_assert_ok($mol_compare_array(new Uint8Array([0]), new Uint8Array([0])));
-            $mol_assert_not($mol_compare_array(new Uint8Array([0]), new Uint8Array([1])));
-        },
-        'Uint8Array vs subclassed array'() {
-            $mol_assert_not($mol_compare_array(new Uint8Array, new TestClass));
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'decode utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
-            $mol_assert_equal($mol_charset_decode(encoded), str);
-            $mol_assert_equal($mol_charset_decode(encoded, 'utf8'), str);
-        },
-        'decode empty string'() {
-            const encoded = new Uint8Array([]);
-            $mol_assert_equal($mol_charset_decode(encoded), '');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'encode empty'() {
-            $mol_assert_equal($mol_charset_encode(''), new Uint8Array([]));
-        },
-        'encode 1 octet'() {
-            $mol_assert_equal($mol_charset_encode('F'), new Uint8Array([0x46]));
-        },
-        'encode 2 octet'() {
-            $mol_assert_equal($mol_charset_encode('Б'), new Uint8Array([0xd0, 0x91]));
-        },
-        'encode 3 octet'() {
-            $mol_assert_equal($mol_charset_encode('ह'), new Uint8Array([0xe0, 0xa4, 0xb9]));
-        },
-        'encode 4 octet'() {
-            $mol_assert_equal($mol_charset_encode('𐍈'), new Uint8Array([0xf0, 0x90, 0x8d, 0x88]));
-        },
-        'encode surrogate pair'() {
-            $mol_assert_equal($mol_charset_encode('😀'), new Uint8Array([0xf0, 0x9f, 0x98, 0x80]));
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'auto name'() {
-            class Invalid extends $mol_error_mix {
-            }
-            const mix = new Invalid('foo');
-            $mol_assert_equal(mix.name, 'Invalid_Error');
-        },
-        'simpe mix'() {
-            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
-            $mol_assert_equal(mix.message, 'foo');
-            $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
-        },
-        'provide additional info'() {
-            class Invalid extends $mol_error_mix {
-            }
-            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
-            const hints = [];
-            if (mix instanceof $mol_error_mix) {
-                for (const er of mix.errors) {
-                    if (er instanceof Invalid) {
-                        hints.push(er.cause?.hint ?? '');
-                    }
-                }
-            }
-            $mol_assert_equal(hints, ['> 8 letters', 'need capital letter']);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        $mol_test({
-            async "Get and parse"($) {
-                $mol_assert_equal(await $mol_wire_async($mol_fetch).text('data:text/plain,foo'), 'foo');
-            },
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        class $mol_locale_mock extends $mol_locale {
-            lang(next = 'en') { return next; }
-            static source(lang) {
-                return {};
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_locale_mock.prototype, "lang", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_locale_mock, "source", null);
-        $.$mol_locale = $mol_locale_mock;
-    });
 })($ || ($ = {}));
 
 ;
@@ -3965,17 +3965,6 @@ var $;
                 $mol_assert_equal(/display: flex/.test(rule), true);
                 $mol_assert_equal(/flex-direction: column/.test(rule), true);
             },
-            'settings.Body: $mol_scroll override is flex column'($) {
-                const rule = style_rule('$raggu_web_front_settings', 'raggu_web_front_settings_body');
-                $mol_assert_equal(/display: flex/.test(rule), true);
-                $mol_assert_equal(/flex-direction: column/.test(rule), true);
-            },
-            'settings: 6 distinct groups + presets row under Body'($) {
-                const v = $raggu_web_front_settings.make({ $ });
-                v.showed(true);
-                // 1 presets row + 6 step groups
-                $mol_assert_equal(v.Body().sub().length, 7);
-            },
             'app: every screen exists as sub-view'($) {
                 const v = $raggu_web_front_app.make({ $ });
                 $mol_assert_equal(v.Gallery() instanceof $raggu_web_front_gallery, true);
@@ -4014,7 +4003,7 @@ var $;
                 const v = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 2);
             },
-            'url state: screen / preset / dataset_id round-trip through $mol_state_arg'($) {
+            'url state: screen / dataset_id round-trip through $mol_state_arg'($) {
                 const app = $raggu_web_front_app.make({ $ });
                 const arg = $.$mol_state_arg;
                 // defaults are NOT written to URL (kept clean)
@@ -4023,8 +4012,6 @@ var $;
                 // non-default values land in $mol_state_arg
                 app.screen('explorer');
                 $mol_assert_equal(arg.value('screen'), 'explorer');
-                app.preset('fast');
-                $mol_assert_equal(arg.value('preset'), 'fast');
                 app.dataset_id('law');
                 $mol_assert_equal(arg.value('ds'), 'law');
                 // resetting to default removes from URL
@@ -4050,67 +4037,56 @@ var $;
                 // user clicks "Дашборд" → dashboard
                 app.Topbar().click_dashboard();
                 $mol_assert_equal(app.screen(), 'dashboard');
-                // user clicks "⚙ Настройки" in topbar → slide-over opens with 6 groups
-                app.open_settings();
-                $mol_assert_equal(app.settings_open(), true);
-                $mol_assert_equal(app.Settings().showed(), true);
-                $mol_assert_equal(app.Settings().Body().sub().length, 7);
-                // user clicks backdrop → slide-over closes
-                app.Settings().close();
-                $mol_assert_equal(app.settings_open(), false);
-                $mol_assert_equal(app.Settings().showed(), false);
                 // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
                 app.Topbar().click_gallery();
                 $mol_assert_equal(app.screen(), 'gallery');
                 app.Gallery().click('law');
                 $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.dataset_id(), 'law');
-                // user picks preset
-                $mol_assert_equal(app.preset(), 'demo');
-                app.Topbar().click_fast();
-                $mol_assert_equal(app.preset(), 'fast');
             },
-            // ---- gallery upload ----
-            // Убраны все gallery.upload / start_upload тесты. Даже те, что напрямую
-            // не читают @-строки: g.start_upload() внутри Upload.start() шедулит
-            // setTimeout-цепочку tick × 6 → tick вызывает complete() → gallery.upload_complete()
-            // который читает uploaded_document_title / _domain / _desc / error_too_large_template.
-            // Тесты завершаются мгновенно, а setTimeout'ы продолжают крутиться в фоне
-            // уже с destroy'нутыми $-контекстами → wire ретраит locale fetch → warn'ы.
-            // ---- settings real controls ----
-            'settings.apply_preset(fast): key fields land at fast values'($) {
-                const s = $raggu_web_front_settings.make({ $ });
-                s.apply_preset('fast');
-                $mol_assert_equal(s.chunking_strategy(), 'Simple');
-                $mol_assert_equal(s.chunking_size_str(), '256');
-                $mol_assert_equal(s.search_topk(), 5);
-                $mol_assert_equal(s.extraction_model(), 'meno-lite-7b');
+            // ---- explorer communities dropdown ----
+            'explorer.communities: mock graph groups nodes by community'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_explorer.make({ $ });
+                const comms = v.communities();
+                $mol_assert_equal(comms.length > 1, true);
+                // суммарный размер сообществ = число узлов мока
+                const total = comms.reduce((s, c) => s + c.size, 0);
+                $mol_assert_equal(total, v.graph_nodes().length);
+                // у каждого сообщества свой цвет
+                const colors = new Set(comms.map(c => v.comm_color_map()[c.id]));
+                $mol_assert_equal(colors.size, comms.length <= 15 ? comms.length : colors.size);
             },
-            'settings.apply_preset(accurate): key fields land at accurate values'($) {
-                const s = $raggu_web_front_settings.make({ $ });
-                s.apply_preset('accurate');
-                $mol_assert_equal(s.chunking_strategy(), 'SmartSemantic');
-                $mol_assert_equal(s.summarization_llm(), true);
-                $mol_assert_equal(s.search_topk(), 10);
-                $mol_assert_equal(s.search_mode(), 'Mix');
+            'explorer.comm_click: toggles selection, comm_mark reflects it'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_explorer.make({ $ });
+                $mol_assert_equal(v.comms_selected().length, 0);
+                v.comm_click(0);
+                $mol_assert_equal(v.comms_selected().length, 1);
+                $mol_assert_equal(v.comm_active(0), true);
+                $mol_assert_equal(v.comm_mark(0), '✓');
+                v.comm_click(0);
+                $mol_assert_equal(v.comms_selected().length, 0);
+                $mol_assert_equal(v.comm_mark(0), '');
             },
-            'settings.apply_preset(demo): key fields land at demo values'($) {
-                const s = $raggu_web_front_settings.make({ $ });
-                s.apply_preset('demo');
-                $mol_assert_equal(s.chunking_size_str(), '512');
-                $mol_assert_equal(s.search_mode(), 'Local');
-                $mol_assert_equal(s.refinement_isolated(), true);
-            },
-            'settings: every group renders Controls array (sub > 0)'($) {
-                const s = $raggu_web_front_settings.make({ $ });
-                $mol_assert_equal(s.Group_chunking().Controls().sub().length > 0, true);
-                $mol_assert_equal(s.Group_extraction().Controls().sub().length > 0, true);
-                $mol_assert_equal(s.Group_summarization().Controls().sub().length > 0, true);
-                $mol_assert_equal(s.Group_communities().Controls().sub().length > 0, true);
-                $mol_assert_equal(s.Group_refinement().Controls().sub().length > 0, true);
-                $mol_assert_equal(s.Group_search().Controls().sub().length > 0, true);
-                // chunking group: select + size_row + overlap_row = 3
-                $mol_assert_equal(s.Group_chunking().Controls().sub().length, 3);
+            'forcegraph: community filter dims outsiders, highlights internal edges only'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_explorer.make({ $ });
+                v.comm_click(0);
+                const comm = v.communities()[0].id;
+                const g = v.graph_view();
+                // узел выбранного сообщества виден, чужой — затемнён
+                const inside = v.graph_nodes().find(n => n.community === comm);
+                const outside = v.graph_nodes().find(n => n.community && n.community !== comm);
+                $mol_assert_equal(g.node_matches(inside.id), true);
+                $mol_assert_equal(g.node_matches(outside.id), false);
+                $mol_assert_equal(g.node_color(inside.id), v.comm_color_map()[comm]);
+                // ребро подсвечено только когда ОБА конца в выбранном сообществе
+                for (const e of v.graph_edges()) {
+                    const both_in = v.graph_nodes().find(n => n.id === e.source)?.community === comm
+                        && v.graph_nodes().find(n => n.id === e.target)?.community === comm;
+                    $mol_assert_equal(g.edge_matches(e.id), both_in);
+                }
             },
             // ---- dashboard energy formula ----
             'dashboard.pipeline_seconds: sum of STAGES.time'($) {
@@ -4158,52 +4134,6 @@ var $;
                 $mol_assert_equal(log.arrow(), '▾');
                 log.toggle();
                 $mol_assert_equal(log.arrow(), '▴');
-            },
-            // ---- export ----
-            'export.formats: explorer has 4 items'($) {
-                const ex = $raggu_web_front_export.make({ $ });
-                ex.screen = () => 'explorer';
-                $mol_assert_equal(ex.formats().length, 4);
-                $mol_assert_equal(ex.formats()[0].id, 'graphml');
-            },
-            'export.formats: chat has 2 items'($) {
-                const ex = $raggu_web_front_export.make({ $ });
-                ex.screen = () => 'chat';
-                $mol_assert_equal(ex.formats().length, 2);
-                $mol_assert_equal(ex.formats()[0].id, 'md_chat');
-            },
-            'export.formats: dashboard has 2 items'($) {
-                const ex = $raggu_web_front_export.make({ $ });
-                ex.screen = () => 'dashboard';
-                $mol_assert_equal(ex.formats().length, 2);
-                $mol_assert_equal(ex.formats()[0].id, 'csv_dash');
-            },
-            'export.formats: gallery → empty list, Items renders Empty placeholder'($) {
-                const ex = $raggu_web_front_export.make({ $ });
-                ex.screen = () => 'gallery';
-                $mol_assert_equal(ex.formats().length, 0);
-                $mol_assert_equal(ex.items().length, 1);
-                $mol_assert_equal(ex.items()[0], ex.Empty());
-            },
-            'export.items: count matches formats across screens'($) {
-                const ex = $raggu_web_front_export.make({ $ });
-                ex.screen = () => 'explorer';
-                $mol_assert_equal(ex.items().length, 4);
-                ex.screen = () => 'chat';
-                $mol_assert_equal(ex.items().length, 2);
-            },
-            'export.payload: returns Blob for each format id'($) {
-                const ex = $raggu_web_front_export.make({ $ });
-                const ids = [
-                    'graphml', 'gexf', 'json_graph', 'png_graph',
-                    'md_chat', 'json_chat',
-                    'csv_dash', 'json_dash',
-                ];
-                for (const id of ids) {
-                    const blob = ex.payload(id);
-                    $mol_assert_equal(blob instanceof Blob, true);
-                    $mol_assert_equal(blob.size > 0, true);
-                }
             },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));

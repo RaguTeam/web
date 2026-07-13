@@ -192,68 +192,363 @@ $raggu_web_front_topbar_nav $bog_builderui_div
 	sub /
 		<= Icon $bog_builderui_div sub / <= icon
 
-$raggu_web_front_topbar_preset $bog_builderui_div
-	label \
-	active false
-	click? null
+$raggu_web_front_topbar $bog_builderui_div
+	screen? \gallery
+	dataset_id \wiki
+	dataset_title \
+	screen_title \
+	open_help? null
+	toggle_sidebar? null
+	help_btn_text @ \? Help
+	sub /
+		<= Sidebar_btn $raggu_web_front_topbar_nav
+			icon \◫
+			hint @ \Toggle sidebar
+			click? <=> toggle_sidebar? null
+		<= Nav $bog_builderui_div sub /
+			<= Nav_gallery $raggu_web_front_topbar_nav
+				icon \▤
+				hint @ \Datasets
+				active <= is_gallery false
+				click? <=> click_gallery? null
+			<= Nav_explorer $raggu_web_front_topbar_nav
+				icon \◉
+				hint @ \Graph
+				active <= is_explorer false
+				disabled <= no_dataset false
+				click? <=> click_explorer? null
+			<= Nav_chat $raggu_web_front_topbar_nav
+				icon \💬
+				hint @ \Chat
+				active <= is_chat false
+				disabled <= no_dataset false
+				click? <=> click_chat? null
+			<= Nav_dashboard $raggu_web_front_topbar_nav
+				icon \▦
+				hint @ \Dashboard
+				active <= is_dashboard false
+				disabled <= no_dataset false
+				click? <=> click_dashboard? null
+			<= Nav_summary $raggu_web_front_topbar_nav
+				icon \✦
+				hint @ \Summary
+				active <= is_summary false
+				click? <=> click_summary? null
+		<= Help_btn $bog_builderui_div
+			event * click? <=> open_help? null
+			sub / <= help_btn_text
+		<= Spacer_left $bog_builderui_div
+		<= Title_block $bog_builderui_div sub /
+			<= Title $bog_builderui_div sub / <= screen_title
+			<= Subtitle $bog_builderui_div sub / <= dataset_title
+		<= Spacer $bog_builderui_div
+
+$raggu_web_front_help_section $bog_builderui_div
+	icon \
+	title \
+	desc \
+	media /
+	sub /
+		<= Icon $bog_builderui_div sub / <= icon
+		<= Text $bog_builderui_div sub /
+			<= Title $bog_builderui_div sub / <= title
+			<= Desc $bog_builderui_div sub / <= desc
+			<= Media $bog_builderui_div sub <= media
+
+$raggu_web_front_help $bog_builderui_div
+	showed? false
+	close? null
+	title_text @ \How to use RAGU
+	subtitle_text @ \what each section does
+	intro_text @ \RAGU builds a knowledge graph from your documents and answers questions over it. The workflow: pick a dataset, explore its graph, ask the agent.
 	attr *
 		^
-		raggu_web_front_topbar_preset_active <= active
+		raggu_web_front_help_showed <= showed?
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Header_text $bog_builderui_div sub /
+					<= Header_title $bog_builderui_div sub / <= title_text
+					<= Header_sub $bog_builderui_div sub / <= subtitle_text
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Intro $bog_builderui_div sub / <= intro_text
+				<= Section_gallery $raggu_web_front_help_section
+					icon \▤
+					title @ \Datasets
+					desc @ \Pre-indexed document collections. Pick one to work with, or upload your own documents — RAGU will index them into a knowledge graph.
+				<= Section_explorer $raggu_web_front_help_section
+					icon \◉
+					title @ \Graph
+					desc @ \Entities extracted from the documents and relations between them. Drag nodes, zoom with the wheel, click a node or an edge to see its card.
+				<= Section_chat $raggu_web_front_help_section
+					icon \💬
+					title @ \Chat
+					desc @ \Ask questions in natural language — the agent answers using the knowledge graph of the active dataset and cites its sources.
+				<= Section_dashboard $raggu_web_front_help_section
+					icon \▦
+					title @ \Dashboard
+					desc @ \Indexing pipeline stats: stages and timings, graph size, quality metrics and logs.
+				<= Section_summary $raggu_web_front_help_section
+					icon \✦
+					title @ \Summary
+					desc @ \Overview of the RAGU solution: what it consists of and how the pieces fit together.
+
+$raggu_web_front_gallery_card_preview $bog_builderui_div
+
+$raggu_web_front_gallery_card $bog_builderui_div
+	id \
+	title \
+	domain \
+	desc \
+	nodes \
+	edges \
+	comms \
+	active false
+	click? null
+	preview_label_text @ \graph preview
+	attr *
+		^
+		raggu_web_front_gallery_card_active <= active
 	event *
 		^
 		click? <=> click? null
-	sub / <= label
-
-$mol_ghost $mol_view
-	Sub $mol_view
-
-$mol_follower $mol_ghost
-	Anchor $mol_view
-	align /number
-		-.5
-		-.5
-	offset /number
-		0
-		0
-	style *
-		^
-		transform <= transform \
-
-$mol_pop $mol_view
-	showed? false
-	align_vert \
-	align_hor \
-	align \bottom_center
-	prefer \vert
-	auto /
-		<= bubble null
 	sub /
-		<= Anchor null
-	sub_visible /
-		<= Anchor
-		<= Follower $mol_follower
-			offset <= bubble_offset /number
-				0
-				1
-			align <= bubble_align /number
-				0
-				0
-			Anchor <= Anchor
-			Sub <= Bubble $mol_pop_bubble
-				content <= bubble_content /$mol_view_content
-				height_max <= height_max 9999
+		<= Preview $raggu_web_front_gallery_card_preview sub /
+			<= Preview_label $bog_builderui_div sub / <= preview_label_text
+			<= Domain_badge $bog_builderui_div sub / <= domain
+		<= Title $bog_builderui_div sub / <= title
+		<= Desc $bog_builderui_div sub / <= desc
+		<= Tags $bog_builderui_div sub /
+			<= Tag_nodes $bog_builderui_div sub / <= tag_nodes \
+			<= Tag_edges $bog_builderui_div sub / <= tag_edges \
+			<= Tag_comms $bog_builderui_div sub / <= tag_comms \
 
-$mol_pop_bubble $mol_view
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
+$raggu_web_front_gallery $bog_builderui_div
+	dataset_id \wiki
+	select_dataset? null
+	datasets /
+	header_title_text @ \Corpus gallery
+	header_subtitle_text @ \Pick a ready knowledge graph
+	mock_badge_text @ \⚠ Mock data — backend is not connected
+	dataset_law_title @ \Russian Codes & Laws
+	dataset_law_domain @ \Law
+	dataset_law_desc @ \Network of norms, references, bodies and concepts of Russian law.
+	dataset_wiki_title @ \Wikipedia: Science
+	dataset_wiki_domain @ \Encyclopedia
+	dataset_wiki_desc @ \Scientists, discoveries, institutions and how they are connected.
+	sub /
+		<= Header $bog_builderui_div sub /
+			<= Header_text $bog_builderui_div sub /
+				<= Header_title $bog_builderui_div sub / <= header_title_text
+				<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
+				<= Mock_badge $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_gallery_mock_badge_showed <= is_mock false
+					sub / <= mock_badge_text
+			<= Spacer $bog_builderui_div
+		<= Grid $bog_builderui_div sub <= rows /
+			<= Card* $raggu_web_front_gallery_card
+				id <= card_id* \
+				title <= card_title* \
+				domain <= card_domain* \
+				desc <= card_desc* \
+				nodes <= card_nodes* \
+				edges <= card_edges* \
+				comms <= card_comms* \
+				active <= card_active* false
+				click? <=> click*? null
+
+$mol_svg_line $mol_svg
+	dom_name \line
+	pos /
+		<= from /
+		<= to /
 	attr *
 		^
-		tabindex 0
-		popover \manual
+		x1 <= from_x \
+		y1 <= from_y \
+		x2 <= to_x \
+		y2 <= to_y \
 
-$bog_builderui_card $bog_builderui_div
+$mol_svg_group $mol_svg
+	dom_name \g
+
+$mol_svg_text $mol_svg
+	dom_name \text
+	pos /
+	attr *
+		^
+		x <= pos_x \
+		y <= pos_y \
+		text-anchor <= align_hor <= align \middle
+		alignment-baseline <= align_vert \baseline
+	sub /
+		<= text \
+
+$mol_svg_circle $mol_svg
+	dom_name \circle
+	pos /
+	attr *
+		^
+		r <= radius \.5%
+		cx <= pos_x \
+		cy <= pos_y \
+
+$mol_svg_rect $mol_svg
+	dom_name \rect
+	pos /
+	attr *
+		^
+		width <= width \0
+		height <= height \0
+		x <= pos_x \
+		y <= pos_y \
+
+$raggu_web_front_explorer_forcegraph $mol_svg_root
+	view_box <= computed_view_box \-300 -300 600 600
+	aspect \xMidYMid meet
+	select?val null
+	selected_id? \
+	hovered_id? \
+	selected_edge_id? \
+	hovered_edge_id? \
+	drag_id? \
+	search \
+	filter_type \
+	filter_relation \
+	filter_comms /
+	comm_colors *
+	graph_key \
+	nodes /
+	edges /
+	pan_x? +0
+	pan_y? +0
+	zoom? +1
+	positions? *
+	gravity +0.03
+	force_scale +0.06
+	spring +0.2
+	damping +0.82
+	min_move +0.15
+	max_speed +12
+	node_size_base +4
+	node_size_growth +1.5
+	event *
+		^
+		wheel?event <=> wheel?event null
+		pointerdown?event <=> pan_start?event null
+		pointermove?event <=> pan_move?event null
+		pointerup?event <=> pan_end?event null
+		pointercancel?event <=> pan_end?event null
+		click?event <=> bg_click?event null
+	sub /
+		<= G_edges $mol_svg_group
+			sub <= edge_views /
+				<= Edge* $mol_svg_line
+					from_x <= edge_x1* \
+					from_y <= edge_y1* \
+					to_x <= edge_x2* \
+					to_y <= edge_y2* \
+					attr *
+						^
+						data-edge-id <= edge_id* \
+						stroke <= edge_color* \#7a7672
+						stroke-width <= edge_width* \1
+						stroke-opacity <= edge_opacity* \0.55
+						cursor \pointer
+					event *
+						^
+						click? <=> edge_click*? null
+						pointerenter? <=> edge_hover_enter*? null
+						pointerleave? <=> edge_hover_leave*? null
+		<= G_edge_labels $mol_svg_group
+			sub <= edge_label_views /
+				<= Edge_label* $mol_svg_text
+					pos_x <= edge_label_x* \
+					pos_y <= edge_label_y* \
+					align \middle
+					align_vert \middle
+					text <= edge_label_text* \
+					attr *
+						^
+						data-edge-id <= edge_id* \
+						data-forcegraph-edge-label \
+						font-size <= edge_label_font_size \8
+						fill-opacity <= edge_label_opacity* \0.75
+						cursor \pointer
+					event *
+						^
+						click? <=> edge_click*? null
+						pointerenter? <=> edge_hover_enter*? null
+						pointerleave? <=> edge_hover_leave*? null
+		<= G_nodes $mol_svg_group
+			sub <= node_views /
+				<= Node* $mol_svg_circle
+					pos_x <= node_x* \
+					pos_y <= node_y* \
+					radius <= node_radius* \6
+					attr *
+						^
+						data-node-id <= node_id* \
+						fill <= node_color* \#7c6ce0
+						fill-opacity <= node_opacity* \1
+						stroke <= node_stroke* \transparent
+						stroke-width <= node_stroke_width* \0
+						cursor \pointer
+					event *
+						^
+						click? <=> click*? null
+						pointerenter? <=> hover_enter*? null
+						pointerleave? <=> hover_leave*? null
+		<= G_node_labels $mol_svg_group
+			attr *
+				^
+				pointer-events \none
+			sub <= node_label_views /
+				<= Node_label* $mol_svg_text
+					pos_x <= node_label_x* \
+					pos_y <= node_label_y* \
+					align \middle
+					text <= node_label_text* \
+					attr *
+						^
+						data-forcegraph-node-label \
+						font-size <= node_label_font_size \10
+						fill-opacity <= node_label_opacity* \1
+		<= Tooltip $mol_svg_group
+			attr *
+				^
+				pointer-events \none
+			sub <= tooltip_sub /
+				<= Tooltip_bg $mol_svg_rect
+					pos_x <= tooltip_bg_x \0
+					pos_y <= tooltip_bg_y \0
+					width <= tooltip_bg_w \0
+					height <= tooltip_bg_h \0
+					attr *
+						^
+						rx \3
+						ry \3
+						stroke-width \1
+						data-forcegraph-tooltip-bg \
+				<= Tooltip_text $mol_svg_text
+					pos_x <= tooltip_x \0
+					pos_y <= tooltip_y \0
+					align \middle
+					align_vert \middle
+					text <= tooltip_text \
+					attr *
+						^
+						font-size <= tooltip_font_size \11
+						font-weight \600
+						data-forcegraph-tooltip-text \
 
 $mol_hotkey $mol_plugin
 	event *
@@ -298,6 +593,176 @@ $mol_string $mol_view
 			mod_ctrl <= submit_with_ctrl false
 			key * enter? <=> submit? null
 
+$raggu_web_front_explorer $bog_builderui_div
+	dataset_id \
+	selected_id? \
+	selected_edge_id? \
+	search? \
+	type_filter? \
+	rel_filter? \
+	legend_collapsed? false
+	rels_collapsed? false
+	aside_collapsed? false
+	ask_click? null
+	filter_search_text @ \🔍 Find node…
+	aside_title_text @ \Entity card
+	aside_relation_title_text @ \Relation card
+	aside_empty_text @ \Click a node or an edge
+	relations_title_template @ \Relations (%s)
+	ask_btn_text @ \💬 Ask about this entity
+	legend_title_text @ \Entity Types
+	legend_label* \
+	legend_count* \
+	legend_active* false
+	legend_click*? null
+	rels_title_text @ \Relation Types
+	rel_legend_label* \
+	rel_legend_count* \
+	rel_legend_active* false
+	rel_legend_click*? null
+	comms_open? false
+	comms_btn_text @ \Communities
+	comm_label* \
+	comm_count* \
+	comm_active* false
+	comm_mark* \
+	comm_click*? null
+	mock_badge_text @ \⚠ Mock data — backend is not connected
+	sub /
+		<= Canvas $bog_builderui_div sub /
+			<= Canvas_bg $bog_builderui_div sub /
+				<= Graph $raggu_web_front_explorer_forcegraph
+					graph_key <= dataset_id
+					nodes <= graph_nodes /
+					edges <= graph_edges /
+					selected_id? <=> selected_id?
+					selected_edge_id? <=> selected_edge_id?
+					search <= search?
+					filter_type <= type_filter?
+					filter_relation <= rel_filter?
+					filter_comms <= comms_checked /
+					comm_colors <= comm_color_map *
+			<= Filters $bog_builderui_div sub /
+				<= Filter_search $mol_string
+					hint <= filter_search_text
+					value? <=> search?
+				<= Comms $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_explorer_panel_collapsed <= comms_closed true
+					sub /
+						<= Comms_btn $bog_builderui_div
+							event *
+								^
+								click? <=> comms_toggle? null
+							sub / <= comms_btn_label \
+						<= Comms_list $bog_builderui_div sub <= comm_rows /
+							<= Comm_row* $bog_builderui_div
+								attr *
+									^
+									raggu_web_front_explorer_legend_on <= comm_active* false
+								event *
+									^
+									click? <=> comm_click*? null
+								sub /
+									<= Comm_mark* $bog_builderui_div sub / <= comm_mark* \
+									<= Comm_dot* $bog_builderui_div
+									<= Comm_label* $bog_builderui_div sub / <= comm_label* \
+									<= Comm_count* $bog_builderui_div sub / <= comm_count* \
+			<= Legends $bog_builderui_div sub /
+				<= Legend $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_explorer_panel_collapsed <= legend_collapsed?
+					sub /
+						<= Legend_head $bog_builderui_div
+							event *
+								^
+								click? <=> legend_toggle? null
+							sub /
+								<= Legend_title $bog_builderui_div sub / <= legend_title_text
+								<= Legend_caret $bog_builderui_div sub / <= legend_caret \▾
+						<= Legend_list $bog_builderui_div sub <= legend_rows /
+							<= Legend_row* $bog_builderui_div
+								attr *
+									^
+									raggu_web_front_explorer_legend_on <= legend_active* false
+								event *
+									^
+									click? <=> legend_click*? null
+								sub /
+									<= Legend_dot* $bog_builderui_div
+									<= Legend_label* $bog_builderui_div sub / <= legend_label* \
+									<= Legend_count* $bog_builderui_div sub / <= legend_count* \
+				<= Rels $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_explorer_panel_collapsed <= rels_collapsed?
+					sub /
+						<= Rels_head $bog_builderui_div
+							event *
+								^
+								click? <=> rels_toggle? null
+							sub /
+								<= Rels_title $bog_builderui_div sub / <= rels_title_text
+								<= Rels_caret $bog_builderui_div sub / <= rels_caret \▾
+						<= Rels_list $bog_builderui_div sub <= rel_legend_rows /
+							<= Rel_row* $bog_builderui_div
+								attr *
+									^
+									raggu_web_front_explorer_legend_on <= rel_legend_active* false
+								event *
+									^
+									click? <=> rel_legend_click*? null
+								sub /
+									<= Rel_row_label* $bog_builderui_div sub / <= rel_legend_label* \
+									<= Rel_row_count* $bog_builderui_div sub / <= rel_legend_count* \
+			<= Mock_badge $bog_builderui_div
+				attr *
+					^
+					raggu_web_front_explorer_mock_badge_showed <= is_mock false
+				sub / <= mock_badge_text
+		<= Aside $bog_builderui_div
+			attr *
+				^
+				raggu_web_front_explorer_aside_collapsed <= aside_collapsed?
+			sub /
+				<= Aside_head $bog_builderui_div sub /
+					<= Aside_toggle $bog_builderui_div
+						event * click? <=> aside_toggle? null
+						sub / <= aside_caret \⟩
+					<= Aside_title $bog_builderui_div sub / <= aside_title \
+				<= Aside_body $bog_builderui_div sub /
+					<= Entity_head $bog_builderui_div sub /
+						<= Entity_dot $bog_builderui_div
+						<= Entity_name $bog_builderui_div sub / <= entity_name \
+					<= Entity_type $bog_builderui_div sub / <= entity_type \
+					<= Entity_desc $bog_builderui_div sub / <= entity_desc \
+					<= Relations_title $bog_builderui_div sub / <= relations_title \
+					<= Relations_list $bog_builderui_div sub <= rel_rows /
+						<= Rel* $bog_builderui_div sub /
+							<= Rel_type* $bog_builderui_div sub / <= rel_type* \
+							<= Rel_target* $bog_builderui_div sub / <= rel_target* \
+					<= Ask_btn $bog_builderui_div
+						sub / <= ask_btn_text
+						event * click? <=> ask_click? null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
+
+$bog_builderui_card $bog_builderui_div
+
 $bog_builderui_field $mol_string
 	minimal_height 36
 
@@ -322,9 +787,6 @@ $mol_chart_legend $mol_scroll
 			<= Graph_title* $mol_view
 				sub /
 					<= graph_title* \
-
-$mol_svg_group $mol_svg
-	dom_name \g
 
 $mol_svg_title $mol_svg
 	dom_name \title
@@ -574,6 +1036,55 @@ $mol_chart $mol_view
 
 $bog_builderui_chart $mol_chart
 
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	align /number
+		-.5
+		-.5
+	offset /number
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	align \bottom_center
+	prefer \vert
+	auto /
+		<= bubble null
+	sub /
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Follower $mol_follower
+			offset <= bubble_offset /number
+				0
+				1
+			align <= bubble_align /number
+				0
+				0
+			Anchor <= Anchor
+			Sub <= Bubble $mol_pop_bubble
+				content <= bubble_content /$mol_view_content
+				height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		tabindex 0
+		popover \manual
+
 $mol_check $mol_button_minor
 	attr *
 		^
@@ -639,20 +1150,6 @@ $mol_nav $mol_plugin
 	event *
 		^
 		keydown? <=> event_key? null
-
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0.1
-	sub <= rows /$mol_view
-		<= Gap_before $mol_view style * paddingTop <= gap_before 0
-		<= Empty $mol_view
-		<= Gap_after $mol_view style * paddingTop <= gap_after 0
-	item_height_min* 1
-	item_width_min* 1
-	view_window_shift? 0
-	view_window /
-		0
-		0
 
 $mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
 
@@ -747,852 +1244,6 @@ $mol_pop_over $mol_pop
 		mouseleave? <=> event_hide? null
 
 $bog_builderui_tooltip $mol_pop_over
-
-$bog_builderui_menu $bog_builderui_card
-	items /
-	sub <= items
-
-$bog_builderui_menu_item $mol_button_minor
-
-$raggu_web_front_export $mol_pop
-	screen \gallery
-	showed? false
-	export_btn_text @ \↓ Export
-	empty_text @ \Nothing to export
-	Anchor $bog_builderui_div
-		event * click? <=> toggle? null
-		sub / <= export_btn_text
-	bubble_content /
-		<= Menu $bog_builderui_menu
-			items <= items /
-	Item* $bog_builderui_menu_item
-		title <= item_label* \
-		click? <=> item_click*? null
-	Empty $bog_builderui_div
-		sub / <= empty_text
-
-$raggu_web_front_topbar $bog_builderui_div
-	screen? \gallery
-	dataset_id \wiki
-	dataset_title \
-	screen_title \
-	preset? \demo
-	open_settings? null
-	open_help? null
-	toggle_sidebar? null
-	preset_label_text @ \Preset
-	settings_btn_text @ \⚙ Settings
-	help_btn_text @ \? Help
-	preset_fast_label @ \⚡ Fast
-	preset_accurate_label @ \🎯 Accurate
-	preset_demo_label @ \🎬 Demo
-	sub /
-		<= Sidebar_btn $raggu_web_front_topbar_nav
-			icon \◫
-			hint @ \Toggle sidebar
-			click? <=> toggle_sidebar? null
-		<= Nav $bog_builderui_div sub /
-			<= Nav_gallery $raggu_web_front_topbar_nav
-				icon \▤
-				hint @ \Datasets
-				active <= is_gallery false
-				click? <=> click_gallery? null
-			<= Nav_explorer $raggu_web_front_topbar_nav
-				icon \◉
-				hint @ \Graph
-				active <= is_explorer false
-				disabled <= no_dataset false
-				click? <=> click_explorer? null
-			<= Nav_chat $raggu_web_front_topbar_nav
-				icon \💬
-				hint @ \Chat
-				active <= is_chat false
-				disabled <= no_dataset false
-				click? <=> click_chat? null
-			<= Nav_dashboard $raggu_web_front_topbar_nav
-				icon \▦
-				hint @ \Dashboard
-				active <= is_dashboard false
-				disabled <= no_dataset false
-				click? <=> click_dashboard? null
-			<= Nav_summary $raggu_web_front_topbar_nav
-				icon \✦
-				hint @ \Summary
-				active <= is_summary false
-				click? <=> click_summary? null
-		<= Help_btn $bog_builderui_div
-			event * click? <=> open_help? null
-			sub / <= help_btn_text
-		<= Spacer_left $bog_builderui_div
-		<= Title_block $bog_builderui_div sub /
-			<= Title $bog_builderui_div sub / <= screen_title
-			<= Subtitle $bog_builderui_div sub / <= dataset_title
-		<= Spacer $bog_builderui_div
-		<= Preset_label $bog_builderui_div sub / <= preset_label_text
-		<= Preset_group $bog_builderui_div sub /
-			<= Preset_fast $raggu_web_front_topbar_preset
-				label <= preset_fast_label
-				active <= is_fast false
-				click? <=> click_fast? null
-			<= Preset_accurate $raggu_web_front_topbar_preset
-				label <= preset_accurate_label
-				active <= is_accurate false
-				click? <=> click_accurate? null
-			<= Preset_demo $raggu_web_front_topbar_preset
-				label <= preset_demo_label
-				active <= is_demo false
-				click? <=> click_demo? null
-		<= Settings_btn $bog_builderui_div
-			event * click? <=> open_settings? null
-			sub / <= settings_btn_text
-		<= Export $raggu_web_front_export
-			screen <= screen
-
-$bog_builderui_button $mol_button_minor
-	minimal_height 32
-	minimal_width 0
-	variant \default
-	attr *
-		^
-		bog_builderui_button_variant <= variant
-
-$raggu_web_front_settings_group $bog_builderui_div
-	step \
-	title \
-	opts \
-	controls /
-	reindex true
-	reindex_text @ \requires reindexing
-	sub /
-		<= Head $bog_builderui_div sub /
-			<= Step $bog_builderui_div sub / <= step
-			<= Reindex $bog_builderui_div
-				attr * raggu_web_front_settings_group_reindex <= reindex
-				sub / <= reindex_text
-		<= Title $bog_builderui_div sub / <= title
-		<= Opts $bog_builderui_div sub / <= opts
-		<= Controls $bog_builderui_div sub <= controls
-
-$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
-
-$mol_check_box $mol_check
-	Icon $mol_icon_tick
-
-$rise_range $mol_view
-	minimal_height 48
-	unit \
-	medium? 5
-	enabled true
-	sub /
-		<= Labels $mol_view
-			sub /
-				<= Min $mol_view
-					sub / <= label_min \
-				<= Medium $mol_view
-					sub / <= label_medium \
-				<= Max $mol_view
-					sub / <= label_max \
-		<= Input $rise_range_input
-			disabled <= disabled false
-			min <= min? 0
-			max <= max? 10
-			step <= step? 1
-			value? <=> value? 0
-			event_input? <=> event_input? null
-		<= Current $mol_view
-			sub /
-				<= Value $rise_range_value
-					sub / <= value
-					disabled <= disabled
-	attr *
-		^
-		disabled <= disabled
-	style *
-		^
-		--rise_range_percent <= percent \0%
-
-$rise_range_input $mol_view
-	dom_name \input
-	attr *
-		^
-		type \range
-		disabled <= disabled false
-	field *
-		^
-		min <= min? 0
-		max <= max? 10
-		step <= step? 1
-		value <= value? 0
-	event *
-		^
-		input? <=> event_input? null
-
-$rise_range_value $mol_view
-	attr *
-		^
-		disabled <= disabled false
-
-$bog_builderui_slider $rise_range
-
-$raggu_web_front_settings $bog_builderui_div
-	showed? false
-	close? null
-	attr *
-		^
-		raggu_web_front_settings_showed <= showed?
-	sub /
-		<= Backdrop $bog_builderui_div
-			event * click? <=> close? null
-		<= Panel $bog_builderui_div sub /
-			<= Header $bog_builderui_div sub /
-				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / \Настройки движка RAGU
-					<= Header_sub $bog_builderui_div sub / \пресет + ручной режим
-				<= Spacer $bog_builderui_div
-				<= Close_btn $bog_builderui_div
-					event * click? <=> close? null
-					sub / \✕
-			<= Body $mol_scroll sub /
-				<= Presets $bog_builderui_div sub /
-					<= Preset_fast $bog_builderui_button
-						title @ \⚡ Fast
-						click? <=> preset_fast? null
-					<= Preset_accurate $bog_builderui_button
-						title @ \🎯 Accurate
-						click? <=> preset_accurate? null
-					<= Preset_demo $bog_builderui_button
-						title @ \🎬 Demo
-						click? <=> preset_demo? null
-				<= Group_chunking $raggu_web_front_settings_group
-					step \Шаг 1
-					title \Chunking
-					opts \Simple / SemanticText / SmartSemantic · размер · overlap
-					reindex true
-					controls /
-						<= Chunking_strategy $bog_builderui_select
-							value? <=> chunking_strategy? \SmartSemantic
-							dictionary *
-								Simple \Simple
-								SemanticText \SemanticText
-								SmartSemantic \SmartSemantic
-						<= Chunking_size_row $bog_builderui_div sub /
-							<= Chunking_size_label $bog_builderui_div sub / <= chunking_size_label_text @ \chunk size
-							<= Chunking_size_input $bog_builderui_field
-								type \number
-								value? <=> chunking_size_str? \512
-						<= Chunking_overlap_row $bog_builderui_div sub /
-							<= Chunking_overlap_label $bog_builderui_div sub / <= chunking_overlap_label_text @ \overlap
-							<= Chunking_overlap_input $bog_builderui_field
-								type \number
-								value? <=> chunking_overlap_str? \64
-				<= Group_extraction $raggu_web_front_settings_group
-					step \Шаг 2
-					title \Extraction
-					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
-					reindex true
-					controls /
-						<= Extraction_mode $bog_builderui_select
-							value? <=> extraction_mode? \two-stage
-							dictionary *
-								single @ \single-stage
-								two-stage @ \two-stage
-						<= Extraction_model $bog_builderui_select
-							value? <=> extraction_model? \meno-lite-7b
-							dictionary *
-								meno-lite-7b \meno-lite 7B
-								gpt-4 \GPT-4
-								llama3-70b \Llama 3 70B
-						<= Extraction_icl $bog_builderui_select
-							value? <=> extraction_icl? \hybrid
-							dictionary *
-								semantic @ \ICL semantic
-								BM25 @ \ICL BM25
-								hybrid @ \ICL hybrid
-								random @ \ICL random
-				<= Group_summarization $raggu_web_front_settings_group
-					step \Шаг 3
-					title \Summarization
-					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
-					reindex true
-					controls /
-						<= Summarization_dbscan $mol_check_box
-							checked? <=> summarization_dbscan? false
-							title @ \DBSCAN clustering
-						<= Summarization_llm $mol_check_box
-							checked? <=> summarization_llm? false
-							title @ \LLM summarization
-				<= Group_communities $raggu_web_front_settings_group
-					step \Шаг 4
-					title \Communities
-					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
-					reindex true
-					controls /
-						<= Communities_algo $bog_builderui_select
-							value? <=> communities_algo? \Leiden
-							dictionary *
-								Leiden \Leiden
-						<= Communities_resolution_row $bog_builderui_div sub /
-							<= Communities_resolution_label $bog_builderui_div sub / <= communities_resolution_label_text @ \resolution
-							<= Communities_resolution_value $bog_builderui_div sub / <= communities_resolution_label \1.0
-						<= Communities_resolution $bog_builderui_slider
-							value? <=> communities_resolution_x10? 10
-							min 5
-							max 20
-							step 1
-				<= Group_refinement $raggu_web_front_settings_group
-					step \Шаг 5
-					title \Refinement
-					opts \RemoveIsolatedNodes и пост-обработчики
-					reindex true
-					controls /
-						<= Refinement_isolated $mol_check_box
-							checked? <=> refinement_isolated? false
-							title @ \RemoveIsolatedNodes
-				<= Group_search $raggu_web_front_settings_group
-					step \Шаг 6
-					title \Search
-					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
-					reindex false
-					controls /
-						<= Search_mode $bog_builderui_select
-							value? <=> search_mode? \Local
-							dictionary *
-								Local \LocalSearch
-								Global \GlobalSearch
-								Naive \NaiveSearch
-								Mix \MixSearch
-								QueryPlan \QueryPlan
-						<= Search_rerank $mol_check_box
-							checked? <=> search_rerank? false
-							title @ \rerank
-						<= Search_topk_row $bog_builderui_div sub /
-							<= Search_topk_label $bog_builderui_div sub / <= search_topk_label_text @ \top-k
-							<= Search_topk_value $bog_builderui_div sub / <= search_topk_label \8
-						<= Search_topk $bog_builderui_slider
-							value? <=> search_topk? 8
-							min 1
-							max 50
-							step 1
-
-$raggu_web_front_help_section $bog_builderui_div
-	icon \
-	title \
-	desc \
-	media /
-	sub /
-		<= Icon $bog_builderui_div sub / <= icon
-		<= Text $bog_builderui_div sub /
-			<= Title $bog_builderui_div sub / <= title
-			<= Desc $bog_builderui_div sub / <= desc
-			<= Media $bog_builderui_div sub <= media
-
-$raggu_web_front_help $bog_builderui_div
-	showed? false
-	close? null
-	title_text @ \How to use RAGU
-	subtitle_text @ \what each section does
-	intro_text @ \RAGU builds a knowledge graph from your documents and answers questions over it. The workflow: pick a dataset, explore its graph, ask the agent.
-	attr *
-		^
-		raggu_web_front_help_showed <= showed?
-	sub /
-		<= Backdrop $bog_builderui_div
-			event * click? <=> close? null
-		<= Panel $bog_builderui_div sub /
-			<= Header $bog_builderui_div sub /
-				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / <= title_text
-					<= Header_sub $bog_builderui_div sub / <= subtitle_text
-				<= Spacer $bog_builderui_div
-				<= Close_btn $bog_builderui_div
-					event * click? <=> close? null
-					sub / \✕
-			<= Body $mol_scroll sub /
-				<= Intro $bog_builderui_div sub / <= intro_text
-				<= Section_gallery $raggu_web_front_help_section
-					icon \▤
-					title @ \Datasets
-					desc @ \Pre-indexed document collections. Pick one to work with, or upload your own documents — RAGU will index them into a knowledge graph.
-				<= Section_explorer $raggu_web_front_help_section
-					icon \◉
-					title @ \Graph
-					desc @ \Entities extracted from the documents and relations between them. Drag nodes, zoom with the wheel, click a node or an edge to see its card.
-				<= Section_chat $raggu_web_front_help_section
-					icon \💬
-					title @ \Chat
-					desc @ \Ask questions in natural language — the agent answers using the knowledge graph of the active dataset and cites its sources.
-				<= Section_dashboard $raggu_web_front_help_section
-					icon \▦
-					title @ \Dashboard
-					desc @ \Indexing pipeline stats: stages and timings, graph size, quality metrics and logs.
-				<= Section_summary $raggu_web_front_help_section
-					icon \✦
-					title @ \Summary
-					desc @ \Overview of the RAGU solution: what it consists of and how the pieces fit together.
-
-$raggu_web_front_gallery_card_preview $bog_builderui_div
-
-$raggu_web_front_gallery_card $bog_builderui_div
-	id \
-	title \
-	domain \
-	desc \
-	nodes \
-	edges \
-	comms \
-	active false
-	click? null
-	preview_label_text @ \graph preview
-	attr *
-		^
-		raggu_web_front_gallery_card_active <= active
-	event *
-		^
-		click? <=> click? null
-	sub /
-		<= Preview $raggu_web_front_gallery_card_preview sub /
-			<= Preview_label $bog_builderui_div sub / <= preview_label_text
-			<= Domain_badge $bog_builderui_div sub / <= domain
-		<= Title $bog_builderui_div sub / <= title
-		<= Desc $bog_builderui_div sub / <= desc
-		<= Tags $bog_builderui_div sub /
-			<= Tag_nodes $bog_builderui_div sub / <= tag_nodes \
-			<= Tag_edges $bog_builderui_div sub / <= tag_edges \
-			<= Tag_comms $bog_builderui_div sub / <= tag_comms \
-
-$bog_builderui_progress $mol_view
-	dom_name \progress
-	value 50
-	max 100
-	attr *
-		^
-		value <= value 50
-		max <= max 100
-
-$raggu_web_front_gallery_upload $bog_builderui_div
-	showed? false
-	kind \document
-	step? 0
-	total_steps 6
-	error \
-	close? null
-	complete? null
-	title_text @ \Indexing document
-	subtitle_text @ \Mock pipeline run · 6 stages · about 4 seconds
-	panel_title_document_text @ \Indexing document
-	panel_title_index_text @ \Uploading prebuilt index
-	error_too_large_template @ \File too large: %s MB. Limit is 10 MB.
-	step_chunking_text @ \Chunking
-	step_extraction_text @ \Extraction
-	step_summarization_text @ \Summarization
-	step_communities_text @ \Communities
-	step_refinement_text @ \Refinement
-	step_search_text @ \Search index
-	progress_label_text @ \Stage
-	close_text @ \✕
-	error_title_text @ \Upload rejected
-	retry_text @ \Close
-	body /
-	step_rows /
-	attr *
-		^
-		raggu_web_front_gallery_upload_showed <= showed?
-	sub /
-		<= Backdrop $bog_builderui_div
-			event * click? <=> close? null
-		<= Panel $bog_builderui_card sub /
-			<= Header $bog_builderui_div sub /
-				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / <= panel_title \
-					<= Header_subtitle $bog_builderui_div sub / <= subtitle_text
-				<= Spacer $bog_builderui_div
-				<= Close_btn $bog_builderui_div
-					event * click? <=> close? null
-					sub / <= close_text
-			<= Body $bog_builderui_div sub <= body
-	Error_body $bog_builderui_div sub /
-		<= Error_title $bog_builderui_div sub / <= error_title_text
-		<= Error_text $bog_builderui_div sub / <= error
-	Progress_body $bog_builderui_div sub /
-		<= Progress_bar $bog_builderui_progress
-			max <= total_steps
-			value <= step?
-		<= Progress_label $bog_builderui_div sub /
-			<= progress_label_text
-			<= progress_label_separator \
-			<= step_label \
-			<= progress_label_slash \ /
-			<= total_steps_text \6
-		<= Steps_list $bog_builderui_div sub <= step_rows
-	Step* $bog_builderui_div
-		attr *
-			^
-			raggu_web_front_gallery_upload_step_status <= step_status* \pending
-		sub /
-			<= Step_marker* $bog_builderui_div sub / <= step_marker_text* \○
-			<= Step_name* $bog_builderui_div sub / <= step_name_text* \
-
-$raggu_web_front_gallery $bog_builderui_div
-	dataset_id \wiki
-	select_dataset? null
-	datasets /
-	upload_kind? \
-	upload_complete? null
-	upload_close? null
-	header_title_text @ \Corpus gallery
-	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
-	mock_badge_text @ \⚠ Mock data — backend is not connected
-	upload_doc_text @ \＋ Upload document
-	upload_idx_text @ \⇪ Upload prebuilt index
-	uploaded_document_title @ \Uploaded document
-	uploaded_index_title @ \Uploaded index
-	uploaded_domain @ \User upload
-	uploaded_desc @ \Mock dataset built by the demo indexing pipeline.
-	dataset_law_title @ \Russian Codes & Laws
-	dataset_law_domain @ \Law
-	dataset_law_desc @ \Network of norms, references, bodies and concepts of Russian law.
-	dataset_wiki_title @ \Wikipedia: Science
-	dataset_wiki_domain @ \Encyclopedia
-	dataset_wiki_desc @ \Scientists, discoveries, institutions and how they are connected.
-	sub /
-		<= Header $bog_builderui_div sub /
-			<= Header_text $bog_builderui_div sub /
-				<= Header_title $bog_builderui_div sub / <= header_title_text
-				<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
-				<= Mock_badge $bog_builderui_div
-					attr *
-						^
-						raggu_web_front_gallery_mock_badge_showed <= is_mock false
-					sub / <= mock_badge_text
-			<= Spacer $bog_builderui_div
-			<= Upload_doc $bog_builderui_div
-				sub / <= upload_doc_text
-				event * click? <=> upload_doc_click? null
-			<= Upload_idx $bog_builderui_div
-				sub / <= upload_idx_text
-				event * click? <=> upload_idx_click? null
-		<= Grid $bog_builderui_div sub <= rows /
-			<= Card* $raggu_web_front_gallery_card
-				id <= card_id* \
-				title <= card_title* \
-				domain <= card_domain* \
-				desc <= card_desc* \
-				nodes <= card_nodes* \
-				edges <= card_edges* \
-				comms <= card_comms* \
-				active <= card_active* false
-				click? <=> click*? null
-		<= Upload $raggu_web_front_gallery_upload
-			showed? <=> upload_showed? false
-			kind <= upload_kind?
-			complete? <=> upload_complete? null
-			close? <=> upload_close? null
-
-$mol_svg_line $mol_svg
-	dom_name \line
-	pos /
-		<= from /
-		<= to /
-	attr *
-		^
-		x1 <= from_x \
-		y1 <= from_y \
-		x2 <= to_x \
-		y2 <= to_y \
-
-$mol_svg_text $mol_svg
-	dom_name \text
-	pos /
-	attr *
-		^
-		x <= pos_x \
-		y <= pos_y \
-		text-anchor <= align_hor <= align \middle
-		alignment-baseline <= align_vert \baseline
-	sub /
-		<= text \
-
-$mol_svg_circle $mol_svg
-	dom_name \circle
-	pos /
-	attr *
-		^
-		r <= radius \.5%
-		cx <= pos_x \
-		cy <= pos_y \
-
-$mol_svg_rect $mol_svg
-	dom_name \rect
-	pos /
-	attr *
-		^
-		width <= width \0
-		height <= height \0
-		x <= pos_x \
-		y <= pos_y \
-
-$raggu_web_front_explorer_forcegraph $mol_svg_root
-	view_box <= computed_view_box \-300 -300 600 600
-	aspect \xMidYMid meet
-	select?val null
-	selected_id? \
-	hovered_id? \
-	selected_edge_id? \
-	hovered_edge_id? \
-	drag_id? \
-	search \
-	filter_type \
-	filter_relation \
-	graph_key \
-	nodes /
-	edges /
-	pan_x? +0
-	pan_y? +0
-	zoom? +1
-	positions? *
-	gravity +0.03
-	force_scale +0.06
-	spring +0.2
-	damping +0.82
-	min_move +0.15
-	max_speed +12
-	node_size_base +4
-	node_size_growth +1.5
-	event *
-		^
-		wheel?event <=> wheel?event null
-		pointerdown?event <=> pan_start?event null
-		pointermove?event <=> pan_move?event null
-		pointerup?event <=> pan_end?event null
-		pointercancel?event <=> pan_end?event null
-		click?event <=> bg_click?event null
-	sub /
-		<= G_edges $mol_svg_group
-			sub <= edge_views /
-				<= Edge* $mol_svg_line
-					from_x <= edge_x1* \
-					from_y <= edge_y1* \
-					to_x <= edge_x2* \
-					to_y <= edge_y2* \
-					attr *
-						^
-						data-edge-id <= edge_id* \
-						stroke <= edge_color* \#7a7672
-						stroke-width <= edge_width* \1
-						stroke-opacity <= edge_opacity* \0.55
-						cursor \pointer
-					event *
-						^
-						click? <=> edge_click*? null
-						pointerenter? <=> edge_hover_enter*? null
-						pointerleave? <=> edge_hover_leave*? null
-		<= G_edge_labels $mol_svg_group
-			sub <= edge_label_views /
-				<= Edge_label* $mol_svg_text
-					pos_x <= edge_label_x* \
-					pos_y <= edge_label_y* \
-					align \middle
-					align_vert \middle
-					text <= edge_label_text* \
-					attr *
-						^
-						data-edge-id <= edge_id* \
-						data-forcegraph-edge-label \
-						font-size <= edge_label_font_size \8
-						fill-opacity <= edge_label_opacity* \0.75
-						cursor \pointer
-					event *
-						^
-						click? <=> edge_click*? null
-						pointerenter? <=> edge_hover_enter*? null
-						pointerleave? <=> edge_hover_leave*? null
-		<= G_nodes $mol_svg_group
-			sub <= node_views /
-				<= Node* $mol_svg_circle
-					pos_x <= node_x* \
-					pos_y <= node_y* \
-					radius <= node_radius* \6
-					attr *
-						^
-						data-node-id <= node_id* \
-						fill <= node_color* \#7c6ce0
-						fill-opacity <= node_opacity* \1
-						stroke <= node_stroke* \transparent
-						stroke-width <= node_stroke_width* \0
-						cursor \pointer
-					event *
-						^
-						click? <=> click*? null
-						pointerenter? <=> hover_enter*? null
-						pointerleave? <=> hover_leave*? null
-		<= G_node_labels $mol_svg_group
-			attr *
-				^
-				pointer-events \none
-			sub <= node_label_views /
-				<= Node_label* $mol_svg_text
-					pos_x <= node_label_x* \
-					pos_y <= node_label_y* \
-					align \middle
-					text <= node_label_text* \
-					attr *
-						^
-						data-forcegraph-node-label \
-						font-size <= node_label_font_size \10
-						fill-opacity <= node_label_opacity* \1
-		<= Tooltip $mol_svg_group
-			attr *
-				^
-				pointer-events \none
-			sub <= tooltip_sub /
-				<= Tooltip_bg $mol_svg_rect
-					pos_x <= tooltip_bg_x \0
-					pos_y <= tooltip_bg_y \0
-					width <= tooltip_bg_w \0
-					height <= tooltip_bg_h \0
-					attr *
-						^
-						rx \3
-						ry \3
-						stroke-width \1
-						data-forcegraph-tooltip-bg \
-				<= Tooltip_text $mol_svg_text
-					pos_x <= tooltip_x \0
-					pos_y <= tooltip_y \0
-					align \middle
-					align_vert \middle
-					text <= tooltip_text \
-					attr *
-						^
-						font-size <= tooltip_font_size \11
-						font-weight \600
-						data-forcegraph-tooltip-text \
-
-$raggu_web_front_explorer $bog_builderui_div
-	dataset_id \
-	selected_id? \
-	selected_edge_id? \
-	search? \
-	type_filter? \
-	rel_filter? \
-	legend_collapsed? false
-	rels_collapsed? false
-	aside_collapsed? false
-	ask_click? null
-	filter_search_text @ \🔍 Find node…
-	aside_title_text @ \Entity card
-	aside_relation_title_text @ \Relation card
-	aside_empty_text @ \Click a node or an edge
-	relations_title_template @ \Relations (%s)
-	sources_title_text @ \Sources (provenance)
-	sources_text @ \chunk #418 · chunk #902 …
-	ask_btn_text @ \💬 Ask about this entity
-	legend_title_text @ \Entity Types
-	legend_label* \
-	legend_count* \
-	legend_active* false
-	legend_click*? null
-	rels_title_text @ \Relation Types
-	rel_legend_label* \
-	rel_legend_count* \
-	rel_legend_active* false
-	rel_legend_click*? null
-	mock_badge_text @ \⚠ Mock data — backend is not connected
-	sub /
-		<= Canvas $bog_builderui_div sub /
-			<= Canvas_bg $bog_builderui_div sub /
-				<= Graph $raggu_web_front_explorer_forcegraph
-					graph_key <= dataset_id
-					nodes <= graph_nodes /
-					edges <= graph_edges /
-					selected_id? <=> selected_id?
-					selected_edge_id? <=> selected_edge_id?
-					search <= search?
-					filter_type <= type_filter?
-					filter_relation <= rel_filter?
-			<= Filters $bog_builderui_div sub /
-				<= Filter_search $mol_string
-					hint <= filter_search_text
-					value? <=> search?
-			<= Legends $bog_builderui_div sub /
-				<= Legend $bog_builderui_div
-					attr *
-						^
-						raggu_web_front_explorer_panel_collapsed <= legend_collapsed?
-					sub /
-						<= Legend_head $bog_builderui_div
-							event *
-								^
-								click? <=> legend_toggle? null
-							sub /
-								<= Legend_title $bog_builderui_div sub / <= legend_title_text
-								<= Legend_caret $bog_builderui_div sub / <= legend_caret \▾
-						<= Legend_list $bog_builderui_div sub <= legend_rows /
-							<= Legend_row* $bog_builderui_div
-								attr *
-									^
-									raggu_web_front_explorer_legend_on <= legend_active* false
-								event *
-									^
-									click? <=> legend_click*? null
-								sub /
-									<= Legend_dot* $bog_builderui_div
-									<= Legend_label* $bog_builderui_div sub / <= legend_label* \
-									<= Legend_count* $bog_builderui_div sub / <= legend_count* \
-				<= Rels $bog_builderui_div
-					attr *
-						^
-						raggu_web_front_explorer_panel_collapsed <= rels_collapsed?
-					sub /
-						<= Rels_head $bog_builderui_div
-							event *
-								^
-								click? <=> rels_toggle? null
-							sub /
-								<= Rels_title $bog_builderui_div sub / <= rels_title_text
-								<= Rels_caret $bog_builderui_div sub / <= rels_caret \▾
-						<= Rels_list $bog_builderui_div sub <= rel_legend_rows /
-							<= Rel_row* $bog_builderui_div
-								attr *
-									^
-									raggu_web_front_explorer_legend_on <= rel_legend_active* false
-								event *
-									^
-									click? <=> rel_legend_click*? null
-								sub /
-									<= Rel_row_label* $bog_builderui_div sub / <= rel_legend_label* \
-									<= Rel_row_count* $bog_builderui_div sub / <= rel_legend_count* \
-			<= Mock_badge $bog_builderui_div
-				attr *
-					^
-					raggu_web_front_explorer_mock_badge_showed <= is_mock false
-				sub / <= mock_badge_text
-		<= Aside $bog_builderui_div
-			attr *
-				^
-				raggu_web_front_explorer_aside_collapsed <= aside_collapsed?
-			sub /
-				<= Aside_head $bog_builderui_div sub /
-					<= Aside_toggle $bog_builderui_div
-						event * click? <=> aside_toggle? null
-						sub / <= aside_caret \⟩
-					<= Aside_title $bog_builderui_div sub / <= aside_title \
-				<= Aside_body $bog_builderui_div sub /
-					<= Entity_head $bog_builderui_div sub /
-						<= Entity_dot $bog_builderui_div
-						<= Entity_name $bog_builderui_div sub / <= entity_name \
-					<= Entity_type $bog_builderui_div sub / <= entity_type \
-					<= Entity_desc $bog_builderui_div sub / <= entity_desc \
-					<= Relations_title $bog_builderui_div sub / <= relations_title \
-					<= Relations_list $bog_builderui_div sub <= rel_rows /
-						<= Rel* $bog_builderui_div sub /
-							<= Rel_type* $bog_builderui_div sub / <= rel_type* \
-							<= Rel_target* $bog_builderui_div sub / <= rel_target* \
-					<= Sources_title $bog_builderui_div sub / <= sources_title_text
-					<= Sources $bog_builderui_div sub / <= sources_text
-					<= Ask_btn $bog_builderui_div
-						sub / <= ask_btn_text
-						event * click? <=> ask_click? null
 
 $bog_builderui_skeleton $bog_builderui_div
 	attr *
@@ -2108,9 +1759,7 @@ $raggu_web_front_summary $bog_builderui_div
 
 $raggu_web_front_app $bog_builderui_div
 	screen? \gallery
-	preset? \demo
 	dataset_id? \
-	settings_open? false
 	help_open? false
 	sidebar_collapsed? false
 	body /
@@ -2152,13 +1801,9 @@ $raggu_web_front_app $bog_builderui_div
 				dataset_id <= dataset_id
 				dataset_title <= dataset_title \
 				screen_title <= screen_title \
-				preset? <=> preset?
-				open_settings? <=> open_settings? null
 				open_help? <=> open_help? null
 				toggle_sidebar? <=> toggle_sidebar? null
 			<= Body $mol_scroll sub <= body
-		<= Settings $raggu_web_front_settings
-			showed? <=> settings_open?
 		<= Help $raggu_web_front_help
 			showed? <=> help_open?
 		<= Summary_popup $mol_view

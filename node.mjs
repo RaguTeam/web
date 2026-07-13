@@ -7356,64 +7356,316 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$raggu_web_front_topbar_preset) = class $raggu_web_front_topbar_preset extends ($.$bog_builderui_div) {
-		click(next){
+	($.$raggu_web_front_topbar) = class $raggu_web_front_topbar extends ($.$bog_builderui_div) {
+		toggle_sidebar(next){
 			if(next !== undefined) return next;
 			return null;
 		}
-		label(){
-			return "";
+		Sidebar_btn(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("◫");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Sidebar_btn_hint")));
+			(obj.click) = (next) => ((this.toggle_sidebar(next)));
+			return obj;
 		}
-		active(){
+		is_gallery(){
 			return false;
 		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_topbar_preset_active": (this.active())};
+		click_gallery(next){
+			if(next !== undefined) return next;
+			return null;
 		}
-		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
+		Nav_gallery(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("▤");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_gallery_hint")));
+			(obj.active) = () => ((this.is_gallery()));
+			(obj.click) = (next) => ((this.click_gallery(next)));
+			return obj;
+		}
+		is_explorer(){
+			return false;
+		}
+		no_dataset(){
+			return false;
+		}
+		click_explorer(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_explorer(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("◉");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_explorer_hint")));
+			(obj.active) = () => ((this.is_explorer()));
+			(obj.disabled) = () => ((this.no_dataset()));
+			(obj.click) = (next) => ((this.click_explorer(next)));
+			return obj;
+		}
+		is_chat(){
+			return false;
+		}
+		click_chat(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_chat(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("💬");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_chat_hint")));
+			(obj.active) = () => ((this.is_chat()));
+			(obj.disabled) = () => ((this.no_dataset()));
+			(obj.click) = (next) => ((this.click_chat(next)));
+			return obj;
+		}
+		is_dashboard(){
+			return false;
+		}
+		click_dashboard(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_dashboard(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("▦");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_dashboard_hint")));
+			(obj.active) = () => ((this.is_dashboard()));
+			(obj.disabled) = () => ((this.no_dataset()));
+			(obj.click) = (next) => ((this.click_dashboard(next)));
+			return obj;
+		}
+		is_summary(){
+			return false;
+		}
+		click_summary(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Nav_summary(){
+			const obj = new this.$.$raggu_web_front_topbar_nav();
+			(obj.icon) = () => ("✦");
+			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_summary_hint")));
+			(obj.active) = () => ((this.is_summary()));
+			(obj.click) = (next) => ((this.click_summary(next)));
+			return obj;
+		}
+		Nav(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Nav_gallery()), 
+				(this.Nav_explorer()), 
+				(this.Nav_chat()), 
+				(this.Nav_dashboard()), 
+				(this.Nav_summary())
+			]);
+			return obj;
+		}
+		open_help(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Help_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.open_help(next))});
+			(obj.sub) = () => ([(this.help_btn_text())]);
+			return obj;
+		}
+		Spacer_left(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.screen_title())]);
+			return obj;
+		}
+		Subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.dataset_title())]);
+			return obj;
+		}
+		Title_block(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Title()), (this.Subtitle())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		screen(next){
+			if(next !== undefined) return next;
+			return "gallery";
+		}
+		dataset_id(){
+			return "wiki";
+		}
+		dataset_title(){
+			return "";
+		}
+		screen_title(){
+			return "";
+		}
+		help_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_topbar_help_btn_text"));
 		}
 		sub(){
-			return [(this.label())];
+			return [
+				(this.Sidebar_btn()), 
+				(this.Nav()), 
+				(this.Help_btn()), 
+				(this.Spacer_left()), 
+				(this.Title_block()), 
+				(this.Spacer())
+			];
 		}
 	};
-	($mol_mem(($.$raggu_web_front_topbar_preset.prototype), "click"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "toggle_sidebar"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Sidebar_btn"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_gallery"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_gallery"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_explorer"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_explorer"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_chat"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_chat"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_dashboard"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_dashboard"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_summary"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_summary"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer_left"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Subtitle"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title_block"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_front_topbar.prototype), "screen"));
 
 
 ;
 "use strict";
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
+            is_gallery() { return this.screen() === 'gallery'; }
+            is_explorer() { return this.screen() === 'explorer'; }
+            is_chat() { return this.screen() === 'chat'; }
+            is_dashboard() { return this.screen() === 'dashboard'; }
+            is_summary() { return this.screen() === 'summary'; }
+            no_dataset() { return !this.dataset_id(); }
+            click_gallery() { this.screen('gallery'); return null; }
+            click_explorer() { this.screen('explorer'); return null; }
+            click_chat() { this.screen('chat'); return null; }
+            click_dashboard() { this.screen('dashboard'); return null; }
+            click_summary() { this.screen('summary'); return null; }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_gallery", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_explorer", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_chat", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_dashboard", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_topbar.prototype, "click_summary", null);
+        $$.$raggu_web_front_topbar = $raggu_web_front_topbar;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 "use strict";
 /** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    $mol_style_define($raggu_web_front_topbar_preset, {
-        font: { size: '11px', weight: 600 },
-        padding: {
-            top: '5px',
-            bottom: '5px',
-            left: '10px',
-            right: '10px',
+    $mol_style_define($raggu_web_front_topbar, {
+        height: '58px',
+        minHeight: '58px',
+        background: { color: $bog_builderui_tokens.card },
+        border: {
+            bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
         },
-        border: { radius: '5px' },
-        cursor: 'pointer',
-        color: $bog_builderui_tokens.shade,
-        '@': {
-            raggu_web_front_topbar_preset_active: {
-                true: {
-                    background: { color: $bog_builderui_tokens.card },
-                    color: $bog_builderui_tokens.text,
-                    box: {
-                        shadow: [{
-                                x: 0,
-                                y: '1px',
-                                blur: '2px',
-                                spread: 0,
-                                color: '#00000014',
-                            }],
-                    },
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '0.875rem',
+        padding: {
+            left: '1.25rem',
+            right: '1.25rem',
+        },
+        Nav: {
+            flex: { direction: 'row' },
+            gap: '0.125rem',
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '3px',
+                bottom: '3px',
+                left: '3px',
+                right: '3px',
+            },
+        },
+        Title_block: {
+            flex: { direction: 'column' },
+            align: { items: 'center' },
+            textAlign: 'center',
+        },
+        Title: {
+            font: { weight: 700, size: '15px' },
+        },
+        Subtitle: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Spacer_left: {
+            flex: { grow: 1 },
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Help_btn: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '6px',
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '7px',
+                bottom: '7px',
+                left: '12px',
+                right: '12px',
+            },
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+        },
+        // Навигация + центрированный заголовок не влезают уже на
+        // ноутбучных ширинах, поэтому враппим сильно раньше, чем раньше (720).
+        '@media': {
+            '(max-width: 1200px)': {
+                height: 'auto',
+                minHeight: '58px',
+                flexWrap: 'wrap',
+                gap: '0.5rem',
+                padding: {
+                    top: '8px',
+                    bottom: '8px',
+                    left: '0.75rem',
+                    right: '0.75rem',
                 },
             },
         },
@@ -7421,234 +7673,1425 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_ghost) = class $mol_ghost extends ($.$mol_view) {
-		Sub(){
-			const obj = new this.$.$mol_view();
+	($.$raggu_web_front_help_section) = class $raggu_web_front_help_section extends ($.$bog_builderui_div) {
+		Icon(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.icon())]);
 			return obj;
 		}
-	};
-	($mol_mem(($.$mol_ghost.prototype), "Sub"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Mixin view logic to DOM node of another component.
-         */
-        class $mol_ghost extends $.$mol_ghost {
-            dom_node_external(next) {
-                return this.Sub().dom_node(next);
-            }
-            dom_node_actual() {
-                this.dom_node();
-                const node = this.Sub().dom_node_actual();
-                const attr = this.attr();
-                const style = this.style();
-                const fields = this.field();
-                $mol_dom_render_attributes(node, attr);
-                $mol_dom_render_styles(node, style);
-                $mol_dom_render_fields(node, fields);
-                return node;
-            }
-            dom_tree() {
-                const Sub = this.Sub();
-                const node = Sub.dom_tree();
-                try {
-                    this.dom_node_actual();
-                    this.auto();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                }
-                return node;
-            }
-            title() {
-                return this.Sub().title();
-            }
-            minimal_width() {
-                return this.Sub().minimal_width();
-            }
-            minimal_height() {
-                return this.Sub().minimal_height();
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_ghost.prototype, "dom_node_actual", null);
-        $$.$mol_ghost = $mol_ghost;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_follower) = class $mol_follower extends ($.$mol_ghost) {
-		transform(){
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		Desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.desc())]);
+			return obj;
+		}
+		Media(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.media()));
+			return obj;
+		}
+		Text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Title()), 
+				(this.Desc()), 
+				(this.Media())
+			]);
+			return obj;
+		}
+		icon(){
 			return "";
 		}
-		Anchor(){
-			const obj = new this.$.$mol_view();
-			return obj;
+		title(){
+			return "";
 		}
-		align(){
-			return [-.5, -.5];
+		desc(){
+			return "";
 		}
-		offset(){
-			return [0, 0];
-		}
-		style(){
-			return {...(super.style()), "transform": (this.transform())};
-		}
-	};
-	($mol_mem(($.$mol_follower.prototype), "Anchor"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Marker on top of another component with tracking of its position.
-         */
-        class $mol_follower extends $.$mol_follower {
-            pos() {
-                const self_rect = this.view_rect();
-                const prev = $mol_wire_probe(() => this.pos());
-                const anchor_rect = this.Anchor()?.view_rect();
-                if (!anchor_rect)
-                    return null;
-                const offset = this.offset();
-                const align = this.align();
-                const left = Math.floor((prev?.left ?? 0)
-                    - (self_rect?.left ?? 0)
-                    + (self_rect?.width ?? 0) * align[0]
-                    + (anchor_rect?.left ?? 0)
-                    + offset[0] * (anchor_rect?.width ?? 0));
-                const top = Math.floor((prev?.top ?? 0)
-                    - (self_rect?.top ?? 0)
-                    + (self_rect?.height ?? 0) * align[1]
-                    + (anchor_rect?.top ?? 0)
-                    + offset[1] * (anchor_rect?.height ?? 0));
-                return { left, top };
-            }
-            transform() {
-                const pos = this.pos();
-                if (!pos)
-                    return 'scale(0)';
-                const { left, top } = pos;
-                return `translate( ${left}px, ${top}px )`;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_follower.prototype, "pos", null);
-        __decorate([
-            $mol_mem
-        ], $mol_follower.prototype, "transform", null);
-        $$.$mol_follower = $mol_follower;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/follower/follower.view.css", "[mol_follower] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\ttransition: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
-		bubble(){
-			return null;
-		}
-		Anchor(){
-			return null;
-		}
-		bubble_offset(){
-			return [0, 1];
-		}
-		bubble_align(){
-			return [0, 0];
-		}
-		bubble_content(){
+		media(){
 			return [];
 		}
-		height_max(){
-			return 9999;
+		sub(){
+			return [(this.Icon()), (this.Text())];
 		}
-		Bubble(){
-			const obj = new this.$.$mol_pop_bubble();
-			(obj.content) = () => ((this.bubble_content()));
-			(obj.height_max) = () => ((this.height_max()));
+	};
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Icon"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Title"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Desc"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Media"));
+	($mol_mem(($.$raggu_web_front_help_section.prototype), "Text"));
+
+
+;
+"use strict";
+
+
+;
+	($.$raggu_web_front_help) = class $raggu_web_front_help extends ($.$bog_builderui_div) {
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Backdrop(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
 			return obj;
 		}
-		Follower(){
-			const obj = new this.$.$mol_follower();
-			(obj.offset) = () => ((this.bubble_offset()));
-			(obj.align) = () => ((this.bubble_align()));
-			(obj.Anchor) = () => ((this.Anchor()));
-			(obj.Sub) = () => ((this.Bubble()));
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title_text())]);
+			return obj;
+		}
+		Header_sub(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.subtitle_text())]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_title()), (this.Header_sub())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Close_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			(obj.sub) = () => (["✕"]);
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Header_text()), 
+				(this.Spacer()), 
+				(this.Close_btn())
+			]);
+			return obj;
+		}
+		Intro(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.intro_text())]);
+			return obj;
+		}
+		Section_gallery(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("▤");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_gallery_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_gallery_desc")));
+			return obj;
+		}
+		Section_explorer(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("◉");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_desc")));
+			return obj;
+		}
+		Section_chat(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("💬");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_desc")));
+			return obj;
+		}
+		Section_dashboard(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("▦");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_desc")));
+			return obj;
+		}
+		Section_summary(){
+			const obj = new this.$.$raggu_web_front_help_section();
+			(obj.icon) = () => ("✦");
+			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_summary_title")));
+			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_summary_desc")));
+			return obj;
+		}
+		Body(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([
+				(this.Intro()), 
+				(this.Section_gallery()), 
+				(this.Section_explorer()), 
+				(this.Section_chat()), 
+				(this.Section_dashboard()), 
+				(this.Section_summary())
+			]);
+			return obj;
+		}
+		Panel(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header()), (this.Body())]);
 			return obj;
 		}
 		showed(next){
 			if(next !== undefined) return next;
 			return false;
 		}
-		align_vert(){
-			return "";
+		title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_help_title_text"));
 		}
-		align_hor(){
-			return "";
+		subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_help_subtitle_text"));
 		}
-		align(){
-			return "bottom_center";
+		intro_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_help_intro_text"));
 		}
-		prefer(){
-			return "vert";
-		}
-		auto(){
-			return [(this.bubble())];
+		attr(){
+			return {...(super.attr()), "raggu_web_front_help_showed": (this.showed())};
 		}
 		sub(){
-			return [(this.Anchor())];
-		}
-		sub_visible(){
-			return [(this.Anchor()), (this.Follower())];
+			return [(this.Backdrop()), (this.Panel())];
 		}
 	};
-	($mol_mem(($.$mol_pop.prototype), "Bubble"));
-	($mol_mem(($.$mol_pop.prototype), "Follower"));
-	($mol_mem(($.$mol_pop.prototype), "showed"));
-	($.$mol_pop_bubble) = class $mol_pop_bubble extends ($.$mol_view) {
-		content(){
-			return [];
+	($mol_mem(($.$raggu_web_front_help.prototype), "close"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Backdrop"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header_sub"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Close_btn"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Header"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Intro"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_gallery"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_explorer"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_chat"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_dashboard"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Section_summary"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Body"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "Panel"));
+	($mol_mem(($.$raggu_web_front_help.prototype), "showed"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_help extends $.$raggu_web_front_help {
+            close() {
+                this.showed(false);
+                return null;
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_help.prototype, "close", null);
+        $$.$raggu_web_front_help = $raggu_web_front_help;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_help, {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'none',
+        zIndex: 40,
+        '@': {
+            raggu_web_front_help_showed: {
+                true: { display: 'flex' },
+            },
+        },
+        Backdrop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: { color: '#1c1b1a59' },
+        },
+        Panel: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: '420px',
+            maxWidth: '100vw',
+            background: { color: $bog_builderui_tokens.card },
+            border: {
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            zIndex: 1,
+            flex: { direction: 'column' },
+            box: {
+                shadow: [{
+                        x: '-12px',
+                        y: 0,
+                        blur: '40px',
+                        spread: 0,
+                        color: '#0000001f',
+                    }],
+            },
+        },
+        Header: {
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '20px',
+                right: '20px',
+            },
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '0.75rem',
+        },
+        Header_text: {
+            flex: { direction: 'column' },
+            gap: '0.125rem',
+        },
+        Header_title: {
+            font: { weight: 700, size: '15px' },
+        },
+        Header_sub: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Close_btn: {
+            cursor: 'pointer',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '14px' },
+            padding: {
+                top: '4px',
+                bottom: '4px',
+                left: '8px',
+                right: '8px',
+            },
+            border: { radius: '6px' },
+        },
+        Body: {
+            // $mol_scroll по умолчанию grid — дети лягут друг на друга (1/1)
+            display: 'flex',
+            flex: { grow: 1, shrink: 1, direction: 'column' },
+            minHeight: 0,
+            padding: {
+                top: '16px',
+                bottom: '16px',
+                left: '20px',
+                right: '20px',
+            },
+            gap: '1rem',
+        },
+        Intro: {
+            font: { size: '13px' },
+            lineHeight: '1.5',
+            color: $bog_builderui_tokens.shade,
+        },
+    });
+    $mol_style_define($raggu_web_front_help_section, {
+        flex: { direction: 'row' },
+        gap: '0.75rem',
+        align: { items: 'flex-start' },
+        Icon: {
+            minWidth: '30px',
+            maxWidth: '30px',
+            height: '30px',
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            font: { size: '14px' },
+        },
+        Text: {
+            flex: { direction: 'column', shrink: 1 },
+            gap: '0.25rem',
+            minWidth: 0,
+        },
+        Title: {
+            font: { weight: 700, size: '13px' },
+        },
+        Desc: {
+            font: { size: '12px' },
+            lineHeight: '1.5',
+            color: $bog_builderui_tokens.shade,
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_gallery_card_preview) = class $raggu_web_front_gallery_card_preview extends ($.$bog_builderui_div) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("raggu/web/front/gallery/card/preview/preview.view.css", "[raggu_web_front_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+	($.$raggu_web_front_gallery_card) = class $raggu_web_front_gallery_card extends ($.$bog_builderui_div) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
 		}
-		height_max(){
-			return 9999;
+		Preview_label(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.preview_label_text())]);
+			return obj;
+		}
+		Domain_badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.domain())]);
+			return obj;
+		}
+		Preview(){
+			const obj = new this.$.$raggu_web_front_gallery_card_preview();
+			(obj.sub) = () => ([(this.Preview_label()), (this.Domain_badge())]);
+			return obj;
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		Desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.desc())]);
+			return obj;
+		}
+		tag_nodes(){
+			return "";
+		}
+		Tag_nodes(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.tag_nodes())]);
+			return obj;
+		}
+		tag_edges(){
+			return "";
+		}
+		Tag_edges(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.tag_edges())]);
+			return obj;
+		}
+		tag_comms(){
+			return "";
+		}
+		Tag_comms(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.tag_comms())]);
+			return obj;
+		}
+		Tags(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Tag_nodes()), 
+				(this.Tag_edges()), 
+				(this.Tag_comms())
+			]);
+			return obj;
+		}
+		id(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		domain(){
+			return "";
+		}
+		desc(){
+			return "";
+		}
+		nodes(){
+			return "";
+		}
+		edges(){
+			return "";
+		}
+		comms(){
+			return "";
+		}
+		active(){
+			return false;
+		}
+		preview_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_card_preview_label_text"));
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_front_gallery_card_active": (this.active())};
+		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.click(next))};
 		}
 		sub(){
-			return (this.content());
+			return [
+				(this.Preview()), 
+				(this.Title()), 
+				(this.Desc()), 
+				(this.Tags())
+			];
 		}
-		style(){
-			return {...(super.style()), "maxHeight": (this.height_max())};
+	};
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "click"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Preview_label"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Domain_badge"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Preview"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Title"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Desc"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tag_nodes"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tag_edges"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tag_comms"));
+	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tags"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_gallery_card extends $.$raggu_web_front_gallery_card {
+            unit(key) {
+                return this.$.$mol_locale.text(`$raggu_web_front_gallery_card_unit_${key}`) || '';
+            }
+            tag_nodes() { return `${this.nodes()} ${this.unit('nodes')}`; }
+            tag_edges() { return `${this.edges()} ${this.unit('edges')}`; }
+            tag_comms() { return `${this.comms()} ${this.unit('comms')}`; }
+        }
+        $$.$raggu_web_front_gallery_card = $raggu_web_front_gallery_card;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const tag_style = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 600,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+        background: { color: $bog_builderui_tokens.field },
+        border: { radius: '5px' },
+        padding: {
+            top: '3px',
+            bottom: '3px',
+            left: '7px',
+            right: '7px',
+        },
+    };
+    $mol_style_define($raggu_web_front_gallery_card, {
+        background: { color: $bog_builderui_tokens.card },
+        border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
+        padding: {
+            top: '12px',
+            bottom: '12px',
+            left: '12px',
+            right: '12px',
+        },
+        flex: { direction: 'column' },
+        cursor: 'pointer',
+        '@': {
+            raggu_web_front_gallery_card_active: {
+                true: {
+                    border: { color: $bog_builderui_tokens.current },
+                    background: { color: $bog_builderui_tokens.field },
+                },
+            },
+        },
+        Preview: {
+            height: '118px',
+            border: { radius: '7px' },
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            position: 'relative',
+        },
+        Preview_label: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+        },
+        Domain_badge: {
+            position: 'absolute',
+            top: '8px',
+            left: '8px',
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '7px',
+                right: '7px',
+            },
+            font: { size: '10px' },
+            color: $bog_builderui_tokens.shade,
+        },
+        Title: {
+            font: { weight: 700, size: '14px' },
+            margin: { top: '11px' },
+        },
+        Desc: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '4px' },
+            lineHeight: '1.4',
+        },
+        Tags: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '6px',
+            margin: { top: '10px' },
+        },
+        Tag_nodes: tag_style,
+        Tag_edges: tag_style,
+        Tag_comms: tag_style,
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_gallery) = class $raggu_web_front_gallery extends ($.$bog_builderui_div) {
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.header_title_text())]);
+			return obj;
+		}
+		Header_subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.header_subtitle_text())]);
+			return obj;
+		}
+		is_mock(){
+			return false;
+		}
+		Mock_badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_gallery_mock_badge_showed": (this.is_mock())});
+			(obj.sub) = () => ([(this.mock_badge_text())]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Header_title()), 
+				(this.Header_subtitle()), 
+				(this.Mock_badge())
+			]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_text()), (this.Spacer())]);
+			return obj;
+		}
+		card_id(id){
+			return "";
+		}
+		card_title(id){
+			return "";
+		}
+		card_domain(id){
+			return "";
+		}
+		card_desc(id){
+			return "";
+		}
+		card_nodes(id){
+			return "";
+		}
+		card_edges(id){
+			return "";
+		}
+		card_comms(id){
+			return "";
+		}
+		card_active(id){
+			return false;
+		}
+		click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Card(id){
+			const obj = new this.$.$raggu_web_front_gallery_card();
+			(obj.id) = () => ((this.card_id(id)));
+			(obj.title) = () => ((this.card_title(id)));
+			(obj.domain) = () => ((this.card_domain(id)));
+			(obj.desc) = () => ((this.card_desc(id)));
+			(obj.nodes) = () => ((this.card_nodes(id)));
+			(obj.edges) = () => ((this.card_edges(id)));
+			(obj.comms) = () => ((this.card_comms(id)));
+			(obj.active) = () => ((this.card_active(id)));
+			(obj.click) = (next) => ((this.click(id, next)));
+			return obj;
+		}
+		rows(){
+			return [(this.Card(id))];
+		}
+		Grid(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.rows()));
+			return obj;
+		}
+		dataset_id(){
+			return "wiki";
+		}
+		select_dataset(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		datasets(){
+			return [];
+		}
+		header_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_header_title_text"));
+		}
+		header_subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_header_subtitle_text"));
+		}
+		mock_badge_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_mock_badge_text"));
+		}
+		dataset_law_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_title"));
+		}
+		dataset_law_domain(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_domain"));
+		}
+		dataset_law_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_desc"));
+		}
+		dataset_wiki_title(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_title"));
+		}
+		dataset_wiki_domain(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_domain"));
+		}
+		dataset_wiki_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_desc"));
+		}
+		sub(){
+			return [(this.Header()), (this.Grid())];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header_subtitle"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Mock_badge"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header"));
+	($mol_mem_key(($.$raggu_web_front_gallery.prototype), "click"));
+	($mol_mem_key(($.$raggu_web_front_gallery.prototype), "Card"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "Grid"));
+	($mol_mem(($.$raggu_web_front_gallery.prototype), "select_dataset"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_rest_code;
+    (function ($mol_rest_code) {
+        $mol_rest_code[$mol_rest_code["Continue"] = 100] = "Continue";
+        $mol_rest_code[$mol_rest_code["Switching protocols"] = 101] = "Switching protocols";
+        $mol_rest_code[$mol_rest_code["Processing"] = 102] = "Processing";
+        $mol_rest_code[$mol_rest_code["OK"] = 200] = "OK";
+        $mol_rest_code[$mol_rest_code["Created"] = 201] = "Created";
+        $mol_rest_code[$mol_rest_code["Accepted"] = 202] = "Accepted";
+        $mol_rest_code[$mol_rest_code["Non-Authoritative Information"] = 203] = "Non-Authoritative Information";
+        $mol_rest_code[$mol_rest_code["No Content"] = 204] = "No Content";
+        $mol_rest_code[$mol_rest_code["Reset Content"] = 205] = "Reset Content";
+        $mol_rest_code[$mol_rest_code["Partial Content"] = 206] = "Partial Content";
+        $mol_rest_code[$mol_rest_code["Multi Status"] = 207] = "Multi Status";
+        $mol_rest_code[$mol_rest_code["Already Reported"] = 208] = "Already Reported";
+        $mol_rest_code[$mol_rest_code["IM Used"] = 226] = "IM Used";
+        $mol_rest_code[$mol_rest_code["Multiple Choices"] = 300] = "Multiple Choices";
+        $mol_rest_code[$mol_rest_code["Moved Permanently"] = 301] = "Moved Permanently";
+        $mol_rest_code[$mol_rest_code["Found"] = 302] = "Found";
+        $mol_rest_code[$mol_rest_code["See Other"] = 303] = "See Other";
+        $mol_rest_code[$mol_rest_code["Not Modified"] = 304] = "Not Modified";
+        $mol_rest_code[$mol_rest_code["Use Proxy"] = 305] = "Use Proxy";
+        $mol_rest_code[$mol_rest_code["Temporary Redirect"] = 307] = "Temporary Redirect";
+        $mol_rest_code[$mol_rest_code["Bad Request"] = 400] = "Bad Request";
+        $mol_rest_code[$mol_rest_code["Unauthorized"] = 401] = "Unauthorized";
+        $mol_rest_code[$mol_rest_code["Payment Required"] = 402] = "Payment Required";
+        $mol_rest_code[$mol_rest_code["Forbidden"] = 403] = "Forbidden";
+        $mol_rest_code[$mol_rest_code["Not Found"] = 404] = "Not Found";
+        $mol_rest_code[$mol_rest_code["Method Not Allowed"] = 405] = "Method Not Allowed";
+        $mol_rest_code[$mol_rest_code["Not Acceptable"] = 406] = "Not Acceptable";
+        $mol_rest_code[$mol_rest_code["Proxy Authentication Required"] = 407] = "Proxy Authentication Required";
+        $mol_rest_code[$mol_rest_code["Request Timeout"] = 408] = "Request Timeout";
+        $mol_rest_code[$mol_rest_code["Conflict"] = 409] = "Conflict";
+        $mol_rest_code[$mol_rest_code["Gone"] = 410] = "Gone";
+        $mol_rest_code[$mol_rest_code["Length Required"] = 411] = "Length Required";
+        $mol_rest_code[$mol_rest_code["Precondition Failed"] = 412] = "Precondition Failed";
+        $mol_rest_code[$mol_rest_code["Request Entity Too Large"] = 413] = "Request Entity Too Large";
+        $mol_rest_code[$mol_rest_code["Request URI Too Long"] = 414] = "Request URI Too Long";
+        $mol_rest_code[$mol_rest_code["Unsupported Media Type"] = 415] = "Unsupported Media Type";
+        $mol_rest_code[$mol_rest_code["Requested Range Not Satisfiable"] = 416] = "Requested Range Not Satisfiable";
+        $mol_rest_code[$mol_rest_code["Expectation Failed"] = 417] = "Expectation Failed";
+        $mol_rest_code[$mol_rest_code["Teapot"] = 418] = "Teapot";
+        $mol_rest_code[$mol_rest_code["Unprocessable Entity"] = 422] = "Unprocessable Entity";
+        $mol_rest_code[$mol_rest_code["Locked"] = 423] = "Locked";
+        $mol_rest_code[$mol_rest_code["Failed Dependency"] = 424] = "Failed Dependency";
+        $mol_rest_code[$mol_rest_code["Upgrade Required"] = 426] = "Upgrade Required";
+        $mol_rest_code[$mol_rest_code["Precondition Required"] = 428] = "Precondition Required";
+        $mol_rest_code[$mol_rest_code["Too Many Requests"] = 429] = "Too Many Requests";
+        $mol_rest_code[$mol_rest_code["Request Header Fields Too Large"] = 431] = "Request Header Fields Too Large";
+        $mol_rest_code[$mol_rest_code["Unavailable For Legal Reasons"] = 451] = "Unavailable For Legal Reasons";
+        $mol_rest_code[$mol_rest_code["Internal Server Error"] = 500] = "Internal Server Error";
+        $mol_rest_code[$mol_rest_code["Not Implemented"] = 501] = "Not Implemented";
+        $mol_rest_code[$mol_rest_code["Bad Gateway"] = 502] = "Bad Gateway";
+        $mol_rest_code[$mol_rest_code["Service Unavailable"] = 503] = "Service Unavailable";
+        $mol_rest_code[$mol_rest_code["Gateway Timeout"] = 504] = "Gateway Timeout";
+        $mol_rest_code[$mol_rest_code["HTTP Version Not Supported"] = 505] = "HTTP Version Not Supported";
+        $mol_rest_code[$mol_rest_code["Insufficient Storage"] = 507] = "Insufficient Storage";
+        $mol_rest_code[$mol_rest_code["Loop Detected"] = 508] = "Loop Detected";
+        $mol_rest_code[$mol_rest_code["Not Extended"] = 510] = "Not Extended";
+        $mol_rest_code[$mol_rest_code["Network Authentication Required"] = 511] = "Network Authentication Required";
+        $mol_rest_code[$mol_rest_code["Network Read Timeout Error"] = 598] = "Network Read Timeout Error";
+        $mol_rest_code[$mol_rest_code["Network Connect Timeout Error"] = 599] = "Network Connect Timeout Error";
+    })($mol_rest_code = $.$mol_rest_code || ($.$mol_rest_code = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function pass(data) {
+        return data;
+    }
+    function $mol_error_fence(task, fallback, loading = pass) {
+        try {
+            return task();
+        }
+        catch (error) {
+            let normalized;
+            try {
+                normalized = $mol_promise_like(error) ? loading(error) : fallback(error);
+            }
+            catch (sub_error) {
+                normalized = $mol_promise_like(sub_error) ? sub_error : new $mol_error_mix(sub_error.message, { error }, sub_error);
+            }
+            if (normalized instanceof Error || $mol_promise_like(normalized)) {
+                $mol_fail_hidden(normalized);
+            }
+            return normalized;
+        }
+    }
+    $.$mol_error_fence = $mol_error_fence;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_error_enriched(cause, cb) {
+        return $mol_error_fence(cb, e => new $mol_error_mix(e.message, cause, e));
+    }
+    $.$mol_error_enriched = $mol_error_enriched;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $mol_object {
+        native;
+        request;
+        status() {
+            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
+            return types[Math.floor(this.native.status / 100)];
+        }
+        code() {
+            return this.native.status;
+        }
+        ok() {
+            return this.native.ok;
+        }
+        message() {
+            return $mol_rest_code[this.code()] || `HTTP Error ${this.code()}`;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const mime = this.mime() || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).json());
+        }
+        blob() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).blob());
+        }
+        buffer() {
+            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).arrayBuffer());
+        }
+        xml() {
+            return $mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $mol_action
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch_request extends $mol_object {
+        native;
+        response_async() {
+            const controller = new AbortController();
+            let done = false;
+            const request = new Request(this.native, { signal: controller.signal });
+            const promise = fetch(request).finally(() => {
+                done = true;
+            });
+            return Object.assign(promise, {
+                destructor: () => {
+                    // Abort of done request breaks response parsing
+                    if (!done && !controller.signal.aborted)
+                        controller.abort();
+                },
+            });
+        }
+        response() {
+            return this.$.$mol_fetch_response.make({
+                native: $mol_wire_sync(this).response_async(),
+                request: this
+            });
+        }
+        success() {
+            const response = this.response();
+            if (response.status() === 'success')
+                return response;
+            throw new Error(response.message(), { cause: response });
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch_request.prototype, "response", null);
+    $.$mol_fetch_request = $mol_fetch_request;
+    class $mol_fetch extends $mol_object {
+        static request(input, init) {
+            return this.$.$mol_fetch_request.make({
+                native: new Request(input, init)
+            });
+        }
+        static response(input, init) {
+            return this.request(input, init).response();
+        }
+        static success(input, init) {
+            return this.request(input, init).success();
+        }
+        static stream(input, init) {
+            return this.success(input, init).stream();
+        }
+        static text(input, init) {
+            return this.success(input, init).text();
+        }
+        static json(input, init) {
+            return this.success(input, init).json();
+        }
+        static blob(input, init) {
+            return this.success(input, init).blob();
+        }
+        static buffer(input, init) {
+            return this.success(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.success(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.success(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.success(input, init).html();
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_fetch, "request", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$raggu_web_front_api_ragu_health = {
+        method: "GET",
+        route: "/api/v1/health",
+        params: undefined,
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_capabilities = {
+        method: "GET",
+        route: "/api/v1/capabilities",
+        params: undefined,
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_list_datasets = {
+        method: "GET",
+        route: "/api/v1/datasets",
+        params: undefined,
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_dataset = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_graph = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_node = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}",
+        params: {},
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_node_neighbors = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}/neighbors",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_communities = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/graph/communities",
+        params: {},
+        query: undefined,
+        body: undefined,
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_create_agent_message = {
+        method: "POST",
+        route: "/api/v1/datasets/{dataset_id}/agent/messages",
+        params: {},
+        query: undefined,
+        body: {},
+        out: {},
+    };
+    $.$raggu_web_front_api_ragu_get_agent_suggestions = {
+        method: "GET",
+        route: "/api/v1/datasets/{dataset_id}/agent/suggestions",
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    /** Build final URL: substitute `{placeholders}` in route, append querystring. */
+    function $raggu_web_front_api_url(endpoint, route, params, query) {
+        let path = route;
+        if (params) {
+            for (const key in params) {
+                path = path.replace(`{${key}}`, encodeURIComponent(String(params[key])));
+            }
+        }
+        const qs = [];
+        if (query) {
+            for (const key in query) {
+                const val = query[key];
+                if (val === undefined || val === null)
+                    continue;
+                if (Array.isArray(val)) {
+                    for (const item of val)
+                        qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
+                }
+                else {
+                    qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(val))}`);
+                }
+            }
+        }
+        const suffix = qs.length ? `?${qs.join('&')}` : '';
+        return `${endpoint}${path}${suffix}`;
+    }
+    /**
+     * Backend base URL — the ONE line to change when the backend is deployed.
+     * No path suffix here: operation `route`s already carry `/api/v1/...`
+     * from FastAPI's OpenAPI dump.
+     */
+    $.$raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org';
+    /**
+     * Effective endpoint: the `?api=<url>` app argument overrides the default,
+     * so a freshly deployed backend can be pointed at WITHOUT a rebuild —
+     * e.g. `...test.html#!api=https%3A%2F%2Fback.example.com`.
+     * Reactive: reads propagate via $mol_state_arg, so changing the arg refetches.
+     */
+    function $raggu_web_front_api_endpoint() {
+        return $mol_state_arg.value('api') || $.$raggu_web_front_api_endpoint_default;
+    }
+    $.$raggu_web_front_api_endpoint = $raggu_web_front_api_endpoint;
+    /**
+     * Детали ребра — симметрично get_node. На бэке ручки ПОКА НЕТ, дескриптор
+     * написан руками под согласованный контракт. Когда бэк добавит её в
+     * openapi.json, генератор создаст одноимённую константу в ragu.openapi.ts —
+     * тогда эту удалить (билд сам напомнит конфликтом имён). Фронт до тех пор
+     * фолбэчится на данные из get_graph.
+     */
+    $.$raggu_web_front_api_ragu_get_edge = {
+        method: 'get',
+        route: '/api/v1/datasets/{dataset_id}/graph/edges/{edge_id}',
+        params: {},
+        query: {},
+        body: undefined,
+        out: {},
+    };
+    /**
+     * Typed REST client factory for OpenAPI-generated operation descriptors.
+     *
+     * Returns a callable that takes an operation constant plus options and
+     * synchronously (via wire) returns the parsed JSON body. Any network
+     * error propagates as an exception so `$mol_view` shows an error plate.
+     */
+    $.$raggu_web_front_api = (() => {
+        const init = {
+            credentials: 'omit',
+            cache: 'no-cache',
+        };
+        return function call(op, opts = {}) {
+            const url = $raggu_web_front_api_url($raggu_web_front_api_endpoint(), op.route, opts.params, opts.query);
+            const req = { ...init, method: op.method };
+            if (opts.body !== undefined) {
+                req.headers = { ...(init.headers ?? {}), 'content-type': 'application/json' };
+                req.body = JSON.stringify(opts.body);
+            }
+            return $mol_fetch.json(url, req);
+        };
+    })();
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        // Статичные моки — на них показываем схему локализации через view.tree @.
+        // Реальные датасеты приходят с бэка через remote_datasets и несут dynamic-строки.
+        const BUILTIN = [
+            { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
+            { id: 'wiki', nodes: '2.41k', edges: '9.1k', comms: '38' },
+        ];
+        function format_count(n) {
+            if (n >= 1000) {
+                const k = n / 1000;
+                return (k >= 10 ? k.toFixed(1) : k.toFixed(2)) + 'k';
+            }
+            return String(n);
+        }
+        class $raggu_web_front_gallery extends $.$raggu_web_front_gallery {
+            // URL flag `?mock=1` → BUILTIN.
+            mock_flag() {
+                return this.$.$mol_state_arg.value('mock') === '1';
+            }
+            // Reactive fetch of preindexed datasets. While loading, the wire promise
+            // is rethrown as usual; a real transport error falls back to BUILTIN moks
+            // so the demo stays alive without the backend.
+            remote_datasets() {
+                if (this.mock_flag())
+                    return null;
+                try {
+                    const cards = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_list_datasets, { query: { locale: 'ru' } });
+                    return cards.map((c) => ({
+                        id: c.id,
+                        nodes: format_count(c.stats.nodes),
+                        edges: format_count(c.stats.edges),
+                        comms: String(c.stats.communities),
+                        dynamic: { title: c.title, domain: c.domain, desc: c.description },
+                    }));
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    console.warn('Datasets fetch failed, falling back to mock:', error);
+                    return null;
+                }
+            }
+            // Показываем юзеру плашку, что перед ним моки, а не данные с бэка.
+            is_mock() {
+                return this.remote_datasets() === null;
+            }
+            datasets() {
+                return this.remote_datasets() ?? BUILTIN;
+            }
+            rows() {
+                return this.datasets().map(ds => this.Card(ds.id));
+            }
+            dataset(id) {
+                return this.datasets().find(d => d.id === id) ?? BUILTIN[0];
+            }
+            card_id(id) { return id; }
+            card_active(id) { return id === this.dataset_id(); }
+            // Бэк-датасеты кладут title/domain/desc в dynamic — рендерим напрямую.
+            // Моки 'law' и 'wiki' резолвятся через @-объявленные строки view.tree.
+            card_title(id) {
+                const ds = this.dataset(id);
+                if (ds.dynamic)
+                    return ds.dynamic.title;
+                if (id === 'law')
+                    return this.dataset_law_title();
+                if (id === 'wiki')
+                    return this.dataset_wiki_title();
+                return '';
+            }
+            card_domain(id) {
+                const ds = this.dataset(id);
+                if (ds.dynamic)
+                    return ds.dynamic.domain;
+                if (id === 'law')
+                    return this.dataset_law_domain();
+                if (id === 'wiki')
+                    return this.dataset_wiki_domain();
+                return '';
+            }
+            card_desc(id) {
+                const ds = this.dataset(id);
+                if (ds.dynamic)
+                    return ds.dynamic.desc;
+                if (id === 'law')
+                    return this.dataset_law_desc();
+                if (id === 'wiki')
+                    return this.dataset_wiki_desc();
+                return '';
+            }
+            card_nodes(id) { return this.dataset(id).nodes; }
+            card_edges(id) { return this.dataset(id).edges; }
+            card_comms(id) { return this.dataset(id).comms; }
+            click(id) {
+                this.select_dataset(id);
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_gallery.prototype, "remote_datasets", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_gallery.prototype, "click", null);
+        $$.$raggu_web_front_gallery = $raggu_web_front_gallery;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_gallery, {
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
+        padding: {
+            top: '1.5rem',
+            bottom: '1.5rem',
+            left: '1.75rem',
+            right: '1.75rem',
+        },
+        Header: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            align: { items: 'flex-end' },
+            gap: '0.875rem',
+            margin: { bottom: '1.25rem' },
+        },
+        Header_text: {
+            flex: { direction: 'column', grow: 1, shrink: 1 },
+            minWidth: 0,
+        },
+        Header_title: {
+            font: { weight: 700, size: '20px' },
+        },
+        Header_subtitle: {
+            font: { size: '13px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '3px' },
+        },
+        Mock_badge: {
+            display: 'none',
+            alignSelf: 'flex-start',
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: '#8a6d1b',
+            background: { color: '#f5c84226' },
+            border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '6px' },
+            padding: {
+                top: '3px',
+                bottom: '3px',
+                left: '8px',
+                right: '8px',
+            },
+            margin: { top: '8px' },
+            '@': {
+                raggu_web_front_gallery_mock_badge_showed: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Grid: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '16px',
+            minWidth: 0,
+        },
+        '@media': {
+            '(max-width: 720px)': {
+                padding: {
+                    top: '1rem',
+                    bottom: '1rem',
+                    left: '0.75rem',
+                    right: '0.75rem',
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_line) = class $mol_svg_line extends ($.$mol_svg) {
+		from(){
+			return [];
+		}
+		to(){
+			return [];
+		}
+		from_x(){
+			return "";
+		}
+		from_y(){
+			return "";
+		}
+		to_x(){
+			return "";
+		}
+		to_y(){
+			return "";
+		}
+		dom_name(){
+			return "line";
+		}
+		pos(){
+			return [(this.from()), (this.to())];
 		}
 		attr(){
 			return {
 				...(super.attr()), 
-				"tabindex": 0, 
-				"popover": "manual"
+				"x1": (this.from_x()), 
+				"y1": (this.from_y()), 
+				"x2": (this.to_x()), 
+				"y2": (this.to_y())
 			};
 		}
 	};
@@ -7664,116 +9107,102 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        /**
-         * `Bubble` that can be shown anchored to `Anchor` element.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
-         */
-        class $mol_pop extends $.$mol_pop {
-            showed(next = false) {
-                this.focused();
-                return next;
+        class $mol_svg_line extends $.$mol_svg_line {
+            from() {
+                return this.pos()[0];
             }
-            sub_visible() {
-                return [
-                    this.Anchor(),
-                    ...this.showed() ? [this.Follower()] : [],
-                ];
+            from_x() {
+                return this.from()[0];
             }
-            height_max() {
-                const viewport = this.$.$mol_window.size();
-                const rect_bubble = this.view_rect();
-                const align = this.align_vert();
-                if (align === 'bottom')
-                    return (viewport.height - rect_bubble.bottom);
-                if (align === 'top')
-                    return rect_bubble.top;
-                return 0;
+            from_y() {
+                return this.from()[1];
             }
-            align() {
-                switch (this.prefer()) {
-                    case 'hor': return `${this.align_hor()}_${this.align_vert()}`;
-                    case 'vert': return `${this.align_vert()}_${this.align_hor()}`;
-                    default: return this.prefer();
-                }
+            to() {
+                return this.pos()[1];
             }
-            align_vert() {
-                const rect_pop = this.view_rect();
-                if (!rect_pop)
-                    return 'suspense';
-                const viewport = this.$.$mol_window.size();
-                return rect_pop.top > viewport.height / 2 ? 'top' : 'bottom';
+            to_x() {
+                return this.to()[0];
             }
-            align_hor() {
-                const rect_pop = this.view_rect();
-                if (!rect_pop)
-                    return 'suspense';
-                const viewport = this.$.$mol_window.size();
-                return rect_pop.left > viewport.width / 2 ? 'left' : 'right';
-            }
-            bubble_offset() {
-                const tags = new Set(this.align().split('_'));
-                if (tags.has('suspense'))
-                    return [0, 0];
-                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
-                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
-                if ([...tags][0] === hor) {
-                    return [
-                        { left: 0, center: .5, right: 1 }[hor],
-                        { top: 1, center: .5, bottom: 0 }[vert],
-                    ];
-                }
-                else {
-                    return [
-                        { left: 1, center: .5, right: 0 }[hor],
-                        { top: 0, center: .5, bottom: 1 }[vert],
-                    ];
-                }
-            }
-            bubble_align() {
-                const tags = new Set(this.align().split('_'));
-                if (tags.has('suspense'))
-                    return [-.5, -.5];
-                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
-                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
-                return [
-                    { left: -1, center: -.5, right: 0, suspense: -.5 }[hor],
-                    { top: -1, center: -.5, bottom: 0, suspense: -.5 }[vert],
-                ];
-            }
-            bubble() {
-                if (!this.showed())
-                    return;
-                this.Bubble().dom_node().showPopover?.();
+            to_y() {
+                return this.to()[1];
             }
         }
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "showed", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "sub_visible", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "height_max", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align_vert", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "align_hor", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "bubble_offset", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "bubble_align", null);
-        __decorate([
-            $mol_mem
-        ], $mol_pop.prototype, "bubble", null);
-        $$.$mol_pop = $mol_pop;
+        $$.$mol_svg_line = $mol_svg_line;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_group) = class $mol_svg_group extends ($.$mol_svg) {
+		dom_name(){
+			return "g";
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+	($.$mol_svg_text) = class $mol_svg_text extends ($.$mol_svg) {
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		align(){
+			return "middle";
+		}
+		align_hor(){
+			return (this.align());
+		}
+		align_vert(){
+			return "baseline";
+		}
+		text(){
+			return "";
+		}
+		dom_name(){
+			return "text";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y()), 
+				"text-anchor": (this.align_hor()), 
+				"alignment-baseline": (this.align_vert())
+			};
+		}
+		sub(){
+			return [(this.text())];
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_text extends $.$mol_svg_text {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_text = $mol_svg_text;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -7781,57 +9210,1896 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/pop/pop.view.css", "@keyframes mol_pop_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tborder: none;\n\tpadding: 0;\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: fixed;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: calc( 100vw - var(--mol_gap_page) );\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n\t/* Safari ios layer fix, https://t.me/mam_mol/170017 */\n\ttransform: translateZ(0);\n\tanimation: mol_pop_show .1s ease-in;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n");
+    $mol_style_attach("mol/svg/text/text.view.css", "[mol_svg_text] {\n\tfill: currentColor;\n\tstroke: none;\n}\n");
 })($ || ($ = {}));
 
 ;
-	($.$bog_builderui_card) = class $bog_builderui_card extends ($.$bog_builderui_div) {};
+	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
+		radius(){
+			return ".5%";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		dom_name(){
+			return "circle";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"r": (this.radius()), 
+				"cx": (this.pos_x()), 
+				"cy": (this.pos_y())
+			};
+		}
+	};
 
 
 ;
 "use strict";
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_circle extends $.$mol_svg_circle {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_circle = $mol_svg_circle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_svg_rect) = class $mol_svg_rect extends ($.$mol_svg) {
+		width(){
+			return "0";
+		}
+		height(){
+			return "0";
+		}
+		pos_x(){
+			return "";
+		}
+		pos_y(){
+			return "";
+		}
+		dom_name(){
+			return "rect";
+		}
+		pos(){
+			return [];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"width": (this.width()), 
+				"height": (this.height()), 
+				"x": (this.pos_x()), 
+				"y": (this.pos_y())
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg_rect extends $.$mol_svg_rect {
+            pos_x() {
+                return this.pos()[0];
+            }
+            pos_y() {
+                return this.pos()[1];
+            }
+        }
+        $$.$mol_svg_rect = $mol_svg_rect;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_explorer_forcegraph) = class $raggu_web_front_explorer_forcegraph extends ($.$mol_svg_root) {
+		computed_view_box(){
+			return "-300 -300 600 600";
+		}
+		wheel(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		pan_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		pan_move(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		pan_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		bg_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edge_x1(id){
+			return "";
+		}
+		edge_y1(id){
+			return "";
+		}
+		edge_x2(id){
+			return "";
+		}
+		edge_y2(id){
+			return "";
+		}
+		edge_id(id){
+			return "";
+		}
+		edge_color(id){
+			return "#7a7672";
+		}
+		edge_width(id){
+			return "1";
+		}
+		edge_opacity(id){
+			return "0.55";
+		}
+		edge_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edge_hover_enter(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edge_hover_leave(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Edge(id){
+			const obj = new this.$.$mol_svg_line();
+			(obj.from_x) = () => ((this.edge_x1(id)));
+			(obj.from_y) = () => ((this.edge_y1(id)));
+			(obj.to_x) = () => ((this.edge_x2(id)));
+			(obj.to_y) = () => ((this.edge_y2(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_line.prototype.attr.call(obj)), 
+				"data-edge-id": (this.edge_id(id)), 
+				"stroke": (this.edge_color(id)), 
+				"stroke-width": (this.edge_width(id)), 
+				"stroke-opacity": (this.edge_opacity(id)), 
+				"cursor": "pointer"
+			});
+			(obj.event) = () => ({
+				...(this.$.$mol_svg_line.prototype.event.call(obj)), 
+				"click": (next) => (this.edge_click(id, next)), 
+				"pointerenter": (next) => (this.edge_hover_enter(id, next)), 
+				"pointerleave": (next) => (this.edge_hover_leave(id, next))
+			});
+			return obj;
+		}
+		edge_views(){
+			return [(this.Edge(id))];
+		}
+		G_edges(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.sub) = () => ((this.edge_views()));
+			return obj;
+		}
+		edge_label_x(id){
+			return "";
+		}
+		edge_label_y(id){
+			return "";
+		}
+		edge_label_text(id){
+			return "";
+		}
+		edge_label_font_size(){
+			return "8";
+		}
+		edge_label_opacity(id){
+			return "0.75";
+		}
+		Edge_label(id){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.edge_label_x(id)));
+			(obj.pos_y) = () => ((this.edge_label_y(id)));
+			(obj.align) = () => ("middle");
+			(obj.align_vert) = () => ("middle");
+			(obj.text) = () => ((this.edge_label_text(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"data-edge-id": (this.edge_id(id)), 
+				"data-forcegraph-edge-label": "", 
+				"font-size": (this.edge_label_font_size()), 
+				"fill-opacity": (this.edge_label_opacity(id)), 
+				"cursor": "pointer"
+			});
+			(obj.event) = () => ({
+				...(this.$.$mol_svg_text.prototype.event.call(obj)), 
+				"click": (next) => (this.edge_click(id, next)), 
+				"pointerenter": (next) => (this.edge_hover_enter(id, next)), 
+				"pointerleave": (next) => (this.edge_hover_leave(id, next))
+			});
+			return obj;
+		}
+		edge_label_views(){
+			return [(this.Edge_label(id))];
+		}
+		G_edge_labels(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.sub) = () => ((this.edge_label_views()));
+			return obj;
+		}
+		node_x(id){
+			return "";
+		}
+		node_y(id){
+			return "";
+		}
+		node_radius(id){
+			return "6";
+		}
+		node_id(id){
+			return "";
+		}
+		node_color(id){
+			return "#7c6ce0";
+		}
+		node_opacity(id){
+			return "1";
+		}
+		node_stroke(id){
+			return "transparent";
+		}
+		node_stroke_width(id){
+			return "0";
+		}
+		click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		hover_enter(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		hover_leave(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Node(id){
+			const obj = new this.$.$mol_svg_circle();
+			(obj.pos_x) = () => ((this.node_x(id)));
+			(obj.pos_y) = () => ((this.node_y(id)));
+			(obj.radius) = () => ((this.node_radius(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
+				"data-node-id": (this.node_id(id)), 
+				"fill": (this.node_color(id)), 
+				"fill-opacity": (this.node_opacity(id)), 
+				"stroke": (this.node_stroke(id)), 
+				"stroke-width": (this.node_stroke_width(id)), 
+				"cursor": "pointer"
+			});
+			(obj.event) = () => ({
+				...(this.$.$mol_svg_circle.prototype.event.call(obj)), 
+				"click": (next) => (this.click(id, next)), 
+				"pointerenter": (next) => (this.hover_enter(id, next)), 
+				"pointerleave": (next) => (this.hover_leave(id, next))
+			});
+			return obj;
+		}
+		node_views(){
+			return [(this.Node(id))];
+		}
+		G_nodes(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.sub) = () => ((this.node_views()));
+			return obj;
+		}
+		node_label_x(id){
+			return "";
+		}
+		node_label_y(id){
+			return "";
+		}
+		node_label_text(id){
+			return "";
+		}
+		node_label_font_size(){
+			return "10";
+		}
+		node_label_opacity(id){
+			return "1";
+		}
+		Node_label(id){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.node_label_x(id)));
+			(obj.pos_y) = () => ((this.node_label_y(id)));
+			(obj.align) = () => ("middle");
+			(obj.text) = () => ((this.node_label_text(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"data-forcegraph-node-label": "", 
+				"font-size": (this.node_label_font_size()), 
+				"fill-opacity": (this.node_label_opacity(id))
+			});
+			return obj;
+		}
+		node_label_views(){
+			return [(this.Node_label(id))];
+		}
+		G_node_labels(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
+			(obj.sub) = () => ((this.node_label_views()));
+			return obj;
+		}
+		tooltip_bg_x(){
+			return "0";
+		}
+		tooltip_bg_y(){
+			return "0";
+		}
+		tooltip_bg_w(){
+			return "0";
+		}
+		tooltip_bg_h(){
+			return "0";
+		}
+		Tooltip_bg(){
+			const obj = new this.$.$mol_svg_rect();
+			(obj.pos_x) = () => ((this.tooltip_bg_x()));
+			(obj.pos_y) = () => ((this.tooltip_bg_y()));
+			(obj.width) = () => ((this.tooltip_bg_w()));
+			(obj.height) = () => ((this.tooltip_bg_h()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_rect.prototype.attr.call(obj)), 
+				"rx": "3", 
+				"ry": "3", 
+				"stroke-width": "1", 
+				"data-forcegraph-tooltip-bg": ""
+			});
+			return obj;
+		}
+		tooltip_x(){
+			return "0";
+		}
+		tooltip_y(){
+			return "0";
+		}
+		tooltip_text(){
+			return "";
+		}
+		tooltip_font_size(){
+			return "11";
+		}
+		Tooltip_text(){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.tooltip_x()));
+			(obj.pos_y) = () => ((this.tooltip_y()));
+			(obj.align) = () => ("middle");
+			(obj.align_vert) = () => ("middle");
+			(obj.text) = () => ((this.tooltip_text()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"font-size": (this.tooltip_font_size()), 
+				"font-weight": "600", 
+				"data-forcegraph-tooltip-text": ""
+			});
+			return obj;
+		}
+		tooltip_sub(){
+			return [(this.Tooltip_bg()), (this.Tooltip_text())];
+		}
+		Tooltip(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
+			(obj.sub) = () => ((this.tooltip_sub()));
+			return obj;
+		}
+		view_box(){
+			return (this.computed_view_box());
+		}
+		aspect(){
+			return "xMidYMid meet";
+		}
+		select(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		selected_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hovered_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		selected_edge_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hovered_edge_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		drag_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		search(){
+			return "";
+		}
+		filter_type(){
+			return "";
+		}
+		filter_relation(){
+			return "";
+		}
+		filter_comms(){
+			return [];
+		}
+		comm_colors(){
+			return {};
+		}
+		graph_key(){
+			return "";
+		}
+		nodes(){
+			return [];
+		}
+		edges(){
+			return [];
+		}
+		pan_x(next){
+			if(next !== undefined) return next;
+			return +0;
+		}
+		pan_y(next){
+			if(next !== undefined) return next;
+			return +0;
+		}
+		zoom(next){
+			if(next !== undefined) return next;
+			return +1;
+		}
+		positions(next){
+			if(next !== undefined) return next;
+			return {};
+		}
+		gravity(){
+			return +0.03;
+		}
+		force_scale(){
+			return +0.06;
+		}
+		spring(){
+			return +0.2;
+		}
+		damping(){
+			return +0.82;
+		}
+		min_move(){
+			return +0.15;
+		}
+		max_speed(){
+			return +12;
+		}
+		node_size_base(){
+			return +4;
+		}
+		node_size_growth(){
+			return +1.5;
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"wheel": (next) => (this.wheel(next)), 
+				"pointerdown": (next) => (this.pan_start(next)), 
+				"pointermove": (next) => (this.pan_move(next)), 
+				"pointerup": (next) => (this.pan_end(next)), 
+				"pointercancel": (next) => (this.pan_end(next)), 
+				"click": (next) => (this.bg_click(next))
+			};
+		}
+		sub(){
+			return [
+				(this.G_edges()), 
+				(this.G_edge_labels()), 
+				(this.G_nodes()), 
+				(this.G_node_labels()), 
+				(this.Tooltip())
+			];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "wheel"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_start"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_move"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_end"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "bg_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_hover_enter"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_hover_leave"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edges"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge_label"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edge_labels"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_enter"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_leave"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_nodes"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node_label"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_node_labels"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_bg"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_text"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "select"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_edge_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_edge_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "drag_id"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_x"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_y"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "zoom"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "positions"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    // Distinct, theme-agnostic categorical palette. Assigned to types
+    // deterministically so the same type always gets the same color.
+    const $raggu_web_front_explorer_forcegraph_palette = [
+        '#e0524f', '#4f8ee0', '#3fb56b', '#d97ad9', '#e0a73f',
+        '#7c6ce0', '#3fb8b8', '#e07a4f', '#7ab54f', '#4f6ce0',
+        '#d94f7a', '#b8873f', '#4fb8a0', '#a04fe0', '#8ea04f',
+    ];
+    // Fixed colors for well-known NEREL buckets — keeps the mock graph's
+    // legend stable. Unknown types fall through to the hashed palette.
+    const $raggu_web_front_explorer_forcegraph_known_color = {
+        PERSON: '#e0524f',
+        ORG: '#4f8ee0',
+        LOC: '#3fb56b',
+        EVENT: '#d97ad9',
+        DATE: '#e0a73f',
+        WORK: '#7c6ce0',
+        LAW: '#3fb8b8',
+    };
+    /** Цвет по порядковому номеру — для сообществ: каждому свой из палитры. */
+    function $raggu_web_front_explorer_forcegraph_index_color(i) {
+        const palette = $raggu_web_front_explorer_forcegraph_palette;
+        return palette[((i % palette.length) + palette.length) % palette.length];
+    }
+    $.$raggu_web_front_explorer_forcegraph_index_color = $raggu_web_front_explorer_forcegraph_index_color;
+    /** Deterministic color for any entity_type string. */
+    function $raggu_web_front_explorer_forcegraph_type_color(type) {
+        if (!type)
+            return '#8a8a8a';
+        const known = $raggu_web_front_explorer_forcegraph_known_color[type];
+        if (known)
+            return known;
+        let hash = 0;
+        for (let i = 0; i < type.length; i++) {
+            hash = (hash * 31 + type.charCodeAt(i)) | 0;
+        }
+        const palette = $raggu_web_front_explorer_forcegraph_palette;
+        return palette[Math.abs(hash) % palette.length];
+    }
+    $.$raggu_web_front_explorer_forcegraph_type_color = $raggu_web_front_explorer_forcegraph_type_color;
+    // --- Mock generator (kept exported: used by demo playground and stress-tests) ---
+    const RELATIONS = [
+        'MENTIONS', 'CITES', 'WORKS_AT', 'LOCATED_IN', 'INVOLVES',
+        'DATED', 'AUTHORED', 'PART_OF', 'REFERS_TO', 'CONTAINS',
+    ];
+    const TYPES = ['PERSON', 'ORG', 'LOC', 'EVENT', 'DATE', 'WORK', 'LAW'];
+    // Deterministic PRNG for stable mock graph between renders.
+    function rand(seed) {
+        let s = seed;
+        return () => {
+            s = (s * 9301 + 49297) % 233280;
+            return s / 233280;
+        };
+    }
+    function $raggu_web_front_explorer_forcegraph_build_mock(seed = 42, n_nodes = 80, n_edges = 130) {
+        const r = rand(seed);
+        const nodes = [];
+        // Сообщества назначаем блоками по индексу (без PRNG — не сдвигает
+        // последовательность и не ломает детерминированные тесты).
+        const n_comms = Math.max(1, Math.min(6, Math.floor(n_nodes / 12)));
+        for (let i = 0; i < n_nodes; i++) {
+            const type = TYPES[Math.floor(r() * TYPES.length)];
+            nodes.push({
+                id: `n${i}`,
+                label: `${type} ${i}`,
+                type,
+                degree: 0,
+                x: (r() - 0.5) * 400,
+                y: (r() - 0.5) * 400,
+                community: `c${i % n_comms}`,
+            });
+        }
+        const edges = [];
+        const seen = new Set();
+        for (let i = 0; i < n_edges; i++) {
+            let a, b, key;
+            do {
+                a = Math.floor(r() * n_nodes);
+                b = Math.floor(r() * n_nodes);
+                key = a < b ? `${a}-${b}` : `${b}-${a}`;
+            } while (a === b || seen.has(key));
+            seen.add(key);
+            edges.push({
+                id: `e${i}`,
+                source: `n${a}`,
+                target: `n${b}`,
+                strength: 0.3 + r() * 0.7,
+                relation: RELATIONS[Math.floor(r() * RELATIONS.length)],
+            });
+            nodes[a].degree++;
+            nodes[b].degree++;
+        }
+        return { nodes, edges };
+    }
+    $.$raggu_web_front_explorer_forcegraph_build_mock = $raggu_web_front_explorer_forcegraph_build_mock;
+    const FORCE_K = 60;
+    const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
+    const THETA2 = THETA * THETA;
+    // Один жёсткий проход разрешения коллизий: каждую пересекающуюся пару
+    // раздвигаем до касания (по половине перекрытия каждому). Пары ищем через
+    // spatial grid с ячейкой в максимальный диаметр — O(N × соседи), не O(N²).
+    // Мутирует positions на месте; возвращает максимальный сдвиг за проход —
+    // 0 означает «перекрытий не осталось».
+    function $raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, pinned_id) {
+        const pad = 1.5;
+        let max_r = 0;
+        for (const n of nodes) {
+            const r = radii[n.id] ?? 0;
+            if (r > max_r)
+                max_r = r;
+        }
+        const cell = Math.max(1, max_r * 2 + pad);
+        const grid = new Map();
+        for (const n of nodes) {
+            const p = positions[n.id];
+            const key = `${Math.floor(p.x / cell)}:${Math.floor(p.y / cell)}`;
+            const list = grid.get(key);
+            if (list)
+                list.push(n.id);
+            else
+                grid.set(key, [n.id]);
+        }
+        let peak = 0;
+        for (const n of nodes) {
+            const p = positions[n.id];
+            const r1 = radii[n.id] ?? 0;
+            const cx = Math.floor(p.x / cell);
+            const cy = Math.floor(p.y / cell);
+            for (let gx = cx - 1; gx <= cx + 1; gx++)
+                for (let gy = cy - 1; gy <= cy + 1; gy++) {
+                    const list = grid.get(`${gx}:${gy}`);
+                    if (!list)
+                        continue;
+                    for (const other of list) {
+                        if (other <= n.id)
+                            continue; // каждую пару считаем один раз
+                        const q = positions[other];
+                        const min_d = r1 + (radii[other] ?? 0) + pad;
+                        let dx = q.x - p.x;
+                        let dy = q.y - p.y;
+                        const d2 = dx * dx + dy * dy;
+                        if (d2 >= min_d * min_d)
+                            continue;
+                        let d = Math.sqrt(d2);
+                        if (d < 0.01) {
+                            dx = min_d;
+                            dy = 0;
+                            d = min_d;
+                        } // совпали — разводим по x
+                        const push = (min_d - d) / d * 0.5;
+                        const fx = dx * push;
+                        const fy = dy * push;
+                        const move = Math.sqrt(fx * fx + fy * fy);
+                        if (move > peak)
+                            peak = move;
+                        // Перетаскиваемый узел не двигаем — вся поправка соседу
+                        if (n.id === pinned_id) {
+                            q.x += fx * 2;
+                            q.y += fy * 2;
+                        }
+                        else if (other === pinned_id) {
+                            p.x -= fx * 2;
+                            p.y -= fy * 2;
+                        }
+                        else {
+                            p.x -= fx;
+                            p.y -= fy;
+                            q.x += fx;
+                            q.y += fy;
+                        }
+                    }
+                }
+        }
+        return peak;
+    }
+    function make_cell(x0, y0, size) {
+        return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
+    }
+    function insert(cell, node, depth) {
+        cell.com_x += node.x;
+        cell.com_y += node.y;
+        cell.count++;
+        if (depth > 20)
+            return; // guard against coincident points
+        if (!cell.kids && !cell.node) {
+            cell.node = node;
+            return;
+        }
+        if (cell.node) {
+            // Was a leaf — split, push old node down, then insert new
+            const old = cell.node;
+            cell.node = undefined;
+            const h = cell.size / 2;
+            cell.kids = [
+                make_cell(cell.x0, cell.y0, h),
+                make_cell(cell.x0 + h, cell.y0, h),
+                make_cell(cell.x0, cell.y0 + h, h),
+                make_cell(cell.x0 + h, cell.y0 + h, h),
+            ];
+            insert_child(cell, old, depth + 1);
+        }
+        insert_child(cell, node, depth + 1);
+    }
+    function insert_child(cell, node, depth) {
+        const mx = cell.x0 + cell.size / 2;
+        const my = cell.y0 + cell.size / 2;
+        const idx = (node.x >= mx ? 1 : 0) + (node.y >= my ? 2 : 0);
+        insert(cell.kids[idx], node, depth);
+    }
+    function accumulate_repulsion(cell, id, x, y, k2, out) {
+        if (cell.count === 0)
+            return;
+        if (cell.node && cell.node.id === id)
+            return;
+        const cx = cell.com_x / cell.count;
+        const cy = cell.com_y / cell.count;
+        const dx = x - cx;
+        const dy = y - cy;
+        const d2 = dx * dx + dy * dy || 0.01;
+        // Barnes-Hut criterion: if cell size² is small enough vs distance², treat as one aggregate mass
+        if (!cell.kids || cell.size * cell.size < THETA2 * d2) {
+            const force = (k2 * cell.count) / d2;
+            out.dx += dx * force;
+            out.dy += dy * force;
+            return;
+        }
+        for (const kid of cell.kids)
+            accumulate_repulsion(kid, id, x, y, k2, out);
+    }
+    // Hermite smoothstep — C¹ continuous ramp from 0 at `a` to 1 at `b`.
+    function smoothstep(a, b, x) {
+        if (x <= a)
+            return 0;
+        if (x >= b)
+            return 1;
+        const t = (x - a) / (b - a);
+        return t * t * (3 - 2 * t);
+    }
+    /**
+     * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
+     *   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
+     *   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
+     * Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
+     */
+    function $raggu_web_front_explorer_forcegraph_tick_layout(nodes, edges, positions, velocities, pinned_id, params) {
+        const { gravity, force_scale, damping, min_move, max_speed } = params;
+        const k = FORCE_K * (params.k_scale ?? 1);
+        const k2 = k * k;
+        const dispX = {};
+        const dispY = {};
+        // Bounds for quadtree — encompass all current node positions
+        let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
+        for (const n of nodes) {
+            const p = positions[n.id];
+            if (p.x < min_x)
+                min_x = p.x;
+            if (p.y < min_y)
+                min_y = p.y;
+            if (p.x > max_x)
+                max_x = p.x;
+            if (p.y > max_y)
+                max_y = p.y;
+        }
+        const size = Math.max(max_x - min_x, max_y - min_y) + 1;
+        const cx = (min_x + max_x) / 2;
+        const cy = (min_y + max_y) / 2;
+        const root = make_cell(cx - size / 2, cy - size / 2, size);
+        for (const n of nodes) {
+            const p = positions[n.id];
+            insert(root, { id: n.id, x: p.x, y: p.y }, 0);
+        }
+        // Repulsion — Barnes-Hut walk per node
+        for (const n of nodes) {
+            const p = positions[n.id];
+            const out = { dx: 0, dy: 0 };
+            accumulate_repulsion(root, n.id, p.x, p.y, k2, out);
+            dispX[n.id] = out.dx;
+            dispY[n.id] = out.dy;
+        }
+        // Attraction — exact, O(E). Пружину ослабляют параметр spring и степень
+        // хабов («dissuade hubs» из ForceAtlas2): у хаба десятки рёбер, их
+        // суммарная тяга без нормализации сминает соседей в плотный ком.
+        const spring = params.spring ?? 1;
+        const degree = {};
+        for (const n of nodes)
+            degree[n.id] = n.degree;
+        for (const e of edges) {
+            const dx = positions[e.source].x - positions[e.target].x;
+            const dy = positions[e.source].y - positions[e.target].y;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+            const hub_norm = Math.sqrt(Math.max(degree[e.source] ?? 0, degree[e.target] ?? 0) + 1);
+            const force = (dist * dist) / k * e.strength * spring / hub_norm;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            dispX[e.source] -= fx;
+            dispY[e.source] -= fy;
+            dispX[e.target] += fx;
+            dispY[e.target] += fy;
+        }
+        // Gravity — soft radial pull toward origin
+        for (const n of nodes) {
+            const p = positions[n.id];
+            dispX[n.id] -= p.x * gravity * k;
+            dispY[n.id] -= p.y * gravity * k;
+        }
+        // Integrate: velocities accumulate + damp; position moves via smooth freeze gate.
+        const next_pos = {};
+        const next_vel = {};
+        for (const n of nodes) {
+            if (n.id === pinned_id) {
+                next_pos[n.id] = positions[n.id];
+                next_vel[n.id] = { vx: 0, vy: 0 };
+                continue;
+            }
+            const prev = velocities[n.id] || { vx: 0, vy: 0 };
+            const step = force_scale * (params.heat ?? 1);
+            let vx = (prev.vx + dispX[n.id] * step) * damping;
+            let vy = (prev.vy + dispY[n.id] * step) * damping;
+            const speed = Math.sqrt(vx * vx + vy * vy);
+            // Soft speed cap: tanh saturation.
+            if (speed > 0) {
+                const cap_scale = max_speed * Math.tanh(speed / max_speed) / speed;
+                vx *= cap_scale;
+                vy *= cap_scale;
+            }
+            // Soft freeze gate.
+            const gate = smoothstep(min_move * 0.3, min_move * 1.5, speed);
+            next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
+            next_vel[n.id] = { vx, vy };
+        }
+        // Коллизии: жёстко продавливаем непересечение. Один проход раздвигает
+        // пары до касания, цепочки (раздвинули пару — наехали на третьего)
+        // дожимаются повторными проходами. Пружины не успевают слепить узлы
+        // обратно — на экран каждый тик уходит уже разрешённое состояние.
+        let collide_peak = 0;
+        if (params.radii) {
+            collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id);
+            for (let i = 0; i < 2; i++) {
+                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id) < 0.05)
+                    break;
+            }
+        }
+        return { positions: next_pos, velocities: next_vel, collide_peak };
+    }
+    $.$raggu_web_front_explorer_forcegraph_tick_layout = $raggu_web_front_explorer_forcegraph_tick_layout;
+    // Initial positions from mock coords — no synchronous FR pre-compute.
+    // The view auto-starts a live sim that visibly settles the graph
+    // ( Obsidian-style spring-in ).
+    // Бэковые раскладки приходят в произвольном масштабе (у medical — тысячи
+    // юнитов), а камера и гравитация живут в мире 600×600 вокруг нуля —
+    // нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
+    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes, radii) {
+        let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
+        for (const n of nodes) {
+            if (n.x < min_x)
+                min_x = n.x;
+            if (n.y < min_y)
+                min_y = n.y;
+            if (n.x > max_x)
+                max_x = n.x;
+            if (n.y > max_y)
+                max_y = n.y;
+        }
+        const cx = (min_x + max_x) / 2;
+        const cy = (min_y + max_y) / 2;
+        const span = Math.max(max_x - min_x, max_y - min_y);
+        const scale = span > 1 ? 520 / span : 1;
+        const positions = {};
+        for (const n of nodes)
+            positions[n.id] = { x: (n.x - cx) * scale, y: (n.y - cy) * scale };
+        // Продавливаем коллизии ещё до первого кадра — граф ни на миг
+        // не рисуется слипшимся.
+        if (radii)
+            for (let i = 0; i < 40; i++) {
+                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, '') < 0.05)
+                    break;
+            }
+        return positions;
+    }
+    $.$raggu_web_front_explorer_forcegraph_initial_positions = $raggu_web_front_explorer_forcegraph_initial_positions;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        // Module-scoped layout cache keyed by graph_key (dataset_id). Survives
+        // component remount so returning to the graph shows the settled layout
+        // instantly instead of replaying the spring-in from scratch every time.
+        const $raggu_web_front_explorer_forcegraph_layout_cache = new Map();
+        class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
+            // Typed accessors over view.tree's `nodes /` and `edges /` — parents
+            // (explorer / demo) feed them via `nodes <= ...` bindings.
+            nodes() {
+                return super.nodes();
+            }
+            edges() {
+                return super.edges();
+            }
+            // Plain non-reactive field overriding the auto-gen @$mol_mem drag_id.
+            // The mem-cell version got invalidated between event-handler fibers
+            // (wire_async destroys previous fiber on each event, which appears to
+            // reset the subscribed cell back to its declared default '').
+            // Plain field persists across calls without wire interference.
+            drag_id_raw = '';
+            drag_id(next) {
+                if (next !== undefined)
+                    this.drag_id_raw = next;
+                return this.drag_id_raw;
+            }
+            // Pan/zoom state — fold into reactive view_box
+            computed_view_box() {
+                const z = Math.max(0.2, Math.min(5, this.zoom()));
+                const size = 600 / z;
+                const x = -size / 2 + this.pan_x();
+                const y = -size / 2 + this.pan_y();
+                return `${x} ${y} ${size} ${size}`;
+            }
+            // Wheel / trackpad-pinch zoom.
+            // Uses exp( -deltaY × sensitivity ) so many small deltaY events (trackpad
+            // pinch) compose smoothly instead of stacking as 10% discrete jumps.
+            wheel(event) {
+                if (!event)
+                    return;
+                event.preventDefault();
+                const factor = Math.exp(-event.deltaY * 0.005);
+                this.zoom(this.zoom() * factor);
+            }
+            // Last pointer position (in client/screen pixels). Used by BOTH pan and node-drag
+            // as the anchor for computing pixel-delta on each pointermove.
+            dragging = false;
+            last_x = 0;
+            last_y = 0;
+            // Total movement during the current pointer-down session, in screen pixels.
+            // Below DRAG_THRESHOLD it's a click, above it's a real drag (suppresses click).
+            moved_px = 0;
+            // Where the pointer landed at pointerdown — for total-distance computation.
+            start_x = 0;
+            start_y = 0;
+            // Minimum pixel distance to treat pointer interaction as drag (vs click).
+            // Matches the $mol_touch convention of `>= 4`.
+            DRAG_THRESHOLD = 4;
+            pan_start(event) {
+                if (!event)
+                    return;
+                const target = event.target;
+                const node_id = target.getAttribute('data-node-id');
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                this.start_x = event.clientX;
+                this.start_y = event.clientY;
+                this.moved_px = 0;
+                this.just_dragged = '';
+                // Capture on the EVENT TARGET (the circle for node-drag, svg for pan).
+                // Pointer events keep targeting that element until release — preserves
+                // click dispatch on the circle and survives cursor leaving its bounds.
+                try {
+                    target.setPointerCapture(event.pointerId);
+                }
+                catch { }
+                if (node_id) {
+                    this.drag_id(node_id);
+                    // Ensure initial positions are seeded before drag starts
+                    this.ensure_positions();
+                    // Don't start simulation here — wait until pan_move crosses threshold,
+                    // so a pure click doesn't trigger force-sim "shaking".
+                    return;
+                }
+                this.dragging = true;
+            }
+            // Returns svg-units per screen-pixel ratio for x/y. 1 if CTM missing.
+            svg_scale() {
+                const svg = this.dom_node();
+                const ctm = svg?.getScreenCTM?.();
+                if (!ctm || !ctm.a || !ctm.d)
+                    return { ax: 1, ay: 1 };
+                return { ax: 1 / ctm.a, ay: 1 / ctm.d };
+            }
+            pan_move(event) {
+                if (!event)
+                    return;
+                const dx_px = event.clientX - this.last_x;
+                const dy_px = event.clientY - this.last_y;
+                if (dx_px === 0 && dy_px === 0)
+                    return;
+                this.last_x = event.clientX;
+                this.last_y = event.clientY;
+                // Track total distance from pointerdown to differentiate click from drag
+                const total_dx = event.clientX - this.start_x;
+                const total_dy = event.clientY - this.start_y;
+                this.moved_px = Math.sqrt(total_dx * total_dx + total_dy * total_dy);
+                // Below threshold while pressing on a node — treat as pending click, don't move
+                if (this.drag_id() && this.moved_px < this.DRAG_THRESHOLD)
+                    return;
+                const { ax, ay } = this.svg_scale();
+                const dx = dx_px * ax;
+                const dy = dy_px * ay;
+                // Node drag: shift the dragged node by pointer delta. No boundary clamp —
+                // gravity in the sim brings released nodes back naturally.
+                if (this.drag_id()) {
+                    // Kick off continuous sim on first real drag movement (idempotent)
+                    this.start_sim();
+                    const id = this.drag_id();
+                    const cur = this.pos(id);
+                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
+                    return;
+                }
+                if (!this.dragging)
+                    return;
+                // Pan: opposite direction (world stays under pointer)
+                this.pan_x(this.pan_x() - dx);
+                this.pan_y(this.pan_y() - dy);
+            }
+            pan_end() {
+                this.dragging = false;
+                if (this.drag_id()) {
+                    if (this.moved_px >= this.DRAG_THRESHOLD) {
+                        this.just_dragged = this.drag_id();
+                    }
+                    this.drag_id('');
+                }
+            }
+            // Convert pointer client coords → svg userspace via native CTM.
+            // Handles viewBox + preserveAspectRatio + zoom/pan in one step.
+            client_to_svg(event) {
+                const svg = this.dom_node();
+                const ctm = svg.getScreenCTM();
+                if (!ctm)
+                    return { x: 0, y: 0 };
+                const pt = svg.createSVGPoint();
+                pt.x = event.clientX;
+                pt.y = event.clientY;
+                const local = pt.matrixTransform(ctm.inverse());
+                return { x: local.x, y: local.y };
+            }
+            // Lazily-computed initial FR layout — memoized so first render already shows
+            // nodes settled into the circular bound, not the raw square mock coords.
+            initial_positions() {
+                return $raggu_web_front_explorer_forcegraph_initial_positions(this.nodes(), this.node_radii());
+            }
+            // Seed positions on first read, or re-seed when the node set changes
+            // (e.g. dataset switched, new fetch result arrived) — old cell may still
+            // hold coords for a different set of nodes.
+            ensure_positions() {
+                let p = this.positions();
+                const nodes = this.nodes();
+                if (Object.keys(p).length !== nodes.length) {
+                    // После ремоунта positions-ячейка пуста — восстанавливаем осевшую
+                    // раскладку из module-кэша, чтобы не переигрывать spring-in.
+                    const key = this.graph_key();
+                    const cached = key ? $raggu_web_front_explorer_forcegraph_layout_cache.get(key) : undefined;
+                    if (cached && Object.keys(cached).length === nodes.length) {
+                        p = { ...cached };
+                    }
+                    else {
+                        p = { ...this.initial_positions() };
+                    }
+                    this.velocities = {};
+                    this.positions(p);
+                }
+                return p;
+            }
+            // Per-node velocity — the state that makes drags ripple through edges
+            // then die via damping instead of shaking the whole graph each frame.
+            velocities = {};
+            // Bundle the tunable params ( declared as view.tree props with defaults ).
+            layout_params() {
+                return {
+                    gravity: this.gravity(),
+                    force_scale: this.force_scale(),
+                    damping: this.damping(),
+                    min_move: this.min_move(),
+                    // Рыхлость как в Obsidian: слабые пружины, хабы не сжимают соседей
+                    spring: this.spring(),
+                    // Крупный граф двигаем медленнее — drag не разгоняет всю кучу
+                    max_speed: this.max_speed() * this.size_scale(),
+                    // …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
+                    k_scale: this.size_scale(),
+                    // Затухание: силы гаснут со временем симуляции, дребезг умирает
+                    heat: this.sim_alpha,
+                    // Радиусы для расталкивания — кружки не наезжают друг на друга
+                    radii: this.node_radii(),
+                };
+            }
+            // One sim tick.
+            tick() {
+                const positions = this.ensure_positions();
+                const next = $raggu_web_front_explorer_forcegraph_tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), this.layout_params());
+                this.velocities = next.velocities;
+                // Пиковая скорость по узлам — сигнал «граф осел» для ранней остановки
+                let peak = 0;
+                for (const id in next.velocities) {
+                    const v = next.velocities[id];
+                    const speed = Math.sqrt(v.vx * v.vx + v.vy * v.vy);
+                    if (speed > peak)
+                        peak = speed;
+                }
+                this.peak_speed = peak;
+                this.collide_peak = next.collide_peak;
+                this.positions(next.positions);
+                // Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
+                const key = this.graph_key();
+                if (key)
+                    $raggu_web_front_explorer_forcegraph_layout_cache.set(key, next.positions);
+            }
+            // Continuous simulation loop driven by requestAnimationFrame.
+            // Runs until frame budget exhausted AND no drag is active. While the
+            // user is dragging, budget is re-armed each frame so neighbors keep
+            // settling smoothly around the moved node.
+            sim_running = false;
+            sim_frames_left = 0;
+            sim_ticks = 0;
+            peak_speed = Infinity;
+            collide_peak = 0;
+            frame_flip = false;
+            SIM_INITIAL_FRAMES = 260;
+            SIM_DRAG_FRAMES = 60;
+            // Alpha-cooling (как в d3-force): множитель сил, тает каждый тик.
+            // Осцилляции вокруг равновесия гаснут вместе с ним — вместо дребезга
+            // до конца бюджета кадров граф плавно замирает за секунду-полторы.
+            sim_alpha = 1;
+            ALPHA_DECAY = 0.97;
+            ALPHA_MIN = 0.03;
+            ALPHA_REHEAT = 0.3;
+            ALPHA_DRAG = 0.5;
+            // Хвост симуляции после отпускания узла — на крупном графе короче
+            drag_frames() {
+                return this.big_graph() ? 45 : this.SIM_DRAG_FRAMES;
+            }
+            start_sim(frames = this.drag_frames(), heat = this.ALPHA_REHEAT) {
+                this.sim_frames_left = Math.max(this.sim_frames_left, frames);
+                if (this.sim_running) {
+                    this.sim_alpha = Math.max(this.sim_alpha, heat);
+                    return;
+                }
+                if (typeof window === 'undefined')
+                    return;
+                this.sim_running = true;
+                this.sim_ticks = 0;
+                this.sim_alpha = heat;
+                this.peak_speed = Infinity;
+                this.collide_peak = Infinity;
+                const loop = () => {
+                    if (!this.sim_running)
+                        return;
+                    // Во время drag на крупном графе тик через кадр: DOM не успевает
+                    // обновлять сотни узлов на каждый RAF, полукадровая частота
+                    // оставляет бюджет самому перетаскиванию
+                    this.frame_flip = !this.frame_flip;
+                    if (this.big_graph() && this.drag_id() && this.frame_flip) {
+                        requestAnimationFrame(loop);
+                        return;
+                    }
+                    // Пока данные с бэка грузятся, tick кидает wire-promise. Такие
+                    // кадры не считаем ни тиками, ни затуханием — иначе симуляция
+                    // «остывает» и глохнет до прихода данных, оставив наезды узлов.
+                    let ok = true;
+                    try {
+                        this.tick();
+                    }
+                    catch {
+                        ok = false;
+                    }
+                    if (ok) {
+                        this.sim_ticks++;
+                        this.sim_alpha = Math.max(0, this.sim_alpha * this.ALPHA_DECAY);
+                    }
+                    if (this.drag_id()) {
+                        this.sim_frames_left = Math.max(this.sim_frames_left, this.drag_frames());
+                        this.sim_alpha = Math.max(this.sim_alpha, this.ALPHA_DRAG);
+                    }
+                    this.sim_frames_left--;
+                    // Граф осел (всё ниже порога заморозки) либо остыл (alpha на нуле) —
+                    // дожигать бюджет кадров незачем. Но пока коллизии заметно
+                    // раздвигают узлы, не глохнем — иначе останутся перекрытия.
+                    const settled = ok && this.sim_ticks > 15
+                        && (this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN)
+                        && this.collide_peak < 0.4;
+                    if ((this.sim_frames_left <= 0 || settled) && !this.drag_id()) {
+                        this.sim_running = false;
+                        return;
+                    }
+                    requestAnimationFrame(loop);
+                };
+                requestAnimationFrame(loop);
+            }
+            // Reactive kick — reading every tunable param here means the mem cell
+            // invalidates whenever any of them changes. dom_tree reads it below,
+            // so slider tweaks (and dataset switches) restart the sim automatically.
+            params_kick() {
+                // Register deps on all sim inputs
+                this.gravity();
+                this.force_scale();
+                this.spring();
+                this.damping();
+                this.min_move();
+                this.max_speed();
+                this.nodes(); // rebuild sim on new graph
+                // Idempotent: re-arms frame budget; starts loop if it was stopped
+                this.start_sim(this.drag_frames());
+                return null;
+            }
+            // Kick off the initial spring-in exactly once, on first mount.
+            initial_sim_started = false;
+            dom_tree() {
+                this.params_kick();
+                const tree = super.dom_tree();
+                if (!this.initial_sim_started) {
+                    this.initial_sim_started = true;
+                    // Уже раскладывали этот граф — берём осевшие позиции из кэша и
+                    // гоняем лишь короткую стабилизацию вместо полного spring-in.
+                    const key = this.graph_key();
+                    const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has(key);
+                    // Полный прогрев только для свежего графа; осевший лишь стабилизируем
+                    this.start_sim(cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES, cached ? this.ALPHA_REHEAT : 1);
+                }
+                return tree;
+            }
+            // --- крупные графы: масштаб визуала и физики от числа узлов ---
+            // Плавный коэффициент 1 → 0.45: на сотнях узлов кружки, рёбра и
+            // скорость движения ужимаются, иначе граф сливается в кашу.
+            size_scale() {
+                const n = this.nodes().length;
+                return Math.max(0.45, Math.min(1, Math.sqrt(220 / Math.max(1, n))));
+            }
+            // Порог «крупного» графа — дальше экономим на подписях и кадрах симуляции
+            big_graph() {
+                return this.nodes().length > 300;
+            }
+            // Плотность рёбер: полупрозрачные линии при наложении складываются и
+            // жирнеют, поэтому чем рёбер больше, тем тоньше и бледнее фоновые.
+            edge_scale() {
+                const e = this.edges().length;
+                return Math.max(0.35, Math.min(1, Math.sqrt(150 / Math.max(1, e))));
+            }
+            node_by_id() {
+                const m = {};
+                for (const n of this.nodes())
+                    m[n.id] = n;
+                return m;
+            }
+            node_views() {
+                return this.nodes().map(n => this.Node(n.id));
+            }
+            edge_views() {
+                return this.edges().map(e => this.Edge(e.id));
+            }
+            // Effective node position: live positions cell (drag/sim output) first,
+            // then the memoized initial FR layout, then raw mock as last resort.
+            pos(id) {
+                const live = this.positions()[id];
+                if (live)
+                    return live;
+                return this.initial_positions()[id] ?? this.node_by_id()[id];
+            }
+            // Used in view.tree as `data-node-id` attr so pan_start can identify node-target.
+            node_id(id) { return id; }
+            // Node accessors (keyed) — return strings, SVG attrs expect string
+            node_x(id) { return String(this.pos(id).x); }
+            node_y(id) { return String(this.pos(id).y); }
+            // radius = base + growth * degree. Linear scale — hubs visually dominate,
+            // which is what we want for a demo graph where the whole point is spotting
+            // the well-connected nodes at a glance.
+            // Radius scales with sqrt(degree), not degree — real graphs have hubs with
+            // degree in the hundreds, and a linear scale blows them up to cover the
+            // whole canvas. Capped so even a 500-degree hub stays readable.
+            node_radius_num(id) {
+                const n = this.node_by_id()[id];
+                const s = this.size_scale();
+                const r = (this.node_size_base() + this.node_size_growth() * Math.sqrt(n.degree)) * s;
+                return Math.min(r, 22 * s);
+            }
+            node_radius(id) {
+                return String(this.node_radius_num(id));
+            }
+            // Карта радиусов для коллизий в симуляции — в svg-юнитах, как позиции
+            node_radii() {
+                const m = {};
+                for (const n of this.nodes())
+                    m[n.id] = this.node_radius_num(n.id);
+                return m;
+            }
+            node_color(id) {
+                // При активном фильтре сообществ узлы выбранных красим в цвет сообщества
+                const cs = this.comm_set();
+                if (cs.size) {
+                    const comm = this.node_comm(id);
+                    if (cs.has(comm))
+                        return this.comm_color(comm) || $raggu_web_front_explorer_forcegraph_type_color(this.node_by_id()[id].type);
+                }
+                return $raggu_web_front_explorer_forcegraph_type_color(this.node_by_id()[id].type);
+            }
+            // Фильтры подсветки: поиск по label, тип узла и/или тип связи из легенд.
+            // Непустой фильтр приглушает узлы и рёбра, которые не матчатся.
+            search_lc() {
+                return this.search().trim().toLowerCase();
+            }
+            // Выбранные в выпадашке сообщества — Set для O(1) проверок
+            comm_set() {
+                return new Set(this.filter_comms());
+            }
+            node_comm(id) {
+                return this.node_by_id()[id]?.community ?? '';
+            }
+            comm_color(id) {
+                return this.comm_colors()[id] ?? '';
+            }
+            filter_active() {
+                return Boolean(this.search_lc() || this.filter_type() || this.filter_relation() || this.comm_set().size);
+            }
+            node_matches(id) {
+                const n = this.node_by_id()[id];
+                const t = this.filter_type();
+                if (t && n?.type !== t)
+                    return false;
+                const s = this.search_lc();
+                if (s && !(n?.label ?? '').toLowerCase().includes(s))
+                    return false;
+                // Фильтр по типу связи подсвечивает концы матчащихся рёбер
+                const r = this.filter_relation();
+                if (r && !this.node_has_relation(id, r))
+                    return false;
+                const cs = this.comm_set();
+                if (cs.size && !cs.has(n?.community ?? ''))
+                    return false;
+                return true;
+            }
+            relation_nodes() {
+                const m = {};
+                for (const e of this.edges()) {
+                    ;
+                    (m[e.relation] ??= new Set()).add(e.source);
+                    m[e.relation].add(e.target);
+                }
+                return m;
+            }
+            node_has_relation(id, rel) {
+                return this.relation_nodes()[rel]?.has(id) ?? false;
+            }
+            // Наведённое/выбранное ребро — его концы ведут себя как hovered-узлы.
+            active_edge() {
+                const id = this.hovered_edge_id() || this.selected_edge_id();
+                return id ? this.edge_by_id()[id] ?? null : null;
+            }
+            edge_endpoint(id) {
+                const e = this.active_edge();
+                return Boolean(e && (e.source === id || e.target === id));
+            }
+            // Наведённый/выбранный узел + его соседи. Остальное затемняем —
+            // симметрично эффекту наведения на ребро.
+            active_node_hood() {
+                const id = this.active_id();
+                if (!id)
+                    return null;
+                const hood = new Set([id]);
+                for (const e of this.edges()) {
+                    if (e.source === id)
+                        hood.add(e.target);
+                    if (e.target === id)
+                        hood.add(e.source);
+                }
+                return hood;
+            }
+            node_opacity(id) {
+                // Активное ребро затемняет всё, кроме своих концов — как hover узла
+                if (this.active_edge())
+                    return this.edge_endpoint(id) ? '1' : '0.25';
+                const hood = this.active_node_hood();
+                if (hood)
+                    return hood.has(id) ? '1' : '0.25';
+                return this.node_matches(id) ? '1' : '0.12';
+            }
+            node_stroke(id) {
+                if (this.selected_id() === id)
+                    return '#ffffff';
+                if (this.hovered_id() === id)
+                    return '#ffffff';
+                if (this.edge_endpoint(id))
+                    return '#ffffff';
+                return 'transparent';
+            }
+            node_stroke_width(id) {
+                if (this.selected_id() === id)
+                    return '2.5';
+                if (this.hovered_id() === id)
+                    return '1.5';
+                if (this.edge_endpoint(id))
+                    return '1.5';
+                return '0';
+            }
+            hover_enter(id) {
+                this.hovered_id(id);
+                return null;
+            }
+            hover_leave() {
+                this.hovered_id('');
+                return null;
+            }
+            // Edge accessors (keyed)
+            edge_by_id() {
+                const m = {};
+                for (const e of this.edges())
+                    m[e.id] = e;
+                return m;
+            }
+            edge_x1(id) { return String(this.pos(this.edge_by_id()[id].source).x); }
+            edge_y1(id) { return String(this.pos(this.edge_by_id()[id].source).y); }
+            edge_x2(id) { return String(this.pos(this.edge_by_id()[id].target).x); }
+            edge_y2(id) { return String(this.pos(this.edge_by_id()[id].target).y); }
+            // Used in view.tree as `data-edge-id` attr — mirrors node_id.
+            edge_id(id) { return id; }
+            // Edge is "active" when hovered or selected directly (not via incident node).
+            edge_active(id) {
+                return this.hovered_edge_id() === id || this.selected_edge_id() === id;
+            }
+            edge_width(id) {
+                const e = this.edge_by_id()[id];
+                const base = (e.strength * 1.5 + 0.4) * this.size_scale() * this.edge_scale();
+                if (this.edge_active(id))
+                    return String(base * 2.5);
+                const incident = this.hovered_id() && (e.source === this.hovered_id() || e.target === this.hovered_id())
+                    || this.selected_id() && (e.source === this.selected_id() || e.target === this.selected_id());
+                return String(incident ? base * 2 : base);
+            }
+            edge_matches(id) {
+                const e = this.edge_by_id()[id];
+                const r = this.filter_relation();
+                if (r && e.relation !== r)
+                    return false;
+                // Сообщества: подсвечиваем только ВНУТРЕННИЕ рёбра — оба конца
+                // в одном и том же выбранном сообществе
+                const cs = this.comm_set();
+                if (cs.size) {
+                    const ca = this.node_comm(e.source);
+                    if (ca !== this.node_comm(e.target) || !cs.has(ca))
+                        return false;
+                }
+                return this.node_matches(e.source) && this.node_matches(e.target);
+            }
+            edge_opacity(id) {
+                const e = this.edge_by_id()[id];
+                if (this.edge_active(id))
+                    return '0.95';
+                // Активное ребро приглушает все остальные — как hover узла
+                if (this.active_edge())
+                    return '0.12';
+                if (this.filter_active() && !this.edge_matches(id))
+                    return '0.08';
+                // Внутренние рёбра выбранных сообществ — ярче фона
+                if (this.comm_set().size && this.edge_matches(id))
+                    return '0.85';
+                const hid = this.hovered_id() || this.selected_id();
+                // Фоновая яркость тает с числом рёбер — иначе серая сетка
+                if (!hid)
+                    return String(+(0.55 * this.edge_scale()).toFixed(2));
+                return (e.source === hid || e.target === hid) ? '0.95' : '0.18';
+            }
+            edge_color(id) {
+                if (this.edge_active(id))
+                    return '#ffffff';
+                const e = this.edge_by_id()[id];
+                const hid = this.hovered_id() || this.selected_id();
+                if (hid && (e.source === hid || e.target === hid))
+                    return '#ffffff';
+                // Внутреннее ребро выбранного сообщества — в его цвет
+                const cs = this.comm_set();
+                if (cs.size && this.edge_matches(id)) {
+                    const c = this.comm_color(this.node_comm(e.source));
+                    if (c)
+                        return c;
+                }
+                return '#7a7672';
+            }
+            edge_hover_enter(id) {
+                this.hovered_edge_id(id);
+                return null;
+            }
+            edge_hover_leave() {
+                this.hovered_edge_id('');
+                return null;
+            }
+            // Клик по ребру (линии или подписи) выбирает связь и снимает выбор узла —
+            // aside показывает либо карточку сущности, либо карточку связи.
+            edge_click(id) {
+                if (this.moved_px >= this.DRAG_THRESHOLD)
+                    return null;
+                this.selected_edge_id(id);
+                this.selected_id('');
+                return null;
+            }
+            selected_edge() {
+                const id = this.selected_edge_id();
+                return id ? this.edge_by_id()[id] ?? null : null;
+            }
+            // ---- always-on labels ----
+            // Пустые подписи не рендерим вовсе: на крупном графе тысячи холостых
+            // <text> с пересчётом координат каждый тик — главный источник лагов.
+            node_label_views() {
+                return this.nodes()
+                    .filter(n => this.node_label_text(n.id) !== '')
+                    .map(n => this.Node_label(n.id));
+            }
+            edge_label_views() {
+                return this.edges()
+                    .filter(e => this.edge_label_text(e.id) !== '')
+                    .map(e => this.Edge_label(e.id));
+            }
+            // Font sizes live in svg units, so they shrink on zoom-out. sqrt easing
+            // (same as tooltip) keeps labels from ballooning when zoomed in close.
+            node_label_font_size() {
+                const s = Math.max(0.7, this.size_scale());
+                return String(Math.max(4, Math.min(14, 10 * s / Math.sqrt(this.zoom()))));
+            }
+            edge_label_font_size() {
+                return String(Math.max(3, Math.min(11, 8 / Math.sqrt(this.zoom()))));
+            }
+            node_label_x(id) { return String(this.pos(id).x); }
+            node_label_y(id) {
+                const fs = parseFloat(this.node_label_font_size());
+                return String(this.pos(id).y + this.node_radius_num(id) + fs + 2);
+            }
+            // «Когда места хватает»: подпись растёт из видимого размера узла на экране
+            // (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
+            node_label_vis(id) {
+                const r_px = this.node_radius_num(id) * this.zoom();
+                // На крупном графе подписи только у заметных хабов, иначе каша;
+                // приближение растит r_px — подписи проявляются по мере зума
+                const min_px = this.big_graph() ? 11 : 7;
+                return Math.max(0, Math.min(1, (r_px - min_px) / 3));
+            }
+            node_label_text(id) {
+                if (this.active_id() === id)
+                    return ''; // tooltip уже показывает label
+                // Концы активного ребра подписываем всегда — видно, что оно связывает
+                if (this.edge_endpoint(id))
+                    return this.node_by_id()[id]?.label ?? '';
+                const hood = this.active_node_hood();
+                if (hood) {
+                    if (!hood.has(id))
+                        return ''; // затемнённым подписи не нужны
+                    // Соседей наведённого узла подписываем всегда (пока их разумно мало)
+                    if (hood.size <= 22)
+                        return this.node_by_id()[id]?.label ?? '';
+                }
+                if (!this.node_matches(id))
+                    return '';
+                // Порог повыше нуля: у самого порога подпись была бы почти прозрачной
+                if (this.node_label_vis(id) <= 0.3)
+                    return '';
+                return this.node_by_id()[id]?.label ?? '';
+            }
+            node_label_opacity(id) {
+                if (this.edge_endpoint(id))
+                    return '1';
+                if (this.active_node_hood()?.has(id))
+                    return '1';
+                // Быстрый разгон до непрозрачности — долгий fade читался как баг
+                return String(Math.min(1, 0.75 + this.node_label_vis(id) * 0.25));
+            }
+            edge_label_mid(id) {
+                const e = this.edge_by_id()[id];
+                const a = this.pos(e.source);
+                const b = this.pos(e.target);
+                return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+            }
+            edge_label_x(id) { return String(this.edge_label_mid(id).x); }
+            edge_label_y(id) { return String(this.edge_label_mid(id).y); }
+            // Подпись ребра рисуем, только когда текст влезает в свободную длину ребра
+            // (за вычетом кружков узлов). Активное ребро подписываем всегда.
+            edge_label_text(id) {
+                const e = this.edge_by_id()[id];
+                const rel = e?.relation ?? '';
+                if (!rel)
+                    return '';
+                if (this.edge_active(id))
+                    return rel;
+                if (this.active_edge())
+                    return ''; // не шумим подписями вокруг активного ребра
+                // На крупном графе фоновые подписи рёбер превращаются в серую пыль —
+                // оставляем их только вокруг наведённого/выбранного узла
+                if (this.big_graph()) {
+                    const hid = this.hovered_id() || this.selected_id();
+                    if (!hid || (e.source !== hid && e.target !== hid))
+                        return '';
+                }
+                if (this.filter_active() && !this.edge_matches(id))
+                    return '';
+                const fs = parseFloat(this.edge_label_font_size());
+                if (fs * this.zoom() < 4)
+                    return ''; // на экране будет нечитаемая пыль
+                const a = this.pos(e.source);
+                const b = this.pos(e.target);
+                const len = Math.hypot(b.x - a.x, b.y - a.y)
+                    - this.node_radius_num(e.source) - this.node_radius_num(e.target);
+                const need = rel.length * fs * 0.62 + fs * 2;
+                return len >= need ? rel : '';
+            }
+            edge_label_opacity(id) {
+                if (this.edge_active(id))
+                    return '1';
+                const hid = this.hovered_id() || this.selected_id();
+                if (hid) {
+                    const e = this.edge_by_id()[id];
+                    return (e.source === hid || e.target === hid) ? '0.95' : '0.25';
+                }
+                return '0.85';
+            }
+            // Suppress click that fires right after node-drag (drag_id was just released)
+            just_dragged = '';
+            click(id) {
+                if (this.just_dragged === id) {
+                    this.just_dragged = '';
+                    return null;
+                }
+                this.selected_id(id);
+                this.selected_edge_id('');
+                this.select(id);
+                return null;
+            }
+            // Background click (anywhere not on a node circle or an edge) → deselect
+            bg_click(event) {
+                if (!event)
+                    return;
+                const target = event.target;
+                if (target.getAttribute('data-node-id'))
+                    return;
+                if (target.getAttribute('data-edge-id'))
+                    return;
+                this.selected_id('');
+                this.selected_edge_id('');
+                this.select('');
+                return null;
+            }
+            // Tooltip — single floating label above hovered-OR-selected node
+            active_id() { return this.hovered_id() || this.selected_id(); }
+            // Conditional sub-list — render bg+text only when an active node exists
+            tooltip_sub() {
+                return this.active_id()
+                    ? [this.Tooltip_bg(), this.Tooltip_text()]
+                    : [];
+            }
+            tooltip_text() {
+                const id = this.active_id();
+                return id ? this.node_by_id()[id]?.label ?? '' : '';
+            }
+            tooltip_font_size() {
+                return String(Math.max(6, Math.min(12, 11 / Math.sqrt(this.zoom()))));
+            }
+            // Position tooltip above the active node, in svg space
+            tooltip_anchor() {
+                const id = this.active_id();
+                if (!id)
+                    return { x: 0, y: 0, r: 0 };
+                return { x: this.pos(id).x, y: this.pos(id).y, r: this.node_radius_num(id) };
+            }
+            tooltip_x() {
+                return String(this.tooltip_anchor().x);
+            }
+            // Text baseline is the middle of the bg box; sits above circle with padding
+            tooltip_y() {
+                const a = this.tooltip_anchor();
+                const fs = parseFloat(this.tooltip_font_size());
+                return String(a.y - a.r - 6 - fs * 0.7);
+            }
+            // Bg sized roughly by char-count × char-width
+            tooltip_bg_w() {
+                const text = this.tooltip_text();
+                const fs = parseFloat(this.tooltip_font_size());
+                return String(text.length * fs * 0.6 + 10);
+            }
+            tooltip_bg_h() {
+                return String(parseFloat(this.tooltip_font_size()) + 8);
+            }
+            tooltip_bg_x() {
+                return String(this.tooltip_anchor().x - parseFloat(this.tooltip_bg_w()) / 2);
+            }
+            tooltip_bg_y() {
+                const a = this.tooltip_anchor();
+                return String(a.y - a.r - 6 - parseFloat(this.tooltip_bg_h()));
+            }
+            // Selected-node helpers consumed by Aside
+            selected_node() {
+                const id = this.selected_id();
+                return id ? this.node_by_id()[id] ?? null : null;
+            }
+            selected_color() {
+                const n = this.selected_node();
+                return $raggu_web_front_explorer_forcegraph_type_color(n?.type ?? '');
+            }
+            // Edges incident to selected node, with the OTHER node's label
+            selected_relations() {
+                const id = this.selected_id();
+                if (!id)
+                    return [];
+                const idx = this.node_by_id();
+                return this.edges()
+                    .filter(e => e.source === id || e.target === id)
+                    .map(e => {
+                    const other_id = e.source === id ? e.target : e.source;
+                    return { relation: e.relation, target_label: idx[other_id]?.label ?? other_id };
+                });
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "computed_view_box", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "wheel", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_start", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_move", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_end", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "initial_positions", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "tick", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "params_kick", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "dom_tree", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "size_scale", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_scale", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "node_radii", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "comm_set", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "relation_nodes", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "active_node_hood", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "hover_enter", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "hover_leave", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_by_id", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_hover_enter", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_hover_leave", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer_forcegraph.prototype, "bg_click", null);
+        $$.$raggu_web_front_explorer_forcegraph = $raggu_web_front_explorer_forcegraph;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 "use strict";
 /** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    $mol_style_define($bog_builderui_card, {
-        background: {
-            color: $bog_builderui_tokens.card,
-        },
-        color: $bog_builderui_tokens.text,
-        border: {
-            radius: $bog_builderui_tokens.radius,
-            width: '1px',
-            style: 'solid',
-            color: $bog_builderui_tokens.line,
-        },
-        padding: {
-            top: '1rem',
-            bottom: '1rem',
-            left: '1.25rem',
-            right: '1.25rem',
-        },
-        box: {
-            shadow: [{
-                    x: 0,
-                    y: '1px',
-                    blur: '3px',
-                    spread: 0,
-                    color: '#0000001a',
-                }],
-        },
-        gap: '0.75rem',
-        flex: {
-            direction: 'column',
-        },
-        breakInside: 'avoid',
-        margin: {
-            bottom: '1rem',
-        },
+    $mol_style_define($raggu_web_front_explorer_forcegraph, {
+        width: '100%',
+        height: '100%',
+        display: 'block',
+        // Disable browser default drag actions during pointer-capture:
+        // - text selection on drag
+        // - touch scroll/zoom gestures
+        // - native image drag
+        userSelect: 'none',
+        touchAction: 'none',
     });
+    // SVG stroke/fill don't accept $mol_style_func in the typed-prop schema,
+    // so wire tokens through raw CSS via style_attach — same trick mol_svg uses
+    // for its own text-box background. Selectors match by data-* set on the
+    // tooltip elements in view.tree.
+    $mol_style_attach('raggu/web/front/explorer/forcegraph/forcegraph.view.css', '[data-forcegraph-tooltip-bg] {\n'
+        + '\tfill: var(--bog_builderui_card);\n'
+        + '\tstroke: var(--bog_builderui_line);\n'
+        + '}\n'
+        + '[data-forcegraph-tooltip-text] {\n'
+        + '\tfill: var(--bog_builderui_text);\n'
+        + '}\n'
+        // Halo (paint-order: stroke) отделяет подписи от линий графа под ними.
+        + '[data-forcegraph-node-label] {\n'
+        + '\tfill: var(--bog_builderui_text);\n'
+        + '\tpaint-order: stroke;\n'
+        + '\tstroke: var(--bog_builderui_back);\n'
+        + '\tstroke-width: 2px;\n'
+        + '\tstroke-opacity: 0.7;\n'
+        + '}\n'
+        + '[data-forcegraph-edge-label] {\n'
+        + '\tfill: var(--bog_builderui_shade);\n'
+        + '\tpaint-order: stroke;\n'
+        + '\tstroke: var(--bog_builderui_back);\n'
+        + '\tstroke-width: 2px;\n'
+        + '\tstroke-opacity: 0.6;\n'
+        + '}\n');
 })($ || ($ = {}));
 
 ;
@@ -8134,6 +11402,1707 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$raggu_web_front_explorer) = class $raggu_web_front_explorer extends ($.$bog_builderui_div) {
+		graph_nodes(){
+			return [];
+		}
+		graph_edges(){
+			return [];
+		}
+		comms_checked(){
+			return [];
+		}
+		comm_color_map(){
+			return {};
+		}
+		Graph(){
+			const obj = new this.$.$raggu_web_front_explorer_forcegraph();
+			(obj.graph_key) = () => ((this.dataset_id()));
+			(obj.nodes) = () => ((this.graph_nodes()));
+			(obj.edges) = () => ((this.graph_edges()));
+			(obj.selected_id) = (next) => ((this.selected_id(next)));
+			(obj.selected_edge_id) = (next) => ((this.selected_edge_id(next)));
+			(obj.search) = () => ((this.search()));
+			(obj.filter_type) = () => ((this.type_filter()));
+			(obj.filter_relation) = () => ((this.rel_filter()));
+			(obj.filter_comms) = () => ((this.comms_checked()));
+			(obj.comm_colors) = () => ((this.comm_color_map()));
+			return obj;
+		}
+		Canvas_bg(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Graph())]);
+			return obj;
+		}
+		Filter_search(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.filter_search_text()));
+			(obj.value) = (next) => ((this.search(next)));
+			return obj;
+		}
+		comms_closed(){
+			return true;
+		}
+		comms_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		comms_btn_label(){
+			return "";
+		}
+		Comms_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.comms_toggle(next))});
+			(obj.sub) = () => ([(this.comms_btn_label())]);
+			return obj;
+		}
+		comm_active(id){
+			return false;
+		}
+		comm_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		comm_mark(id){
+			return "";
+		}
+		Comm_mark(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.comm_mark(id))]);
+			return obj;
+		}
+		Comm_dot(id){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		comm_label(id){
+			return "";
+		}
+		Comm_label(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.comm_label(id))]);
+			return obj;
+		}
+		comm_count(id){
+			return "";
+		}
+		Comm_count(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.comm_count(id))]);
+			return obj;
+		}
+		Comm_row(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_legend_on": (this.comm_active(id))});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.comm_click(id, next))});
+			(obj.sub) = () => ([
+				(this.Comm_mark(id)), 
+				(this.Comm_dot(id)), 
+				(this.Comm_label(id)), 
+				(this.Comm_count(id))
+			]);
+			return obj;
+		}
+		comm_rows(){
+			return [(this.Comm_row(id))];
+		}
+		Comms_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.comm_rows()));
+			return obj;
+		}
+		Comms(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.comms_closed())});
+			(obj.sub) = () => ([(this.Comms_btn()), (this.Comms_list())]);
+			return obj;
+		}
+		Filters(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Filter_search()), (this.Comms())]);
+			return obj;
+		}
+		legend_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Legend_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.legend_title_text())]);
+			return obj;
+		}
+		legend_caret(){
+			return "▾";
+		}
+		Legend_caret(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.legend_caret())]);
+			return obj;
+		}
+		Legend_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.legend_toggle(next))});
+			(obj.sub) = () => ([(this.Legend_title()), (this.Legend_caret())]);
+			return obj;
+		}
+		legend_active(id){
+			return false;
+		}
+		legend_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Legend_dot(id){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		legend_label(id){
+			return "";
+		}
+		Legend_label(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.legend_label(id))]);
+			return obj;
+		}
+		legend_count(id){
+			return "";
+		}
+		Legend_count(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.legend_count(id))]);
+			return obj;
+		}
+		Legend_row(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_legend_on": (this.legend_active(id))});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.legend_click(id, next))});
+			(obj.sub) = () => ([
+				(this.Legend_dot(id)), 
+				(this.Legend_label(id)), 
+				(this.Legend_count(id))
+			]);
+			return obj;
+		}
+		legend_rows(){
+			return [(this.Legend_row(id))];
+		}
+		Legend_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.legend_rows()));
+			return obj;
+		}
+		Legend(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.legend_collapsed())});
+			(obj.sub) = () => ([(this.Legend_head()), (this.Legend_list())]);
+			return obj;
+		}
+		rels_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Rels_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rels_title_text())]);
+			return obj;
+		}
+		rels_caret(){
+			return "▾";
+		}
+		Rels_caret(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rels_caret())]);
+			return obj;
+		}
+		Rels_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.rels_toggle(next))});
+			(obj.sub) = () => ([(this.Rels_title()), (this.Rels_caret())]);
+			return obj;
+		}
+		rel_legend_active(id){
+			return false;
+		}
+		rel_legend_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		rel_legend_label(id){
+			return "";
+		}
+		Rel_row_label(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_legend_label(id))]);
+			return obj;
+		}
+		rel_legend_count(id){
+			return "";
+		}
+		Rel_row_count(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_legend_count(id))]);
+			return obj;
+		}
+		Rel_row(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_legend_on": (this.rel_legend_active(id))});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.rel_legend_click(id, next))});
+			(obj.sub) = () => ([(this.Rel_row_label(id)), (this.Rel_row_count(id))]);
+			return obj;
+		}
+		rel_legend_rows(){
+			return [(this.Rel_row(id))];
+		}
+		Rels_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.rel_legend_rows()));
+			return obj;
+		}
+		Rels(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.rels_collapsed())});
+			(obj.sub) = () => ([(this.Rels_head()), (this.Rels_list())]);
+			return obj;
+		}
+		Legends(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Legend()), (this.Rels())]);
+			return obj;
+		}
+		is_mock(){
+			return false;
+		}
+		Mock_badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_mock_badge_showed": (this.is_mock())});
+			(obj.sub) = () => ([(this.mock_badge_text())]);
+			return obj;
+		}
+		Canvas(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Canvas_bg()), 
+				(this.Filters()), 
+				(this.Legends()), 
+				(this.Mock_badge())
+			]);
+			return obj;
+		}
+		aside_toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		aside_caret(){
+			return "⟩";
+		}
+		Aside_toggle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.aside_toggle(next))});
+			(obj.sub) = () => ([(this.aside_caret())]);
+			return obj;
+		}
+		aside_title(){
+			return "";
+		}
+		Aside_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.aside_title())]);
+			return obj;
+		}
+		Aside_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Aside_toggle()), (this.Aside_title())]);
+			return obj;
+		}
+		Entity_dot(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		entity_name(){
+			return "";
+		}
+		Entity_name(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.entity_name())]);
+			return obj;
+		}
+		Entity_head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Entity_dot()), (this.Entity_name())]);
+			return obj;
+		}
+		entity_type(){
+			return "";
+		}
+		Entity_type(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.entity_type())]);
+			return obj;
+		}
+		entity_desc(){
+			return "";
+		}
+		Entity_desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.entity_desc())]);
+			return obj;
+		}
+		relations_title(){
+			return "";
+		}
+		Relations_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.relations_title())]);
+			return obj;
+		}
+		rel_type(id){
+			return "";
+		}
+		Rel_type(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_type(id))]);
+			return obj;
+		}
+		rel_target(id){
+			return "";
+		}
+		Rel_target(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.rel_target(id))]);
+			return obj;
+		}
+		Rel(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Rel_type(id)), (this.Rel_target(id))]);
+			return obj;
+		}
+		rel_rows(){
+			return [(this.Rel(id))];
+		}
+		Relations_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.rel_rows()));
+			return obj;
+		}
+		ask_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Ask_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.ask_btn_text())]);
+			(obj.event) = () => ({"click": (next) => (this.ask_click(next))});
+			return obj;
+		}
+		Aside_body(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Entity_head()), 
+				(this.Entity_type()), 
+				(this.Entity_desc()), 
+				(this.Relations_title()), 
+				(this.Relations_list()), 
+				(this.Ask_btn())
+			]);
+			return obj;
+		}
+		Aside(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_aside_collapsed": (this.aside_collapsed())});
+			(obj.sub) = () => ([(this.Aside_head()), (this.Aside_body())]);
+			return obj;
+		}
+		dataset_id(){
+			return "";
+		}
+		selected_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		selected_edge_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		search(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		type_filter(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		rel_filter(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		legend_collapsed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		rels_collapsed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		aside_collapsed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		filter_search_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_filter_search_text"));
+		}
+		aside_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_title_text"));
+		}
+		aside_relation_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_relation_title_text"));
+		}
+		aside_empty_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_empty_text"));
+		}
+		relations_title_template(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_relations_title_template"));
+		}
+		ask_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_ask_btn_text"));
+		}
+		legend_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
+		}
+		rels_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_rels_title_text"));
+		}
+		comms_open(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		comms_btn_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_comms_btn_text"));
+		}
+		mock_badge_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_mock_badge_text"));
+		}
+		sub(){
+			return [(this.Canvas()), (this.Aside())];
+		}
+	};
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Graph"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas_bg"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_search"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "comms_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms_btn"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "comm_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_mark"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_dot"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_label"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_count"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_row"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms_list"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filters"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "legend_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_title"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_caret"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_head"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "legend_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_dot"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_label"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_count"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_row"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_list"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "rels_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_title"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_caret"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_head"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "rel_legend_click"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row_label"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row_count"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_list"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legends"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Mock_badge"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_toggle"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_title"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_head"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_dot"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_name"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_head"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_type"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_desc"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_title"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_type"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_target"));
+	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_list"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "ask_click"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_body"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_edge_id"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "search"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "type_filter"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "rel_filter"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "legend_collapsed"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "rels_collapsed"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_collapsed"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "comms_open"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        // Default page size for the graph endpoint. The mock backend caps at 5000.
+        const GRAPH_LIMIT = 500;
+        // Module-scoped cache keyed by dataset_id. Survives component remount:
+        // switching tabs drops the @$mol_mem cell's subscribers and resets it, so
+        // without this every return to the graph re-fetches and re-runs the layout.
+        const $raggu_web_front_explorer_graph_cache = new Map();
+        class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
+            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo
+            // and jsdom tests where no live backend is available.
+            mock_flag() {
+                return this.$.$mol_state_arg.value('mock') === '1';
+            }
+            // Reactive live fetch. While loading, the wire promise is rethrown as
+            // usual; a real transport error falls back to the built-in mock graph
+            // so the demo stays alive without the backend.
+            graph_remote() {
+                const id = this.dataset_id();
+                if (!id)
+                    return null;
+                if (this.mock_flag())
+                    return null;
+                // Возврат на вкладку не должен снова дёргать бэк — отдаём тот же объект,
+                // стабильная identity сохраняет раскладку графа.
+                const cached = $raggu_web_front_explorer_graph_cache.get(id);
+                if (cached)
+                    return cached;
+                try {
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_graph, { params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } });
+                    const nodes = res.nodes.map((n) => ({
+                        id: n.id,
+                        label: n.label,
+                        type: n.entity_type ?? '',
+                        degree: n.degree,
+                        x: n.x,
+                        y: n.y,
+                        community: n.community_id ?? '',
+                    }));
+                    const edges = res.edges.map((e) => ({
+                        id: e.id,
+                        source: e.source,
+                        target: e.target,
+                        strength: e.strength,
+                        relation: e.relation_type,
+                        description: e.description ?? '',
+                    }));
+                    const result = { nodes, edges };
+                    $raggu_web_front_explorer_graph_cache.set(id, result);
+                    return result;
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    console.warn('Graph fetch failed, falling back to mock:', error);
+                    return null;
+                }
+            }
+            // Показываем юзеру плашку, что перед ним мок-граф, а не данные с бэка.
+            is_mock() {
+                return this.graph_remote() === null;
+            }
+            // Легенда строится из фактических типов графа (топ по количеству узлов),
+            // а не из фиксированного NEREL-набора — схемы разных доменов различаются.
+            legend_entries() {
+                const counts = {};
+                for (const n of this.graph_nodes()) {
+                    counts[n.type] = (counts[n.type] ?? 0) + 1;
+                }
+                return Object.entries(counts)
+                    .map(([type, count]) => ({ type, count }))
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 12);
+            }
+            legend_rows() {
+                return this.legend_entries().map((_, i) => this.Legend_row(i));
+            }
+            legend_label(i) {
+                return this.legend_entries()[i]?.type ?? '';
+            }
+            legend_count(i) {
+                return String(this.legend_entries()[i]?.count ?? '');
+            }
+            legend_active(i) {
+                return this.type_filter() === this.legend_entries()[i]?.type;
+            }
+            // Цвет точки легенды = цвет узлов этого типа. Style override, т.к. цвет
+            // вычисляется рантайм-функцией, не токеном.
+            Legend_dot(i) {
+                const dot = super.Legend_dot(i);
+                const type = this.legend_entries()[i]?.type ?? '';
+                dot.style = () => ({
+                    background: $raggu_web_front_explorer_forcegraph_type_color(type),
+                });
+                return dot;
+            }
+            // Клик по типу подсвечивает все узлы этого типа (как поиск).
+            // Повторный клик по активному типу снимает фильтр.
+            legend_click(i) {
+                const t = this.legend_entries()[i]?.type ?? '';
+                this.type_filter(this.type_filter() === t ? '' : t);
+                return null;
+            }
+            // Легенда типов связей — симметрична легенде сущностей, но по рёбрам.
+            rel_entries() {
+                const counts = {};
+                for (const e of this.graph_edges()) {
+                    counts[e.relation] = (counts[e.relation] ?? 0) + 1;
+                }
+                return Object.entries(counts)
+                    .map(([type, count]) => ({ type, count }))
+                    .sort((a, b) => b.count - a.count)
+                    .slice(0, 12);
+            }
+            rel_legend_rows() {
+                return this.rel_entries().map((_, i) => this.Rel_row(i));
+            }
+            rel_legend_label(i) {
+                return this.rel_entries()[i]?.type ?? '';
+            }
+            rel_legend_count(i) {
+                return String(this.rel_entries()[i]?.count ?? '');
+            }
+            // Тип отношения наведённого/выбранного ребра — подсвечиваем его строку
+            active_relation() {
+                return this.graph_view().active_edge()?.relation ?? '';
+            }
+            rel_legend_active(i) {
+                const t = this.rel_entries()[i]?.type ?? '';
+                return this.rel_filter() === t || this.active_relation() === t;
+            }
+            rel_legend_click(i) {
+                const t = this.rel_entries()[i]?.type ?? '';
+                this.rel_filter(this.rel_filter() === t ? '' : t);
+                return null;
+            }
+            // --- Сообщества: выпадашка с чекбоксами возле поиска ---
+            // Список с бэка (get_communities); для мока/фолбэка группируем узлы
+            // по community. Иерархию Leiden режем до самого крупного уровня.
+            communities() {
+                const ds = this.dataset_id();
+                if (ds && !this.mock_flag()) {
+                    try {
+                        const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_communities, { params: { dataset_id: ds } });
+                        const all = res.communities ?? [];
+                        if (all.length) {
+                            const top = Math.min(...all.map((c) => c.level ?? 0));
+                            return all
+                                .filter((c) => (c.level ?? 0) === top)
+                                .map((c) => ({ id: c.id, title: c.title || c.id, size: c.size ?? 0 }))
+                                .sort((a, b) => b.size - a.size);
+                        }
+                    }
+                    catch (error) {
+                        if ($mol_promise_like(error))
+                            $mol_fail_hidden(error);
+                    }
+                }
+                const counts = {};
+                for (const n of this.graph_nodes()) {
+                    const c = n.community ?? '';
+                    if (!c)
+                        continue;
+                    counts[c] = (counts[c] ?? 0) + 1;
+                }
+                return Object.entries(counts)
+                    .map(([id, size]) => ({ id, title: id, size }))
+                    .sort((a, b) => b.size - a.size);
+            }
+            // Каждому сообществу свой цвет — по порядку в списке
+            comm_color_map() {
+                const m = {};
+                this.communities().forEach((c, i) => {
+                    m[c.id] = $raggu_web_front_explorer_forcegraph_index_color(i);
+                });
+                return m;
+            }
+            comms_selected(next) {
+                return next ?? [];
+            }
+            // Пересечение выбора с текущим списком: смена датасета не тащит чужой
+            // выбор (id сообществ у датасетов разные — фильтр гасил бы весь граф)
+            comms_checked() {
+                const ids = new Set(this.communities().map(c => c.id));
+                return this.comms_selected().filter(id => ids.has(id));
+            }
+            comm_rows() {
+                return this.communities().map((_, i) => this.Comm_row(i));
+            }
+            comm_label(i) { return this.communities()[i]?.title ?? ''; }
+            comm_count(i) { return String(this.communities()[i]?.size ?? ''); }
+            comm_active(i) {
+                return this.comms_selected().includes(this.communities()[i]?.id ?? '');
+            }
+            comm_mark(i) { return this.comm_active(i) ? '✓' : ''; }
+            Comm_dot(i) {
+                const dot = super.Comm_dot(i);
+                dot.style = () => ({
+                    background: this.comm_color_map()[this.communities()[i]?.id ?? ''] ?? '',
+                });
+                return dot;
+            }
+            comm_click(i) {
+                const id = this.communities()[i]?.id;
+                if (!id)
+                    return null;
+                const cur = this.comms_selected();
+                this.comms_selected(cur.includes(id)
+                    ? cur.filter(c => c !== id)
+                    : [...cur, id]);
+                return null;
+            }
+            comms_toggle() {
+                this.comms_open(!this.comms_open());
+                return null;
+            }
+            comms_closed() { return !this.comms_open(); }
+            comms_btn_label() {
+                const n = this.comms_checked().length;
+                return `${this.comms_btn_text()}${n ? ` · ${n}` : ''} ${this.comms_open() ? '▴' : '▾'}`;
+            }
+            // Сворачивание легенд и правой панели — больше места графу
+            legend_caret() { return this.legend_collapsed() ? '▸' : '▾'; }
+            rels_caret() { return this.rels_collapsed() ? '▸' : '▾'; }
+            aside_caret() { return this.aside_collapsed() ? '⟨' : '⟩'; }
+            legend_toggle() {
+                this.legend_collapsed(!this.legend_collapsed());
+                return null;
+            }
+            rels_toggle() {
+                this.rels_collapsed(!this.rels_collapsed());
+                return null;
+            }
+            aside_toggle() {
+                this.aside_collapsed(!this.aside_collapsed());
+                return null;
+            }
+            graph_data() {
+                return this.graph_remote()
+                    ?? $raggu_web_front_explorer_forcegraph_build_mock(42, 80, 130);
+            }
+            graph_nodes() { return this.graph_data().nodes; }
+            graph_edges() { return this.graph_data().edges; }
+            // Cast to extended class to access TS-only methods (selected_node/selected_color/...)
+            graph_view() {
+                return this.Graph();
+            }
+            // Selected node, mirrors $raggu_web_front_explorer_forcegraph internals
+            selected() {
+                return this.graph_view().selected_node();
+            }
+            // Selected edge — aside shows a relation card instead of an entity card
+            selected_edge() {
+                return this.graph_view().selected_edge();
+            }
+            node_label(id) {
+                return this.graph_nodes().find(n => n.id === id)?.label ?? id;
+            }
+            aside_title() {
+                return this.selected_edge() ? this.aside_relation_title_text() : this.aside_title_text();
+            }
+            // Aside text — fall back to placeholder when nothing selected
+            entity_name() {
+                const edge = this.selected_edge();
+                if (edge)
+                    return edge.relation || '—';
+                return this.selected()?.label ?? this.aside_empty_text();
+            }
+            entity_type() {
+                const edge = this.selected_edge();
+                if (edge)
+                    return `${this.node_label(edge.source)} → ${this.node_label(edge.target)}`;
+                return this.selected()?.type ?? '';
+            }
+            // Описание ребра с бэка: ручки get_edge на бэке пока нет, поэтому любая
+            // ошибка (404 в т.ч.) тихо фолбэчится на description из get_graph.
+            edge_remote_desc() {
+                const edge = this.selected_edge();
+                const id = this.dataset_id();
+                if (!edge || !id || this.mock_flag())
+                    return null;
+                try {
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_edge, { params: { dataset_id: id, edge_id: edge.id } });
+                    return res.description || null;
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    return null;
+                }
+            }
+            entity_desc() {
+                const edge = this.selected_edge();
+                if (edge) {
+                    return this.edge_remote_desc()
+                        ?? (edge.description
+                            || `${this.node_label(edge.source)} — ${edge.relation} — ${this.node_label(edge.target)}`);
+                }
+                const n = this.selected();
+                if (!n)
+                    return '';
+                return `Mock entity of type ${n.type}, connected to ${n.degree} other nodes.`;
+            }
+            relations_title() {
+                const n = this.selected();
+                if (!n)
+                    return '';
+                return this.relations_title_template().replace('%s', String(n.degree));
+            }
+            rels() {
+                if (this.selected_edge())
+                    return [];
+                return this.graph_view().selected_relations().slice(0, 5);
+            }
+            rel_rows() {
+                return this.rels().map((_, i) => this.Rel(i));
+            }
+            rel_type(i) { return this.rels()[i]?.relation ?? ''; }
+            rel_target(i) { return this.rels()[i]?.target_label ?? ''; }
+            // Entity_dot color reflects type of selected node; neutral for an edge
+            Entity_dot() {
+                const dot = super.Entity_dot();
+                dot.style = () => ({
+                    background: this.selected_edge() ? '#7a7672' : this.graph_view().selected_color(),
+                });
+                return dot;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "graph_remote", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "legend_entries", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "legend_click", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "rel_entries", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "rel_legend_click", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "communities", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "comm_color_map", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "comms_selected", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "comms_checked", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "comm_click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "comms_toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "legend_toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "rels_toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "aside_toggle", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "graph_data", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "edge_remote_desc", null);
+        $$.$raggu_web_front_explorer = $raggu_web_front_explorer;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    const { radial_gradient } = $mol_style_func;
+    const dot_base = {
+        minWidth: '9px',
+        maxWidth: '9px',
+        height: '9px',
+        border: { radius: '50%' },
+    };
+    const legend_row = {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '8px',
+        padding: {
+            top: '2px',
+            bottom: '2px',
+            left: '4px',
+            right: '4px',
+        },
+        cursor: 'pointer',
+        border: { radius: '5px' },
+        '@': {
+            raggu_web_front_explorer_legend_on: {
+                true: {
+                    background: { color: '#ffffff26' },
+                },
+            },
+        },
+    };
+    const legend_label = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 500,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.shade,
+    };
+    // Общий каркас панелек-легенд поверх канвы. Сворачивание: атрибут
+    // raggu_web_front_explorer_panel_collapsed прячет список, остаётся шапка.
+    const legend_panel = {
+        background: { color: '#1c1b1ae6' },
+        border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
+        padding: {
+            top: '11px',
+            bottom: '11px',
+            left: '13px',
+            right: '13px',
+        },
+        flex: { direction: 'column', shrink: 1 },
+        minHeight: 0,
+    };
+    const legend_head = {
+        flex: { direction: 'row' },
+        align: { items: 'center' },
+        gap: '8px',
+        cursor: 'pointer',
+    };
+    const legend_title = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 700,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.line,
+        textTransform: 'uppercase',
+        letterSpacing: '0.6px',
+        flex: { grow: 1 },
+    };
+    const legend_caret = {
+        color: '#8a8a8a',
+        font: { size: '10px' },
+    };
+    const legend_list = {
+        flex: { direction: 'column' },
+        overflow: 'auto',
+        margin: { top: '8px' },
+    };
+    const relation_card = {
+        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+        padding: {
+            top: '8px',
+            bottom: '8px',
+            left: '10px',
+            right: '10px',
+        },
+        margin: { bottom: '6px' },
+        font: { size: '11px' },
+        flex: { direction: 'column' },
+    };
+    const relation_type = {
+        font: {
+            family: 'ui-monospace, monospace',
+            weight: 600,
+            size: '10px',
+        },
+        color: $bog_builderui_tokens.current,
+    };
+    const relation_target = {
+        color: $bog_builderui_tokens.shade,
+        margin: { top: '2px' },
+    };
+    $mol_style_define($raggu_web_front_explorer, {
+        flex: { direction: 'row', shrink: 1 },
+        minWidth: 0,
+        height: '100%',
+        Canvas: {
+            flex: { grow: 1, shrink: 1, direction: 'column' },
+            position: 'relative',
+            background: { color: $bog_builderui_tokens.back },
+            minWidth: 0,
+        },
+        Canvas_bg: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            align: { items: 'center' },
+            justify: { content: 'center' },
+            background: {
+                image: [
+                    [radial_gradient('circle at 35% 40%, #5b5bd62e, transparent 45%')],
+                    [radial_gradient('circle at 70% 65%, #d65b8c24, transparent 45%')],
+                ],
+            },
+        },
+        Filters: {
+            position: 'absolute',
+            top: '14px',
+            left: '14px',
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '8px',
+            maxWidth: '62%',
+        },
+        Filter_search: {
+            background: { color: $bog_builderui_tokens.field },
+            color: $bog_builderui_tokens.text,
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px', weight: 600 },
+            width: '200px',
+        },
+        // Выпадашка сообществ: кнопка в ряду фильтров, список поверх канвы
+        Comms: {
+            position: 'relative',
+            flex: { direction: 'column' },
+            '@': {
+                raggu_web_front_explorer_panel_collapsed: {
+                    true: {
+                        Comms_list: { display: 'none' },
+                    },
+                },
+            },
+        },
+        Comms_btn: {
+            background: { color: $bog_builderui_tokens.field },
+            color: $bog_builderui_tokens.text,
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            padding: {
+                top: '8px',
+                bottom: '8px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px', weight: 600 },
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+        },
+        Comms_list: {
+            ...legend_panel,
+            position: 'absolute',
+            top: $mol_style_func.calc('100% + 6px'),
+            left: 0,
+            width: '250px',
+            maxHeight: '320px',
+            overflow: 'auto',
+            zIndex: 5,
+        },
+        Comm_row: legend_row,
+        Comm_mark: {
+            minWidth: '13px',
+            maxWidth: '13px',
+            color: $bog_builderui_tokens.current,
+            font: { size: '11px', weight: 700 },
+        },
+        Comm_dot: dot_base,
+        Comm_label: {
+            ...legend_label,
+            flex: { grow: 1 },
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+        },
+        Comm_count: {
+            ...legend_label,
+            color: '#8a8a8a',
+        },
+        Legends: {
+            position: 'absolute',
+            top: '14px',
+            right: '14px',
+            width: '184px',
+            maxHeight: $mol_style_func.calc('100% - 28px'),
+            flex: { direction: 'column' },
+            gap: '8px',
+        },
+        Legend: {
+            ...legend_panel,
+            '@': {
+                raggu_web_front_explorer_panel_collapsed: {
+                    true: {
+                        Legend_list: { display: 'none' },
+                    },
+                },
+            },
+        },
+        Legend_head: legend_head,
+        Legend_title: legend_title,
+        Legend_caret: legend_caret,
+        Legend_list: legend_list,
+        Legend_row: legend_row,
+        Legend_dot: dot_base,
+        Legend_label: {
+            ...legend_label,
+            flex: { grow: 1 },
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+        },
+        Legend_count: {
+            ...legend_label,
+            color: '#8a8a8a',
+        },
+        Rels: {
+            ...legend_panel,
+            '@': {
+                raggu_web_front_explorer_panel_collapsed: {
+                    true: {
+                        Rels_list: { display: 'none' },
+                    },
+                },
+            },
+        },
+        Rels_head: legend_head,
+        Rels_title: legend_title,
+        Rels_caret: legend_caret,
+        Rels_list: legend_list,
+        Rel_row: legend_row,
+        Rel_row_label: {
+            ...legend_label,
+            flex: { grow: 1 },
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+        },
+        Rel_row_count: {
+            ...legend_label,
+            color: '#8a8a8a',
+        },
+        Mock_badge: {
+            display: 'none',
+            position: 'absolute',
+            bottom: '14px',
+            left: '14px',
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: '#8a6d1b',
+            background: { color: '#f5c84226' },
+            border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '6px' },
+            padding: {
+                top: '3px',
+                bottom: '3px',
+                left: '8px',
+                right: '8px',
+            },
+            '@': {
+                raggu_web_front_explorer_mock_badge_showed: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        Aside: {
+            minWidth: '240px',
+            maxWidth: '240px',
+            background: { color: $bog_builderui_tokens.card },
+            border: {
+                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '18px',
+                right: '18px',
+            },
+            overflow: 'auto',
+            flex: { direction: 'column' },
+            // Свёрнутая панель — узкая полоска с шевроном, граф забирает ширину
+            '@': {
+                raggu_web_front_explorer_aside_collapsed: {
+                    true: {
+                        minWidth: '34px',
+                        maxWidth: '34px',
+                        padding: {
+                            top: '10px',
+                            bottom: '10px',
+                            left: '4px',
+                            right: '4px',
+                        },
+                        Aside_title: { display: 'none' },
+                        Aside_body: { display: 'none' },
+                    },
+                },
+            },
+        },
+        Aside_head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+        },
+        Aside_toggle: {
+            cursor: 'pointer',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '13px', weight: 600 },
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '8px',
+                right: '8px',
+            },
+            border: { radius: '5px' },
+            ':hover': {
+                background: { color: $bog_builderui_tokens.field },
+            },
+        },
+        Aside_body: {
+            flex: { direction: 'column' },
+        },
+        Aside_title: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+            letterSpacing: '0.7px',
+        },
+        Entity_head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+            margin: { top: '11px' },
+        },
+        Entity_dot: {
+            minWidth: '12px',
+            maxWidth: '12px',
+            height: '12px',
+            border: { radius: '50%' },
+            background: { color: '#7c6ce0' },
+        },
+        Entity_name: {
+            font: { weight: 700, size: '16px' },
+        },
+        Entity_type: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.current,
+            margin: { top: '6px' },
+        },
+        Entity_desc: {
+            font: { size: '12px' },
+            color: $bog_builderui_tokens.shade,
+            lineHeight: '1.5',
+            margin: { top: '10px' },
+        },
+        Relations_title: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            textTransform: 'uppercase',
+            margin: { top: '18px', bottom: '8px' },
+        },
+        Relations_list: {
+            flex: { direction: 'column' },
+        },
+        Rel: relation_card,
+        Rel_type: relation_type,
+        Rel_target: relation_target,
+        Ask_btn: {
+            margin: { top: '16px' },
+            background: { color: $bog_builderui_tokens.current },
+            color: '#ffffff',
+            border: { radius: '7px' },
+            padding: {
+                top: '10px',
+                bottom: '10px',
+                left: '10px',
+                right: '10px',
+            },
+            textAlign: 'center',
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+        },
+        '@media': {
+            '(max-width: 720px)': {
+                flex: { direction: 'column' },
+                overflow: 'auto',
+                Canvas: {
+                    minHeight: '55vh',
+                },
+                Aside: {
+                    minWidth: 0,
+                    maxWidth: '100%',
+                    border: {
+                        left: { width: 0 },
+                        top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+                    },
+                    overflow: 'visible',
+                },
+                Filters: {
+                    maxWidth: $mol_style_func.calc('100% - 28px'),
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_list) = class $mol_list extends ($.$mol_view) {
+		gap_before(){
+			return 0;
+		}
+		Gap_before(){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"paddingTop": (this.gap_before())});
+			return obj;
+		}
+		Empty(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		gap_after(){
+			return 0;
+		}
+		Gap_after(){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"paddingTop": (this.gap_after())});
+			return obj;
+		}
+		rows(){
+			return [
+				(this.Gap_before()), 
+				(this.Empty()), 
+				(this.Gap_after())
+			];
+		}
+		render_visible_only(){
+			return true;
+		}
+		render_over(){
+			return 0.1;
+		}
+		sub(){
+			return (this.rows());
+		}
+		item_height_min(id){
+			return 1;
+		}
+		item_width_min(id){
+			return 1;
+		}
+		view_window_shift(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		view_window(){
+			return [0, 0];
+		}
+	};
+	($mol_mem(($.$mol_list.prototype), "Gap_before"));
+	($mol_mem(($.$mol_list.prototype), "Empty"));
+	($mol_mem(($.$mol_list.prototype), "Gap_after"));
+	($mol_mem(($.$mol_list.prototype), "view_window_shift"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    let cache = null;
+    function $mol_support_css_overflow_anchor() {
+        return cache ?? (cache = this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false);
+    }
+    $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
+         * `mol_list` should contain only components that inherits `mol_view`. You should not place raw strings or numbers in list.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
+         */
+        class $mol_list extends $.$mol_list {
+            sub() {
+                const rows = this.rows();
+                const next = (rows.length === 0) ? [this.Empty()] : rows;
+                const prev = $mol_mem_cached(() => this.sub());
+                const [start, end] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
+                if (prev && $mol_mem_cached(() => prev[start] !== next[start])) {
+                    const index = $mol_mem_cached(() => next.indexOf(prev[start])) ?? -1;
+                    if (index >= 0)
+                        this.view_window_shift(index - start);
+                }
+                return next;
+            }
+            render_visible_only() {
+                return this.$.$mol_support_css_overflow_anchor();
+            }
+            _view_window_last = [0, 0];
+            view_window(next) {
+                const kids = this.sub();
+                if (kids.length < 3)
+                    return [0, kids.length];
+                if (this.$.$mol_print.active())
+                    return [0, kids.length];
+                const rect = this.view_rect();
+                if (next)
+                    return next;
+                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? this._view_window_last;
+                const shift = this.view_window_shift();
+                this.view_window_shift(0);
+                min += shift;
+                max += shift;
+                let max2 = max = Math.min(max, kids.length);
+                let min2 = min = Math.max(0, Math.min(min, max - 1));
+                const anchoring = this.render_visible_only();
+                const window_height = this.$.$mol_window.size().height + 40;
+                const over = Math.ceil(window_height * this.render_over());
+                const limit_top = -over;
+                const limit_bottom = window_height + over;
+                const gap_before = $mol_mem_cached(() => this.gap_before()) ?? 0;
+                const gap_after = $mol_mem_cached(() => this.gap_after()) ?? 0;
+                let top = Math.ceil(rect?.top ?? 0) + gap_before;
+                let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
+                // change nothing when already covers all limits
+                if (top <= limit_top && bottom >= limit_bottom) {
+                    return [min2, max2];
+                }
+                // jumps when fully over limits
+                if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
+                    min = 0;
+                    top = Math.ceil(rect?.top ?? 0);
+                    while (min < (kids.length - 1)) {
+                        const height = this.item_height_min(min);
+                        if (top + height >= limit_top)
+                            break;
+                        top += height;
+                        ++min;
+                    }
+                    min2 = min;
+                    max2 = max = min;
+                    bottom = top;
+                }
+                let top2 = top;
+                let bottom2 = bottom;
+                // force recalc min when overlapse top limit
+                if (anchoring && (top < limit_top) && (bottom < limit_bottom) && (max < kids.length)) {
+                    min2 = max;
+                    top2 = bottom;
+                }
+                // force recalc max when overlapse bottom limit
+                if ((bottom > limit_bottom) && (top > limit_top) && (min > 0)) {
+                    max2 = min;
+                    bottom2 = top;
+                }
+                // extend min to cover top limit
+                while (anchoring && ((top2 > limit_top) && (min2 > 0))) {
+                    --min2;
+                    top2 -= this.item_height_min(min2);
+                }
+                // extend max to cover bottom limit
+                while (bottom2 < limit_bottom && max2 < kids.length) {
+                    bottom2 += this.item_height_min(max2);
+                    ++max2;
+                }
+                return [min2, max2];
+            }
+            item_height_min(index) {
+                try {
+                    return this.sub()[index]?.minimal_height() ?? 0;
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return 0;
+                }
+            }
+            row_width_min(index) {
+                try {
+                    return this.sub()[index]?.minimal_width() ?? 0;
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return 0;
+                }
+            }
+            gap_before() {
+                let gap = 0;
+                const skipped = this.view_window()[0];
+                for (let i = 0; i < skipped; ++i)
+                    gap += this.item_height_min(i);
+                return gap;
+            }
+            gap_after() {
+                let gap = 0;
+                const from = this.view_window()[1];
+                const to = this.sub().length;
+                for (let i = from; i < to; ++i)
+                    gap += this.item_height_min(i);
+                return gap;
+            }
+            sub_visible() {
+                return [
+                    ...this.gap_before() ? [this.Gap_before()] : [],
+                    ...this.sub().slice(...this._view_window_last = this.view_window()),
+                    ...this.gap_after() ? [this.Gap_after()] : [],
+                ];
+            }
+            minimal_height() {
+                let height = 0;
+                const len = this.sub().length;
+                for (let i = 0; i < len; ++i)
+                    height += this.item_height_min(i);
+                return height;
+            }
+            minimal_width() {
+                let width = 0;
+                const len = this.sub().length;
+                for (let i = 0; i < len; ++i)
+                    width = Math.max(width, this.item_width_min(i));
+                return width;
+            }
+            force_render(path) {
+                const kids = this.rows();
+                const index = kids.findIndex(item => path.has(item));
+                if (index >= 0) {
+                    const win = this.view_window();
+                    if (index < win[0] || index >= win[1]) {
+                        this.view_window([this.render_visible_only() ? index : 0, index + 1]);
+                    }
+                    kids[index].force_render(path);
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "view_window", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "gap_before", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "gap_after", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "sub_visible", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "minimal_height", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "minimal_width", null);
+        $$.$mol_list = $mol_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: 1.5rem;\n\t/* will-change: contents; */\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$bog_builderui_card) = class $bog_builderui_card extends ($.$bog_builderui_div) {};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($bog_builderui_card, {
+        background: {
+            color: $bog_builderui_tokens.card,
+        },
+        color: $bog_builderui_tokens.text,
+        border: {
+            radius: $bog_builderui_tokens.radius,
+            width: '1px',
+            style: 'solid',
+            color: $bog_builderui_tokens.line,
+        },
+        padding: {
+            top: '1rem',
+            bottom: '1rem',
+            left: '1.25rem',
+            right: '1.25rem',
+        },
+        box: {
+            shadow: [{
+                    x: 0,
+                    y: '1px',
+                    blur: '3px',
+                    spread: 0,
+                    color: '#0000001a',
+                }],
+        },
+        gap: '0.75rem',
+        flex: {
+            direction: 'column',
+        },
+        breakInside: 'avoid',
+        margin: {
+            bottom: '1rem',
+        },
+    });
+})($ || ($ = {}));
+
+;
 	($.$bog_builderui_field) = class $bog_builderui_field extends ($.$mol_string) {
 		minimal_height(){
 			return 36;
@@ -8305,18 +13274,6 @@ var $;
 	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_sample_box"));
 	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_title"));
 	($mol_mem_key(($.$mol_chart_legend.prototype), "Graph_legend"));
-
-
-;
-	($.$mol_svg_group) = class $mol_svg_group extends ($.$mol_svg) {
-		dom_name(){
-			return "g";
-		}
-	};
-
-
-;
-"use strict";
 
 
 ;
@@ -9699,6 +14656,370 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_ghost) = class $mol_ghost extends ($.$mol_view) {
+		Sub(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_ghost.prototype), "Sub"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Mixin view logic to DOM node of another component.
+         */
+        class $mol_ghost extends $.$mol_ghost {
+            dom_node_external(next) {
+                return this.Sub().dom_node(next);
+            }
+            dom_node_actual() {
+                this.dom_node();
+                const node = this.Sub().dom_node_actual();
+                const attr = this.attr();
+                const style = this.style();
+                const fields = this.field();
+                $mol_dom_render_attributes(node, attr);
+                $mol_dom_render_styles(node, style);
+                $mol_dom_render_fields(node, fields);
+                return node;
+            }
+            dom_tree() {
+                const Sub = this.Sub();
+                const node = Sub.dom_tree();
+                try {
+                    this.dom_node_actual();
+                    this.auto();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                }
+                return node;
+            }
+            title() {
+                return this.Sub().title();
+            }
+            minimal_width() {
+                return this.Sub().minimal_width();
+            }
+            minimal_height() {
+                return this.Sub().minimal_height();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_ghost.prototype, "dom_node_actual", null);
+        $$.$mol_ghost = $mol_ghost;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_follower) = class $mol_follower extends ($.$mol_ghost) {
+		transform(){
+			return "";
+		}
+		Anchor(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		align(){
+			return [-.5, -.5];
+		}
+		offset(){
+			return [0, 0];
+		}
+		style(){
+			return {...(super.style()), "transform": (this.transform())};
+		}
+	};
+	($mol_mem(($.$mol_follower.prototype), "Anchor"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * Marker on top of another component with tracking of its position.
+         */
+        class $mol_follower extends $.$mol_follower {
+            pos() {
+                const self_rect = this.view_rect();
+                const prev = $mol_wire_probe(() => this.pos());
+                const anchor_rect = this.Anchor()?.view_rect();
+                if (!anchor_rect)
+                    return null;
+                const offset = this.offset();
+                const align = this.align();
+                const left = Math.floor((prev?.left ?? 0)
+                    - (self_rect?.left ?? 0)
+                    + (self_rect?.width ?? 0) * align[0]
+                    + (anchor_rect?.left ?? 0)
+                    + offset[0] * (anchor_rect?.width ?? 0));
+                const top = Math.floor((prev?.top ?? 0)
+                    - (self_rect?.top ?? 0)
+                    + (self_rect?.height ?? 0) * align[1]
+                    + (anchor_rect?.top ?? 0)
+                    + offset[1] * (anchor_rect?.height ?? 0));
+                return { left, top };
+            }
+            transform() {
+                const pos = this.pos();
+                if (!pos)
+                    return 'scale(0)';
+                const { left, top } = pos;
+                return `translate( ${left}px, ${top}px )`;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_follower.prototype, "pos", null);
+        __decorate([
+            $mol_mem
+        ], $mol_follower.prototype, "transform", null);
+        $$.$mol_follower = $mol_follower;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/follower/follower.view.css", "[mol_follower] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\ttransition: none;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_pop) = class $mol_pop extends ($.$mol_view) {
+		bubble(){
+			return null;
+		}
+		Anchor(){
+			return null;
+		}
+		bubble_offset(){
+			return [0, 1];
+		}
+		bubble_align(){
+			return [0, 0];
+		}
+		bubble_content(){
+			return [];
+		}
+		height_max(){
+			return 9999;
+		}
+		Bubble(){
+			const obj = new this.$.$mol_pop_bubble();
+			(obj.content) = () => ((this.bubble_content()));
+			(obj.height_max) = () => ((this.height_max()));
+			return obj;
+		}
+		Follower(){
+			const obj = new this.$.$mol_follower();
+			(obj.offset) = () => ((this.bubble_offset()));
+			(obj.align) = () => ((this.bubble_align()));
+			(obj.Anchor) = () => ((this.Anchor()));
+			(obj.Sub) = () => ((this.Bubble()));
+			return obj;
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		align_vert(){
+			return "";
+		}
+		align_hor(){
+			return "";
+		}
+		align(){
+			return "bottom_center";
+		}
+		prefer(){
+			return "vert";
+		}
+		auto(){
+			return [(this.bubble())];
+		}
+		sub(){
+			return [(this.Anchor())];
+		}
+		sub_visible(){
+			return [(this.Anchor()), (this.Follower())];
+		}
+	};
+	($mol_mem(($.$mol_pop.prototype), "Bubble"));
+	($mol_mem(($.$mol_pop.prototype), "Follower"));
+	($mol_mem(($.$mol_pop.prototype), "showed"));
+	($.$mol_pop_bubble) = class $mol_pop_bubble extends ($.$mol_view) {
+		content(){
+			return [];
+		}
+		height_max(){
+			return 9999;
+		}
+		sub(){
+			return (this.content());
+		}
+		style(){
+			return {...(super.style()), "maxHeight": (this.height_max())};
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"tabindex": 0, 
+				"popover": "manual"
+			};
+		}
+	};
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * `Bubble` that can be shown anchored to `Anchor` element.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_pop_demo
+         */
+        class $mol_pop extends $.$mol_pop {
+            showed(next = false) {
+                this.focused();
+                return next;
+            }
+            sub_visible() {
+                return [
+                    this.Anchor(),
+                    ...this.showed() ? [this.Follower()] : [],
+                ];
+            }
+            height_max() {
+                const viewport = this.$.$mol_window.size();
+                const rect_bubble = this.view_rect();
+                const align = this.align_vert();
+                if (align === 'bottom')
+                    return (viewport.height - rect_bubble.bottom);
+                if (align === 'top')
+                    return rect_bubble.top;
+                return 0;
+            }
+            align() {
+                switch (this.prefer()) {
+                    case 'hor': return `${this.align_hor()}_${this.align_vert()}`;
+                    case 'vert': return `${this.align_vert()}_${this.align_hor()}`;
+                    default: return this.prefer();
+                }
+            }
+            align_vert() {
+                const rect_pop = this.view_rect();
+                if (!rect_pop)
+                    return 'suspense';
+                const viewport = this.$.$mol_window.size();
+                return rect_pop.top > viewport.height / 2 ? 'top' : 'bottom';
+            }
+            align_hor() {
+                const rect_pop = this.view_rect();
+                if (!rect_pop)
+                    return 'suspense';
+                const viewport = this.$.$mol_window.size();
+                return rect_pop.left > viewport.width / 2 ? 'left' : 'right';
+            }
+            bubble_offset() {
+                const tags = new Set(this.align().split('_'));
+                if (tags.has('suspense'))
+                    return [0, 0];
+                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
+                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
+                if ([...tags][0] === hor) {
+                    return [
+                        { left: 0, center: .5, right: 1 }[hor],
+                        { top: 1, center: .5, bottom: 0 }[vert],
+                    ];
+                }
+                else {
+                    return [
+                        { left: 1, center: .5, right: 0 }[hor],
+                        { top: 0, center: .5, bottom: 1 }[vert],
+                    ];
+                }
+            }
+            bubble_align() {
+                const tags = new Set(this.align().split('_'));
+                if (tags.has('suspense'))
+                    return [-.5, -.5];
+                const hor = tags.has('right') ? 'right' : tags.has('left') ? 'left' : 'center';
+                const vert = tags.has('bottom') ? 'bottom' : tags.has('top') ? 'top' : 'center';
+                return [
+                    { left: -1, center: -.5, right: 0, suspense: -.5 }[hor],
+                    { top: -1, center: -.5, bottom: 0, suspense: -.5 }[vert],
+                ];
+            }
+            bubble() {
+                if (!this.showed())
+                    return;
+                this.Bubble().dom_node().showPopover?.();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "showed", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "sub_visible", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "height_max", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "align", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "align_vert", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "align_hor", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "bubble_offset", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "bubble_align", null);
+        __decorate([
+            $mol_mem
+        ], $mol_pop.prototype, "bubble", null);
+        $$.$mol_pop = $mol_pop;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/pop/pop.view.css", "@keyframes mol_pop_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[mol_pop] {\n\tposition: relative;\n\tdisplay: inline-flex;\n}\n\n[mol_pop_bubble] {\n\tborder: none;\n\tpadding: 0;\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: 0 0 1rem hsla(0,0%,0%,.5);\n\tborder-radius: var(--mol_gap_round);\n\tposition: fixed;\n\tz-index: var(--mol_layer_popup);\n\tbackground: var(--mol_theme_back);\n\tmax-width: none;\n\tmax-height: none;\n\t/* overflow: hidden;\n\toverflow-y: scroll;\n\toverflow-y: overlay; */\n\tword-break: normal;\n\twidth: max-content;\n\t/* height: max-content; */\n\tflex-direction: column;\n\tmax-width: calc( 100vw - var(--mol_gap_page) );\n\tmax-height: 80vw;\n\tcontain: paint;\n\ttransition-property: opacity;\n\t/* Safari ios layer fix, https://t.me/mam_mol/170017 */\n\ttransform: translateZ(0);\n\tanimation: mol_pop_show .1s ease-in;\n}\n\n:where( [mol_pop_bubble] > * ) {\n\tbackground: var(--mol_theme_card);\n}\n\n[mol_pop_bubble][mol_scroll] {\n\tbackground: var(--mol_theme_back);\n}\n\n[mol_pop_bubble]:focus {\n\toutline: none;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_check) = class $mol_check extends ($.$mol_button_minor) {
 		checked(next){
 			if(next !== undefined) return next;
@@ -10550,273 +15871,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_list) = class $mol_list extends ($.$mol_view) {
-		gap_before(){
-			return 0;
-		}
-		Gap_before(){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this.gap_before())});
-			return obj;
-		}
-		Empty(){
-			const obj = new this.$.$mol_view();
-			return obj;
-		}
-		gap_after(){
-			return 0;
-		}
-		Gap_after(){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this.gap_after())});
-			return obj;
-		}
-		rows(){
-			return [
-				(this.Gap_before()), 
-				(this.Empty()), 
-				(this.Gap_after())
-			];
-		}
-		render_visible_only(){
-			return true;
-		}
-		render_over(){
-			return 0.1;
-		}
-		sub(){
-			return (this.rows());
-		}
-		item_height_min(id){
-			return 1;
-		}
-		item_width_min(id){
-			return 1;
-		}
-		view_window_shift(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		view_window(){
-			return [0, 0];
-		}
-	};
-	($mol_mem(($.$mol_list.prototype), "Gap_before"));
-	($mol_mem(($.$mol_list.prototype), "Empty"));
-	($mol_mem(($.$mol_list.prototype), "Gap_after"));
-	($mol_mem(($.$mol_list.prototype), "view_window_shift"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    let cache = null;
-    function $mol_support_css_overflow_anchor() {
-        return cache ?? (cache = this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false);
-    }
-    $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
-         * `mol_list` should contain only components that inherits `mol_view`. You should not place raw strings or numbers in list.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
-         */
-        class $mol_list extends $.$mol_list {
-            sub() {
-                const rows = this.rows();
-                const next = (rows.length === 0) ? [this.Empty()] : rows;
-                const prev = $mol_mem_cached(() => this.sub());
-                const [start, end] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
-                if (prev && $mol_mem_cached(() => prev[start] !== next[start])) {
-                    const index = $mol_mem_cached(() => next.indexOf(prev[start])) ?? -1;
-                    if (index >= 0)
-                        this.view_window_shift(index - start);
-                }
-                return next;
-            }
-            render_visible_only() {
-                return this.$.$mol_support_css_overflow_anchor();
-            }
-            _view_window_last = [0, 0];
-            view_window(next) {
-                const kids = this.sub();
-                if (kids.length < 3)
-                    return [0, kids.length];
-                if (this.$.$mol_print.active())
-                    return [0, kids.length];
-                const rect = this.view_rect();
-                if (next)
-                    return next;
-                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? this._view_window_last;
-                const shift = this.view_window_shift();
-                this.view_window_shift(0);
-                min += shift;
-                max += shift;
-                let max2 = max = Math.min(max, kids.length);
-                let min2 = min = Math.max(0, Math.min(min, max - 1));
-                const anchoring = this.render_visible_only();
-                const window_height = this.$.$mol_window.size().height + 40;
-                const over = Math.ceil(window_height * this.render_over());
-                const limit_top = -over;
-                const limit_bottom = window_height + over;
-                const gap_before = $mol_mem_cached(() => this.gap_before()) ?? 0;
-                const gap_after = $mol_mem_cached(() => this.gap_after()) ?? 0;
-                let top = Math.ceil(rect?.top ?? 0) + gap_before;
-                let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
-                // change nothing when already covers all limits
-                if (top <= limit_top && bottom >= limit_bottom) {
-                    return [min2, max2];
-                }
-                // jumps when fully over limits
-                if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
-                    min = 0;
-                    top = Math.ceil(rect?.top ?? 0);
-                    while (min < (kids.length - 1)) {
-                        const height = this.item_height_min(min);
-                        if (top + height >= limit_top)
-                            break;
-                        top += height;
-                        ++min;
-                    }
-                    min2 = min;
-                    max2 = max = min;
-                    bottom = top;
-                }
-                let top2 = top;
-                let bottom2 = bottom;
-                // force recalc min when overlapse top limit
-                if (anchoring && (top < limit_top) && (bottom < limit_bottom) && (max < kids.length)) {
-                    min2 = max;
-                    top2 = bottom;
-                }
-                // force recalc max when overlapse bottom limit
-                if ((bottom > limit_bottom) && (top > limit_top) && (min > 0)) {
-                    max2 = min;
-                    bottom2 = top;
-                }
-                // extend min to cover top limit
-                while (anchoring && ((top2 > limit_top) && (min2 > 0))) {
-                    --min2;
-                    top2 -= this.item_height_min(min2);
-                }
-                // extend max to cover bottom limit
-                while (bottom2 < limit_bottom && max2 < kids.length) {
-                    bottom2 += this.item_height_min(max2);
-                    ++max2;
-                }
-                return [min2, max2];
-            }
-            item_height_min(index) {
-                try {
-                    return this.sub()[index]?.minimal_height() ?? 0;
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return 0;
-                }
-            }
-            row_width_min(index) {
-                try {
-                    return this.sub()[index]?.minimal_width() ?? 0;
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return 0;
-                }
-            }
-            gap_before() {
-                let gap = 0;
-                const skipped = this.view_window()[0];
-                for (let i = 0; i < skipped; ++i)
-                    gap += this.item_height_min(i);
-                return gap;
-            }
-            gap_after() {
-                let gap = 0;
-                const from = this.view_window()[1];
-                const to = this.sub().length;
-                for (let i = from; i < to; ++i)
-                    gap += this.item_height_min(i);
-                return gap;
-            }
-            sub_visible() {
-                return [
-                    ...this.gap_before() ? [this.Gap_before()] : [],
-                    ...this.sub().slice(...this._view_window_last = this.view_window()),
-                    ...this.gap_after() ? [this.Gap_after()] : [],
-                ];
-            }
-            minimal_height() {
-                let height = 0;
-                const len = this.sub().length;
-                for (let i = 0; i < len; ++i)
-                    height += this.item_height_min(i);
-                return height;
-            }
-            minimal_width() {
-                let width = 0;
-                const len = this.sub().length;
-                for (let i = 0; i < len; ++i)
-                    width = Math.max(width, this.item_width_min(i));
-                return width;
-            }
-            force_render(path) {
-                const kids = this.rows();
-                const index = kids.findIndex(item => path.has(item));
-                if (index >= 0) {
-                    const win = this.view_window();
-                    if (index < win[0] || index >= win[1]) {
-                        this.view_window([this.render_visible_only() ? index : 0, index + 1]);
-                    }
-                    kids[index].force_render(path);
-                }
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "sub", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "view_window", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "gap_before", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "gap_after", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "sub_visible", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "minimal_height", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "minimal_width", null);
-        $$.$mol_list = $mol_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: 1.5rem;\n\t/* will-change: contents; */\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
-})($ || ($ = {}));
-
-;
 	($.$mol_icon_close) = class $mol_icon_close extends ($.$mol_icon) {
 		path(){
 			return "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z";
@@ -11529,7636 +16583,6 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("bog/builderui/theme.css", "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');\n\n:root {\n\t--bog_builderui_font_body: 'Inter', system-ui, sans-serif;\n\t--bog_builderui_font_head: 'Inter', system-ui, sans-serif;\n\t--bog_builderui_radius: 0.5rem;\n}\n\n/* ============================================================\n   RADIUS PRESETS\n   ============================================================ */\n[bog_builderui_radius=\"none\"] { --bog_builderui_radius: 0; }\n[bog_builderui_radius=\"small\"] { --bog_builderui_radius: 0.25rem; }\n[bog_builderui_radius=\"medium\"] { --bog_builderui_radius: 0.5rem; }\n[bog_builderui_radius=\"large\"] { --bog_builderui_radius: 1rem; }\n\n/* ============================================================\n   BODY FONT\n   ============================================================ */\n[bog_builderui_font_body=\"inter\"] { --bog_builderui_font_body: 'Inter', system-ui, sans-serif; }\n[bog_builderui_font_body=\"manrope\"] { --bog_builderui_font_body: 'Manrope', system-ui, sans-serif; }\n[bog_builderui_font_body=\"dm-sans\"] { --bog_builderui_font_body: 'DM Sans', system-ui, sans-serif; }\n[bog_builderui_font_body=\"eb-garamond\"] { --bog_builderui_font_body: 'EB Garamond', Georgia, serif; }\n\n/* ============================================================\n   HEADING FONT\n   ============================================================ */\n[bog_builderui_font_head=\"inter\"] { --bog_builderui_font_head: 'Inter', system-ui, sans-serif; }\n[bog_builderui_font_head=\"manrope\"] { --bog_builderui_font_head: 'Manrope', system-ui, sans-serif; }\n[bog_builderui_font_head=\"dm-sans\"] { --bog_builderui_font_head: 'DM Sans', system-ui, sans-serif; }\n[bog_builderui_font_head=\"eb-garamond\"] { --bog_builderui_font_head: 'EB Garamond', Georgia, serif; }\n\n/* ============================================================\n   BASE COLORS (neutral palette)\n   Vars: back, card, field, text, shade, line, hover\n   ============================================================ */\n\n/* === Slate (default) === */\n:root,\n[bog_builderui_base=\"slate\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #020817;\n\t--bog_builderui_card: #0f172a;\n\t--bog_builderui_field: #1e293b;\n\t--bog_builderui_text: #f8fafc;\n\t--bog_builderui_shade: #94a3b8;\n\t--bog_builderui_line: #1e293b;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"slate\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #ffffff;\n\t--bog_builderui_card: #f8fafc;\n\t--bog_builderui_field: #f1f5f9;\n\t--bog_builderui_text: #0f172a;\n\t--bog_builderui_shade: #64748b;\n\t--bog_builderui_line: #e2e8f0;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* === Stone === */\n[bog_builderui_base=\"stone\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #0c0a09;\n\t--bog_builderui_card: #1c1917;\n\t--bog_builderui_field: #292524;\n\t--bog_builderui_text: #fafaf9;\n\t--bog_builderui_shade: #a8a29e;\n\t--bog_builderui_line: #292524;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"stone\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #fafaf9;\n\t--bog_builderui_card: #ffffff;\n\t--bog_builderui_field: #f5f5f4;\n\t--bog_builderui_text: #0c0a09;\n\t--bog_builderui_shade: #78716c;\n\t--bog_builderui_line: #e7e5e4;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* === Zinc === */\n[bog_builderui_base=\"zinc\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #09090b;\n\t--bog_builderui_card: #18181b;\n\t--bog_builderui_field: #27272a;\n\t--bog_builderui_text: #fafafa;\n\t--bog_builderui_shade: #a1a1aa;\n\t--bog_builderui_line: #27272a;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"zinc\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #ffffff;\n\t--bog_builderui_card: #fafafa;\n\t--bog_builderui_field: #f4f4f5;\n\t--bog_builderui_text: #09090b;\n\t--bog_builderui_shade: #71717a;\n\t--bog_builderui_line: #e4e4e7;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* === Gray === */\n[bog_builderui_base=\"gray\"][bog_builderui_lights=\"dark\"] {\n\t--bog_builderui_back: #030712;\n\t--bog_builderui_card: #111827;\n\t--bog_builderui_field: #1f2937;\n\t--bog_builderui_text: #f9fafb;\n\t--bog_builderui_shade: #9ca3af;\n\t--bog_builderui_line: #1f2937;\n\t--bog_builderui_hover: #ffffff0d;\n}\n[bog_builderui_base=\"gray\"][bog_builderui_lights=\"light\"] {\n\t--bog_builderui_back: #ffffff;\n\t--bog_builderui_card: #f9fafb;\n\t--bog_builderui_field: #f3f4f6;\n\t--bog_builderui_text: #030712;\n\t--bog_builderui_shade: #6b7280;\n\t--bog_builderui_line: #e5e7eb;\n\t--bog_builderui_hover: #0000000a;\n}\n\n/* ============================================================\n   ACCENT THEMES (vars: control, focus, current, special)\n   ============================================================ */\n\n:root,\n[bog_builderui_theme=\"sky\"] {\n\t--bog_builderui_control: #0ea5e9;\n\t--bog_builderui_focus: #38bdf8;\n\t--bog_builderui_current: #06b6d4;\n\t--bog_builderui_special: #6366f1;\n}\n[bog_builderui_theme=\"rose\"] {\n\t--bog_builderui_control: #f43f5e;\n\t--bog_builderui_focus: #fb7185;\n\t--bog_builderui_current: #ec4899;\n\t--bog_builderui_special: #f97316;\n}\n[bog_builderui_theme=\"violet\"] {\n\t--bog_builderui_control: #8b5cf6;\n\t--bog_builderui_focus: #a78bfa;\n\t--bog_builderui_current: #6366f1;\n\t--bog_builderui_special: #d946ef;\n}\n[bog_builderui_theme=\"emerald\"] {\n\t--bog_builderui_control: #10b981;\n\t--bog_builderui_focus: #34d399;\n\t--bog_builderui_current: #14b8a6;\n\t--bog_builderui_special: #84cc16;\n}\n[bog_builderui_theme=\"amber\"] {\n\t--bog_builderui_control: #f59e0b;\n\t--bog_builderui_focus: #fbbf24;\n\t--bog_builderui_current: #f97316;\n\t--bog_builderui_special: #eab308;\n}\n\n/* ============================================================\n   Bridge to --mol_theme_* so stock $mol components ($mol_chart,\n   $mol_button, $mol_string) pick up our palette automatically.\n   ============================================================ */\n:where([bog_builderui_lights]) {\n\t--mol_theme_back: var(--bog_builderui_back);\n\t--mol_theme_card: var(--bog_builderui_card);\n\t--mol_theme_field: var(--bog_builderui_field);\n\t--mol_theme_hover: var(--bog_builderui_hover);\n\t--mol_theme_text: var(--bog_builderui_text);\n\t--mol_theme_shade: var(--bog_builderui_shade);\n\t--mol_theme_line: var(--bog_builderui_line);\n\t--mol_theme_focus: var(--bog_builderui_focus);\n\t--mol_theme_control: var(--bog_builderui_control);\n\t--mol_theme_current: var(--bog_builderui_current);\n\t--mol_theme_special: var(--bog_builderui_special);\n}\n\n/* ============================================================\n   CHART COLOR — independent accent for the chart bar/line\n   ============================================================ */\n:root,\n[bog_builderui_chart=\"blue\"] { --bog_builderui_chart: #3b82f6; }\n[bog_builderui_chart=\"green\"] { --bog_builderui_chart: #10b981; }\n[bog_builderui_chart=\"red\"] { --bog_builderui_chart: #ef4444; }\n[bog_builderui_chart=\"yellow\"] { --bog_builderui_chart: #eab308; }\n[bog_builderui_chart=\"purple\"] { --bog_builderui_chart: #a855f7; }\n\n/* ============================================================\n   Popover for $bog_builderui_select (style the $mol_pop bubble\n   when it sits inside our scope or carries our marker)\n   ============================================================ */\n[bog_builderui_lights] [mol_pop_bubble],\n[bog_builderui_pop] {\n\tbackground-color: var(--bog_builderui_card);\n\tborder: 1px solid var(--bog_builderui_line);\n\tborder-radius: var(--bog_builderui_radius);\n\tbox-shadow: 0 10px 30px #00000059;\n\tpadding: 0.375rem;\n\tgap: 0.125rem;\n\tmin-width: 14rem;\n\toverflow: hidden;\n}\n\n[bog_builderui_lights] [mol_select_filter] {\n\tdisplay: none;\n}\n\n[bog_builderui_lights] [mol_select_option_row] {\n\tborder-radius: calc(var(--bog_builderui_radius) - 2px);\n\tpadding: 0.5rem 0.75rem;\n\tcolor: var(--bog_builderui_text);\n\tfont-family: var(--bog_builderui_font_body);\n\tfont-size: 0.9rem;\n\tbackground-color: transparent;\n}\n\n[bog_builderui_lights] [mol_select_option_row]:hover {\n\tbackground-color: var(--bog_builderui_hover);\n}\n\n[bog_builderui_lights] [mol_select_option_label] {\n\tpadding: 0;\n\tcolor: inherit;\n}\n\n[bog_builderui_lights] [mol_select_no_options] {\n\tcolor: var(--bog_builderui_shade);\n\tpadding: 0.5rem 0.75rem;\n}\n\n[bog_builderui_lights] [bog_builderui_select] [mol_select_trigger] {\n\tgap: 0.5rem;\n\tpadding: 0 0.25rem 0 0;\n}\n[bog_builderui_lights] [bog_builderui_select] [mol_select_trigger] > * {\n\tmargin-right: 0;\n}\n\n/* ============================================================\n   Skeleton — any $mol_view in pending state gets a pulsing surface\n   ============================================================ */\n@keyframes bog_builderui_skeleton_pulse {\n\t0%, 100% { opacity: 1; }\n\t50% { opacity: 0.5; }\n}\n\n[bog_builderui_lights] [mol_view][mol_view_error=\"Promise\"],\n[bog_builderui_lights] [mol_view][mol_view_error=\"$mol_promise_blocker\"] {\n\tborder-radius: var(--bog_builderui_radius);\n\tbackground-color: var(--bog_builderui_field);\n\tcolor: transparent;\n\tanimation: bog_builderui_skeleton_pulse 1.6s ease-in-out infinite;\n}\n\n/* ============================================================\n   Tooltip surface\n   ============================================================ */\n[bog_builderui_lights] [bog_builderui_tooltip] [mol_pop_bubble] {\n\tbackground-color: var(--bog_builderui_text);\n\tcolor: var(--bog_builderui_back);\n\tborder: none;\n\tborder-radius: calc(var(--bog_builderui_radius) - 2px);\n\tpadding: 0.375rem 0.625rem;\n\tfont-family: var(--bog_builderui_font_body);\n\tfont-size: 0.8rem;\n\tbox-shadow: 0 4px 12px #0000004d;\n\tmin-width: 0;\n}\n\n");
-})($ || ($ = {}));
-
-;
-	($.$bog_builderui_menu) = class $bog_builderui_menu extends ($.$bog_builderui_card) {
-		items(){
-			return [];
-		}
-		sub(){
-			return (this.items());
-		}
-	};
-	($.$bog_builderui_menu_item) = class $bog_builderui_menu_item extends ($.$mol_button_minor) {};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($bog_builderui_menu, {
-        padding: {
-            top: '0.375rem',
-            bottom: '0.375rem',
-            left: '0.375rem',
-            right: '0.375rem',
-        },
-        gap: '0.125rem',
-        flex: {
-            direction: 'column',
-            grow: 0,
-            shrink: 0,
-        },
-        align: {
-            self: 'stretch',
-        },
-        minWidth: 0,
-        maxWidth: 'none',
-        box: {
-            shadow: [{
-                    x: 0,
-                    y: 0,
-                    blur: 0,
-                    spread: 0,
-                    color: 'transparent',
-                }],
-        },
-    });
-    $mol_style_define($bog_builderui_menu_item, {
-        justify: {
-            content: 'flex-start',
-        },
-        padding: {
-            top: '0.5rem',
-            bottom: '0.5rem',
-            left: '0.75rem',
-            right: '0.75rem',
-        },
-        border: {
-            radius: $bog_builderui_tokens.radius,
-            width: 0,
-        },
-        background: {
-            color: 'transparent',
-        },
-        color: $bog_builderui_tokens.text,
-        font: {
-            family: $bog_builderui_tokens.font_body,
-            size: '0.9rem',
-        },
-        flex: {
-            grow: 0,
-            shrink: 0,
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_export) = class $raggu_web_front_export extends ($.$mol_pop) {
-		toggle(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		items(){
-			return [];
-		}
-		Menu(){
-			const obj = new this.$.$bog_builderui_menu();
-			(obj.items) = () => ((this.items()));
-			return obj;
-		}
-		item_label(id){
-			return "";
-		}
-		item_click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		screen(){
-			return "gallery";
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		export_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_export_export_btn_text"));
-		}
-		empty_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_export_empty_text"));
-		}
-		Anchor(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.toggle(next))});
-			(obj.sub) = () => ([(this.export_btn_text())]);
-			return obj;
-		}
-		bubble_content(){
-			return [(this.Menu())];
-		}
-		Item(id){
-			const obj = new this.$.$bog_builderui_menu_item();
-			(obj.title) = () => ((this.item_label(id)));
-			(obj.click) = (next) => ((this.item_click(id, next)));
-			return obj;
-		}
-		Empty(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.empty_text())]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$raggu_web_front_export.prototype), "toggle"));
-	($mol_mem(($.$raggu_web_front_export.prototype), "Menu"));
-	($mol_mem_key(($.$raggu_web_front_export.prototype), "item_click"));
-	($mol_mem(($.$raggu_web_front_export.prototype), "showed"));
-	($mol_mem(($.$raggu_web_front_export.prototype), "Anchor"));
-	($mol_mem_key(($.$raggu_web_front_export.prototype), "Item"));
-	($mol_mem(($.$raggu_web_front_export.prototype), "Empty"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_export, {
-        Anchor: {
-            display: 'flex',
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '6px',
-            background: { color: $bog_builderui_tokens.current },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '7px',
-                bottom: '7px',
-                left: '12px',
-                right: '12px',
-            },
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-            userSelect: 'none',
-        },
-        Menu: {
-            minWidth: '200px',
-            background: { color: $bog_builderui_tokens.card },
-            border: {
-                width: '1px',
-                style: 'solid',
-                color: $bog_builderui_tokens.line,
-                radius: $bog_builderui_tokens.radius,
-            },
-            box: {
-                shadow: [{
-                        x: 0,
-                        y: '4px',
-                        blur: '16px',
-                        spread: 0,
-                        color: '#0000001a',
-                    }],
-            },
-        },
-        Empty: {
-            padding: {
-                top: '0.5rem',
-                bottom: '0.5rem',
-                left: '0.75rem',
-                right: '0.75rem',
-            },
-            color: $bog_builderui_tokens.shade,
-            font: {
-                family: $bog_builderui_tokens.font_body,
-                size: '0.85rem',
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const FORMATS = {
-            explorer: [
-                { id: 'graphml', label_key: '$raggu_web_front_export_fmt_graphml', fallback: 'GraphML (.xml)', ext: 'xml', mime: 'application/xml' },
-                { id: 'gexf', label_key: '$raggu_web_front_export_fmt_gexf', fallback: 'GEXF (.gexf)', ext: 'gexf', mime: 'application/xml' },
-                { id: 'json_graph', label_key: '$raggu_web_front_export_fmt_json_graph', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
-                { id: 'png_graph', label_key: '$raggu_web_front_export_fmt_png_graph', fallback: 'PNG (.png)', ext: 'png', mime: 'image/png' },
-            ],
-            chat: [
-                { id: 'md_chat', label_key: '$raggu_web_front_export_fmt_md_chat', fallback: 'Markdown (.md)', ext: 'md', mime: 'text/markdown' },
-                { id: 'json_chat', label_key: '$raggu_web_front_export_fmt_json_chat', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
-            ],
-            dashboard: [
-                { id: 'csv_dash', label_key: '$raggu_web_front_export_fmt_csv_dash', fallback: 'CSV (.csv)', ext: 'csv', mime: 'text/csv' },
-                { id: 'json_dash', label_key: '$raggu_web_front_export_fmt_json_dash', fallback: 'JSON (.json)', ext: 'json', mime: 'application/json' },
-            ],
-            gallery: [],
-        };
-        const GRAPH_NODES = [
-            { id: 'n1', label: 'Bjørnstjerne Bjørnson', type: 'PERSON' },
-            { id: 'n2', label: 'Norwegian anthem', type: 'WORK_OF_ART' },
-            { id: 'n3', label: '1859', type: 'DATE' },
-            { id: 'n4', label: 'Nobel Prize', type: 'EVENT' },
-            { id: 'n5', label: 'Kvikne, Norway', type: 'LOCATION' },
-            { id: 'n6', label: 'Henrik Ibsen', type: 'PERSON' },
-            { id: 'n7', label: 'Det Norske Theater', type: 'ORGANIZATION' },
-            { id: 'n8', label: 'Romantic Nationalism', type: 'EVENT' },
-        ];
-        const GRAPH_EDGES = [
-            { source: 'n1', target: 'n2', type: 'AUTHORED', weight: 0.95 },
-            { source: 'n2', target: 'n3', type: 'YEAR', weight: 0.9 },
-            { source: 'n1', target: 'n4', type: 'AWARDED_WITH', weight: 0.8 },
-            { source: 'n1', target: 'n5', type: 'PLACE_OF_BIRTH', weight: 0.7 },
-            { source: 'n1', target: 'n6', type: 'CONTEMPORARY_OF', weight: 0.6 },
-            { source: 'n1', target: 'n7', type: 'AFFILIATED_WITH', weight: 0.5 },
-            { source: 'n1', target: 'n8', type: 'PART_OF', weight: 0.65 },
-            { source: 'n6', target: 'n7', type: 'AFFILIATED_WITH', weight: 0.55 },
-        ];
-        function xml_escape(s) {
-            return s.replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&apos;');
-        }
-        function to_graphml() {
-            const nodes = GRAPH_NODES.map(n => `    <node id="${xml_escape(n.id)}"><data key="label">${xml_escape(n.label)}</data><data key="type">${xml_escape(n.type)}</data></node>`).join('\n');
-            const edges = GRAPH_EDGES.map((e, i) => `    <edge id="e${i}" source="${xml_escape(e.source)}" target="${xml_escape(e.target)}"><data key="rel">${xml_escape(e.type)}</data><data key="weight">${e.weight}</data></edge>`).join('\n');
-            return `<?xml version="1.0" encoding="UTF-8"?>
-<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
-  <key id="label" for="node" attr.name="label" attr.type="string"/>
-  <key id="type" for="node" attr.name="type" attr.type="string"/>
-  <key id="rel" for="edge" attr.name="rel" attr.type="string"/>
-  <key id="weight" for="edge" attr.name="weight" attr.type="double"/>
-  <graph id="G" edgedefault="directed">
-${nodes}
-${edges}
-  </graph>
-</graphml>`;
-        }
-        function to_gexf() {
-            const nodes = GRAPH_NODES.map(n => `      <node id="${xml_escape(n.id)}" label="${xml_escape(n.label)}"><attvalues><attvalue for="0" value="${xml_escape(n.type)}"/></attvalues></node>`).join('\n');
-            const edges = GRAPH_EDGES.map((e, i) => `      <edge id="${i}" source="${xml_escape(e.source)}" target="${xml_escape(e.target)}" weight="${e.weight}" label="${xml_escape(e.type)}"/>`).join('\n');
-            return `<?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.3" version="1.3">
-  <graph mode="static" defaultedgetype="directed">
-    <attributes class="node">
-      <attribute id="0" title="type" type="string"/>
-    </attributes>
-    <nodes>
-${nodes}
-    </nodes>
-    <edges>
-${edges}
-    </edges>
-  </graph>
-</gexf>`;
-        }
-        function to_json_graph() {
-            return JSON.stringify({ nodes: GRAPH_NODES, edges: GRAPH_EDGES }, null, '\t');
-        }
-        // Stub PNG: 1x1 transparent pixel. Real graph rasterization is future work.
-        function to_png_stub() {
-            const bytes = new Uint8Array([
-                0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
-                0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
-                0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-                0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
-                0x89, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x44, 0x41,
-                0x54, 0x78, 0x9c, 0x63, 0x00, 0x01, 0x00, 0x00,
-                0x05, 0x00, 0x01, 0x0d, 0x0a, 0x2d, 0xb4, 0x00,
-                0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae,
-                0x42, 0x60, 0x82,
-            ]);
-            return new Blob([bytes], { type: 'image/png' });
-        }
-        const CHAT = {
-            question: 'Who wrote the Norwegian anthem and when?',
-            answer: 'The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859.',
-            trace: {
-                mode: 'LocalSearch',
-                top_k: 8,
-                rerank: true,
-                entities: ['Bjørnson', 'Norwegian anthem', '1859'],
-                chunks: 3,
-                communities: 1,
-                retrieval_ms: 140,
-                gen_s: 1.2,
-                power_wh: 0.4,
-            },
-        };
-        function to_md_chat() {
-            const t = CHAT.trace;
-            return `# Chat export
-
-## Q
-${CHAT.question}
-
-## A
-${CHAT.answer}
-
-## Trace
-- mode: ${t.mode}
-- top-k: ${t.top_k}
-- rerank: ${t.rerank ? 'yes' : 'no'}
-- entities: ${t.entities.join(', ')}
-- chunks: ${t.chunks}
-- communities: ${t.communities}
-- retrieval: ${t.retrieval_ms} ms
-- generation: ${t.gen_s} s
-- power: ~${t.power_wh} Wh
-`;
-        }
-        function to_json_chat() {
-            return JSON.stringify(CHAT, null, '\t');
-        }
-        const METRICS = [
-            { id: 'correctness', name: 'Answer Correctness', value: '59.0', pct: '59%' },
-            { id: 'recall', name: 'Evidence Recall', value: '84.2', pct: '84%' },
-            { id: 'relevancy', name: 'Context Relevancy', value: '90.8', pct: '91%' },
-        ];
-        const STAGES = [
-            { id: 'chunking', name: 'Chunking', time: '1.2s', pct: '15%' },
-            { id: 'extraction', name: 'Extraction', time: '8.4s', pct: '70%' },
-            { id: 'summarization', name: 'Summarization', time: '3.1s', pct: '38%' },
-            { id: 'communities', name: 'Communities', time: '2.0s', pct: '26%' },
-            { id: 'refinement', name: 'Refinement', time: '0.6s', pct: '9%' },
-        ];
-        function csv_field(s) {
-            const needs = /[",\n]/.test(s);
-            const esc = s.replace(/"/g, '""');
-            return needs ? `"${esc}"` : esc;
-        }
-        function to_csv_dash() {
-            const lines = [];
-            lines.push(['section', 'id', 'name', 'value', 'pct'].join(','));
-            for (const m of METRICS) {
-                lines.push(['metric', m.id, m.name, m.value, m.pct].map(csv_field).join(','));
-            }
-            for (const s of STAGES) {
-                lines.push(['stage', s.id, s.name, s.time, s.pct].map(csv_field).join(','));
-            }
-            return lines.join('\n') + '\n';
-        }
-        function to_json_dash() {
-            return JSON.stringify({ metrics: METRICS, stages: STAGES }, null, '\t');
-        }
-        class $raggu_web_front_export extends $.$raggu_web_front_export {
-            toggle() {
-                this.showed(!this.showed());
-                return null;
-            }
-            formats() {
-                return FORMATS[this.screen()] ?? [];
-            }
-            items() {
-                const list = this.formats();
-                if (!list.length)
-                    return [this.Empty()];
-                return list.map((_, i) => this.Item(i));
-            }
-            format_at(i) {
-                return this.formats()[i];
-            }
-            item_label(i) {
-                const f = this.format_at(i);
-                if (!f)
-                    return '';
-                return this.$.$mol_locale.text(f.label_key) || f.fallback;
-            }
-            item_click(i) {
-                const f = this.format_at(i);
-                if (!f)
-                    return null;
-                this.download(f);
-                this.showed(false);
-                return null;
-            }
-            filename(f) {
-                const stamp = new Date().toISOString().slice(0, 10);
-                return `raggu-${this.screen()}-${stamp}.${f.ext}`;
-            }
-            payload(id) {
-                switch (id) {
-                    case 'graphml': return new Blob([to_graphml()], { type: 'application/xml' });
-                    case 'gexf': return new Blob([to_gexf()], { type: 'application/xml' });
-                    case 'json_graph': return new Blob([to_json_graph()], { type: 'application/json' });
-                    case 'png_graph': return to_png_stub();
-                    case 'md_chat': return new Blob([to_md_chat()], { type: 'text/markdown' });
-                    case 'json_chat': return new Blob([to_json_chat()], { type: 'application/json' });
-                    case 'csv_dash': return new Blob([to_csv_dash()], { type: 'text/csv' });
-                    case 'json_dash': return new Blob([to_json_dash()], { type: 'application/json' });
-                }
-            }
-            download(f) {
-                const blob = this.payload(f.id);
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = this.filename(f);
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                setTimeout(() => URL.revokeObjectURL(url), 1000);
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_export.prototype, "toggle", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_export.prototype, "item_click", null);
-        $$.$raggu_web_front_export = $raggu_web_front_export;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_topbar) = class $raggu_web_front_topbar extends ($.$bog_builderui_div) {
-		toggle_sidebar(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Sidebar_btn(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("◫");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Sidebar_btn_hint")));
-			(obj.click) = (next) => ((this.toggle_sidebar(next)));
-			return obj;
-		}
-		is_gallery(){
-			return false;
-		}
-		click_gallery(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_gallery(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("▤");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_gallery_hint")));
-			(obj.active) = () => ((this.is_gallery()));
-			(obj.click) = (next) => ((this.click_gallery(next)));
-			return obj;
-		}
-		is_explorer(){
-			return false;
-		}
-		no_dataset(){
-			return false;
-		}
-		click_explorer(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_explorer(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("◉");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_explorer_hint")));
-			(obj.active) = () => ((this.is_explorer()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_explorer(next)));
-			return obj;
-		}
-		is_chat(){
-			return false;
-		}
-		click_chat(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_chat(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("💬");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_chat_hint")));
-			(obj.active) = () => ((this.is_chat()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_chat(next)));
-			return obj;
-		}
-		is_dashboard(){
-			return false;
-		}
-		click_dashboard(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_dashboard(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("▦");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_dashboard_hint")));
-			(obj.active) = () => ((this.is_dashboard()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_dashboard(next)));
-			return obj;
-		}
-		is_summary(){
-			return false;
-		}
-		click_summary(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_summary(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("✦");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_summary_hint")));
-			(obj.active) = () => ((this.is_summary()));
-			(obj.click) = (next) => ((this.click_summary(next)));
-			return obj;
-		}
-		Nav(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Nav_gallery()), 
-				(this.Nav_explorer()), 
-				(this.Nav_chat()), 
-				(this.Nav_dashboard()), 
-				(this.Nav_summary())
-			]);
-			return obj;
-		}
-		open_help(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Help_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.open_help(next))});
-			(obj.sub) = () => ([(this.help_btn_text())]);
-			return obj;
-		}
-		Spacer_left(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.screen_title())]);
-			return obj;
-		}
-		Subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.dataset_title())]);
-			return obj;
-		}
-		Title_block(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Title()), (this.Subtitle())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Preset_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.preset_label_text())]);
-			return obj;
-		}
-		is_fast(){
-			return false;
-		}
-		click_fast(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_fast(){
-			const obj = new this.$.$raggu_web_front_topbar_preset();
-			(obj.label) = () => ((this.preset_fast_label()));
-			(obj.active) = () => ((this.is_fast()));
-			(obj.click) = (next) => ((this.click_fast(next)));
-			return obj;
-		}
-		is_accurate(){
-			return false;
-		}
-		click_accurate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_accurate(){
-			const obj = new this.$.$raggu_web_front_topbar_preset();
-			(obj.label) = () => ((this.preset_accurate_label()));
-			(obj.active) = () => ((this.is_accurate()));
-			(obj.click) = (next) => ((this.click_accurate(next)));
-			return obj;
-		}
-		is_demo(){
-			return false;
-		}
-		click_demo(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_demo(){
-			const obj = new this.$.$raggu_web_front_topbar_preset();
-			(obj.label) = () => ((this.preset_demo_label()));
-			(obj.active) = () => ((this.is_demo()));
-			(obj.click) = (next) => ((this.click_demo(next)));
-			return obj;
-		}
-		Preset_group(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Preset_fast()), 
-				(this.Preset_accurate()), 
-				(this.Preset_demo())
-			]);
-			return obj;
-		}
-		open_settings(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Settings_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.open_settings(next))});
-			(obj.sub) = () => ([(this.settings_btn_text())]);
-			return obj;
-		}
-		Export(){
-			const obj = new this.$.$raggu_web_front_export();
-			(obj.screen) = () => ((this.screen()));
-			return obj;
-		}
-		screen(next){
-			if(next !== undefined) return next;
-			return "gallery";
-		}
-		dataset_id(){
-			return "wiki";
-		}
-		dataset_title(){
-			return "";
-		}
-		screen_title(){
-			return "";
-		}
-		preset(next){
-			if(next !== undefined) return next;
-			return "demo";
-		}
-		preset_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_topbar_preset_label_text"));
-		}
-		settings_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_topbar_settings_btn_text"));
-		}
-		help_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_topbar_help_btn_text"));
-		}
-		preset_fast_label(){
-			return (this.$.$mol_locale.text("$raggu_web_front_topbar_preset_fast_label"));
-		}
-		preset_accurate_label(){
-			return (this.$.$mol_locale.text("$raggu_web_front_topbar_preset_accurate_label"));
-		}
-		preset_demo_label(){
-			return (this.$.$mol_locale.text("$raggu_web_front_topbar_preset_demo_label"));
-		}
-		sub(){
-			return [
-				(this.Sidebar_btn()), 
-				(this.Nav()), 
-				(this.Help_btn()), 
-				(this.Spacer_left()), 
-				(this.Title_block()), 
-				(this.Spacer()), 
-				(this.Preset_label()), 
-				(this.Preset_group()), 
-				(this.Settings_btn()), 
-				(this.Export())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "toggle_sidebar"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Sidebar_btn"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_gallery"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_gallery"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_explorer"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_explorer"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_chat"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_chat"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_dashboard"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_dashboard"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_summary"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_summary"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer_left"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Subtitle"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title_block"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_label"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_fast"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_fast"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_accurate"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_accurate"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_demo"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_demo"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Preset_group"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_settings"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Settings_btn"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Export"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "screen"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "preset"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
-            is_gallery() { return this.screen() === 'gallery'; }
-            is_explorer() { return this.screen() === 'explorer'; }
-            is_chat() { return this.screen() === 'chat'; }
-            is_dashboard() { return this.screen() === 'dashboard'; }
-            is_summary() { return this.screen() === 'summary'; }
-            no_dataset() { return !this.dataset_id(); }
-            click_gallery() { this.screen('gallery'); return null; }
-            click_explorer() { this.screen('explorer'); return null; }
-            click_chat() { this.screen('chat'); return null; }
-            click_dashboard() { this.screen('dashboard'); return null; }
-            click_summary() { this.screen('summary'); return null; }
-            is_fast() { return this.preset() === 'fast'; }
-            is_accurate() { return this.preset() === 'accurate'; }
-            is_demo() { return this.preset() === 'demo'; }
-            click_fast() { this.preset('fast'); return null; }
-            click_accurate() { this.preset('accurate'); return null; }
-            click_demo() { this.preset('demo'); return null; }
-        }
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_gallery", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_explorer", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_chat", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_dashboard", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_summary", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_fast", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_accurate", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_demo", null);
-        $$.$raggu_web_front_topbar = $raggu_web_front_topbar;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_topbar, {
-        height: '58px',
-        minHeight: '58px',
-        background: { color: $bog_builderui_tokens.card },
-        border: {
-            bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-        },
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '0.875rem',
-        padding: {
-            left: '1.25rem',
-            right: '1.25rem',
-        },
-        Nav: {
-            flex: { direction: 'row' },
-            gap: '0.125rem',
-            background: { color: $bog_builderui_tokens.field },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '3px',
-                bottom: '3px',
-                left: '3px',
-                right: '3px',
-            },
-        },
-        Title_block: {
-            flex: { direction: 'column' },
-            align: { items: 'center' },
-            textAlign: 'center',
-        },
-        Title: {
-            font: { weight: 700, size: '15px' },
-        },
-        Subtitle: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Spacer_left: {
-            flex: { grow: 1 },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Preset_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-        },
-        Preset_group: {
-            flex: { direction: 'row' },
-            gap: '0.25rem',
-            background: { color: $bog_builderui_tokens.field },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '3px',
-                bottom: '3px',
-                left: '3px',
-                right: '3px',
-            },
-        },
-        Help_btn: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '6px',
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '7px',
-                bottom: '7px',
-                left: '12px',
-                right: '12px',
-            },
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
-        Settings_btn: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '6px',
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '7px',
-                bottom: '7px',
-                left: '12px',
-                right: '12px',
-            },
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
-        // Навигация + центрированный заголовок + пресеты не влезают уже на
-        // ноутбучных ширинах, поэтому враппим сильно раньше, чем раньше (720).
-        '@media': {
-            '(max-width: 1200px)': {
-                height: 'auto',
-                minHeight: '58px',
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                padding: {
-                    top: '8px',
-                    bottom: '8px',
-                    left: '0.75rem',
-                    right: '0.75rem',
-                },
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$bog_builderui_button) = class $bog_builderui_button extends ($.$mol_button_minor) {
-		minimal_height(){
-			return 32;
-		}
-		minimal_width(){
-			return 0;
-		}
-		variant(){
-			return "default";
-		}
-		attr(){
-			return {...(super.attr()), "bog_builderui_button_variant": (this.variant())};
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("bog/builderui/button/button.view.css", "[bog_builderui_button][bog_builderui_button_variant=\"secondary\"] {\n\tbackground-color: var(--bog_builderui_field);\n\tcolor: var(--bog_builderui_text);\n\tborder: 1px solid var(--bog_builderui_line);\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"outline\"] {\n\tbackground-color: transparent;\n\tcolor: var(--bog_builderui_text);\n\tborder: 1px solid var(--bog_builderui_line);\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"ghost\"] {\n\tbackground-color: transparent;\n\tcolor: var(--bog_builderui_text);\n\tborder: 0;\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"destructive\"] {\n\tbackground-color: var(--bog_builderui_special);\n\tcolor: var(--bog_builderui_back);\n\tborder: 0;\n}\n\n[bog_builderui_button][bog_builderui_button_variant=\"secondary\"]:hover,\n[bog_builderui_button][bog_builderui_button_variant=\"outline\"]:hover,\n[bog_builderui_button][bog_builderui_button_variant=\"ghost\"]:hover {\n\tbackground-color: var(--bog_builderui_hover);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($bog_builderui_button, {
-        font: {
-            family: $bog_builderui_tokens.font_body,
-            weight: 500,
-        },
-        color: $bog_builderui_tokens.back,
-        background: {
-            color: $bog_builderui_tokens.control,
-        },
-        border: {
-            radius: $bog_builderui_tokens.radius,
-            width: 0,
-        },
-        padding: {
-            top: '0.5rem',
-            bottom: '0.5rem',
-            left: '1rem',
-            right: '1rem',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_settings_group) = class $raggu_web_front_settings_group extends ($.$bog_builderui_div) {
-		Step(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.step())]);
-			return obj;
-		}
-		Reindex(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({"raggu_web_front_settings_group_reindex": (this.reindex())});
-			(obj.sub) = () => ([(this.reindex_text())]);
-			return obj;
-		}
-		Head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Step()), (this.Reindex())]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Opts(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.opts())]);
-			return obj;
-		}
-		Controls(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.controls()));
-			return obj;
-		}
-		step(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		opts(){
-			return "";
-		}
-		controls(){
-			return [];
-		}
-		reindex(){
-			return true;
-		}
-		reindex_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_group_reindex_text"));
-		}
-		sub(){
-			return [
-				(this.Head()), 
-				(this.Title()), 
-				(this.Opts()), 
-				(this.Controls())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_settings_group.prototype), "Step"));
-	($mol_mem(($.$raggu_web_front_settings_group.prototype), "Reindex"));
-	($mol_mem(($.$raggu_web_front_settings_group.prototype), "Head"));
-	($mol_mem(($.$raggu_web_front_settings_group.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_settings_group.prototype), "Opts"));
-	($mol_mem(($.$raggu_web_front_settings_group.prototype), "Controls"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_settings_group, {
-        flex: { direction: 'column' },
-        Head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-        },
-        Step: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 700,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.current,
-            textTransform: 'uppercase',
-            letterSpacing: '0.6px',
-        },
-        Reindex: {
-            background: { color: '#fdf0e6' },
-            color: '#c2691a',
-            border: { radius: '4px' },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '6px',
-                right: '6px',
-            },
-            font: { size: '9px', weight: 600 },
-            display: 'none',
-            '@': {
-                raggu_web_front_settings_group_reindex: {
-                    true: { display: 'flex' },
-                },
-            },
-        },
-        Title: {
-            font: { weight: 600, size: '13px' },
-            margin: { top: '5px' },
-        },
-        Opts: {
-            font: { size: '11px' },
-            color: $bog_builderui_tokens.shade,
-            lineHeight: '1.5',
-            margin: { top: '4px' },
-        },
-        Controls: {
-            margin: { top: '8px' },
-            flex: { direction: 'column' },
-            gap: '8px',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
-		path(){
-			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
-		Icon(){
-			const obj = new this.$.$mol_icon_tick();
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_check_box.prototype), "Icon"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$rise_range) = class $rise_range extends ($.$mol_view) {
-		label_min(){
-			return "";
-		}
-		Min(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.label_min())]);
-			return obj;
-		}
-		label_medium(){
-			return "";
-		}
-		Medium(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.label_medium())]);
-			return obj;
-		}
-		label_max(){
-			return "";
-		}
-		Max(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.label_max())]);
-			return obj;
-		}
-		Labels(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([
-				(this.Min()), 
-				(this.Medium()), 
-				(this.Max())
-			]);
-			return obj;
-		}
-		disabled(){
-			return false;
-		}
-		min(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		max(next){
-			if(next !== undefined) return next;
-			return 10;
-		}
-		step(next){
-			if(next !== undefined) return next;
-			return 1;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		event_input(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Input(){
-			const obj = new this.$.$rise_range_input();
-			(obj.disabled) = () => ((this.disabled()));
-			(obj.min) = () => ((this.min()));
-			(obj.max) = () => ((this.max()));
-			(obj.step) = () => ((this.step()));
-			(obj.value) = (next) => ((this.value(next)));
-			(obj.event_input) = (next) => ((this.event_input(next)));
-			return obj;
-		}
-		Value(){
-			const obj = new this.$.$rise_range_value();
-			(obj.sub) = () => ([(this.value())]);
-			(obj.disabled) = () => ((this.disabled()));
-			return obj;
-		}
-		Current(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.Value())]);
-			return obj;
-		}
-		percent(){
-			return "0%";
-		}
-		minimal_height(){
-			return 48;
-		}
-		unit(){
-			return "";
-		}
-		medium(next){
-			if(next !== undefined) return next;
-			return 5;
-		}
-		enabled(){
-			return true;
-		}
-		sub(){
-			return [
-				(this.Labels()), 
-				(this.Input()), 
-				(this.Current())
-			];
-		}
-		attr(){
-			return {...(super.attr()), "disabled": (this.disabled())};
-		}
-		style(){
-			return {...(super.style()), "--rise_range_percent": (this.percent())};
-		}
-	};
-	($mol_mem(($.$rise_range.prototype), "Min"));
-	($mol_mem(($.$rise_range.prototype), "Medium"));
-	($mol_mem(($.$rise_range.prototype), "Max"));
-	($mol_mem(($.$rise_range.prototype), "Labels"));
-	($mol_mem(($.$rise_range.prototype), "min"));
-	($mol_mem(($.$rise_range.prototype), "max"));
-	($mol_mem(($.$rise_range.prototype), "step"));
-	($mol_mem(($.$rise_range.prototype), "value"));
-	($mol_mem(($.$rise_range.prototype), "event_input"));
-	($mol_mem(($.$rise_range.prototype), "Input"));
-	($mol_mem(($.$rise_range.prototype), "Value"));
-	($mol_mem(($.$rise_range.prototype), "Current"));
-	($mol_mem(($.$rise_range.prototype), "medium"));
-	($.$rise_range_input) = class $rise_range_input extends ($.$mol_view) {
-		disabled(){
-			return false;
-		}
-		min(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		max(next){
-			if(next !== undefined) return next;
-			return 10;
-		}
-		step(next){
-			if(next !== undefined) return next;
-			return 1;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		event_input(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "input";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"type": "range", 
-				"disabled": (this.disabled())
-			};
-		}
-		field(){
-			return {
-				...(super.field()), 
-				"min": (this.min()), 
-				"max": (this.max()), 
-				"step": (this.step()), 
-				"value": (this.value())
-			};
-		}
-		event(){
-			return {...(super.event()), "input": (next) => (this.event_input(next))};
-		}
-	};
-	($mol_mem(($.$rise_range_input.prototype), "min"));
-	($mol_mem(($.$rise_range_input.prototype), "max"));
-	($mol_mem(($.$rise_range_input.prototype), "step"));
-	($mol_mem(($.$rise_range_input.prototype), "value"));
-	($mol_mem(($.$rise_range_input.prototype), "event_input"));
-	($.$rise_range_value) = class $rise_range_value extends ($.$mol_view) {
-		disabled(){
-			return false;
-		}
-		attr(){
-			return {...(super.attr()), "disabled": (this.disabled())};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $rise_range extends $.$rise_range {
-            event_input(event) {
-                const el = event.target;
-                this.value(Number(el.value));
-            }
-            medium() {
-                return Math.round((this.min() + this.max()) / 2);
-            }
-            label_min() {
-                return this.min() + ' ' + this.unit();
-            }
-            label_max() {
-                return this.max() + ' ' + this.unit();
-            }
-            label_medium() {
-                return this.medium() + ' ' + this.unit();
-            }
-            percent() {
-                const val = this.value() - this.min();
-                const range = this.max() - this.min();
-                return (val / range) * 100 + '%';
-            }
-            disabled() {
-                return !this.enabled();
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $rise_range.prototype, "event_input", null);
-        $$.$rise_range = $rise_range;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const Thumb_size = $mol_gap.block;
-        const Track_height = $mol_gap.space;
-        const Track_margin = $mol_gap.block; // expands vertical clickable area
-        $mol_style_define($rise_range, {
-            flex: {
-                grow: 1,
-                direction: 'column',
-            },
-            padding: {
-                top: $mol_gap.space,
-                bottom: $mol_gap.space,
-            },
-            Labels: {
-                pointerEvents: 'none',
-                left: 0,
-                right: 0,
-                justify: {
-                    content: 'space-between',
-                },
-            },
-            Current: {
-                pointerEvents: 'none',
-                position: 'relative',
-                height: '1.5rem',
-                margin: {
-                    left: $mol_style_func.calc(`${Thumb_size} / 2`),
-                    right: $mol_style_func.calc(`${Thumb_size} / 2`),
-                },
-            },
-            '[disabled]': {
-                'true': {
-                    Value: {
-                        color: $mol_theme.shade,
-                    },
-                },
-            },
-            Value: {
-                position: 'absolute',
-                left: $mol_style_func.vary('--rise_range_percent'),
-                transform: 'translateX(-50%)',
-                color: $mol_theme.current,
-            },
-        });
-        const Track = {
-            height: Track_height,
-            border: {
-                radius: $mol_gap.round,
-            },
-            background: {
-                color: $mol_theme.line,
-            },
-        };
-        const Thumb = {
-            height: Thumb_size,
-            width: Thumb_size,
-            margin: {
-                top: $mol_style_func.calc(`(${Track_height} - ${Thumb_size}) / 2`),
-            },
-            appearance: 'none',
-            border: {
-                radius: '50%',
-            },
-            background: {
-                color: $mol_theme.current,
-            },
-        };
-        $mol_style_define($rise_range_input, {
-            height: $mol_style_func.calc(`${Thumb_size} + 2 * ${Track_margin}`),
-            margin: {
-                top: $mol_style_func.calc(`-1 * ${Track_margin} / 2 - var(--mol_gap_space)`),
-                bottom: $mol_style_func.calc(`-1 * ${Track_margin} / 2`),
-                left: 0,
-                right: 0,
-            },
-            '::-webkit-slider-runnable-track': Track,
-            ['::-moz-range-track']: Track,
-            '::-webkit-slider-thumb': Thumb,
-            ['::-moz-range-thumb']: Thumb,
-            appearance: 'none',
-            background: {
-                color: 'transparent',
-            },
-            cursor: 'pointer',
-            ':disabled': {
-                cursor: 'default',
-                '::-webkit-slider-thumb': {
-                    background: {
-                        color: $mol_theme.shade,
-                    },
-                },
-                ['::-moz-range-thumb']: {
-                    background: {
-                        color: $mol_theme.shade,
-                    },
-                },
-            },
-            ':focus': {
-                outline: 'none',
-            },
-        });
-        $mol_style_define($rise_range_value, {
-            '[disabled]': {
-                'true': {
-                    color: $mol_theme.shade,
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$bog_builderui_slider) = class $bog_builderui_slider extends ($.$rise_range) {};
-
-
-;
-"use strict";
-
-
-;
-	($.$raggu_web_front_settings) = class $raggu_web_front_settings extends ($.$bog_builderui_div) {
-		close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Backdrop(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			return obj;
-		}
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["Настройки движка RAGU"]);
-			return obj;
-		}
-		Header_sub(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["пресет + ручной режим"]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header_title()), (this.Header_sub())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Close_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			(obj.sub) = () => (["✕"]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Close_btn())
-			]);
-			return obj;
-		}
-		preset_fast(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_fast(){
-			const obj = new this.$.$bog_builderui_button();
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Preset_fast_title")));
-			(obj.click) = (next) => ((this.preset_fast(next)));
-			return obj;
-		}
-		preset_accurate(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_accurate(){
-			const obj = new this.$.$bog_builderui_button();
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Preset_accurate_title")));
-			(obj.click) = (next) => ((this.preset_accurate(next)));
-			return obj;
-		}
-		preset_demo(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preset_demo(){
-			const obj = new this.$.$bog_builderui_button();
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Preset_demo_title")));
-			(obj.click) = (next) => ((this.preset_demo(next)));
-			return obj;
-		}
-		Presets(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Preset_fast()), 
-				(this.Preset_accurate()), 
-				(this.Preset_demo())
-			]);
-			return obj;
-		}
-		chunking_strategy(next){
-			if(next !== undefined) return next;
-			return "SmartSemantic";
-		}
-		Chunking_strategy(){
-			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.chunking_strategy(next)));
-			(obj.dictionary) = () => ({
-				"Simple": "Simple", 
-				"SemanticText": "SemanticText", 
-				"SmartSemantic": "SmartSemantic"
-			});
-			return obj;
-		}
-		chunking_size_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_chunking_size_label_text"));
-		}
-		Chunking_size_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.chunking_size_label_text())]);
-			return obj;
-		}
-		chunking_size_str(next){
-			if(next !== undefined) return next;
-			return "512";
-		}
-		Chunking_size_input(){
-			const obj = new this.$.$bog_builderui_field();
-			(obj.type) = () => ("number");
-			(obj.value) = (next) => ((this.chunking_size_str(next)));
-			return obj;
-		}
-		Chunking_size_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Chunking_size_label()), (this.Chunking_size_input())]);
-			return obj;
-		}
-		chunking_overlap_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_chunking_overlap_label_text"));
-		}
-		Chunking_overlap_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.chunking_overlap_label_text())]);
-			return obj;
-		}
-		chunking_overlap_str(next){
-			if(next !== undefined) return next;
-			return "64";
-		}
-		Chunking_overlap_input(){
-			const obj = new this.$.$bog_builderui_field();
-			(obj.type) = () => ("number");
-			(obj.value) = (next) => ((this.chunking_overlap_str(next)));
-			return obj;
-		}
-		Chunking_overlap_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Chunking_overlap_label()), (this.Chunking_overlap_input())]);
-			return obj;
-		}
-		Group_chunking(){
-			const obj = new this.$.$raggu_web_front_settings_group();
-			(obj.step) = () => ("Шаг 1");
-			(obj.title) = () => ("Chunking");
-			(obj.opts) = () => ("Simple / SemanticText / SmartSemantic · размер · overlap");
-			(obj.reindex) = () => (true);
-			(obj.controls) = () => ([
-				(this.Chunking_strategy()), 
-				(this.Chunking_size_row()), 
-				(this.Chunking_overlap_row())
-			]);
-			return obj;
-		}
-		extraction_mode(next){
-			if(next !== undefined) return next;
-			return "two-stage";
-		}
-		Extraction_mode(){
-			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.extraction_mode(next)));
-			(obj.dictionary) = () => ({"single": (this.$.$mol_locale.text("$raggu_web_front_settings_Extraction_mode_dictionary_single")), "two-stage": (this.$.$mol_locale.text("$raggu_web_front_settings_Extraction_mode_dictionary_two-stage"))});
-			return obj;
-		}
-		extraction_model(next){
-			if(next !== undefined) return next;
-			return "meno-lite-7b";
-		}
-		Extraction_model(){
-			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.extraction_model(next)));
-			(obj.dictionary) = () => ({
-				"meno-lite-7b": "meno-lite 7B", 
-				"gpt-4": "GPT-4", 
-				"llama3-70b": "Llama 3 70B"
-			});
-			return obj;
-		}
-		extraction_icl(next){
-			if(next !== undefined) return next;
-			return "hybrid";
-		}
-		Extraction_icl(){
-			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.extraction_icl(next)));
-			(obj.dictionary) = () => ({
-				"semantic": (this.$.$mol_locale.text("$raggu_web_front_settings_Extraction_icl_dictionary_semantic")), 
-				"BM25": (this.$.$mol_locale.text("$raggu_web_front_settings_Extraction_icl_dictionary_BM25")), 
-				"hybrid": (this.$.$mol_locale.text("$raggu_web_front_settings_Extraction_icl_dictionary_hybrid")), 
-				"random": (this.$.$mol_locale.text("$raggu_web_front_settings_Extraction_icl_dictionary_random"))
-			});
-			return obj;
-		}
-		Group_extraction(){
-			const obj = new this.$.$raggu_web_front_settings_group();
-			(obj.step) = () => ("Шаг 2");
-			(obj.title) = () => ("Extraction");
-			(obj.opts) = () => ("single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель");
-			(obj.reindex) = () => (true);
-			(obj.controls) = () => ([
-				(this.Extraction_mode()), 
-				(this.Extraction_model()), 
-				(this.Extraction_icl())
-			]);
-			return obj;
-		}
-		summarization_dbscan(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Summarization_dbscan(){
-			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this.summarization_dbscan(next)));
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Summarization_dbscan_title")));
-			return obj;
-		}
-		summarization_llm(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Summarization_llm(){
-			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this.summarization_llm(next)));
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Summarization_llm_title")));
-			return obj;
-		}
-		Group_summarization(){
-			const obj = new this.$.$raggu_web_front_settings_group();
-			(obj.step) = () => ("Шаг 3");
-			(obj.title) = () => ("Summarization");
-			(obj.opts) = () => ("DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей");
-			(obj.reindex) = () => (true);
-			(obj.controls) = () => ([(this.Summarization_dbscan()), (this.Summarization_llm())]);
-			return obj;
-		}
-		communities_algo(next){
-			if(next !== undefined) return next;
-			return "Leiden";
-		}
-		Communities_algo(){
-			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.communities_algo(next)));
-			(obj.dictionary) = () => ({"Leiden": "Leiden"});
-			return obj;
-		}
-		communities_resolution_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_communities_resolution_label_text"));
-		}
-		Communities_resolution_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.communities_resolution_label_text())]);
-			return obj;
-		}
-		communities_resolution_label(){
-			return "1.0";
-		}
-		Communities_resolution_value(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.communities_resolution_label())]);
-			return obj;
-		}
-		Communities_resolution_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Communities_resolution_label()), (this.Communities_resolution_value())]);
-			return obj;
-		}
-		communities_resolution_x10(next){
-			if(next !== undefined) return next;
-			return 10;
-		}
-		Communities_resolution(){
-			const obj = new this.$.$bog_builderui_slider();
-			(obj.value) = (next) => ((this.communities_resolution_x10(next)));
-			(obj.min) = () => (5);
-			(obj.max) = () => (20);
-			(obj.step) = () => (1);
-			return obj;
-		}
-		Group_communities(){
-			const obj = new this.$.$raggu_web_front_settings_group();
-			(obj.step) = () => ("Шаг 4");
-			(obj.title) = () => ("Communities");
-			(obj.opts) = () => ("Hierarchical Leiden (resolution, levels) · суммаризация сообществ");
-			(obj.reindex) = () => (true);
-			(obj.controls) = () => ([
-				(this.Communities_algo()), 
-				(this.Communities_resolution_row()), 
-				(this.Communities_resolution())
-			]);
-			return obj;
-		}
-		refinement_isolated(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Refinement_isolated(){
-			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this.refinement_isolated(next)));
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Refinement_isolated_title")));
-			return obj;
-		}
-		Group_refinement(){
-			const obj = new this.$.$raggu_web_front_settings_group();
-			(obj.step) = () => ("Шаг 5");
-			(obj.title) = () => ("Refinement");
-			(obj.opts) = () => ("RemoveIsolatedNodes и пост-обработчики");
-			(obj.reindex) = () => (true);
-			(obj.controls) = () => ([(this.Refinement_isolated())]);
-			return obj;
-		}
-		search_mode(next){
-			if(next !== undefined) return next;
-			return "Local";
-		}
-		Search_mode(){
-			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.search_mode(next)));
-			(obj.dictionary) = () => ({
-				"Local": "LocalSearch", 
-				"Global": "GlobalSearch", 
-				"Naive": "NaiveSearch", 
-				"Mix": "MixSearch", 
-				"QueryPlan": "QueryPlan"
-			});
-			return obj;
-		}
-		search_rerank(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		Search_rerank(){
-			const obj = new this.$.$mol_check_box();
-			(obj.checked) = (next) => ((this.search_rerank(next)));
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Search_rerank_title")));
-			return obj;
-		}
-		search_topk_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_search_topk_label_text"));
-		}
-		Search_topk_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.search_topk_label_text())]);
-			return obj;
-		}
-		search_topk_label(){
-			return "8";
-		}
-		Search_topk_value(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.search_topk_label())]);
-			return obj;
-		}
-		Search_topk_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Search_topk_label()), (this.Search_topk_value())]);
-			return obj;
-		}
-		search_topk(next){
-			if(next !== undefined) return next;
-			return 8;
-		}
-		Search_topk(){
-			const obj = new this.$.$bog_builderui_slider();
-			(obj.value) = (next) => ((this.search_topk(next)));
-			(obj.min) = () => (1);
-			(obj.max) = () => (50);
-			(obj.step) = () => (1);
-			return obj;
-		}
-		Group_search(){
-			const obj = new this.$.$raggu_web_front_settings_group();
-			(obj.step) = () => ("Шаг 6");
-			(obj.title) = () => ("Search");
-			(obj.opts) = () => ("Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k");
-			(obj.reindex) = () => (false);
-			(obj.controls) = () => ([
-				(this.Search_mode()), 
-				(this.Search_rerank()), 
-				(this.Search_topk_row()), 
-				(this.Search_topk())
-			]);
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([
-				(this.Presets()), 
-				(this.Group_chunking()), 
-				(this.Group_extraction()), 
-				(this.Group_summarization()), 
-				(this.Group_communities()), 
-				(this.Group_refinement()), 
-				(this.Group_search())
-			]);
-			return obj;
-		}
-		Panel(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header()), (this.Body())]);
-			return obj;
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_settings_showed": (this.showed())};
-		}
-		sub(){
-			return [(this.Backdrop()), (this.Panel())];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_settings.prototype), "close"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Backdrop"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Header_sub"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Close_btn"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Header"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "preset_fast"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Preset_fast"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "preset_accurate"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Preset_accurate"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "preset_demo"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Preset_demo"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Presets"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "chunking_strategy"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_strategy"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_size_label"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "chunking_size_str"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_size_input"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_size_row"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_overlap_label"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "chunking_overlap_str"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_overlap_input"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Chunking_overlap_row"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Group_chunking"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "extraction_mode"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Extraction_mode"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "extraction_model"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Extraction_model"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "extraction_icl"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Extraction_icl"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Group_extraction"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "summarization_dbscan"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Summarization_dbscan"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "summarization_llm"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Summarization_llm"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Group_summarization"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "communities_algo"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Communities_algo"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Communities_resolution_label"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Communities_resolution_value"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Communities_resolution_row"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "communities_resolution_x10"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Communities_resolution"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Group_communities"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "refinement_isolated"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Refinement_isolated"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Group_refinement"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "search_mode"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Search_mode"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "search_rerank"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Search_rerank"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Search_topk_label"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Search_topk_value"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Search_topk_row"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "search_topk"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Search_topk"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Group_search"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Body"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Panel"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "showed"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const $raggu_web_front_settings_presets = {
-            fast: {
-                chunking_strategy: 'Simple',
-                chunking_size: 256,
-                chunking_overlap: 32,
-                extraction_mode: 'single',
-                extraction_model: 'meno-lite-7b',
-                extraction_icl: 'random',
-                summarization_dbscan: false,
-                summarization_llm: false,
-                communities_algo: 'Leiden',
-                communities_resolution_x10: 10,
-                refinement_isolated: false,
-                search_mode: 'Naive',
-                search_rerank: false,
-                search_topk: 5,
-            },
-            accurate: {
-                chunking_strategy: 'SmartSemantic',
-                chunking_size: 1024,
-                chunking_overlap: 128,
-                extraction_mode: 'two-stage',
-                extraction_model: 'gpt-4',
-                extraction_icl: 'hybrid',
-                summarization_dbscan: true,
-                summarization_llm: true,
-                communities_algo: 'Leiden',
-                communities_resolution_x10: 15,
-                refinement_isolated: true,
-                search_mode: 'Mix',
-                search_rerank: true,
-                search_topk: 10,
-            },
-            demo: {
-                chunking_strategy: 'SmartSemantic',
-                chunking_size: 512,
-                chunking_overlap: 64,
-                extraction_mode: 'two-stage',
-                extraction_model: 'meno-lite-7b',
-                extraction_icl: 'hybrid',
-                summarization_dbscan: true,
-                summarization_llm: false,
-                communities_algo: 'Leiden',
-                communities_resolution_x10: 10,
-                refinement_isolated: true,
-                search_mode: 'Local',
-                search_rerank: true,
-                search_topk: 8,
-            },
-        };
-        class $raggu_web_front_settings extends $.$raggu_web_front_settings {
-            close() {
-                this.showed(false);
-                return null;
-            }
-            // ---- preset handlers ----
-            preset_fast() {
-                this.apply_preset('fast');
-                return null;
-            }
-            preset_accurate() {
-                this.apply_preset('accurate');
-                return null;
-            }
-            preset_demo() {
-                this.apply_preset('demo');
-                return null;
-            }
-            apply_preset(name) {
-                const values = $raggu_web_front_settings_presets[name];
-                if (!values)
-                    return null;
-                this.chunking_strategy(values.chunking_strategy);
-                this.chunking_size_str(String(values.chunking_size));
-                this.chunking_overlap_str(String(values.chunking_overlap));
-                this.extraction_mode(values.extraction_mode);
-                this.extraction_model(values.extraction_model);
-                this.extraction_icl(values.extraction_icl);
-                this.summarization_dbscan(values.summarization_dbscan);
-                this.summarization_llm(values.summarization_llm);
-                this.communities_algo(values.communities_algo);
-                this.communities_resolution_x10(values.communities_resolution_x10);
-                this.refinement_isolated(values.refinement_isolated);
-                this.search_mode(values.search_mode);
-                this.search_rerank(values.search_rerank);
-                this.search_topk(values.search_topk);
-                return null;
-            }
-            // ---- local-state-backed fields ----
-            chunking_strategy(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.chunking_strategy', next ?? null) ?? 'SmartSemantic';
-            }
-            chunking_size_str(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.chunking_size_str', next ?? null) ?? '512';
-            }
-            chunking_overlap_str(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.chunking_overlap_str', next ?? null) ?? '64';
-            }
-            extraction_mode(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.extraction_mode', next ?? null) ?? 'two-stage';
-            }
-            extraction_model(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.extraction_model', next ?? null) ?? 'meno-lite-7b';
-            }
-            extraction_icl(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.extraction_icl', next ?? null) ?? 'hybrid';
-            }
-            summarization_dbscan(next) {
-                const v = this.$.$mol_state_local.value('$raggu_web_front_settings.summarization_dbscan', next ?? null);
-                return v ?? true;
-            }
-            summarization_llm(next) {
-                const v = this.$.$mol_state_local.value('$raggu_web_front_settings.summarization_llm', next ?? null);
-                return v ?? false;
-            }
-            communities_algo(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.communities_algo', next ?? null) ?? 'Leiden';
-            }
-            communities_resolution_x10(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.communities_resolution_x10', next ?? null) ?? 10;
-            }
-            communities_resolution_label() {
-                return (this.communities_resolution_x10() / 10).toFixed(1);
-            }
-            refinement_isolated(next) {
-                const v = this.$.$mol_state_local.value('$raggu_web_front_settings.refinement_isolated', next ?? null);
-                return v ?? true;
-            }
-            search_mode(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.search_mode', next ?? null) ?? 'Local';
-            }
-            search_rerank(next) {
-                const v = this.$.$mol_state_local.value('$raggu_web_front_settings.search_rerank', next ?? null);
-                return v ?? true;
-            }
-            search_topk(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.search_topk', next ?? null) ?? 8;
-            }
-            search_topk_label() {
-                return String(this.search_topk());
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_settings.prototype, "close", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_settings.prototype, "preset_fast", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_settings.prototype, "preset_accurate", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_settings.prototype, "preset_demo", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_settings.prototype, "apply_preset", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "chunking_strategy", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "chunking_size_str", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "chunking_overlap_str", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "extraction_mode", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "extraction_model", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "extraction_icl", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "summarization_dbscan", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "summarization_llm", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "communities_algo", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "communities_resolution_x10", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "refinement_isolated", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "search_mode", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "search_rerank", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_settings.prototype, "search_topk", null);
-        $$.$raggu_web_front_settings = $raggu_web_front_settings;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_settings, {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'none',
-        zIndex: 40,
-        '@': {
-            raggu_web_front_settings_showed: {
-                true: { display: 'flex' },
-            },
-        },
-        Backdrop: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            background: { color: '#1c1b1a59' },
-        },
-        Panel: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: '380px',
-            background: { color: $bog_builderui_tokens.card },
-            border: {
-                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            zIndex: 1,
-            flex: { direction: 'column' },
-            box: {
-                shadow: [{
-                        x: '-12px',
-                        y: 0,
-                        blur: '40px',
-                        spread: 0,
-                        color: '#0000001f',
-                    }],
-            },
-        },
-        Header: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-        },
-        Header_text: {
-            flex: { direction: 'column' },
-        },
-        Header_title: {
-            font: { weight: 700, size: '16px' },
-        },
-        Header_sub: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '2px' },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Close_btn: {
-            minWidth: '30px',
-            maxWidth: '30px',
-            height: '30px',
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            cursor: 'pointer',
-            font: { size: '15px' },
-        },
-        Body: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            display: 'flex',
-            flex: { direction: 'column' },
-            gap: '18px',
-        },
-        Presets: {
-            flex: { direction: 'row' },
-            gap: '6px',
-            padding: {
-                bottom: '6px',
-            },
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-        },
-        Chunking_size_row: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-        },
-        Chunking_overlap_row: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-        },
-        Communities_resolution_row: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            justify: { content: 'space-between' },
-        },
-        Search_topk_row: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            justify: { content: 'space-between' },
-        },
-        Chunking_size_label: {
-            minWidth: '90px',
-            color: $bog_builderui_tokens.shade,
-            font: { size: '11px' },
-        },
-        Chunking_overlap_label: {
-            minWidth: '90px',
-            color: $bog_builderui_tokens.shade,
-            font: { size: '11px' },
-        },
-        Communities_resolution_label: {
-            color: $bog_builderui_tokens.shade,
-            font: { size: '11px' },
-        },
-        Search_topk_label: {
-            color: $bog_builderui_tokens.shade,
-            font: { size: '11px' },
-        },
-        Communities_resolution_value: {
-            color: $bog_builderui_tokens.text,
-            font: {
-                family: 'ui-monospace, monospace',
-                size: '11px',
-                weight: 600,
-            },
-        },
-        Search_topk_value: {
-            color: $bog_builderui_tokens.text,
-            font: {
-                family: 'ui-monospace, monospace',
-                size: '11px',
-                weight: 600,
-            },
-        },
-        Chunking_size_input: {
-            flex: { grow: 1 },
-        },
-        Chunking_overlap_input: {
-            flex: { grow: 1 },
-        },
-        '@media': {
-            '(max-width: 720px)': {
-                Panel: {
-                    width: '100vw',
-                },
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_help_section) = class $raggu_web_front_help_section extends ($.$bog_builderui_div) {
-		Icon(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.icon())]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Desc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.desc())]);
-			return obj;
-		}
-		Media(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.media()));
-			return obj;
-		}
-		Text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Title()), 
-				(this.Desc()), 
-				(this.Media())
-			]);
-			return obj;
-		}
-		icon(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		desc(){
-			return "";
-		}
-		media(){
-			return [];
-		}
-		sub(){
-			return [(this.Icon()), (this.Text())];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_help_section.prototype), "Icon"));
-	($mol_mem(($.$raggu_web_front_help_section.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_help_section.prototype), "Desc"));
-	($mol_mem(($.$raggu_web_front_help_section.prototype), "Media"));
-	($mol_mem(($.$raggu_web_front_help_section.prototype), "Text"));
-
-
-;
-"use strict";
-
-
-;
-	($.$raggu_web_front_help) = class $raggu_web_front_help extends ($.$bog_builderui_div) {
-		close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Backdrop(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			return obj;
-		}
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title_text())]);
-			return obj;
-		}
-		Header_sub(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.subtitle_text())]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header_title()), (this.Header_sub())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Close_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			(obj.sub) = () => (["✕"]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Close_btn())
-			]);
-			return obj;
-		}
-		Intro(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.intro_text())]);
-			return obj;
-		}
-		Section_gallery(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("▤");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_gallery_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_gallery_desc")));
-			return obj;
-		}
-		Section_explorer(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("◉");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_desc")));
-			return obj;
-		}
-		Section_chat(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("💬");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_desc")));
-			return obj;
-		}
-		Section_dashboard(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("▦");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_desc")));
-			return obj;
-		}
-		Section_summary(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("✦");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_summary_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_summary_desc")));
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([
-				(this.Intro()), 
-				(this.Section_gallery()), 
-				(this.Section_explorer()), 
-				(this.Section_chat()), 
-				(this.Section_dashboard()), 
-				(this.Section_summary())
-			]);
-			return obj;
-		}
-		Panel(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header()), (this.Body())]);
-			return obj;
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_help_title_text"));
-		}
-		subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_help_subtitle_text"));
-		}
-		intro_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_help_intro_text"));
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_help_showed": (this.showed())};
-		}
-		sub(){
-			return [(this.Backdrop()), (this.Panel())];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_help.prototype), "close"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Backdrop"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Header_sub"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Close_btn"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Header"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Intro"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_gallery"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_explorer"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_chat"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_dashboard"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_summary"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Body"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Panel"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "showed"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_help extends $.$raggu_web_front_help {
-            close() {
-                this.showed(false);
-                return null;
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_help.prototype, "close", null);
-        $$.$raggu_web_front_help = $raggu_web_front_help;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_help, {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'none',
-        zIndex: 40,
-        '@': {
-            raggu_web_front_help_showed: {
-                true: { display: 'flex' },
-            },
-        },
-        Backdrop: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            background: { color: '#1c1b1a59' },
-        },
-        Panel: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: '420px',
-            maxWidth: '100vw',
-            background: { color: $bog_builderui_tokens.card },
-            border: {
-                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            zIndex: 1,
-            flex: { direction: 'column' },
-            box: {
-                shadow: [{
-                        x: '-12px',
-                        y: 0,
-                        blur: '40px',
-                        spread: 0,
-                        color: '#0000001f',
-                    }],
-            },
-        },
-        Header: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '0.75rem',
-        },
-        Header_text: {
-            flex: { direction: 'column' },
-            gap: '0.125rem',
-        },
-        Header_title: {
-            font: { weight: 700, size: '15px' },
-        },
-        Header_sub: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Close_btn: {
-            cursor: 'pointer',
-            color: $bog_builderui_tokens.shade,
-            font: { size: '14px' },
-            padding: {
-                top: '4px',
-                bottom: '4px',
-                left: '8px',
-                right: '8px',
-            },
-            border: { radius: '6px' },
-        },
-        Body: {
-            // $mol_scroll по умолчанию grid — дети лягут друг на друга (1/1)
-            display: 'flex',
-            flex: { grow: 1, shrink: 1, direction: 'column' },
-            minHeight: 0,
-            padding: {
-                top: '16px',
-                bottom: '16px',
-                left: '20px',
-                right: '20px',
-            },
-            gap: '1rem',
-        },
-        Intro: {
-            font: { size: '13px' },
-            lineHeight: '1.5',
-            color: $bog_builderui_tokens.shade,
-        },
-    });
-    $mol_style_define($raggu_web_front_help_section, {
-        flex: { direction: 'row' },
-        gap: '0.75rem',
-        align: { items: 'flex-start' },
-        Icon: {
-            minWidth: '30px',
-            maxWidth: '30px',
-            height: '30px',
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            background: { color: $bog_builderui_tokens.field },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            font: { size: '14px' },
-        },
-        Text: {
-            flex: { direction: 'column', shrink: 1 },
-            gap: '0.25rem',
-            minWidth: 0,
-        },
-        Title: {
-            font: { weight: 700, size: '13px' },
-        },
-        Desc: {
-            font: { size: '12px' },
-            lineHeight: '1.5',
-            color: $bog_builderui_tokens.shade,
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_gallery_card_preview) = class $raggu_web_front_gallery_card_preview extends ($.$bog_builderui_div) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("raggu/web/front/gallery/card/preview/preview.view.css", "[raggu_web_front_gallery_card_preview] {\n\tbackground-image: repeating-linear-gradient(135deg, #efedea 0 9px, #e7e4e0 9px 18px);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$raggu_web_front_gallery_card) = class $raggu_web_front_gallery_card extends ($.$bog_builderui_div) {
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Preview_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.preview_label_text())]);
-			return obj;
-		}
-		Domain_badge(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.domain())]);
-			return obj;
-		}
-		Preview(){
-			const obj = new this.$.$raggu_web_front_gallery_card_preview();
-			(obj.sub) = () => ([(this.Preview_label()), (this.Domain_badge())]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Desc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.desc())]);
-			return obj;
-		}
-		tag_nodes(){
-			return "";
-		}
-		Tag_nodes(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.tag_nodes())]);
-			return obj;
-		}
-		tag_edges(){
-			return "";
-		}
-		Tag_edges(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.tag_edges())]);
-			return obj;
-		}
-		tag_comms(){
-			return "";
-		}
-		Tag_comms(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.tag_comms())]);
-			return obj;
-		}
-		Tags(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Tag_nodes()), 
-				(this.Tag_edges()), 
-				(this.Tag_comms())
-			]);
-			return obj;
-		}
-		id(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		domain(){
-			return "";
-		}
-		desc(){
-			return "";
-		}
-		nodes(){
-			return "";
-		}
-		edges(){
-			return "";
-		}
-		comms(){
-			return "";
-		}
-		active(){
-			return false;
-		}
-		preview_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_card_preview_label_text"));
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_gallery_card_active": (this.active())};
-		}
-		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
-		}
-		sub(){
-			return [
-				(this.Preview()), 
-				(this.Title()), 
-				(this.Desc()), 
-				(this.Tags())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "click"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Preview_label"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Domain_badge"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Preview"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Desc"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tag_nodes"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tag_edges"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tag_comms"));
-	($mol_mem(($.$raggu_web_front_gallery_card.prototype), "Tags"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_gallery_card extends $.$raggu_web_front_gallery_card {
-            unit(key) {
-                return this.$.$mol_locale.text(`$raggu_web_front_gallery_card_unit_${key}`) || '';
-            }
-            tag_nodes() { return `${this.nodes()} ${this.unit('nodes')}`; }
-            tag_edges() { return `${this.edges()} ${this.unit('edges')}`; }
-            tag_comms() { return `${this.comms()} ${this.unit('comms')}`; }
-        }
-        $$.$raggu_web_front_gallery_card = $raggu_web_front_gallery_card;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const tag_style = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-        background: { color: $bog_builderui_tokens.field },
-        border: { radius: '5px' },
-        padding: {
-            top: '3px',
-            bottom: '3px',
-            left: '7px',
-            right: '7px',
-        },
-    };
-    $mol_style_define($raggu_web_front_gallery_card, {
-        background: { color: $bog_builderui_tokens.card },
-        border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-        padding: {
-            top: '12px',
-            bottom: '12px',
-            left: '12px',
-            right: '12px',
-        },
-        flex: { direction: 'column' },
-        cursor: 'pointer',
-        '@': {
-            raggu_web_front_gallery_card_active: {
-                true: {
-                    border: { color: $bog_builderui_tokens.current },
-                    background: { color: $bog_builderui_tokens.field },
-                },
-            },
-        },
-        Preview: {
-            height: '118px',
-            border: { radius: '7px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            position: 'relative',
-        },
-        Preview_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Domain_badge: {
-            position: 'absolute',
-            top: '8px',
-            left: '8px',
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '7px',
-                right: '7px',
-            },
-            font: { size: '10px' },
-            color: $bog_builderui_tokens.shade,
-        },
-        Title: {
-            font: { weight: 700, size: '14px' },
-            margin: { top: '11px' },
-        },
-        Desc: {
-            font: { size: '11px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '4px' },
-            lineHeight: '1.4',
-        },
-        Tags: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '6px',
-            margin: { top: '10px' },
-        },
-        Tag_nodes: tag_style,
-        Tag_edges: tag_style,
-        Tag_comms: tag_style,
-    });
-})($ || ($ = {}));
-
-;
-	($.$bog_builderui_progress) = class $bog_builderui_progress extends ($.$mol_view) {
-		value(){
-			return 50;
-		}
-		max(){
-			return 100;
-		}
-		dom_name(){
-			return "progress";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"value": (this.value()), 
-				"max": (this.max())
-			};
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("bog/builderui/progress/progress.view.css", "[bog_builderui_progress]::-webkit-progress-bar {\n\tbackground-color: var(--bog_builderui_field);\n\tborder-radius: 9999px;\n}\n[bog_builderui_progress]::-webkit-progress-value {\n\tbackground-color: var(--bog_builderui_control);\n\tborder-radius: 9999px;\n}\n[bog_builderui_progress]::-moz-progress-bar {\n\tbackground-color: var(--bog_builderui_control);\n\tborder-radius: 9999px;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($bog_builderui_progress, {
-        appearance: 'none',
-        width: '100%',
-        height: '0.5rem',
-        border: {
-            radius: '9999px',
-            width: 0,
-        },
-        background: {
-            color: $bog_builderui_tokens.field,
-        },
-        color: $bog_builderui_tokens.control,
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_gallery_upload) = class $raggu_web_front_gallery_upload extends ($.$bog_builderui_div) {
-		close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Backdrop(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			return obj;
-		}
-		panel_title(){
-			return "";
-		}
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.panel_title())]);
-			return obj;
-		}
-		Header_subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.subtitle_text())]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header_title()), (this.Header_subtitle())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Close_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			(obj.sub) = () => ([(this.close_text())]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Close_btn())
-			]);
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.body()));
-			return obj;
-		}
-		Panel(){
-			const obj = new this.$.$bog_builderui_card();
-			(obj.sub) = () => ([(this.Header()), (this.Body())]);
-			return obj;
-		}
-		Error_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.error_title_text())]);
-			return obj;
-		}
-		Error_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.error())]);
-			return obj;
-		}
-		Progress_bar(){
-			const obj = new this.$.$bog_builderui_progress();
-			(obj.max) = () => ((this.total_steps()));
-			(obj.value) = () => ((this.step()));
-			return obj;
-		}
-		progress_label_separator(){
-			return "";
-		}
-		step_label(){
-			return "";
-		}
-		progress_label_slash(){
-			return " /";
-		}
-		total_steps_text(){
-			return "6";
-		}
-		Progress_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.progress_label_text()), 
-				(this.progress_label_separator()), 
-				(this.step_label()), 
-				(this.progress_label_slash()), 
-				(this.total_steps_text())
-			]);
-			return obj;
-		}
-		Steps_list(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.step_rows()));
-			return obj;
-		}
-		step_status(id){
-			return "pending";
-		}
-		step_marker_text(id){
-			return "○";
-		}
-		Step_marker(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.step_marker_text(id))]);
-			return obj;
-		}
-		step_name_text(id){
-			return "";
-		}
-		Step_name(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.step_name_text(id))]);
-			return obj;
-		}
-		showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		kind(){
-			return "document";
-		}
-		step(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		total_steps(){
-			return 6;
-		}
-		error(){
-			return "";
-		}
-		complete(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_title_text"));
-		}
-		subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_subtitle_text"));
-		}
-		panel_title_document_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_panel_title_document_text"));
-		}
-		panel_title_index_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_panel_title_index_text"));
-		}
-		error_too_large_template(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_error_too_large_template"));
-		}
-		step_chunking_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_chunking_text"));
-		}
-		step_extraction_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_extraction_text"));
-		}
-		step_summarization_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_summarization_text"));
-		}
-		step_communities_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_communities_text"));
-		}
-		step_refinement_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_refinement_text"));
-		}
-		step_search_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_step_search_text"));
-		}
-		progress_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_progress_label_text"));
-		}
-		close_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_close_text"));
-		}
-		error_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_error_title_text"));
-		}
-		retry_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_retry_text"));
-		}
-		body(){
-			return [];
-		}
-		step_rows(){
-			return [];
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_gallery_upload_showed": (this.showed())};
-		}
-		sub(){
-			return [(this.Backdrop()), (this.Panel())];
-		}
-		Error_body(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Error_title()), (this.Error_text())]);
-			return obj;
-		}
-		Progress_body(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Progress_bar()), 
-				(this.Progress_label()), 
-				(this.Steps_list())
-			]);
-			return obj;
-		}
-		Step(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_gallery_upload_step_status": (this.step_status(id))});
-			(obj.sub) = () => ([(this.Step_marker(id)), (this.Step_name(id))]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "close"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Backdrop"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Header_subtitle"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Close_btn"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Header"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Body"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Panel"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Error_title"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Error_text"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Progress_bar"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Progress_label"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Steps_list"));
-	($mol_mem_key(($.$raggu_web_front_gallery_upload.prototype), "Step_marker"));
-	($mol_mem_key(($.$raggu_web_front_gallery_upload.prototype), "Step_name"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "showed"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "step"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "complete"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Error_body"));
-	($mol_mem(($.$raggu_web_front_gallery_upload.prototype), "Progress_body"));
-	($mol_mem_key(($.$raggu_web_front_gallery_upload.prototype), "Step"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const STEP_KEYS = [
-            'chunking',
-            'extraction',
-            'summarization',
-            'communities',
-            'refinement',
-            'search',
-        ];
-        class $raggu_web_front_gallery_upload extends $.$raggu_web_front_gallery_upload {
-            step(next) {
-                return next ?? 0;
-            }
-            error(next) {
-                return next ?? '';
-            }
-            has_error() {
-                return this.error() ? 'true' : 'false';
-            }
-            panel_title() {
-                return this.kind() === 'index' ? this.panel_title_index_text() : this.panel_title_document_text();
-            }
-            body() {
-                return this.error() ? [this.Error_body()] : [this.Progress_body()];
-            }
-            step_label() {
-                const n = this.step();
-                const idx = Math.max(0, Math.min(n, STEP_KEYS.length) - 1);
-                return this.step_name_text(STEP_KEYS[idx]);
-            }
-            step_rows() {
-                return STEP_KEYS.map(key => this.Step(key));
-            }
-            step_status(key) {
-                const idx = STEP_KEYS.indexOf(key);
-                const current = this.step();
-                if (current > idx)
-                    return 'done';
-                if (current === idx)
-                    return 'active';
-                return 'pending';
-            }
-            step_marker_text(key) {
-                const status = this.step_status(key);
-                if (status === 'done')
-                    return '●';
-                if (status === 'active')
-                    return '◐';
-                return '○';
-            }
-            step_name_text(key) {
-                switch (key) {
-                    case 'chunking': return this.step_chunking_text();
-                    case 'extraction': return this.step_extraction_text();
-                    case 'summarization': return this.step_summarization_text();
-                    case 'communities': return this.step_communities_text();
-                    case 'refinement': return this.step_refinement_text();
-                    case 'search': return this.step_search_text();
-                }
-            }
-            progress_label_separator() { return ' '; }
-            progress_label_slash() { return ' / '; }
-            total_steps_text() { return String(this.total_steps()); }
-            /**
-             * Mock pipeline: validates size limit, then advances step 0→6 via setTimeout chain.
-             * Returns immediately; UI re-renders on each step setter call.
-             */
-            start(mock_file_size_mb) {
-                this.error('');
-                this.step(0);
-                if (mock_file_size_mb > 10) {
-                    this.error(this.error_too_large_template().replace('%s', mock_file_size_mb.toFixed(1)));
-                    return;
-                }
-                this.tick(1);
-            }
-            tick(next_step) {
-                setTimeout(() => {
-                    this.step(next_step);
-                    if (next_step >= this.total_steps()) {
-                        setTimeout(() => this.complete(null), 200);
-                        return;
-                    }
-                    this.tick(next_step + 1);
-                }, 600);
-            }
-            close() {
-                this.showed(false);
-                this.step(0);
-                this.error('');
-                return null;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_gallery_upload.prototype, "step", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_gallery_upload.prototype, "error", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery_upload.prototype, "close", null);
-        $$.$raggu_web_front_gallery_upload = $raggu_web_front_gallery_upload;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_gallery_upload, {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'none',
-        zIndex: 50,
-        justify: { content: 'center' },
-        align: { items: 'center' },
-        '@': {
-            raggu_web_front_gallery_upload_showed: {
-                true: { display: 'flex' },
-            },
-        },
-        Backdrop: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            background: { color: '#1c1b1a8c' },
-        },
-        Panel: {
-            position: 'relative',
-            zIndex: 1,
-            minWidth: '420px',
-            maxWidth: '520px',
-            width: '90%',
-            gap: '14px',
-            padding: {
-                top: '20px',
-                bottom: '20px',
-                left: '22px',
-                right: '22px',
-            },
-        },
-        Header: {
-            flex: { direction: 'row' },
-            align: { items: 'flex-start' },
-            gap: '12px',
-        },
-        Header_text: {
-            flex: { direction: 'column', grow: 1, shrink: 1 },
-            minWidth: 0,
-        },
-        Header_title: {
-            font: { weight: 700, size: '16px' },
-            color: $bog_builderui_tokens.text,
-        },
-        Header_subtitle: {
-            font: { size: '12px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '3px' },
-        },
-        Spacer: { flex: { grow: 1 } },
-        Close_btn: {
-            minWidth: '28px',
-            maxWidth: '28px',
-            height: '28px',
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            cursor: 'pointer',
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-        },
-        Body: {
-            flex: { direction: 'column' },
-            gap: '14px',
-        },
-        Progress_body: {
-            flex: { direction: 'column' },
-            gap: '14px',
-        },
-        Progress_label: {
-            flex: { direction: 'row' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Steps_list: {
-            flex: { direction: 'column' },
-            gap: '6px',
-            margin: { top: '4px' },
-        },
-        Step: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '10px',
-            padding: {
-                top: '6px',
-                bottom: '6px',
-                left: '8px',
-                right: '8px',
-            },
-            border: { radius: '6px' },
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-            '@': {
-                raggu_web_front_gallery_upload_step_status: {
-                    active: {
-                        background: { color: $bog_builderui_tokens.field },
-                        color: $bog_builderui_tokens.text,
-                        font: { weight: 600 },
-                    },
-                    done: {
-                        color: $bog_builderui_tokens.text,
-                    },
-                },
-            },
-        },
-        Step_marker: {
-            minWidth: '16px',
-            font: {
-                family: 'ui-monospace, monospace',
-                size: '14px',
-            },
-        },
-        Error_body: {
-            flex: { direction: 'column' },
-            gap: '8px',
-            padding: {
-                top: '12px',
-                bottom: '12px',
-                left: '14px',
-                right: '14px',
-            },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '8px' },
-            background: { color: $bog_builderui_tokens.field },
-        },
-        Error_title: {
-            font: { weight: 700, size: '13px' },
-            color: $bog_builderui_tokens.text,
-        },
-        Error_text: {
-            font: { size: '12px' },
-            color: $bog_builderui_tokens.shade,
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_gallery) = class $raggu_web_front_gallery extends ($.$bog_builderui_div) {
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.header_title_text())]);
-			return obj;
-		}
-		Header_subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.header_subtitle_text())]);
-			return obj;
-		}
-		is_mock(){
-			return false;
-		}
-		Mock_badge(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_gallery_mock_badge_showed": (this.is_mock())});
-			(obj.sub) = () => ([(this.mock_badge_text())]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_title()), 
-				(this.Header_subtitle()), 
-				(this.Mock_badge())
-			]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		upload_doc_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Upload_doc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.upload_doc_text())]);
-			(obj.event) = () => ({"click": (next) => (this.upload_doc_click(next))});
-			return obj;
-		}
-		upload_idx_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Upload_idx(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.upload_idx_text())]);
-			(obj.event) = () => ({"click": (next) => (this.upload_idx_click(next))});
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Upload_doc()), 
-				(this.Upload_idx())
-			]);
-			return obj;
-		}
-		card_id(id){
-			return "";
-		}
-		card_title(id){
-			return "";
-		}
-		card_domain(id){
-			return "";
-		}
-		card_desc(id){
-			return "";
-		}
-		card_nodes(id){
-			return "";
-		}
-		card_edges(id){
-			return "";
-		}
-		card_comms(id){
-			return "";
-		}
-		card_active(id){
-			return false;
-		}
-		click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Card(id){
-			const obj = new this.$.$raggu_web_front_gallery_card();
-			(obj.id) = () => ((this.card_id(id)));
-			(obj.title) = () => ((this.card_title(id)));
-			(obj.domain) = () => ((this.card_domain(id)));
-			(obj.desc) = () => ((this.card_desc(id)));
-			(obj.nodes) = () => ((this.card_nodes(id)));
-			(obj.edges) = () => ((this.card_edges(id)));
-			(obj.comms) = () => ((this.card_comms(id)));
-			(obj.active) = () => ((this.card_active(id)));
-			(obj.click) = (next) => ((this.click(id, next)));
-			return obj;
-		}
-		rows(){
-			return [(this.Card(id))];
-		}
-		Grid(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.rows()));
-			return obj;
-		}
-		upload_showed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		upload_complete(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		upload_close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Upload(){
-			const obj = new this.$.$raggu_web_front_gallery_upload();
-			(obj.showed) = (next) => ((this.upload_showed(next)));
-			(obj.kind) = () => ((this.upload_kind()));
-			(obj.complete) = (next) => ((this.upload_complete(next)));
-			(obj.close) = (next) => ((this.upload_close(next)));
-			return obj;
-		}
-		dataset_id(){
-			return "wiki";
-		}
-		select_dataset(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		datasets(){
-			return [];
-		}
-		upload_kind(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		header_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_header_title_text"));
-		}
-		header_subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_header_subtitle_text"));
-		}
-		mock_badge_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_mock_badge_text"));
-		}
-		upload_doc_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_doc_text"));
-		}
-		upload_idx_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_upload_idx_text"));
-		}
-		uploaded_document_title(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_document_title"));
-		}
-		uploaded_index_title(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_index_title"));
-		}
-		uploaded_domain(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_domain"));
-		}
-		uploaded_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_uploaded_desc"));
-		}
-		dataset_law_title(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_title"));
-		}
-		dataset_law_domain(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_domain"));
-		}
-		dataset_law_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_law_desc"));
-		}
-		dataset_wiki_title(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_title"));
-		}
-		dataset_wiki_domain(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_domain"));
-		}
-		dataset_wiki_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_gallery_dataset_wiki_desc"));
-		}
-		sub(){
-			return [
-				(this.Header()), 
-				(this.Grid()), 
-				(this.Upload())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header_subtitle"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Mock_badge"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "upload_doc_click"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Upload_doc"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "upload_idx_click"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Upload_idx"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Header"));
-	($mol_mem_key(($.$raggu_web_front_gallery.prototype), "click"));
-	($mol_mem_key(($.$raggu_web_front_gallery.prototype), "Card"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Grid"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "upload_showed"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "upload_complete"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "upload_close"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "Upload"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "select_dataset"));
-	($mol_mem(($.$raggu_web_front_gallery.prototype), "upload_kind"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    let $mol_rest_code;
-    (function ($mol_rest_code) {
-        $mol_rest_code[$mol_rest_code["Continue"] = 100] = "Continue";
-        $mol_rest_code[$mol_rest_code["Switching protocols"] = 101] = "Switching protocols";
-        $mol_rest_code[$mol_rest_code["Processing"] = 102] = "Processing";
-        $mol_rest_code[$mol_rest_code["OK"] = 200] = "OK";
-        $mol_rest_code[$mol_rest_code["Created"] = 201] = "Created";
-        $mol_rest_code[$mol_rest_code["Accepted"] = 202] = "Accepted";
-        $mol_rest_code[$mol_rest_code["Non-Authoritative Information"] = 203] = "Non-Authoritative Information";
-        $mol_rest_code[$mol_rest_code["No Content"] = 204] = "No Content";
-        $mol_rest_code[$mol_rest_code["Reset Content"] = 205] = "Reset Content";
-        $mol_rest_code[$mol_rest_code["Partial Content"] = 206] = "Partial Content";
-        $mol_rest_code[$mol_rest_code["Multi Status"] = 207] = "Multi Status";
-        $mol_rest_code[$mol_rest_code["Already Reported"] = 208] = "Already Reported";
-        $mol_rest_code[$mol_rest_code["IM Used"] = 226] = "IM Used";
-        $mol_rest_code[$mol_rest_code["Multiple Choices"] = 300] = "Multiple Choices";
-        $mol_rest_code[$mol_rest_code["Moved Permanently"] = 301] = "Moved Permanently";
-        $mol_rest_code[$mol_rest_code["Found"] = 302] = "Found";
-        $mol_rest_code[$mol_rest_code["See Other"] = 303] = "See Other";
-        $mol_rest_code[$mol_rest_code["Not Modified"] = 304] = "Not Modified";
-        $mol_rest_code[$mol_rest_code["Use Proxy"] = 305] = "Use Proxy";
-        $mol_rest_code[$mol_rest_code["Temporary Redirect"] = 307] = "Temporary Redirect";
-        $mol_rest_code[$mol_rest_code["Bad Request"] = 400] = "Bad Request";
-        $mol_rest_code[$mol_rest_code["Unauthorized"] = 401] = "Unauthorized";
-        $mol_rest_code[$mol_rest_code["Payment Required"] = 402] = "Payment Required";
-        $mol_rest_code[$mol_rest_code["Forbidden"] = 403] = "Forbidden";
-        $mol_rest_code[$mol_rest_code["Not Found"] = 404] = "Not Found";
-        $mol_rest_code[$mol_rest_code["Method Not Allowed"] = 405] = "Method Not Allowed";
-        $mol_rest_code[$mol_rest_code["Not Acceptable"] = 406] = "Not Acceptable";
-        $mol_rest_code[$mol_rest_code["Proxy Authentication Required"] = 407] = "Proxy Authentication Required";
-        $mol_rest_code[$mol_rest_code["Request Timeout"] = 408] = "Request Timeout";
-        $mol_rest_code[$mol_rest_code["Conflict"] = 409] = "Conflict";
-        $mol_rest_code[$mol_rest_code["Gone"] = 410] = "Gone";
-        $mol_rest_code[$mol_rest_code["Length Required"] = 411] = "Length Required";
-        $mol_rest_code[$mol_rest_code["Precondition Failed"] = 412] = "Precondition Failed";
-        $mol_rest_code[$mol_rest_code["Request Entity Too Large"] = 413] = "Request Entity Too Large";
-        $mol_rest_code[$mol_rest_code["Request URI Too Long"] = 414] = "Request URI Too Long";
-        $mol_rest_code[$mol_rest_code["Unsupported Media Type"] = 415] = "Unsupported Media Type";
-        $mol_rest_code[$mol_rest_code["Requested Range Not Satisfiable"] = 416] = "Requested Range Not Satisfiable";
-        $mol_rest_code[$mol_rest_code["Expectation Failed"] = 417] = "Expectation Failed";
-        $mol_rest_code[$mol_rest_code["Teapot"] = 418] = "Teapot";
-        $mol_rest_code[$mol_rest_code["Unprocessable Entity"] = 422] = "Unprocessable Entity";
-        $mol_rest_code[$mol_rest_code["Locked"] = 423] = "Locked";
-        $mol_rest_code[$mol_rest_code["Failed Dependency"] = 424] = "Failed Dependency";
-        $mol_rest_code[$mol_rest_code["Upgrade Required"] = 426] = "Upgrade Required";
-        $mol_rest_code[$mol_rest_code["Precondition Required"] = 428] = "Precondition Required";
-        $mol_rest_code[$mol_rest_code["Too Many Requests"] = 429] = "Too Many Requests";
-        $mol_rest_code[$mol_rest_code["Request Header Fields Too Large"] = 431] = "Request Header Fields Too Large";
-        $mol_rest_code[$mol_rest_code["Unavailable For Legal Reasons"] = 451] = "Unavailable For Legal Reasons";
-        $mol_rest_code[$mol_rest_code["Internal Server Error"] = 500] = "Internal Server Error";
-        $mol_rest_code[$mol_rest_code["Not Implemented"] = 501] = "Not Implemented";
-        $mol_rest_code[$mol_rest_code["Bad Gateway"] = 502] = "Bad Gateway";
-        $mol_rest_code[$mol_rest_code["Service Unavailable"] = 503] = "Service Unavailable";
-        $mol_rest_code[$mol_rest_code["Gateway Timeout"] = 504] = "Gateway Timeout";
-        $mol_rest_code[$mol_rest_code["HTTP Version Not Supported"] = 505] = "HTTP Version Not Supported";
-        $mol_rest_code[$mol_rest_code["Insufficient Storage"] = 507] = "Insufficient Storage";
-        $mol_rest_code[$mol_rest_code["Loop Detected"] = 508] = "Loop Detected";
-        $mol_rest_code[$mol_rest_code["Not Extended"] = 510] = "Not Extended";
-        $mol_rest_code[$mol_rest_code["Network Authentication Required"] = 511] = "Network Authentication Required";
-        $mol_rest_code[$mol_rest_code["Network Read Timeout Error"] = 598] = "Network Read Timeout Error";
-        $mol_rest_code[$mol_rest_code["Network Connect Timeout Error"] = 599] = "Network Connect Timeout Error";
-    })($mol_rest_code = $.$mol_rest_code || ($.$mol_rest_code = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function pass(data) {
-        return data;
-    }
-    function $mol_error_fence(task, fallback, loading = pass) {
-        try {
-            return task();
-        }
-        catch (error) {
-            let normalized;
-            try {
-                normalized = $mol_promise_like(error) ? loading(error) : fallback(error);
-            }
-            catch (sub_error) {
-                normalized = $mol_promise_like(sub_error) ? sub_error : new $mol_error_mix(sub_error.message, { error }, sub_error);
-            }
-            if (normalized instanceof Error || $mol_promise_like(normalized)) {
-                $mol_fail_hidden(normalized);
-            }
-            return normalized;
-        }
-    }
-    $.$mol_error_fence = $mol_error_fence;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_error_enriched(cause, cb) {
-        return $mol_error_fence(cb, e => new $mol_error_mix(e.message, cause, e));
-    }
-    $.$mol_error_enriched = $mol_error_enriched;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror');
-        if (error.length)
-            throw new Error(error[0].textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_fetch_response extends $mol_object {
-        native;
-        request;
-        status() {
-            const types = ['unknown', 'inform', 'success', 'redirect', 'wrong', 'failed'];
-            return types[Math.floor(this.native.status / 100)];
-        }
-        code() {
-            return this.native.status;
-        }
-        ok() {
-            return this.native.ok;
-        }
-        message() {
-            return $mol_rest_code[this.code()] || `HTTP Error ${this.code()}`;
-        }
-        headers() {
-            return this.native.headers;
-        }
-        mime() {
-            return this.headers().get('content-type');
-        }
-        stream() {
-            return this.native.body;
-        }
-        text() {
-            const buffer = this.buffer();
-            const mime = this.mime() || '';
-            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
-            const decoder = new TextDecoder(charset);
-            return decoder.decode(buffer);
-        }
-        json() {
-            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).json());
-        }
-        blob() {
-            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).blob());
-        }
-        buffer() {
-            return $mol_error_enriched(this, () => $mol_wire_sync(this.native).arrayBuffer());
-        }
-        xml() {
-            return $mol_dom_parse(this.text(), 'application/xml');
-        }
-        xhtml() {
-            return $mol_dom_parse(this.text(), 'application/xhtml+xml');
-        }
-        html() {
-            return $mol_dom_parse(this.text(), 'text/html');
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "stream", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "text", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "xhtml", null);
-    __decorate([
-        $mol_action
-    ], $mol_fetch_response.prototype, "html", null);
-    $.$mol_fetch_response = $mol_fetch_response;
-    class $mol_fetch_request extends $mol_object {
-        native;
-        response_async() {
-            const controller = new AbortController();
-            let done = false;
-            const request = new Request(this.native, { signal: controller.signal });
-            const promise = fetch(request).finally(() => {
-                done = true;
-            });
-            return Object.assign(promise, {
-                destructor: () => {
-                    // Abort of done request breaks response parsing
-                    if (!done && !controller.signal.aborted)
-                        controller.abort();
-                },
-            });
-        }
-        response() {
-            return this.$.$mol_fetch_response.make({
-                native: $mol_wire_sync(this).response_async(),
-                request: this
-            });
-        }
-        success() {
-            const response = this.response();
-            if (response.status() === 'success')
-                return response;
-            throw new Error(response.message(), { cause: response });
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch_request.prototype, "response", null);
-    $.$mol_fetch_request = $mol_fetch_request;
-    class $mol_fetch extends $mol_object {
-        static request(input, init) {
-            return this.$.$mol_fetch_request.make({
-                native: new Request(input, init)
-            });
-        }
-        static response(input, init) {
-            return this.request(input, init).response();
-        }
-        static success(input, init) {
-            return this.request(input, init).success();
-        }
-        static stream(input, init) {
-            return this.success(input, init).stream();
-        }
-        static text(input, init) {
-            return this.success(input, init).text();
-        }
-        static json(input, init) {
-            return this.success(input, init).json();
-        }
-        static blob(input, init) {
-            return this.success(input, init).blob();
-        }
-        static buffer(input, init) {
-            return this.success(input, init).buffer();
-        }
-        static xml(input, init) {
-            return this.success(input, init).xml();
-        }
-        static xhtml(input, init) {
-            return this.success(input, init).xhtml();
-        }
-        static html(input, init) {
-            return this.success(input, init).html();
-        }
-    }
-    __decorate([
-        $mol_action
-    ], $mol_fetch, "request", null);
-    $.$mol_fetch = $mol_fetch;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$raggu_web_front_api_ragu_health = {
-        method: "GET",
-        route: "/api/v1/health",
-        params: undefined,
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_capabilities = {
-        method: "GET",
-        route: "/api/v1/capabilities",
-        params: undefined,
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_list_datasets = {
-        method: "GET",
-        route: "/api/v1/datasets",
-        params: undefined,
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_dataset = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_graph = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_node = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}",
-        params: {},
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_node_neighbors = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}/neighbors",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_communities = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph/communities",
-        params: {},
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_create_agent_message = {
-        method: "POST",
-        route: "/api/v1/datasets/{dataset_id}/agent/messages",
-        params: {},
-        query: undefined,
-        body: {},
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_agent_suggestions = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/agent/suggestions",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /** Build final URL: substitute `{placeholders}` in route, append querystring. */
-    function $raggu_web_front_api_url(endpoint, route, params, query) {
-        let path = route;
-        if (params) {
-            for (const key in params) {
-                path = path.replace(`{${key}}`, encodeURIComponent(String(params[key])));
-            }
-        }
-        const qs = [];
-        if (query) {
-            for (const key in query) {
-                const val = query[key];
-                if (val === undefined || val === null)
-                    continue;
-                if (Array.isArray(val)) {
-                    for (const item of val)
-                        qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
-                }
-                else {
-                    qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(val))}`);
-                }
-            }
-        }
-        const suffix = qs.length ? `?${qs.join('&')}` : '';
-        return `${endpoint}${path}${suffix}`;
-    }
-    /**
-     * Backend base URL — the ONE line to change when the backend is deployed.
-     * No path suffix here: operation `route`s already carry `/api/v1/...`
-     * from FastAPI's OpenAPI dump.
-     */
-    $.$raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org';
-    /**
-     * Effective endpoint: the `?api=<url>` app argument overrides the default,
-     * so a freshly deployed backend can be pointed at WITHOUT a rebuild —
-     * e.g. `...test.html#!api=https%3A%2F%2Fback.example.com`.
-     * Reactive: reads propagate via $mol_state_arg, so changing the arg refetches.
-     */
-    function $raggu_web_front_api_endpoint() {
-        return $mol_state_arg.value('api') || $.$raggu_web_front_api_endpoint_default;
-    }
-    $.$raggu_web_front_api_endpoint = $raggu_web_front_api_endpoint;
-    /**
-     * Детали ребра — симметрично get_node. На бэке ручки ПОКА НЕТ, дескриптор
-     * написан руками под согласованный контракт. Когда бэк добавит её в
-     * openapi.json, генератор создаст одноимённую константу в ragu.openapi.ts —
-     * тогда эту удалить (билд сам напомнит конфликтом имён). Фронт до тех пор
-     * фолбэчится на данные из get_graph.
-     */
-    $.$raggu_web_front_api_ragu_get_edge = {
-        method: 'get',
-        route: '/api/v1/datasets/{dataset_id}/graph/edges/{edge_id}',
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    /**
-     * Typed REST client factory for OpenAPI-generated operation descriptors.
-     *
-     * Returns a callable that takes an operation constant plus options and
-     * synchronously (via wire) returns the parsed JSON body. Any network
-     * error propagates as an exception so `$mol_view` shows an error plate.
-     */
-    $.$raggu_web_front_api = (() => {
-        const init = {
-            credentials: 'omit',
-            cache: 'no-cache',
-        };
-        return function call(op, opts = {}) {
-            const url = $raggu_web_front_api_url($raggu_web_front_api_endpoint(), op.route, opts.params, opts.query);
-            const req = { ...init, method: op.method };
-            if (opts.body !== undefined) {
-                req.headers = { ...(init.headers ?? {}), 'content-type': 'application/json' };
-                req.body = JSON.stringify(opts.body);
-            }
-            return $mol_fetch.json(url, req);
-        };
-    })();
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        // Статичные моки — на них показываем схему локализации через view.tree @.
-        // Реальные датасеты приходят с бэка через remote_datasets и несут dynamic-строки.
-        const BUILTIN = [
-            { id: 'law', nodes: '18.4k', edges: '52k', comms: '210' },
-            { id: 'wiki', nodes: '2.41k', edges: '9.1k', comms: '38' },
-        ];
-        function format_count(n) {
-            if (n >= 1000) {
-                const k = n / 1000;
-                return (k >= 10 ? k.toFixed(1) : k.toFixed(2)) + 'k';
-            }
-            return String(n);
-        }
-        function random_stats(seed) {
-            const rng = (m) => Math.floor((Math.sin(seed++) * 10000 % m + m) % m);
-            const nodes = 800 + rng(7200);
-            const edges = nodes * (2 + rng(4));
-            const comms = 12 + rng(80);
-            return {
-                nodes: format_count(nodes),
-                edges: format_count(edges),
-                comms: String(comms),
-            };
-        }
-        class $raggu_web_front_gallery extends $.$raggu_web_front_gallery {
-            extra_datasets(next) {
-                return next ?? [];
-            }
-            // URL flag `?mock=1` → BUILTIN.
-            mock_flag() {
-                return this.$.$mol_state_arg.value('mock') === '1';
-            }
-            // Reactive fetch of preindexed datasets. While loading, the wire promise
-            // is rethrown as usual; a real transport error falls back to BUILTIN moks
-            // so the demo stays alive without the backend.
-            remote_datasets() {
-                if (this.mock_flag())
-                    return null;
-                try {
-                    const cards = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_list_datasets, { query: { locale: 'ru' } });
-                    return cards.map((c) => ({
-                        id: c.id,
-                        nodes: format_count(c.stats.nodes),
-                        edges: format_count(c.stats.edges),
-                        comms: String(c.stats.communities),
-                        dynamic: { title: c.title, domain: c.domain, desc: c.description },
-                    }));
-                }
-                catch (error) {
-                    if ($mol_promise_like(error))
-                        $mol_fail_hidden(error);
-                    console.warn('Datasets fetch failed, falling back to mock:', error);
-                    return null;
-                }
-            }
-            // Показываем юзеру плашку, что перед ним моки, а не данные с бэка.
-            is_mock() {
-                return this.remote_datasets() === null;
-            }
-            datasets() {
-                const base = this.remote_datasets() ?? BUILTIN;
-                return [...base, ...this.extra_datasets()];
-            }
-            rows() {
-                return this.datasets().map(ds => this.Card(ds.id));
-            }
-            dataset(id) {
-                return this.datasets().find(d => d.id === id) ?? BUILTIN[0];
-            }
-            card_id(id) { return id; }
-            card_active(id) { return id === this.dataset_id(); }
-            // Бэк-датасеты кладут title/domain/desc в dynamic — рендерим напрямую.
-            // Моки 'law' и 'wiki' резолвятся через @-объявленные строки view.tree.
-            card_title(id) {
-                const ds = this.dataset(id);
-                if (ds.dynamic)
-                    return ds.dynamic.title;
-                if (id === 'law')
-                    return this.dataset_law_title();
-                if (id === 'wiki')
-                    return this.dataset_wiki_title();
-                return '';
-            }
-            card_domain(id) {
-                const ds = this.dataset(id);
-                if (ds.dynamic)
-                    return ds.dynamic.domain;
-                if (id === 'law')
-                    return this.dataset_law_domain();
-                if (id === 'wiki')
-                    return this.dataset_wiki_domain();
-                return '';
-            }
-            card_desc(id) {
-                const ds = this.dataset(id);
-                if (ds.dynamic)
-                    return ds.dynamic.desc;
-                if (id === 'law')
-                    return this.dataset_law_desc();
-                if (id === 'wiki')
-                    return this.dataset_wiki_desc();
-                return '';
-            }
-            card_nodes(id) { return this.dataset(id).nodes; }
-            card_edges(id) { return this.dataset(id).edges; }
-            card_comms(id) { return this.dataset(id).comms; }
-            click(id) {
-                this.select_dataset(id);
-                return null;
-            }
-            /** Mock file size in MB for upload validation. */
-            mock_file_size(kind) {
-                // document = always small, index = sometimes too big to demo validation
-                return kind === 'index' ? 4.2 : 2.8;
-            }
-            upload_doc_click() {
-                this.start_upload('document');
-                return null;
-            }
-            upload_idx_click() {
-                this.start_upload('index');
-                return null;
-            }
-            start_upload(kind) {
-                this.upload_kind(kind);
-                this.upload_showed(true);
-                this.Upload().start(this.mock_file_size(kind));
-                return null;
-            }
-            upload_complete() {
-                const kind = this.upload_kind() || 'document';
-                const list = this.extra_datasets();
-                const idx = list.length + 1;
-                const id = `up-${Date.now()}-${idx}`;
-                const seed = Date.now() + idx;
-                const stats = random_stats(seed);
-                const title_prefix = kind === 'index' ? this.uploaded_index_title() : this.uploaded_document_title();
-                const domain = this.uploaded_domain();
-                const desc = this.uploaded_desc();
-                this.extra_datasets([
-                    ...list,
-                    {
-                        id,
-                        nodes: stats.nodes,
-                        edges: stats.edges,
-                        comms: stats.comms,
-                        dynamic: { title: `${title_prefix} #${idx}`, domain, desc },
-                    },
-                ]);
-                this.upload_showed(false);
-                this.upload_kind('');
-                return null;
-            }
-            upload_close() {
-                this.upload_showed(false);
-                this.upload_kind('');
-                return null;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_gallery.prototype, "extra_datasets", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_gallery.prototype, "remote_datasets", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery.prototype, "click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery.prototype, "upload_doc_click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery.prototype, "upload_idx_click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery.prototype, "start_upload", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery.prototype, "upload_complete", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_gallery.prototype, "upload_close", null);
-        $$.$raggu_web_front_gallery = $raggu_web_front_gallery;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_gallery, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        padding: {
-            top: '1.5rem',
-            bottom: '1.5rem',
-            left: '1.75rem',
-            right: '1.75rem',
-        },
-        Header: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            align: { items: 'flex-end' },
-            gap: '0.875rem',
-            margin: { bottom: '1.25rem' },
-        },
-        Header_text: {
-            flex: { direction: 'column', grow: 1, shrink: 1 },
-            minWidth: 0,
-        },
-        Header_title: {
-            font: { weight: 700, size: '20px' },
-        },
-        Header_subtitle: {
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '3px' },
-        },
-        Mock_badge: {
-            display: 'none',
-            alignSelf: 'flex-start',
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: '#8a6d1b',
-            background: { color: '#f5c84226' },
-            border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '6px' },
-            padding: {
-                top: '3px',
-                bottom: '3px',
-                left: '8px',
-                right: '8px',
-            },
-            margin: { top: '8px' },
-            '@': {
-                raggu_web_front_gallery_mock_badge_showed: {
-                    true: { display: 'flex' },
-                },
-            },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Upload_doc: {
-            border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '16px',
-                right: '16px',
-            },
-            font: { size: '12px', weight: 600 },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.card },
-            cursor: 'pointer',
-        },
-        Upload_idx: {
-            border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '16px',
-                right: '16px',
-            },
-            font: { size: '12px', weight: 600 },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.card },
-            cursor: 'pointer',
-        },
-        Grid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '16px',
-            minWidth: 0,
-        },
-        '@media': {
-            '(max-width: 720px)': {
-                padding: {
-                    top: '1rem',
-                    bottom: '1rem',
-                    left: '0.75rem',
-                    right: '0.75rem',
-                },
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$mol_svg_line) = class $mol_svg_line extends ($.$mol_svg) {
-		from(){
-			return [];
-		}
-		to(){
-			return [];
-		}
-		from_x(){
-			return "";
-		}
-		from_y(){
-			return "";
-		}
-		to_x(){
-			return "";
-		}
-		to_y(){
-			return "";
-		}
-		dom_name(){
-			return "line";
-		}
-		pos(){
-			return [(this.from()), (this.to())];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"x1": (this.from_x()), 
-				"y1": (this.from_y()), 
-				"x2": (this.to_x()), 
-				"y2": (this.to_y())
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_line extends $.$mol_svg_line {
-            from() {
-                return this.pos()[0];
-            }
-            from_x() {
-                return this.from()[0];
-            }
-            from_y() {
-                return this.from()[1];
-            }
-            to() {
-                return this.pos()[1];
-            }
-            to_x() {
-                return this.to()[0];
-            }
-            to_y() {
-                return this.to()[1];
-            }
-        }
-        $$.$mol_svg_line = $mol_svg_line;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_svg_text) = class $mol_svg_text extends ($.$mol_svg) {
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
-		}
-		align(){
-			return "middle";
-		}
-		align_hor(){
-			return (this.align());
-		}
-		align_vert(){
-			return "baseline";
-		}
-		text(){
-			return "";
-		}
-		dom_name(){
-			return "text";
-		}
-		pos(){
-			return [];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"x": (this.pos_x()), 
-				"y": (this.pos_y()), 
-				"text-anchor": (this.align_hor()), 
-				"alignment-baseline": (this.align_vert())
-			};
-		}
-		sub(){
-			return [(this.text())];
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_text extends $.$mol_svg_text {
-            pos_x() {
-                return this.pos()[0];
-            }
-            pos_y() {
-                return this.pos()[1];
-            }
-        }
-        $$.$mol_svg_text = $mol_svg_text;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/svg/text/text.view.css", "[mol_svg_text] {\n\tfill: currentColor;\n\tstroke: none;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_svg_circle) = class $mol_svg_circle extends ($.$mol_svg) {
-		radius(){
-			return ".5%";
-		}
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
-		}
-		dom_name(){
-			return "circle";
-		}
-		pos(){
-			return [];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"r": (this.radius()), 
-				"cx": (this.pos_x()), 
-				"cy": (this.pos_y())
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_circle extends $.$mol_svg_circle {
-            pos_x() {
-                return this.pos()[0];
-            }
-            pos_y() {
-                return this.pos()[1];
-            }
-        }
-        $$.$mol_svg_circle = $mol_svg_circle;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_svg_rect) = class $mol_svg_rect extends ($.$mol_svg) {
-		width(){
-			return "0";
-		}
-		height(){
-			return "0";
-		}
-		pos_x(){
-			return "";
-		}
-		pos_y(){
-			return "";
-		}
-		dom_name(){
-			return "rect";
-		}
-		pos(){
-			return [];
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"width": (this.width()), 
-				"height": (this.height()), 
-				"x": (this.pos_x()), 
-				"y": (this.pos_y())
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_svg_rect extends $.$mol_svg_rect {
-            pos_x() {
-                return this.pos()[0];
-            }
-            pos_y() {
-                return this.pos()[1];
-            }
-        }
-        $$.$mol_svg_rect = $mol_svg_rect;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_explorer_forcegraph) = class $raggu_web_front_explorer_forcegraph extends ($.$mol_svg_root) {
-		computed_view_box(){
-			return "-300 -300 600 600";
-		}
-		wheel(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		pan_start(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		pan_move(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		pan_end(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		bg_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		edge_x1(id){
-			return "";
-		}
-		edge_y1(id){
-			return "";
-		}
-		edge_x2(id){
-			return "";
-		}
-		edge_y2(id){
-			return "";
-		}
-		edge_id(id){
-			return "";
-		}
-		edge_color(id){
-			return "#7a7672";
-		}
-		edge_width(id){
-			return "1";
-		}
-		edge_opacity(id){
-			return "0.55";
-		}
-		edge_click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		edge_hover_enter(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		edge_hover_leave(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Edge(id){
-			const obj = new this.$.$mol_svg_line();
-			(obj.from_x) = () => ((this.edge_x1(id)));
-			(obj.from_y) = () => ((this.edge_y1(id)));
-			(obj.to_x) = () => ((this.edge_x2(id)));
-			(obj.to_y) = () => ((this.edge_y2(id)));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_line.prototype.attr.call(obj)), 
-				"data-edge-id": (this.edge_id(id)), 
-				"stroke": (this.edge_color(id)), 
-				"stroke-width": (this.edge_width(id)), 
-				"stroke-opacity": (this.edge_opacity(id)), 
-				"cursor": "pointer"
-			});
-			(obj.event) = () => ({
-				...(this.$.$mol_svg_line.prototype.event.call(obj)), 
-				"click": (next) => (this.edge_click(id, next)), 
-				"pointerenter": (next) => (this.edge_hover_enter(id, next)), 
-				"pointerleave": (next) => (this.edge_hover_leave(id, next))
-			});
-			return obj;
-		}
-		edge_views(){
-			return [(this.Edge(id))];
-		}
-		G_edges(){
-			const obj = new this.$.$mol_svg_group();
-			(obj.sub) = () => ((this.edge_views()));
-			return obj;
-		}
-		edge_label_x(id){
-			return "";
-		}
-		edge_label_y(id){
-			return "";
-		}
-		edge_label_text(id){
-			return "";
-		}
-		edge_label_font_size(){
-			return "8";
-		}
-		edge_label_opacity(id){
-			return "0.75";
-		}
-		Edge_label(id){
-			const obj = new this.$.$mol_svg_text();
-			(obj.pos_x) = () => ((this.edge_label_x(id)));
-			(obj.pos_y) = () => ((this.edge_label_y(id)));
-			(obj.align) = () => ("middle");
-			(obj.align_vert) = () => ("middle");
-			(obj.text) = () => ((this.edge_label_text(id)));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
-				"data-edge-id": (this.edge_id(id)), 
-				"data-forcegraph-edge-label": "", 
-				"font-size": (this.edge_label_font_size()), 
-				"fill-opacity": (this.edge_label_opacity(id)), 
-				"cursor": "pointer"
-			});
-			(obj.event) = () => ({
-				...(this.$.$mol_svg_text.prototype.event.call(obj)), 
-				"click": (next) => (this.edge_click(id, next)), 
-				"pointerenter": (next) => (this.edge_hover_enter(id, next)), 
-				"pointerleave": (next) => (this.edge_hover_leave(id, next))
-			});
-			return obj;
-		}
-		edge_label_views(){
-			return [(this.Edge_label(id))];
-		}
-		G_edge_labels(){
-			const obj = new this.$.$mol_svg_group();
-			(obj.sub) = () => ((this.edge_label_views()));
-			return obj;
-		}
-		node_x(id){
-			return "";
-		}
-		node_y(id){
-			return "";
-		}
-		node_radius(id){
-			return "6";
-		}
-		node_id(id){
-			return "";
-		}
-		node_color(id){
-			return "#7c6ce0";
-		}
-		node_opacity(id){
-			return "1";
-		}
-		node_stroke(id){
-			return "transparent";
-		}
-		node_stroke_width(id){
-			return "0";
-		}
-		click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		hover_enter(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		hover_leave(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Node(id){
-			const obj = new this.$.$mol_svg_circle();
-			(obj.pos_x) = () => ((this.node_x(id)));
-			(obj.pos_y) = () => ((this.node_y(id)));
-			(obj.radius) = () => ((this.node_radius(id)));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
-				"data-node-id": (this.node_id(id)), 
-				"fill": (this.node_color(id)), 
-				"fill-opacity": (this.node_opacity(id)), 
-				"stroke": (this.node_stroke(id)), 
-				"stroke-width": (this.node_stroke_width(id)), 
-				"cursor": "pointer"
-			});
-			(obj.event) = () => ({
-				...(this.$.$mol_svg_circle.prototype.event.call(obj)), 
-				"click": (next) => (this.click(id, next)), 
-				"pointerenter": (next) => (this.hover_enter(id, next)), 
-				"pointerleave": (next) => (this.hover_leave(id, next))
-			});
-			return obj;
-		}
-		node_views(){
-			return [(this.Node(id))];
-		}
-		G_nodes(){
-			const obj = new this.$.$mol_svg_group();
-			(obj.sub) = () => ((this.node_views()));
-			return obj;
-		}
-		node_label_x(id){
-			return "";
-		}
-		node_label_y(id){
-			return "";
-		}
-		node_label_text(id){
-			return "";
-		}
-		node_label_font_size(){
-			return "10";
-		}
-		node_label_opacity(id){
-			return "1";
-		}
-		Node_label(id){
-			const obj = new this.$.$mol_svg_text();
-			(obj.pos_x) = () => ((this.node_label_x(id)));
-			(obj.pos_y) = () => ((this.node_label_y(id)));
-			(obj.align) = () => ("middle");
-			(obj.text) = () => ((this.node_label_text(id)));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
-				"data-forcegraph-node-label": "", 
-				"font-size": (this.node_label_font_size()), 
-				"fill-opacity": (this.node_label_opacity(id))
-			});
-			return obj;
-		}
-		node_label_views(){
-			return [(this.Node_label(id))];
-		}
-		G_node_labels(){
-			const obj = new this.$.$mol_svg_group();
-			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
-			(obj.sub) = () => ((this.node_label_views()));
-			return obj;
-		}
-		tooltip_bg_x(){
-			return "0";
-		}
-		tooltip_bg_y(){
-			return "0";
-		}
-		tooltip_bg_w(){
-			return "0";
-		}
-		tooltip_bg_h(){
-			return "0";
-		}
-		Tooltip_bg(){
-			const obj = new this.$.$mol_svg_rect();
-			(obj.pos_x) = () => ((this.tooltip_bg_x()));
-			(obj.pos_y) = () => ((this.tooltip_bg_y()));
-			(obj.width) = () => ((this.tooltip_bg_w()));
-			(obj.height) = () => ((this.tooltip_bg_h()));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_rect.prototype.attr.call(obj)), 
-				"rx": "3", 
-				"ry": "3", 
-				"stroke-width": "1", 
-				"data-forcegraph-tooltip-bg": ""
-			});
-			return obj;
-		}
-		tooltip_x(){
-			return "0";
-		}
-		tooltip_y(){
-			return "0";
-		}
-		tooltip_text(){
-			return "";
-		}
-		tooltip_font_size(){
-			return "11";
-		}
-		Tooltip_text(){
-			const obj = new this.$.$mol_svg_text();
-			(obj.pos_x) = () => ((this.tooltip_x()));
-			(obj.pos_y) = () => ((this.tooltip_y()));
-			(obj.align) = () => ("middle");
-			(obj.align_vert) = () => ("middle");
-			(obj.text) = () => ((this.tooltip_text()));
-			(obj.attr) = () => ({
-				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
-				"font-size": (this.tooltip_font_size()), 
-				"font-weight": "600", 
-				"data-forcegraph-tooltip-text": ""
-			});
-			return obj;
-		}
-		tooltip_sub(){
-			return [(this.Tooltip_bg()), (this.Tooltip_text())];
-		}
-		Tooltip(){
-			const obj = new this.$.$mol_svg_group();
-			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
-			(obj.sub) = () => ((this.tooltip_sub()));
-			return obj;
-		}
-		view_box(){
-			return (this.computed_view_box());
-		}
-		aspect(){
-			return "xMidYMid meet";
-		}
-		select(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		selected_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hovered_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		selected_edge_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hovered_edge_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		drag_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		search(){
-			return "";
-		}
-		filter_type(){
-			return "";
-		}
-		filter_relation(){
-			return "";
-		}
-		graph_key(){
-			return "";
-		}
-		nodes(){
-			return [];
-		}
-		edges(){
-			return [];
-		}
-		pan_x(next){
-			if(next !== undefined) return next;
-			return +0;
-		}
-		pan_y(next){
-			if(next !== undefined) return next;
-			return +0;
-		}
-		zoom(next){
-			if(next !== undefined) return next;
-			return +1;
-		}
-		positions(next){
-			if(next !== undefined) return next;
-			return {};
-		}
-		gravity(){
-			return +0.03;
-		}
-		force_scale(){
-			return +0.06;
-		}
-		spring(){
-			return +0.2;
-		}
-		damping(){
-			return +0.82;
-		}
-		min_move(){
-			return +0.15;
-		}
-		max_speed(){
-			return +12;
-		}
-		node_size_base(){
-			return +4;
-		}
-		node_size_growth(){
-			return +1.5;
-		}
-		event(){
-			return {
-				...(super.event()), 
-				"wheel": (next) => (this.wheel(next)), 
-				"pointerdown": (next) => (this.pan_start(next)), 
-				"pointermove": (next) => (this.pan_move(next)), 
-				"pointerup": (next) => (this.pan_end(next)), 
-				"pointercancel": (next) => (this.pan_end(next)), 
-				"click": (next) => (this.bg_click(next))
-			};
-		}
-		sub(){
-			return [
-				(this.G_edges()), 
-				(this.G_edge_labels()), 
-				(this.G_nodes()), 
-				(this.G_node_labels()), 
-				(this.Tooltip())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "wheel"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_start"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_move"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_end"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "bg_click"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_click"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_hover_enter"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "edge_hover_leave"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edges"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Edge_label"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_edge_labels"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "click"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_enter"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "hover_leave"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_nodes"));
-	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node_label"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_node_labels"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_bg"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_text"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "select"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_id"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_id"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "selected_edge_id"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "hovered_edge_id"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "drag_id"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_x"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "pan_y"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "zoom"));
-	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "positions"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    // Distinct, theme-agnostic categorical palette. Assigned to types
-    // deterministically so the same type always gets the same color.
-    const $raggu_web_front_explorer_forcegraph_palette = [
-        '#e0524f', '#4f8ee0', '#3fb56b', '#d97ad9', '#e0a73f',
-        '#7c6ce0', '#3fb8b8', '#e07a4f', '#7ab54f', '#4f6ce0',
-        '#d94f7a', '#b8873f', '#4fb8a0', '#a04fe0', '#8ea04f',
-    ];
-    // Fixed colors for well-known NEREL buckets — keeps the mock graph's
-    // legend stable. Unknown types fall through to the hashed palette.
-    const $raggu_web_front_explorer_forcegraph_known_color = {
-        PERSON: '#e0524f',
-        ORG: '#4f8ee0',
-        LOC: '#3fb56b',
-        EVENT: '#d97ad9',
-        DATE: '#e0a73f',
-        WORK: '#7c6ce0',
-        LAW: '#3fb8b8',
-    };
-    /** Deterministic color for any entity_type string. */
-    function $raggu_web_front_explorer_forcegraph_type_color(type) {
-        if (!type)
-            return '#8a8a8a';
-        const known = $raggu_web_front_explorer_forcegraph_known_color[type];
-        if (known)
-            return known;
-        let hash = 0;
-        for (let i = 0; i < type.length; i++) {
-            hash = (hash * 31 + type.charCodeAt(i)) | 0;
-        }
-        const palette = $raggu_web_front_explorer_forcegraph_palette;
-        return palette[Math.abs(hash) % palette.length];
-    }
-    $.$raggu_web_front_explorer_forcegraph_type_color = $raggu_web_front_explorer_forcegraph_type_color;
-    // --- Mock generator (kept exported: used by demo playground and stress-tests) ---
-    const RELATIONS = [
-        'MENTIONS', 'CITES', 'WORKS_AT', 'LOCATED_IN', 'INVOLVES',
-        'DATED', 'AUTHORED', 'PART_OF', 'REFERS_TO', 'CONTAINS',
-    ];
-    const TYPES = ['PERSON', 'ORG', 'LOC', 'EVENT', 'DATE', 'WORK', 'LAW'];
-    // Deterministic PRNG for stable mock graph between renders.
-    function rand(seed) {
-        let s = seed;
-        return () => {
-            s = (s * 9301 + 49297) % 233280;
-            return s / 233280;
-        };
-    }
-    function $raggu_web_front_explorer_forcegraph_build_mock(seed = 42, n_nodes = 80, n_edges = 130) {
-        const r = rand(seed);
-        const nodes = [];
-        for (let i = 0; i < n_nodes; i++) {
-            const type = TYPES[Math.floor(r() * TYPES.length)];
-            nodes.push({
-                id: `n${i}`,
-                label: `${type} ${i}`,
-                type,
-                degree: 0,
-                x: (r() - 0.5) * 400,
-                y: (r() - 0.5) * 400,
-            });
-        }
-        const edges = [];
-        const seen = new Set();
-        for (let i = 0; i < n_edges; i++) {
-            let a, b, key;
-            do {
-                a = Math.floor(r() * n_nodes);
-                b = Math.floor(r() * n_nodes);
-                key = a < b ? `${a}-${b}` : `${b}-${a}`;
-            } while (a === b || seen.has(key));
-            seen.add(key);
-            edges.push({
-                id: `e${i}`,
-                source: `n${a}`,
-                target: `n${b}`,
-                strength: 0.3 + r() * 0.7,
-                relation: RELATIONS[Math.floor(r() * RELATIONS.length)],
-            });
-            nodes[a].degree++;
-            nodes[b].degree++;
-        }
-        return { nodes, edges };
-    }
-    $.$raggu_web_front_explorer_forcegraph_build_mock = $raggu_web_front_explorer_forcegraph_build_mock;
-    const FORCE_K = 60;
-    const THETA = 0.3; // Barnes-Hut opening angle. Smaller = more accurate, slower
-    const THETA2 = THETA * THETA;
-    // Один жёсткий проход разрешения коллизий: каждую пересекающуюся пару
-    // раздвигаем до касания (по половине перекрытия каждому). Пары ищем через
-    // spatial grid с ячейкой в максимальный диаметр — O(N × соседи), не O(N²).
-    // Мутирует positions на месте; возвращает максимальный сдвиг за проход —
-    // 0 означает «перекрытий не осталось».
-    function $raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, pinned_id) {
-        const pad = 1.5;
-        let max_r = 0;
-        for (const n of nodes) {
-            const r = radii[n.id] ?? 0;
-            if (r > max_r)
-                max_r = r;
-        }
-        const cell = Math.max(1, max_r * 2 + pad);
-        const grid = new Map();
-        for (const n of nodes) {
-            const p = positions[n.id];
-            const key = `${Math.floor(p.x / cell)}:${Math.floor(p.y / cell)}`;
-            const list = grid.get(key);
-            if (list)
-                list.push(n.id);
-            else
-                grid.set(key, [n.id]);
-        }
-        let peak = 0;
-        for (const n of nodes) {
-            const p = positions[n.id];
-            const r1 = radii[n.id] ?? 0;
-            const cx = Math.floor(p.x / cell);
-            const cy = Math.floor(p.y / cell);
-            for (let gx = cx - 1; gx <= cx + 1; gx++)
-                for (let gy = cy - 1; gy <= cy + 1; gy++) {
-                    const list = grid.get(`${gx}:${gy}`);
-                    if (!list)
-                        continue;
-                    for (const other of list) {
-                        if (other <= n.id)
-                            continue; // каждую пару считаем один раз
-                        const q = positions[other];
-                        const min_d = r1 + (radii[other] ?? 0) + pad;
-                        let dx = q.x - p.x;
-                        let dy = q.y - p.y;
-                        const d2 = dx * dx + dy * dy;
-                        if (d2 >= min_d * min_d)
-                            continue;
-                        let d = Math.sqrt(d2);
-                        if (d < 0.01) {
-                            dx = min_d;
-                            dy = 0;
-                            d = min_d;
-                        } // совпали — разводим по x
-                        const push = (min_d - d) / d * 0.5;
-                        const fx = dx * push;
-                        const fy = dy * push;
-                        const move = Math.sqrt(fx * fx + fy * fy);
-                        if (move > peak)
-                            peak = move;
-                        // Перетаскиваемый узел не двигаем — вся поправка соседу
-                        if (n.id === pinned_id) {
-                            q.x += fx * 2;
-                            q.y += fy * 2;
-                        }
-                        else if (other === pinned_id) {
-                            p.x -= fx * 2;
-                            p.y -= fy * 2;
-                        }
-                        else {
-                            p.x -= fx;
-                            p.y -= fy;
-                            q.x += fx;
-                            q.y += fy;
-                        }
-                    }
-                }
-        }
-        return peak;
-    }
-    function make_cell(x0, y0, size) {
-        return { x0, y0, size, com_x: 0, com_y: 0, count: 0 };
-    }
-    function insert(cell, node, depth) {
-        cell.com_x += node.x;
-        cell.com_y += node.y;
-        cell.count++;
-        if (depth > 20)
-            return; // guard against coincident points
-        if (!cell.kids && !cell.node) {
-            cell.node = node;
-            return;
-        }
-        if (cell.node) {
-            // Was a leaf — split, push old node down, then insert new
-            const old = cell.node;
-            cell.node = undefined;
-            const h = cell.size / 2;
-            cell.kids = [
-                make_cell(cell.x0, cell.y0, h),
-                make_cell(cell.x0 + h, cell.y0, h),
-                make_cell(cell.x0, cell.y0 + h, h),
-                make_cell(cell.x0 + h, cell.y0 + h, h),
-            ];
-            insert_child(cell, old, depth + 1);
-        }
-        insert_child(cell, node, depth + 1);
-    }
-    function insert_child(cell, node, depth) {
-        const mx = cell.x0 + cell.size / 2;
-        const my = cell.y0 + cell.size / 2;
-        const idx = (node.x >= mx ? 1 : 0) + (node.y >= my ? 2 : 0);
-        insert(cell.kids[idx], node, depth);
-    }
-    function accumulate_repulsion(cell, id, x, y, k2, out) {
-        if (cell.count === 0)
-            return;
-        if (cell.node && cell.node.id === id)
-            return;
-        const cx = cell.com_x / cell.count;
-        const cy = cell.com_y / cell.count;
-        const dx = x - cx;
-        const dy = y - cy;
-        const d2 = dx * dx + dy * dy || 0.01;
-        // Barnes-Hut criterion: if cell size² is small enough vs distance², treat as one aggregate mass
-        if (!cell.kids || cell.size * cell.size < THETA2 * d2) {
-            const force = (k2 * cell.count) / d2;
-            out.dx += dx * force;
-            out.dy += dy * force;
-            return;
-        }
-        for (const kid of cell.kids)
-            accumulate_repulsion(kid, id, x, y, k2, out);
-    }
-    // Hermite smoothstep — C¹ continuous ramp from 0 at `a` to 1 at `b`.
-    function smoothstep(a, b, x) {
-        if (x <= a)
-            return 0;
-        if (x >= b)
-            return 1;
-        const t = (x - a) / (b - a);
-        return t * t * (3 - 2 * t);
-    }
-    /**
-     * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
-     *   v[i] = ( v[i] + acceleration[i] ) * damping     ← momentum with friction
-     *   p[i] += v[i] * smoothstep_gate                  ← smooth freeze at low speed
-     * Repulsion via Barnes-Hut quadtree ( O(N log N) instead of naive O(N²) ).
-     */
-    function $raggu_web_front_explorer_forcegraph_tick_layout(nodes, edges, positions, velocities, pinned_id, params) {
-        const { gravity, force_scale, damping, min_move, max_speed } = params;
-        const k = FORCE_K * (params.k_scale ?? 1);
-        const k2 = k * k;
-        const dispX = {};
-        const dispY = {};
-        // Bounds for quadtree — encompass all current node positions
-        let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
-        for (const n of nodes) {
-            const p = positions[n.id];
-            if (p.x < min_x)
-                min_x = p.x;
-            if (p.y < min_y)
-                min_y = p.y;
-            if (p.x > max_x)
-                max_x = p.x;
-            if (p.y > max_y)
-                max_y = p.y;
-        }
-        const size = Math.max(max_x - min_x, max_y - min_y) + 1;
-        const cx = (min_x + max_x) / 2;
-        const cy = (min_y + max_y) / 2;
-        const root = make_cell(cx - size / 2, cy - size / 2, size);
-        for (const n of nodes) {
-            const p = positions[n.id];
-            insert(root, { id: n.id, x: p.x, y: p.y }, 0);
-        }
-        // Repulsion — Barnes-Hut walk per node
-        for (const n of nodes) {
-            const p = positions[n.id];
-            const out = { dx: 0, dy: 0 };
-            accumulate_repulsion(root, n.id, p.x, p.y, k2, out);
-            dispX[n.id] = out.dx;
-            dispY[n.id] = out.dy;
-        }
-        // Attraction — exact, O(E). Пружину ослабляют параметр spring и степень
-        // хабов («dissuade hubs» из ForceAtlas2): у хаба десятки рёбер, их
-        // суммарная тяга без нормализации сминает соседей в плотный ком.
-        const spring = params.spring ?? 1;
-        const degree = {};
-        for (const n of nodes)
-            degree[n.id] = n.degree;
-        for (const e of edges) {
-            const dx = positions[e.source].x - positions[e.target].x;
-            const dy = positions[e.source].y - positions[e.target].y;
-            const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-            const hub_norm = Math.sqrt(Math.max(degree[e.source] ?? 0, degree[e.target] ?? 0) + 1);
-            const force = (dist * dist) / k * e.strength * spring / hub_norm;
-            const fx = (dx / dist) * force;
-            const fy = (dy / dist) * force;
-            dispX[e.source] -= fx;
-            dispY[e.source] -= fy;
-            dispX[e.target] += fx;
-            dispY[e.target] += fy;
-        }
-        // Gravity — soft radial pull toward origin
-        for (const n of nodes) {
-            const p = positions[n.id];
-            dispX[n.id] -= p.x * gravity * k;
-            dispY[n.id] -= p.y * gravity * k;
-        }
-        // Integrate: velocities accumulate + damp; position moves via smooth freeze gate.
-        const next_pos = {};
-        const next_vel = {};
-        for (const n of nodes) {
-            if (n.id === pinned_id) {
-                next_pos[n.id] = positions[n.id];
-                next_vel[n.id] = { vx: 0, vy: 0 };
-                continue;
-            }
-            const prev = velocities[n.id] || { vx: 0, vy: 0 };
-            const step = force_scale * (params.heat ?? 1);
-            let vx = (prev.vx + dispX[n.id] * step) * damping;
-            let vy = (prev.vy + dispY[n.id] * step) * damping;
-            const speed = Math.sqrt(vx * vx + vy * vy);
-            // Soft speed cap: tanh saturation.
-            if (speed > 0) {
-                const cap_scale = max_speed * Math.tanh(speed / max_speed) / speed;
-                vx *= cap_scale;
-                vy *= cap_scale;
-            }
-            // Soft freeze gate.
-            const gate = smoothstep(min_move * 0.3, min_move * 1.5, speed);
-            next_pos[n.id] = { x: positions[n.id].x + vx * gate, y: positions[n.id].y + vy * gate };
-            next_vel[n.id] = { vx, vy };
-        }
-        // Коллизии: жёстко продавливаем непересечение. Один проход раздвигает
-        // пары до касания, цепочки (раздвинули пару — наехали на третьего)
-        // дожимаются повторными проходами. Пружины не успевают слепить узлы
-        // обратно — на экран каждый тик уходит уже разрешённое состояние.
-        let collide_peak = 0;
-        if (params.radii) {
-            collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id);
-            for (let i = 0; i < 2; i++) {
-                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id) < 0.05)
-                    break;
-            }
-        }
-        return { positions: next_pos, velocities: next_vel, collide_peak };
-    }
-    $.$raggu_web_front_explorer_forcegraph_tick_layout = $raggu_web_front_explorer_forcegraph_tick_layout;
-    // Initial positions from mock coords — no synchronous FR pre-compute.
-    // The view auto-starts a live sim that visibly settles the graph
-    // ( Obsidian-style spring-in ).
-    // Бэковые раскладки приходят в произвольном масштабе (у medical — тысячи
-    // юнитов), а камера и гравитация живут в мире 600×600 вокруг нуля —
-    // нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
-    function $raggu_web_front_explorer_forcegraph_initial_positions(nodes, radii) {
-        let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
-        for (const n of nodes) {
-            if (n.x < min_x)
-                min_x = n.x;
-            if (n.y < min_y)
-                min_y = n.y;
-            if (n.x > max_x)
-                max_x = n.x;
-            if (n.y > max_y)
-                max_y = n.y;
-        }
-        const cx = (min_x + max_x) / 2;
-        const cy = (min_y + max_y) / 2;
-        const span = Math.max(max_x - min_x, max_y - min_y);
-        const scale = span > 1 ? 520 / span : 1;
-        const positions = {};
-        for (const n of nodes)
-            positions[n.id] = { x: (n.x - cx) * scale, y: (n.y - cy) * scale };
-        // Продавливаем коллизии ещё до первого кадра — граф ни на миг
-        // не рисуется слипшимся.
-        if (radii)
-            for (let i = 0; i < 40; i++) {
-                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, '') < 0.05)
-                    break;
-            }
-        return positions;
-    }
-    $.$raggu_web_front_explorer_forcegraph_initial_positions = $raggu_web_front_explorer_forcegraph_initial_positions;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        // Module-scoped layout cache keyed by graph_key (dataset_id). Survives
-        // component remount so returning to the graph shows the settled layout
-        // instantly instead of replaying the spring-in from scratch every time.
-        const $raggu_web_front_explorer_forcegraph_layout_cache = new Map();
-        class $raggu_web_front_explorer_forcegraph extends $.$raggu_web_front_explorer_forcegraph {
-            // Typed accessors over view.tree's `nodes /` and `edges /` — parents
-            // (explorer / demo) feed them via `nodes <= ...` bindings.
-            nodes() {
-                return super.nodes();
-            }
-            edges() {
-                return super.edges();
-            }
-            // Plain non-reactive field overriding the auto-gen @$mol_mem drag_id.
-            // The mem-cell version got invalidated between event-handler fibers
-            // (wire_async destroys previous fiber on each event, which appears to
-            // reset the subscribed cell back to its declared default '').
-            // Plain field persists across calls without wire interference.
-            drag_id_raw = '';
-            drag_id(next) {
-                if (next !== undefined)
-                    this.drag_id_raw = next;
-                return this.drag_id_raw;
-            }
-            // Pan/zoom state — fold into reactive view_box
-            computed_view_box() {
-                const z = Math.max(0.2, Math.min(5, this.zoom()));
-                const size = 600 / z;
-                const x = -size / 2 + this.pan_x();
-                const y = -size / 2 + this.pan_y();
-                return `${x} ${y} ${size} ${size}`;
-            }
-            // Wheel / trackpad-pinch zoom.
-            // Uses exp( -deltaY × sensitivity ) so many small deltaY events (trackpad
-            // pinch) compose smoothly instead of stacking as 10% discrete jumps.
-            wheel(event) {
-                if (!event)
-                    return;
-                event.preventDefault();
-                const factor = Math.exp(-event.deltaY * 0.005);
-                this.zoom(this.zoom() * factor);
-            }
-            // Last pointer position (in client/screen pixels). Used by BOTH pan and node-drag
-            // as the anchor for computing pixel-delta on each pointermove.
-            dragging = false;
-            last_x = 0;
-            last_y = 0;
-            // Total movement during the current pointer-down session, in screen pixels.
-            // Below DRAG_THRESHOLD it's a click, above it's a real drag (suppresses click).
-            moved_px = 0;
-            // Where the pointer landed at pointerdown — for total-distance computation.
-            start_x = 0;
-            start_y = 0;
-            // Minimum pixel distance to treat pointer interaction as drag (vs click).
-            // Matches the $mol_touch convention of `>= 4`.
-            DRAG_THRESHOLD = 4;
-            pan_start(event) {
-                if (!event)
-                    return;
-                const target = event.target;
-                const node_id = target.getAttribute('data-node-id');
-                this.last_x = event.clientX;
-                this.last_y = event.clientY;
-                this.start_x = event.clientX;
-                this.start_y = event.clientY;
-                this.moved_px = 0;
-                this.just_dragged = '';
-                // Capture on the EVENT TARGET (the circle for node-drag, svg for pan).
-                // Pointer events keep targeting that element until release — preserves
-                // click dispatch on the circle and survives cursor leaving its bounds.
-                try {
-                    target.setPointerCapture(event.pointerId);
-                }
-                catch { }
-                if (node_id) {
-                    this.drag_id(node_id);
-                    // Ensure initial positions are seeded before drag starts
-                    this.ensure_positions();
-                    // Don't start simulation here — wait until pan_move crosses threshold,
-                    // so a pure click doesn't trigger force-sim "shaking".
-                    return;
-                }
-                this.dragging = true;
-            }
-            // Returns svg-units per screen-pixel ratio for x/y. 1 if CTM missing.
-            svg_scale() {
-                const svg = this.dom_node();
-                const ctm = svg?.getScreenCTM?.();
-                if (!ctm || !ctm.a || !ctm.d)
-                    return { ax: 1, ay: 1 };
-                return { ax: 1 / ctm.a, ay: 1 / ctm.d };
-            }
-            pan_move(event) {
-                if (!event)
-                    return;
-                const dx_px = event.clientX - this.last_x;
-                const dy_px = event.clientY - this.last_y;
-                if (dx_px === 0 && dy_px === 0)
-                    return;
-                this.last_x = event.clientX;
-                this.last_y = event.clientY;
-                // Track total distance from pointerdown to differentiate click from drag
-                const total_dx = event.clientX - this.start_x;
-                const total_dy = event.clientY - this.start_y;
-                this.moved_px = Math.sqrt(total_dx * total_dx + total_dy * total_dy);
-                // Below threshold while pressing on a node — treat as pending click, don't move
-                if (this.drag_id() && this.moved_px < this.DRAG_THRESHOLD)
-                    return;
-                const { ax, ay } = this.svg_scale();
-                const dx = dx_px * ax;
-                const dy = dy_px * ay;
-                // Node drag: shift the dragged node by pointer delta. No boundary clamp —
-                // gravity in the sim brings released nodes back naturally.
-                if (this.drag_id()) {
-                    // Kick off continuous sim on first real drag movement (idempotent)
-                    this.start_sim();
-                    const id = this.drag_id();
-                    const cur = this.pos(id);
-                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
-                    return;
-                }
-                if (!this.dragging)
-                    return;
-                // Pan: opposite direction (world stays under pointer)
-                this.pan_x(this.pan_x() - dx);
-                this.pan_y(this.pan_y() - dy);
-            }
-            pan_end() {
-                this.dragging = false;
-                if (this.drag_id()) {
-                    if (this.moved_px >= this.DRAG_THRESHOLD) {
-                        this.just_dragged = this.drag_id();
-                    }
-                    this.drag_id('');
-                }
-            }
-            // Convert pointer client coords → svg userspace via native CTM.
-            // Handles viewBox + preserveAspectRatio + zoom/pan in one step.
-            client_to_svg(event) {
-                const svg = this.dom_node();
-                const ctm = svg.getScreenCTM();
-                if (!ctm)
-                    return { x: 0, y: 0 };
-                const pt = svg.createSVGPoint();
-                pt.x = event.clientX;
-                pt.y = event.clientY;
-                const local = pt.matrixTransform(ctm.inverse());
-                return { x: local.x, y: local.y };
-            }
-            // Lazily-computed initial FR layout — memoized so first render already shows
-            // nodes settled into the circular bound, not the raw square mock coords.
-            initial_positions() {
-                return $raggu_web_front_explorer_forcegraph_initial_positions(this.nodes(), this.node_radii());
-            }
-            // Seed positions on first read, or re-seed when the node set changes
-            // (e.g. dataset switched, new fetch result arrived) — old cell may still
-            // hold coords for a different set of nodes.
-            ensure_positions() {
-                let p = this.positions();
-                const nodes = this.nodes();
-                if (Object.keys(p).length !== nodes.length) {
-                    // После ремоунта positions-ячейка пуста — восстанавливаем осевшую
-                    // раскладку из module-кэша, чтобы не переигрывать spring-in.
-                    const key = this.graph_key();
-                    const cached = key ? $raggu_web_front_explorer_forcegraph_layout_cache.get(key) : undefined;
-                    if (cached && Object.keys(cached).length === nodes.length) {
-                        p = { ...cached };
-                    }
-                    else {
-                        p = { ...this.initial_positions() };
-                    }
-                    this.velocities = {};
-                    this.positions(p);
-                }
-                return p;
-            }
-            // Per-node velocity — the state that makes drags ripple through edges
-            // then die via damping instead of shaking the whole graph each frame.
-            velocities = {};
-            // Bundle the tunable params ( declared as view.tree props with defaults ).
-            layout_params() {
-                return {
-                    gravity: this.gravity(),
-                    force_scale: this.force_scale(),
-                    damping: this.damping(),
-                    min_move: this.min_move(),
-                    // Рыхлость как в Obsidian: слабые пружины, хабы не сжимают соседей
-                    spring: this.spring(),
-                    // Крупный граф двигаем медленнее — drag не разгоняет всю кучу
-                    max_speed: this.max_speed() * this.size_scale(),
-                    // …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
-                    k_scale: this.size_scale(),
-                    // Затухание: силы гаснут со временем симуляции, дребезг умирает
-                    heat: this.sim_alpha,
-                    // Радиусы для расталкивания — кружки не наезжают друг на друга
-                    radii: this.node_radii(),
-                };
-            }
-            // One sim tick.
-            tick() {
-                const positions = this.ensure_positions();
-                const next = $raggu_web_front_explorer_forcegraph_tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), this.layout_params());
-                this.velocities = next.velocities;
-                // Пиковая скорость по узлам — сигнал «граф осел» для ранней остановки
-                let peak = 0;
-                for (const id in next.velocities) {
-                    const v = next.velocities[id];
-                    const speed = Math.sqrt(v.vx * v.vx + v.vy * v.vy);
-                    if (speed > peak)
-                        peak = speed;
-                }
-                this.peak_speed = peak;
-                this.collide_peak = next.collide_peak;
-                this.positions(next.positions);
-                // Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
-                const key = this.graph_key();
-                if (key)
-                    $raggu_web_front_explorer_forcegraph_layout_cache.set(key, next.positions);
-            }
-            // Continuous simulation loop driven by requestAnimationFrame.
-            // Runs until frame budget exhausted AND no drag is active. While the
-            // user is dragging, budget is re-armed each frame so neighbors keep
-            // settling smoothly around the moved node.
-            sim_running = false;
-            sim_frames_left = 0;
-            sim_ticks = 0;
-            peak_speed = Infinity;
-            collide_peak = 0;
-            frame_flip = false;
-            SIM_INITIAL_FRAMES = 260;
-            SIM_DRAG_FRAMES = 60;
-            // Alpha-cooling (как в d3-force): множитель сил, тает каждый тик.
-            // Осцилляции вокруг равновесия гаснут вместе с ним — вместо дребезга
-            // до конца бюджета кадров граф плавно замирает за секунду-полторы.
-            sim_alpha = 1;
-            ALPHA_DECAY = 0.97;
-            ALPHA_MIN = 0.03;
-            ALPHA_REHEAT = 0.3;
-            ALPHA_DRAG = 0.5;
-            // Хвост симуляции после отпускания узла — на крупном графе короче
-            drag_frames() {
-                return this.big_graph() ? 45 : this.SIM_DRAG_FRAMES;
-            }
-            start_sim(frames = this.drag_frames(), heat = this.ALPHA_REHEAT) {
-                this.sim_frames_left = Math.max(this.sim_frames_left, frames);
-                if (this.sim_running) {
-                    this.sim_alpha = Math.max(this.sim_alpha, heat);
-                    return;
-                }
-                if (typeof window === 'undefined')
-                    return;
-                this.sim_running = true;
-                this.sim_ticks = 0;
-                this.sim_alpha = heat;
-                this.peak_speed = Infinity;
-                this.collide_peak = Infinity;
-                const loop = () => {
-                    if (!this.sim_running)
-                        return;
-                    // Во время drag на крупном графе тик через кадр: DOM не успевает
-                    // обновлять сотни узлов на каждый RAF, полукадровая частота
-                    // оставляет бюджет самому перетаскиванию
-                    this.frame_flip = !this.frame_flip;
-                    if (this.big_graph() && this.drag_id() && this.frame_flip) {
-                        requestAnimationFrame(loop);
-                        return;
-                    }
-                    // Пока данные с бэка грузятся, tick кидает wire-promise. Такие
-                    // кадры не считаем ни тиками, ни затуханием — иначе симуляция
-                    // «остывает» и глохнет до прихода данных, оставив наезды узлов.
-                    let ok = true;
-                    try {
-                        this.tick();
-                    }
-                    catch {
-                        ok = false;
-                    }
-                    if (ok) {
-                        this.sim_ticks++;
-                        this.sim_alpha = Math.max(0, this.sim_alpha * this.ALPHA_DECAY);
-                    }
-                    if (this.drag_id()) {
-                        this.sim_frames_left = Math.max(this.sim_frames_left, this.drag_frames());
-                        this.sim_alpha = Math.max(this.sim_alpha, this.ALPHA_DRAG);
-                    }
-                    this.sim_frames_left--;
-                    // Граф осел (всё ниже порога заморозки) либо остыл (alpha на нуле) —
-                    // дожигать бюджет кадров незачем. Но пока коллизии заметно
-                    // раздвигают узлы, не глохнем — иначе останутся перекрытия.
-                    const settled = ok && this.sim_ticks > 15
-                        && (this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN)
-                        && this.collide_peak < 0.4;
-                    if ((this.sim_frames_left <= 0 || settled) && !this.drag_id()) {
-                        this.sim_running = false;
-                        return;
-                    }
-                    requestAnimationFrame(loop);
-                };
-                requestAnimationFrame(loop);
-            }
-            // Reactive kick — reading every tunable param here means the mem cell
-            // invalidates whenever any of them changes. dom_tree reads it below,
-            // so slider tweaks (and dataset switches) restart the sim automatically.
-            params_kick() {
-                // Register deps on all sim inputs
-                this.gravity();
-                this.force_scale();
-                this.spring();
-                this.damping();
-                this.min_move();
-                this.max_speed();
-                this.nodes(); // rebuild sim on new graph
-                // Idempotent: re-arms frame budget; starts loop if it was stopped
-                this.start_sim(this.drag_frames());
-                return null;
-            }
-            // Kick off the initial spring-in exactly once, on first mount.
-            initial_sim_started = false;
-            dom_tree() {
-                this.params_kick();
-                const tree = super.dom_tree();
-                if (!this.initial_sim_started) {
-                    this.initial_sim_started = true;
-                    // Уже раскладывали этот граф — берём осевшие позиции из кэша и
-                    // гоняем лишь короткую стабилизацию вместо полного spring-in.
-                    const key = this.graph_key();
-                    const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has(key);
-                    // Полный прогрев только для свежего графа; осевший лишь стабилизируем
-                    this.start_sim(cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES, cached ? this.ALPHA_REHEAT : 1);
-                }
-                return tree;
-            }
-            // --- крупные графы: масштаб визуала и физики от числа узлов ---
-            // Плавный коэффициент 1 → 0.45: на сотнях узлов кружки, рёбра и
-            // скорость движения ужимаются, иначе граф сливается в кашу.
-            size_scale() {
-                const n = this.nodes().length;
-                return Math.max(0.45, Math.min(1, Math.sqrt(220 / Math.max(1, n))));
-            }
-            // Порог «крупного» графа — дальше экономим на подписях и кадрах симуляции
-            big_graph() {
-                return this.nodes().length > 300;
-            }
-            node_by_id() {
-                const m = {};
-                for (const n of this.nodes())
-                    m[n.id] = n;
-                return m;
-            }
-            node_views() {
-                return this.nodes().map(n => this.Node(n.id));
-            }
-            edge_views() {
-                return this.edges().map(e => this.Edge(e.id));
-            }
-            // Effective node position: live positions cell (drag/sim output) first,
-            // then the memoized initial FR layout, then raw mock as last resort.
-            pos(id) {
-                const live = this.positions()[id];
-                if (live)
-                    return live;
-                return this.initial_positions()[id] ?? this.node_by_id()[id];
-            }
-            // Used in view.tree as `data-node-id` attr so pan_start can identify node-target.
-            node_id(id) { return id; }
-            // Node accessors (keyed) — return strings, SVG attrs expect string
-            node_x(id) { return String(this.pos(id).x); }
-            node_y(id) { return String(this.pos(id).y); }
-            // radius = base + growth * degree. Linear scale — hubs visually dominate,
-            // which is what we want for a demo graph where the whole point is spotting
-            // the well-connected nodes at a glance.
-            // Radius scales with sqrt(degree), not degree — real graphs have hubs with
-            // degree in the hundreds, and a linear scale blows them up to cover the
-            // whole canvas. Capped so even a 500-degree hub stays readable.
-            node_radius_num(id) {
-                const n = this.node_by_id()[id];
-                const s = this.size_scale();
-                const r = (this.node_size_base() + this.node_size_growth() * Math.sqrt(n.degree)) * s;
-                return Math.min(r, 22 * s);
-            }
-            node_radius(id) {
-                return String(this.node_radius_num(id));
-            }
-            // Карта радиусов для коллизий в симуляции — в svg-юнитах, как позиции
-            node_radii() {
-                const m = {};
-                for (const n of this.nodes())
-                    m[n.id] = this.node_radius_num(n.id);
-                return m;
-            }
-            node_color(id) {
-                return $raggu_web_front_explorer_forcegraph_type_color(this.node_by_id()[id].type);
-            }
-            // Фильтры подсветки: поиск по label, тип узла и/или тип связи из легенд.
-            // Непустой фильтр приглушает узлы и рёбра, которые не матчатся.
-            search_lc() {
-                return this.search().trim().toLowerCase();
-            }
-            filter_active() {
-                return Boolean(this.search_lc() || this.filter_type() || this.filter_relation());
-            }
-            node_matches(id) {
-                const n = this.node_by_id()[id];
-                const t = this.filter_type();
-                if (t && n?.type !== t)
-                    return false;
-                const s = this.search_lc();
-                if (s && !(n?.label ?? '').toLowerCase().includes(s))
-                    return false;
-                // Фильтр по типу связи подсвечивает концы матчащихся рёбер
-                const r = this.filter_relation();
-                if (r && !this.node_has_relation(id, r))
-                    return false;
-                return true;
-            }
-            relation_nodes() {
-                const m = {};
-                for (const e of this.edges()) {
-                    ;
-                    (m[e.relation] ??= new Set()).add(e.source);
-                    m[e.relation].add(e.target);
-                }
-                return m;
-            }
-            node_has_relation(id, rel) {
-                return this.relation_nodes()[rel]?.has(id) ?? false;
-            }
-            // Наведённое/выбранное ребро — его концы ведут себя как hovered-узлы.
-            active_edge() {
-                const id = this.hovered_edge_id() || this.selected_edge_id();
-                return id ? this.edge_by_id()[id] ?? null : null;
-            }
-            edge_endpoint(id) {
-                const e = this.active_edge();
-                return Boolean(e && (e.source === id || e.target === id));
-            }
-            // Наведённый/выбранный узел + его соседи. Остальное затемняем —
-            // симметрично эффекту наведения на ребро.
-            active_node_hood() {
-                const id = this.active_id();
-                if (!id)
-                    return null;
-                const hood = new Set([id]);
-                for (const e of this.edges()) {
-                    if (e.source === id)
-                        hood.add(e.target);
-                    if (e.target === id)
-                        hood.add(e.source);
-                }
-                return hood;
-            }
-            node_opacity(id) {
-                // Активное ребро затемняет всё, кроме своих концов — как hover узла
-                if (this.active_edge())
-                    return this.edge_endpoint(id) ? '1' : '0.25';
-                const hood = this.active_node_hood();
-                if (hood)
-                    return hood.has(id) ? '1' : '0.25';
-                return this.node_matches(id) ? '1' : '0.12';
-            }
-            node_stroke(id) {
-                if (this.selected_id() === id)
-                    return '#ffffff';
-                if (this.hovered_id() === id)
-                    return '#ffffff';
-                if (this.edge_endpoint(id))
-                    return '#ffffff';
-                return 'transparent';
-            }
-            node_stroke_width(id) {
-                if (this.selected_id() === id)
-                    return '2.5';
-                if (this.hovered_id() === id)
-                    return '1.5';
-                if (this.edge_endpoint(id))
-                    return '1.5';
-                return '0';
-            }
-            hover_enter(id) {
-                this.hovered_id(id);
-                return null;
-            }
-            hover_leave() {
-                this.hovered_id('');
-                return null;
-            }
-            // Edge accessors (keyed)
-            edge_by_id() {
-                const m = {};
-                for (const e of this.edges())
-                    m[e.id] = e;
-                return m;
-            }
-            edge_x1(id) { return String(this.pos(this.edge_by_id()[id].source).x); }
-            edge_y1(id) { return String(this.pos(this.edge_by_id()[id].source).y); }
-            edge_x2(id) { return String(this.pos(this.edge_by_id()[id].target).x); }
-            edge_y2(id) { return String(this.pos(this.edge_by_id()[id].target).y); }
-            // Used in view.tree as `data-edge-id` attr — mirrors node_id.
-            edge_id(id) { return id; }
-            // Edge is "active" when hovered or selected directly (not via incident node).
-            edge_active(id) {
-                return this.hovered_edge_id() === id || this.selected_edge_id() === id;
-            }
-            edge_width(id) {
-                const e = this.edge_by_id()[id];
-                const base = (e.strength * 1.5 + 0.4) * this.size_scale();
-                if (this.edge_active(id))
-                    return String(base * 2.5);
-                const incident = this.hovered_id() && (e.source === this.hovered_id() || e.target === this.hovered_id())
-                    || this.selected_id() && (e.source === this.selected_id() || e.target === this.selected_id());
-                return String(incident ? base * 2 : base);
-            }
-            edge_matches(id) {
-                const e = this.edge_by_id()[id];
-                const r = this.filter_relation();
-                if (r && e.relation !== r)
-                    return false;
-                return this.node_matches(e.source) && this.node_matches(e.target);
-            }
-            edge_opacity(id) {
-                const e = this.edge_by_id()[id];
-                if (this.edge_active(id))
-                    return '0.95';
-                // Активное ребро приглушает все остальные — как hover узла
-                if (this.active_edge())
-                    return '0.12';
-                if (this.filter_active() && !this.edge_matches(id))
-                    return '0.08';
-                const hid = this.hovered_id() || this.selected_id();
-                // На крупном графе рёбра в полную яркость сливаются в серую сетку
-                if (!hid)
-                    return this.big_graph() ? '0.3' : '0.55';
-                return (e.source === hid || e.target === hid) ? '0.95' : '0.18';
-            }
-            edge_color(id) {
-                if (this.edge_active(id))
-                    return '#ffffff';
-                const e = this.edge_by_id()[id];
-                const hid = this.hovered_id() || this.selected_id();
-                if (hid && (e.source === hid || e.target === hid))
-                    return '#ffffff';
-                return '#7a7672';
-            }
-            edge_hover_enter(id) {
-                this.hovered_edge_id(id);
-                return null;
-            }
-            edge_hover_leave() {
-                this.hovered_edge_id('');
-                return null;
-            }
-            // Клик по ребру (линии или подписи) выбирает связь и снимает выбор узла —
-            // aside показывает либо карточку сущности, либо карточку связи.
-            edge_click(id) {
-                if (this.moved_px >= this.DRAG_THRESHOLD)
-                    return null;
-                this.selected_edge_id(id);
-                this.selected_id('');
-                return null;
-            }
-            selected_edge() {
-                const id = this.selected_edge_id();
-                return id ? this.edge_by_id()[id] ?? null : null;
-            }
-            // ---- always-on labels ----
-            // Пустые подписи не рендерим вовсе: на крупном графе тысячи холостых
-            // <text> с пересчётом координат каждый тик — главный источник лагов.
-            node_label_views() {
-                return this.nodes()
-                    .filter(n => this.node_label_text(n.id) !== '')
-                    .map(n => this.Node_label(n.id));
-            }
-            edge_label_views() {
-                return this.edges()
-                    .filter(e => this.edge_label_text(e.id) !== '')
-                    .map(e => this.Edge_label(e.id));
-            }
-            // Font sizes live in svg units, so they shrink on zoom-out. sqrt easing
-            // (same as tooltip) keeps labels from ballooning when zoomed in close.
-            node_label_font_size() {
-                const s = Math.max(0.7, this.size_scale());
-                return String(Math.max(4, Math.min(14, 10 * s / Math.sqrt(this.zoom()))));
-            }
-            edge_label_font_size() {
-                return String(Math.max(3, Math.min(11, 8 / Math.sqrt(this.zoom()))));
-            }
-            node_label_x(id) { return String(this.pos(id).x); }
-            node_label_y(id) {
-                const fs = parseFloat(this.node_label_font_size());
-                return String(this.pos(id).y + this.node_radius_num(id) + fs + 2);
-            }
-            // «Когда места хватает»: подпись растёт из видимого размера узла на экране
-            // (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
-            node_label_vis(id) {
-                const r_px = this.node_radius_num(id) * this.zoom();
-                // На крупном графе подписи только у заметных хабов, иначе каша;
-                // приближение растит r_px — подписи проявляются по мере зума
-                const min_px = this.big_graph() ? 11 : 7;
-                return Math.max(0, Math.min(1, (r_px - min_px) / 3));
-            }
-            node_label_text(id) {
-                if (this.active_id() === id)
-                    return ''; // tooltip уже показывает label
-                // Концы активного ребра подписываем всегда — видно, что оно связывает
-                if (this.edge_endpoint(id))
-                    return this.node_by_id()[id]?.label ?? '';
-                const hood = this.active_node_hood();
-                if (hood) {
-                    if (!hood.has(id))
-                        return ''; // затемнённым подписи не нужны
-                    // Соседей наведённого узла подписываем всегда (пока их разумно мало)
-                    if (hood.size <= 22)
-                        return this.node_by_id()[id]?.label ?? '';
-                }
-                if (!this.node_matches(id))
-                    return '';
-                // Порог повыше нуля: у самого порога подпись была бы почти прозрачной
-                if (this.node_label_vis(id) <= 0.3)
-                    return '';
-                return this.node_by_id()[id]?.label ?? '';
-            }
-            node_label_opacity(id) {
-                if (this.edge_endpoint(id))
-                    return '1';
-                if (this.active_node_hood()?.has(id))
-                    return '1';
-                // Быстрый разгон до непрозрачности — долгий fade читался как баг
-                return String(Math.min(1, 0.75 + this.node_label_vis(id) * 0.25));
-            }
-            edge_label_mid(id) {
-                const e = this.edge_by_id()[id];
-                const a = this.pos(e.source);
-                const b = this.pos(e.target);
-                return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-            }
-            edge_label_x(id) { return String(this.edge_label_mid(id).x); }
-            edge_label_y(id) { return String(this.edge_label_mid(id).y); }
-            // Подпись ребра рисуем, только когда текст влезает в свободную длину ребра
-            // (за вычетом кружков узлов). Активное ребро подписываем всегда.
-            edge_label_text(id) {
-                const e = this.edge_by_id()[id];
-                const rel = e?.relation ?? '';
-                if (!rel)
-                    return '';
-                if (this.edge_active(id))
-                    return rel;
-                if (this.active_edge())
-                    return ''; // не шумим подписями вокруг активного ребра
-                // На крупном графе фоновые подписи рёбер превращаются в серую пыль —
-                // оставляем их только вокруг наведённого/выбранного узла
-                if (this.big_graph()) {
-                    const hid = this.hovered_id() || this.selected_id();
-                    if (!hid || (e.source !== hid && e.target !== hid))
-                        return '';
-                }
-                if (this.filter_active() && !this.edge_matches(id))
-                    return '';
-                const fs = parseFloat(this.edge_label_font_size());
-                if (fs * this.zoom() < 4)
-                    return ''; // на экране будет нечитаемая пыль
-                const a = this.pos(e.source);
-                const b = this.pos(e.target);
-                const len = Math.hypot(b.x - a.x, b.y - a.y)
-                    - this.node_radius_num(e.source) - this.node_radius_num(e.target);
-                const need = rel.length * fs * 0.62 + fs * 2;
-                return len >= need ? rel : '';
-            }
-            edge_label_opacity(id) {
-                if (this.edge_active(id))
-                    return '1';
-                const hid = this.hovered_id() || this.selected_id();
-                if (hid) {
-                    const e = this.edge_by_id()[id];
-                    return (e.source === hid || e.target === hid) ? '0.95' : '0.25';
-                }
-                return '0.85';
-            }
-            // Suppress click that fires right after node-drag (drag_id was just released)
-            just_dragged = '';
-            click(id) {
-                if (this.just_dragged === id) {
-                    this.just_dragged = '';
-                    return null;
-                }
-                this.selected_id(id);
-                this.selected_edge_id('');
-                this.select(id);
-                return null;
-            }
-            // Background click (anywhere not on a node circle or an edge) → deselect
-            bg_click(event) {
-                if (!event)
-                    return;
-                const target = event.target;
-                if (target.getAttribute('data-node-id'))
-                    return;
-                if (target.getAttribute('data-edge-id'))
-                    return;
-                this.selected_id('');
-                this.selected_edge_id('');
-                this.select('');
-                return null;
-            }
-            // Tooltip — single floating label above hovered-OR-selected node
-            active_id() { return this.hovered_id() || this.selected_id(); }
-            // Conditional sub-list — render bg+text only when an active node exists
-            tooltip_sub() {
-                return this.active_id()
-                    ? [this.Tooltip_bg(), this.Tooltip_text()]
-                    : [];
-            }
-            tooltip_text() {
-                const id = this.active_id();
-                return id ? this.node_by_id()[id]?.label ?? '' : '';
-            }
-            tooltip_font_size() {
-                return String(Math.max(6, Math.min(12, 11 / Math.sqrt(this.zoom()))));
-            }
-            // Position tooltip above the active node, in svg space
-            tooltip_anchor() {
-                const id = this.active_id();
-                if (!id)
-                    return { x: 0, y: 0, r: 0 };
-                return { x: this.pos(id).x, y: this.pos(id).y, r: this.node_radius_num(id) };
-            }
-            tooltip_x() {
-                return String(this.tooltip_anchor().x);
-            }
-            // Text baseline is the middle of the bg box; sits above circle with padding
-            tooltip_y() {
-                const a = this.tooltip_anchor();
-                const fs = parseFloat(this.tooltip_font_size());
-                return String(a.y - a.r - 6 - fs * 0.7);
-            }
-            // Bg sized roughly by char-count × char-width
-            tooltip_bg_w() {
-                const text = this.tooltip_text();
-                const fs = parseFloat(this.tooltip_font_size());
-                return String(text.length * fs * 0.6 + 10);
-            }
-            tooltip_bg_h() {
-                return String(parseFloat(this.tooltip_font_size()) + 8);
-            }
-            tooltip_bg_x() {
-                return String(this.tooltip_anchor().x - parseFloat(this.tooltip_bg_w()) / 2);
-            }
-            tooltip_bg_y() {
-                const a = this.tooltip_anchor();
-                return String(a.y - a.r - 6 - parseFloat(this.tooltip_bg_h()));
-            }
-            // Selected-node helpers consumed by Aside
-            selected_node() {
-                const id = this.selected_id();
-                return id ? this.node_by_id()[id] ?? null : null;
-            }
-            selected_color() {
-                const n = this.selected_node();
-                return $raggu_web_front_explorer_forcegraph_type_color(n?.type ?? '');
-            }
-            // Edges incident to selected node, with the OTHER node's label
-            selected_relations() {
-                const id = this.selected_id();
-                if (!id)
-                    return [];
-                const idx = this.node_by_id();
-                return this.edges()
-                    .filter(e => e.source === id || e.target === id)
-                    .map(e => {
-                    const other_id = e.source === id ? e.target : e.source;
-                    return { relation: e.relation, target_label: idx[other_id]?.label ?? other_id };
-                });
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "computed_view_box", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "wheel", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_start", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_move", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "pan_end", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "initial_positions", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "tick", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "params_kick", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "dom_tree", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "size_scale", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "node_radii", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "relation_nodes", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "active_node_hood", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "hover_enter", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "hover_leave", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_by_id", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_hover_enter", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_hover_leave", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "edge_click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer_forcegraph.prototype, "bg_click", null);
-        $$.$raggu_web_front_explorer_forcegraph = $raggu_web_front_explorer_forcegraph;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_explorer_forcegraph, {
-        width: '100%',
-        height: '100%',
-        display: 'block',
-        // Disable browser default drag actions during pointer-capture:
-        // - text selection on drag
-        // - touch scroll/zoom gestures
-        // - native image drag
-        userSelect: 'none',
-        touchAction: 'none',
-    });
-    // SVG stroke/fill don't accept $mol_style_func in the typed-prop schema,
-    // so wire tokens through raw CSS via style_attach — same trick mol_svg uses
-    // for its own text-box background. Selectors match by data-* set on the
-    // tooltip elements in view.tree.
-    $mol_style_attach('raggu/web/front/explorer/forcegraph/forcegraph.view.css', '[data-forcegraph-tooltip-bg] {\n'
-        + '\tfill: var(--bog_builderui_card);\n'
-        + '\tstroke: var(--bog_builderui_line);\n'
-        + '}\n'
-        + '[data-forcegraph-tooltip-text] {\n'
-        + '\tfill: var(--bog_builderui_text);\n'
-        + '}\n'
-        // Halo (paint-order: stroke) отделяет подписи от линий графа под ними.
-        + '[data-forcegraph-node-label] {\n'
-        + '\tfill: var(--bog_builderui_text);\n'
-        + '\tpaint-order: stroke;\n'
-        + '\tstroke: var(--bog_builderui_back);\n'
-        + '\tstroke-width: 2px;\n'
-        + '\tstroke-opacity: 0.7;\n'
-        + '}\n'
-        + '[data-forcegraph-edge-label] {\n'
-        + '\tfill: var(--bog_builderui_shade);\n'
-        + '\tpaint-order: stroke;\n'
-        + '\tstroke: var(--bog_builderui_back);\n'
-        + '\tstroke-width: 2px;\n'
-        + '\tstroke-opacity: 0.6;\n'
-        + '}\n');
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_explorer) = class $raggu_web_front_explorer extends ($.$bog_builderui_div) {
-		graph_nodes(){
-			return [];
-		}
-		graph_edges(){
-			return [];
-		}
-		Graph(){
-			const obj = new this.$.$raggu_web_front_explorer_forcegraph();
-			(obj.graph_key) = () => ((this.dataset_id()));
-			(obj.nodes) = () => ((this.graph_nodes()));
-			(obj.edges) = () => ((this.graph_edges()));
-			(obj.selected_id) = (next) => ((this.selected_id(next)));
-			(obj.selected_edge_id) = (next) => ((this.selected_edge_id(next)));
-			(obj.search) = () => ((this.search()));
-			(obj.filter_type) = () => ((this.type_filter()));
-			(obj.filter_relation) = () => ((this.rel_filter()));
-			return obj;
-		}
-		Canvas_bg(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Graph())]);
-			return obj;
-		}
-		Filter_search(){
-			const obj = new this.$.$mol_string();
-			(obj.hint) = () => ((this.filter_search_text()));
-			(obj.value) = (next) => ((this.search(next)));
-			return obj;
-		}
-		Filters(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Filter_search())]);
-			return obj;
-		}
-		legend_toggle(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Legend_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.legend_title_text())]);
-			return obj;
-		}
-		legend_caret(){
-			return "▾";
-		}
-		Legend_caret(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.legend_caret())]);
-			return obj;
-		}
-		Legend_head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.legend_toggle(next))});
-			(obj.sub) = () => ([(this.Legend_title()), (this.Legend_caret())]);
-			return obj;
-		}
-		legend_active(id){
-			return false;
-		}
-		legend_click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Legend_dot(id){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		legend_label(id){
-			return "";
-		}
-		Legend_label(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.legend_label(id))]);
-			return obj;
-		}
-		legend_count(id){
-			return "";
-		}
-		Legend_count(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.legend_count(id))]);
-			return obj;
-		}
-		Legend_row(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_legend_on": (this.legend_active(id))});
-			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.legend_click(id, next))});
-			(obj.sub) = () => ([
-				(this.Legend_dot(id)), 
-				(this.Legend_label(id)), 
-				(this.Legend_count(id))
-			]);
-			return obj;
-		}
-		legend_rows(){
-			return [(this.Legend_row(id))];
-		}
-		Legend_list(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.legend_rows()));
-			return obj;
-		}
-		Legend(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.legend_collapsed())});
-			(obj.sub) = () => ([(this.Legend_head()), (this.Legend_list())]);
-			return obj;
-		}
-		rels_toggle(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Rels_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rels_title_text())]);
-			return obj;
-		}
-		rels_caret(){
-			return "▾";
-		}
-		Rels_caret(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rels_caret())]);
-			return obj;
-		}
-		Rels_head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.rels_toggle(next))});
-			(obj.sub) = () => ([(this.Rels_title()), (this.Rels_caret())]);
-			return obj;
-		}
-		rel_legend_active(id){
-			return false;
-		}
-		rel_legend_click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		rel_legend_label(id){
-			return "";
-		}
-		Rel_row_label(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_legend_label(id))]);
-			return obj;
-		}
-		rel_legend_count(id){
-			return "";
-		}
-		Rel_row_count(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_legend_count(id))]);
-			return obj;
-		}
-		Rel_row(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_legend_on": (this.rel_legend_active(id))});
-			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.rel_legend_click(id, next))});
-			(obj.sub) = () => ([(this.Rel_row_label(id)), (this.Rel_row_count(id))]);
-			return obj;
-		}
-		rel_legend_rows(){
-			return [(this.Rel_row(id))];
-		}
-		Rels_list(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.rel_legend_rows()));
-			return obj;
-		}
-		Rels(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_panel_collapsed": (this.rels_collapsed())});
-			(obj.sub) = () => ([(this.Rels_head()), (this.Rels_list())]);
-			return obj;
-		}
-		Legends(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Legend()), (this.Rels())]);
-			return obj;
-		}
-		is_mock(){
-			return false;
-		}
-		Mock_badge(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_mock_badge_showed": (this.is_mock())});
-			(obj.sub) = () => ([(this.mock_badge_text())]);
-			return obj;
-		}
-		Canvas(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Canvas_bg()), 
-				(this.Filters()), 
-				(this.Legends()), 
-				(this.Mock_badge())
-			]);
-			return obj;
-		}
-		aside_toggle(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		aside_caret(){
-			return "⟩";
-		}
-		Aside_toggle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.aside_toggle(next))});
-			(obj.sub) = () => ([(this.aside_caret())]);
-			return obj;
-		}
-		aside_title(){
-			return "";
-		}
-		Aside_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.aside_title())]);
-			return obj;
-		}
-		Aside_head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Aside_toggle()), (this.Aside_title())]);
-			return obj;
-		}
-		Entity_dot(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		entity_name(){
-			return "";
-		}
-		Entity_name(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_name())]);
-			return obj;
-		}
-		Entity_head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Entity_dot()), (this.Entity_name())]);
-			return obj;
-		}
-		entity_type(){
-			return "";
-		}
-		Entity_type(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_type())]);
-			return obj;
-		}
-		entity_desc(){
-			return "";
-		}
-		Entity_desc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.entity_desc())]);
-			return obj;
-		}
-		relations_title(){
-			return "";
-		}
-		Relations_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.relations_title())]);
-			return obj;
-		}
-		rel_type(id){
-			return "";
-		}
-		Rel_type(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_type(id))]);
-			return obj;
-		}
-		rel_target(id){
-			return "";
-		}
-		Rel_target(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.rel_target(id))]);
-			return obj;
-		}
-		Rel(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Rel_type(id)), (this.Rel_target(id))]);
-			return obj;
-		}
-		rel_rows(){
-			return [(this.Rel(id))];
-		}
-		Relations_list(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.rel_rows()));
-			return obj;
-		}
-		Sources_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sources_title_text())]);
-			return obj;
-		}
-		Sources(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sources_text())]);
-			return obj;
-		}
-		ask_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Ask_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.ask_btn_text())]);
-			(obj.event) = () => ({"click": (next) => (this.ask_click(next))});
-			return obj;
-		}
-		Aside_body(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Entity_head()), 
-				(this.Entity_type()), 
-				(this.Entity_desc()), 
-				(this.Relations_title()), 
-				(this.Relations_list()), 
-				(this.Sources_title()), 
-				(this.Sources()), 
-				(this.Ask_btn())
-			]);
-			return obj;
-		}
-		Aside(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_aside_collapsed": (this.aside_collapsed())});
-			(obj.sub) = () => ([(this.Aside_head()), (this.Aside_body())]);
-			return obj;
-		}
-		dataset_id(){
-			return "";
-		}
-		selected_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		selected_edge_id(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		search(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		type_filter(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		rel_filter(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		legend_collapsed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		rels_collapsed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		aside_collapsed(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		filter_search_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_filter_search_text"));
-		}
-		aside_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_title_text"));
-		}
-		aside_relation_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_relation_title_text"));
-		}
-		aside_empty_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_aside_empty_text"));
-		}
-		relations_title_template(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_relations_title_template"));
-		}
-		sources_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_sources_title_text"));
-		}
-		sources_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_sources_text"));
-		}
-		ask_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_ask_btn_text"));
-		}
-		legend_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
-		}
-		rels_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_rels_title_text"));
-		}
-		mock_badge_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_mock_badge_text"));
-		}
-		sub(){
-			return [(this.Canvas()), (this.Aside())];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Graph"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas_bg"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_search"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filters"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "legend_toggle"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_title"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_caret"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_head"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "legend_click"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_dot"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_label"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_count"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Legend_row"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend_list"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legend"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "rels_toggle"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_title"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_caret"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_head"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "rel_legend_click"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row_label"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row_count"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_row"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels_list"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legends"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Mock_badge"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_toggle"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_toggle"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_title"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_head"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_dot"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_name"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_head"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_type"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Entity_desc"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_title"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_type"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_target"));
-	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_list"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources_title"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Sources"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "ask_click"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_body"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_edge_id"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "search"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "type_filter"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "rel_filter"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "legend_collapsed"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "rels_collapsed"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_collapsed"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        // Default page size for the graph endpoint. The mock backend caps at 5000.
-        const GRAPH_LIMIT = 500;
-        // Module-scoped cache keyed by dataset_id. Survives component remount:
-        // switching tabs drops the @$mol_mem cell's subscribers and resets it, so
-        // without this every return to the graph re-fetches and re-runs the layout.
-        const $raggu_web_front_explorer_graph_cache = new Map();
-        class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
-            // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo
-            // and jsdom tests where no live backend is available.
-            mock_flag() {
-                return this.$.$mol_state_arg.value('mock') === '1';
-            }
-            // Reactive live fetch. While loading, the wire promise is rethrown as
-            // usual; a real transport error falls back to the built-in mock graph
-            // so the demo stays alive without the backend.
-            graph_remote() {
-                const id = this.dataset_id();
-                if (!id)
-                    return null;
-                if (this.mock_flag())
-                    return null;
-                // Возврат на вкладку не должен снова дёргать бэк — отдаём тот же объект,
-                // стабильная identity сохраняет раскладку графа.
-                const cached = $raggu_web_front_explorer_graph_cache.get(id);
-                if (cached)
-                    return cached;
-                try {
-                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_graph, { params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } });
-                    const nodes = res.nodes.map((n) => ({
-                        id: n.id,
-                        label: n.label,
-                        type: n.entity_type ?? '',
-                        degree: n.degree,
-                        x: n.x,
-                        y: n.y,
-                    }));
-                    const edges = res.edges.map((e) => ({
-                        id: e.id,
-                        source: e.source,
-                        target: e.target,
-                        strength: e.strength,
-                        relation: e.relation_type,
-                        description: e.description ?? '',
-                    }));
-                    const result = { nodes, edges };
-                    $raggu_web_front_explorer_graph_cache.set(id, result);
-                    return result;
-                }
-                catch (error) {
-                    if ($mol_promise_like(error))
-                        $mol_fail_hidden(error);
-                    console.warn('Graph fetch failed, falling back to mock:', error);
-                    return null;
-                }
-            }
-            // Показываем юзеру плашку, что перед ним мок-граф, а не данные с бэка.
-            is_mock() {
-                return this.graph_remote() === null;
-            }
-            // Легенда строится из фактических типов графа (топ по количеству узлов),
-            // а не из фиксированного NEREL-набора — схемы разных доменов различаются.
-            legend_entries() {
-                const counts = {};
-                for (const n of this.graph_nodes()) {
-                    counts[n.type] = (counts[n.type] ?? 0) + 1;
-                }
-                return Object.entries(counts)
-                    .map(([type, count]) => ({ type, count }))
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 12);
-            }
-            legend_rows() {
-                return this.legend_entries().map((_, i) => this.Legend_row(i));
-            }
-            legend_label(i) {
-                return this.legend_entries()[i]?.type ?? '';
-            }
-            legend_count(i) {
-                return String(this.legend_entries()[i]?.count ?? '');
-            }
-            legend_active(i) {
-                return this.type_filter() === this.legend_entries()[i]?.type;
-            }
-            // Цвет точки легенды = цвет узлов этого типа. Style override, т.к. цвет
-            // вычисляется рантайм-функцией, не токеном.
-            Legend_dot(i) {
-                const dot = super.Legend_dot(i);
-                const type = this.legend_entries()[i]?.type ?? '';
-                dot.style = () => ({
-                    background: $raggu_web_front_explorer_forcegraph_type_color(type),
-                });
-                return dot;
-            }
-            // Клик по типу подсвечивает все узлы этого типа (как поиск).
-            // Повторный клик по активному типу снимает фильтр.
-            legend_click(i) {
-                const t = this.legend_entries()[i]?.type ?? '';
-                this.type_filter(this.type_filter() === t ? '' : t);
-                return null;
-            }
-            // Легенда типов связей — симметрична легенде сущностей, но по рёбрам.
-            rel_entries() {
-                const counts = {};
-                for (const e of this.graph_edges()) {
-                    counts[e.relation] = (counts[e.relation] ?? 0) + 1;
-                }
-                return Object.entries(counts)
-                    .map(([type, count]) => ({ type, count }))
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 12);
-            }
-            rel_legend_rows() {
-                return this.rel_entries().map((_, i) => this.Rel_row(i));
-            }
-            rel_legend_label(i) {
-                return this.rel_entries()[i]?.type ?? '';
-            }
-            rel_legend_count(i) {
-                return String(this.rel_entries()[i]?.count ?? '');
-            }
-            // Тип отношения наведённого/выбранного ребра — подсвечиваем его строку
-            active_relation() {
-                return this.graph_view().active_edge()?.relation ?? '';
-            }
-            rel_legend_active(i) {
-                const t = this.rel_entries()[i]?.type ?? '';
-                return this.rel_filter() === t || this.active_relation() === t;
-            }
-            rel_legend_click(i) {
-                const t = this.rel_entries()[i]?.type ?? '';
-                this.rel_filter(this.rel_filter() === t ? '' : t);
-                return null;
-            }
-            // Сворачивание легенд и правой панели — больше места графу
-            legend_caret() { return this.legend_collapsed() ? '▸' : '▾'; }
-            rels_caret() { return this.rels_collapsed() ? '▸' : '▾'; }
-            aside_caret() { return this.aside_collapsed() ? '⟨' : '⟩'; }
-            legend_toggle() {
-                this.legend_collapsed(!this.legend_collapsed());
-                return null;
-            }
-            rels_toggle() {
-                this.rels_collapsed(!this.rels_collapsed());
-                return null;
-            }
-            aside_toggle() {
-                this.aside_collapsed(!this.aside_collapsed());
-                return null;
-            }
-            graph_data() {
-                return this.graph_remote()
-                    ?? $raggu_web_front_explorer_forcegraph_build_mock(42, 80, 130);
-            }
-            graph_nodes() { return this.graph_data().nodes; }
-            graph_edges() { return this.graph_data().edges; }
-            // Cast to extended class to access TS-only methods (selected_node/selected_color/...)
-            graph_view() {
-                return this.Graph();
-            }
-            // Selected node, mirrors $raggu_web_front_explorer_forcegraph internals
-            selected() {
-                return this.graph_view().selected_node();
-            }
-            // Selected edge — aside shows a relation card instead of an entity card
-            selected_edge() {
-                return this.graph_view().selected_edge();
-            }
-            node_label(id) {
-                return this.graph_nodes().find(n => n.id === id)?.label ?? id;
-            }
-            aside_title() {
-                return this.selected_edge() ? this.aside_relation_title_text() : this.aside_title_text();
-            }
-            // Aside text — fall back to placeholder when nothing selected
-            entity_name() {
-                const edge = this.selected_edge();
-                if (edge)
-                    return edge.relation || '—';
-                return this.selected()?.label ?? this.aside_empty_text();
-            }
-            entity_type() {
-                const edge = this.selected_edge();
-                if (edge)
-                    return `${this.node_label(edge.source)} → ${this.node_label(edge.target)}`;
-                return this.selected()?.type ?? '';
-            }
-            // Описание ребра с бэка: ручки get_edge на бэке пока нет, поэтому любая
-            // ошибка (404 в т.ч.) тихо фолбэчится на description из get_graph.
-            edge_remote_desc() {
-                const edge = this.selected_edge();
-                const id = this.dataset_id();
-                if (!edge || !id || this.mock_flag())
-                    return null;
-                try {
-                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_edge, { params: { dataset_id: id, edge_id: edge.id } });
-                    return res.description || null;
-                }
-                catch (error) {
-                    if ($mol_promise_like(error))
-                        $mol_fail_hidden(error);
-                    return null;
-                }
-            }
-            entity_desc() {
-                const edge = this.selected_edge();
-                if (edge) {
-                    return this.edge_remote_desc()
-                        ?? (edge.description
-                            || `${this.node_label(edge.source)} — ${edge.relation} — ${this.node_label(edge.target)}`);
-                }
-                const n = this.selected();
-                if (!n)
-                    return '';
-                return `Mock entity of type ${n.type}, connected to ${n.degree} other nodes.`;
-            }
-            relations_title() {
-                const n = this.selected();
-                if (!n)
-                    return '';
-                return this.relations_title_template().replace('%s', String(n.degree));
-            }
-            rels() {
-                if (this.selected_edge())
-                    return [];
-                return this.graph_view().selected_relations().slice(0, 5);
-            }
-            rel_rows() {
-                return this.rels().map((_, i) => this.Rel(i));
-            }
-            rel_type(i) { return this.rels()[i]?.relation ?? ''; }
-            rel_target(i) { return this.rels()[i]?.target_label ?? ''; }
-            // Entity_dot color reflects type of selected node; neutral for an edge
-            Entity_dot() {
-                const dot = super.Entity_dot();
-                dot.style = () => ({
-                    background: this.selected_edge() ? '#7a7672' : this.graph_view().selected_color(),
-                });
-                return dot;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer.prototype, "graph_remote", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer.prototype, "legend_entries", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer.prototype, "legend_click", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer.prototype, "rel_entries", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer.prototype, "rel_legend_click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer.prototype, "legend_toggle", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer.prototype, "rels_toggle", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_explorer.prototype, "aside_toggle", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer.prototype, "graph_data", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_explorer.prototype, "edge_remote_desc", null);
-        $$.$raggu_web_front_explorer = $raggu_web_front_explorer;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const { radial_gradient } = $mol_style_func;
-    const dot_base = {
-        minWidth: '9px',
-        maxWidth: '9px',
-        height: '9px',
-        border: { radius: '50%' },
-    };
-    const legend_row = {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '8px',
-        padding: {
-            top: '2px',
-            bottom: '2px',
-            left: '4px',
-            right: '4px',
-        },
-        cursor: 'pointer',
-        border: { radius: '5px' },
-        '@': {
-            raggu_web_front_explorer_legend_on: {
-                true: {
-                    background: { color: '#ffffff26' },
-                },
-            },
-        },
-    };
-    const legend_label = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-    };
-    // Общий каркас панелек-легенд поверх канвы. Сворачивание: атрибут
-    // raggu_web_front_explorer_panel_collapsed прячет список, остаётся шапка.
-    const legend_panel = {
-        background: { color: '#1c1b1ae6' },
-        border: { width: '1px', style: 'solid', color: '#3a3937', radius: '8px' },
-        padding: {
-            top: '11px',
-            bottom: '11px',
-            left: '13px',
-            right: '13px',
-        },
-        flex: { direction: 'column', shrink: 1 },
-        minHeight: 0,
-    };
-    const legend_head = {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '8px',
-        cursor: 'pointer',
-    };
-    const legend_title = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 700,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.line,
-        textTransform: 'uppercase',
-        letterSpacing: '0.6px',
-        flex: { grow: 1 },
-    };
-    const legend_caret = {
-        color: '#8a8a8a',
-        font: { size: '10px' },
-    };
-    const legend_list = {
-        flex: { direction: 'column' },
-        overflow: 'auto',
-        margin: { top: '8px' },
-    };
-    const relation_card = {
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-        padding: {
-            top: '8px',
-            bottom: '8px',
-            left: '10px',
-            right: '10px',
-        },
-        margin: { bottom: '6px' },
-        font: { size: '11px' },
-        flex: { direction: 'column' },
-    };
-    const relation_type = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.current,
-    };
-    const relation_target = {
-        color: $bog_builderui_tokens.shade,
-        margin: { top: '2px' },
-    };
-    $mol_style_define($raggu_web_front_explorer, {
-        flex: { direction: 'row', shrink: 1 },
-        minWidth: 0,
-        height: '100%',
-        Canvas: {
-            flex: { grow: 1, shrink: 1, direction: 'column' },
-            position: 'relative',
-            background: { color: $bog_builderui_tokens.back },
-            minWidth: 0,
-        },
-        Canvas_bg: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            background: {
-                image: [
-                    [radial_gradient('circle at 35% 40%, #5b5bd62e, transparent 45%')],
-                    [radial_gradient('circle at 70% 65%, #d65b8c24, transparent 45%')],
-                ],
-            },
-        },
-        Filters: {
-            position: 'absolute',
-            top: '14px',
-            left: '14px',
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '8px',
-            maxWidth: '62%',
-        },
-        Filter_search: {
-            background: { color: $bog_builderui_tokens.field },
-            color: $bog_builderui_tokens.text,
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '11px',
-                right: '11px',
-            },
-            font: { size: '11px', weight: 600 },
-            width: '200px',
-        },
-        Legends: {
-            position: 'absolute',
-            top: '14px',
-            right: '14px',
-            width: '184px',
-            maxHeight: $mol_style_func.calc('100% - 28px'),
-            flex: { direction: 'column' },
-            gap: '8px',
-        },
-        Legend: {
-            ...legend_panel,
-            '@': {
-                raggu_web_front_explorer_panel_collapsed: {
-                    true: {
-                        Legend_list: { display: 'none' },
-                    },
-                },
-            },
-        },
-        Legend_head: legend_head,
-        Legend_title: legend_title,
-        Legend_caret: legend_caret,
-        Legend_list: legend_list,
-        Legend_row: legend_row,
-        Legend_dot: dot_base,
-        Legend_label: {
-            ...legend_label,
-            flex: { grow: 1 },
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-        },
-        Legend_count: {
-            ...legend_label,
-            color: '#8a8a8a',
-        },
-        Rels: {
-            ...legend_panel,
-            '@': {
-                raggu_web_front_explorer_panel_collapsed: {
-                    true: {
-                        Rels_list: { display: 'none' },
-                    },
-                },
-            },
-        },
-        Rels_head: legend_head,
-        Rels_title: legend_title,
-        Rels_caret: legend_caret,
-        Rels_list: legend_list,
-        Rel_row: legend_row,
-        Rel_row_label: {
-            ...legend_label,
-            flex: { grow: 1 },
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-        },
-        Rel_row_count: {
-            ...legend_label,
-            color: '#8a8a8a',
-        },
-        Mock_badge: {
-            display: 'none',
-            position: 'absolute',
-            bottom: '14px',
-            left: '14px',
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: '#8a6d1b',
-            background: { color: '#f5c84226' },
-            border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '6px' },
-            padding: {
-                top: '3px',
-                bottom: '3px',
-                left: '8px',
-                right: '8px',
-            },
-            '@': {
-                raggu_web_front_explorer_mock_badge_showed: {
-                    true: { display: 'flex' },
-                },
-            },
-        },
-        Aside: {
-            minWidth: '240px',
-            maxWidth: '240px',
-            background: { color: $bog_builderui_tokens.card },
-            border: {
-                left: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '18px',
-                right: '18px',
-            },
-            overflow: 'auto',
-            flex: { direction: 'column' },
-            // Свёрнутая панель — узкая полоска с шевроном, граф забирает ширину
-            '@': {
-                raggu_web_front_explorer_aside_collapsed: {
-                    true: {
-                        minWidth: '34px',
-                        maxWidth: '34px',
-                        padding: {
-                            top: '10px',
-                            bottom: '10px',
-                            left: '4px',
-                            right: '4px',
-                        },
-                        Aside_title: { display: 'none' },
-                        Aside_body: { display: 'none' },
-                    },
-                },
-            },
-        },
-        Aside_head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-        },
-        Aside_toggle: {
-            cursor: 'pointer',
-            color: $bog_builderui_tokens.shade,
-            font: { size: '13px', weight: 600 },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '8px',
-                right: '8px',
-            },
-            border: { radius: '5px' },
-            ':hover': {
-                background: { color: $bog_builderui_tokens.field },
-            },
-        },
-        Aside_body: {
-            flex: { direction: 'column' },
-        },
-        Aside_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            letterSpacing: '0.7px',
-        },
-        Entity_head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-            margin: { top: '11px' },
-        },
-        Entity_dot: {
-            minWidth: '12px',
-            maxWidth: '12px',
-            height: '12px',
-            border: { radius: '50%' },
-            background: { color: '#7c6ce0' },
-        },
-        Entity_name: {
-            font: { weight: 700, size: '16px' },
-        },
-        Entity_type: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.current,
-            margin: { top: '6px' },
-        },
-        Entity_desc: {
-            font: { size: '12px' },
-            color: $bog_builderui_tokens.shade,
-            lineHeight: '1.5',
-            margin: { top: '10px' },
-        },
-        Relations_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            margin: { top: '18px', bottom: '8px' },
-        },
-        Relations_list: {
-            flex: { direction: 'column' },
-        },
-        Rel: relation_card,
-        Rel_type: relation_type,
-        Rel_target: relation_target,
-        Sources_title: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            textTransform: 'uppercase',
-            margin: { top: '16px', bottom: '8px' },
-        },
-        Sources: {
-            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-            },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.back },
-        },
-        Ask_btn: {
-            margin: { top: '16px' },
-            background: { color: $bog_builderui_tokens.current },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-            },
-            textAlign: 'center',
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
-        '@media': {
-            '(max-width: 720px)': {
-                flex: { direction: 'column' },
-                overflow: 'auto',
-                Canvas: {
-                    minHeight: '55vh',
-                },
-                Aside: {
-                    minWidth: 0,
-                    maxWidth: '100%',
-                    border: {
-                        left: { width: 0 },
-                        top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-                    },
-                    overflow: 'visible',
-                },
-                Filters: {
-                    maxWidth: $mol_style_func.calc('100% - 28px'),
-                },
-            },
-        },
-    });
 })($ || ($ = {}));
 
 ;
@@ -23815,10 +21239,6 @@ var $;
 		screen_title(){
 			return "";
 		}
-		open_settings(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 		open_help(next){
 			if(next !== undefined) return next;
 			return null;
@@ -23833,8 +21253,6 @@ var $;
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			(obj.dataset_title) = () => ((this.dataset_title()));
 			(obj.screen_title) = () => ((this.screen_title()));
-			(obj.preset) = (next) => ((this.preset(next)));
-			(obj.open_settings) = (next) => ((this.open_settings(next)));
 			(obj.open_help) = (next) => ((this.open_help(next)));
 			(obj.toggle_sidebar) = (next) => ((this.toggle_sidebar(next)));
 			return obj;
@@ -23847,11 +21265,6 @@ var $;
 		Main(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.Topbar()), (this.Body())]);
-			return obj;
-		}
-		Settings(){
-			const obj = new this.$.$raggu_web_front_settings();
-			(obj.showed) = (next) => ((this.settings_open(next)));
 			return obj;
 		}
 		Help(){
@@ -23871,17 +21284,9 @@ var $;
 			if(next !== undefined) return next;
 			return "gallery";
 		}
-		preset(next){
-			if(next !== undefined) return next;
-			return "demo";
-		}
 		dataset_id(next){
 			if(next !== undefined) return next;
 			return "";
-		}
-		settings_open(next){
-			if(next !== undefined) return next;
-			return false;
 		}
 		help_open(next){
 			if(next !== undefined) return next;
@@ -23937,7 +21342,6 @@ var $;
 			return [
 				(this.Sidebar()), 
 				(this.Main()), 
-				(this.Settings()), 
 				(this.Help()), 
 				(this.Summary_popup())
 			];
@@ -23973,20 +21377,16 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Theme_auto"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "select_dataset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Sidebar"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "open_settings"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "open_help"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "toggle_sidebar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Topbar"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "Settings"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Help"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Summary_popup"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "ask_chat"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "screen"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "preset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "dataset_id"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "settings_open"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "help_open"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "sidebar_collapsed"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Gallery"));
@@ -24047,10 +21447,6 @@ var $;
             // contain:content у скролла — fixed-оверлей позиционируется не от вьюпорта.
             Summary_popup() {
                 return this.Summary().Detail();
-            }
-            open_settings() {
-                this.settings_open(true);
-                return null;
             }
             open_help() {
                 this.help_open(true);
@@ -24117,15 +21513,11 @@ var $;
                 return next;
             }
             screen(next) { return this.arg_value('screen', next, 'gallery'); }
-            preset(next) { return this.arg_value('preset', next, 'demo'); }
             dataset_id(next) { return this.arg_value('ds', next, ''); }
         }
         __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "lights_mode", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_app.prototype, "open_settings", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "open_help", null);
@@ -24141,9 +21533,6 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "screen", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_app.prototype, "preset", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "dataset_id", null);
