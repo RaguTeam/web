@@ -134,6 +134,8 @@ namespace $ {
 		heat?: number
 		/** Радиусы узлов (svg-юниты) для расталкивания перекрытий — без них кружки наезжают друг на друга. */
 		radii?: Record< string, number >
+		/** Множитель силы пружин рёбер (только притяжение). Меньше — воздушнее раскладка, как в Obsidian. */
+		spring?: number
 	}
 
 	const FORCE_K = 60
@@ -325,12 +327,18 @@ namespace $ {
 			dispX[ n.id ] = out.dx
 			dispY[ n.id ] = out.dy
 		}
-		// Attraction — exact, O(E)
+		// Attraction — exact, O(E). Пружину ослабляют параметр spring и степень
+		// хабов («dissuade hubs» из ForceAtlas2): у хаба десятки рёбер, их
+		// суммарная тяга без нормализации сминает соседей в плотный ком.
+		const spring = params.spring ?? 1
+		const degree: Record< string, number > = {}
+		for ( const n of nodes ) degree[ n.id ] = n.degree
 		for ( const e of edges ) {
 			const dx = positions[ e.source ].x - positions[ e.target ].x
 			const dy = positions[ e.source ].y - positions[ e.target ].y
 			const dist = Math.sqrt( dx * dx + dy * dy ) || 0.01
-			const force = ( dist * dist ) / k * e.strength
+			const hub_norm = Math.sqrt( Math.max( degree[ e.source ] ?? 0, degree[ e.target ] ?? 0 ) + 1 )
+			const force = ( dist * dist ) / k * e.strength * spring / hub_norm
 			const fx = ( dx / dist ) * force
 			const fy = ( dy / dist ) * force
 			dispX[ e.source ] -= fx; dispY[ e.source ] -= fy

@@ -209,6 +209,8 @@ namespace $.$$ {
 				force_scale: this.force_scale(),
 				damping: this.damping(),
 				min_move: this.min_move(),
+				// Рыхлость как в Obsidian: слабые пружины, хабы не сжимают соседей
+				spring: this.spring(),
 				// Крупный граф двигаем медленнее — drag не разгоняет всю кучу
 				max_speed: this.max_speed() * this.size_scale(),
 				// …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
@@ -334,6 +336,7 @@ namespace $.$$ {
 			// Register deps on all sim inputs
 			this.gravity()
 			this.force_scale()
+			this.spring()
 			this.damping()
 			this.min_move()
 			this.max_speed()
