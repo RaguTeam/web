@@ -8437,6 +8437,8 @@ declare namespace $ {
         max_speed: number;
         /** Масштаб базовой длины пружин k: на крупных графах < 1, чтобы раскладка не расползалась за вьюпорт. */
         k_scale?: number;
+        /** Затухание (alpha-cooling как в d3-force): множитель сил 1 → 0. Гасит осцилляции вокруг равновесия — без него плотный граф дребезжит, пока не кончится бюджет кадров. */
+        heat?: number;
     };
     /**
      * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
@@ -8873,8 +8875,13 @@ declare namespace $.$$ {
         frame_flip: boolean;
         readonly SIM_INITIAL_FRAMES = 260;
         readonly SIM_DRAG_FRAMES = 60;
-        drag_frames(): 30 | 60;
-        start_sim(frames?: number): void;
+        sim_alpha: number;
+        readonly ALPHA_DECAY = 0.97;
+        readonly ALPHA_MIN = 0.03;
+        readonly ALPHA_REHEAT = 0.3;
+        readonly ALPHA_DRAG = 0.5;
+        drag_frames(): 45 | 60;
+        start_sim(frames?: number, heat?: number): void;
         params_kick(): null;
         initial_sim_started: boolean;
         dom_tree(): Element;
@@ -8897,6 +8904,7 @@ declare namespace $.$$ {
         node_has_relation(id: string, rel: string): boolean;
         active_edge(): GraphEdge | null;
         edge_endpoint(id: string): boolean;
+        active_node_hood(): Set<string> | null;
         node_opacity(id: string): "0.12" | "1" | "0.25";
         node_stroke(id: string): "#ffffff" | "transparent";
         node_stroke_width(id: string): "2.5" | "1.5" | "0";
@@ -8933,7 +8941,7 @@ declare namespace $.$$ {
         edge_label_x(id: string): string;
         edge_label_y(id: string): string;
         edge_label_text(id: string): string;
-        edge_label_opacity(id: string): "0.95" | "1" | "0.25" | "0.75";
+        edge_label_opacity(id: string): "0.95" | "1" | "0.25" | "0.85";
         just_dragged: string;
         click(id: string): null;
         bg_click(event?: MouseEvent): null | undefined;
