@@ -15958,6 +15958,9 @@ var $;
 		force_scale(){
 			return +0.06;
 		}
+		spring(){
+			return +0.2;
+		}
 		damping(){
 			return +0.82;
 		}
@@ -16300,12 +16303,19 @@ var $;
             dispX[n.id] = out.dx;
             dispY[n.id] = out.dy;
         }
-        // Attraction — exact, O(E)
+        // Attraction — exact, O(E). Пружину ослабляют параметр spring и степень
+        // хабов («dissuade hubs» из ForceAtlas2): у хаба десятки рёбер, их
+        // суммарная тяга без нормализации сминает соседей в плотный ком.
+        const spring = params.spring ?? 1;
+        const degree = {};
+        for (const n of nodes)
+            degree[n.id] = n.degree;
         for (const e of edges) {
             const dx = positions[e.source].x - positions[e.target].x;
             const dy = positions[e.source].y - positions[e.target].y;
             const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
-            const force = (dist * dist) / k * e.strength;
+            const hub_norm = Math.sqrt(Math.max(degree[e.source] ?? 0, degree[e.target] ?? 0) + 1);
+            const force = (dist * dist) / k * e.strength * spring / hub_norm;
             const fx = (dx / dist) * force;
             const fy = (dy / dist) * force;
             dispX[e.source] -= fx;
@@ -16592,6 +16602,8 @@ var $;
                     force_scale: this.force_scale(),
                     damping: this.damping(),
                     min_move: this.min_move(),
+                    // Рыхлость как в Obsidian: слабые пружины, хабы не сжимают соседей
+                    spring: this.spring(),
                     // Крупный граф двигаем медленнее — drag не разгоняет всю кучу
                     max_speed: this.max_speed() * this.size_scale(),
                     // …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
@@ -16711,6 +16723,7 @@ var $;
                 // Register deps on all sim inputs
                 this.gravity();
                 this.force_scale();
+                this.spring();
                 this.damping();
                 this.min_move();
                 this.max_speed();

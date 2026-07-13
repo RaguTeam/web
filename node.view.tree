@@ -1352,6 +1352,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	positions? *
 	gravity +0.03
 	force_scale +0.06
+	spring +0.2
 	damping +0.82
 	min_move +0.15
 	max_speed +12

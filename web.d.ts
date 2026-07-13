@@ -8228,6 +8228,8 @@ declare namespace $ {
         heat?: number;
         /** Радиусы узлов (svg-юниты) для расталкивания перекрытий — без них кружки наезжают друг на друга. */
         radii?: Record<string, number>;
+        /** Множитель силы пружин рёбер (только притяжение). Меньше — воздушнее раскладка, как в Obsidian. */
+        spring?: number;
     };
     /**
      * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
@@ -8597,6 +8599,7 @@ declare namespace $ {
 		positions( next?: Record<string, any> ): Record<string, any>
 		gravity( ): number
 		force_scale( ): number
+		spring( ): number
 		damping( ): number
 		min_move( ): number
 		max_speed( ): number
