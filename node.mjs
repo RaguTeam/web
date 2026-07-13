@@ -16643,7 +16643,7 @@ var $;
 			return {};
 		}
 		gravity(){
-			return +0.04;
+			return +0.03;
 		}
 		force_scale(){
 			return +0.06;
@@ -16880,7 +16880,7 @@ var $;
      */
     function $raggu_web_front_explorer_forcegraph_tick_layout(nodes, edges, positions, velocities, pinned_id, params) {
         const { gravity, force_scale, damping, min_move, max_speed } = params;
-        const k = FORCE_K;
+        const k = FORCE_K * (params.k_scale ?? 1);
         const k2 = k * k;
         const dispX = {};
         const dispY = {};
@@ -16962,10 +16962,28 @@ var $;
     // Initial positions from mock coords — no synchronous FR pre-compute.
     // The view auto-starts a live sim that visibly settles the graph
     // ( Obsidian-style spring-in ).
+    // Бэковые раскладки приходят в произвольном масштабе (у medical — тысячи
+    // юнитов), а камера и гравитация живут в мире 600×600 вокруг нуля —
+    // нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
     function $raggu_web_front_explorer_forcegraph_initial_positions(nodes) {
+        let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity;
+        for (const n of nodes) {
+            if (n.x < min_x)
+                min_x = n.x;
+            if (n.y < min_y)
+                min_y = n.y;
+            if (n.x > max_x)
+                max_x = n.x;
+            if (n.y > max_y)
+                max_y = n.y;
+        }
+        const cx = (min_x + max_x) / 2;
+        const cy = (min_y + max_y) / 2;
+        const span = Math.max(max_x - min_x, max_y - min_y);
+        const scale = span > 1 ? 520 / span : 1;
         const positions = {};
         for (const n of nodes)
-            positions[n.id] = { x: n.x, y: n.y };
+            positions[n.id] = { x: (n.x - cx) * scale, y: (n.y - cy) * scale };
         return positions;
     }
     $.$raggu_web_front_explorer_forcegraph_initial_positions = $raggu_web_front_explorer_forcegraph_initial_positions;
@@ -17167,7 +17185,10 @@ var $;
                     force_scale: this.force_scale(),
                     damping: this.damping(),
                     min_move: this.min_move(),
-                    max_speed: this.max_speed(),
+                    // Крупный граф двигаем медленнее — drag не разгоняет всю кучу
+                    max_speed: this.max_speed() * this.size_scale(),
+                    // …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
+                    k_scale: this.size_scale(),
                 };
             }
             // One sim tick.
@@ -17175,6 +17196,15 @@ var $;
                 const positions = this.ensure_positions();
                 const next = $raggu_web_front_explorer_forcegraph_tick_layout(this.nodes(), this.edges(), positions, this.velocities, this.drag_id(), this.layout_params());
                 this.velocities = next.velocities;
+                // Пиковая скорость по узлам — сигнал «граф осел» для ранней остановки
+                let peak = 0;
+                for (const id in next.velocities) {
+                    const v = next.velocities[id];
+                    const speed = Math.sqrt(v.vx * v.vx + v.vy * v.vy);
+                    if (speed > peak)
+                        peak = speed;
+                }
+                this.peak_speed = peak;
                 this.positions(next.positions);
                 // Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
                 const key = this.graph_key();
@@ -17187,27 +17217,47 @@ var $;
             // settling smoothly around the moved node.
             sim_running = false;
             sim_frames_left = 0;
+            sim_ticks = 0;
+            peak_speed = Infinity;
+            frame_flip = false;
             SIM_INITIAL_FRAMES = 260;
             SIM_DRAG_FRAMES = 60;
-            start_sim(frames = this.SIM_DRAG_FRAMES) {
+            // Хвост симуляции после отпускания узла — на крупном графе короче
+            drag_frames() {
+                return this.big_graph() ? 30 : this.SIM_DRAG_FRAMES;
+            }
+            start_sim(frames = this.drag_frames()) {
                 this.sim_frames_left = Math.max(this.sim_frames_left, frames);
                 if (this.sim_running)
                     return;
                 if (typeof window === 'undefined')
                     return;
                 this.sim_running = true;
+                this.sim_ticks = 0;
+                this.peak_speed = Infinity;
                 const loop = () => {
                     if (!this.sim_running)
                         return;
+                    // Крупный граф: тик через кадр — DOM не успевает обновлять сотни
+                    // узлов на каждый RAF, полукадровая частота убирает лаг при drag
+                    this.frame_flip = !this.frame_flip;
+                    if (this.big_graph() && this.frame_flip && this.sim_ticks > 0) {
+                        requestAnimationFrame(loop);
+                        return;
+                    }
                     try {
                         this.tick();
                     }
                     catch { }
+                    this.sim_ticks++;
                     if (this.drag_id()) {
-                        this.sim_frames_left = Math.max(this.sim_frames_left, this.SIM_DRAG_FRAMES);
+                        this.sim_frames_left = Math.max(this.sim_frames_left, this.drag_frames());
                     }
                     this.sim_frames_left--;
-                    if (this.sim_frames_left <= 0 && !this.drag_id()) {
+                    // Все узлы ниже порога заморозки — граф осел, дожигать бюджет
+                    // кадров незачем (та самая долгая «вибрация» после микро-драга)
+                    const settled = this.sim_ticks > 15 && this.peak_speed < this.min_move();
+                    if ((this.sim_frames_left <= 0 || settled) && !this.drag_id()) {
                         this.sim_running = false;
                         return;
                     }
@@ -17227,7 +17277,7 @@ var $;
                 this.max_speed();
                 this.nodes(); // rebuild sim on new graph
                 // Idempotent: re-arms frame budget; starts loop if it was stopped
-                this.start_sim(this.SIM_DRAG_FRAMES);
+                this.start_sim(this.drag_frames());
                 return null;
             }
             // Kick off the initial spring-in exactly once, on first mount.
@@ -17241,9 +17291,20 @@ var $;
                     // гоняем лишь короткую стабилизацию вместо полного spring-in.
                     const key = this.graph_key();
                     const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has(key);
-                    this.start_sim(cached ? this.SIM_DRAG_FRAMES : this.SIM_INITIAL_FRAMES);
+                    this.start_sim(cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES);
                 }
                 return tree;
+            }
+            // --- крупные графы: масштаб визуала и физики от числа узлов ---
+            // Плавный коэффициент 1 → 0.45: на сотнях узлов кружки, рёбра и
+            // скорость движения ужимаются, иначе граф сливается в кашу.
+            size_scale() {
+                const n = this.nodes().length;
+                return Math.max(0.45, Math.min(1, Math.sqrt(220 / Math.max(1, n))));
+            }
+            // Порог «крупного» графа — дальше экономим на подписях и кадрах симуляции
+            big_graph() {
+                return this.nodes().length > 300;
             }
             node_by_id() {
                 const m = {};
@@ -17278,8 +17339,9 @@ var $;
             // whole canvas. Capped so even a 500-degree hub stays readable.
             node_radius_num(id) {
                 const n = this.node_by_id()[id];
-                const r = this.node_size_base() + this.node_size_growth() * Math.sqrt(n.degree);
-                return Math.min(r, 22);
+                const s = this.size_scale();
+                const r = (this.node_size_base() + this.node_size_growth() * Math.sqrt(n.degree)) * s;
+                return Math.min(r, 22 * s);
             }
             node_radius(id) {
                 return String(this.node_radius_num(id));
@@ -17381,7 +17443,7 @@ var $;
             }
             edge_width(id) {
                 const e = this.edge_by_id()[id];
-                const base = e.strength * 1.5 + 0.4;
+                const base = (e.strength * 1.5 + 0.4) * this.size_scale();
                 if (this.edge_active(id))
                     return String(base * 2.5);
                 const incident = this.hovered_id() && (e.source === this.hovered_id() || e.target === this.hovered_id())
@@ -17405,8 +17467,9 @@ var $;
                 if (this.filter_active() && !this.edge_matches(id))
                     return '0.08';
                 const hid = this.hovered_id() || this.selected_id();
+                // На крупном графе рёбра в полную яркость сливаются в серую сетку
                 if (!hid)
-                    return '0.55';
+                    return this.big_graph() ? '0.3' : '0.55';
                 return (e.source === hid || e.target === hid) ? '0.95' : '0.18';
             }
             edge_color(id) {
@@ -17440,16 +17503,23 @@ var $;
                 return id ? this.edge_by_id()[id] ?? null : null;
             }
             // ---- always-on labels ----
+            // Пустые подписи не рендерим вовсе: на крупном графе тысячи холостых
+            // <text> с пересчётом координат каждый тик — главный источник лагов.
             node_label_views() {
-                return this.nodes().map(n => this.Node_label(n.id));
+                return this.nodes()
+                    .filter(n => this.node_label_text(n.id) !== '')
+                    .map(n => this.Node_label(n.id));
             }
             edge_label_views() {
-                return this.edges().map(e => this.Edge_label(e.id));
+                return this.edges()
+                    .filter(e => this.edge_label_text(e.id) !== '')
+                    .map(e => this.Edge_label(e.id));
             }
             // Font sizes live in svg units, so they shrink on zoom-out. sqrt easing
             // (same as tooltip) keeps labels from ballooning when zoomed in close.
             node_label_font_size() {
-                return String(Math.max(4, Math.min(14, 10 / Math.sqrt(this.zoom()))));
+                const s = Math.max(0.7, this.size_scale());
+                return String(Math.max(4, Math.min(14, 10 * s / Math.sqrt(this.zoom()))));
             }
             edge_label_font_size() {
                 return String(Math.max(3, Math.min(11, 8 / Math.sqrt(this.zoom()))));
@@ -17463,7 +17533,10 @@ var $;
             // (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
             node_label_vis(id) {
                 const r_px = this.node_radius_num(id) * this.zoom();
-                return Math.max(0, Math.min(1, (r_px - 7) / 3));
+                // На крупном графе подписи только у заметных хабов, иначе каша;
+                // приближение растит r_px — подписи проявляются по мере зума
+                const min_px = this.big_graph() ? 11 : 7;
+                return Math.max(0, Math.min(1, (r_px - min_px) / 3));
             }
             node_label_text(id) {
                 if (this.active_id() === id)
@@ -17501,6 +17574,13 @@ var $;
                     return rel;
                 if (this.active_edge())
                     return ''; // не шумим подписями вокруг активного ребра
+                // На крупном графе фоновые подписи рёбер превращаются в серую пыль —
+                // оставляем их только вокруг наведённого/выбранного узла
+                if (this.big_graph()) {
+                    const hid = this.hovered_id() || this.selected_id();
+                    if (!hid || (e.source !== hid && e.target !== hid))
+                        return '';
+                }
                 if (this.filter_active() && !this.edge_matches(id))
                     return '';
                 const fs = parseFloat(this.edge_label_font_size());
@@ -17646,6 +17726,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "dom_tree", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "size_scale", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "node_by_id", null);

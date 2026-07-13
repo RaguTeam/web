@@ -8435,6 +8435,8 @@ declare namespace $ {
         damping: number;
         min_move: number;
         max_speed: number;
+        /** Масштаб базовой длины пружин k: на крупных графах < 1, чтобы раскладка не расползалась за вьюпорт. */
+        k_scale?: number;
     };
     /**
      * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
@@ -8866,12 +8868,18 @@ declare namespace $.$$ {
         tick(): void;
         sim_running: boolean;
         sim_frames_left: number;
+        sim_ticks: number;
+        peak_speed: number;
+        frame_flip: boolean;
         readonly SIM_INITIAL_FRAMES = 260;
         readonly SIM_DRAG_FRAMES = 60;
+        drag_frames(): 30 | 60;
         start_sim(frames?: number): void;
         params_kick(): null;
         initial_sim_started: boolean;
         dom_tree(): Element;
+        size_scale(): number;
+        big_graph(): boolean;
         node_by_id(): Record<string, GraphNode>;
         node_views(): $.$mol_svg_circle[];
         edge_views(): $.$mol_svg_line[];
@@ -8903,7 +8911,7 @@ declare namespace $.$$ {
         edge_active(id: string): boolean;
         edge_width(id: string): string;
         edge_matches(id: string): boolean;
-        edge_opacity(id: string): "0.95" | "0.12" | "0.08" | "0.55" | "0.18";
+        edge_opacity(id: string): "0.95" | "0.12" | "0.08" | "0.3" | "0.55" | "0.18";
         edge_color(id: string): "#ffffff" | "#7a7672";
         edge_hover_enter(id: string): null;
         edge_hover_leave(): null;
