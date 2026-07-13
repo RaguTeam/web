@@ -132,11 +132,76 @@ namespace $ {
 		k_scale?: number
 		/** Затухание (alpha-cooling как в d3-force): множитель сил 1 → 0. Гасит осцилляции вокруг равновесия — без него плотный граф дребезжит, пока не кончится бюджет кадров. */
 		heat?: number
+		/** Радиусы узлов (svg-юниты) для расталкивания перекрытий — без них кружки наезжают друг на друга. */
+		radii?: Record< string, number >
 	}
 
 	const FORCE_K = 60
 	const THETA = 0.3   // Barnes-Hut opening angle. Smaller = more accurate, slower
 	const THETA2 = THETA * THETA
+
+	// Один жёсткий проход разрешения коллизий: каждую пересекающуюся пару
+	// раздвигаем до касания (по половине перекрытия каждому). Пары ищем через
+	// spatial grid с ячейкой в максимальный диаметр — O(N × соседи), не O(N²).
+	// Мутирует positions на месте; возвращает максимальный сдвиг за проход —
+	// 0 означает «перекрытий не осталось».
+	function $raggu_web_front_explorer_forcegraph_collide_pass(
+		nodes: $raggu_web_front_explorer_forcegraph_node[],
+		positions: Record< string, { x: number, y: number } >,
+		radii: Record< string, number >,
+		pinned_id: string,
+	): number {
+		const pad = 1.5
+		let max_r = 0
+		for ( const n of nodes ) {
+			const r = radii[ n.id ] ?? 0
+			if ( r > max_r ) max_r = r
+		}
+		const cell = Math.max( 1, max_r * 2 + pad )
+		const grid = new Map< string, string[] >()
+		for ( const n of nodes ) {
+			const p = positions[ n.id ]
+			const key = `${ Math.floor( p.x / cell ) }:${ Math.floor( p.y / cell ) }`
+			const list = grid.get( key )
+			if ( list ) list.push( n.id ); else grid.set( key, [ n.id ] )
+		}
+		let peak = 0
+		for ( const n of nodes ) {
+			const p = positions[ n.id ]
+			const r1 = radii[ n.id ] ?? 0
+			const cx = Math.floor( p.x / cell )
+			const cy = Math.floor( p.y / cell )
+			for ( let gx = cx - 1; gx <= cx + 1; gx++ )
+			for ( let gy = cy - 1; gy <= cy + 1; gy++ ) {
+				const list = grid.get( `${ gx }:${ gy }` )
+				if ( !list ) continue
+				for ( const other of list ) {
+					if ( other <= n.id ) continue // каждую пару считаем один раз
+					const q = positions[ other ]
+					const min_d = r1 + ( radii[ other ] ?? 0 ) + pad
+					let dx = q.x - p.x
+					let dy = q.y - p.y
+					const d2 = dx * dx + dy * dy
+					if ( d2 >= min_d * min_d ) continue
+					let d = Math.sqrt( d2 )
+					if ( d < 0.01 ) { dx = min_d; dy = 0; d = min_d } // совпали — разводим по x
+					const push = ( min_d - d ) / d * 0.5
+					const fx = dx * push
+					const fy = dy * push
+					const move = Math.sqrt( fx * fx + fy * fy )
+					if ( move > peak ) peak = move
+					// Перетаскиваемый узел не двигаем — вся поправка соседу
+					if ( n.id === pinned_id ) { q.x += fx * 2; q.y += fy * 2 }
+					else if ( other === pinned_id ) { p.x -= fx * 2; p.y -= fy * 2 }
+					else {
+						p.x -= fx; p.y -= fy
+						q.x += fx; q.y += fy
+					}
+				}
+			}
+		}
+		return peak
+	}
 
 	// --- Barnes-Hut quadtree ------------------------------------------------
 	// Instead of every-pair repulsion ( O(N²) ), aggregate distant groups of
@@ -225,6 +290,8 @@ namespace $ {
 	): {
 		positions: Record< string, { x: number, y: number } >,
 		velocities: Record< string, { vx: number, vy: number } >,
+		/** Максимальный сдвиг узла коллизиями за этот тик — 0 когда перекрытий нет. */
+		collide_peak: number,
 	} {
 		const { gravity, force_scale, damping, min_move, max_speed } = params
 		const k = FORCE_K * ( params.k_scale ?? 1 )
@@ -301,7 +368,20 @@ namespace $ {
 			next_pos[ n.id ] = { x: positions[ n.id ].x + vx * gate, y: positions[ n.id ].y + vy * gate }
 			next_vel[ n.id ] = { vx, vy }
 		}
-		return { positions: next_pos, velocities: next_vel }
+
+		// Коллизии: жёстко продавливаем непересечение. Один проход раздвигает
+		// пары до касания, цепочки (раздвинули пару — наехали на третьего)
+		// дожимаются повторными проходами. Пружины не успевают слепить узлы
+		// обратно — на экран каждый тик уходит уже разрешённое состояние.
+		let collide_peak = 0
+		if ( params.radii ) {
+			collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id )
+			for ( let i = 0; i < 2; i++ ) {
+				if ( $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id ) < 0.05 ) break
+			}
+		}
+
+		return { positions: next_pos, velocities: next_vel, collide_peak }
 	}
 
 	// Initial positions from mock coords — no synchronous FR pre-compute.
@@ -312,6 +392,7 @@ namespace $ {
 	// нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
 	export function $raggu_web_front_explorer_forcegraph_initial_positions(
 		nodes: $raggu_web_front_explorer_forcegraph_node[],
+		radii?: Record< string, number >,
 	): Record< string, { x: number, y: number } > {
 		let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity
 		for ( const n of nodes ) {
@@ -326,6 +407,11 @@ namespace $ {
 		const scale = span > 1 ? 520 / span : 1
 		const positions: Record< string, { x: number, y: number } > = {}
 		for ( const n of nodes ) positions[ n.id ] = { x: ( n.x - cx ) * scale, y: ( n.y - cy ) * scale }
+		// Продавливаем коллизии ещё до первого кадра — граф ни на миг
+		// не рисуется слипшимся.
+		if ( radii ) for ( let i = 0; i < 40; i++ ) {
+			if ( $raggu_web_front_explorer_forcegraph_collide_pass( nodes, positions, radii, '' ) < 0.05 ) break
+		}
 		return positions
 	}
 

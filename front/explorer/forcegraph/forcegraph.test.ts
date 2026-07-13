@@ -43,7 +43,7 @@ namespace $.$$ {
 
 	$mol_test( {
 
-		'pos(id): no override → normalized layout coords (bbox вписан в 520 вокруг нуля)'( $ ) {
+		'pos(id): no override → normalized layout coords (bbox ~520 вокруг нуля, без перекрытий)'( $ ) {
 			const { g } = make_graph( $ )
 			let min_x = Infinity, max_x = -Infinity, min_y = Infinity, max_y = -Infinity
 			for ( const n of g.nodes() ) {
@@ -51,10 +51,22 @@ namespace $.$$ {
 				min_x = Math.min( min_x, p.x ); max_x = Math.max( max_x, p.x )
 				min_y = Math.min( min_y, p.y ); max_y = Math.max( max_y, p.y )
 			}
+			// Нормализация вписывает bbox в 520, стартовое расталкивание
+			// коллизий может слегка расширить его и сместить центр
 			const span = Math.max( max_x - min_x, max_y - min_y )
-			$mol_assert_equal( Math.abs( span - 520 ) < 1, true )
-			$mol_assert_equal( Math.abs( min_x + max_x ) < 1, true )
-			$mol_assert_equal( Math.abs( min_y + max_y ) < 1, true )
+			$mol_assert_equal( span >= 500 && span <= 720, true )
+			$mol_assert_equal( Math.abs( min_x + max_x ) < 80, true )
+			$mol_assert_equal( Math.abs( min_y + max_y ) < 80, true )
+			// Перекрытий нет уже на старте
+			const nodes = g.nodes()
+			for ( let i = 0; i < nodes.length; i++ )
+			for ( let j = i + 1; j < nodes.length; j++ ) {
+				const a = g.pos( nodes[ i ].id )
+				const b = g.pos( nodes[ j ].id )
+				const d = Math.hypot( a.x - b.x, a.y - b.y )
+				const min_d = g.node_radius_num( nodes[ i ].id ) + g.node_radius_num( nodes[ j ].id )
+				$mol_assert_equal( d >= min_d - 0.5, true )
+			}
 		},
 
 		// THE bug from user: 1-pixel pointer move ⇒ node travels exactly 1 pixel.

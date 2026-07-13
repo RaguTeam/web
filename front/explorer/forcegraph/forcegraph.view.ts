@@ -170,7 +170,10 @@ namespace $.$$ {
 		// nodes settled into the circular bound, not the raw square mock coords.
 		@$mol_mem
 		initial_positions(): Record< string, { x: number, y: number } > {
-			return $raggu_web_front_explorer_forcegraph_initial_positions( this.nodes() as GraphNode[] )
+			return $raggu_web_front_explorer_forcegraph_initial_positions(
+				this.nodes() as GraphNode[],
+				this.node_radii(),
+			)
 		}
 
 		// Seed positions on first read, or re-seed when the node set changes
@@ -212,6 +215,8 @@ namespace $.$$ {
 				k_scale: this.size_scale(),
 				// Затухание: силы гаснут со временем симуляции, дребезг умирает
 				heat: this.sim_alpha,
+				// Радиусы для расталкивания — кружки не наезжают друг на друга
+				radii: this.node_radii(),
 			}
 		}
 
@@ -236,6 +241,7 @@ namespace $.$$ {
 				if ( speed > peak ) peak = speed
 			}
 			this.peak_speed = peak
+			this.collide_peak = next.collide_peak
 			this.positions( next.positions )
 			// Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
 			const key = this.graph_key()
@@ -250,6 +256,7 @@ namespace $.$$ {
 		sim_frames_left = 0
 		sim_ticks = 0
 		peak_speed = Infinity
+		collide_peak = 0
 		frame_flip = false
 		readonly SIM_INITIAL_FRAMES = 260
 		readonly SIM_DRAG_FRAMES = 60
@@ -279,6 +286,7 @@ namespace $.$$ {
 			this.sim_ticks = 0
 			this.sim_alpha = heat
 			this.peak_speed = Infinity
+			this.collide_peak = Infinity
 			const loop = () => {
 				if ( !this.sim_running ) return
 				// Во время drag на крупном графе тик через кадр: DOM не успевает
@@ -289,18 +297,26 @@ namespace $.$$ {
 					requestAnimationFrame( loop )
 					return
 				}
-				try { this.tick() } catch {}
-				this.sim_ticks++
-				this.sim_alpha = Math.max( 0, this.sim_alpha * this.ALPHA_DECAY )
+				// Пока данные с бэка грузятся, tick кидает wire-promise. Такие
+				// кадры не считаем ни тиками, ни затуханием — иначе симуляция
+				// «остывает» и глохнет до прихода данных, оставив наезды узлов.
+				let ok = true
+				try { this.tick() } catch { ok = false }
+				if ( ok ) {
+					this.sim_ticks++
+					this.sim_alpha = Math.max( 0, this.sim_alpha * this.ALPHA_DECAY )
+				}
 				if ( this.drag_id() ) {
 					this.sim_frames_left = Math.max( this.sim_frames_left, this.drag_frames() )
 					this.sim_alpha = Math.max( this.sim_alpha, this.ALPHA_DRAG )
 				}
 				this.sim_frames_left--
 				// Граф осел (всё ниже порога заморозки) либо остыл (alpha на нуле) —
-				// дожигать бюджет кадров незачем
-				const settled = this.sim_ticks > 15
+				// дожигать бюджет кадров незачем. Но пока коллизии заметно
+				// раздвигают узлы, не глохнем — иначе останутся перекрытия.
+				const settled = ok && this.sim_ticks > 15
 					&& ( this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN )
+					&& this.collide_peak < 0.4
 				if ( ( this.sim_frames_left <= 0 || settled ) && !this.drag_id() ) {
 					this.sim_running = false
 					return
@@ -406,6 +422,14 @@ namespace $.$$ {
 		}
 		node_radius( id: string ) {
 			return String( this.node_radius_num( id ) )
+		}
+
+		// Карта радиусов для коллизий в симуляции — в svg-юнитах, как позиции
+		@$mol_mem
+		node_radii(): Record< string, number > {
+			const m: Record< string, number > = {}
+			for ( const n of this.nodes() ) m[ n.id ] = this.node_radius_num( n.id )
+			return m
 		}
 		node_color( id: string ) {
 			return $raggu_web_front_explorer_forcegraph_type_color( this.node_by_id()[ id ].type )
