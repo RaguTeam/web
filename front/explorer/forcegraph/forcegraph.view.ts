@@ -382,6 +382,14 @@ namespace $.$$ {
 			return this.nodes().length > 300
 		}
 
+		// Плотность рёбер: полупрозрачные линии при наложении складываются и
+		// жирнеют, поэтому чем рёбер больше, тем тоньше и бледнее фоновые.
+		@$mol_mem
+		edge_scale() {
+			const e = this.edges().length
+			return Math.max( 0.35, Math.min( 1, Math.sqrt( 150 / Math.max( 1, e ) ) ) )
+		}
+
 		@$mol_mem
 		node_by_id(): Record< string, GraphNode > {
 			const m: Record< string, GraphNode > = {}
@@ -549,7 +557,7 @@ namespace $.$$ {
 
 		edge_width( id: string ) {
 			const e = this.edge_by_id()[ id ]
-			const base = ( e.strength * 1.5 + 0.4 ) * this.size_scale()
+			const base = ( e.strength * 1.5 + 0.4 ) * this.size_scale() * this.edge_scale()
 			if ( this.edge_active( id ) ) return String( base * 2.5 )
 			const incident = this.hovered_id() && ( e.source === this.hovered_id() || e.target === this.hovered_id() )
 				|| this.selected_id() && ( e.source === this.selected_id() || e.target === this.selected_id() )
@@ -568,8 +576,8 @@ namespace $.$$ {
 			if ( this.active_edge() ) return '0.12'
 			if ( this.filter_active() && !this.edge_matches( id ) ) return '0.08'
 			const hid = this.hovered_id() || this.selected_id()
-			// На крупном графе рёбра в полную яркость сливаются в серую сетку
-			if ( !hid ) return this.big_graph() ? '0.3' : '0.55'
+			// Фоновая яркость тает с числом рёбер — иначе серая сетка
+			if ( !hid ) return String( +( 0.55 * this.edge_scale() ).toFixed( 2 ) )
 			return ( e.source === hid || e.target === hid ) ? '0.95' : '0.18'
 		}
 		edge_color( id: string ) {
