@@ -130,6 +130,8 @@ namespace $ {
 		max_speed: number     // tanh-saturated speed ceiling
 		/** Масштаб базовой длины пружин k: на крупных графах < 1, чтобы раскладка не расползалась за вьюпорт. */
 		k_scale?: number
+		/** Затухание (alpha-cooling как в d3-force): множитель сил 1 → 0. Гасит осцилляции вокруг равновесия — без него плотный граф дребезжит, пока не кончится бюджет кадров. */
+		heat?: number
 	}
 
 	const FORCE_K = 60
@@ -284,8 +286,9 @@ namespace $ {
 				continue
 			}
 			const prev = velocities[ n.id ] || { vx: 0, vy: 0 }
-			let vx = ( prev.vx + dispX[ n.id ] * force_scale ) * damping
-			let vy = ( prev.vy + dispY[ n.id ] * force_scale ) * damping
+			const step = force_scale * ( params.heat ?? 1 )
+			let vx = ( prev.vx + dispX[ n.id ] * step ) * damping
+			let vy = ( prev.vy + dispY[ n.id ] * step ) * damping
 			const speed = Math.sqrt( vx * vx + vy * vy )
 			// Soft speed cap: tanh saturation.
 			if ( speed > 0 ) {

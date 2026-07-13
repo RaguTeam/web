@@ -210,6 +210,8 @@ namespace $.$$ {
 				max_speed: this.max_speed() * this.size_scale(),
 				// …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
 				k_scale: this.size_scale(),
+				// Затухание: силы гаснут со временем симуляции, дребезг умирает
+				heat: this.sim_alpha,
 			}
 		}
 
@@ -252,36 +254,53 @@ namespace $.$$ {
 		readonly SIM_INITIAL_FRAMES = 260
 		readonly SIM_DRAG_FRAMES = 60
 
+		// Alpha-cooling (как в d3-force): множитель сил, тает каждый тик.
+		// Осцилляции вокруг равновесия гаснут вместе с ним — вместо дребезга
+		// до конца бюджета кадров граф плавно замирает за секунду-полторы.
+		sim_alpha = 1
+		readonly ALPHA_DECAY = 0.97
+		readonly ALPHA_MIN = 0.03
+		readonly ALPHA_REHEAT = 0.3
+		readonly ALPHA_DRAG = 0.5
+
 		// Хвост симуляции после отпускания узла — на крупном графе короче
 		drag_frames() {
-			return this.big_graph() ? 30 : this.SIM_DRAG_FRAMES
+			return this.big_graph() ? 45 : this.SIM_DRAG_FRAMES
 		}
 
-		start_sim( frames: number = this.drag_frames() ) {
+		start_sim( frames: number = this.drag_frames(), heat: number = this.ALPHA_REHEAT ) {
 			this.sim_frames_left = Math.max( this.sim_frames_left, frames )
-			if ( this.sim_running ) return
+			if ( this.sim_running ) {
+				this.sim_alpha = Math.max( this.sim_alpha, heat )
+				return
+			}
 			if ( typeof window === 'undefined' ) return
 			this.sim_running = true
 			this.sim_ticks = 0
+			this.sim_alpha = heat
 			this.peak_speed = Infinity
 			const loop = () => {
 				if ( !this.sim_running ) return
-				// Крупный граф: тик через кадр — DOM не успевает обновлять сотни
-				// узлов на каждый RAF, полукадровая частота убирает лаг при drag
+				// Во время drag на крупном графе тик через кадр: DOM не успевает
+				// обновлять сотни узлов на каждый RAF, полукадровая частота
+				// оставляет бюджет самому перетаскиванию
 				this.frame_flip = !this.frame_flip
-				if ( this.big_graph() && this.frame_flip && this.sim_ticks > 0 ) {
+				if ( this.big_graph() && this.drag_id() && this.frame_flip ) {
 					requestAnimationFrame( loop )
 					return
 				}
 				try { this.tick() } catch {}
 				this.sim_ticks++
+				this.sim_alpha = Math.max( 0, this.sim_alpha * this.ALPHA_DECAY )
 				if ( this.drag_id() ) {
 					this.sim_frames_left = Math.max( this.sim_frames_left, this.drag_frames() )
+					this.sim_alpha = Math.max( this.sim_alpha, this.ALPHA_DRAG )
 				}
 				this.sim_frames_left--
-				// Все узлы ниже порога заморозки — граф осел, дожигать бюджет
-				// кадров незачем (та самая долгая «вибрация» после микро-драга)
-				const settled = this.sim_ticks > 15 && this.peak_speed < this.min_move()
+				// Граф осел (всё ниже порога заморозки) либо остыл (alpha на нуле) —
+				// дожигать бюджет кадров незачем
+				const settled = this.sim_ticks > 15
+					&& ( this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN )
 				if ( ( this.sim_frames_left <= 0 || settled ) && !this.drag_id() ) {
 					this.sim_running = false
 					return
@@ -320,7 +339,11 @@ namespace $.$$ {
 				// гоняем лишь короткую стабилизацию вместо полного spring-in.
 				const key = this.graph_key()
 				const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has( key )
-				this.start_sim( cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES )
+				// Полный прогрев только для свежего графа; осевший лишь стабилизируем
+				this.start_sim(
+					cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES,
+					cached ? this.ALPHA_REHEAT : 1,
+				)
 			}
 			return tree
 		}
@@ -431,9 +454,25 @@ namespace $.$$ {
 			return Boolean( e && ( e.source === id || e.target === id ) )
 		}
 
+		// Наведённый/выбранный узел + его соседи. Остальное затемняем —
+		// симметрично эффекту наведения на ребро.
+		@$mol_mem
+		active_node_hood(): Set< string > | null {
+			const id = this.active_id()
+			if ( !id ) return null
+			const hood = new Set( [ id ] )
+			for ( const e of this.edges() ) {
+				if ( e.source === id ) hood.add( e.target )
+				if ( e.target === id ) hood.add( e.source )
+			}
+			return hood
+		}
+
 		node_opacity( id: string ) {
 			// Активное ребро затемняет всё, кроме своих концов — как hover узла
 			if ( this.active_edge() ) return this.edge_endpoint( id ) ? '1' : '0.25'
+			const hood = this.active_node_hood()
+			if ( hood ) return hood.has( id ) ? '1' : '0.25'
 			return this.node_matches( id ) ? '1' : '0.12'
 		}
 		node_stroke( id: string ) {
@@ -586,14 +625,23 @@ namespace $.$$ {
 			if ( this.active_id() === id ) return '' // tooltip уже показывает label
 			// Концы активного ребра подписываем всегда — видно, что оно связывает
 			if ( this.edge_endpoint( id ) ) return this.node_by_id()[ id ]?.label ?? ''
+			const hood = this.active_node_hood()
+			if ( hood ) {
+				if ( !hood.has( id ) ) return '' // затемнённым подписи не нужны
+				// Соседей наведённого узла подписываем всегда (пока их разумно мало)
+				if ( hood.size <= 22 ) return this.node_by_id()[ id ]?.label ?? ''
+			}
 			if ( !this.node_matches( id ) ) return ''
-			if ( this.node_label_vis( id ) <= 0 ) return ''
+			// Порог повыше нуля: у самого порога подпись была бы почти прозрачной
+			if ( this.node_label_vis( id ) <= 0.3 ) return ''
 			return this.node_by_id()[ id ]?.label ?? ''
 		}
 
 		node_label_opacity( id: string ) {
 			if ( this.edge_endpoint( id ) ) return '1'
-			return String( this.node_label_vis( id ) * 0.85 )
+			if ( this.active_node_hood()?.has( id ) ) return '1'
+			// Быстрый разгон до непрозрачности — долгий fade читался как баг
+			return String( Math.min( 1, 0.75 + this.node_label_vis( id ) * 0.25 ) )
 		}
 
 		edge_label_mid( id: string ) {
@@ -637,7 +685,7 @@ namespace $.$$ {
 				const e = this.edge_by_id()[ id ]
 				return ( e.source === hid || e.target === hid ) ? '0.95' : '0.25'
 			}
-			return '0.75'
+			return '0.85'
 		}
 
 		// Suppress click that fires right after node-drag (drag_id was just released)
