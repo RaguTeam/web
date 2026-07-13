@@ -443,6 +443,12 @@ namespace $.$$ {
 			return m
 		}
 		node_color( id: string ) {
+			// При активном фильтре сообществ узлы выбранных красим в цвет сообщества
+			const cs = this.comm_set()
+			if ( cs.size ) {
+				const comm = this.node_comm( id )
+				if ( cs.has( comm ) ) return this.comm_color( comm ) || $raggu_web_front_explorer_forcegraph_type_color( this.node_by_id()[ id ].type )
+			}
 			return $raggu_web_front_explorer_forcegraph_type_color( this.node_by_id()[ id ].type )
 		}
 
@@ -451,8 +457,21 @@ namespace $.$$ {
 		search_lc() {
 			return this.search().trim().toLowerCase()
 		}
+
+		// Выбранные в выпадашке сообщества — Set для O(1) проверок
+		@$mol_mem
+		comm_set(): Set< string > {
+			return new Set( this.filter_comms() as string[] )
+		}
+		node_comm( id: string ) {
+			return this.node_by_id()[ id ]?.community ?? ''
+		}
+		comm_color( id: string ): string {
+			return ( this.comm_colors() as Record< string, string > )[ id ] ?? ''
+		}
+
 		filter_active() {
-			return Boolean( this.search_lc() || this.filter_type() || this.filter_relation() )
+			return Boolean( this.search_lc() || this.filter_type() || this.filter_relation() || this.comm_set().size )
 		}
 		node_matches( id: string ) {
 			const n = this.node_by_id()[ id ]
@@ -463,6 +482,8 @@ namespace $.$$ {
 			// Фильтр по типу связи подсвечивает концы матчащихся рёбер
 			const r = this.filter_relation()
 			if( r && !this.node_has_relation( id, r ) ) return false
+			const cs = this.comm_set()
+			if( cs.size && !cs.has( n?.community ?? '' ) ) return false
 			return true
 		}
 
@@ -567,6 +588,13 @@ namespace $.$$ {
 			const e = this.edge_by_id()[ id ]
 			const r = this.filter_relation()
 			if ( r && e.relation !== r ) return false
+			// Сообщества: подсвечиваем только ВНУТРЕННИЕ рёбра — оба конца
+			// в одном и том же выбранном сообществе
+			const cs = this.comm_set()
+			if ( cs.size ) {
+				const ca = this.node_comm( e.source )
+				if ( ca !== this.node_comm( e.target ) || !cs.has( ca ) ) return false
+			}
 			return this.node_matches( e.source ) && this.node_matches( e.target )
 		}
 		edge_opacity( id: string ) {
@@ -575,6 +603,8 @@ namespace $.$$ {
 			// Активное ребро приглушает все остальные — как hover узла
 			if ( this.active_edge() ) return '0.12'
 			if ( this.filter_active() && !this.edge_matches( id ) ) return '0.08'
+			// Внутренние рёбра выбранных сообществ — ярче фона
+			if ( this.comm_set().size && this.edge_matches( id ) ) return '0.85'
 			const hid = this.hovered_id() || this.selected_id()
 			// Фоновая яркость тает с числом рёбер — иначе серая сетка
 			if ( !hid ) return String( +( 0.55 * this.edge_scale() ).toFixed( 2 ) )
@@ -585,6 +615,12 @@ namespace $.$$ {
 			const e = this.edge_by_id()[ id ]
 			const hid = this.hovered_id() || this.selected_id()
 			if ( hid && ( e.source === hid || e.target === hid ) ) return '#ffffff'
+			// Внутреннее ребро выбранного сообщества — в его цвет
+			const cs = this.comm_set()
+			if ( cs.size && this.edge_matches( id ) ) {
+				const c = this.comm_color( this.node_comm( e.source ) )
+				if ( c ) return c
+			}
 			return '#7a7672'
 		}
 

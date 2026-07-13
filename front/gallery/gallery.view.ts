@@ -24,24 +24,7 @@ namespace $.$$ {
 		return String( n )
 	}
 
-	function random_stats( seed: number ) {
-		const rng = ( m: number ) => Math.floor( ( Math.sin( seed++ ) * 10000 % m + m ) % m )
-		const nodes = 800 + rng( 7200 )
-		const edges = nodes * ( 2 + rng( 4 ) )
-		const comms = 12 + rng( 80 )
-		return {
-			nodes: format_count( nodes ),
-			edges: format_count( edges ),
-			comms: String( comms ),
-		}
-	}
-
 	export class $raggu_web_front_gallery extends $.$raggu_web_front_gallery {
-
-		@$mol_mem
-		extra_datasets( next?: DatasetStats[] ): DatasetStats[] {
-			return next ?? []
-		}
 
 		// URL flag `?mock=1` → BUILTIN.
 		mock_flag(): boolean {
@@ -79,8 +62,7 @@ namespace $.$$ {
 		}
 
 		datasets() {
-			const base = this.remote_datasets() ?? BUILTIN
-			return [ ...base, ...this.extra_datasets() ]
+			return this.remote_datasets() ?? BUILTIN
 		}
 
 		rows() {
@@ -128,65 +110,6 @@ namespace $.$$ {
 		@$mol_action
 		click( id: string ) {
 			this.select_dataset( id )
-			return null
-		}
-
-		/** Mock file size in MB for upload validation. */
-		mock_file_size( kind: string ): number {
-			// document = always small, index = sometimes too big to demo validation
-			return kind === 'index' ? 4.2 : 2.8
-		}
-
-		@$mol_action
-		upload_doc_click() {
-			this.start_upload( 'document' )
-			return null
-		}
-
-		@$mol_action
-		upload_idx_click() {
-			this.start_upload( 'index' )
-			return null
-		}
-
-		@$mol_action
-		start_upload( kind: 'document' | 'index' ) {
-			this.upload_kind( kind )
-			this.upload_showed( true )
-			;( this.Upload() as $.$$.$raggu_web_front_gallery_upload ).start( this.mock_file_size( kind ) )
-			return null
-		}
-
-		@$mol_action
-		upload_complete() {
-			const kind = this.upload_kind() || 'document'
-			const list = this.extra_datasets()
-			const idx = list.length + 1
-			const id = `up-${ Date.now() }-${ idx }`
-			const seed = Date.now() + idx
-			const stats = random_stats( seed )
-			const title_prefix = kind === 'index' ? this.uploaded_index_title() : this.uploaded_document_title()
-			const domain = this.uploaded_domain()
-			const desc = this.uploaded_desc()
-			this.extra_datasets( [
-				...list,
-				{
-					id,
-					nodes: stats.nodes,
-					edges: stats.edges,
-					comms: stats.comms,
-					dynamic: { title: `${ title_prefix } #${ idx }`, domain, desc },
-				},
-			] )
-			this.upload_showed( false )
-			this.upload_kind( '' )
-			return null
-		}
-
-		@$mol_action
-		upload_close() {
-			this.upload_showed( false )
-			this.upload_kind( '' )
 			return null
 		}
 

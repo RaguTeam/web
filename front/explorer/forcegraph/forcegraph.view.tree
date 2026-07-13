@@ -10,6 +10,8 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	search \
 	filter_type \
 	filter_relation \
+	filter_comms /
+	comm_colors *
 	graph_key \
 	nodes /
 	edges /

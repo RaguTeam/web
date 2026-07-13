@@ -12,6 +12,8 @@ namespace $ {
 		degree: number
 		x: number
 		y: number
+		/** Community id из бэка (Leiden); пустая строка = не определено. */
+		community?: string
 	}
 
 	export type $raggu_web_front_explorer_forcegraph_edge = {
@@ -42,6 +44,12 @@ namespace $ {
 		DATE: '#e0a73f',
 		WORK: '#7c6ce0',
 		LAW: '#3fb8b8',
+	}
+
+	/** Цвет по порядковому номеру — для сообществ: каждому свой из палитры. */
+	export function $raggu_web_front_explorer_forcegraph_index_color( i: number ): string {
+		const palette = $raggu_web_front_explorer_forcegraph_palette
+		return palette[ ( ( i % palette.length ) + palette.length ) % palette.length ]
 	}
 
 	/** Deterministic color for any entity_type string. */
@@ -84,6 +92,9 @@ namespace $ {
 	} {
 		const r = rand( seed )
 		const nodes: $raggu_web_front_explorer_forcegraph_node[] = []
+		// Сообщества назначаем блоками по индексу (без PRNG — не сдвигает
+		// последовательность и не ломает детерминированные тесты).
+		const n_comms = Math.max( 1, Math.min( 6, Math.floor( n_nodes / 12 ) ) )
 		for ( let i = 0; i < n_nodes; i++ ) {
 			const type = TYPES[ Math.floor( r() * TYPES.length ) ]
 			nodes.push( {
@@ -93,6 +104,7 @@ namespace $ {
 				degree: 0,
 				x: ( r() - 0.5 ) * 400,
 				y: ( r() - 0.5 ) * 400,
+				community: `c${ i % n_comms }`,
 			} )
 		}
 		const edges: $raggu_web_front_explorer_forcegraph_edge[] = []

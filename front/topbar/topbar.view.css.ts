@@ -52,29 +52,6 @@ namespace $ {
 			flex: { grow: 1 },
 		},
 
-		Preset_label: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 600,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.shade,
-			textTransform: 'uppercase',
-		},
-
-		Preset_group: {
-			flex: { direction: 'row' },
-			gap: '0.25rem',
-			background: { color: $bog_builderui_tokens.field },
-			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-			padding: {
-				top: '3px',
-				bottom: '3px',
-				left: '3px',
-				right: '3px',
-			},
-		},
-
 		Help_btn: {
 			flex: { direction: 'row' },
 			align: { items: 'center' },
@@ -91,23 +68,7 @@ namespace $ {
 			cursor: 'pointer',
 		},
 
-		Settings_btn: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			gap: '6px',
-			background: { color: $bog_builderui_tokens.card },
-			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
-			padding: {
-				top: '7px',
-				bottom: '7px',
-				left: '12px',
-				right: '12px',
-			},
-			font: { size: '12px', weight: 600 },
-			cursor: 'pointer',
-		},
-
-		// Навигация + центрированный заголовок + пресеты не влезают уже на
+		// Навигация + центрированный заголовок не влезают уже на
 		// ноутбучных ширинах, поэтому враппим сильно раньше, чем раньше (720).
 		'@media': {
 			'(max-width: 1200px)': {

@@ -2,18 +2,9 @@ $raggu_web_front_gallery $bog_builderui_div
 	dataset_id \wiki
 	select_dataset? null
 	datasets /
-	upload_kind? \
-	upload_complete? null
-	upload_close? null
 	header_title_text @ \Corpus gallery
-	header_subtitle_text @ \Pick a ready knowledge graph or upload your own document / index
+	header_subtitle_text @ \Pick a ready knowledge graph
 	mock_badge_text @ \⚠ Mock data — backend is not connected
-	upload_doc_text @ \＋ Upload document
-	upload_idx_text @ \⇪ Upload prebuilt index
-	uploaded_document_title @ \Uploaded document
-	uploaded_index_title @ \Uploaded index
-	uploaded_domain @ \User upload
-	uploaded_desc @ \Mock dataset built by the demo indexing pipeline.
 	dataset_law_title @ \Russian Codes & Laws
 	dataset_law_domain @ \Law
 	dataset_law_desc @ \Network of norms, references, bodies and concepts of Russian law.
@@ -31,12 +22,6 @@ $raggu_web_front_gallery $bog_builderui_div
 						raggu_web_front_gallery_mock_badge_showed <= is_mock false
 					sub / <= mock_badge_text
 			<= Spacer $bog_builderui_div
-			<= Upload_doc $bog_builderui_div
-				sub / <= upload_doc_text
-				event * click? <=> upload_doc_click? null
-			<= Upload_idx $bog_builderui_div
-				sub / <= upload_idx_text
-				event * click? <=> upload_idx_click? null
 		<= Grid $bog_builderui_div sub <= rows /
 			<= Card* $raggu_web_front_gallery_card
 				id <= card_id* \
@@ -48,8 +33,3 @@ $raggu_web_front_gallery $bog_builderui_div
 				comms <= card_comms* \
 				active <= card_active* false
 				click? <=> click*? null
-		<= Upload $raggu_web_front_gallery_upload
-			showed? <=> upload_showed? false
-			kind <= upload_kind?
-			complete? <=> upload_complete? null
-			close? <=> upload_close? null
