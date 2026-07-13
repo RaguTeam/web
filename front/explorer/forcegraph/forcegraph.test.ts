@@ -43,12 +43,18 @@ namespace $.$$ {
 
 	$mol_test( {
 
-		'pos(id): no override → layout coords'( $ ) {
+		'pos(id): no override → normalized layout coords (bbox вписан в 520 вокруг нуля)'( $ ) {
 			const { g } = make_graph( $ )
-			const n = g.nodes()[ 0 ]
-			const p = g.pos( n.id )
-			$mol_assert_equal( p.x, n.x )
-			$mol_assert_equal( p.y, n.y )
+			let min_x = Infinity, max_x = -Infinity, min_y = Infinity, max_y = -Infinity
+			for ( const n of g.nodes() ) {
+				const p = g.pos( n.id )
+				min_x = Math.min( min_x, p.x ); max_x = Math.max( max_x, p.x )
+				min_y = Math.min( min_y, p.y ); max_y = Math.max( max_y, p.y )
+			}
+			const span = Math.max( max_x - min_x, max_y - min_y )
+			$mol_assert_equal( Math.abs( span - 520 ) < 1, true )
+			$mol_assert_equal( Math.abs( min_x + max_x ) < 1, true )
+			$mol_assert_equal( Math.abs( min_y + max_y ) < 1, true )
 		},
 
 		// THE bug from user: 1-pixel pointer move ⇒ node travels exactly 1 pixel.

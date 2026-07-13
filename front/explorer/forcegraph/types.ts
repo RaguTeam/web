@@ -128,6 +128,8 @@ namespace $ {
 		damping: number       // velocity persistence per tick (0..1, higher = springier)
 		min_move: number      // smooth freeze gate midpoint (px/tick)
 		max_speed: number     // tanh-saturated speed ceiling
+		/** Масштаб базовой длины пружин k: на крупных графах < 1, чтобы раскладка не расползалась за вьюпорт. */
+		k_scale?: number
 	}
 
 	const FORCE_K = 60
@@ -223,7 +225,7 @@ namespace $ {
 		velocities: Record< string, { vx: number, vy: number } >,
 	} {
 		const { gravity, force_scale, damping, min_move, max_speed } = params
-		const k = FORCE_K
+		const k = FORCE_K * ( params.k_scale ?? 1 )
 		const k2 = k * k
 		const dispX: Record< string, number > = {}
 		const dispY: Record< string, number > = {}
@@ -302,11 +304,25 @@ namespace $ {
 	// Initial positions from mock coords — no synchronous FR pre-compute.
 	// The view auto-starts a live sim that visibly settles the graph
 	// ( Obsidian-style spring-in ).
+	// Бэковые раскладки приходят в произвольном масштабе (у medical — тысячи
+	// юнитов), а камера и гравитация живут в мире 600×600 вокруг нуля —
+	// нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
 	export function $raggu_web_front_explorer_forcegraph_initial_positions(
 		nodes: $raggu_web_front_explorer_forcegraph_node[],
 	): Record< string, { x: number, y: number } > {
+		let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity
+		for ( const n of nodes ) {
+			if ( n.x < min_x ) min_x = n.x
+			if ( n.y < min_y ) min_y = n.y
+			if ( n.x > max_x ) max_x = n.x
+			if ( n.y > max_y ) max_y = n.y
+		}
+		const cx = ( min_x + max_x ) / 2
+		const cy = ( min_y + max_y ) / 2
+		const span = Math.max( max_x - min_x, max_y - min_y )
+		const scale = span > 1 ? 520 / span : 1
 		const positions: Record< string, { x: number, y: number } > = {}
-		for ( const n of nodes ) positions[ n.id ] = { x: n.x, y: n.y }
+		for ( const n of nodes ) positions[ n.id ] = { x: ( n.x - cx ) * scale, y: ( n.y - cy ) * scale }
 		return positions
 	}
 
