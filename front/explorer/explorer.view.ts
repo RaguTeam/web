@@ -3,9 +3,8 @@ namespace $.$$ {
 	type GraphNode = $raggu_web_front_explorer_forcegraph_node
 	type GraphEdge = $raggu_web_front_explorer_forcegraph_edge
 
-	// Default page size for the graph endpoint. Бэк режет limit на 5000.
+	// Default page size for the graph endpoint.
 	const GRAPH_LIMIT = 500
-	const GRAPH_LIMIT_MAX = 5000
 
 	// Module-scoped cache keyed by dataset_id. Survives component remount:
 	// switching tabs drops the @$mol_mem cell's subscribers and resets it, so
@@ -22,11 +21,13 @@ namespace $.$$ {
 
 		// Размер выборки графа — URL-арг `limit` (например #!limit=5000).
 		// По умолчанию 500: SVG на тысячах узлов заметно тяжелеет.
+		// Сверху НЕ ограничиваем: сейчас бэк режет на 5000 (422), но лимит там
+		// собираются поднимать — фронт должен позволять это проверить.
 		@$mol_mem
 		graph_limit(): number {
 			const raw = Number( this.$.$mol_state_arg.value( 'limit' ) ?? '' )
 			if ( !Number.isFinite( raw ) || raw <= 0 ) return GRAPH_LIMIT
-			return Math.min( GRAPH_LIMIT_MAX, Math.round( raw ) )
+			return Math.round( raw )
 		}
 
 		// Ключ кэшей графа и раскладки: датасет + лимит выборки
