@@ -5054,6 +5054,8 @@ declare namespace $ {
         radii?: Record<string, number>;
         /** Множитель силы пружин рёбер (только притяжение). Меньше — воздушнее раскладка, как в Obsidian. */
         spring?: number;
+        /** Подвижное подмножество узлов (локальная симуляция при drag): остальные заморожены, но продолжают отталкивать. Пусто/не задано = двигаются все. */
+        mobile?: ReadonlySet<string> | null;
     };
     /**
      * Velocity-Verlet sim tick — d3-force / ForceAtlas2 style.
@@ -5127,37 +5129,44 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_line['event'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_7 = $mol_type_enforce<
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_7 = $mol_type_enforce<
+		({ 
+			'data-forcegraph-base': string,
+		})  & ReturnType< $mol_svg_group['attr'] >
+		,
+		ReturnType< $mol_svg_group['attr'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_8 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_views'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
-	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_8 = $mol_type_enforce<
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_9 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_x'] >
 		,
 		ReturnType< $mol_svg_text['pos_x'] >
 	>
-	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_9 = $mol_type_enforce<
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_10 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_y'] >
 		,
 		ReturnType< $mol_svg_text['pos_y'] >
 	>
-	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_10 = $mol_type_enforce<
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_11 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align'] >
 	>
-	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_11 = $mol_type_enforce<
+	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_12 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align_vert'] >
 	>
-	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_12 = $mol_type_enforce<
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_13 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_text'] >
 		,
 		ReturnType< $mol_svg_text['text'] >
 	>
-	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_13 = $mol_type_enforce<
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_14 = $mol_type_enforce<
 		({ 
 			'data-edge-id': ReturnType< $raggu_web_front_explorer_forcegraph['edge_id'] >,
 			'data-forcegraph-edge-label': string,
@@ -5168,7 +5177,7 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['attr'] >
 	>
-	type $mol_svg_text__event_raggu_web_front_explorer_forcegraph_14 = $mol_type_enforce<
+	type $mol_svg_text__event_raggu_web_front_explorer_forcegraph_15 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['edge_click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['edge_click'] >,
 			pointerenter( next?: ReturnType< $raggu_web_front_explorer_forcegraph['edge_hover_enter'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['edge_hover_enter'] >,
@@ -5177,39 +5186,44 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['event'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_15 = $mol_type_enforce<
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_16 = $mol_type_enforce<
+		({ 
+			'data-forcegraph-base': string,
+		})  & ReturnType< $mol_svg_group['attr'] >
+		,
+		ReturnType< $mol_svg_group['attr'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_17 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_views'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
-	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_16 = $mol_type_enforce<
+	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_x'] >
 		,
 		ReturnType< $mol_svg_circle['pos_x'] >
 	>
-	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_17 = $mol_type_enforce<
+	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_19 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_y'] >
 		,
 		ReturnType< $mol_svg_circle['pos_y'] >
 	>
-	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_18 = $mol_type_enforce<
+	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_20 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_radius'] >
 		,
 		ReturnType< $mol_svg_circle['radius'] >
 	>
-	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_19 = $mol_type_enforce<
+	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_21 = $mol_type_enforce<
 		({ 
 			'data-node-id': ReturnType< $raggu_web_front_explorer_forcegraph['node_id'] >,
 			'fill': ReturnType< $raggu_web_front_explorer_forcegraph['node_color'] >,
 			'fill-opacity': ReturnType< $raggu_web_front_explorer_forcegraph['node_opacity'] >,
-			'stroke': ReturnType< $raggu_web_front_explorer_forcegraph['node_stroke'] >,
-			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['node_stroke_width'] >,
 			'cursor': string,
 		})  & ReturnType< $mol_svg_circle['attr'] >
 		,
 		ReturnType< $mol_svg_circle['attr'] >
 	>
-	type $mol_svg_circle__event_raggu_web_front_explorer_forcegraph_20 = $mol_type_enforce<
+	type $mol_svg_circle__event_raggu_web_front_explorer_forcegraph_22 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_explorer_forcegraph['click'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['click'] >,
 			pointerenter( next?: ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['hover_enter'] >,
@@ -5218,32 +5232,39 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_circle['event'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_21 = $mol_type_enforce<
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_23 = $mol_type_enforce<
+		({ 
+			'data-forcegraph-base': string,
+		})  & ReturnType< $mol_svg_group['attr'] >
+		,
+		ReturnType< $mol_svg_group['attr'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_24 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_views'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
-	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_22 = $mol_type_enforce<
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_25 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_x'] >
 		,
 		ReturnType< $mol_svg_text['pos_x'] >
 	>
-	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_23 = $mol_type_enforce<
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_26 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_y'] >
 		,
 		ReturnType< $mol_svg_text['pos_y'] >
 	>
-	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_24 = $mol_type_enforce<
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_27 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align'] >
 	>
-	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_25 = $mol_type_enforce<
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_28 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_text'] >
 		,
 		ReturnType< $mol_svg_text['text'] >
 	>
-	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_26 = $mol_type_enforce<
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_29 = $mol_type_enforce<
 		({ 
 			'data-forcegraph-node-label': string,
 			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['node_label_font_size'] >,
@@ -5252,39 +5273,164 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['attr'] >
 	>
-	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_27 = $mol_type_enforce<
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_30 = $mol_type_enforce<
+		({ 
+			'pointer-events': string,
+			'data-forcegraph-base': string,
+		})  & ReturnType< $mol_svg_group['attr'] >
+		,
+		ReturnType< $mol_svg_group['attr'] >
+	>
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_31 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_views'] >
+		,
+		ReturnType< $mol_svg_group['sub'] >
+	>
+	type $mol_svg_line__from_x_raggu_web_front_explorer_forcegraph_32 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x1'] >
+		,
+		ReturnType< $mol_svg_line['from_x'] >
+	>
+	type $mol_svg_line__from_y_raggu_web_front_explorer_forcegraph_33 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_y1'] >
+		,
+		ReturnType< $mol_svg_line['from_y'] >
+	>
+	type $mol_svg_line__to_x_raggu_web_front_explorer_forcegraph_34 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_x2'] >
+		,
+		ReturnType< $mol_svg_line['to_x'] >
+	>
+	type $mol_svg_line__to_y_raggu_web_front_explorer_forcegraph_35 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_y2'] >
+		,
+		ReturnType< $mol_svg_line['to_y'] >
+	>
+	type $mol_svg_line__attr_raggu_web_front_explorer_forcegraph_36 = $mol_type_enforce<
+		({ 
+			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['overlay_edge_width'] >,
+			'stroke-opacity': string,
+		})  & ReturnType< $mol_svg_line['attr'] >
+		,
+		ReturnType< $mol_svg_line['attr'] >
+	>
+	type $mol_svg_circle__pos_x_raggu_web_front_explorer_forcegraph_37 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_x'] >
+		,
+		ReturnType< $mol_svg_circle['pos_x'] >
+	>
+	type $mol_svg_circle__pos_y_raggu_web_front_explorer_forcegraph_38 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_y'] >
+		,
+		ReturnType< $mol_svg_circle['pos_y'] >
+	>
+	type $mol_svg_circle__radius_raggu_web_front_explorer_forcegraph_39 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_radius'] >
+		,
+		ReturnType< $mol_svg_circle['radius'] >
+	>
+	type $mol_svg_circle__attr_raggu_web_front_explorer_forcegraph_40 = $mol_type_enforce<
+		({ 
+			'fill': ReturnType< $raggu_web_front_explorer_forcegraph['node_color'] >,
+			'stroke-width': ReturnType< $raggu_web_front_explorer_forcegraph['overlay_node_stroke_width'] >,
+		})  & ReturnType< $mol_svg_circle['attr'] >
+		,
+		ReturnType< $mol_svg_circle['attr'] >
+	>
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_41 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_x'] >
+		,
+		ReturnType< $mol_svg_text['pos_x'] >
+	>
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_42 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_y'] >
+		,
+		ReturnType< $mol_svg_text['pos_y'] >
+	>
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_43 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_svg_text['align'] >
+	>
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_44 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['overlay_label_text'] >
+		,
+		ReturnType< $mol_svg_text['text'] >
+	>
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_45 = $mol_type_enforce<
+		({ 
+			'data-forcegraph-node-label': string,
+			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['node_label_font_size'] >,
+		})  & ReturnType< $mol_svg_text['attr'] >
+		,
+		ReturnType< $mol_svg_text['attr'] >
+	>
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_46 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_x'] >
+		,
+		ReturnType< $mol_svg_text['pos_x'] >
+	>
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_47 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_y'] >
+		,
+		ReturnType< $mol_svg_text['pos_y'] >
+	>
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_48 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_svg_text['align'] >
+	>
+	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_49 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_svg_text['align_vert'] >
+	>
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_50 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['overlay_edge_label_text'] >
+		,
+		ReturnType< $mol_svg_text['text'] >
+	>
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_51 = $mol_type_enforce<
+		({ 
+			'data-forcegraph-edge-label': string,
+			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['edge_label_font_size'] >,
+		})  & ReturnType< $mol_svg_text['attr'] >
+		,
+		ReturnType< $mol_svg_text['attr'] >
+	>
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_52 = $mol_type_enforce<
 		({ 
 			'pointer-events': string,
 		})  & ReturnType< $mol_svg_group['attr'] >
 		,
 		ReturnType< $mol_svg_group['attr'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_28 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_explorer_forcegraph['node_label_views'] >
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_53 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_explorer_forcegraph['overlay_views'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
-	type $mol_svg_rect__pos_x_raggu_web_front_explorer_forcegraph_29 = $mol_type_enforce<
+	type $mol_svg_rect__pos_x_raggu_web_front_explorer_forcegraph_54 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_x'] >
 		,
 		ReturnType< $mol_svg_rect['pos_x'] >
 	>
-	type $mol_svg_rect__pos_y_raggu_web_front_explorer_forcegraph_30 = $mol_type_enforce<
+	type $mol_svg_rect__pos_y_raggu_web_front_explorer_forcegraph_55 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_y'] >
 		,
 		ReturnType< $mol_svg_rect['pos_y'] >
 	>
-	type $mol_svg_rect__width_raggu_web_front_explorer_forcegraph_31 = $mol_type_enforce<
+	type $mol_svg_rect__width_raggu_web_front_explorer_forcegraph_56 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_w'] >
 		,
 		ReturnType< $mol_svg_rect['width'] >
 	>
-	type $mol_svg_rect__height_raggu_web_front_explorer_forcegraph_32 = $mol_type_enforce<
+	type $mol_svg_rect__height_raggu_web_front_explorer_forcegraph_57 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_bg_h'] >
 		,
 		ReturnType< $mol_svg_rect['height'] >
 	>
-	type $mol_svg_rect__attr_raggu_web_front_explorer_forcegraph_33 = $mol_type_enforce<
+	type $mol_svg_rect__attr_raggu_web_front_explorer_forcegraph_58 = $mol_type_enforce<
 		({ 
 			'rx': string,
 			'ry': string,
@@ -5294,32 +5440,32 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_rect['attr'] >
 	>
-	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_34 = $mol_type_enforce<
+	type $mol_svg_text__pos_x_raggu_web_front_explorer_forcegraph_59 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_x'] >
 		,
 		ReturnType< $mol_svg_text['pos_x'] >
 	>
-	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_35 = $mol_type_enforce<
+	type $mol_svg_text__pos_y_raggu_web_front_explorer_forcegraph_60 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_y'] >
 		,
 		ReturnType< $mol_svg_text['pos_y'] >
 	>
-	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_36 = $mol_type_enforce<
+	type $mol_svg_text__align_raggu_web_front_explorer_forcegraph_61 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align'] >
 	>
-	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_37 = $mol_type_enforce<
+	type $mol_svg_text__align_vert_raggu_web_front_explorer_forcegraph_62 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_svg_text['align_vert'] >
 	>
-	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_38 = $mol_type_enforce<
+	type $mol_svg_text__text_raggu_web_front_explorer_forcegraph_63 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_text'] >
 		,
 		ReturnType< $mol_svg_text['text'] >
 	>
-	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_39 = $mol_type_enforce<
+	type $mol_svg_text__attr_raggu_web_front_explorer_forcegraph_64 = $mol_type_enforce<
 		({ 
 			'font-size': ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_font_size'] >,
 			'font-weight': string,
@@ -5328,20 +5474,21 @@ declare namespace $ {
 		,
 		ReturnType< $mol_svg_text['attr'] >
 	>
-	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_40 = $mol_type_enforce<
+	type $mol_svg_group__attr_raggu_web_front_explorer_forcegraph_65 = $mol_type_enforce<
 		({ 
 			'pointer-events': string,
 		})  & ReturnType< $mol_svg_group['attr'] >
 		,
 		ReturnType< $mol_svg_group['attr'] >
 	>
-	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_41 = $mol_type_enforce<
+	type $mol_svg_group__sub_raggu_web_front_explorer_forcegraph_66 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_explorer_forcegraph['tooltip_sub'] >
 		,
 		ReturnType< $mol_svg_group['sub'] >
 	>
 	export class $raggu_web_front_explorer_forcegraph extends $mol_svg_root {
 		computed_view_box( ): string
+		dim_active( ): boolean
 		wheel( next?: any ): any
 		pan_start( next?: any ): any
 		pan_move( next?: any ): any
@@ -5375,8 +5522,6 @@ declare namespace $ {
 		node_id( id: any): string
 		node_color( id: any): string
 		node_opacity( id: any): string
-		node_stroke( id: any): string
-		node_stroke_width( id: any): string
 		click( id: any, next?: any ): any
 		hover_enter( id: any, next?: any ): any
 		hover_leave( id: any, next?: any ): any
@@ -5391,6 +5536,16 @@ declare namespace $ {
 		Node_label( id: any): $mol_svg_text
 		node_label_views( ): readonly(any)[]
 		G_node_labels( ): $mol_svg_group
+		overlay_edge_width( id: any): string
+		Overlay_edge( id: any): $mol_svg_line
+		overlay_node_stroke_width( id: any): string
+		Overlay_node( id: any): $mol_svg_circle
+		overlay_label_text( id: any): string
+		Overlay_label( id: any): $mol_svg_text
+		overlay_edge_label_text( id: any): string
+		Overlay_edge_label( id: any): $mol_svg_text
+		overlay_views( ): readonly(any)[]
+		G_overlay( ): $mol_svg_group
 		tooltip_bg_x( ): string
 		tooltip_bg_y( ): string
 		tooltip_bg_w( ): string
@@ -5431,6 +5586,9 @@ declare namespace $ {
 		max_speed( ): number
 		node_size_base( ): number
 		node_size_growth( ): number
+		attr( ): ({ 
+			'data-forcegraph-dim': ReturnType< $raggu_web_front_explorer_forcegraph['dim_active'] >,
+		})  & ReturnType< $mol_svg_root['attr'] >
 		event( ): ({ 
 			wheel( next?: ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['wheel'] >,
 			pointerdown( next?: ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] > ): ReturnType< $raggu_web_front_explorer_forcegraph['pan_start'] >,
@@ -5486,6 +5644,26 @@ declare namespace $.$$ {
             vx: number;
             vy: number;
         }>;
+        positions_raw: Record<string, {
+            x: number;
+            y: number;
+        }>;
+        node_pos(id: string, next?: {
+            x: number;
+            y: number;
+        }): {
+            x: number;
+            y: number;
+        } | null;
+        positions(next?: Record<string, {
+            x: number;
+            y: number;
+        }>): Record<string, {
+            x: number;
+            y: number;
+        }>;
+        drag_mobile: Set<string> | null;
+        adjacency(): Record<string, string[]>;
         layout_params(): LayoutParams;
         tick(): void;
         sim_running: boolean;
@@ -5513,7 +5691,10 @@ declare namespace $.$$ {
         node_by_id(): Record<string, GraphNode>;
         node_views(): $.$mol_svg_circle[];
         edge_views(): $.$mol_svg_line[];
-        pos(id: string): any;
+        pos(id: string): {
+            x: number;
+            y: number;
+        };
         node_id(id: string): string;
         node_x(id: string): string;
         node_y(id: string): string;
@@ -5532,9 +5713,10 @@ declare namespace $.$$ {
         active_edge(): GraphEdge | null;
         edge_endpoint(id: string): boolean;
         active_node_hood(): Set<string> | null;
-        node_opacity(id: string): "0.12" | "1" | "0.25";
-        node_stroke(id: string): "#ffffff" | "transparent";
-        node_stroke_width(id: string): "2.5" | "1.5" | "0";
+        node_opacity(id: string): "1" | "0.12";
+        hover_timer: any;
+        readonly HOVER_DWELL_MS = 200;
+        hover_after(fire: () => void): void;
         hover_enter(id: string): null;
         hover_leave(): null;
         edge_by_id(): Record<string, GraphEdge>;
@@ -5544,6 +5726,7 @@ declare namespace $.$$ {
         edge_y2(id: string): string;
         edge_id(id: string): string;
         edge_active(id: string): boolean;
+        edge_base_width(id: string): number;
         edge_width(id: string): string;
         edge_matches(id: string): boolean;
         edge_opacity(id: string): string;
@@ -5567,18 +5750,25 @@ declare namespace $.$$ {
         };
         edge_label_x(id: string): string;
         edge_label_y(id: string): string;
+        edge_label_fits(id: string): boolean;
         edge_label_text(id: string): string;
-        edge_label_opacity(id: string): "0.95" | "0.85" | "1" | "0.25";
+        edge_label_opacity(id: string): string;
         just_dragged: string;
         click(id: string): null;
         bg_click(event?: MouseEvent): null | undefined;
+        dim_active(): boolean;
+        overlay_views(): readonly $mol_view[];
+        overlay_label_text(id: string): string;
+        overlay_node_stroke_width(id: string): "2.5" | "1.5";
+        overlay_edge_width(id: string): string;
+        overlay_edge_label_text(id: string): string;
         active_id(): string;
         tooltip_sub(): readonly $mol_view[];
         tooltip_text(): string;
         tooltip_font_size(): string;
         tooltip_anchor(): {
-            x: any;
-            y: any;
+            x: number;
+            y: number;
             r: number;
         };
         tooltip_x(): string;

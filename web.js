@@ -8632,6 +8632,9 @@ var $;
 		computed_view_box(){
 			return "-300 -300 600 600";
 		}
+		dim_active(){
+			return false;
+		}
 		wheel(next){
 			if(next !== undefined) return next;
 			return null;
@@ -8715,6 +8718,7 @@ var $;
 		}
 		G_edges(){
 			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "data-forcegraph-base": ""});
 			(obj.sub) = () => ((this.edge_views()));
 			return obj;
 		}
@@ -8761,6 +8765,7 @@ var $;
 		}
 		G_edge_labels(){
 			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "data-forcegraph-base": ""});
 			(obj.sub) = () => ((this.edge_label_views()));
 			return obj;
 		}
@@ -8781,12 +8786,6 @@ var $;
 		}
 		node_opacity(id){
 			return "1";
-		}
-		node_stroke(id){
-			return "transparent";
-		}
-		node_stroke_width(id){
-			return "0";
 		}
 		click(id, next){
 			if(next !== undefined) return next;
@@ -8810,8 +8809,6 @@ var $;
 				"data-node-id": (this.node_id(id)), 
 				"fill": (this.node_color(id)), 
 				"fill-opacity": (this.node_opacity(id)), 
-				"stroke": (this.node_stroke(id)), 
-				"stroke-width": (this.node_stroke_width(id)), 
 				"cursor": "pointer"
 			});
 			(obj.event) = () => ({
@@ -8827,6 +8824,7 @@ var $;
 		}
 		G_nodes(){
 			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "data-forcegraph-base": ""});
 			(obj.sub) = () => ((this.node_views()));
 			return obj;
 		}
@@ -8864,8 +8862,90 @@ var $;
 		}
 		G_node_labels(){
 			const obj = new this.$.$mol_svg_group();
-			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_group.prototype.attr.call(obj)), 
+				"pointer-events": "none", 
+				"data-forcegraph-base": ""
+			});
 			(obj.sub) = () => ((this.node_label_views()));
+			return obj;
+		}
+		overlay_edge_width(id){
+			return "2";
+		}
+		Overlay_edge(id){
+			const obj = new this.$.$mol_svg_line();
+			(obj.from_x) = () => ((this.edge_x1(id)));
+			(obj.from_y) = () => ((this.edge_y1(id)));
+			(obj.to_x) = () => ((this.edge_x2(id)));
+			(obj.to_y) = () => ((this.edge_y2(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_line.prototype.attr.call(obj)), 
+				"stroke-width": (this.overlay_edge_width(id)), 
+				"stroke-opacity": "0.95"
+			});
+			return obj;
+		}
+		overlay_node_stroke_width(id){
+			return "1.5";
+		}
+		Overlay_node(id){
+			const obj = new this.$.$mol_svg_circle();
+			(obj.pos_x) = () => ((this.node_x(id)));
+			(obj.pos_y) = () => ((this.node_y(id)));
+			(obj.radius) = () => ((this.node_radius(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_circle.prototype.attr.call(obj)), 
+				"fill": (this.node_color(id)), 
+				"stroke-width": (this.overlay_node_stroke_width(id))
+			});
+			return obj;
+		}
+		overlay_label_text(id){
+			return "";
+		}
+		Overlay_label(id){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.node_label_x(id)));
+			(obj.pos_y) = () => ((this.node_label_y(id)));
+			(obj.align) = () => ("middle");
+			(obj.text) = () => ((this.overlay_label_text(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"data-forcegraph-node-label": "", 
+				"font-size": (this.node_label_font_size())
+			});
+			return obj;
+		}
+		overlay_edge_label_text(id){
+			return "";
+		}
+		Overlay_edge_label(id){
+			const obj = new this.$.$mol_svg_text();
+			(obj.pos_x) = () => ((this.edge_label_x(id)));
+			(obj.pos_y) = () => ((this.edge_label_y(id)));
+			(obj.align) = () => ("middle");
+			(obj.align_vert) = () => ("middle");
+			(obj.text) = () => ((this.overlay_edge_label_text(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_text.prototype.attr.call(obj)), 
+				"data-forcegraph-edge-label": "", 
+				"font-size": (this.edge_label_font_size())
+			});
+			return obj;
+		}
+		overlay_views(){
+			return [
+				(this.Overlay_edge(id)), 
+				(this.Overlay_node(id)), 
+				(this.Overlay_label(id)), 
+				(this.Overlay_edge_label(id))
+			];
+		}
+		G_overlay(){
+			const obj = new this.$.$mol_svg_group();
+			(obj.attr) = () => ({...(this.$.$mol_svg_group.prototype.attr.call(obj)), "pointer-events": "none"});
+			(obj.sub) = () => ((this.overlay_views()));
 			return obj;
 		}
 		tooltip_bg_x(){
@@ -9025,6 +9105,9 @@ var $;
 		node_size_growth(){
 			return +1.5;
 		}
+		attr(){
+			return {...(super.attr()), "data-forcegraph-dim": (this.dim_active())};
+		}
 		event(){
 			return {
 				...(super.event()), 
@@ -9042,6 +9125,7 @@ var $;
 				(this.G_edge_labels()), 
 				(this.G_nodes()), 
 				(this.G_node_labels()), 
+				(this.G_overlay()), 
 				(this.Tooltip())
 			];
 		}
@@ -9065,6 +9149,11 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_nodes"));
 	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Node_label"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_node_labels"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Overlay_edge"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Overlay_node"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Overlay_label"));
+	($mol_mem_key(($.$raggu_web_front_explorer_forcegraph.prototype), "Overlay_edge_label"));
+	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "G_overlay"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_bg"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip_text"));
 	($mol_mem(($.$raggu_web_front_explorer_forcegraph.prototype), "Tooltip"));
@@ -9186,7 +9275,10 @@ var $;
     // spatial grid с ячейкой в максимальный диаметр — O(N × соседи), не O(N²).
     // Мутирует positions на месте; возвращает максимальный сдвиг за проход —
     // 0 означает «перекрытий не осталось».
-    function $raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, pinned_id) {
+    function $raggu_web_front_explorer_forcegraph_collide_pass(nodes, positions, radii, pinned_id, mobile) {
+        // Неподвижный узел (pinned или вне mobile-подмножества) не двигаем —
+        // вся поправка достаётся его подвижному соседу
+        const frozen = (id) => id === pinned_id || (mobile ? !mobile.has(id) : false);
         const pad = 1.5;
         let max_r = 0;
         for (const n of nodes) {
@@ -9195,10 +9287,13 @@ var $;
                 max_r = r;
         }
         const cell = Math.max(1, max_r * 2 + pad);
+        // Числовые ключи ячеек: строковая конкатенация на десятках тысяч
+        // lookup'ов за тик была главной статьёй расходов коллизий
         const grid = new Map();
+        const key_of = (gx, gy) => (gx + 2048) * 65536 + (gy + 2048);
         for (const n of nodes) {
             const p = positions[n.id];
-            const key = `${Math.floor(p.x / cell)}:${Math.floor(p.y / cell)}`;
+            const key = key_of(Math.floor(p.x / cell), Math.floor(p.y / cell));
             const list = grid.get(key);
             if (list)
                 list.push(n.id);
@@ -9206,19 +9301,30 @@ var $;
                 grid.set(key, [n.id]);
         }
         let peak = 0;
-        for (const n of nodes) {
+        // Локальная симуляция: пары перебираем только вокруг подвижных узлов —
+        // замороженные пары не могут разрешиться, незачем их и смотреть
+        const subjects = mobile ? nodes.filter(n => mobile.has(n.id)) : nodes;
+        for (const n of subjects) {
             const p = positions[n.id];
             const r1 = radii[n.id] ?? 0;
             const cx = Math.floor(p.x / cell);
             const cy = Math.floor(p.y / cell);
             for (let gx = cx - 1; gx <= cx + 1; gx++)
                 for (let gy = cy - 1; gy <= cy + 1; gy++) {
-                    const list = grid.get(`${gx}:${gy}`);
+                    const list = grid.get(key_of(gx, gy));
                     if (!list)
                         continue;
                     for (const other of list) {
-                        if (other <= n.id)
-                            continue; // каждую пару считаем один раз
+                        if (other === n.id)
+                            continue;
+                        // Пару из двух подвижных встречаем дважды — считаем один раз;
+                        // пара с замороженным соседом встречается лишь однажды
+                        if ((!mobile || mobile.has(other)) && other <= n.id)
+                            continue;
+                        const a_frozen = frozen(n.id);
+                        const b_frozen = frozen(other);
+                        if (a_frozen && b_frozen)
+                            continue;
                         const q = positions[other];
                         const min_d = r1 + (radii[other] ?? 0) + pad;
                         let dx = q.x - p.x;
@@ -9238,12 +9344,11 @@ var $;
                         const move = Math.sqrt(fx * fx + fy * fy);
                         if (move > peak)
                             peak = move;
-                        // Перетаскиваемый узел не двигаем — вся поправка соседу
-                        if (n.id === pinned_id) {
+                        if (a_frozen) {
                             q.x += fx * 2;
                             q.y += fy * 2;
                         }
-                        else if (other === pinned_id) {
+                        else if (b_frozen) {
                             p.x -= fx * 2;
                             p.y -= fy * 2;
                         }
@@ -9354,8 +9459,16 @@ var $;
             const p = positions[n.id];
             insert(root, { id: n.id, x: p.x, y: p.y }, 0);
         }
-        // Repulsion — Barnes-Hut walk per node
+        // Локальная симуляция: двигаем только mobile-узлы, остальные заморожены
+        // (но участвуют в отталкивании и коллизиях как препятствия)
+        const mobile = params.mobile ?? null;
+        const is_mobile = (id) => !mobile || mobile.has(id);
+        // Repulsion — Barnes-Hut walk per node (только для подвижных)
         for (const n of nodes) {
+            dispX[n.id] = 0;
+            dispY[n.id] = 0;
+            if (!is_mobile(n.id))
+                continue;
             const p = positions[n.id];
             const out = { dx: 0, dy: 0 };
             accumulate_repulsion(root, n.id, p.x, p.y, k2, out);
@@ -9370,6 +9483,8 @@ var $;
         for (const n of nodes)
             degree[n.id] = n.degree;
         for (const e of edges) {
+            if (mobile && !mobile.has(e.source) && !mobile.has(e.target))
+                continue;
             const dx = positions[e.source].x - positions[e.target].x;
             const dy = positions[e.source].y - positions[e.target].y;
             const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
@@ -9377,13 +9492,19 @@ var $;
             const force = (dist * dist) / k * e.strength * spring / hub_norm;
             const fx = (dx / dist) * force;
             const fy = (dy / dist) * force;
-            dispX[e.source] -= fx;
-            dispY[e.source] -= fy;
-            dispX[e.target] += fx;
-            dispY[e.target] += fy;
+            if (is_mobile(e.source)) {
+                dispX[e.source] -= fx;
+                dispY[e.source] -= fy;
+            }
+            if (is_mobile(e.target)) {
+                dispX[e.target] += fx;
+                dispY[e.target] += fy;
+            }
         }
         // Gravity — soft radial pull toward origin
         for (const n of nodes) {
+            if (!is_mobile(n.id))
+                continue;
             const p = positions[n.id];
             dispX[n.id] -= p.x * gravity * k;
             dispY[n.id] -= p.y * gravity * k;
@@ -9392,7 +9513,7 @@ var $;
         const next_pos = {};
         const next_vel = {};
         for (const n of nodes) {
-            if (n.id === pinned_id) {
+            if (n.id === pinned_id || !is_mobile(n.id)) {
                 next_pos[n.id] = positions[n.id];
                 next_vel[n.id] = { vx: 0, vy: 0 };
                 continue;
@@ -9419,9 +9540,9 @@ var $;
         // обратно — на экран каждый тик уходит уже разрешённое состояние.
         let collide_peak = 0;
         if (params.radii) {
-            collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id);
+            collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id, mobile);
             for (let i = 0; i < 2; i++) {
-                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id) < 0.05)
+                if ($raggu_web_front_explorer_forcegraph_collide_pass(nodes, next_pos, params.radii, pinned_id, mobile) < 0.05)
                     break;
             }
         }
@@ -9551,6 +9672,12 @@ var $;
                 catch { }
                 if (node_id) {
                     this.drag_id(node_id);
+                    // Локальная симуляция: на крупном графе физика двигает только
+                    // таскаемый узел и его соседей — стоимость drag не зависит от
+                    // размера графа. Остальные узлы — неподвижные препятствия.
+                    this.drag_mobile = this.big_graph()
+                        ? new Set([node_id, ...(this.adjacency()[node_id] ?? [])])
+                        : null;
                     // Ensure initial positions are seeded before drag starts
                     this.ensure_positions();
                     // Don't start simulation here — wait until pan_move crosses threshold,
@@ -9593,7 +9720,10 @@ var $;
                     this.start_sim();
                     const id = this.drag_id();
                     const cur = this.pos(id);
-                    this.positions({ ...this.positions(), [id]: { x: cur.x + dx, y: cur.y + dy } });
+                    const p = { x: cur.x + dx, y: cur.y + dy };
+                    // Точечная запись — двигается один узел, а не весь словарь
+                    this.positions_raw = { ...this.positions_raw, [id]: p };
+                    this.node_pos(id, p);
                     return;
                 }
                 if (!this.dragging)
@@ -9654,6 +9784,34 @@ var $;
             // Per-node velocity — the state that makes drags ripple through edges
             // then die via damping instead of shaking the whole graph each frame.
             velocities = {};
+            // Позиции живут в ДВУХ видах: плоский нереактивный словарь для физики
+            // (positions_raw) и гранулярные keyed-мемы для рендера (node_pos).
+            // Запись позиции одного узла инвалидирует только его координаты —
+            // а не все 20k+ элементов, как это делал единый мем-объект.
+            positions_raw = {};
+            node_pos(id, next) {
+                return next ?? null;
+            }
+            // Совместимость со старым интерфейсом (тесты пишут сюда целиком)
+            positions(next) {
+                if (next !== undefined) {
+                    this.positions_raw = next;
+                    for (const id in next)
+                        this.node_pos(id, next[id]);
+                }
+                return this.positions_raw;
+            }
+            // Подвижное подмножество текущего drag (узел + соседи). Живёт до
+            // остановки симуляции — хвост после отпускания тоже локальный.
+            drag_mobile = null;
+            adjacency() {
+                const m = {};
+                for (const e of this.edges()) {
+                    (m[e.source] ??= []).push(e.target);
+                    (m[e.target] ??= []).push(e.source);
+                }
+                return m;
+            }
             // Bundle the tunable params ( declared as view.tree props with defaults ).
             layout_params() {
                 return {
@@ -9671,6 +9829,8 @@ var $;
                     heat: this.sim_alpha,
                     // Радиусы для расталкивания — кружки не наезжают друг на друга
                     radii: this.node_radii(),
+                    // Локальная симуляция во время/после drag на крупном графе
+                    mobile: this.drag_mobile,
                 };
             }
             // One sim tick.
@@ -9688,7 +9848,17 @@ var $;
                 }
                 this.peak_speed = peak;
                 this.collide_peak = next.collide_peak;
-                this.positions(next.positions);
+                // Точечные записи: инвалидируем координаты только реально
+                // сдвинувшихся узлов — замороженные не трогают DOM вовсе
+                const prev = this.positions_raw;
+                this.positions_raw = next.positions;
+                for (const id in next.positions) {
+                    const a = prev[id];
+                    const b = next.positions[id];
+                    if (!a || Math.abs(a.x - b.x) > 1e-4 || Math.abs(a.y - b.y) > 1e-4) {
+                        this.node_pos(id, b);
+                    }
+                }
                 // Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
                 const key = this.graph_key();
                 if (key)
@@ -9769,6 +9939,7 @@ var $;
                         && this.collide_peak < 0.4;
                     if ((this.sim_frames_left <= 0 || settled) && !this.drag_id()) {
                         this.sim_running = false;
+                        this.drag_mobile = null;
                         return;
                     }
                     requestAnimationFrame(loop);
@@ -9845,10 +10016,10 @@ var $;
             edge_views() {
                 return this.edges().map(e => this.Edge(e.id));
             }
-            // Effective node position: live positions cell (drag/sim output) first,
+            // Effective node position: live keyed cell (drag/sim output) first,
             // then the memoized initial FR layout, then raw mock as last resort.
             pos(id) {
-                const live = this.positions()[id];
+                const live = this.node_pos(id);
                 if (live)
                     return live;
                 return this.initial_positions()[id] ?? this.node_by_id()[id];
@@ -9961,38 +10132,26 @@ var $;
                 }
                 return hood;
             }
+            // Базовая непрозрачность узла зависит ТОЛЬКО от фильтров: ховер гасит
+            // базовые слои одним атрибутом на группу и рисует окрестность в overlay,
+            // поэтому наведение не инвалидирует тысячи элементов.
             node_opacity(id) {
-                // Активное ребро затемняет всё, кроме своих концов — как hover узла
-                if (this.active_edge())
-                    return this.edge_endpoint(id) ? '1' : '0.25';
-                const hood = this.active_node_hood();
-                if (hood)
-                    return hood.has(id) ? '1' : '0.25';
                 return this.node_matches(id) ? '1' : '0.12';
             }
-            node_stroke(id) {
-                if (this.selected_id() === id)
-                    return '#ffffff';
-                if (this.hovered_id() === id)
-                    return '#ffffff';
-                if (this.edge_endpoint(id))
-                    return '#ffffff';
-                return 'transparent';
-            }
-            node_stroke_width(id) {
-                if (this.selected_id() === id)
-                    return '2.5';
-                if (this.hovered_id() === id)
-                    return '1.5';
-                if (this.edge_endpoint(id))
-                    return '1.5';
-                return '0';
+            // Ховер срабатывает после паузы курсора (dwell): быстрое проведение
+            // по графу не дёргает подсветку. Снятие — мгновенное.
+            hover_timer = null;
+            HOVER_DWELL_MS = 200;
+            hover_after(fire) {
+                clearTimeout(this.hover_timer);
+                this.hover_timer = setTimeout(fire, this.HOVER_DWELL_MS);
             }
             hover_enter(id) {
-                this.hovered_id(id);
+                this.hover_after(() => this.hovered_id(id));
                 return null;
             }
             hover_leave() {
+                clearTimeout(this.hover_timer);
                 this.hovered_id('');
                 return null;
             }
@@ -10013,14 +10172,12 @@ var $;
             edge_active(id) {
                 return this.hovered_edge_id() === id || this.selected_edge_id() === id;
             }
-            edge_width(id) {
+            edge_base_width(id) {
                 const e = this.edge_by_id()[id];
-                const base = (e.strength * 1.5 + 0.4) * this.size_scale() * this.edge_scale();
-                if (this.edge_active(id))
-                    return String(base * 2.5);
-                const incident = this.hovered_id() && (e.source === this.hovered_id() || e.target === this.hovered_id())
-                    || this.selected_id() && (e.source === this.selected_id() || e.target === this.selected_id());
-                return String(incident ? base * 2 : base);
+                return (e.strength * 1.5 + 0.4) * this.size_scale() * this.edge_scale();
+            }
+            edge_width(id) {
+                return String(this.edge_base_width(id));
             }
             edge_matches(id) {
                 const e = this.edge_by_id()[id];
@@ -10037,31 +10194,18 @@ var $;
                 }
                 return this.node_matches(e.source) && this.node_matches(e.target);
             }
+            // База без ховер-зависимостей: только фильтры и сообщества
             edge_opacity(id) {
-                const e = this.edge_by_id()[id];
-                if (this.edge_active(id))
-                    return '0.95';
-                // Активное ребро приглушает все остальные — как hover узла
-                if (this.active_edge())
-                    return '0.12';
                 if (this.filter_active() && !this.edge_matches(id))
                     return '0.08';
                 // Внутренние рёбра выбранных сообществ — ярче фона
                 if (this.comm_set().size && this.edge_matches(id))
                     return '0.85';
-                const hid = this.hovered_id() || this.selected_id();
                 // Фоновая яркость тает с числом рёбер — иначе серая сетка
-                if (!hid)
-                    return String(+(0.55 * this.edge_scale()).toFixed(2));
-                return (e.source === hid || e.target === hid) ? '0.95' : '0.18';
+                return String(+(0.55 * this.edge_scale()).toFixed(2));
             }
             edge_color(id) {
-                if (this.edge_active(id))
-                    return '#ffffff';
                 const e = this.edge_by_id()[id];
-                const hid = this.hovered_id() || this.selected_id();
-                if (hid && (e.source === hid || e.target === hid))
-                    return '#ffffff';
                 // Внутреннее ребро выбранного сообщества — в его цвет
                 const cs = this.comm_set();
                 if (cs.size && this.edge_matches(id)) {
@@ -10072,10 +10216,11 @@ var $;
                 return '#7a7672';
             }
             edge_hover_enter(id) {
-                this.hovered_edge_id(id);
+                this.hover_after(() => this.hovered_edge_id(id));
                 return null;
             }
             edge_hover_leave() {
+                clearTimeout(this.hover_timer);
                 this.hovered_edge_id('');
                 return null;
             }
@@ -10128,20 +10273,9 @@ var $;
                 const min_px = this.big_graph() ? 11 : 7;
                 return Math.max(0, Math.min(1, (r_px - min_px) / 3));
             }
+            // База: подписи хабов по зуму и фильтрам. Подписи окрестности ховера
+            // рисует overlay — база от наведения не зависит.
             node_label_text(id) {
-                if (this.active_id() === id)
-                    return ''; // tooltip уже показывает label
-                // Концы активного ребра подписываем всегда — видно, что оно связывает
-                if (this.edge_endpoint(id))
-                    return this.node_by_id()[id]?.label ?? '';
-                const hood = this.active_node_hood();
-                if (hood) {
-                    if (!hood.has(id))
-                        return ''; // затемнённым подписи не нужны
-                    // Соседей наведённого узла подписываем всегда (пока их разумно мало)
-                    if (hood.size <= 22)
-                        return this.node_by_id()[id]?.label ?? '';
-                }
                 if (!this.node_matches(id))
                     return '';
                 // Порог повыше нуля: у самого порога подпись была бы почти прозрачной
@@ -10150,10 +10284,6 @@ var $;
                 return this.node_by_id()[id]?.label ?? '';
             }
             node_label_opacity(id) {
-                if (this.edge_endpoint(id))
-                    return '1';
-                if (this.active_node_hood()?.has(id))
-                    return '1';
                 // Быстрый разгон до непрозрачности — долгий fade читался как баг
                 return String(Math.min(1, 0.75 + this.node_label_vis(id) * 0.25));
             }
@@ -10165,44 +10295,33 @@ var $;
             }
             edge_label_x(id) { return String(this.edge_label_mid(id).x); }
             edge_label_y(id) { return String(this.edge_label_mid(id).y); }
-            // Подпись ребра рисуем, только когда текст влезает в свободную длину ребра
-            // (за вычетом кружков узлов). Активное ребро подписываем всегда.
-            edge_label_text(id) {
+            // Подпись влезает в свободную длину ребра (за вычетом кружков узлов)
+            // и читаема на экране?
+            edge_label_fits(id) {
                 const e = this.edge_by_id()[id];
                 const rel = e?.relation ?? '';
                 if (!rel)
-                    return '';
-                if (this.edge_active(id))
-                    return rel;
-                if (this.active_edge())
-                    return ''; // не шумим подписями вокруг активного ребра
-                // На крупном графе фоновые подписи рёбер превращаются в серую пыль —
-                // оставляем их только вокруг наведённого/выбранного узла
-                if (this.big_graph()) {
-                    const hid = this.hovered_id() || this.selected_id();
-                    if (!hid || (e.source !== hid && e.target !== hid))
-                        return '';
-                }
-                if (this.filter_active() && !this.edge_matches(id))
-                    return '';
+                    return false;
                 const fs = parseFloat(this.edge_label_font_size());
                 if (fs * this.zoom() < 4)
-                    return ''; // на экране будет нечитаемая пыль
+                    return false; // нечитаемая пыль
                 const a = this.pos(e.source);
                 const b = this.pos(e.target);
                 const len = Math.hypot(b.x - a.x, b.y - a.y)
                     - this.node_radius_num(e.source) - this.node_radius_num(e.target);
                 const need = rel.length * fs * 0.62 + fs * 2;
-                return len >= need ? rel : '';
+                return len >= need;
+            }
+            // База: на крупном графе фоновые подписи рёбер — серая пыль, их рисует
+            // только overlay при ховере. От наведения база не зависит.
+            edge_label_text(id) {
+                if (this.big_graph())
+                    return '';
+                if (this.filter_active() && !this.edge_matches(id))
+                    return '';
+                return this.edge_label_fits(id) ? this.edge_by_id()[id]?.relation ?? '' : '';
             }
             edge_label_opacity(id) {
-                if (this.edge_active(id))
-                    return '1';
-                const hid = this.hovered_id() || this.selected_id();
-                if (hid) {
-                    const e = this.edge_by_id()[id];
-                    return (e.source === hid || e.target === hid) ? '0.95' : '0.25';
-                }
                 return '0.85';
             }
             // Suppress click that fires right after node-drag (drag_id was just released)
@@ -10230,6 +10349,68 @@ var $;
                 this.selected_edge_id('');
                 this.select('');
                 return null;
+            }
+            // ---- overlay-слой подсветки ----
+            // База при активном узле/ребре гасится одним атрибутом на группу
+            // (см. data-forcegraph-dim), а сюда рендерится только окрестность —
+            // ховер стоит десятки элементов вместо тысяч.
+            dim_active() {
+                return Boolean(this.active_id() || this.active_edge());
+            }
+            overlay_views() {
+                const edge = this.active_edge();
+                if (edge) {
+                    return [
+                        this.Overlay_edge(edge.id),
+                        this.Overlay_node(edge.source),
+                        this.Overlay_node(edge.target),
+                        this.Overlay_label(edge.source),
+                        this.Overlay_label(edge.target),
+                        this.Overlay_edge_label(edge.id),
+                    ];
+                }
+                const id = this.active_id();
+                if (!id)
+                    return [];
+                const hood = this.active_node_hood();
+                const views = [];
+                for (const e of this.edges()) {
+                    if (e.source !== id && e.target !== id)
+                        continue;
+                    views.push(this.Overlay_edge(e.id));
+                    if (this.overlay_edge_label_text(e.id))
+                        views.push(this.Overlay_edge_label(e.id));
+                }
+                const label_all = hood.size <= 22;
+                for (const nid of hood) {
+                    views.push(this.Overlay_node(nid));
+                    // Имя активного узла показывает tooltip, соседей подписываем
+                    // пока их разумно мало
+                    if (nid !== id && label_all)
+                        views.push(this.Overlay_label(nid));
+                }
+                return views;
+            }
+            overlay_label_text(id) {
+                return this.node_by_id()[id]?.label ?? '';
+            }
+            overlay_node_stroke_width(id) {
+                return id === this.active_id() ? '2.5' : '1.5';
+            }
+            overlay_edge_width(id) {
+                const base = this.edge_base_width(id);
+                return String(this.edge_active(id)
+                    ? Math.max(base * 2.5, 1.2)
+                    : Math.max(base * 2, 1));
+            }
+            // Тип связи: у активного ребра всегда, у рёбер окрестности — если влезает
+            overlay_edge_label_text(id) {
+                const rel = this.edge_by_id()[id]?.relation ?? '';
+                if (!rel)
+                    return '';
+                if (this.edge_active(id))
+                    return rel;
+                return this.edge_label_fits(id) ? rel : '';
             }
             // Tooltip — single floating label above hovered-OR-selected node
             active_id() { return this.hovered_id() || this.selected_id(); }
@@ -10319,6 +10500,12 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer_forcegraph.prototype, "initial_positions", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_explorer_forcegraph.prototype, "node_pos", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer_forcegraph.prototype, "adjacency", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer_forcegraph.prototype, "tick", null);
@@ -10418,6 +10605,22 @@ var $;
         + '\tstroke: var(--bog_builderui_back);\n'
         + '\tstroke-width: 2px;\n'
         + '\tstroke-opacity: 0.6;\n'
+        + '}\n'
+        // Ховер гасит базовые слои ОДНИМ свойством на группу — вместо
+        // пересчёта opacity у тысяч элементов. Подсветка живёт в G_overlay.
+        + '[data-forcegraph-base] {\n'
+        + '\ttransition: opacity 0.15s ease;\n'
+        + '}\n'
+        + '[data-forcegraph-dim="true"] [data-forcegraph-base] {\n'
+        + '\topacity: 0.22;\n'
+        + '}\n'
+        // Обводка/линии оверлея — темозависимые: белое на светлой теме
+        // поверх приглушённой базы было невидимым
+        + '[raggu_web_front_explorer_forcegraph_overlay_edge] {\n'
+        + '\tstroke: var(--bog_builderui_text);\n'
+        + '}\n'
+        + '[raggu_web_front_explorer_forcegraph_overlay_node] {\n'
+        + '\tstroke: var(--bog_builderui_text);\n'
         + '}\n');
 })($ || ($ = {}));
 
