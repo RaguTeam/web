@@ -1,10 +1,5 @@
 {
-	"$raggu_web_front_topbar_preset_label_text": "Пресет",
-	"$raggu_web_front_topbar_settings_btn_text": "⚙ Настройки",
 	"$raggu_web_front_topbar_help_btn_text": "? Помощь",
-	"$raggu_web_front_topbar_preset_fast_label": "⚡ Быстро",
-	"$raggu_web_front_topbar_preset_accurate_label": "🎯 Точно",
-	"$raggu_web_front_topbar_preset_demo_label": "🎬 Демо",
 	"$raggu_web_front_topbar_Sidebar_btn_hint": "Свернуть/развернуть панель",
 	"$raggu_web_front_topbar_Nav_gallery_hint": "Датасеты",
 	"$raggu_web_front_topbar_Nav_explorer_hint": "Граф",

@@ -10,6 +10,8 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	search \
 	filter_type \
 	filter_relation \
+	filter_comms /
+	comm_colors *
 	graph_key \
 	nodes /
 	edges /
@@ -17,8 +19,9 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	pan_y? +0
 	zoom? +1
 	positions? *
-	gravity +0.04
+	gravity +0.03
 	force_scale +0.06
+	spring +0.2
 	damping +0.82
 	min_move +0.15
 	max_speed +12

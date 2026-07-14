@@ -14,8 +14,6 @@ $raggu_web_front_explorer $bog_builderui_div
 	aside_relation_title_text @ \Relation card
 	aside_empty_text @ \Click a node or an edge
 	relations_title_template @ \Relations (%s)
-	sources_title_text @ \Sources (provenance)
-	sources_text @ \chunk #418 · chunk #902 …
 	ask_btn_text @ \💬 Ask about this entity
 	legend_title_text @ \Entity Types
 	legend_label* \
@@ -27,6 +25,13 @@ $raggu_web_front_explorer $bog_builderui_div
 	rel_legend_count* \
 	rel_legend_active* false
 	rel_legend_click*? null
+	comms_open? false
+	comms_btn_text @ \Communities
+	comm_label* \
+	comm_count* \
+	comm_active* false
+	comm_mark* \
+	comm_click*? null
 	mock_badge_text @ \⚠ Mock data — backend is not connected
 	sub /
 		<= Canvas $bog_builderui_div sub /
@@ -40,10 +45,35 @@ $raggu_web_front_explorer $bog_builderui_div
 					search <= search?
 					filter_type <= type_filter?
 					filter_relation <= rel_filter?
+					filter_comms <= comms_checked /
+					comm_colors <= comm_color_map *
 			<= Filters $bog_builderui_div sub /
 				<= Filter_search $mol_string
 					hint <= filter_search_text
 					value? <=> search?
+				<= Comms $bog_builderui_div
+					attr *
+						^
+						raggu_web_front_explorer_panel_collapsed <= comms_closed true
+					sub /
+						<= Comms_btn $bog_builderui_div
+							event *
+								^
+								click? <=> comms_toggle? null
+							sub / <= comms_btn_label \
+						<= Comms_list $bog_builderui_div sub <= comm_rows /
+							<= Comm_row* $bog_builderui_div
+								attr *
+									^
+									raggu_web_front_explorer_legend_on <= comm_active* false
+								event *
+									^
+									click? <=> comm_click*? null
+								sub /
+									<= Comm_mark* $bog_builderui_div sub / <= comm_mark* \
+									<= Comm_dot* $bog_builderui_div
+									<= Comm_label* $bog_builderui_div sub / <= comm_label* \
+									<= Comm_count* $bog_builderui_div sub / <= comm_count* \
 			<= Legends $bog_builderui_div sub /
 				<= Legend $bog_builderui_div
 					attr *
@@ -118,8 +148,6 @@ $raggu_web_front_explorer $bog_builderui_div
 						<= Rel* $bog_builderui_div sub /
 							<= Rel_type* $bog_builderui_div sub / <= rel_type* \
 							<= Rel_target* $bog_builderui_div sub / <= rel_target* \
-					<= Sources_title $bog_builderui_div sub / <= sources_title_text
-					<= Sources $bog_builderui_div sub / <= sources_text
 					<= Ask_btn $bog_builderui_div
 						sub / <= ask_btn_text
 						event * click? <=> ask_click? null

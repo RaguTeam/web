@@ -12,6 +12,8 @@ namespace $ {
 		degree: number
 		x: number
 		y: number
+		/** Community id из бэка (Leiden); пустая строка = не определено. */
+		community?: string
 	}
 
 	export type $raggu_web_front_explorer_forcegraph_edge = {
@@ -42,6 +44,12 @@ namespace $ {
 		DATE: '#e0a73f',
 		WORK: '#7c6ce0',
 		LAW: '#3fb8b8',
+	}
+
+	/** Цвет по порядковому номеру — для сообществ: каждому свой из палитры. */
+	export function $raggu_web_front_explorer_forcegraph_index_color( i: number ): string {
+		const palette = $raggu_web_front_explorer_forcegraph_palette
+		return palette[ ( ( i % palette.length ) + palette.length ) % palette.length ]
 	}
 
 	/** Deterministic color for any entity_type string. */
@@ -84,6 +92,9 @@ namespace $ {
 	} {
 		const r = rand( seed )
 		const nodes: $raggu_web_front_explorer_forcegraph_node[] = []
+		// Сообщества назначаем блоками по индексу (без PRNG — не сдвигает
+		// последовательность и не ломает детерминированные тесты).
+		const n_comms = Math.max( 1, Math.min( 6, Math.floor( n_nodes / 12 ) ) )
 		for ( let i = 0; i < n_nodes; i++ ) {
 			const type = TYPES[ Math.floor( r() * TYPES.length ) ]
 			nodes.push( {
@@ -93,6 +104,7 @@ namespace $ {
 				degree: 0,
 				x: ( r() - 0.5 ) * 400,
 				y: ( r() - 0.5 ) * 400,
+				community: `c${ i % n_comms }`,
 			} )
 		}
 		const edges: $raggu_web_front_explorer_forcegraph_edge[] = []
@@ -128,11 +140,82 @@ namespace $ {
 		damping: number       // velocity persistence per tick (0..1, higher = springier)
 		min_move: number      // smooth freeze gate midpoint (px/tick)
 		max_speed: number     // tanh-saturated speed ceiling
+		/** Масштаб базовой длины пружин k: на крупных графах < 1, чтобы раскладка не расползалась за вьюпорт. */
+		k_scale?: number
+		/** Затухание (alpha-cooling как в d3-force): множитель сил 1 → 0. Гасит осцилляции вокруг равновесия — без него плотный граф дребезжит, пока не кончится бюджет кадров. */
+		heat?: number
+		/** Радиусы узлов (svg-юниты) для расталкивания перекрытий — без них кружки наезжают друг на друга. */
+		radii?: Record< string, number >
+		/** Множитель силы пружин рёбер (только притяжение). Меньше — воздушнее раскладка, как в Obsidian. */
+		spring?: number
 	}
 
 	const FORCE_K = 60
 	const THETA = 0.3   // Barnes-Hut opening angle. Smaller = more accurate, slower
 	const THETA2 = THETA * THETA
+
+	// Один жёсткий проход разрешения коллизий: каждую пересекающуюся пару
+	// раздвигаем до касания (по половине перекрытия каждому). Пары ищем через
+	// spatial grid с ячейкой в максимальный диаметр — O(N × соседи), не O(N²).
+	// Мутирует positions на месте; возвращает максимальный сдвиг за проход —
+	// 0 означает «перекрытий не осталось».
+	function $raggu_web_front_explorer_forcegraph_collide_pass(
+		nodes: $raggu_web_front_explorer_forcegraph_node[],
+		positions: Record< string, { x: number, y: number } >,
+		radii: Record< string, number >,
+		pinned_id: string,
+	): number {
+		const pad = 1.5
+		let max_r = 0
+		for ( const n of nodes ) {
+			const r = radii[ n.id ] ?? 0
+			if ( r > max_r ) max_r = r
+		}
+		const cell = Math.max( 1, max_r * 2 + pad )
+		const grid = new Map< string, string[] >()
+		for ( const n of nodes ) {
+			const p = positions[ n.id ]
+			const key = `${ Math.floor( p.x / cell ) }:${ Math.floor( p.y / cell ) }`
+			const list = grid.get( key )
+			if ( list ) list.push( n.id ); else grid.set( key, [ n.id ] )
+		}
+		let peak = 0
+		for ( const n of nodes ) {
+			const p = positions[ n.id ]
+			const r1 = radii[ n.id ] ?? 0
+			const cx = Math.floor( p.x / cell )
+			const cy = Math.floor( p.y / cell )
+			for ( let gx = cx - 1; gx <= cx + 1; gx++ )
+			for ( let gy = cy - 1; gy <= cy + 1; gy++ ) {
+				const list = grid.get( `${ gx }:${ gy }` )
+				if ( !list ) continue
+				for ( const other of list ) {
+					if ( other <= n.id ) continue // каждую пару считаем один раз
+					const q = positions[ other ]
+					const min_d = r1 + ( radii[ other ] ?? 0 ) + pad
+					let dx = q.x - p.x
+					let dy = q.y - p.y
+					const d2 = dx * dx + dy * dy
+					if ( d2 >= min_d * min_d ) continue
+					let d = Math.sqrt( d2 )
+					if ( d < 0.01 ) { dx = min_d; dy = 0; d = min_d } // совпали — разводим по x
+					const push = ( min_d - d ) / d * 0.5
+					const fx = dx * push
+					const fy = dy * push
+					const move = Math.sqrt( fx * fx + fy * fy )
+					if ( move > peak ) peak = move
+					// Перетаскиваемый узел не двигаем — вся поправка соседу
+					if ( n.id === pinned_id ) { q.x += fx * 2; q.y += fy * 2 }
+					else if ( other === pinned_id ) { p.x -= fx * 2; p.y -= fy * 2 }
+					else {
+						p.x -= fx; p.y -= fy
+						q.x += fx; q.y += fy
+					}
+				}
+			}
+		}
+		return peak
+	}
 
 	// --- Barnes-Hut quadtree ------------------------------------------------
 	// Instead of every-pair repulsion ( O(N²) ), aggregate distant groups of
@@ -221,9 +304,11 @@ namespace $ {
 	): {
 		positions: Record< string, { x: number, y: number } >,
 		velocities: Record< string, { vx: number, vy: number } >,
+		/** Максимальный сдвиг узла коллизиями за этот тик — 0 когда перекрытий нет. */
+		collide_peak: number,
 	} {
 		const { gravity, force_scale, damping, min_move, max_speed } = params
-		const k = FORCE_K
+		const k = FORCE_K * ( params.k_scale ?? 1 )
 		const k2 = k * k
 		const dispX: Record< string, number > = {}
 		const dispY: Record< string, number > = {}
@@ -254,12 +339,18 @@ namespace $ {
 			dispX[ n.id ] = out.dx
 			dispY[ n.id ] = out.dy
 		}
-		// Attraction — exact, O(E)
+		// Attraction — exact, O(E). Пружину ослабляют параметр spring и степень
+		// хабов («dissuade hubs» из ForceAtlas2): у хаба десятки рёбер, их
+		// суммарная тяга без нормализации сминает соседей в плотный ком.
+		const spring = params.spring ?? 1
+		const degree: Record< string, number > = {}
+		for ( const n of nodes ) degree[ n.id ] = n.degree
 		for ( const e of edges ) {
 			const dx = positions[ e.source ].x - positions[ e.target ].x
 			const dy = positions[ e.source ].y - positions[ e.target ].y
 			const dist = Math.sqrt( dx * dx + dy * dy ) || 0.01
-			const force = ( dist * dist ) / k * e.strength
+			const hub_norm = Math.sqrt( Math.max( degree[ e.source ] ?? 0, degree[ e.target ] ?? 0 ) + 1 )
+			const force = ( dist * dist ) / k * e.strength * spring / hub_norm
 			const fx = ( dx / dist ) * force
 			const fy = ( dy / dist ) * force
 			dispX[ e.source ] -= fx; dispY[ e.source ] -= fy
@@ -282,8 +373,9 @@ namespace $ {
 				continue
 			}
 			const prev = velocities[ n.id ] || { vx: 0, vy: 0 }
-			let vx = ( prev.vx + dispX[ n.id ] * force_scale ) * damping
-			let vy = ( prev.vy + dispY[ n.id ] * force_scale ) * damping
+			const step = force_scale * ( params.heat ?? 1 )
+			let vx = ( prev.vx + dispX[ n.id ] * step ) * damping
+			let vy = ( prev.vy + dispY[ n.id ] * step ) * damping
 			const speed = Math.sqrt( vx * vx + vy * vy )
 			// Soft speed cap: tanh saturation.
 			if ( speed > 0 ) {
@@ -296,17 +388,50 @@ namespace $ {
 			next_pos[ n.id ] = { x: positions[ n.id ].x + vx * gate, y: positions[ n.id ].y + vy * gate }
 			next_vel[ n.id ] = { vx, vy }
 		}
-		return { positions: next_pos, velocities: next_vel }
+
+		// Коллизии: жёстко продавливаем непересечение. Один проход раздвигает
+		// пары до касания, цепочки (раздвинули пару — наехали на третьего)
+		// дожимаются повторными проходами. Пружины не успевают слепить узлы
+		// обратно — на экран каждый тик уходит уже разрешённое состояние.
+		let collide_peak = 0
+		if ( params.radii ) {
+			collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id )
+			for ( let i = 0; i < 2; i++ ) {
+				if ( $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id ) < 0.05 ) break
+			}
+		}
+
+		return { positions: next_pos, velocities: next_vel, collide_peak }
 	}
 
 	// Initial positions from mock coords — no synchronous FR pre-compute.
 	// The view auto-starts a live sim that visibly settles the graph
 	// ( Obsidian-style spring-in ).
+	// Бэковые раскладки приходят в произвольном масштабе (у medical — тысячи
+	// юнитов), а камера и гравитация живут в мире 600×600 вокруг нуля —
+	// нормализуем: центрируем bbox в ноль и вписываем в ~520 юнитов.
 	export function $raggu_web_front_explorer_forcegraph_initial_positions(
 		nodes: $raggu_web_front_explorer_forcegraph_node[],
+		radii?: Record< string, number >,
 	): Record< string, { x: number, y: number } > {
+		let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity
+		for ( const n of nodes ) {
+			if ( n.x < min_x ) min_x = n.x
+			if ( n.y < min_y ) min_y = n.y
+			if ( n.x > max_x ) max_x = n.x
+			if ( n.y > max_y ) max_y = n.y
+		}
+		const cx = ( min_x + max_x ) / 2
+		const cy = ( min_y + max_y ) / 2
+		const span = Math.max( max_x - min_x, max_y - min_y )
+		const scale = span > 1 ? 520 / span : 1
 		const positions: Record< string, { x: number, y: number } > = {}
-		for ( const n of nodes ) positions[ n.id ] = { x: n.x, y: n.y }
+		for ( const n of nodes ) positions[ n.id ] = { x: ( n.x - cx ) * scale, y: ( n.y - cy ) * scale }
+		// Продавливаем коллизии ещё до первого кадра — граф ни на миг
+		// не рисуется слипшимся.
+		if ( radii ) for ( let i = 0; i < 40; i++ ) {
+			if ( $raggu_web_front_explorer_forcegraph_collide_pass( nodes, positions, radii, '' ) < 0.05 ) break
+		}
 		return positions
 	}
 

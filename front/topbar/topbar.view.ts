@@ -16,14 +16,6 @@ namespace $.$$ {
 		@$mol_action click_dashboard() { this.screen( 'dashboard' ); return null }
 		@$mol_action click_summary() { this.screen( 'summary' ); return null }
 
-		is_fast() { return this.preset() === 'fast' }
-		is_accurate() { return this.preset() === 'accurate' }
-		is_demo() { return this.preset() === 'demo' }
-
-		@$mol_action click_fast() { this.preset( 'fast' ); return null }
-		@$mol_action click_accurate() { this.preset( 'accurate' ); return null }
-		@$mol_action click_demo() { this.preset( 'demo' ); return null }
-
 	}
 
 }

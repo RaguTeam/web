@@ -46,12 +46,6 @@ namespace $.$$ {
 		}
 
 		@$mol_action
-		open_settings() {
-			this.settings_open( true )
-			return null
-		}
-
-		@$mol_action
 		open_help() {
 			this.help_open( true )
 			return null
@@ -129,9 +123,6 @@ namespace $.$$ {
 
 		@$mol_mem
 		screen( next?: string ) { return this.arg_value( 'screen', next, 'gallery' ) }
-
-		@$mol_mem
-		preset( next?: string ) { return this.arg_value( 'preset', next, 'demo' ) }
 
 		@$mol_mem
 		dataset_id( next?: string ) { return this.arg_value( 'ds', next, '' ) }

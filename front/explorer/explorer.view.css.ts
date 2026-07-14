@@ -161,6 +161,62 @@ namespace $ {
 			width: '200px',
 		},
 
+		// Выпадашка сообществ: кнопка в ряду фильтров, список поверх канвы
+		Comms: {
+			position: 'relative',
+			flex: { direction: 'column' },
+			'@': {
+				raggu_web_front_explorer_panel_collapsed: {
+					true: {
+						Comms_list: { display: 'none' },
+					},
+				},
+			},
+		},
+		Comms_btn: {
+			background: { color: $bog_builderui_tokens.field },
+			color: $bog_builderui_tokens.text,
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+			padding: {
+				top: '8px',
+				bottom: '8px',
+				left: '11px',
+				right: '11px',
+			},
+			font: { size: '11px', weight: 600 },
+			cursor: 'pointer',
+			whiteSpace: 'nowrap',
+		},
+		Comms_list: {
+			...legend_panel,
+			position: 'absolute',
+			top: $mol_style_func.calc( '100% + 6px' ),
+			left: 0,
+			width: '250px',
+			maxHeight: '320px',
+			overflow: 'auto',
+			zIndex: 5,
+		},
+		Comm_row: legend_row,
+		Comm_mark: {
+			minWidth: '13px',
+			maxWidth: '13px',
+			color: $bog_builderui_tokens.current,
+			font: { size: '11px', weight: 700 },
+		},
+		Comm_dot: dot_base,
+		Comm_label: {
+			...legend_label,
+			flex: { grow: 1 },
+			overflow: 'hidden',
+			whiteSpace: 'nowrap',
+			textOverflow: 'ellipsis',
+		},
+		Comm_count: {
+			...legend_label,
+			color: '#8a8a8a',
+		},
+
 		Legends: {
 			position: 'absolute',
 			top: '14px',
@@ -366,32 +422,6 @@ namespace $ {
 		Rel_type: relation_type,
 		Rel_target: relation_target,
 
-		Sources_title: {
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 600,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.shade,
-			textTransform: 'uppercase',
-			margin: { top: '16px', bottom: '8px' },
-		},
-		Sources: {
-			border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
-			padding: {
-				top: '10px',
-				bottom: '10px',
-				left: '10px',
-				right: '10px',
-			},
-			font: {
-				family: 'ui-monospace, monospace',
-				weight: 500,
-				size: '10px',
-			},
-			color: $bog_builderui_tokens.shade,
-			background: { color: $bog_builderui_tokens.back },
-		},
 		Ask_btn: {
 			margin: { top: '16px' },
 			background: { color: $bog_builderui_tokens.current },

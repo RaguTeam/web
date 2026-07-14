@@ -170,7 +170,10 @@ namespace $.$$ {
 		// nodes settled into the circular bound, not the raw square mock coords.
 		@$mol_mem
 		initial_positions(): Record< string, { x: number, y: number } > {
-			return $raggu_web_front_explorer_forcegraph_initial_positions( this.nodes() as GraphNode[] )
+			return $raggu_web_front_explorer_forcegraph_initial_positions(
+				this.nodes() as GraphNode[],
+				this.node_radii(),
+			)
 		}
 
 		// Seed positions on first read, or re-seed when the node set changes
@@ -206,7 +209,16 @@ namespace $.$$ {
 				force_scale: this.force_scale(),
 				damping: this.damping(),
 				min_move: this.min_move(),
-				max_speed: this.max_speed(),
+				// Рыхлость как в Obsidian: слабые пружины, хабы не сжимают соседей
+				spring: this.spring(),
+				// Крупный граф двигаем медленнее — drag не разгоняет всю кучу
+				max_speed: this.max_speed() * this.size_scale(),
+				// …и с короткими пружинами, чтобы раскладка не расползалась за вьюпорт
+				k_scale: this.size_scale(),
+				// Затухание: силы гаснут со временем симуляции, дребезг умирает
+				heat: this.sim_alpha,
+				// Радиусы для расталкивания — кружки не наезжают друг на друга
+				radii: this.node_radii(),
 			}
 		}
 
@@ -223,6 +235,15 @@ namespace $.$$ {
 				this.layout_params(),
 			)
 			this.velocities = next.velocities
+			// Пиковая скорость по узлам — сигнал «граф осел» для ранней остановки
+			let peak = 0
+			for ( const id in next.velocities ) {
+				const v = next.velocities[ id ]
+				const speed = Math.sqrt( v.vx * v.vx + v.vy * v.vy )
+				if ( speed > peak ) peak = speed
+			}
+			this.peak_speed = peak
+			this.collide_peak = next.collide_peak
 			this.positions( next.positions )
 			// Кэшируем осевшую раскладку по dataset_id — переживёт ремоунт вкладки.
 			const key = this.graph_key()
@@ -235,22 +256,70 @@ namespace $.$$ {
 		// settling smoothly around the moved node.
 		sim_running = false
 		sim_frames_left = 0
+		sim_ticks = 0
+		peak_speed = Infinity
+		collide_peak = 0
+		frame_flip = false
 		readonly SIM_INITIAL_FRAMES = 260
 		readonly SIM_DRAG_FRAMES = 60
 
-		start_sim( frames: number = this.SIM_DRAG_FRAMES ) {
+		// Alpha-cooling (как в d3-force): множитель сил, тает каждый тик.
+		// Осцилляции вокруг равновесия гаснут вместе с ним — вместо дребезга
+		// до конца бюджета кадров граф плавно замирает за секунду-полторы.
+		sim_alpha = 1
+		readonly ALPHA_DECAY = 0.97
+		readonly ALPHA_MIN = 0.03
+		readonly ALPHA_REHEAT = 0.3
+		readonly ALPHA_DRAG = 0.5
+
+		// Хвост симуляции после отпускания узла — на крупном графе короче
+		drag_frames() {
+			return this.big_graph() ? 45 : this.SIM_DRAG_FRAMES
+		}
+
+		start_sim( frames: number = this.drag_frames(), heat: number = this.ALPHA_REHEAT ) {
 			this.sim_frames_left = Math.max( this.sim_frames_left, frames )
-			if ( this.sim_running ) return
+			if ( this.sim_running ) {
+				this.sim_alpha = Math.max( this.sim_alpha, heat )
+				return
+			}
 			if ( typeof window === 'undefined' ) return
 			this.sim_running = true
+			this.sim_ticks = 0
+			this.sim_alpha = heat
+			this.peak_speed = Infinity
+			this.collide_peak = Infinity
 			const loop = () => {
 				if ( !this.sim_running ) return
-				try { this.tick() } catch {}
+				// Во время drag на крупном графе тик через кадр: DOM не успевает
+				// обновлять сотни узлов на каждый RAF, полукадровая частота
+				// оставляет бюджет самому перетаскиванию
+				this.frame_flip = !this.frame_flip
+				if ( this.big_graph() && this.drag_id() && this.frame_flip ) {
+					requestAnimationFrame( loop )
+					return
+				}
+				// Пока данные с бэка грузятся, tick кидает wire-promise. Такие
+				// кадры не считаем ни тиками, ни затуханием — иначе симуляция
+				// «остывает» и глохнет до прихода данных, оставив наезды узлов.
+				let ok = true
+				try { this.tick() } catch { ok = false }
+				if ( ok ) {
+					this.sim_ticks++
+					this.sim_alpha = Math.max( 0, this.sim_alpha * this.ALPHA_DECAY )
+				}
 				if ( this.drag_id() ) {
-					this.sim_frames_left = Math.max( this.sim_frames_left, this.SIM_DRAG_FRAMES )
+					this.sim_frames_left = Math.max( this.sim_frames_left, this.drag_frames() )
+					this.sim_alpha = Math.max( this.sim_alpha, this.ALPHA_DRAG )
 				}
 				this.sim_frames_left--
-				if ( this.sim_frames_left <= 0 && !this.drag_id() ) {
+				// Граф осел (всё ниже порога заморозки) либо остыл (alpha на нуле) —
+				// дожигать бюджет кадров незачем. Но пока коллизии заметно
+				// раздвигают узлы, не глохнем — иначе останутся перекрытия.
+				const settled = ok && this.sim_ticks > 15
+					&& ( this.peak_speed < this.min_move() || this.sim_alpha < this.ALPHA_MIN )
+					&& this.collide_peak < 0.4
+				if ( ( this.sim_frames_left <= 0 || settled ) && !this.drag_id() ) {
 					this.sim_running = false
 					return
 				}
@@ -267,12 +336,13 @@ namespace $.$$ {
 			// Register deps on all sim inputs
 			this.gravity()
 			this.force_scale()
+			this.spring()
 			this.damping()
 			this.min_move()
 			this.max_speed()
 			this.nodes()   // rebuild sim on new graph
 			// Idempotent: re-arms frame budget; starts loop if it was stopped
-			this.start_sim( this.SIM_DRAG_FRAMES )
+			this.start_sim( this.drag_frames() )
 			return null
 		}
 
@@ -288,9 +358,36 @@ namespace $.$$ {
 				// гоняем лишь короткую стабилизацию вместо полного spring-in.
 				const key = this.graph_key()
 				const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has( key )
-				this.start_sim( cached ? this.SIM_DRAG_FRAMES : this.SIM_INITIAL_FRAMES )
+				// Полный прогрев только для свежего графа; осевший лишь стабилизируем
+				this.start_sim(
+					cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES,
+					cached ? this.ALPHA_REHEAT : 1,
+				)
 			}
 			return tree
+		}
+
+		// --- крупные графы: масштаб визуала и физики от числа узлов ---
+
+		// Плавный коэффициент 1 → 0.45: на сотнях узлов кружки, рёбра и
+		// скорость движения ужимаются, иначе граф сливается в кашу.
+		@$mol_mem
+		size_scale() {
+			const n = this.nodes().length
+			return Math.max( 0.45, Math.min( 1, Math.sqrt( 220 / Math.max( 1, n ) ) ) )
+		}
+
+		// Порог «крупного» графа — дальше экономим на подписях и кадрах симуляции
+		big_graph() {
+			return this.nodes().length > 300
+		}
+
+		// Плотность рёбер: полупрозрачные линии при наложении складываются и
+		// жирнеют, поэтому чем рёбер больше, тем тоньше и бледнее фоновые.
+		@$mol_mem
+		edge_scale() {
+			const e = this.edges().length
+			return Math.max( 0.35, Math.min( 1, Math.sqrt( 150 / Math.max( 1, e ) ) ) )
 		}
 
 		@$mol_mem
@@ -330,13 +427,28 @@ namespace $.$$ {
 		// whole canvas. Capped so even a 500-degree hub stays readable.
 		node_radius_num( id: string ): number {
 			const n = this.node_by_id()[ id ]
-			const r = this.node_size_base() + this.node_size_growth() * Math.sqrt( n.degree )
-			return Math.min( r, 22 )
+			const s = this.size_scale()
+			const r = ( this.node_size_base() + this.node_size_growth() * Math.sqrt( n.degree ) ) * s
+			return Math.min( r, 22 * s )
 		}
 		node_radius( id: string ) {
 			return String( this.node_radius_num( id ) )
 		}
+
+		// Карта радиусов для коллизий в симуляции — в svg-юнитах, как позиции
+		@$mol_mem
+		node_radii(): Record< string, number > {
+			const m: Record< string, number > = {}
+			for ( const n of this.nodes() ) m[ n.id ] = this.node_radius_num( n.id )
+			return m
+		}
 		node_color( id: string ) {
+			// При активном фильтре сообществ узлы выбранных красим в цвет сообщества
+			const cs = this.comm_set()
+			if ( cs.size ) {
+				const comm = this.node_comm( id )
+				if ( cs.has( comm ) ) return this.comm_color( comm ) || $raggu_web_front_explorer_forcegraph_type_color( this.node_by_id()[ id ].type )
+			}
 			return $raggu_web_front_explorer_forcegraph_type_color( this.node_by_id()[ id ].type )
 		}
 
@@ -345,8 +457,21 @@ namespace $.$$ {
 		search_lc() {
 			return this.search().trim().toLowerCase()
 		}
+
+		// Выбранные в выпадашке сообщества — Set для O(1) проверок
+		@$mol_mem
+		comm_set(): Set< string > {
+			return new Set( this.filter_comms() as string[] )
+		}
+		node_comm( id: string ) {
+			return this.node_by_id()[ id ]?.community ?? ''
+		}
+		comm_color( id: string ): string {
+			return ( this.comm_colors() as Record< string, string > )[ id ] ?? ''
+		}
+
 		filter_active() {
-			return Boolean( this.search_lc() || this.filter_type() || this.filter_relation() )
+			return Boolean( this.search_lc() || this.filter_type() || this.filter_relation() || this.comm_set().size )
 		}
 		node_matches( id: string ) {
 			const n = this.node_by_id()[ id ]
@@ -357,6 +482,8 @@ namespace $.$$ {
 			// Фильтр по типу связи подсвечивает концы матчащихся рёбер
 			const r = this.filter_relation()
 			if( r && !this.node_has_relation( id, r ) ) return false
+			const cs = this.comm_set()
+			if( cs.size && !cs.has( n?.community ?? '' ) ) return false
 			return true
 		}
 
@@ -383,9 +510,25 @@ namespace $.$$ {
 			return Boolean( e && ( e.source === id || e.target === id ) )
 		}
 
+		// Наведённый/выбранный узел + его соседи. Остальное затемняем —
+		// симметрично эффекту наведения на ребро.
+		@$mol_mem
+		active_node_hood(): Set< string > | null {
+			const id = this.active_id()
+			if ( !id ) return null
+			const hood = new Set( [ id ] )
+			for ( const e of this.edges() ) {
+				if ( e.source === id ) hood.add( e.target )
+				if ( e.target === id ) hood.add( e.source )
+			}
+			return hood
+		}
+
 		node_opacity( id: string ) {
 			// Активное ребро затемняет всё, кроме своих концов — как hover узла
 			if ( this.active_edge() ) return this.edge_endpoint( id ) ? '1' : '0.25'
+			const hood = this.active_node_hood()
+			if ( hood ) return hood.has( id ) ? '1' : '0.25'
 			return this.node_matches( id ) ? '1' : '0.12'
 		}
 		node_stroke( id: string ) {
@@ -435,7 +578,7 @@ namespace $.$$ {
 
 		edge_width( id: string ) {
 			const e = this.edge_by_id()[ id ]
-			const base = e.strength * 1.5 + 0.4
+			const base = ( e.strength * 1.5 + 0.4 ) * this.size_scale() * this.edge_scale()
 			if ( this.edge_active( id ) ) return String( base * 2.5 )
 			const incident = this.hovered_id() && ( e.source === this.hovered_id() || e.target === this.hovered_id() )
 				|| this.selected_id() && ( e.source === this.selected_id() || e.target === this.selected_id() )
@@ -445,6 +588,13 @@ namespace $.$$ {
 			const e = this.edge_by_id()[ id ]
 			const r = this.filter_relation()
 			if ( r && e.relation !== r ) return false
+			// Сообщества: подсвечиваем только ВНУТРЕННИЕ рёбра — оба конца
+			// в одном и том же выбранном сообществе
+			const cs = this.comm_set()
+			if ( cs.size ) {
+				const ca = this.node_comm( e.source )
+				if ( ca !== this.node_comm( e.target ) || !cs.has( ca ) ) return false
+			}
 			return this.node_matches( e.source ) && this.node_matches( e.target )
 		}
 		edge_opacity( id: string ) {
@@ -453,8 +603,11 @@ namespace $.$$ {
 			// Активное ребро приглушает все остальные — как hover узла
 			if ( this.active_edge() ) return '0.12'
 			if ( this.filter_active() && !this.edge_matches( id ) ) return '0.08'
+			// Внутренние рёбра выбранных сообществ — ярче фона
+			if ( this.comm_set().size && this.edge_matches( id ) ) return '0.85'
 			const hid = this.hovered_id() || this.selected_id()
-			if ( !hid ) return '0.55'
+			// Фоновая яркость тает с числом рёбер — иначе серая сетка
+			if ( !hid ) return String( +( 0.55 * this.edge_scale() ).toFixed( 2 ) )
 			return ( e.source === hid || e.target === hid ) ? '0.95' : '0.18'
 		}
 		edge_color( id: string ) {
@@ -462,6 +615,12 @@ namespace $.$$ {
 			const e = this.edge_by_id()[ id ]
 			const hid = this.hovered_id() || this.selected_id()
 			if ( hid && ( e.source === hid || e.target === hid ) ) return '#ffffff'
+			// Внутреннее ребро выбранного сообщества — в его цвет
+			const cs = this.comm_set()
+			if ( cs.size && this.edge_matches( id ) ) {
+				const c = this.comm_color( this.node_comm( e.source ) )
+				if ( c ) return c
+			}
 			return '#7a7672'
 		}
 
@@ -494,17 +653,24 @@ namespace $.$$ {
 
 		// ---- always-on labels ----
 
+		// Пустые подписи не рендерим вовсе: на крупном графе тысячи холостых
+		// <text> с пересчётом координат каждый тик — главный источник лагов.
 		node_label_views() {
-			return this.nodes().map( n => this.Node_label( n.id ) )
+			return this.nodes()
+				.filter( n => this.node_label_text( n.id ) !== '' )
+				.map( n => this.Node_label( n.id ) )
 		}
 		edge_label_views() {
-			return this.edges().map( e => this.Edge_label( e.id ) )
+			return this.edges()
+				.filter( e => this.edge_label_text( e.id ) !== '' )
+				.map( e => this.Edge_label( e.id ) )
 		}
 
 		// Font sizes live in svg units, so they shrink on zoom-out. sqrt easing
 		// (same as tooltip) keeps labels from ballooning when zoomed in close.
 		node_label_font_size() {
-			return String( Math.max( 4, Math.min( 14, 10 / Math.sqrt( this.zoom() ) ) ) )
+			const s = Math.max( 0.7, this.size_scale() )
+			return String( Math.max( 4, Math.min( 14, 10 * s / Math.sqrt( this.zoom() ) ) ) )
 		}
 		edge_label_font_size() {
 			return String( Math.max( 3, Math.min( 11, 8 / Math.sqrt( this.zoom() ) ) ) )
@@ -520,21 +686,33 @@ namespace $.$$ {
 		// (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
 		node_label_vis( id: string ): number {
 			const r_px = this.node_radius_num( id ) * this.zoom()
-			return Math.max( 0, Math.min( 1, ( r_px - 7 ) / 3 ) )
+			// На крупном графе подписи только у заметных хабов, иначе каша;
+			// приближение растит r_px — подписи проявляются по мере зума
+			const min_px = this.big_graph() ? 11 : 7
+			return Math.max( 0, Math.min( 1, ( r_px - min_px ) / 3 ) )
 		}
 
 		node_label_text( id: string ) {
 			if ( this.active_id() === id ) return '' // tooltip уже показывает label
 			// Концы активного ребра подписываем всегда — видно, что оно связывает
 			if ( this.edge_endpoint( id ) ) return this.node_by_id()[ id ]?.label ?? ''
+			const hood = this.active_node_hood()
+			if ( hood ) {
+				if ( !hood.has( id ) ) return '' // затемнённым подписи не нужны
+				// Соседей наведённого узла подписываем всегда (пока их разумно мало)
+				if ( hood.size <= 22 ) return this.node_by_id()[ id ]?.label ?? ''
+			}
 			if ( !this.node_matches( id ) ) return ''
-			if ( this.node_label_vis( id ) <= 0 ) return ''
+			// Порог повыше нуля: у самого порога подпись была бы почти прозрачной
+			if ( this.node_label_vis( id ) <= 0.3 ) return ''
 			return this.node_by_id()[ id ]?.label ?? ''
 		}
 
 		node_label_opacity( id: string ) {
 			if ( this.edge_endpoint( id ) ) return '1'
-			return String( this.node_label_vis( id ) * 0.85 )
+			if ( this.active_node_hood()?.has( id ) ) return '1'
+			// Быстрый разгон до непрозрачности — долгий fade читался как баг
+			return String( Math.min( 1, 0.75 + this.node_label_vis( id ) * 0.25 ) )
 		}
 
 		edge_label_mid( id: string ) {
@@ -554,6 +732,12 @@ namespace $.$$ {
 			if ( !rel ) return ''
 			if ( this.edge_active( id ) ) return rel
 			if ( this.active_edge() ) return '' // не шумим подписями вокруг активного ребра
+			// На крупном графе фоновые подписи рёбер превращаются в серую пыль —
+			// оставляем их только вокруг наведённого/выбранного узла
+			if ( this.big_graph() ) {
+				const hid = this.hovered_id() || this.selected_id()
+				if ( !hid || ( e.source !== hid && e.target !== hid ) ) return ''
+			}
 			if ( this.filter_active() && !this.edge_matches( id ) ) return ''
 			const fs = parseFloat( this.edge_label_font_size() )
 			if ( fs * this.zoom() < 4 ) return '' // на экране будет нечитаемая пыль
@@ -572,7 +756,7 @@ namespace $.$$ {
 				const e = this.edge_by_id()[ id ]
 				return ( e.source === hid || e.target === hid ) ? '0.95' : '0.25'
 			}
-			return '0.75'
+			return '0.85'
 		}
 
 		// Suppress click that fires right after node-drag (drag_id was just released)

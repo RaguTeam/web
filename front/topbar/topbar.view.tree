@@ -3,16 +3,9 @@ $raggu_web_front_topbar $bog_builderui_div
 	dataset_id \wiki
 	dataset_title \
 	screen_title \
-	preset? \demo
-	open_settings? null
 	open_help? null
 	toggle_sidebar? null
-	preset_label_text @ \Preset
-	settings_btn_text @ \⚙ Settings
 	help_btn_text @ \? Help
-	preset_fast_label @ \⚡ Fast
-	preset_accurate_label @ \🎯 Accurate
-	preset_demo_label @ \🎬 Demo
 	sub /
 		<= Sidebar_btn $raggu_web_front_topbar_nav
 			icon \◫
@@ -55,22 +48,3 @@ $raggu_web_front_topbar $bog_builderui_div
 			<= Title $bog_builderui_div sub / <= screen_title
 			<= Subtitle $bog_builderui_div sub / <= dataset_title
 		<= Spacer $bog_builderui_div
-		<= Preset_label $bog_builderui_div sub / <= preset_label_text
-		<= Preset_group $bog_builderui_div sub /
-			<= Preset_fast $raggu_web_front_topbar_preset
-				label <= preset_fast_label
-				active <= is_fast false
-				click? <=> click_fast? null
-			<= Preset_accurate $raggu_web_front_topbar_preset
-				label <= preset_accurate_label
-				active <= is_accurate false
-				click? <=> click_accurate? null
-			<= Preset_demo $raggu_web_front_topbar_preset
-				label <= preset_demo_label
-				active <= is_demo false
-				click? <=> click_demo? null
-		<= Settings_btn $bog_builderui_div
-			event * click? <=> open_settings? null
-			sub / <= settings_btn_text
-		<= Export $raggu_web_front_export
-			screen <= screen

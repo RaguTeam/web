@@ -43,6 +43,7 @@ namespace $.$$ {
 					degree: n.degree,
 					x: n.x,
 					y: n.y,
+					community: n.community_id ?? '',
 				} ) )
 				const edges: GraphEdge[] = res.edges.map( (e: any) => ( {
 					id: e.id,
@@ -153,6 +154,106 @@ namespace $.$$ {
 			const t = this.rel_entries()[ i ]?.type ?? ''
 			this.rel_filter( this.rel_filter() === t ? '' : t )
 			return null
+		}
+
+		// --- Сообщества: выпадашка с чекбоксами возле поиска ---
+
+		// Список с бэка (get_communities); для мока/фолбэка группируем узлы
+		// по community. Иерархию Leiden режем до самого крупного уровня.
+		@$mol_mem
+		communities(): Array< { id: string, title: string, size: number } > {
+			const ds = this.dataset_id()
+			if ( ds && !this.mock_flag() ) {
+				try {
+					const res = this.$.$raggu_web_front_api(
+						$raggu_web_front_api_ragu_get_communities,
+						{ params: { dataset_id: ds } },
+					)
+					const all = res.communities ?? []
+					if ( all.length ) {
+						const top = Math.min( ... all.map( ( c: any ) => c.level ?? 0 ) )
+						return all
+							.filter( ( c: any ) => ( c.level ?? 0 ) === top )
+							.map( ( c: any ) => ( { id: c.id, title: c.title || c.id, size: c.size ?? 0 } ) )
+							.sort( ( a: any, b: any ) => b.size - a.size )
+					}
+				} catch( error ) {
+					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				}
+			}
+			const counts: Record< string, number > = {}
+			for ( const n of this.graph_nodes() ) {
+				const c = n.community ?? ''
+				if ( !c ) continue
+				counts[ c ] = ( counts[ c ] ?? 0 ) + 1
+			}
+			return Object.entries( counts )
+				.map( ( [ id, size ] ) => ( { id, title: id, size } ) )
+				.sort( ( a, b ) => b.size - a.size )
+		}
+
+		// Каждому сообществу свой цвет — по порядку в списке
+		@$mol_mem
+		comm_color_map(): Record< string, string > {
+			const m: Record< string, string > = {}
+			this.communities().forEach( ( c, i ) => {
+				m[ c.id ] = $raggu_web_front_explorer_forcegraph_index_color( i )
+			} )
+			return m
+		}
+
+		@$mol_mem
+		comms_selected( next?: readonly string[] ): readonly string[] {
+			return next ?? []
+		}
+
+		// Пересечение выбора с текущим списком: смена датасета не тащит чужой
+		// выбор (id сообществ у датасетов разные — фильтр гасил бы весь граф)
+		@$mol_mem
+		comms_checked(): readonly string[] {
+			const ids = new Set( this.communities().map( c => c.id ) )
+			return this.comms_selected().filter( id => ids.has( id ) )
+		}
+
+		comm_rows() {
+			return this.communities().map( ( _, i ) => this.Comm_row( i ) )
+		}
+		comm_label( i: number ) { return this.communities()[ i ]?.title ?? '' }
+		comm_count( i: number ) { return String( this.communities()[ i ]?.size ?? '' ) }
+		comm_active( i: number ) {
+			return this.comms_selected().includes( this.communities()[ i ]?.id ?? '' )
+		}
+		comm_mark( i: number ) { return this.comm_active( i ) ? '✓' : '' }
+
+		Comm_dot( i: number ) {
+			const dot = super.Comm_dot( i )
+			dot.style = () => ( {
+				background: this.comm_color_map()[ this.communities()[ i ]?.id ?? '' ] ?? '',
+			} )
+			return dot
+		}
+
+		@$mol_action
+		comm_click( i: number ) {
+			const id = this.communities()[ i ]?.id
+			if ( !id ) return null
+			const cur = this.comms_selected()
+			this.comms_selected( cur.includes( id )
+				? cur.filter( c => c !== id )
+				: [ ... cur, id ] )
+			return null
+		}
+
+		@$mol_action
+		comms_toggle() {
+			this.comms_open( !this.comms_open() )
+			return null
+		}
+		comms_closed() { return !this.comms_open() }
+
+		comms_btn_label() {
+			const n = this.comms_checked().length
+			return `${ this.comms_btn_text() }${ n ? ` · ${ n }` : '' } ${ this.comms_open() ? '▴' : '▾' }`
 		}
 
 		// Сворачивание легенд и правой панели — больше места графу

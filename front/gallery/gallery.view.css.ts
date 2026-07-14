@@ -56,33 +56,6 @@ namespace $ {
 		Spacer: {
 			flex: { grow: 1 },
 		},
-		Upload_doc: {
-			border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
-			padding: {
-				top: '10px',
-				bottom: '10px',
-				left: '16px',
-				right: '16px',
-			},
-			font: { size: '12px', weight: 600 },
-			color: $bog_builderui_tokens.shade,
-			background: { color: $bog_builderui_tokens.card },
-			cursor: 'pointer',
-		},
-		Upload_idx: {
-			border: { width: '1px', style: 'dashed', color: '#b8b4b0', radius: '8px' },
-			padding: {
-				top: '10px',
-				bottom: '10px',
-				left: '16px',
-				right: '16px',
-			},
-			font: { size: '12px', weight: 600 },
-			color: $bog_builderui_tokens.shade,
-			background: { color: $bog_builderui_tokens.card },
-			cursor: 'pointer',
-		},
-
 		Grid: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
