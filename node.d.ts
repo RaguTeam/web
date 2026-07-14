@@ -5233,6 +5233,8 @@ declare namespace $ {
         y: number;
         /** Community id из бэка (Leiden); пустая строка = не определено. */
         community?: string;
+        /** Описание сущности с бэка; для мока пусто. */
+        description?: string;
     };
     type $raggu_web_front_explorer_forcegraph_edge = {
         id: string;
@@ -5719,6 +5721,7 @@ declare namespace $.$$ {
         dom_tree(): Element;
         size_scale(): number;
         big_graph(): boolean;
+        huge_graph(): boolean;
         edge_scale(): number;
         node_by_id(): Record<string, GraphNode>;
         node_views(): $.$mol_svg_circle[];
@@ -5926,7 +5929,7 @@ declare namespace $ {
 declare namespace $ {
 
 	type $raggu_web_front_explorer_forcegraph__graph_key_raggu_web_front_explorer_1 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_explorer['dataset_id'] >
+		ReturnType< $raggu_web_front_explorer['graph_key'] >
 		,
 		ReturnType< $raggu_web_front_explorer_forcegraph['graph_key'] >
 	>
@@ -6313,6 +6316,8 @@ declare namespace $ {
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	export class $raggu_web_front_explorer extends $bog_builderui_div {
+		outside_click( next?: any ): any
+		graph_key( ): string
 		graph_nodes( ): readonly(any)[]
 		graph_edges( ): readonly(any)[]
 		comms_checked( ): readonly(any)[]
@@ -6420,6 +6425,9 @@ declare namespace $ {
 		comms_open( next?: boolean ): boolean
 		comms_btn_text( ): string
 		mock_badge_text( ): string
+		event( ): ({ 
+			click( next?: ReturnType< $raggu_web_front_explorer['outside_click'] > ): ReturnType< $raggu_web_front_explorer['outside_click'] >,
+		})  & ReturnType< $bog_builderui_div['event'] >
 		sub( ): readonly(any)[]
 	}
 	
@@ -6431,6 +6439,8 @@ declare namespace $.$$ {
     type GraphEdge = $raggu_web_front_explorer_forcegraph_edge;
     export class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
         mock_flag(): boolean;
+        graph_limit(): number;
+        graph_key(): string;
         graph_remote(): {
             nodes: GraphNode[];
             edges: GraphEdge[];
@@ -6466,6 +6476,7 @@ declare namespace $.$$ {
         comms_checked(): readonly string[];
         comm_rows(): $bog_builderui_div[];
         comm_label(i: number): string;
+        comm_visible_counts(): Record<string, number>;
         comm_count(i: number): string;
         comm_active(i: number): boolean;
         comm_mark(i: number): "" | "✓";
@@ -6473,6 +6484,7 @@ declare namespace $.$$ {
         comm_click(i: number): null;
         comms_toggle(): null;
         comms_closed(): boolean;
+        outside_click(event?: MouseEvent): null;
         comms_btn_label(): string;
         legend_caret(): "▾" | "▸";
         rels_caret(): "▾" | "▸";
@@ -6494,6 +6506,7 @@ declare namespace $.$$ {
         entity_name(): string;
         entity_type(): string;
         edge_remote_desc(): string | null;
+        node_remote_desc(): string | null;
         entity_desc(): string;
         relations_title(): string;
         rels(): Array<{

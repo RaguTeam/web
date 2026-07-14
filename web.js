@@ -9788,7 +9788,8 @@ var $;
                 this.max_speed();
                 this.nodes(); // rebuild sim on new graph
                 // Idempotent: re-arms frame budget; starts loop if it was stopped
-                this.start_sim(this.drag_frames());
+                if (!this.huge_graph())
+                    this.start_sim(this.drag_frames());
                 return null;
             }
             // Kick off the initial spring-in exactly once, on first mount.
@@ -9798,12 +9799,15 @@ var $;
                 const tree = super.dom_tree();
                 if (!this.initial_sim_started) {
                     this.initial_sim_started = true;
-                    // Уже раскладывали этот граф — берём осевшие позиции из кэша и
-                    // гоняем лишь короткую стабилизацию вместо полного spring-in.
-                    const key = this.graph_key();
-                    const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has(key);
-                    // Полный прогрев только для свежего графа; осевший лишь стабилизируем
-                    this.start_sim(cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES, cached ? this.ALPHA_REHEAT : 1);
+                    // Бэковая раскладка + стартовое расталкивание уже дают картинку —
+                    // на огромном графе симуляция включится только при drag.
+                    if (!this.huge_graph()) {
+                        // Уже раскладывали этот граф — берём осевшие позиции из кэша и
+                        // гоняем лишь короткую стабилизацию вместо полного spring-in.
+                        const key = this.graph_key();
+                        const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has(key);
+                        this.start_sim(cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES, cached ? this.ALPHA_REHEAT : 1);
+                    }
                 }
                 return tree;
             }
@@ -9817,6 +9821,11 @@ var $;
             // Порог «крупного» графа — дальше экономим на подписях и кадрах симуляции
             big_graph() {
                 return this.nodes().length > 300;
+            }
+            // «Огромный» граф: тик стоит ~100мс+, авто-симуляцию не гоняем вовсе —
+            // физика включается только на время перетаскивания узла
+            huge_graph() {
+                return this.nodes().length > 2000;
             }
             // Плотность рёбер: полупрозрачные линии при наложении складываются и
             // жирнеют, поэтому чем рёбер больше, тем тоньше и бледнее фоновые.
@@ -10713,6 +10722,13 @@ var $;
 
 ;
 	($.$raggu_web_front_explorer) = class $raggu_web_front_explorer extends ($.$bog_builderui_div) {
+		outside_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		graph_key(){
+			return "";
+		}
 		graph_nodes(){
 			return [];
 		}
@@ -10727,7 +10743,7 @@ var $;
 		}
 		Graph(){
 			const obj = new this.$.$raggu_web_front_explorer_forcegraph();
-			(obj.graph_key) = () => ((this.dataset_id()));
+			(obj.graph_key) = () => ((this.graph_key()));
 			(obj.nodes) = () => ((this.graph_nodes()));
 			(obj.edges) = () => ((this.graph_edges()));
 			(obj.selected_id) = (next) => ((this.selected_id(next)));
@@ -11191,10 +11207,14 @@ var $;
 		mock_badge_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_mock_badge_text"));
 		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.outside_click(next))};
+		}
 		sub(){
 			return [(this.Canvas()), (this.Aside())];
 		}
 	};
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "outside_click"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Graph"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas_bg"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_search"));
@@ -11272,8 +11292,9 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        // Default page size for the graph endpoint. The mock backend caps at 5000.
+        // Default page size for the graph endpoint. Бэк режет limit на 5000.
         const GRAPH_LIMIT = 500;
+        const GRAPH_LIMIT_MAX = 5000;
         // Module-scoped cache keyed by dataset_id. Survives component remount:
         // switching tabs drops the @$mol_mem cell's subscribers and resets it, so
         // without this every return to the graph re-fetches and re-runs the layout.
@@ -11283,6 +11304,18 @@ var $;
             // and jsdom tests where no live backend is available.
             mock_flag() {
                 return this.$.$mol_state_arg.value('mock') === '1';
+            }
+            // Размер выборки графа — URL-арг `limit` (например #!limit=5000).
+            // По умолчанию 500: SVG на тысячах узлов заметно тяжелеет.
+            graph_limit() {
+                const raw = Number(this.$.$mol_state_arg.value('limit') ?? '');
+                if (!Number.isFinite(raw) || raw <= 0)
+                    return GRAPH_LIMIT;
+                return Math.min(GRAPH_LIMIT_MAX, Math.round(raw));
+            }
+            // Ключ кэшей графа и раскладки: датасет + лимит выборки
+            graph_key() {
+                return `${this.dataset_id()}:${this.graph_limit()}`;
             }
             // Reactive live fetch. While loading, the wire promise is rethrown as
             // usual; a real transport error falls back to the built-in mock graph
@@ -11295,11 +11328,12 @@ var $;
                     return null;
                 // Возврат на вкладку не должен снова дёргать бэк — отдаём тот же объект,
                 // стабильная identity сохраняет раскладку графа.
-                const cached = $raggu_web_front_explorer_graph_cache.get(id);
+                const key = this.graph_key();
+                const cached = $raggu_web_front_explorer_graph_cache.get(key);
                 if (cached)
                     return cached;
                 try {
-                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_graph, { params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } });
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_graph, { params: { dataset_id: id }, query: { limit: this.graph_limit() } });
                     const nodes = res.nodes.map((n) => ({
                         id: n.id,
                         label: n.label,
@@ -11308,6 +11342,7 @@ var $;
                         x: n.x,
                         y: n.y,
                         community: n.community_id ?? '',
+                        description: n.description ?? '',
                     }));
                     const edges = res.edges.map((e) => ({
                         id: e.id,
@@ -11318,7 +11353,7 @@ var $;
                         description: e.description ?? '',
                     }));
                     const result = { nodes, edges };
-                    $raggu_web_front_explorer_graph_cache.set(id, result);
+                    $raggu_web_front_explorer_graph_cache.set(key, result);
                     return result;
                 }
                 catch (error) {
@@ -11332,7 +11367,7 @@ var $;
             is_mock() {
                 return this.graph_remote() === null;
             }
-            // Легенда строится из фактических типов графа (топ по количеству узлов),
+            // Легенда строится из фактических типов графа (все, по убыванию),
             // а не из фиксированного NEREL-набора — схемы разных доменов различаются.
             legend_entries() {
                 const counts = {};
@@ -11341,8 +11376,7 @@ var $;
                 }
                 return Object.entries(counts)
                     .map(([type, count]) => ({ type, count }))
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 12);
+                    .sort((a, b) => b.count - a.count);
             }
             legend_rows() {
                 return this.legend_entries().map((_, i) => this.Legend_row(i));
@@ -11381,8 +11415,7 @@ var $;
                 }
                 return Object.entries(counts)
                     .map(([type, count]) => ({ type, count }))
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 12);
+                    .sort((a, b) => b.count - a.count);
             }
             rel_legend_rows() {
                 return this.rel_entries().map((_, i) => this.Rel_row(i));
@@ -11460,7 +11493,26 @@ var $;
                 return this.communities().map((_, i) => this.Comm_row(i));
             }
             comm_label(i) { return this.communities()[i]?.title ?? ''; }
-            comm_count(i) { return String(this.communities()[i]?.size ?? ''); }
+            // Сколько вершин сообщества реально попало в выборку графа (limit!)
+            comm_visible_counts() {
+                const m = {};
+                for (const n of this.graph_nodes()) {
+                    const c = n.community ?? '';
+                    if (!c)
+                        continue;
+                    m[c] = (m[c] ?? 0) + 1;
+                }
+                return m;
+            }
+            // «видимых / всего»: size с бэка — по всему датасету, а канва держит
+            // только limit-выборку, иначе число не сходится с подсветкой
+            comm_count(i) {
+                const c = this.communities()[i];
+                if (!c)
+                    return '';
+                const vis = this.comm_visible_counts()[c.id] ?? 0;
+                return vis === c.size ? String(c.size) : `${vis} / ${c.size}`;
+            }
             comm_active(i) {
                 return this.comms_selected().includes(this.communities()[i]?.id ?? '');
             }
@@ -11487,6 +11539,17 @@ var $;
                 return null;
             }
             comms_closed() { return !this.comms_open(); }
+            // Клик вне выпадашки закрывает её. Клики внутри (кнопка, строки)
+            // добегают сюда всплытием, но target лежит внутри Comms — пропускаем.
+            outside_click(event) {
+                if (!this.comms_open())
+                    return null;
+                const box = this.Comms().dom_node();
+                if (box && event?.target instanceof Node && box.contains(event.target))
+                    return null;
+                this.comms_open(false);
+                return null;
+            }
             comms_btn_label() {
                 const n = this.comms_checked().length;
                 return `${this.comms_btn_text()}${n ? ` · ${n}` : ''} ${this.comms_open() ? '▴' : '▾'}`;
@@ -11561,6 +11624,23 @@ var $;
                     return null;
                 }
             }
+            // Описание узла с бэка (get_node); ошибка тихо фолбэчится на
+            // description из get_graph — как у рёбер.
+            node_remote_desc() {
+                const n = this.selected();
+                const id = this.dataset_id();
+                if (!n || !id || this.mock_flag())
+                    return null;
+                try {
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_node, { params: { dataset_id: id, node_id: n.id } });
+                    return res.node?.description || null;
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    return null;
+                }
+            }
             entity_desc() {
                 const edge = this.selected_edge();
                 if (edge) {
@@ -11571,7 +11651,7 @@ var $;
                 const n = this.selected();
                 if (!n)
                     return '';
-                return `Mock entity of type ${n.type}, connected to ${n.degree} other nodes.`;
+                return this.node_remote_desc() ?? (n.description || '');
             }
             relations_title() {
                 const n = this.selected();
@@ -11600,6 +11680,9 @@ var $;
         }
         __decorate([
             $mol_mem
+        ], $raggu_web_front_explorer.prototype, "graph_limit", null);
+        __decorate([
+            $mol_mem
         ], $raggu_web_front_explorer.prototype, "graph_remote", null);
         __decorate([
             $mol_mem
@@ -11626,11 +11709,17 @@ var $;
             $mol_mem
         ], $raggu_web_front_explorer.prototype, "comms_checked", null);
         __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "comm_visible_counts", null);
+        __decorate([
             $mol_action
         ], $raggu_web_front_explorer.prototype, "comm_click", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer.prototype, "comms_toggle", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "outside_click", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_explorer.prototype, "legend_toggle", null);
@@ -11646,6 +11735,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer.prototype, "edge_remote_desc", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_explorer.prototype, "node_remote_desc", null);
         $$.$raggu_web_front_explorer = $raggu_web_front_explorer;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -11725,8 +11817,13 @@ var $;
         color: '#8a8a8a',
         font: { size: '10px' },
     };
+    // shrink+minHeight: без них flex не ужимает список и панель вылезает
+    // за экран вместо прокрутки. maxHeight делит вьюпорт между двумя
+    // легендами — иначе длинная (типы связей) выдавливает короткую в ноль.
     const legend_list = {
-        flex: { direction: 'column' },
+        flex: { direction: 'column', shrink: 1 },
+        minHeight: 0,
+        maxHeight: '34vh',
         overflow: 'auto',
         margin: { top: '8px' },
     };
@@ -12024,6 +12121,9 @@ var $;
         },
         Entity_name: {
             font: { weight: 700, size: '16px' },
+            // Длинные имена сущностей не должны вылезать за панель
+            minWidth: 0,
+            overflowWrap: 'anywhere',
         },
         Entity_type: {
             font: {
@@ -12033,6 +12133,7 @@ var $;
             },
             color: $bog_builderui_tokens.current,
             margin: { top: '6px' },
+            overflowWrap: 'anywhere',
         },
         Entity_desc: {
             font: { size: '12px' },
