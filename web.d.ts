@@ -5612,6 +5612,8 @@ declare namespace $.$$ {
         edges(): readonly GraphEdge[];
         drag_id_raw: string;
         drag_id(next?: string): string;
+        world_size(): number;
+        screen_scale(): number;
         computed_view_box(): string;
         wheel(event?: WheelEvent): void;
         dragging: boolean;
