@@ -6,3 +6,5 @@ __pycache__
 *.py[cod]
 .idea
 .DS_Store
+indexes/
+.env

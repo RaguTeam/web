@@ -1,0 +1,32 @@
+services:
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    image: ragu-web-api:local
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      RAGU_INDEXES_DIR: /data/indexes    # переопределяет путь под контейнер
+    volumes:
+      - ./indexes:/data/indexes:ro
+    expose:
+      - "8000"                            # только внутрь сети docker
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on: [back]
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ragu-back.duckdns.org
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
