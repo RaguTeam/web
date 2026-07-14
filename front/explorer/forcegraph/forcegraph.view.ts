@@ -33,11 +33,34 @@ namespace $.$$ {
 			return this.drag_id_raw
 		}
 
+		// Размер мира: bbox стартовой раскладки (растёт с числом узлов).
+		// Камера при zoom=1 вмещает его целиком независимо от размера графа.
+		@$mol_mem
+		world_size(): number {
+			const pos = this.initial_positions()
+			let min_x = Infinity, min_y = Infinity, max_x = -Infinity, max_y = -Infinity
+			for ( const id in pos ) {
+				const p = pos[ id ]
+				if ( p.x < min_x ) min_x = p.x
+				if ( p.y < min_y ) min_y = p.y
+				if ( p.x > max_x ) max_x = p.x
+				if ( p.y > max_y ) max_y = p.y
+			}
+			const span = Math.max( max_x - min_x, max_y - min_y )
+			return Number.isFinite( span ) ? Math.max( 600, span * 1.15 ) : 600
+		}
+
+		// Экранных пикселей на svg-юнит (приблизительно, при вьюпорте ~600px) —
+		// для эвристик видимости подписей
+		screen_scale(): number {
+			return this.zoom() * 600 / this.world_size()
+		}
+
 		// Pan/zoom state — fold into reactive view_box
 		@$mol_mem
 		computed_view_box() {
 			const z = Math.max( 0.2, Math.min( 5, this.zoom() ) )
-			const size = 600 / z
+			const size = this.world_size() / z
 			const x = -size / 2 + this.pan_x()
 			const y = -size / 2 + this.pan_y()
 			return `${ x } ${ y } ${ size } ${ size }`
@@ -725,10 +748,10 @@ namespace $.$$ {
 		// (same as tooltip) keeps labels from ballooning when zoomed in close.
 		node_label_font_size() {
 			const s = Math.max( 0.7, this.size_scale() )
-			return String( Math.max( 4, Math.min( 14, 10 * s / Math.sqrt( this.zoom() ) ) ) )
+			return String( Math.max( 4, Math.min( 14, 10 * s / Math.sqrt( this.screen_scale() ) ) ) )
 		}
 		edge_label_font_size() {
-			return String( Math.max( 3, Math.min( 11, 8 / Math.sqrt( this.zoom() ) ) ) )
+			return String( Math.max( 3, Math.min( 11, 8 / Math.sqrt( this.screen_scale() ) ) ) )
 		}
 
 		node_label_x( id: string ) { return String( this.pos( id ).x ) }
@@ -740,7 +763,7 @@ namespace $.$$ {
 		// «Когда места хватает»: подпись растёт из видимого размера узла на экране
 		// (радиус × zoom) — мелкие узлы при отдалении остаются без подписей.
 		node_label_vis( id: string ): number {
-			const r_px = this.node_radius_num( id ) * this.zoom()
+			const r_px = this.node_radius_num( id ) * this.screen_scale()
 			// На крупном графе подписи только у заметных хабов, иначе каша;
 			// приближение растит r_px — подписи проявляются по мере зума
 			const min_px = this.big_graph() ? 11 : 7
@@ -777,7 +800,7 @@ namespace $.$$ {
 			const rel = e?.relation ?? ''
 			if ( !rel ) return false
 			const fs = parseFloat( this.edge_label_font_size() )
-			if ( fs * this.zoom() < 4 ) return false // нечитаемая пыль
+			if ( fs * this.screen_scale() < 4 ) return false // нечитаемая пыль
 			const a = this.pos( e.source )
 			const b = this.pos( e.target )
 			const len = Math.hypot( b.x - a.x, b.y - a.y )
@@ -905,7 +928,7 @@ namespace $.$$ {
 		}
 
 		tooltip_font_size() {
-			return String( Math.max( 6, Math.min( 12, 11 / Math.sqrt( this.zoom() ) ) ) )
+			return String( Math.max( 6, Math.min( 12, 11 / Math.sqrt( this.screen_scale() ) ) ) )
 		}
 
 		// Position tooltip above the active node, in svg space

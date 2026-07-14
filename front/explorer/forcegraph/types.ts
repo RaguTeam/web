@@ -453,7 +453,11 @@ namespace $ {
 		const cx = ( min_x + max_x ) / 2
 		const cy = ( min_y + max_y ) / 2
 		const span = Math.max( max_x - min_x, max_y - min_y )
-		const scale = span > 1 ? 520 / span : 1
+		// Площадь мира растёт с числом узлов (span ∝ √N): иначе 5000 узлов,
+		// втиснутые в те же 520 юнитов, после расталкивания коллизий дают
+		// плотный круг-«упаковку» вместо разреженного графа
+		const target = 520 * Math.max( 1, Math.sqrt( nodes.length / 500 ) )
+		const scale = span > 1 ? target / span : 1
 		const positions: Record< string, { x: number, y: number } > = {}
 		for ( const n of nodes ) positions[ n.id ] = { x: ( n.x - cx ) * scale, y: ( n.y - cy ) * scale }
 		// Продавливаем коллизии ещё до первого кадра — граф ни на миг
