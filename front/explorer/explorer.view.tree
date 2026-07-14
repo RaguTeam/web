@@ -33,6 +33,9 @@ $raggu_web_front_explorer $bog_builderui_div
 	comm_mark* \
 	comm_click*? null
 	mock_badge_text @ \⚠ Mock data — backend is not connected
+	event *
+		^
+		click?event <=> outside_click?event null
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /

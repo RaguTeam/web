@@ -79,8 +79,13 @@ namespace $ {
 		font: { size: '10px' },
 	} as const
 
+	// shrink+minHeight: без них flex не ужимает список и панель вылезает
+	// за экран вместо прокрутки. maxHeight делит вьюпорт между двумя
+	// легендами — иначе длинная (типы связей) выдавливает короткую в ноль.
 	const legend_list = {
-		flex: { direction: 'column' },
+		flex: { direction: 'column', shrink: 1 },
+		minHeight: 0,
+		maxHeight: '34vh',
 		overflow: 'auto',
 		margin: { top: '8px' },
 	} as const
@@ -388,6 +393,9 @@ namespace $ {
 		},
 		Entity_name: {
 			font: { weight: 700, size: '16px' },
+			// Длинные имена сущностей не должны вылезать за панель
+			minWidth: 0,
+			overflowWrap: 'anywhere',
 		},
 		Entity_type: {
 			font: {
@@ -397,6 +405,7 @@ namespace $ {
 			},
 			color: $bog_builderui_tokens.current,
 			margin: { top: '6px' },
+			overflowWrap: 'anywhere',
 		},
 		Entity_desc: {
 			font: { size: '12px' },

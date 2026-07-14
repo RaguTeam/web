@@ -14,6 +14,8 @@ namespace $ {
 		y: number
 		/** Community id из бэка (Leiden); пустая строка = не определено. */
 		community?: string
+		/** Описание сущности с бэка; для мока пусто. */
+		description?: string
 	}
 
 	export type $raggu_web_front_explorer_forcegraph_edge = {
