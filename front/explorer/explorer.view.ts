@@ -3,8 +3,9 @@ namespace $.$$ {
 	type GraphNode = $raggu_web_front_explorer_forcegraph_node
 	type GraphEdge = $raggu_web_front_explorer_forcegraph_edge
 
-	// Default page size for the graph endpoint. The mock backend caps at 5000.
+	// Default page size for the graph endpoint. Бэк режет limit на 5000.
 	const GRAPH_LIMIT = 500
+	const GRAPH_LIMIT_MAX = 5000
 
 	// Module-scoped cache keyed by dataset_id. Survives component remount:
 	// switching tabs drops the @$mol_mem cell's subscribers and resets it, so
@@ -19,6 +20,20 @@ namespace $.$$ {
 			return this.$.$mol_state_arg.value( 'mock' ) === '1'
 		}
 
+		// Размер выборки графа — URL-арг `limit` (например #!limit=5000).
+		// По умолчанию 500: SVG на тысячах узлов заметно тяжелеет.
+		@$mol_mem
+		graph_limit(): number {
+			const raw = Number( this.$.$mol_state_arg.value( 'limit' ) ?? '' )
+			if ( !Number.isFinite( raw ) || raw <= 0 ) return GRAPH_LIMIT
+			return Math.min( GRAPH_LIMIT_MAX, Math.round( raw ) )
+		}
+
+		// Ключ кэшей графа и раскладки: датасет + лимит выборки
+		graph_key() {
+			return `${ this.dataset_id() }:${ this.graph_limit() }`
+		}
+
 		// Reactive live fetch. While loading, the wire promise is rethrown as
 		// usual; a real transport error falls back to the built-in mock graph
 		// so the demo stays alive without the backend.
@@ -29,12 +44,13 @@ namespace $.$$ {
 			if ( this.mock_flag() ) return null
 			// Возврат на вкладку не должен снова дёргать бэк — отдаём тот же объект,
 			// стабильная identity сохраняет раскладку графа.
-			const cached = $raggu_web_front_explorer_graph_cache.get( id )
+			const key = this.graph_key()
+			const cached = $raggu_web_front_explorer_graph_cache.get( key )
 			if ( cached ) return cached
 			try {
 				const res = this.$.$raggu_web_front_api(
 					$raggu_web_front_api_ragu_get_graph,
-					{ params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } },
+					{ params: { dataset_id: id }, query: { limit: this.graph_limit() } },
 				)
 				const nodes: GraphNode[] = res.nodes.map( (n: any) => ( {
 					id: n.id,
@@ -55,7 +71,7 @@ namespace $.$$ {
 					description: e.description ?? '',
 				} ) )
 				const result = { nodes, edges }
-				$raggu_web_front_explorer_graph_cache.set( id, result )
+				$raggu_web_front_explorer_graph_cache.set( key, result )
 				return result
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
@@ -383,7 +399,7 @@ namespace $.$$ {
 					$raggu_web_front_api_ragu_get_node,
 					{ params: { dataset_id: id, node_id: n.id } },
 				)
-				return res.description || null
+				return res.node?.description || null
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 				return null

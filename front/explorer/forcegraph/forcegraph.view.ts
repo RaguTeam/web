@@ -342,7 +342,7 @@ namespace $.$$ {
 			this.max_speed()
 			this.nodes()   // rebuild sim on new graph
 			// Idempotent: re-arms frame budget; starts loop if it was stopped
-			this.start_sim( this.drag_frames() )
+			if ( !this.huge_graph() ) this.start_sim( this.drag_frames() )
 			return null
 		}
 
@@ -354,15 +354,18 @@ namespace $.$$ {
 			const tree = super.dom_tree()
 			if ( !this.initial_sim_started ) {
 				this.initial_sim_started = true
-				// Уже раскладывали этот граф — берём осевшие позиции из кэша и
-				// гоняем лишь короткую стабилизацию вместо полного spring-in.
-				const key = this.graph_key()
-				const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has( key )
-				// Полный прогрев только для свежего графа; осевший лишь стабилизируем
-				this.start_sim(
-					cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES,
-					cached ? this.ALPHA_REHEAT : 1,
-				)
+				// Бэковая раскладка + стартовое расталкивание уже дают картинку —
+				// на огромном графе симуляция включится только при drag.
+				if ( !this.huge_graph() ) {
+					// Уже раскладывали этот граф — берём осевшие позиции из кэша и
+					// гоняем лишь короткую стабилизацию вместо полного spring-in.
+					const key = this.graph_key()
+					const cached = key && $raggu_web_front_explorer_forcegraph_layout_cache.has( key )
+					this.start_sim(
+						cached ? this.drag_frames() : this.SIM_INITIAL_FRAMES,
+						cached ? this.ALPHA_REHEAT : 1,
+					)
+				}
 			}
 			return tree
 		}
@@ -380,6 +383,12 @@ namespace $.$$ {
 		// Порог «крупного» графа — дальше экономим на подписях и кадрах симуляции
 		big_graph() {
 			return this.nodes().length > 300
+		}
+
+		// «Огромный» граф: тик стоит ~100мс+, авто-симуляцию не гоняем вовсе —
+		// физика включается только на время перетаскивания узла
+		huge_graph() {
+			return this.nodes().length > 2000
 		}
 
 		// Плотность рёбер: полупрозрачные линии при наложении складываются и
