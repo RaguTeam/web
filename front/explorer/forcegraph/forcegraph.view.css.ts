@@ -39,5 +39,21 @@ namespace $ {
 		+ '\tstroke-width: 2px;\n'
 		+ '\tstroke-opacity: 0.6;\n'
 		+ '}\n'
+		// Ховер гасит базовые слои ОДНИМ свойством на группу — вместо
+		// пересчёта opacity у тысяч элементов. Подсветка живёт в G_overlay.
+		+ '[data-forcegraph-base] {\n'
+		+ '\ttransition: opacity 0.15s ease;\n'
+		+ '}\n'
+		+ '[data-forcegraph-dim="true"] [data-forcegraph-base] {\n'
+		+ '\topacity: 0.22;\n'
+		+ '}\n'
+		// Обводка/линии оверлея — темозависимые: белое на светлой теме
+		// поверх приглушённой базы было невидимым
+		+ '[raggu_web_front_explorer_forcegraph_overlay_edge] {\n'
+		+ '\tstroke: var(--bog_builderui_text);\n'
+		+ '}\n'
+		+ '[raggu_web_front_explorer_forcegraph_overlay_node] {\n'
+		+ '\tstroke: var(--bog_builderui_text);\n'
+		+ '}\n'
 	)
 }

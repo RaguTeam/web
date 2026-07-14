@@ -150,6 +150,8 @@ namespace $ {
 		radii?: Record< string, number >
 		/** Множитель силы пружин рёбер (только притяжение). Меньше — воздушнее раскладка, как в Obsidian. */
 		spring?: number
+		/** Подвижное подмножество узлов (локальная симуляция при drag): остальные заморожены, но продолжают отталкивать. Пусто/не задано = двигаются все. */
+		mobile?: ReadonlySet< string > | null
 	}
 
 	const FORCE_K = 60
@@ -166,7 +168,11 @@ namespace $ {
 		positions: Record< string, { x: number, y: number } >,
 		radii: Record< string, number >,
 		pinned_id: string,
+		mobile?: ReadonlySet< string > | null,
 	): number {
+		// Неподвижный узел (pinned или вне mobile-подмножества) не двигаем —
+		// вся поправка достаётся его подвижному соседу
+		const frozen = ( id: string ) => id === pinned_id || ( mobile ? !mobile.has( id ) : false )
 		const pad = 1.5
 		let max_r = 0
 		for ( const n of nodes ) {
@@ -174,25 +180,37 @@ namespace $ {
 			if ( r > max_r ) max_r = r
 		}
 		const cell = Math.max( 1, max_r * 2 + pad )
-		const grid = new Map< string, string[] >()
+		// Числовые ключи ячеек: строковая конкатенация на десятках тысяч
+		// lookup'ов за тик была главной статьёй расходов коллизий
+		const grid = new Map< number, string[] >()
+		const key_of = ( gx: number, gy: number ) => ( gx + 2048 ) * 65536 + ( gy + 2048 )
 		for ( const n of nodes ) {
 			const p = positions[ n.id ]
-			const key = `${ Math.floor( p.x / cell ) }:${ Math.floor( p.y / cell ) }`
+			const key = key_of( Math.floor( p.x / cell ), Math.floor( p.y / cell ) )
 			const list = grid.get( key )
 			if ( list ) list.push( n.id ); else grid.set( key, [ n.id ] )
 		}
 		let peak = 0
-		for ( const n of nodes ) {
+		// Локальная симуляция: пары перебираем только вокруг подвижных узлов —
+		// замороженные пары не могут разрешиться, незачем их и смотреть
+		const subjects = mobile ? nodes.filter( n => mobile.has( n.id ) ) : nodes
+		for ( const n of subjects ) {
 			const p = positions[ n.id ]
 			const r1 = radii[ n.id ] ?? 0
 			const cx = Math.floor( p.x / cell )
 			const cy = Math.floor( p.y / cell )
 			for ( let gx = cx - 1; gx <= cx + 1; gx++ )
 			for ( let gy = cy - 1; gy <= cy + 1; gy++ ) {
-				const list = grid.get( `${ gx }:${ gy }` )
+				const list = grid.get( key_of( gx, gy ) )
 				if ( !list ) continue
 				for ( const other of list ) {
-					if ( other <= n.id ) continue // каждую пару считаем один раз
+					if ( other === n.id ) continue
+					// Пару из двух подвижных встречаем дважды — считаем один раз;
+					// пара с замороженным соседом встречается лишь однажды
+					if ( ( !mobile || mobile.has( other ) ) && other <= n.id ) continue
+					const a_frozen = frozen( n.id )
+					const b_frozen = frozen( other )
+					if ( a_frozen && b_frozen ) continue
 					const q = positions[ other ]
 					const min_d = r1 + ( radii[ other ] ?? 0 ) + pad
 					let dx = q.x - p.x
@@ -206,9 +224,8 @@ namespace $ {
 					const fy = dy * push
 					const move = Math.sqrt( fx * fx + fy * fy )
 					if ( move > peak ) peak = move
-					// Перетаскиваемый узел не двигаем — вся поправка соседу
-					if ( n.id === pinned_id ) { q.x += fx * 2; q.y += fy * 2 }
-					else if ( other === pinned_id ) { p.x -= fx * 2; p.y -= fy * 2 }
+					if ( a_frozen ) { q.x += fx * 2; q.y += fy * 2 }
+					else if ( b_frozen ) { p.x -= fx * 2; p.y -= fy * 2 }
 					else {
 						p.x -= fx; p.y -= fy
 						q.x += fx; q.y += fy
@@ -333,8 +350,16 @@ namespace $ {
 			insert( root, { id: n.id, x: p.x, y: p.y }, 0 )
 		}
 
-		// Repulsion — Barnes-Hut walk per node
+		// Локальная симуляция: двигаем только mobile-узлы, остальные заморожены
+		// (но участвуют в отталкивании и коллизиях как препятствия)
+		const mobile = params.mobile ?? null
+		const is_mobile = ( id: string ) => !mobile || mobile.has( id )
+
+		// Repulsion — Barnes-Hut walk per node (только для подвижных)
 		for ( const n of nodes ) {
+			dispX[ n.id ] = 0
+			dispY[ n.id ] = 0
+			if ( !is_mobile( n.id ) ) continue
 			const p = positions[ n.id ]
 			const out = { dx: 0, dy: 0 }
 			accumulate_repulsion( root, n.id, p.x, p.y, k2, out )
@@ -348,6 +373,7 @@ namespace $ {
 		const degree: Record< string, number > = {}
 		for ( const n of nodes ) degree[ n.id ] = n.degree
 		for ( const e of edges ) {
+			if ( mobile && !mobile.has( e.source ) && !mobile.has( e.target ) ) continue
 			const dx = positions[ e.source ].x - positions[ e.target ].x
 			const dy = positions[ e.source ].y - positions[ e.target ].y
 			const dist = Math.sqrt( dx * dx + dy * dy ) || 0.01
@@ -355,11 +381,12 @@ namespace $ {
 			const force = ( dist * dist ) / k * e.strength * spring / hub_norm
 			const fx = ( dx / dist ) * force
 			const fy = ( dy / dist ) * force
-			dispX[ e.source ] -= fx; dispY[ e.source ] -= fy
-			dispX[ e.target ] += fx; dispY[ e.target ] += fy
+			if ( is_mobile( e.source ) ) { dispX[ e.source ] -= fx; dispY[ e.source ] -= fy }
+			if ( is_mobile( e.target ) ) { dispX[ e.target ] += fx; dispY[ e.target ] += fy }
 		}
 		// Gravity — soft radial pull toward origin
 		for ( const n of nodes ) {
+			if ( !is_mobile( n.id ) ) continue
 			const p = positions[ n.id ]
 			dispX[ n.id ] -= p.x * gravity * k
 			dispY[ n.id ] -= p.y * gravity * k
@@ -369,7 +396,7 @@ namespace $ {
 		const next_pos: Record< string, { x: number, y: number } > = {}
 		const next_vel: Record< string, { vx: number, vy: number } > = {}
 		for ( const n of nodes ) {
-			if ( n.id === pinned_id ) {
+			if ( n.id === pinned_id || !is_mobile( n.id ) ) {
 				next_pos[ n.id ] = positions[ n.id ]
 				next_vel[ n.id ] = { vx: 0, vy: 0 }
 				continue
@@ -397,9 +424,9 @@ namespace $ {
 		// обратно — на экран каждый тик уходит уже разрешённое состояние.
 		let collide_peak = 0
 		if ( params.radii ) {
-			collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id )
+			collide_peak = $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id, mobile )
 			for ( let i = 0; i < 2; i++ ) {
-				if ( $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id ) < 0.05 ) break
+				if ( $raggu_web_front_explorer_forcegraph_collide_pass( nodes, next_pos, params.radii, pinned_id, mobile ) < 0.05 ) break
 			}
 		}
 
