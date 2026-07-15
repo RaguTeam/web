@@ -23,18 +23,6 @@ $raggu_web_front_topbar $bog_builderui_div
 				active <= is_explorer false
 				disabled <= no_dataset false
 				click? <=> click_explorer? null
-			<= Nav_chat $raggu_web_front_topbar_nav
-				icon \💬
-				hint @ \Chat
-				active <= is_chat false
-				disabled <= no_dataset false
-				click? <=> click_chat? null
-			<= Nav_dashboard $raggu_web_front_topbar_nav
-				icon \▦
-				hint @ \Dashboard
-				active <= is_dashboard false
-				disabled <= no_dataset false
-				click? <=> click_dashboard? null
 			<= Nav_summary $raggu_web_front_topbar_nav
 				icon \✦
 				hint @ \Summary
