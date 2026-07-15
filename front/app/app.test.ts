@@ -20,7 +20,6 @@ namespace $.$$ {
 			const v = $raggu_web_front_app.make({ $ })
 			$mol_assert_equal( v.Gallery() instanceof $raggu_web_front_gallery, true )
 			$mol_assert_equal( v.Explorer() instanceof $raggu_web_front_explorer, true )
-			$mol_assert_equal( v.Chat() instanceof $raggu_web_front_chat, true )
 		},
 
 		'app.body: switches by screen()'( $ ) {
@@ -31,8 +30,6 @@ namespace $.$$ {
 			$mol_assert_equal( v.body()[0], v.Gallery() )
 			v.screen( 'explorer' )
 			$mol_assert_equal( v.body()[0], v.Explorer() )
-			v.screen( 'chat' )
-			$mol_assert_equal( v.body()[0], v.Chat() )
 		},
 
 		'app.body: forces Gallery when no dataset selected'( $ ) {
@@ -86,10 +83,6 @@ namespace $.$$ {
 			app.Topbar().click_explorer()
 			$mol_assert_equal( app.screen(), 'explorer' )
 			$mol_assert_equal( app.body()[0], app.Explorer() )
-
-			// user clicks "Чат" → chat
-			app.Topbar().click_chat()
-			$mol_assert_equal( app.screen(), 'chat' )
 
 			// user navigates back to Датасеты and clicks a card → dataset selected, screen stays
 			app.Topbar().click_gallery()
@@ -147,8 +140,8 @@ namespace $.$$ {
 			}
 		},
 
-		// Тесты дашборда убраны вместе с ним из бандла: вкладка спрятана,
-		// пока на бэке нет ручек пайплайна (метрики, тайминги, лог запросов).
+		// Тесты чата и дашборда убраны вместе с вкладками из бандла:
+		// вкладки спрятаны до готовности бэка.
 
 	} )
 

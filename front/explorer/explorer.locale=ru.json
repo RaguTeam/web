@@ -5,7 +5,6 @@
 	"$raggu_web_front_explorer_aside_relation_title_text": "Карточка связи",
 	"$raggu_web_front_explorer_aside_empty_text": "Кликни узел или связь",
 	"$raggu_web_front_explorer_relations_title_template": "Связи (%s)",
-	"$raggu_web_front_explorer_ask_btn_text": "💬 Спросить про эту сущность",
 	"$raggu_web_front_explorer_legend_title_text": "Типы сущностей",
 	"$raggu_web_front_explorer_rels_title_text": "Типы связей",
 	"$raggu_web_front_explorer_mock_badge_text": "⚠ Мок-данные — бэкенд не подключён"

@@ -1,0 +1,6 @@
+# torch (CPU build) is installed separately in the Dockerfile to avoid the
+# large CUDA wheel; sentence-transformers reuses it.
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+sentence-transformers>=3.0.0
+einops>=0.7.0

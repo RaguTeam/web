@@ -1,7 +1,6 @@
 {
 	"$raggu_web_front_app_screen_gallery_title": "Датасеты",
 	"$raggu_web_front_app_screen_explorer_title": "Граф знаний",
-	"$raggu_web_front_app_screen_chat_title": "Чат с агентом",
 	"$raggu_web_front_app_screen_summary_title": "Сводка решения",
 	"$raggu_web_front_app_ask_entity_template": "Расскажи про сущность «%s» из графа знаний.",
 	"$raggu_web_front_app_ask_relation_template": "Расскажи про связь «%s» из графа знаний.",

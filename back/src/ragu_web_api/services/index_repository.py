@@ -8,7 +8,7 @@ import re
 import time
 from ast import literal_eval
 from collections import Counter, defaultdict, deque
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from hashlib import md5
 from html import unescape
@@ -84,10 +84,28 @@ class RaguEmbedderConfig:
     base_url: str | None
     model_name: str | None
     provider: str
+    # Per-index overrides keyed by index folder name or dataset id. Lets a single
+    # deployment serve indexes that were built with different embedding models
+    # (e.g. bge-large-en for the medical graph, gte-multilingual-base for the rest).
+    model_by_index: dict[str, str] = field(default_factory=dict)
+    base_url_by_index: dict[str, str] = field(default_factory=dict)
 
-    @property
-    def is_configured(self) -> bool:
-        return bool(self.model_name and (self.api_key or self.base_url))
+    def model_for(self, *keys: str) -> str | None:
+        for key in keys:
+            if key and key in self.model_by_index:
+                return self.model_by_index[key]
+        return self.model_name
+
+    def base_url_for(self, *keys: str) -> str | None:
+        for key in keys:
+            if key and key in self.base_url_by_index:
+                return self.base_url_by_index[key]
+        return self.base_url
+
+    def is_configured_for(self, *keys: str) -> bool:
+        model = self.model_for(*keys)
+        base_url = self.base_url_for(*keys)
+        return bool(model and (self.api_key or base_url))
 
 
 @dataclass
@@ -159,15 +177,16 @@ class RaguMixSearchAdapter:
         self._engines: dict[str, Any] = {}
 
     async def search(self, index: LoadedIndex, query: str, top_k: int) -> RetrievalResult | None:
-        if not self.config.is_configured:
+        definition = index.definition
+        if not self.config.is_configured_for(definition.path.name, definition.id):
             return None
-        if not _is_ragu_vector_index(index.definition.path):
+        if not _is_ragu_vector_index(definition.path):
             return None
 
-        engine = self._engines.get(index.definition.id)
+        engine = self._engines.get(definition.id)
         if engine is None:
-            engine = self._build_engine(index.definition)
-            self._engines[index.definition.id] = engine
+            engine = self._build_engine(definition)
+            self._engines[definition.id] = engine
 
         result = await engine.a_search(query, top_k=top_k)
         return _retrieval_from_ragu_mix(index, result, top_k)
@@ -185,12 +204,24 @@ class RaguMixSearchAdapter:
         if embedding_dim is None:
             raise RuntimeError(f"RAGU vector index at '{definition.path}' has no embedding_dim.")
 
+        keys = (definition.path.name, definition.id)
+        model_name = self.config.model_for(*keys)
+        base_url = self.config.base_url_for(*keys)
+        api_key = self.config.api_key
+        LOGGER.info(
+            "Building RAGU MixSearch engine for dataset '%s' with embedder '%s' at '%s' (embedding_dim=%s).",
+            definition.id,
+            model_name,
+            base_url,
+            embedding_dim,
+        )
+
         Settings.storage_folder = str(definition.path)
         Settings.language = _ragu_language(definition.language)
 
         client = CachedAsyncOpenAI(
-            base_url=self.config.base_url,
-            api_key=self.config.api_key or "unused",
+            base_url=base_url,
+            api_key=api_key or "unused",
             rate_max_simultaneous=4,
             rate_max_per_minute=240,
             retry_times_sec=None,
@@ -198,7 +229,7 @@ class RaguMixSearchAdapter:
         )
         embedder = EmbedderOpenAI(
             client=client,
-            model_name=self.config.model_name,
+            model_name=model_name,
             dim=embedding_dim,
             batch_size=32,
             max_concurrent_batches=2,
@@ -507,6 +538,7 @@ class IndexRepository:
             if isinstance(item, dict) and item.get("doc_id")
         }
         primary_entity_types = [item for item, _ in entity_types.most_common(6)]
+        community_count = _count_communities(path)
         language = _detect_language(
             " ".join(
                 str(item.get("content", ""))
@@ -522,7 +554,9 @@ class IndexRepository:
             stats=DatasetStats(
                 nodes=node_count,
                 edges=edge_count,
-                communities=max(1, len(primary_entity_types)),
+                communities=(
+                    community_count if community_count is not None else max(1, len(primary_entity_types))
+                ),
                 chunks=len(chunks),
                 documents=len(doc_ids),
             ),
@@ -547,6 +581,13 @@ class IndexRepository:
             badges=[
                 DatasetBadge(label="source", value="RAGU"),
                 DatasetBadge(label="llm", value=self._llm.config.provider),
+                DatasetBadge(
+                    label="embedder",
+                    value=(
+                        self._ragu_search.config.model_for(definition.path.name, definition.id)
+                        or "keyword"
+                    ),
+                ),
             ],
             preview=DatasetPreview(
                 node_count=definition.stats.nodes,
@@ -969,6 +1010,20 @@ def _llm_config_from_env(env: dict[str, str]) -> LLMConfig:
     )
 
 
+def _parse_str_map(raw: str | None) -> dict[str, str]:
+    if not raw or not raw.strip():
+        return {}
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        LOGGER.warning("Ignoring malformed embedder map (invalid JSON): %s", raw[:120])
+        return {}
+    if not isinstance(data, dict):
+        LOGGER.warning("Ignoring embedder map (expected a JSON object): %s", raw[:120])
+        return {}
+    return {str(key): str(value) for key, value in data.items() if key and value}
+
+
 def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
     base_url = (
         env.get("EMBEDDER_BASE_URL")
@@ -987,11 +1042,16 @@ def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
         or env.get("OPENAI_EMBEDDER_MODEL")
         or env.get("LLM_EMBEDDER_MODEL")
     )
+    model_by_index = _parse_str_map(env.get("EMBEDDER_MODEL_MAP"))
+    base_url_by_index = _parse_str_map(env.get("EMBEDDER_BASE_URL_MAP"))
+    configured = bool(model_name or model_by_index)
     return RaguEmbedderConfig(
         api_key=api_key,
         base_url=base_url,
         model_name=model_name,
-        provider="OpenAI-compatible embeddings" if model_name else "not configured",
+        provider="OpenAI-compatible embeddings" if configured else "not configured",
+        model_by_index=model_by_index,
+        base_url_by_index=base_url_by_index,
     )
 
 
@@ -1159,6 +1219,22 @@ def _read_json_object(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as file:
         data = json.load(file)
     return data if isinstance(data, dict) else {}
+
+
+def _safe_read_json_object(path: Path) -> dict[str, Any]:
+    """Like :func:`_read_json_object` but returns ``{}`` for a missing or
+    unreadable file instead of raising (used for optional index artifacts)."""
+    try:
+        return _read_json_object(path)
+    except (OSError, ValueError):
+        return {}
+
+
+def _count_communities(path: Path) -> int | None:
+    """Real community count from ``kv_community.json`` (all Leiden levels), or
+    ``None`` when the file is absent so the caller can fall back."""
+    data = _safe_read_json_object(path / "kv_community.json")
+    return len(data) or None
 
 
 def _read_gml_payloads(
@@ -1382,6 +1458,71 @@ def _build_communities(
     node_payloads: list[tuple[str, dict[str, Any]]],
     definition: IndexDefinition,
 ) -> tuple[dict[str, str], list[CommunitySummary]]:
+    """Load real Leiden communities from RAGU's ``kv_community.json`` /
+    ``kv_community_summary.json``. Falls back to node ``clusters`` / entity-type
+    grouping only when those files are missing (older indexes)."""
+    node_ids = {str(node_id) for node_id, _ in node_payloads}
+    members = _safe_read_json_object(definition.path / "kv_community.json")
+    if members:
+        summaries = _safe_read_json_object(definition.path / "kv_community_summary.json")
+        return _communities_from_reports(members, summaries, node_ids, definition)
+    return _communities_fallback(node_payloads, definition)
+
+
+def _communities_from_reports(
+    members: dict[str, Any],
+    summaries: dict[str, Any],
+    node_ids: set[str],
+    definition: IndexDefinition,
+) -> tuple[dict[str, str], list[CommunitySummary]]:
+    community_id_by_node: dict[str, str] = {}
+    node_level: dict[str, int] = {}
+    communities: list[CommunitySummary] = []
+
+    for raw_id, payload in members.items():
+        if not isinstance(payload, dict):
+            continue
+        community_id = str(raw_id)
+        level = _safe_int(payload.get("level"), 0)
+        cluster_id = _safe_int(payload.get("cluster_id"), 0)
+        entity_ids = [
+            str(item)
+            for item in payload.get("entity_ids", [])
+            if str(item) in node_ids
+        ]
+
+        summary_text = summaries.get(community_id, "")
+        title, body = _parse_community_report(summary_text if isinstance(summary_text, str) else "")
+        if not title:
+            title = f"Community {cluster_id}" if level == 0 else f"Community {cluster_id} (L{level})"
+        summary = body or f"{len(entity_ids)} entities in {definition.title}."
+
+        communities.append(
+            CommunitySummary(
+                id=community_id,
+                title=title,
+                summary=summary,
+                level=level,
+                size=len(entity_ids),
+                node_ids=entity_ids,
+            )
+        )
+
+        # Every node has exactly one level-0 (full-coverage) community; assign
+        # that as its primary community, so lower level wins on ties.
+        for node_id in entity_ids:
+            if node_id not in node_level or level < node_level[node_id]:
+                node_level[node_id] = level
+                community_id_by_node[node_id] = community_id
+
+    communities.sort(key=lambda community: (community.level, -community.size, community.id))
+    return community_id_by_node, communities
+
+
+def _communities_fallback(
+    node_payloads: list[tuple[str, dict[str, Any]]],
+    definition: IndexDefinition,
+) -> tuple[dict[str, str], list[CommunitySummary]]:
     members: dict[str, list[str]] = defaultdict(list)
     titles: dict[str, str] = {}
 
@@ -1406,21 +1547,46 @@ def _build_communities(
 
     community_id_by_node: dict[str, str] = {}
     communities: list[CommunitySummary] = []
-    for community_id, node_ids in sorted(members.items(), key=lambda item: (-len(item[1]), item[0])):
+    for community_id, ids in sorted(members.items(), key=lambda item: (-len(item[1]), item[0])):
         title = titles.get(community_id, community_id)
-        for node_id in node_ids:
+        for node_id in ids:
             community_id_by_node.setdefault(node_id, community_id)
         communities.append(
             CommunitySummary(
                 id=community_id,
                 title=title,
-                summary=f"{title}: {len(node_ids)} entities in {definition.title}.",
+                summary=f"{title}: {len(ids)} entities in {definition.title}.",
                 level=0,
-                size=len(node_ids),
-                node_ids=node_ids,
+                size=len(ids),
+                node_ids=ids,
             )
         )
     return community_id_by_node, communities
+
+
+def _parse_community_report(text: str) -> tuple[str, str]:
+    """Split a RAGU community report string into ``(title, body)``.
+
+    Reports are rendered as ``Report title: ...`` / ``Report summary: ...`` /
+    ``Finding summary: ...`` / ``Finding explanation: ...`` lines.
+    """
+    title = ""
+    body_parts: list[str] = []
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+        lowered = line.lower()
+        if not title and lowered.startswith("report title:"):
+            title = line.split(":", 1)[1].strip()
+            continue
+        for label in ("report summary:", "finding summary:", "finding explanation:"):
+            if lowered.startswith(label):
+                line = line.split(":", 1)[1].strip()
+                break
+        if line:
+            body_parts.append(line)
+    return title, " ".join(body_parts).strip()
 
 
 def _query_terms(query: str) -> list[str]:

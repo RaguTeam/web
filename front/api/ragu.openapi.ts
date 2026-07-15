@@ -190,7 +190,7 @@ namespace $.$raggu_web_front_api_ragu {
 	            history?: components["schemas"]["ChatMessage"][];
 	            /**
 	             * Engine
-	             * @default local
+	             * @default mix
 	             * @enum {string}
 	             */
 	            engine: "local" | "global" | "naive" | "mix" | "query_plan";
@@ -402,7 +402,7 @@ namespace $.$raggu_web_front_api_ragu {
 	            suggested_questions?: string[];
 	            /**
 	             * Default Engine
-	             * @default local
+	             * @default mix
 	             * @enum {string}
 	             */
 	            default_engine: "local" | "global" | "naive" | "mix" | "query_plan";

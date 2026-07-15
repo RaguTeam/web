@@ -3,7 +3,7 @@ $raggu_web_front_help $bog_builderui_div
 	close? null
 	title_text @ \How to use RAGU
 	subtitle_text @ \what each section does
-	intro_text @ \RAGU builds a knowledge graph from your documents and answers questions over it. The workflow: pick a dataset, explore its graph, ask the agent.
+	intro_text @ \RAGU builds a knowledge graph from your documents. The workflow: pick a dataset and explore its graph.
 	attr *
 		^
 		raggu_web_front_help_showed <= showed?
@@ -29,10 +29,6 @@ $raggu_web_front_help $bog_builderui_div
 					icon \◉
 					title @ \Graph
 					desc @ \Entities extracted from the documents and relations between them. Drag nodes, zoom with the wheel, click a node or an edge to see its card.
-				<= Section_chat $raggu_web_front_help_section
-					icon \💬
-					title @ \Chat
-					desc @ \Ask questions in natural language — the agent answers using the knowledge graph of the active dataset and cites its sources.
 				<= Section_summary $raggu_web_front_help_section
 					icon \✦
 					title @ \Summary
