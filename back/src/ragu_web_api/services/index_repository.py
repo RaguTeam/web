@@ -538,6 +538,7 @@ class IndexRepository:
             if isinstance(item, dict) and item.get("doc_id")
         }
         primary_entity_types = [item for item, _ in entity_types.most_common(6)]
+        community_count = _count_communities(path)
         language = _detect_language(
             " ".join(
                 str(item.get("content", ""))
@@ -553,7 +554,9 @@ class IndexRepository:
             stats=DatasetStats(
                 nodes=node_count,
                 edges=edge_count,
-                communities=max(1, len(primary_entity_types)),
+                communities=(
+                    community_count if community_count is not None else max(1, len(primary_entity_types))
+                ),
                 chunks=len(chunks),
                 documents=len(doc_ids),
             ),
@@ -1218,6 +1221,22 @@ def _read_json_object(path: Path) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
+def _safe_read_json_object(path: Path) -> dict[str, Any]:
+    """Like :func:`_read_json_object` but returns ``{}`` for a missing or
+    unreadable file instead of raising (used for optional index artifacts)."""
+    try:
+        return _read_json_object(path)
+    except (OSError, ValueError):
+        return {}
+
+
+def _count_communities(path: Path) -> int | None:
+    """Real community count from ``kv_community.json`` (all Leiden levels), or
+    ``None`` when the file is absent so the caller can fall back."""
+    data = _safe_read_json_object(path / "kv_community.json")
+    return len(data) or None
+
+
 def _read_gml_payloads(
     path: Path,
 ) -> tuple[list[tuple[str, dict[str, Any]]], list[tuple[str, str, str, dict[str, Any]]]]:
@@ -1439,6 +1458,71 @@ def _build_communities(
     node_payloads: list[tuple[str, dict[str, Any]]],
     definition: IndexDefinition,
 ) -> tuple[dict[str, str], list[CommunitySummary]]:
+    """Load real Leiden communities from RAGU's ``kv_community.json`` /
+    ``kv_community_summary.json``. Falls back to node ``clusters`` / entity-type
+    grouping only when those files are missing (older indexes)."""
+    node_ids = {str(node_id) for node_id, _ in node_payloads}
+    members = _safe_read_json_object(definition.path / "kv_community.json")
+    if members:
+        summaries = _safe_read_json_object(definition.path / "kv_community_summary.json")
+        return _communities_from_reports(members, summaries, node_ids, definition)
+    return _communities_fallback(node_payloads, definition)
+
+
+def _communities_from_reports(
+    members: dict[str, Any],
+    summaries: dict[str, Any],
+    node_ids: set[str],
+    definition: IndexDefinition,
+) -> tuple[dict[str, str], list[CommunitySummary]]:
+    community_id_by_node: dict[str, str] = {}
+    node_level: dict[str, int] = {}
+    communities: list[CommunitySummary] = []
+
+    for raw_id, payload in members.items():
+        if not isinstance(payload, dict):
+            continue
+        community_id = str(raw_id)
+        level = _safe_int(payload.get("level"), 0)
+        cluster_id = _safe_int(payload.get("cluster_id"), 0)
+        entity_ids = [
+            str(item)
+            for item in payload.get("entity_ids", [])
+            if str(item) in node_ids
+        ]
+
+        summary_text = summaries.get(community_id, "")
+        title, body = _parse_community_report(summary_text if isinstance(summary_text, str) else "")
+        if not title:
+            title = f"Community {cluster_id}" if level == 0 else f"Community {cluster_id} (L{level})"
+        summary = body or f"{len(entity_ids)} entities in {definition.title}."
+
+        communities.append(
+            CommunitySummary(
+                id=community_id,
+                title=title,
+                summary=summary,
+                level=level,
+                size=len(entity_ids),
+                node_ids=entity_ids,
+            )
+        )
+
+        # Every node has exactly one level-0 (full-coverage) community; assign
+        # that as its primary community, so lower level wins on ties.
+        for node_id in entity_ids:
+            if node_id not in node_level or level < node_level[node_id]:
+                node_level[node_id] = level
+                community_id_by_node[node_id] = community_id
+
+    communities.sort(key=lambda community: (community.level, -community.size, community.id))
+    return community_id_by_node, communities
+
+
+def _communities_fallback(
+    node_payloads: list[tuple[str, dict[str, Any]]],
+    definition: IndexDefinition,
+) -> tuple[dict[str, str], list[CommunitySummary]]:
     members: dict[str, list[str]] = defaultdict(list)
     titles: dict[str, str] = {}
 
@@ -1463,21 +1547,46 @@ def _build_communities(
 
     community_id_by_node: dict[str, str] = {}
     communities: list[CommunitySummary] = []
-    for community_id, node_ids in sorted(members.items(), key=lambda item: (-len(item[1]), item[0])):
+    for community_id, ids in sorted(members.items(), key=lambda item: (-len(item[1]), item[0])):
         title = titles.get(community_id, community_id)
-        for node_id in node_ids:
+        for node_id in ids:
             community_id_by_node.setdefault(node_id, community_id)
         communities.append(
             CommunitySummary(
                 id=community_id,
                 title=title,
-                summary=f"{title}: {len(node_ids)} entities in {definition.title}.",
+                summary=f"{title}: {len(ids)} entities in {definition.title}.",
                 level=0,
-                size=len(node_ids),
-                node_ids=node_ids,
+                size=len(ids),
+                node_ids=ids,
             )
         )
     return community_id_by_node, communities
+
+
+def _parse_community_report(text: str) -> tuple[str, str]:
+    """Split a RAGU community report string into ``(title, body)``.
+
+    Reports are rendered as ``Report title: ...`` / ``Report summary: ...`` /
+    ``Finding summary: ...`` / ``Finding explanation: ...`` lines.
+    """
+    title = ""
+    body_parts: list[str] = []
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+        lowered = line.lower()
+        if not title and lowered.startswith("report title:"):
+            title = line.split(":", 1)[1].strip()
+            continue
+        for label in ("report summary:", "finding summary:", "finding explanation:"):
+            if lowered.startswith(label):
+                line = line.split(":", 1)[1].strip()
+                break
+        if line:
+            body_parts.append(line)
+    return title, " ".join(body_parts).strip()
 
 
 def _query_terms(query: str) -> list[str]:
