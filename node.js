@@ -7402,38 +7402,6 @@ var $;
 			(obj.click) = (next) => ((this.click_explorer(next)));
 			return obj;
 		}
-		is_chat(){
-			return false;
-		}
-		click_chat(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_chat(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("💬");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_chat_hint")));
-			(obj.active) = () => ((this.is_chat()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_chat(next)));
-			return obj;
-		}
-		is_dashboard(){
-			return false;
-		}
-		click_dashboard(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Nav_dashboard(){
-			const obj = new this.$.$raggu_web_front_topbar_nav();
-			(obj.icon) = () => ("▦");
-			(obj.hint) = () => ((this.$.$mol_locale.text("$raggu_web_front_topbar_Nav_dashboard_hint")));
-			(obj.active) = () => ((this.is_dashboard()));
-			(obj.disabled) = () => ((this.no_dataset()));
-			(obj.click) = (next) => ((this.click_dashboard(next)));
-			return obj;
-		}
 		is_summary(){
 			return false;
 		}
@@ -7454,8 +7422,6 @@ var $;
 			(obj.sub) = () => ([
 				(this.Nav_gallery()), 
 				(this.Nav_explorer()), 
-				(this.Nav_chat()), 
-				(this.Nav_dashboard()), 
 				(this.Nav_summary())
 			]);
 			return obj;
@@ -7526,10 +7492,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_gallery"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_explorer"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_explorer"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_chat"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_chat"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_dashboard"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_dashboard"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "click_summary"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav_summary"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
@@ -7554,17 +7516,38 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
-            is_gallery() { return this.screen() === 'gallery'; }
-            is_explorer() { return this.screen() === 'explorer'; }
-            is_chat() { return this.screen() === 'chat'; }
-            is_dashboard() { return this.screen() === 'dashboard'; }
-            is_summary() { return this.screen() === 'summary'; }
-            no_dataset() { return !this.dataset_id(); }
-            click_gallery() { this.screen('gallery'); return null; }
-            click_explorer() { this.screen('explorer'); return null; }
-            click_chat() { this.screen('chat'); return null; }
-            click_dashboard() { this.screen('dashboard'); return null; }
-            click_summary() { this.screen('summary'); return null; }
+            is_gallery() {
+                return this.screen() === "gallery";
+            }
+            is_explorer() {
+                return this.screen() === "explorer";
+            }
+            is_chat() {
+                return this.screen() === "chat";
+            }
+            is_dashboard() {
+                return this.screen() === "dashboard";
+            }
+            is_summary() {
+                return this.screen() === "summary";
+            }
+            no_dataset() {
+                return !this.dataset_id();
+            }
+            click_gallery() {
+                this.screen("gallery");
+                return null;
+            }
+            click_explorer() {
+                this.screen("explorer");
+                return null;
+            }
+            // @$mol_action click_chat() { this.screen( 'chat' ); return null }
+            // @$mol_action click_dashboard() { this.screen( 'dashboard' ); return null }
+            click_summary() {
+                this.screen("summary");
+                return null;
+            }
         }
         __decorate([
             $mol_action
@@ -7572,12 +7555,6 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_topbar.prototype, "click_explorer", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_chat", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_topbar.prototype, "click_dashboard", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_topbar.prototype, "click_summary", null);

@@ -2958,93 +2958,43 @@ declare namespace $ {
 		ReturnType< $raggu_web_front_topbar_nav['hint'] >
 	>
 	type $raggu_web_front_topbar_nav__active_raggu_web_front_topbar_15 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_topbar['is_chat'] >
-		,
-		ReturnType< $raggu_web_front_topbar_nav['active'] >
-	>
-	type $raggu_web_front_topbar_nav__disabled_raggu_web_front_topbar_16 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_topbar['no_dataset'] >
-		,
-		ReturnType< $raggu_web_front_topbar_nav['disabled'] >
-	>
-	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_17 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_topbar['click_chat'] >
-		,
-		ReturnType< $raggu_web_front_topbar_nav['click'] >
-	>
-	type $raggu_web_front_topbar_nav__icon_raggu_web_front_topbar_18 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_topbar_nav['icon'] >
-	>
-	type $raggu_web_front_topbar_nav__hint_raggu_web_front_topbar_19 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_topbar_nav['hint'] >
-	>
-	type $raggu_web_front_topbar_nav__active_raggu_web_front_topbar_20 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_topbar['is_dashboard'] >
-		,
-		ReturnType< $raggu_web_front_topbar_nav['active'] >
-	>
-	type $raggu_web_front_topbar_nav__disabled_raggu_web_front_topbar_21 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_topbar['no_dataset'] >
-		,
-		ReturnType< $raggu_web_front_topbar_nav['disabled'] >
-	>
-	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_22 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_topbar['click_dashboard'] >
-		,
-		ReturnType< $raggu_web_front_topbar_nav['click'] >
-	>
-	type $raggu_web_front_topbar_nav__icon_raggu_web_front_topbar_23 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_topbar_nav['icon'] >
-	>
-	type $raggu_web_front_topbar_nav__hint_raggu_web_front_topbar_24 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_topbar_nav['hint'] >
-	>
-	type $raggu_web_front_topbar_nav__active_raggu_web_front_topbar_25 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_topbar['is_summary'] >
 		,
 		ReturnType< $raggu_web_front_topbar_nav['active'] >
 	>
-	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_26 = $mol_type_enforce<
+	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_16 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_topbar['click_summary'] >
 		,
 		ReturnType< $raggu_web_front_topbar_nav['click'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_27 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_17 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_topbar_28 = $mol_type_enforce<
+	type $bog_builderui_div__event_raggu_web_front_topbar_18 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_topbar['open_help'] > ): ReturnType< $raggu_web_front_topbar['open_help'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['event'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_29 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_19 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_30 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_20 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_31 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_21 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_32 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_22 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -3059,12 +3009,6 @@ declare namespace $ {
 		no_dataset( ): boolean
 		click_explorer( next?: any ): any
 		Nav_explorer( ): $raggu_web_front_topbar_nav
-		is_chat( ): boolean
-		click_chat( next?: any ): any
-		Nav_chat( ): $raggu_web_front_topbar_nav
-		is_dashboard( ): boolean
-		click_dashboard( next?: any ): any
-		Nav_dashboard( ): $raggu_web_front_topbar_nav
 		is_summary( ): boolean
 		click_summary( next?: any ): any
 		Nav_summary( ): $raggu_web_front_topbar_nav
@@ -3097,8 +3041,6 @@ declare namespace $.$$ {
         no_dataset(): boolean;
         click_gallery(): null;
         click_explorer(): null;
-        click_chat(): null;
-        click_dashboard(): null;
         click_summary(): null;
     }
 }

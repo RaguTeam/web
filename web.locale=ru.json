@@ -77,8 +77,6 @@
 	"$raggu_web_front_summary_ragu_fact_1": "Пайплайн индексации: chunking → извлечение сущностей и отношений → суммаризация сообществ → поисковый индекс.",
 	"$raggu_web_front_summary_ragu_fact_2": "Комбинирует локальный поиск по графу, глобальные суммари сообществ и векторный индекс.",
 	"$raggu_web_front_summary_ragu_fact_3": "Полностью открытый стек, разворачивается on-premise — данные не покидают контур.",
-	"$raggu_web_front_topbar_Nav_chat_hint": "Чат",
-	"$raggu_web_front_topbar_Nav_dashboard_hint": "Дашборд",
 	"$raggu_web_front_topbar_Nav_explorer_hint": "Граф",
 	"$raggu_web_front_topbar_Nav_gallery_hint": "Датасеты",
 	"$raggu_web_front_topbar_Nav_summary_hint": "Сводка",

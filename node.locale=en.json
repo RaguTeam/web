@@ -77,8 +77,6 @@
 	"$raggu_web_front_summary_ragu_fact_1": "Indexing pipeline: chunking → entity and relation extraction → community summarization → search index.",
 	"$raggu_web_front_summary_ragu_fact_2": "Combines local graph search, global community summaries and a vector index.",
 	"$raggu_web_front_summary_ragu_fact_3": "Fully open stack, runs on-premise — data stays inside the contour.",
-	"$raggu_web_front_topbar_Nav_chat_hint": "Chat",
-	"$raggu_web_front_topbar_Nav_dashboard_hint": "Dashboard",
 	"$raggu_web_front_topbar_Nav_explorer_hint": "Graph",
 	"$raggu_web_front_topbar_Nav_gallery_hint": "Datasets",
 	"$raggu_web_front_topbar_Nav_summary_hint": "Summary",
