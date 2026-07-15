@@ -9,7 +9,9 @@ $raggu_web_front_sidebar $bog_builderui_div
 	dataset_meta* \
 	sub /
 		<= Brand $bog_builderui_div sub /
-			<= Brand_logo $bog_builderui_div sub / \R
+			<= Brand_logo $mol_image
+				uri \raggu/web/front/assets/logo.jpg
+				title \RAGU
 			<= Brand_title $bog_builderui_div sub / \RAGU
 			<= Brand_badge $bog_builderui_div sub / \demo
 		<= Datasets_label $bog_builderui_div sub / <= datasets_label_text

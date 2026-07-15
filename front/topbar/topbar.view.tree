@@ -29,12 +29,6 @@ $raggu_web_front_topbar $bog_builderui_div
 				active <= is_chat false
 				disabled <= no_dataset false
 				click? <=> click_chat? null
-			<= Nav_dashboard $raggu_web_front_topbar_nav
-				icon \▦
-				hint @ \Dashboard
-				active <= is_dashboard false
-				disabled <= no_dataset false
-				click? <=> click_dashboard? null
 			<= Nav_summary $raggu_web_front_topbar_nav
 				icon \✦
 				hint @ \Summary
@@ -43,7 +37,6 @@ $raggu_web_front_topbar $bog_builderui_div
 		<= Help_btn $bog_builderui_div
 			event * click? <=> open_help? null
 			sub / <= help_btn_text
-		<= Spacer_left $bog_builderui_div
 		<= Title_block $bog_builderui_div sub /
 			<= Title $bog_builderui_div sub / <= screen_title
 			<= Subtitle $bog_builderui_div sub / <= dataset_title

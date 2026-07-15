@@ -33,10 +33,6 @@ $raggu_web_front_help $bog_builderui_div
 					icon \💬
 					title @ \Chat
 					desc @ \Ask questions in natural language — the agent answers using the knowledge graph of the active dataset and cites its sources.
-				<= Section_dashboard $raggu_web_front_help_section
-					icon \▦
-					title @ \Dashboard
-					desc @ \Indexing pipeline stats: stages and timings, graph size, quality metrics and logs.
 				<= Section_summary $raggu_web_front_help_section
 					icon \✦
 					title @ \Summary

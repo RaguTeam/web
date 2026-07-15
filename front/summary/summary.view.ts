@@ -5,7 +5,7 @@ namespace $.$$ {
 	export class $raggu_web_front_summary extends $.$raggu_web_front_summary {
 
 		ids() {
-			return [ 'ragu', 'mol', 'menolite', 'nerel', 'ocr' ]
+			return [ 'ragu', 'menolite', 'nerel', 'mol' ]
 		}
 
 		rows() {
@@ -18,7 +18,6 @@ namespace $.$$ {
 				case 'mol': return '⚡'
 				case 'menolite': return '🤖'
 				case 'nerel': return '🏷'
-				case 'ocr': return '📄'
 			}
 			return ''
 		}
@@ -28,8 +27,7 @@ namespace $.$$ {
 				case 'ragu': return 'RAGU'
 				case 'mol': return '$mol'
 				case 'menolite': return 'Meno-Lite-0.1'
-				case 'nerel': return 'NEREL+'
-				case 'ocr': return 'OCR'
+				case 'nerel': return 'NEREL'
 			}
 			return ''
 		}
@@ -40,7 +38,6 @@ namespace $.$$ {
 				case 'mol': return this.mol_badge()
 				case 'menolite': return this.menolite_badge()
 				case 'nerel': return this.nerel_badge()
-				case 'ocr': return this.ocr_badge()
 			}
 			return ''
 		}
@@ -51,7 +48,6 @@ namespace $.$$ {
 				case 'mol': return this.mol_desc()
 				case 'menolite': return this.menolite_desc()
 				case 'nerel': return this.nerel_desc()
-				case 'ocr': return this.ocr_desc()
 			}
 			return ''
 		}
@@ -62,7 +58,6 @@ namespace $.$$ {
 				case 'mol': return [ this.mol_fact_1(), this.mol_fact_2(), this.mol_fact_3() ]
 				case 'menolite': return [ this.menolite_fact_1(), this.menolite_fact_2(), this.menolite_fact_3() ]
 				case 'nerel': return [ this.nerel_fact_1(), this.nerel_fact_2(), this.nerel_fact_3() ]
-				case 'ocr': return [ this.ocr_fact_1(), this.ocr_fact_2() ]
 			}
 			return []
 		}
@@ -81,9 +76,6 @@ namespace $.$$ {
 				]
 				case 'nerel': return [
 					{ label: 'NEREL paper (arXiv:2108.13112)', uri: 'https://arxiv.org/abs/2108.13112' },
-				]
-				case 'ocr': return [
-					{ label: 'github.com/AleksanderMerkulov/text_extractor', uri: 'https://github.com/AleksanderMerkulov/text_extractor' },
 				]
 			}
 			return []

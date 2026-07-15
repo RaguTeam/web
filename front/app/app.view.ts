@@ -10,7 +10,8 @@ namespace $.$$ {
 				case 'gallery': return [ this.Gallery() ]
 				case 'explorer': return [ this.Explorer() ]
 				case 'chat': return [ this.Chat() ]
-				case 'dashboard': return [ this.Dashboard() ]
+				// Дашборд спрятан до появления ручек пайплайна на бэке:
+				// case 'dashboard': return [ this.Dashboard() ]
 			}
 			return []
 		}
@@ -102,7 +103,6 @@ namespace $.$$ {
 				case 'gallery': return this.screen_gallery_title()
 				case 'explorer': return this.screen_explorer_title()
 				case 'chat': return this.screen_chat_title()
-				case 'dashboard': return this.screen_dashboard_title()
 				case 'summary': return this.screen_summary_title()
 			}
 			return ''

@@ -21,7 +21,6 @@ namespace $.$$ {
 			$mol_assert_equal( v.Gallery() instanceof $raggu_web_front_gallery, true )
 			$mol_assert_equal( v.Explorer() instanceof $raggu_web_front_explorer, true )
 			$mol_assert_equal( v.Chat() instanceof $raggu_web_front_chat, true )
-			$mol_assert_equal( v.Dashboard() instanceof $raggu_web_front_dashboard, true )
 		},
 
 		'app.body: switches by screen()'( $ ) {
@@ -34,8 +33,6 @@ namespace $.$$ {
 			$mol_assert_equal( v.body()[0], v.Explorer() )
 			v.screen( 'chat' )
 			$mol_assert_equal( v.body()[0], v.Chat() )
-			v.screen( 'dashboard' )
-			$mol_assert_equal( v.body()[0], v.Dashboard() )
 		},
 
 		'app.body: forces Gallery when no dataset selected'( $ ) {
@@ -43,12 +40,6 @@ namespace $.$$ {
 			v.screen( 'explorer' )
 			$mol_assert_equal( v.dataset_id(), '' )
 			$mol_assert_equal( v.body()[0], v.Gallery() )
-		},
-
-		'dashboard: metric and stage rows match data'( $ ) {
-			const v = $raggu_web_front_dashboard.make({ $ })
-			$mol_assert_equal( v.Metric_rows().sub().length, 3 )
-			$mol_assert_equal( v.Stage_rows().sub().length, 5 )
 		},
 
 		'gallery: BUILTIN mock renders two cards (law, wiki)'( $ ) {
@@ -99,10 +90,6 @@ namespace $.$$ {
 			// user clicks "Чат" → chat
 			app.Topbar().click_chat()
 			$mol_assert_equal( app.screen(), 'chat' )
-
-			// user clicks "Дашборд" → dashboard
-			app.Topbar().click_dashboard()
-			$mol_assert_equal( app.screen(), 'dashboard' )
 
 			// user navigates back to Датасеты and clicks a card → dataset selected, screen stays
 			app.Topbar().click_gallery()
@@ -160,62 +147,8 @@ namespace $.$$ {
 			}
 		},
 
-		// ---- dashboard energy formula ----
-
-		'dashboard.pipeline_seconds: sum of STAGES.time'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			// 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
-			$mol_assert_equal( d.pipeline_seconds().toFixed( 1 ), '15.3' )
-		},
-
-		'dashboard.energy_kwh: TDP × time × PUE / 1000'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			// 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
-			const kwh = d.energy_kwh()
-			$mol_assert_equal( kwh > 0.0017 && kwh < 0.0019, true )
-			$mol_assert_equal( d.energy_kwh_val(), '0.00' )
-		},
-
-		'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			const val = d.energy_cost_val()
-			$mol_assert_equal( /^[−+]\d+%$/.test( val ), true )
-		},
-
-		// ---- dashboard log expand ----
-
-		'dashboard.log: default not expanded'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			$mol_assert_equal( d.Log( 'q1' ).expanded(), false )
-		},
-
-		'dashboard.log.toggle: flips expanded'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			const log = d.Log( 'q1' )
-			$mol_assert_equal( log.expanded(), false )
-			log.toggle()
-			$mol_assert_equal( log.expanded(), true )
-			log.toggle()
-			$mol_assert_equal( log.expanded(), false )
-		},
-
-		'dashboard.log: Trace sub-view exists, attr reflects expanded state'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			const log = d.Log( 'q1' )
-			$mol_assert_equal( !! log.Trace(), true )
-			$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, false )
-			log.toggle()
-			$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, true )
-		},
-
-		'dashboard.log.arrow: glyph depends on expanded'( $ ) {
-			const d = $raggu_web_front_dashboard.make({ $ })
-			const log = d.Log( 'q2' )
-			$mol_assert_equal( log.arrow(), '▾' )
-			log.toggle()
-			$mol_assert_equal( log.arrow(), '▴' )
-		},
-
+		// Тесты дашборда убраны вместе с ним из бандла: вкладка спрятана,
+		// пока на бэке нет ручек пайплайна (метрики, тайминги, лог запросов).
 
 	} )
 

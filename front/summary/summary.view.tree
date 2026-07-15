@@ -19,14 +19,10 @@ $raggu_web_front_summary $bog_builderui_div
 	menolite_fact_2 @ \Extracts typed entities and relations from Russian scientific text.
 	menolite_fact_3 @ \Used at indexing time; answers are generated with the same open stack.
 	nerel_badge @ \Annotation schema
-	nerel_desc @ \NEREL schema (29 entity types, 49 relation types) extended with materials-science domain types.
-	nerel_fact_1 @ \Domain entities added: MATERIAL, PROCESS, EQUIPMENT, PROPERTY, EXPERIMENT, PUBLICATION, EXPERT, FACILITY.
-	nerel_fact_2 @ \Domain relations added: USES_MATERIAL, OPERATES_AT_CONDITION, PRODUCES_OUTPUT, DESCRIBED_IN, VALIDATED_BY, CONTRADICTS.
+	nerel_desc @ \NEREL — the largest Russian dataset for named entities, relations and events; used as the annotation schema.
+	nerel_fact_1 @ \56K+ annotated entities and 39K+ relations across Russian news texts.
+	nerel_fact_2 @ \29 entity types and 49 relation types, with support for nested entities and events.
 	nerel_fact_3 @ \The schema lives at prompt level — extends without model retraining.
-	ocr_badge @ \Preprocessing
-	ocr_desc @ \Document preprocessing: PDF and DOCX are converted to clean text before indexing.
-	ocr_fact_1 @ \A 93-page, 7 MB PDF is extracted in about 4 minutes.
-	ocr_fact_2 @ \Tables are preserved; images, XLSX and PPTX are next in line.
 	sub /
 		<= Header $bog_builderui_div sub /
 			<= Header_title $bog_builderui_div sub / <= header_title_text

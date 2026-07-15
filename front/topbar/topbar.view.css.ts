@@ -28,10 +28,12 @@ namespace $ {
 			},
 		},
 
+		// Заголовок сразу после переключалок разделов, не по центру окна
 		Title_block: {
 			flex: { direction: 'column' },
-			align: { items: 'center' },
-			textAlign: 'center',
+			align: { items: 'flex-start' },
+			textAlign: 'left',
+			margin: { left: '0.5rem' },
 		},
 		Title: {
 			font: { weight: 700, size: '15px' },
@@ -45,9 +47,6 @@ namespace $ {
 			color: $bog_builderui_tokens.shade,
 		},
 
-		Spacer_left: {
-			flex: { grow: 1 },
-		},
 		Spacer: {
 			flex: { grow: 1 },
 		},

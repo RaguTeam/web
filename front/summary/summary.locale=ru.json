@@ -18,12 +18,8 @@
 	"$raggu_web_front_summary_menolite_fact_2": "Извлекает типизированные сущности и отношения из русскоязычных научных текстов.",
 	"$raggu_web_front_summary_menolite_fact_3": "Используется на этапе индексации; ответы генерируются тем же открытым стеком.",
 	"$raggu_web_front_summary_nerel_badge": "Схема разметки",
-	"$raggu_web_front_summary_nerel_desc": "Схема NEREL (29 типов сущностей, 49 типов отношений), расширенная доменными типами для металлургии и материаловедения.",
-	"$raggu_web_front_summary_nerel_fact_1": "Добавлены доменные сущности: MATERIAL, PROCESS, EQUIPMENT, PROPERTY, EXPERIMENT, PUBLICATION, EXPERT, FACILITY.",
-	"$raggu_web_front_summary_nerel_fact_2": "Добавлены доменные отношения: USES_MATERIAL, OPERATES_AT_CONDITION, PRODUCES_OUTPUT, DESCRIBED_IN, VALIDATED_BY, CONTRADICTS.",
-	"$raggu_web_front_summary_nerel_fact_3": "Схема задаётся на уровне промпта — расширяется без переобучения модели.",
-	"$raggu_web_front_summary_ocr_badge": "Препроцессинг",
-	"$raggu_web_front_summary_ocr_desc": "Препроцессинг документов: PDF и DOCX конвертируются в чистый текст перед индексацией.",
-	"$raggu_web_front_summary_ocr_fact_1": "PDF на 93 страницы и 7 МБ извлекается примерно за 4 минуты.",
-	"$raggu_web_front_summary_ocr_fact_2": "Таблицы сохраняются; картинки, XLSX и PPTX — следующие на очереди."
+	"$raggu_web_front_summary_nerel_desc": "NEREL — крупнейший русскоязычный датасет именованных сущностей, отношений и событий; используется как схема разметки.",
+	"$raggu_web_front_summary_nerel_fact_1": "Более 56 тысяч размеченных сущностей и 39 тысяч отношений в новостных текстах.",
+	"$raggu_web_front_summary_nerel_fact_2": "29 типов сущностей и 49 типов отношений, включая вложенные сущности и события.",
+	"$raggu_web_front_summary_nerel_fact_3": "Схема задаётся на уровне промпта — расширяется без переобучения модели."
 }
