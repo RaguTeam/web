@@ -2237,6 +2237,38 @@ declare namespace $ {
 }
 
 declare namespace $ {
+
+	export class $mol_image extends $mol_view {
+		uri( ): string
+		title( ): string
+		loading( ): string
+		decoding( ): string
+		cors( ): any
+		natural_width( ): number
+		natural_height( ): number
+		load( next?: any ): any
+		dom_name( ): string
+		attr( ): Record<string, any> & ReturnType< $mol_view['attr'] >
+		event( ): Record<string, any>
+		minimal_width( ): number
+		minimal_height( ): number
+	}
+	
+}
+
+//# sourceMappingURL=image.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_image extends $.$mol_image {
+        natural_width(next?: null): number;
+        natural_height(next?: null): number;
+        load(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_dom_listener extends $mol_object {
         _node: any;
         _event: string;
@@ -2685,15 +2717,15 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $bog_builderui_div__sub_raggu_web_front_sidebar_1 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_image__uri_raggu_web_front_sidebar_1 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_image['uri'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_sidebar_2 = $mol_type_enforce<
-		readonly(any)[]
+	type $mol_image__title_raggu_web_front_sidebar_2 = $mol_type_enforce<
+		string
 		,
-		ReturnType< $bog_builderui_div['sub'] >
+		ReturnType< $mol_image['title'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_sidebar_3 = $mol_type_enforce<
 		readonly(any)[]
@@ -2720,87 +2752,92 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_sidebar_8 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_sidebar_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_sidebar_9 = $mol_type_enforce<
 		({ 
 			'raggu_web_front_sidebar_dataset_active': ReturnType< $raggu_web_front_sidebar['dataset_active'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_sidebar_9 = $mol_type_enforce<
+	type $bog_builderui_div__event_raggu_web_front_sidebar_10 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_sidebar['dataset_click'] > ): ReturnType< $raggu_web_front_sidebar['dataset_click'] >,
 		})  & ReturnType< $bog_builderui_div['event'] >
 		,
 		ReturnType< $bog_builderui_div['event'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_sidebar_10 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_sidebar_11 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_sidebar_11 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_sidebar_12 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_sidebar['dataset_rows'] >
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_scroll__sub_raggu_web_front_sidebar_12 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_front_sidebar_13 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $bog_theme_switch__theme_auto_raggu_web_front_sidebar_13 = $mol_type_enforce<
+	type $bog_theme_switch__theme_auto_raggu_web_front_sidebar_14 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_sidebar['Theme_auto'] >
 		,
 		ReturnType< $bog_theme_switch['theme_auto'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_sidebar_14 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_sidebar_15 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $raggu_web_front_sidebar_lang__label_raggu_web_front_sidebar_15 = $mol_type_enforce<
+	type $raggu_web_front_sidebar_lang__label_raggu_web_front_sidebar_16 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_sidebar_lang['label'] >
 	>
-	type $raggu_web_front_sidebar_lang__active_raggu_web_front_sidebar_16 = $mol_type_enforce<
+	type $raggu_web_front_sidebar_lang__active_raggu_web_front_sidebar_17 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_sidebar['is_en'] >
 		,
 		ReturnType< $raggu_web_front_sidebar_lang['active'] >
 	>
-	type $raggu_web_front_sidebar_lang__click_raggu_web_front_sidebar_17 = $mol_type_enforce<
+	type $raggu_web_front_sidebar_lang__click_raggu_web_front_sidebar_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_sidebar['click_en'] >
 		,
 		ReturnType< $raggu_web_front_sidebar_lang['click'] >
 	>
-	type $raggu_web_front_sidebar_lang__label_raggu_web_front_sidebar_18 = $mol_type_enforce<
+	type $raggu_web_front_sidebar_lang__label_raggu_web_front_sidebar_19 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_sidebar_lang['label'] >
 	>
-	type $raggu_web_front_sidebar_lang__active_raggu_web_front_sidebar_19 = $mol_type_enforce<
+	type $raggu_web_front_sidebar_lang__active_raggu_web_front_sidebar_20 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_sidebar['is_ru'] >
 		,
 		ReturnType< $raggu_web_front_sidebar_lang['active'] >
 	>
-	type $raggu_web_front_sidebar_lang__click_raggu_web_front_sidebar_20 = $mol_type_enforce<
+	type $raggu_web_front_sidebar_lang__click_raggu_web_front_sidebar_21 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_sidebar['click_ru'] >
 		,
 		ReturnType< $raggu_web_front_sidebar_lang['click'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_sidebar_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_sidebar_22 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
+	type $bog_builderui_div__sub_raggu_web_front_sidebar_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
 	export class $raggu_web_front_sidebar extends $bog_builderui_div {
-		Brand_logo( ): $bog_builderui_div
+		Brand_logo( ): $mol_image
 		Brand_title( ): $bog_builderui_div
 		Brand_badge( ): $bog_builderui_div
 		Brand( ): $bog_builderui_div
@@ -3015,7 +3052,6 @@ declare namespace $ {
 		Nav( ): $bog_builderui_div
 		open_help( next?: any ): any
 		Help_btn( ): $bog_builderui_div
-		Spacer_left( ): $bog_builderui_div
 		Title( ): $bog_builderui_div
 		Subtitle( ): $bog_builderui_div
 		Title_block( ): $bog_builderui_div
@@ -3035,8 +3071,6 @@ declare namespace $.$$ {
     class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
         is_gallery(): boolean;
         is_explorer(): boolean;
-        is_chat(): boolean;
-        is_dashboard(): boolean;
         is_summary(): boolean;
         no_dataset(): boolean;
         click_gallery(): null;
@@ -3183,42 +3217,12 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_help_section['desc'] >
 	>
-	type $raggu_web_front_help_section__icon_raggu_web_front_help_18 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_help_section['icon'] >
-	>
-	type $raggu_web_front_help_section__title_raggu_web_front_help_19 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_help_section['title'] >
-	>
-	type $raggu_web_front_help_section__desc_raggu_web_front_help_20 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_help_section['desc'] >
-	>
-	type $raggu_web_front_help_section__icon_raggu_web_front_help_21 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_help_section['icon'] >
-	>
-	type $raggu_web_front_help_section__title_raggu_web_front_help_22 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_help_section['title'] >
-	>
-	type $raggu_web_front_help_section__desc_raggu_web_front_help_23 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $raggu_web_front_help_section['desc'] >
-	>
-	type $mol_scroll__sub_raggu_web_front_help_24 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_front_help_18 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_help_25 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_help_19 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -3235,8 +3239,6 @@ declare namespace $ {
 		Intro( ): $bog_builderui_div
 		Section_gallery( ): $raggu_web_front_help_section
 		Section_explorer( ): $raggu_web_front_help_section
-		Section_chat( ): $raggu_web_front_help_section
-		Section_dashboard( ): $raggu_web_front_help_section
 		Section_summary( ): $raggu_web_front_help_section
 		Body( ): $mol_scroll
 		Panel( ): $bog_builderui_div
@@ -3678,7 +3680,7 @@ declare namespace $.$raggu_web_front_api_ragu {
                 history?: components["schemas"]["ChatMessage"][];
                 /**
                  * Engine
-                 * @default local
+                 * @default mix
                  * @enum {string}
                  */
                 engine: "local" | "global" | "naive" | "mix" | "query_plan";
@@ -3890,7 +3892,7 @@ declare namespace $.$raggu_web_front_api_ragu {
                 suggested_questions?: string[];
                 /**
                  * Default Engine
-                 * @default local
+                 * @default mix
                  * @enum {string}
                  */
                 default_engine: "local" | "global" | "naive" | "mix" | "query_plan";
@@ -6425,26 +6427,14 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_explorer_68 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_explorer['ask_click'] > ): ReturnType< $raggu_web_front_explorer['ask_click'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_69 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__attr_raggu_web_front_explorer_70 = $mol_type_enforce<
+	type $bog_builderui_div__attr_raggu_web_front_explorer_68 = $mol_type_enforce<
 		({ 
 			'raggu_web_front_explorer_aside_collapsed': ReturnType< $raggu_web_front_explorer['aside_collapsed'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_71 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_explorer_69 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -6535,8 +6525,6 @@ declare namespace $ {
 		Rel( id: any): $bog_builderui_div
 		rel_rows( ): readonly(any)[]
 		Relations_list( ): $bog_builderui_div
-		ask_click( next?: any ): any
-		Ask_btn( ): $bog_builderui_div
 		Aside_body( ): $bog_builderui_div
 		Aside( ): $bog_builderui_div
 		dataset_id( ): string
@@ -6553,7 +6541,6 @@ declare namespace $ {
 		aside_relation_title_text( ): string
 		aside_empty_text( ): string
 		relations_title_template( ): string
-		ask_btn_text( ): string
 		legend_title_text( ): string
 		rels_title_text( ): string
 		comms_open( next?: boolean ): boolean
@@ -6715,38 +6702,6 @@ declare namespace $ {
 
 //# sourceMappingURL=card.view.tree.d.ts.map
 /** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_image extends $mol_view {
-		uri( ): string
-		title( ): string
-		loading( ): string
-		decoding( ): string
-		cors( ): any
-		natural_width( ): number
-		natural_height( ): number
-		load( next?: any ): any
-		dom_name( ): string
-		attr( ): Record<string, any> & ReturnType< $mol_view['attr'] >
-		event( ): Record<string, any>
-		minimal_width( ): number
-		minimal_height( ): number
-	}
-	
-}
-
-//# sourceMappingURL=image.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_image extends $.$mol_image {
-        natural_width(next?: null): number;
-        natural_height(next?: null): number;
-        load(): void;
-    }
-}
-
 declare namespace $ {
 }
 
@@ -7100,10 +7055,6 @@ declare namespace $ {
 		nerel_fact_1( ): string
 		nerel_fact_2( ): string
 		nerel_fact_3( ): string
-		ocr_badge( ): string
-		ocr_desc( ): string
-		ocr_fact_1( ): string
-		ocr_fact_2( ): string
 		sub( ): readonly(any)[]
 		Detail( ): $raggu_web_front_summary_detail
 	}
@@ -7119,17 +7070,17 @@ declare namespace $.$$ {
     export class $raggu_web_front_summary extends $.$raggu_web_front_summary {
         ids(): string[];
         rows(): $raggu_web_front_summary_card[];
-        card_icon(id: string): "" | "🧠" | "⚡" | "🤖" | "🏷" | "📄";
-        card_title(id: string): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL+" | "OCR";
+        card_icon(id: string): "" | "🧠" | "⚡" | "🤖" | "🏷";
+        card_title(id: string): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL";
         card_badge(id: string): string;
         card_desc(id: string): string;
         card_facts(id: string): string[];
         card_links(id: string): TechLink[];
         card_image(id: string): "" | "raggu/web/front/assets/ragu.jpg";
         detail_showed(): boolean;
-        opened_icon(): "" | "🧠" | "⚡" | "🤖" | "🏷" | "📄";
+        opened_icon(): "" | "🧠" | "⚡" | "🤖" | "🏷";
         opened_badge(): string;
-        opened_title(): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL+" | "OCR";
+        opened_title(): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL";
         opened_facts(): string[];
         opened_links(): TechLink[];
         opened_image(): "" | "raggu/web/front/assets/ragu.jpg";

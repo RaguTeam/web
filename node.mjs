@@ -5962,6 +5962,109 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_image) = class $mol_image extends ($.$mol_view) {
+		uri(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		loading(){
+			return "lazy";
+		}
+		decoding(){
+			return "async";
+		}
+		cors(){
+			return null;
+		}
+		natural_width(){
+			return 0;
+		}
+		natural_height(){
+			return 0;
+		}
+		load(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "img";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"src": (this.uri()), 
+				"title": (this.hint()), 
+				"alt": (this.title()), 
+				"loading": (this.loading()), 
+				"decoding": (this.decoding()), 
+				"crossOrigin": (this.cors()), 
+				"width": (this.natural_width()), 
+				"height": (this.natural_height())
+			};
+		}
+		event(){
+			return {"load": (next) => (this.load(next))};
+		}
+		minimal_width(){
+			return 16;
+		}
+		minimal_height(){
+			return 16;
+		}
+	};
+	($mol_mem(($.$mol_image.prototype), "load"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_image extends $.$mol_image {
+            natural_width(next) {
+                const dom = this.dom_node();
+                if (dom.naturalWidth)
+                    return dom.naturalWidth;
+                const found = this.uri().match(/\bwidth=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            natural_height(next) {
+                const dom = this.dom_node();
+                if (dom.naturalHeight)
+                    return dom.naturalHeight;
+                const found = this.uri().match(/\bheight=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            load() {
+                this.natural_width(null);
+                this.natural_height(null);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_height", null);
+        $$.$mol_image = $mol_image;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
 		tabindex(){
 			return -1;
@@ -6879,8 +6982,9 @@ var $;
 ;
 	($.$raggu_web_front_sidebar) = class $raggu_web_front_sidebar extends ($.$bog_builderui_div) {
 		Brand_logo(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["R"]);
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ("raggu/web/front/assets/logo.jpg");
+			(obj.title) = () => ("RAGU");
 			return obj;
 		}
 		Brand_title(){
@@ -7131,11 +7235,9 @@ var $;
             minWidth: '26px',
             maxWidth: '26px',
             height: '26px',
-            border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.current, radius: '6px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            font: { weight: 800, size: '14px' },
-            color: $bog_builderui_tokens.current,
+            border: { radius: '6px' },
+            objectFit: 'cover',
+            overflow: 'hidden',
         },
         Brand_title: {
             font: { weight: 700, size: '16px' },
@@ -7436,10 +7538,6 @@ var $;
 			(obj.sub) = () => ([(this.help_btn_text())]);
 			return obj;
 		}
-		Spacer_left(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
 		Title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.screen_title())]);
@@ -7480,7 +7578,6 @@ var $;
 				(this.Sidebar_btn()), 
 				(this.Nav()), 
 				(this.Help_btn()), 
-				(this.Spacer_left()), 
 				(this.Title_block()), 
 				(this.Spacer())
 			];
@@ -7497,7 +7594,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer_left"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Subtitle"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title_block"));
@@ -7516,38 +7612,13 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
-            is_gallery() {
-                return this.screen() === "gallery";
-            }
-            is_explorer() {
-                return this.screen() === "explorer";
-            }
-            is_chat() {
-                return this.screen() === "chat";
-            }
-            is_dashboard() {
-                return this.screen() === "dashboard";
-            }
-            is_summary() {
-                return this.screen() === "summary";
-            }
-            no_dataset() {
-                return !this.dataset_id();
-            }
-            click_gallery() {
-                this.screen("gallery");
-                return null;
-            }
-            click_explorer() {
-                this.screen("explorer");
-                return null;
-            }
-            // @$mol_action click_chat() { this.screen( 'chat' ); return null }
-            // @$mol_action click_dashboard() { this.screen( 'dashboard' ); return null }
-            click_summary() {
-                this.screen("summary");
-                return null;
-            }
+            is_gallery() { return this.screen() === 'gallery'; }
+            is_explorer() { return this.screen() === 'explorer'; }
+            is_summary() { return this.screen() === 'summary'; }
+            no_dataset() { return !this.dataset_id(); }
+            click_gallery() { this.screen('gallery'); return null; }
+            click_explorer() { this.screen('explorer'); return null; }
+            click_summary() { this.screen('summary'); return null; }
         }
         __decorate([
             $mol_action
@@ -7593,10 +7664,12 @@ var $;
                 right: '3px',
             },
         },
+        // Заголовок сразу после переключалок разделов, не по центру окна
         Title_block: {
             flex: { direction: 'column' },
-            align: { items: 'center' },
-            textAlign: 'center',
+            align: { items: 'flex-start' },
+            textAlign: 'left',
+            margin: { left: '0.5rem' },
         },
         Title: {
             font: { weight: 700, size: '15px' },
@@ -7608,9 +7681,6 @@ var $;
                 size: '10px',
             },
             color: $bog_builderui_tokens.shade,
-        },
-        Spacer_left: {
-            flex: { grow: 1 },
         },
         Spacer: {
             flex: { grow: 1 },
@@ -7771,20 +7841,6 @@ var $;
 			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_desc")));
 			return obj;
 		}
-		Section_chat(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("💬");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_desc")));
-			return obj;
-		}
-		Section_dashboard(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("▦");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_desc")));
-			return obj;
-		}
 		Section_summary(){
 			const obj = new this.$.$raggu_web_front_help_section();
 			(obj.icon) = () => ("✦");
@@ -7798,8 +7854,6 @@ var $;
 				(this.Intro()), 
 				(this.Section_gallery()), 
 				(this.Section_explorer()), 
-				(this.Section_chat()), 
-				(this.Section_dashboard()), 
 				(this.Section_summary())
 			]);
 			return obj;
@@ -7840,8 +7894,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_help.prototype), "Intro"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Section_gallery"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Section_explorer"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_chat"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_dashboard"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Section_summary"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Panel"));
@@ -12011,16 +12063,6 @@ var $;
 			(obj.sub) = () => ((this.rel_rows()));
 			return obj;
 		}
-		ask_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Ask_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.ask_btn_text())]);
-			(obj.event) = () => ({"click": (next) => (this.ask_click(next))});
-			return obj;
-		}
 		Aside_body(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
@@ -12028,8 +12070,7 @@ var $;
 				(this.Entity_type()), 
 				(this.Entity_desc()), 
 				(this.Relations_title()), 
-				(this.Relations_list()), 
-				(this.Ask_btn())
+				(this.Relations_list())
 			]);
 			return obj;
 		}
@@ -12088,9 +12129,6 @@ var $;
 		}
 		relations_title_template(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_relations_title_template"));
-		}
-		ask_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_ask_btn_text"));
 		}
 		legend_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
@@ -12168,8 +12206,6 @@ var $;
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_target"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_list"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "ask_click"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_body"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
@@ -13059,21 +13095,6 @@ var $;
         Rel: relation_card,
         Rel_type: relation_type,
         Rel_target: relation_target,
-        Ask_btn: {
-            margin: { top: '16px' },
-            background: { color: $bog_builderui_tokens.current },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-            },
-            textAlign: 'center',
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
         '@media': {
             '(max-width: 720px)': {
                 flex: { direction: 'column' },
@@ -13245,109 +13266,6 @@ var $;
             margin: { top: '10px' },
         },
     });
-})($ || ($ = {}));
-
-;
-	($.$mol_image) = class $mol_image extends ($.$mol_view) {
-		uri(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		loading(){
-			return "lazy";
-		}
-		decoding(){
-			return "async";
-		}
-		cors(){
-			return null;
-		}
-		natural_width(){
-			return 0;
-		}
-		natural_height(){
-			return 0;
-		}
-		load(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "img";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"src": (this.uri()), 
-				"title": (this.hint()), 
-				"alt": (this.title()), 
-				"loading": (this.loading()), 
-				"decoding": (this.decoding()), 
-				"crossOrigin": (this.cors()), 
-				"width": (this.natural_width()), 
-				"height": (this.natural_height())
-			};
-		}
-		event(){
-			return {"load": (next) => (this.load(next))};
-		}
-		minimal_width(){
-			return 16;
-		}
-		minimal_height(){
-			return 16;
-		}
-	};
-	($mol_mem(($.$mol_image.prototype), "load"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_image extends $.$mol_image {
-            natural_width(next) {
-                const dom = this.dom_node();
-                if (dom.naturalWidth)
-                    return dom.naturalWidth;
-                const found = this.uri().match(/\bwidth=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            natural_height(next) {
-                const dom = this.dom_node();
-                if (dom.naturalHeight)
-                    return dom.naturalHeight;
-                const found = this.uri().match(/\bheight=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            load() {
-                this.natural_width(null);
-                this.natural_height(null);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_width", null);
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_height", null);
-        $$.$mol_image = $mol_image;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -14042,18 +13960,6 @@ var $;
 		nerel_fact_3(){
 			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_3"));
 		}
-		ocr_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_badge"));
-		}
-		ocr_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_desc"));
-		}
-		ocr_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_1"));
-		}
-		ocr_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_2"));
-		}
 		sub(){
 			return [(this.Header()), (this.Grid())];
 		}
@@ -14093,7 +13999,7 @@ var $;
     (function ($$) {
         class $raggu_web_front_summary extends $.$raggu_web_front_summary {
             ids() {
-                return ['ragu', 'mol', 'menolite', 'nerel', 'ocr'];
+                return ['ragu', 'menolite', 'nerel', 'mol'];
             }
             rows() {
                 return this.ids().map(id => this.Card(id));
@@ -14104,7 +14010,6 @@ var $;
                     case 'mol': return '⚡';
                     case 'menolite': return '🤖';
                     case 'nerel': return '🏷';
-                    case 'ocr': return '📄';
                 }
                 return '';
             }
@@ -14113,8 +14018,7 @@ var $;
                     case 'ragu': return 'RAGU';
                     case 'mol': return '$mol';
                     case 'menolite': return 'Meno-Lite-0.1';
-                    case 'nerel': return 'NEREL+';
-                    case 'ocr': return 'OCR';
+                    case 'nerel': return 'NEREL';
                 }
                 return '';
             }
@@ -14124,7 +14028,6 @@ var $;
                     case 'mol': return this.mol_badge();
                     case 'menolite': return this.menolite_badge();
                     case 'nerel': return this.nerel_badge();
-                    case 'ocr': return this.ocr_badge();
                 }
                 return '';
             }
@@ -14134,7 +14037,6 @@ var $;
                     case 'mol': return this.mol_desc();
                     case 'menolite': return this.menolite_desc();
                     case 'nerel': return this.nerel_desc();
-                    case 'ocr': return this.ocr_desc();
                 }
                 return '';
             }
@@ -14144,7 +14046,6 @@ var $;
                     case 'mol': return [this.mol_fact_1(), this.mol_fact_2(), this.mol_fact_3()];
                     case 'menolite': return [this.menolite_fact_1(), this.menolite_fact_2(), this.menolite_fact_3()];
                     case 'nerel': return [this.nerel_fact_1(), this.nerel_fact_2(), this.nerel_fact_3()];
-                    case 'ocr': return [this.ocr_fact_1(), this.ocr_fact_2()];
                 }
                 return [];
             }
@@ -14162,9 +14063,6 @@ var $;
                     ];
                     case 'nerel': return [
                         { label: 'NEREL paper (arXiv:2108.13112)', uri: 'https://arxiv.org/abs/2108.13112' },
-                    ];
-                    case 'ocr': return [
-                        { label: 'github.com/AleksanderMerkulov/text_extractor', uri: 'https://github.com/AleksanderMerkulov/text_extractor' },
                     ];
                 }
                 return [];
@@ -18243,14 +18141,13 @@ var $;
         class $raggu_web_front_app extends $.$raggu_web_front_app {
             body() {
                 // Сводка не зависит от датасета, для остальных экранов без него показываем Gallery.
-                if (this.screen() === "summary")
+                if (this.screen() === 'summary')
                     return [this.Summary()];
-                const s = this.dataset_id() ? this.screen() : "gallery";
+                const s = this.dataset_id() ? this.screen() : 'gallery';
                 switch (s) {
-                    case "gallery":
-                        return [this.Gallery()];
-                    case "explorer":
-                        return [this.Explorer()];
+                    case 'gallery': return [this.Gallery()];
+                    case 'explorer': return [this.Explorer()];
+                    // Чат и дашборд спрятаны до готовности бэка:
                     // case 'chat': return [ this.Chat() ]
                     // case 'dashboard': return [ this.Dashboard() ]
                 }
@@ -18271,13 +18168,13 @@ var $;
                         return;
                     root.scroll({
                         left: main.offsetLeft + main.offsetWidth - root.clientWidth,
-                        behavior: "smooth",
+                        behavior: 'smooth',
                     });
                 });
                 return [];
             }
             lights_mode() {
-                return this.Theme_auto().is_light_now() ? "light" : "dark";
+                return this.Theme_auto().is_light_now() ? 'light' : 'dark';
             }
             // Попап деталей сводки рендерим на уровне app: внутри Body его ломает
             // contain:content у скролла — fixed-оверлей позиционируется не от вьюпорта.
@@ -18288,9 +18185,7 @@ var $;
                 this.help_open(true);
                 return null;
             }
-            sidebar_hidden() {
-                return this.sidebar_collapsed();
-            }
+            sidebar_hidden() { return this.sidebar_collapsed(); }
             toggle_sidebar() {
                 this.sidebar_collapsed(!this.sidebar_collapsed());
                 return null;
@@ -18298,9 +18193,7 @@ var $;
             // Gallery владеет фетчем списка датасетов — сайдбар получает данные
             // через эти прокси, чтобы не дублировать remote_datasets.
             dataset_ids() {
-                return this.Gallery()
-                    .datasets()
-                    .map((ds) => ds.id);
+                return this.Gallery().datasets().map((ds) => ds.id);
             }
             sidebar_dataset_name(id) {
                 return this.Gallery().card_title(id);
@@ -18313,11 +18206,12 @@ var $;
                 this.dataset_id(id);
                 return null;
             }
+            // Спрятано вместе с чатом — вернуть при включении вкладки:
             // @$mol_action
             // ask_chat() {
             // 	// Переносим выбранное в графе (сущность или связь) в чат: переключаем
             // 	// экран и сразу кладём заготовку вопроса в поле ввода.
-            // 	const explorer = this.Explorer() as $.$$.$raggu_web_front_explorer
+            // 	const explorer = this.Explorer()
             // 	const node = explorer.selected()
             // 	const edge = explorer.selected_edge()
             // 	this.screen( 'chat' )
@@ -18331,21 +18225,17 @@ var $;
             // }
             screen_title() {
                 switch (this.screen()) {
-                    case "gallery":
-                        return this.screen_gallery_title();
-                    case "explorer":
-                        return this.screen_explorer_title();
+                    case 'gallery': return this.screen_gallery_title();
+                    case 'explorer': return this.screen_explorer_title();
                     // case 'chat': return this.screen_chat_title()
-                    // case 'dashboard': return this.screen_dashboard_title()
-                    case "summary":
-                        return this.screen_summary_title();
+                    case 'summary': return this.screen_summary_title();
                 }
-                return "";
+                return '';
             }
             dataset_title() {
                 const id = this.dataset_id();
                 if (!id)
-                    return "";
+                    return '';
                 return this.Gallery().card_title(id);
             }
             arg_value(key, next, fallback) {
@@ -18355,12 +18245,8 @@ var $;
                 arg.value(key, next === fallback ? null : next);
                 return next;
             }
-            screen(next) {
-                return this.arg_value("screen", next, "gallery");
-            }
-            dataset_id(next) {
-                return this.arg_value("ds", next, "");
-            }
+            screen(next) { return this.arg_value('screen', next, 'gallery'); }
+            dataset_id(next) { return this.arg_value('ds', next, ''); }
         }
         __decorate([
             $mol_mem

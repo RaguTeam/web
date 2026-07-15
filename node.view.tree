@@ -46,6 +46,23 @@ $bog_theme_auto $mol_plugin
 	is_light_now false
 	attr * mol_theme <= theme \
 
+$mol_image $mol_view
+	dom_name \img
+	attr *any
+		^
+		src <= uri \
+		title <= hint
+		alt <= title \
+		loading <= loading \lazy
+		decoding <= decoding \async
+		crossOrigin <= cors null
+		width <= natural_width 0
+		height <= natural_height 0
+	event *any
+		load? <=> load? null
+	minimal_width 16
+	minimal_height 16
+
 $mol_scroll $mol_view
 	scroll_top? 0
 	scroll_left? 0
@@ -145,7 +162,9 @@ $raggu_web_front_sidebar $bog_builderui_div
 	dataset_meta* \
 	sub /
 		<= Brand $bog_builderui_div sub /
-			<= Brand_logo $bog_builderui_div sub / \R
+			<= Brand_logo $mol_image
+				uri \raggu/web/front/assets/logo.jpg
+				title \RAGU
 			<= Brand_title $bog_builderui_div sub / \RAGU
 			<= Brand_badge $bog_builderui_div sub / \demo
 		<= Datasets_label $bog_builderui_div sub / <= datasets_label_text
@@ -225,7 +244,6 @@ $raggu_web_front_topbar $bog_builderui_div
 		<= Help_btn $bog_builderui_div
 			event * click? <=> open_help? null
 			sub / <= help_btn_text
-		<= Spacer_left $bog_builderui_div
 		<= Title_block $bog_builderui_div sub /
 			<= Title $bog_builderui_div sub / <= screen_title
 			<= Subtitle $bog_builderui_div sub / <= dataset_title
@@ -248,7 +266,7 @@ $raggu_web_front_help $bog_builderui_div
 	close? null
 	title_text @ \How to use RAGU
 	subtitle_text @ \what each section does
-	intro_text @ \RAGU builds a knowledge graph from your documents and answers questions over it. The workflow: pick a dataset, explore its graph, ask the agent.
+	intro_text @ \RAGU builds a knowledge graph from your documents. The workflow: pick a dataset and explore its graph.
 	attr *
 		^
 		raggu_web_front_help_showed <= showed?
@@ -274,14 +292,6 @@ $raggu_web_front_help $bog_builderui_div
 					icon \◉
 					title @ \Graph
 					desc @ \Entities extracted from the documents and relations between them. Drag nodes, zoom with the wheel, click a node or an edge to see its card.
-				<= Section_chat $raggu_web_front_help_section
-					icon \💬
-					title @ \Chat
-					desc @ \Ask questions in natural language — the agent answers using the knowledge graph of the active dataset and cites its sources.
-				<= Section_dashboard $raggu_web_front_help_section
-					icon \▦
-					title @ \Dashboard
-					desc @ \Indexing pipeline stats: stages and timings, graph size, quality metrics and logs.
 				<= Section_summary $raggu_web_front_help_section
 					icon \✦
 					title @ \Summary
@@ -643,13 +653,11 @@ $raggu_web_front_explorer $bog_builderui_div
 	legend_collapsed? false
 	rels_collapsed? false
 	aside_collapsed? false
-	ask_click? null
 	filter_search_text @ \🔍 Find node…
 	aside_title_text @ \Entity card
 	aside_relation_title_text @ \Relation card
 	aside_empty_text @ \Click a node or an edge
 	relations_title_template @ \Relations (%s)
-	ask_btn_text @ \💬 Ask about this entity
 	legend_title_text @ \Entity Types
 	legend_label* \
 	legend_count* \
@@ -786,9 +794,6 @@ $raggu_web_front_explorer $bog_builderui_div
 						<= Rel* $bog_builderui_div sub /
 							<= Rel_type* $bog_builderui_div sub / <= rel_type* \
 							<= Rel_target* $bog_builderui_div sub / <= rel_target* \
-					<= Ask_btn $bog_builderui_div
-						sub / <= ask_btn_text
-						event * click? <=> ask_click? null
 
 $raggu_web_front_summary_card $bog_builderui_div
 	icon \
@@ -808,23 +813,6 @@ $raggu_web_front_summary_card $bog_builderui_div
 		<= Title $bog_builderui_div sub / <= title
 		<= Desc $bog_builderui_div sub / <= desc
 		<= More $bog_builderui_div sub / <= more
-
-$mol_image $mol_view
-	dom_name \img
-	attr *any
-		^
-		src <= uri \
-		title <= hint
-		alt <= title \
-		loading <= loading \lazy
-		decoding <= decoding \async
-		crossOrigin <= cors null
-		width <= natural_width 0
-		height <= natural_height 0
-	event *any
-		load? <=> load? null
-	minimal_width 16
-	minimal_height 16
 
 $mol_link $mol_view
 	uri \
@@ -909,14 +897,10 @@ $raggu_web_front_summary $bog_builderui_div
 	menolite_fact_2 @ \Extracts typed entities and relations from Russian scientific text.
 	menolite_fact_3 @ \Used at indexing time; answers are generated with the same open stack.
 	nerel_badge @ \Annotation schema
-	nerel_desc @ \NEREL schema (29 entity types, 49 relation types) extended with materials-science domain types.
-	nerel_fact_1 @ \Domain entities added: MATERIAL, PROCESS, EQUIPMENT, PROPERTY, EXPERIMENT, PUBLICATION, EXPERT, FACILITY.
-	nerel_fact_2 @ \Domain relations added: USES_MATERIAL, OPERATES_AT_CONDITION, PRODUCES_OUTPUT, DESCRIBED_IN, VALIDATED_BY, CONTRADICTS.
+	nerel_desc @ \NEREL — the largest Russian dataset for named entities, relations and events; used as the annotation schema.
+	nerel_fact_1 @ \56K+ annotated entities and 39K+ relations across Russian news texts.
+	nerel_fact_2 @ \29 entity types and 49 relation types, with support for nested entities and events.
 	nerel_fact_3 @ \The schema lives at prompt level — extends without model retraining.
-	ocr_badge @ \Preprocessing
-	ocr_desc @ \Document preprocessing: PDF and DOCX are converted to clean text before indexing.
-	ocr_fact_1 @ \A 93-page, 7 MB PDF is extracted in about 4 minutes.
-	ocr_fact_2 @ \Tables are preserved; images, XLSX and PPTX are next in line.
 	sub /
 		<= Header $bog_builderui_div sub /
 			<= Header_title $bog_builderui_div sub / <= header_title_text

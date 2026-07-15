@@ -5953,6 +5953,109 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_image) = class $mol_image extends ($.$mol_view) {
+		uri(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		loading(){
+			return "lazy";
+		}
+		decoding(){
+			return "async";
+		}
+		cors(){
+			return null;
+		}
+		natural_width(){
+			return 0;
+		}
+		natural_height(){
+			return 0;
+		}
+		load(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "img";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"src": (this.uri()), 
+				"title": (this.hint()), 
+				"alt": (this.title()), 
+				"loading": (this.loading()), 
+				"decoding": (this.decoding()), 
+				"crossOrigin": (this.cors()), 
+				"width": (this.natural_width()), 
+				"height": (this.natural_height())
+			};
+		}
+		event(){
+			return {"load": (next) => (this.load(next))};
+		}
+		minimal_width(){
+			return 16;
+		}
+		minimal_height(){
+			return 16;
+		}
+	};
+	($mol_mem(($.$mol_image.prototype), "load"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_image extends $.$mol_image {
+            natural_width(next) {
+                const dom = this.dom_node();
+                if (dom.naturalWidth)
+                    return dom.naturalWidth;
+                const found = this.uri().match(/\bwidth=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            natural_height(next) {
+                const dom = this.dom_node();
+                if (dom.naturalHeight)
+                    return dom.naturalHeight;
+                const found = this.uri().match(/\bheight=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            load() {
+                this.natural_width(null);
+                this.natural_height(null);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_height", null);
+        $$.$mol_image = $mol_image;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_scroll) = class $mol_scroll extends ($.$mol_view) {
 		tabindex(){
 			return -1;
@@ -6870,8 +6973,9 @@ var $;
 ;
 	($.$raggu_web_front_sidebar) = class $raggu_web_front_sidebar extends ($.$bog_builderui_div) {
 		Brand_logo(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["R"]);
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ("raggu/web/front/assets/logo.jpg");
+			(obj.title) = () => ("RAGU");
 			return obj;
 		}
 		Brand_title(){
@@ -7122,11 +7226,9 @@ var $;
             minWidth: '26px',
             maxWidth: '26px',
             height: '26px',
-            border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.current, radius: '6px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            font: { weight: 800, size: '14px' },
-            color: $bog_builderui_tokens.current,
+            border: { radius: '6px' },
+            objectFit: 'cover',
+            overflow: 'hidden',
         },
         Brand_title: {
             font: { weight: 700, size: '16px' },
@@ -7427,10 +7529,6 @@ var $;
 			(obj.sub) = () => ([(this.help_btn_text())]);
 			return obj;
 		}
-		Spacer_left(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
 		Title(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([(this.screen_title())]);
@@ -7471,7 +7569,6 @@ var $;
 				(this.Sidebar_btn()), 
 				(this.Nav()), 
 				(this.Help_btn()), 
-				(this.Spacer_left()), 
 				(this.Title_block()), 
 				(this.Spacer())
 			];
@@ -7488,7 +7585,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Nav"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "open_help"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Help_btn"));
-	($mol_mem(($.$raggu_web_front_topbar.prototype), "Spacer_left"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Subtitle"));
 	($mol_mem(($.$raggu_web_front_topbar.prototype), "Title_block"));
@@ -7507,38 +7603,13 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
-            is_gallery() {
-                return this.screen() === "gallery";
-            }
-            is_explorer() {
-                return this.screen() === "explorer";
-            }
-            is_chat() {
-                return this.screen() === "chat";
-            }
-            is_dashboard() {
-                return this.screen() === "dashboard";
-            }
-            is_summary() {
-                return this.screen() === "summary";
-            }
-            no_dataset() {
-                return !this.dataset_id();
-            }
-            click_gallery() {
-                this.screen("gallery");
-                return null;
-            }
-            click_explorer() {
-                this.screen("explorer");
-                return null;
-            }
-            // @$mol_action click_chat() { this.screen( 'chat' ); return null }
-            // @$mol_action click_dashboard() { this.screen( 'dashboard' ); return null }
-            click_summary() {
-                this.screen("summary");
-                return null;
-            }
+            is_gallery() { return this.screen() === 'gallery'; }
+            is_explorer() { return this.screen() === 'explorer'; }
+            is_summary() { return this.screen() === 'summary'; }
+            no_dataset() { return !this.dataset_id(); }
+            click_gallery() { this.screen('gallery'); return null; }
+            click_explorer() { this.screen('explorer'); return null; }
+            click_summary() { this.screen('summary'); return null; }
         }
         __decorate([
             $mol_action
@@ -7584,10 +7655,12 @@ var $;
                 right: '3px',
             },
         },
+        // Заголовок сразу после переключалок разделов, не по центру окна
         Title_block: {
             flex: { direction: 'column' },
-            align: { items: 'center' },
-            textAlign: 'center',
+            align: { items: 'flex-start' },
+            textAlign: 'left',
+            margin: { left: '0.5rem' },
         },
         Title: {
             font: { weight: 700, size: '15px' },
@@ -7599,9 +7672,6 @@ var $;
                 size: '10px',
             },
             color: $bog_builderui_tokens.shade,
-        },
-        Spacer_left: {
-            flex: { grow: 1 },
         },
         Spacer: {
             flex: { grow: 1 },
@@ -7762,20 +7832,6 @@ var $;
 			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_explorer_desc")));
 			return obj;
 		}
-		Section_chat(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("💬");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_chat_desc")));
-			return obj;
-		}
-		Section_dashboard(){
-			const obj = new this.$.$raggu_web_front_help_section();
-			(obj.icon) = () => ("▦");
-			(obj.title) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_title")));
-			(obj.desc) = () => ((this.$.$mol_locale.text("$raggu_web_front_help_Section_dashboard_desc")));
-			return obj;
-		}
 		Section_summary(){
 			const obj = new this.$.$raggu_web_front_help_section();
 			(obj.icon) = () => ("✦");
@@ -7789,8 +7845,6 @@ var $;
 				(this.Intro()), 
 				(this.Section_gallery()), 
 				(this.Section_explorer()), 
-				(this.Section_chat()), 
-				(this.Section_dashboard()), 
 				(this.Section_summary())
 			]);
 			return obj;
@@ -7831,8 +7885,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_help.prototype), "Intro"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Section_gallery"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Section_explorer"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_chat"));
-	($mol_mem(($.$raggu_web_front_help.prototype), "Section_dashboard"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Section_summary"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_help.prototype), "Panel"));
@@ -12002,16 +12054,6 @@ var $;
 			(obj.sub) = () => ((this.rel_rows()));
 			return obj;
 		}
-		ask_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Ask_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.ask_btn_text())]);
-			(obj.event) = () => ({"click": (next) => (this.ask_click(next))});
-			return obj;
-		}
 		Aside_body(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
@@ -12019,8 +12061,7 @@ var $;
 				(this.Entity_type()), 
 				(this.Entity_desc()), 
 				(this.Relations_title()), 
-				(this.Relations_list()), 
-				(this.Ask_btn())
+				(this.Relations_list())
 			]);
 			return obj;
 		}
@@ -12079,9 +12120,6 @@ var $;
 		}
 		relations_title_template(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_relations_title_template"));
-		}
-		ask_btn_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_explorer_ask_btn_text"));
 		}
 		legend_title_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_legend_title_text"));
@@ -12159,8 +12197,6 @@ var $;
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel_target"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Rel"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Relations_list"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "ask_click"));
-	($mol_mem(($.$raggu_web_front_explorer.prototype), "Ask_btn"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_body"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "selected_id"));
@@ -13050,21 +13086,6 @@ var $;
         Rel: relation_card,
         Rel_type: relation_type,
         Rel_target: relation_target,
-        Ask_btn: {
-            margin: { top: '16px' },
-            background: { color: $bog_builderui_tokens.current },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '10px',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-            },
-            textAlign: 'center',
-            font: { size: '12px', weight: 600 },
-            cursor: 'pointer',
-        },
         '@media': {
             '(max-width: 720px)': {
                 flex: { direction: 'column' },
@@ -13236,109 +13257,6 @@ var $;
             margin: { top: '10px' },
         },
     });
-})($ || ($ = {}));
-
-;
-	($.$mol_image) = class $mol_image extends ($.$mol_view) {
-		uri(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		loading(){
-			return "lazy";
-		}
-		decoding(){
-			return "async";
-		}
-		cors(){
-			return null;
-		}
-		natural_width(){
-			return 0;
-		}
-		natural_height(){
-			return 0;
-		}
-		load(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "img";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"src": (this.uri()), 
-				"title": (this.hint()), 
-				"alt": (this.title()), 
-				"loading": (this.loading()), 
-				"decoding": (this.decoding()), 
-				"crossOrigin": (this.cors()), 
-				"width": (this.natural_width()), 
-				"height": (this.natural_height())
-			};
-		}
-		event(){
-			return {"load": (next) => (this.load(next))};
-		}
-		minimal_width(){
-			return 16;
-		}
-		minimal_height(){
-			return 16;
-		}
-	};
-	($mol_mem(($.$mol_image.prototype), "load"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_image extends $.$mol_image {
-            natural_width(next) {
-                const dom = this.dom_node();
-                if (dom.naturalWidth)
-                    return dom.naturalWidth;
-                const found = this.uri().match(/\bwidth=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            natural_height(next) {
-                const dom = this.dom_node();
-                if (dom.naturalHeight)
-                    return dom.naturalHeight;
-                const found = this.uri().match(/\bheight=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            load() {
-                this.natural_width(null);
-                this.natural_height(null);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_width", null);
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_height", null);
-        $$.$mol_image = $mol_image;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -14033,18 +13951,6 @@ var $;
 		nerel_fact_3(){
 			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_3"));
 		}
-		ocr_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_badge"));
-		}
-		ocr_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_desc"));
-		}
-		ocr_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_1"));
-		}
-		ocr_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_2"));
-		}
 		sub(){
 			return [(this.Header()), (this.Grid())];
 		}
@@ -14084,7 +13990,7 @@ var $;
     (function ($$) {
         class $raggu_web_front_summary extends $.$raggu_web_front_summary {
             ids() {
-                return ['ragu', 'mol', 'menolite', 'nerel', 'ocr'];
+                return ['ragu', 'menolite', 'nerel', 'mol'];
             }
             rows() {
                 return this.ids().map(id => this.Card(id));
@@ -14095,7 +14001,6 @@ var $;
                     case 'mol': return '⚡';
                     case 'menolite': return '🤖';
                     case 'nerel': return '🏷';
-                    case 'ocr': return '📄';
                 }
                 return '';
             }
@@ -14104,8 +14009,7 @@ var $;
                     case 'ragu': return 'RAGU';
                     case 'mol': return '$mol';
                     case 'menolite': return 'Meno-Lite-0.1';
-                    case 'nerel': return 'NEREL+';
-                    case 'ocr': return 'OCR';
+                    case 'nerel': return 'NEREL';
                 }
                 return '';
             }
@@ -14115,7 +14019,6 @@ var $;
                     case 'mol': return this.mol_badge();
                     case 'menolite': return this.menolite_badge();
                     case 'nerel': return this.nerel_badge();
-                    case 'ocr': return this.ocr_badge();
                 }
                 return '';
             }
@@ -14125,7 +14028,6 @@ var $;
                     case 'mol': return this.mol_desc();
                     case 'menolite': return this.menolite_desc();
                     case 'nerel': return this.nerel_desc();
-                    case 'ocr': return this.ocr_desc();
                 }
                 return '';
             }
@@ -14135,7 +14037,6 @@ var $;
                     case 'mol': return [this.mol_fact_1(), this.mol_fact_2(), this.mol_fact_3()];
                     case 'menolite': return [this.menolite_fact_1(), this.menolite_fact_2(), this.menolite_fact_3()];
                     case 'nerel': return [this.nerel_fact_1(), this.nerel_fact_2(), this.nerel_fact_3()];
-                    case 'ocr': return [this.ocr_fact_1(), this.ocr_fact_2()];
                 }
                 return [];
             }
@@ -14153,9 +14054,6 @@ var $;
                     ];
                     case 'nerel': return [
                         { label: 'NEREL paper (arXiv:2108.13112)', uri: 'https://arxiv.org/abs/2108.13112' },
-                    ];
-                    case 'ocr': return [
-                        { label: 'github.com/AleksanderMerkulov/text_extractor', uri: 'https://github.com/AleksanderMerkulov/text_extractor' },
                     ];
                 }
                 return [];
@@ -18234,14 +18132,13 @@ var $;
         class $raggu_web_front_app extends $.$raggu_web_front_app {
             body() {
                 // Сводка не зависит от датасета, для остальных экранов без него показываем Gallery.
-                if (this.screen() === "summary")
+                if (this.screen() === 'summary')
                     return [this.Summary()];
-                const s = this.dataset_id() ? this.screen() : "gallery";
+                const s = this.dataset_id() ? this.screen() : 'gallery';
                 switch (s) {
-                    case "gallery":
-                        return [this.Gallery()];
-                    case "explorer":
-                        return [this.Explorer()];
+                    case 'gallery': return [this.Gallery()];
+                    case 'explorer': return [this.Explorer()];
+                    // Чат и дашборд спрятаны до готовности бэка:
                     // case 'chat': return [ this.Chat() ]
                     // case 'dashboard': return [ this.Dashboard() ]
                 }
@@ -18262,13 +18159,13 @@ var $;
                         return;
                     root.scroll({
                         left: main.offsetLeft + main.offsetWidth - root.clientWidth,
-                        behavior: "smooth",
+                        behavior: 'smooth',
                     });
                 });
                 return [];
             }
             lights_mode() {
-                return this.Theme_auto().is_light_now() ? "light" : "dark";
+                return this.Theme_auto().is_light_now() ? 'light' : 'dark';
             }
             // Попап деталей сводки рендерим на уровне app: внутри Body его ломает
             // contain:content у скролла — fixed-оверлей позиционируется не от вьюпорта.
@@ -18279,9 +18176,7 @@ var $;
                 this.help_open(true);
                 return null;
             }
-            sidebar_hidden() {
-                return this.sidebar_collapsed();
-            }
+            sidebar_hidden() { return this.sidebar_collapsed(); }
             toggle_sidebar() {
                 this.sidebar_collapsed(!this.sidebar_collapsed());
                 return null;
@@ -18289,9 +18184,7 @@ var $;
             // Gallery владеет фетчем списка датасетов — сайдбар получает данные
             // через эти прокси, чтобы не дублировать remote_datasets.
             dataset_ids() {
-                return this.Gallery()
-                    .datasets()
-                    .map((ds) => ds.id);
+                return this.Gallery().datasets().map((ds) => ds.id);
             }
             sidebar_dataset_name(id) {
                 return this.Gallery().card_title(id);
@@ -18304,11 +18197,12 @@ var $;
                 this.dataset_id(id);
                 return null;
             }
+            // Спрятано вместе с чатом — вернуть при включении вкладки:
             // @$mol_action
             // ask_chat() {
             // 	// Переносим выбранное в графе (сущность или связь) в чат: переключаем
             // 	// экран и сразу кладём заготовку вопроса в поле ввода.
-            // 	const explorer = this.Explorer() as $.$$.$raggu_web_front_explorer
+            // 	const explorer = this.Explorer()
             // 	const node = explorer.selected()
             // 	const edge = explorer.selected_edge()
             // 	this.screen( 'chat' )
@@ -18322,21 +18216,17 @@ var $;
             // }
             screen_title() {
                 switch (this.screen()) {
-                    case "gallery":
-                        return this.screen_gallery_title();
-                    case "explorer":
-                        return this.screen_explorer_title();
+                    case 'gallery': return this.screen_gallery_title();
+                    case 'explorer': return this.screen_explorer_title();
                     // case 'chat': return this.screen_chat_title()
-                    // case 'dashboard': return this.screen_dashboard_title()
-                    case "summary":
-                        return this.screen_summary_title();
+                    case 'summary': return this.screen_summary_title();
                 }
-                return "";
+                return '';
             }
             dataset_title() {
                 const id = this.dataset_id();
                 if (!id)
-                    return "";
+                    return '';
                 return this.Gallery().card_title(id);
             }
             arg_value(key, next, fallback) {
@@ -18346,12 +18236,8 @@ var $;
                 arg.value(key, next === fallback ? null : next);
                 return next;
             }
-            screen(next) {
-                return this.arg_value("screen", next, "gallery");
-            }
-            dataset_id(next) {
-                return this.arg_value("ds", next, "");
-            }
+            screen(next) { return this.arg_value('screen', next, 'gallery'); }
+            dataset_id(next) { return this.arg_value('ds', next, ''); }
         }
         __decorate([
             $mol_mem
@@ -22384,97 +22270,80 @@ var $;
     (function ($$) {
         function style_rule(component, key) {
             const el = $mol_dom_context.document.getElementById(`$mol_style_attach:${component}`);
-            const css = (el?.textContent ?? "").replace(/\s+/g, " ");
-            return css.match(new RegExp(`\\[${key}\\][^{]*\\{[^}]*\\}`))?.[0] ?? "";
+            const css = (el?.textContent ?? '').replace(/\s+/g, ' ');
+            return css.match(new RegExp(`\\[${key}\\][^{]*\\{[^}]*\\}`))?.[0] ?? '';
         }
         $mol_test({
-            "app.Body: $mol_scroll override is flex column"($) {
-                const rule = style_rule("$raggu_web_front_app", "raggu_web_front_app_body");
+            'app.Body: $mol_scroll override is flex column'($) {
+                const rule = style_rule('$raggu_web_front_app', 'raggu_web_front_app_body');
                 $mol_assert_equal(/display: flex/.test(rule), true);
                 $mol_assert_equal(/flex-direction: column/.test(rule), true);
             },
-            "app: every screen exists as sub-view"($) {
+            'app: every screen exists as sub-view'($) {
                 const v = $raggu_web_front_app.make({ $ });
                 $mol_assert_equal(v.Gallery() instanceof $raggu_web_front_gallery, true);
                 $mol_assert_equal(v.Explorer() instanceof $raggu_web_front_explorer, true);
-                // $mol_assert_equal( v.Chat() instanceof $raggu_web_front_chat, true )
-                // $mol_assert_equal( v.Dashboard() instanceof $raggu_web_front_dashboard, true )
             },
-            "app.body: switches by screen()"($) {
+            'app.body: switches by screen()'($) {
                 const v = $raggu_web_front_app.make({ $ });
                 // body() forces Gallery when no dataset selected — задать датасет чтобы проверить остальные экраны
-                v.dataset_id("wiki");
-                v.screen("gallery");
+                v.dataset_id('wiki');
+                v.screen('gallery');
                 $mol_assert_equal(v.body()[0], v.Gallery());
-                v.screen("explorer");
+                v.screen('explorer');
                 $mol_assert_equal(v.body()[0], v.Explorer());
-                // v.screen( 'chat' )
-                // $mol_assert_equal( v.body()[0], v.Chat() )
-                // v.screen( 'dashboard' )
-                // $mol_assert_equal( v.body()[0], v.Dashboard() )
             },
-            "app.body: forces Gallery when no dataset selected"($) {
+            'app.body: forces Gallery when no dataset selected'($) {
                 const v = $raggu_web_front_app.make({ $ });
-                v.screen("explorer");
-                $mol_assert_equal(v.dataset_id(), "");
+                v.screen('explorer');
+                $mol_assert_equal(v.dataset_id(), '');
                 $mol_assert_equal(v.body()[0], v.Gallery());
             },
-            // 'dashboard: metric and stage rows match data'( $ ) {
-            // const v = $raggu_web_front_dashboard.make({ $ })
-            // $mol_assert_equal( v.Metric_rows().sub().length, 3 )
-            // $mol_assert_equal( v.Stage_rows().sub().length, 5 )
-            // },
-            "gallery: BUILTIN mock renders two cards (law, wiki)"($) {
+            'gallery: BUILTIN mock renders two cards (law, wiki)'($) {
                 // No live backend in node tests → force ?mock=1 so remote_datasets returns null
                 // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
-                $.$mol_state_arg.value("mock", "1");
+                $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 2);
             },
-            "url state: screen / dataset_id round-trip through $mol_state_arg"($) {
+            'url state: screen / dataset_id round-trip through $mol_state_arg'($) {
                 const app = $raggu_web_front_app.make({ $ });
                 const arg = $.$mol_state_arg;
                 // defaults are NOT written to URL (kept clean)
-                $mol_assert_equal(app.screen(), "gallery");
-                $mol_assert_equal(arg.value("screen"), null);
+                $mol_assert_equal(app.screen(), 'gallery');
+                $mol_assert_equal(arg.value('screen'), null);
                 // non-default values land in $mol_state_arg
-                app.screen("explorer");
-                $mol_assert_equal(arg.value("screen"), "explorer");
-                app.dataset_id("law");
-                $mol_assert_equal(arg.value("ds"), "law");
+                app.screen('explorer');
+                $mol_assert_equal(arg.value('screen'), 'explorer');
+                app.dataset_id('law');
+                $mol_assert_equal(arg.value('ds'), 'law');
                 // resetting to default removes from URL
-                app.screen("gallery");
-                $mol_assert_equal(arg.value("screen"), null);
+                app.screen('gallery');
+                $mol_assert_equal(arg.value('screen'), null);
             },
-            "e2e: full user flow through all screens"($) {
-                $.$mol_state_arg.value("mock", "1");
+            'e2e: full user flow through all screens'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const app = $raggu_web_front_app.make({ $ });
                 // initial: gallery screen, BUILTIN mock has two cards (law, wiki)
-                $mol_assert_equal(app.screen(), "gallery");
+                $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.body()[0], app.Gallery());
                 $mol_assert_equal(app.Gallery().Grid().sub().length, 2);
                 // user picks dataset first — иначе body() держит Gallery
-                app.dataset_id("law");
+                app.dataset_id('law');
                 // user clicks "Граф" in topbar → explorer
                 app.Topbar().click_explorer();
-                $mol_assert_equal(app.screen(), "explorer");
+                $mol_assert_equal(app.screen(), 'explorer');
                 $mol_assert_equal(app.body()[0], app.Explorer());
-                // user clicks "Чат" → chat
-                // app.Topbar().click_chat()
-                // $mol_assert_equal( app.screen(), 'chat' )
-                // user clicks "Дашборд" → dashboard
-                // app.Topbar().click_dashboard()
-                // $mol_assert_equal( app.screen(), 'dashboard' )
                 // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
                 app.Topbar().click_gallery();
-                $mol_assert_equal(app.screen(), "gallery");
-                app.Gallery().click("law");
-                $mol_assert_equal(app.screen(), "gallery");
-                $mol_assert_equal(app.dataset_id(), "law");
+                $mol_assert_equal(app.screen(), 'gallery');
+                app.Gallery().click('law');
+                $mol_assert_equal(app.screen(), 'gallery');
+                $mol_assert_equal(app.dataset_id(), 'law');
             },
             // ---- explorer communities dropdown ----
-            "explorer.communities: mock graph groups nodes by community"($) {
-                $.$mol_state_arg.value("mock", "1");
+            'explorer.communities: mock graph groups nodes by community'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_explorer.make({ $ });
                 const comms = v.communities();
                 $mol_assert_equal(comms.length > 1, true);
@@ -22482,89 +22351,42 @@ var $;
                 const total = comms.reduce((s, c) => s + c.size, 0);
                 $mol_assert_equal(total, v.graph_nodes().length);
                 // у каждого сообщества свой цвет
-                const colors = new Set(comms.map((c) => v.comm_color_map()[c.id]));
+                const colors = new Set(comms.map(c => v.comm_color_map()[c.id]));
                 $mol_assert_equal(colors.size, comms.length <= 15 ? comms.length : colors.size);
             },
-            "explorer.comm_click: toggles selection, comm_mark reflects it"($) {
-                $.$mol_state_arg.value("mock", "1");
+            'explorer.comm_click: toggles selection, comm_mark reflects it'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_explorer.make({ $ });
                 $mol_assert_equal(v.comms_selected().length, 0);
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 1);
                 $mol_assert_equal(v.comm_active(0), true);
-                $mol_assert_equal(v.comm_mark(0), "✓");
+                $mol_assert_equal(v.comm_mark(0), '✓');
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 0);
-                $mol_assert_equal(v.comm_mark(0), "");
+                $mol_assert_equal(v.comm_mark(0), '');
             },
-            "forcegraph: community filter dims outsiders, highlights internal edges only"($) {
-                $.$mol_state_arg.value("mock", "1");
+            'forcegraph: community filter dims outsiders, highlights internal edges only'($) {
+                $.$mol_state_arg.value('mock', '1');
                 const v = $raggu_web_front_explorer.make({ $ });
                 v.comm_click(0);
                 const comm = v.communities()[0].id;
                 const g = v.graph_view();
                 // узел выбранного сообщества виден, чужой — затемнён
-                const inside = v.graph_nodes().find((n) => n.community === comm);
-                const outside = v
-                    .graph_nodes()
-                    .find((n) => n.community && n.community !== comm);
+                const inside = v.graph_nodes().find(n => n.community === comm);
+                const outside = v.graph_nodes().find(n => n.community && n.community !== comm);
                 $mol_assert_equal(g.node_matches(inside.id), true);
                 $mol_assert_equal(g.node_matches(outside.id), false);
                 $mol_assert_equal(g.node_color(inside.id), v.comm_color_map()[comm]);
                 // ребро подсвечено только когда ОБА конца в выбранном сообществе
                 for (const e of v.graph_edges()) {
-                    const both_in = v.graph_nodes().find((n) => n.id === e.source)?.community === comm &&
-                        v.graph_nodes().find((n) => n.id === e.target)?.community === comm;
+                    const both_in = v.graph_nodes().find(n => n.id === e.source)?.community === comm
+                        && v.graph_nodes().find(n => n.id === e.target)?.community === comm;
                     $mol_assert_equal(g.edge_matches(e.id), both_in);
                 }
             },
-            // ---- dashboard energy formula ----
-            // 'dashboard.pipeline_seconds: sum of STAGES.time'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	// 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
-            // 	$mol_assert_equal( d.pipeline_seconds().toFixed( 1 ), '15.3' )
-            // },
-            // 'dashboard.energy_kwh: TDP × time × PUE / 1000'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	// 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
-            // 	const kwh = d.energy_kwh()
-            // 	$mol_assert_equal( kwh > 0.0017 && kwh < 0.0019, true )
-            // 	$mol_assert_equal( d.energy_kwh_val(), '0.00' )
-            // },
-            // 'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	const val = d.energy_cost_val()
-            // 	$mol_assert_equal( /^[−+]\d+%$/.test( val ), true )
-            // },
-            // ---- dashboard log expand ----
-            // 'dashboard.log: default not expanded'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	$mol_assert_equal( d.Log( 'q1' ).expanded(), false )
-            // },
-            // 'dashboard.log.toggle: flips expanded'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	const log = d.Log( 'q1' )
-            // 	$mol_assert_equal( log.expanded(), false )
-            // 	log.toggle()
-            // 	$mol_assert_equal( log.expanded(), true )
-            // 	log.toggle()
-            // 	$mol_assert_equal( log.expanded(), false )
-            // },
-            // 'dashboard.log: Trace sub-view exists, attr reflects expanded state'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	const log = d.Log( 'q1' )
-            // 	$mol_assert_equal( !! log.Trace(), true )
-            // 	$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, false )
-            // 	log.toggle()
-            // 	$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, true )
-            // },
-            // 'dashboard.log.arrow: glyph depends on expanded'( $ ) {
-            // 	const d = $raggu_web_front_dashboard.make({ $ })
-            // 	const log = d.Log( 'q2' )
-            // 	$mol_assert_equal( log.arrow(), '▾' )
-            // 	log.toggle()
-            // 	$mol_assert_equal( log.arrow(), '▴' )
-            // },
+            // Тесты чата и дашборда убраны вместе с вкладками из бандла:
+            // вкладки спрятаны до готовности бэка.
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
