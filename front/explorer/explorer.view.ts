@@ -3,7 +3,7 @@ namespace $.$$ {
 	type GraphNode = $raggu_web_front_explorer_forcegraph_node
 	type GraphEdge = $raggu_web_front_explorer_forcegraph_edge
 
-	// Default page size for the graph endpoint. The mock backend caps at 5000.
+	// Default page size for the graph endpoint.
 	const GRAPH_LIMIT = 500
 
 	// Module-scoped cache keyed by dataset_id. Survives component remount:
@@ -19,6 +19,22 @@ namespace $.$$ {
 			return this.$.$mol_state_arg.value( 'mock' ) === '1'
 		}
 
+		// Размер выборки графа — URL-арг `limit` (например #!limit=5000).
+		// По умолчанию 500: SVG на тысячах узлов заметно тяжелеет.
+		// Сверху НЕ ограничиваем: сейчас бэк режет на 5000 (422), но лимит там
+		// собираются поднимать — фронт должен позволять это проверить.
+		@$mol_mem
+		graph_limit(): number {
+			const raw = Number( this.$.$mol_state_arg.value( 'limit' ) ?? '' )
+			if ( !Number.isFinite( raw ) || raw <= 0 ) return GRAPH_LIMIT
+			return Math.round( raw )
+		}
+
+		// Ключ кэшей графа и раскладки: датасет + лимит выборки
+		graph_key() {
+			return `${ this.dataset_id() }:${ this.graph_limit() }`
+		}
+
 		// Reactive live fetch. While loading, the wire promise is rethrown as
 		// usual; a real transport error falls back to the built-in mock graph
 		// so the demo stays alive without the backend.
@@ -29,12 +45,13 @@ namespace $.$$ {
 			if ( this.mock_flag() ) return null
 			// Возврат на вкладку не должен снова дёргать бэк — отдаём тот же объект,
 			// стабильная identity сохраняет раскладку графа.
-			const cached = $raggu_web_front_explorer_graph_cache.get( id )
+			const key = this.graph_key()
+			const cached = $raggu_web_front_explorer_graph_cache.get( key )
 			if ( cached ) return cached
 			try {
 				const res = this.$.$raggu_web_front_api(
 					$raggu_web_front_api_ragu_get_graph,
-					{ params: { dataset_id: id }, query: { limit: GRAPH_LIMIT } },
+					{ params: { dataset_id: id }, query: { limit: this.graph_limit() } },
 				)
 				const nodes: GraphNode[] = res.nodes.map( (n: any) => ( {
 					id: n.id,
@@ -44,6 +61,7 @@ namespace $.$$ {
 					x: n.x,
 					y: n.y,
 					community: n.community_id ?? '',
+					description: n.description ?? '',
 				} ) )
 				const edges: GraphEdge[] = res.edges.map( (e: any) => ( {
 					id: e.id,
@@ -54,7 +72,7 @@ namespace $.$$ {
 					description: e.description ?? '',
 				} ) )
 				const result = { nodes, edges }
-				$raggu_web_front_explorer_graph_cache.set( id, result )
+				$raggu_web_front_explorer_graph_cache.set( key, result )
 				return result
 			} catch( error ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
@@ -68,7 +86,7 @@ namespace $.$$ {
 			return this.graph_remote() === null
 		}
 
-		// Легенда строится из фактических типов графа (топ по количеству узлов),
+		// Легенда строится из фактических типов графа (все, по убыванию),
 		// а не из фиксированного NEREL-набора — схемы разных доменов различаются.
 		@$mol_mem
 		legend_entries(): Array< { type: string, count: number } > {
@@ -79,7 +97,6 @@ namespace $.$$ {
 			return Object.entries( counts )
 				.map( ( [ type, count ] ) => ( { type, count } ) )
 				.sort( ( a, b ) => b.count - a.count )
-				.slice( 0, 12 )
 		}
 
 		legend_rows() {
@@ -126,7 +143,6 @@ namespace $.$$ {
 			return Object.entries( counts )
 				.map( ( [ type, count ] ) => ( { type, count } ) )
 				.sort( ( a, b ) => b.count - a.count )
-				.slice( 0, 12 )
 		}
 
 		rel_legend_rows() {
@@ -219,7 +235,27 @@ namespace $.$$ {
 			return this.communities().map( ( _, i ) => this.Comm_row( i ) )
 		}
 		comm_label( i: number ) { return this.communities()[ i ]?.title ?? '' }
-		comm_count( i: number ) { return String( this.communities()[ i ]?.size ?? '' ) }
+
+		// Сколько вершин сообщества реально попало в выборку графа (limit!)
+		@$mol_mem
+		comm_visible_counts(): Record< string, number > {
+			const m: Record< string, number > = {}
+			for ( const n of this.graph_nodes() ) {
+				const c = n.community ?? ''
+				if ( !c ) continue
+				m[ c ] = ( m[ c ] ?? 0 ) + 1
+			}
+			return m
+		}
+
+		// «видимых / всего»: size с бэка — по всему датасету, а канва держит
+		// только limit-выборку, иначе число не сходится с подсветкой
+		comm_count( i: number ) {
+			const c = this.communities()[ i ]
+			if ( !c ) return ''
+			const vis = this.comm_visible_counts()[ c.id ] ?? 0
+			return vis === c.size ? String( c.size ) : `${ vis } / ${ c.size }`
+		}
 		comm_active( i: number ) {
 			return this.comms_selected().includes( this.communities()[ i ]?.id ?? '' )
 		}
@@ -250,6 +286,17 @@ namespace $.$$ {
 			return null
 		}
 		comms_closed() { return !this.comms_open() }
+
+		// Клик вне выпадашки закрывает её. Клики внутри (кнопка, строки)
+		// добегают сюда всплытием, но target лежит внутри Comms — пропускаем.
+		@$mol_action
+		outside_click( event?: MouseEvent ) {
+			if ( !this.comms_open() ) return null
+			const box = this.Comms().dom_node() as HTMLElement | null
+			if ( box && event?.target instanceof Node && box.contains( event.target ) ) return null
+			this.comms_open( false )
+			return null
+		}
 
 		comms_btn_label() {
 			const n = this.comms_checked().length
@@ -341,6 +388,25 @@ namespace $.$$ {
 			}
 		}
 
+		// Описание узла с бэка (get_node); ошибка тихо фолбэчится на
+		// description из get_graph — как у рёбер.
+		@$mol_mem
+		node_remote_desc(): string | null {
+			const n = this.selected()
+			const id = this.dataset_id()
+			if ( !n || !id || this.mock_flag() ) return null
+			try {
+				const res = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_get_node,
+					{ params: { dataset_id: id, node_id: n.id } },
+				)
+				return res.node?.description || null
+			} catch( error ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				return null
+			}
+		}
+
 		entity_desc() {
 			const edge = this.selected_edge()
 			if ( edge ) {
@@ -350,7 +416,7 @@ namespace $.$$ {
 			}
 			const n = this.selected()
 			if ( !n ) return ''
-			return `Mock entity of type ${ n.type }, connected to ${ n.degree } other nodes.`
+			return this.node_remote_desc() ?? ( n.description || '' )
 		}
 
 		relations_title() {

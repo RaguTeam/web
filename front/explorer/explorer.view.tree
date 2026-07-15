@@ -33,11 +33,14 @@ $raggu_web_front_explorer $bog_builderui_div
 	comm_mark* \
 	comm_click*? null
 	mock_badge_text @ \⚠ Mock data — backend is not connected
+	event *
+		^
+		click?event <=> outside_click?event null
 	sub /
 		<= Canvas $bog_builderui_div sub /
 			<= Canvas_bg $bog_builderui_div sub /
 				<= Graph $raggu_web_front_explorer_forcegraph
-					graph_key <= dataset_id
+					graph_key <= graph_key \
 					nodes <= graph_nodes /
 					edges <= graph_edges /
 					selected_id? <=> selected_id?

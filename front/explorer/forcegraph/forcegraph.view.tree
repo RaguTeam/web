@@ -27,6 +27,9 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 	max_speed +12
 	node_size_base +4
 	node_size_growth +1.5
+	attr *
+		^
+		data-forcegraph-dim <= dim_active false
 	event *
 		^
 		wheel?event <=> wheel?event null
@@ -37,6 +40,9 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 		click?event <=> bg_click?event null
 	sub /
 		<= G_edges $mol_svg_group
+			attr *
+				^
+				data-forcegraph-base \
 			sub <= edge_views /
 				<= Edge* $mol_svg_line
 					from_x <= edge_x1* \
@@ -56,6 +62,9 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						pointerenter? <=> edge_hover_enter*? null
 						pointerleave? <=> edge_hover_leave*? null
 		<= G_edge_labels $mol_svg_group
+			attr *
+				^
+				data-forcegraph-base \
 			sub <= edge_label_views /
 				<= Edge_label* $mol_svg_text
 					pos_x <= edge_label_x* \
@@ -76,6 +85,9 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						pointerenter? <=> edge_hover_enter*? null
 						pointerleave? <=> edge_hover_leave*? null
 		<= G_nodes $mol_svg_group
+			attr *
+				^
+				data-forcegraph-base \
 			sub <= node_views /
 				<= Node* $mol_svg_circle
 					pos_x <= node_x* \
@@ -86,8 +98,6 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						data-node-id <= node_id* \
 						fill <= node_color* \#7c6ce0
 						fill-opacity <= node_opacity* \1
-						stroke <= node_stroke* \transparent
-						stroke-width <= node_stroke_width* \0
 						cursor \pointer
 					event *
 						^
@@ -98,6 +108,7 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 			attr *
 				^
 				pointer-events \none
+				data-forcegraph-base \
 			sub <= node_label_views /
 				<= Node_label* $mol_svg_text
 					pos_x <= node_label_x* \
@@ -109,6 +120,47 @@ $raggu_web_front_explorer_forcegraph $mol_svg_root
 						data-forcegraph-node-label \
 						font-size <= node_label_font_size \10
 						fill-opacity <= node_label_opacity* \1
+		<= G_overlay $mol_svg_group
+			attr *
+				^
+				pointer-events \none
+			sub <= overlay_views /
+				<= Overlay_edge* $mol_svg_line
+					from_x <= edge_x1* \
+					from_y <= edge_y1* \
+					to_x <= edge_x2* \
+					to_y <= edge_y2* \
+					attr *
+						^
+						stroke-width <= overlay_edge_width* \2
+						stroke-opacity \0.95
+				<= Overlay_node* $mol_svg_circle
+					pos_x <= node_x* \
+					pos_y <= node_y* \
+					radius <= node_radius* \6
+					attr *
+						^
+						fill <= node_color* \#7c6ce0
+						stroke-width <= overlay_node_stroke_width* \1.5
+				<= Overlay_label* $mol_svg_text
+					pos_x <= node_label_x* \
+					pos_y <= node_label_y* \
+					align \middle
+					text <= overlay_label_text* \
+					attr *
+						^
+						data-forcegraph-node-label \
+						font-size <= node_label_font_size \10
+				<= Overlay_edge_label* $mol_svg_text
+					pos_x <= edge_label_x* \
+					pos_y <= edge_label_y* \
+					align \middle
+					align_vert \middle
+					text <= overlay_edge_label_text* \
+					attr *
+						^
+						data-forcegraph-edge-label \
+						font-size <= edge_label_font_size \8
 		<= Tooltip $mol_svg_group
 			attr *
 				^
