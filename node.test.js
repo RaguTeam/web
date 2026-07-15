@@ -13113,73 +13113,325 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_list) = class $mol_list extends ($.$mol_view) {
-		gap_before(){
-			return 0;
+	($.$raggu_web_front_summary_card) = class $raggu_web_front_summary_card extends ($.$bog_builderui_div) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
 		}
-		Gap_before(){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this.gap_before())});
+		Icon(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.icon())]);
 			return obj;
 		}
-		Empty(){
-			const obj = new this.$.$mol_view();
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
 			return obj;
 		}
-		gap_after(){
-			return 0;
-		}
-		Gap_after(){
-			const obj = new this.$.$mol_view();
-			(obj.style) = () => ({"paddingTop": (this.gap_after())});
+		Badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.badge())]);
 			return obj;
 		}
-		rows(){
-			return [
-				(this.Gap_before()), 
-				(this.Empty()), 
-				(this.Gap_after())
-			];
+		Head(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Icon()), 
+				(this.Spacer()), 
+				(this.Badge())
+			]);
+			return obj;
 		}
-		render_visible_only(){
-			return true;
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
 		}
-		render_over(){
-			return 0.1;
+		Desc(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.desc())]);
+			return obj;
+		}
+		More(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.more())]);
+			return obj;
+		}
+		icon(){
+			return "";
+		}
+		badge(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		desc(){
+			return "";
+		}
+		more(){
+			return "";
+		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.click(next))};
 		}
 		sub(){
-			return (this.rows());
-		}
-		item_height_min(id){
-			return 1;
-		}
-		item_width_min(id){
-			return 1;
-		}
-		view_window_shift(next){
-			if(next !== undefined) return next;
-			return 0;
-		}
-		view_window(){
-			return [0, 0];
+			return [
+				(this.Head()), 
+				(this.Title()), 
+				(this.Desc()), 
+				(this.More())
+			];
 		}
 	};
-	($mol_mem(($.$mol_list.prototype), "Gap_before"));
-	($mol_mem(($.$mol_list.prototype), "Empty"));
-	($mol_mem(($.$mol_list.prototype), "Gap_after"));
-	($mol_mem(($.$mol_list.prototype), "view_window_shift"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "click"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Icon"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Badge"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Head"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Title"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Desc"));
+	($mol_mem(($.$raggu_web_front_summary_card.prototype), "More"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_summary_card, {
+        background: { color: $bog_builderui_tokens.card },
+        border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
+        padding: {
+            top: '12px',
+            bottom: '12px',
+            left: '12px',
+            right: '12px',
+        },
+        flex: { direction: 'column' },
+        cursor: 'pointer',
+        ':hover': {
+            border: { color: $bog_builderui_tokens.current },
+        },
+        Head: {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+        },
+        Icon: {
+            font: { size: '22px' },
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Badge: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.field },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
+            padding: {
+                top: '2px',
+                bottom: '2px',
+                left: '7px',
+                right: '7px',
+            },
+        },
+        Title: {
+            font: { weight: 700, size: '14px' },
+            margin: { top: '11px' },
+        },
+        Desc: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '4px' },
+            lineHeight: '1.4',
+            flex: { grow: 1 },
+        },
+        More: {
+            font: { weight: 600, size: '11px' },
+            color: $bog_builderui_tokens.current,
+            margin: { top: '10px' },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_image) = class $mol_image extends ($.$mol_view) {
+		uri(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		loading(){
+			return "lazy";
+		}
+		decoding(){
+			return "async";
+		}
+		cors(){
+			return null;
+		}
+		natural_width(){
+			return 0;
+		}
+		natural_height(){
+			return 0;
+		}
+		load(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "img";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"src": (this.uri()), 
+				"title": (this.hint()), 
+				"alt": (this.title()), 
+				"loading": (this.loading()), 
+				"decoding": (this.decoding()), 
+				"crossOrigin": (this.cors()), 
+				"width": (this.natural_width()), 
+				"height": (this.natural_height())
+			};
+		}
+		event(){
+			return {"load": (next) => (this.load(next))};
+		}
+		minimal_width(){
+			return 16;
+		}
+		minimal_height(){
+			return 16;
+		}
+	};
+	($mol_mem(($.$mol_image.prototype), "load"));
+
+
+;
+"use strict";
 
 
 ;
 "use strict";
 var $;
 (function ($) {
-    let cache = null;
-    function $mol_support_css_overflow_anchor() {
-        return cache ?? (cache = this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false);
-    }
-    $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
+    var $$;
+    (function ($$) {
+        class $mol_image extends $.$mol_image {
+            natural_width(next) {
+                const dom = this.dom_node();
+                if (dom.naturalWidth)
+                    return dom.naturalWidth;
+                const found = this.uri().match(/\bwidth=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            natural_height(next) {
+                const dom = this.dom_node();
+                if (dom.naturalHeight)
+                    return dom.naturalHeight;
+                const found = this.uri().match(/\bheight=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            load() {
+                this.natural_width(null);
+                this.natural_height(null);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_height", null);
+        $$.$mol_image = $mol_image;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_link) = class $mol_link extends ($.$mol_view) {
+		uri_toggle(){
+			return "";
+		}
+		hint(){
+			return "";
+		}
+		hint_safe(){
+			return (this.hint());
+		}
+		target(){
+			return "_self";
+		}
+		file_name(){
+			return "";
+		}
+		current(){
+			return false;
+		}
+		relation(){
+			return "";
+		}
+		event_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		click(next){
+			return (this.event_click(next));
+		}
+		uri(){
+			return "";
+		}
+		dom_name(){
+			return "a";
+		}
+		uri_off(){
+			return "";
+		}
+		uri_native(){
+			return null;
+		}
+		external(){
+			return false;
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"href": (this.uri_toggle()), 
+				"title": (this.hint_safe()), 
+				"target": (this.target()), 
+				"download": (this.file_name()), 
+				"mol_link_current": (this.current()), 
+				"rel": (this.relation())
+			};
+		}
+		sub(){
+			return [(this.title())];
+		}
+		arg(){
+			return {};
+		}
+		event(){
+			return {...(super.event()), "click": (next) => (this.click(next))};
+		}
+	};
+	($mol_mem(($.$mol_link.prototype), "event_click"));
+
 
 ;
 "use strict";
@@ -13192,183 +13444,81 @@ var $;
     var $$;
     (function ($$) {
         /**
-         * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
-         * `mol_list` should contain only components that inherits `mol_view`. You should not place raw strings or numbers in list.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
+         * Dynamic hyperlink. It can add, change or remove parameters. A link that leads to the current page has [mol_link_current] attribute set to true.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_link_demo
          */
-        class $mol_list extends $.$mol_list {
-            sub() {
-                const rows = this.rows();
-                const next = (rows.length === 0) ? [this.Empty()] : rows;
-                const prev = $mol_mem_cached(() => this.sub());
-                const [start, end] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
-                if (prev && $mol_mem_cached(() => prev[start] !== next[start])) {
-                    const index = $mol_mem_cached(() => next.indexOf(prev[start])) ?? -1;
-                    if (index >= 0)
-                        this.view_window_shift(index - start);
-                }
-                return next;
+        class $mol_link extends $.$mol_link {
+            uri_toggle() {
+                return this.current() ? this.uri_off() : this.uri();
             }
-            render_visible_only() {
-                return this.$.$mol_support_css_overflow_anchor();
+            uri() {
+                return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
-            _view_window_last = [0, 0];
-            view_window(next) {
-                const kids = this.sub();
-                if (kids.length < 3)
-                    return [0, kids.length];
-                if (this.$.$mol_print.active())
-                    return [0, kids.length];
-                const rect = this.view_rect();
-                if (next)
-                    return next;
-                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? this._view_window_last;
-                const shift = this.view_window_shift();
-                this.view_window_shift(0);
-                min += shift;
-                max += shift;
-                let max2 = max = Math.min(max, kids.length);
-                let min2 = min = Math.max(0, Math.min(min, max - 1));
-                const anchoring = this.render_visible_only();
-                const window_height = this.$.$mol_window.size().height + 40;
-                const over = Math.ceil(window_height * this.render_over());
-                const limit_top = -over;
-                const limit_bottom = window_height + over;
-                const gap_before = $mol_mem_cached(() => this.gap_before()) ?? 0;
-                const gap_after = $mol_mem_cached(() => this.gap_after()) ?? 0;
-                let top = Math.ceil(rect?.top ?? 0) + gap_before;
-                let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
-                // change nothing when already covers all limits
-                if (top <= limit_top && bottom >= limit_bottom) {
-                    return [min2, max2];
-                }
-                // jumps when fully over limits
-                if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
-                    min = 0;
-                    top = Math.ceil(rect?.top ?? 0);
-                    while (min < (kids.length - 1)) {
-                        const height = this.item_height_min(min);
-                        if (top + height >= limit_top)
-                            break;
-                        top += height;
-                        ++min;
-                    }
-                    min2 = min;
-                    max2 = max = min;
-                    bottom = top;
-                }
-                let top2 = top;
-                let bottom2 = bottom;
-                // force recalc min when overlapse top limit
-                if (anchoring && (top < limit_top) && (bottom < limit_bottom) && (max < kids.length)) {
-                    min2 = max;
-                    top2 = bottom;
-                }
-                // force recalc max when overlapse bottom limit
-                if ((bottom > limit_bottom) && (top > limit_top) && (min > 0)) {
-                    max2 = min;
-                    bottom2 = top;
-                }
-                // extend min to cover top limit
-                while (anchoring && ((top2 > limit_top) && (min2 > 0))) {
-                    --min2;
-                    top2 -= this.item_height_min(min2);
-                }
-                // extend max to cover bottom limit
-                while (bottom2 < limit_bottom && max2 < kids.length) {
-                    bottom2 += this.item_height_min(max2);
-                    ++max2;
-                }
-                return [min2, max2];
+            uri_off() {
+                const arg2 = {};
+                for (let i in this.arg())
+                    arg2[i] = null;
+                return new this.$.$mol_state_arg(this.state_key()).link(arg2);
             }
-            item_height_min(index) {
-                try {
-                    return this.sub()[index]?.minimal_height() ?? 0;
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return 0;
-                }
+            uri_native() {
+                const base = this.$.$mol_state_arg.href();
+                return new URL(this.uri(), base);
             }
-            row_width_min(index) {
-                try {
-                    return this.sub()[index]?.minimal_width() ?? 0;
+            current() {
+                const base = this.$.$mol_state_arg.href_normal();
+                const target = this.uri_native().toString();
+                if (base === target)
+                    return true;
+                const args = this.arg();
+                const keys = Object.keys(args).filter(key => args[key] != null);
+                if (keys.length === 0)
+                    return false;
+                for (const key of keys) {
+                    if (this.$.$mol_state_arg.value(key) != args[key])
+                        return false;
                 }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return 0;
-                }
+                return true;
             }
-            gap_before() {
-                let gap = 0;
-                const skipped = this.view_window()[0];
-                for (let i = 0; i < skipped; ++i)
-                    gap += this.item_height_min(i);
-                return gap;
-            }
-            gap_after() {
-                let gap = 0;
-                const from = this.view_window()[1];
-                const to = this.sub().length;
-                for (let i = from; i < to; ++i)
-                    gap += this.item_height_min(i);
-                return gap;
-            }
-            sub_visible() {
-                return [
-                    ...this.gap_before() ? [this.Gap_before()] : [],
-                    ...this.sub().slice(...this._view_window_last = this.view_window()),
-                    ...this.gap_after() ? [this.Gap_after()] : [],
-                ];
+            file_name() {
+                return null;
             }
             minimal_height() {
-                let height = 0;
-                const len = this.sub().length;
-                for (let i = 0; i < len; ++i)
-                    height += this.item_height_min(i);
-                return height;
+                return Math.max(super.minimal_height(), 24);
             }
-            minimal_width() {
-                let width = 0;
-                const len = this.sub().length;
-                for (let i = 0; i < len; ++i)
-                    width = Math.max(width, this.item_width_min(i));
-                return width;
+            external() {
+                return this.uri_native().origin !== $mol_dom_context.location.origin;
             }
-            force_render(path) {
-                const kids = this.rows();
-                const index = kids.findIndex(item => path.has(item));
-                if (index >= 0) {
-                    const win = this.view_window();
-                    if (index < win[0] || index >= win[1]) {
-                        this.view_window([this.render_visible_only() ? index : 0, index + 1]);
-                    }
-                    kids[index].force_render(path);
+            target() {
+                return this.external() ? '_blank' : '_self';
+            }
+            hint_safe() {
+                try {
+                    return this.hint();
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    if (error instanceof Error)
+                        return '💥' + error.message;
+                    return '';
                 }
             }
         }
         __decorate([
             $mol_mem
-        ], $mol_list.prototype, "sub", null);
+        ], $mol_link.prototype, "uri_toggle", null);
         __decorate([
             $mol_mem
-        ], $mol_list.prototype, "view_window", null);
+        ], $mol_link.prototype, "uri", null);
         __decorate([
             $mol_mem
-        ], $mol_list.prototype, "gap_before", null);
+        ], $mol_link.prototype, "uri_off", null);
         __decorate([
             $mol_mem
-        ], $mol_list.prototype, "gap_after", null);
+        ], $mol_link.prototype, "uri_native", null);
         __decorate([
             $mol_mem
-        ], $mol_list.prototype, "sub_visible", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "minimal_height", null);
-        __decorate([
-            $mol_mem
-        ], $mol_list.prototype, "minimal_width", null);
-        $$.$mol_list = $mol_list;
+        ], $mol_link.prototype, "current", null);
+        $$.$mol_link = $mol_link;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -13376,7 +13526,740 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: 1.5rem;\n\t/* will-change: contents; */\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
+    const { rem } = $mol_style_unit;
+    $mol_style_define($mol_link, {
+        textDecoration: 'none',
+        color: $mol_theme.control,
+        stroke: 'currentcolor',
+        cursor: 'pointer',
+        padding: $mol_gap.text,
+        boxSizing: 'border-box',
+        position: 'relative',
+        minWidth: rem(2.5),
+        minHeight: rem(2.5),
+        gap: $mol_gap.space,
+        border: {
+            radius: $mol_gap.round,
+        },
+        ':hover': {
+            background: {
+                color: $mol_theme.hover,
+            },
+        },
+        ':focus': {
+            outline: 'none',
+        },
+        ':focus-visible': {
+            outline: 'none',
+            background: {
+                color: $mol_theme.hover,
+            }
+        },
+        ':active': {
+            color: $mol_theme.focus,
+        },
+        '@': {
+            mol_link_current: {
+                'true': {
+                    color: $mol_theme.current,
+                    textShadow: '0 0',
+                }
+            }
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_summary_detail) = class $raggu_web_front_summary_detail extends ($.$bog_builderui_div) {
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Backdrop(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			return obj;
+		}
+		Icon(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.icon())]);
+			return obj;
+		}
+		Title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		Badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.badge())]);
+			return obj;
+		}
+		Header_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Title()), (this.Badge())]);
+			return obj;
+		}
+		Spacer(){
+			const obj = new this.$.$bog_builderui_div();
+			return obj;
+		}
+		Close_btn(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.event) = () => ({"click": (next) => (this.close(next))});
+			(obj.sub) = () => (["✕"]);
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([
+				(this.Icon()), 
+				(this.Header_text()), 
+				(this.Spacer()), 
+				(this.Close_btn())
+			]);
+			return obj;
+		}
+		Content(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.body()));
+			return obj;
+		}
+		Body(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([(this.Content())]);
+			return obj;
+		}
+		Panel(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header()), (this.Body())]);
+			return obj;
+		}
+		Fact_marker(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => (["—"]);
+			return obj;
+		}
+		fact(id){
+			return "";
+		}
+		Fact_text(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.fact(id))]);
+			return obj;
+		}
+		link_rows(){
+			return [];
+		}
+		link_uri(id){
+			return "";
+		}
+		link_label(id){
+			return "";
+		}
+		showed(){
+			return false;
+		}
+		icon(){
+			return "";
+		}
+		badge(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		image(){
+			return "";
+		}
+		facts(){
+			return [];
+		}
+		links(){
+			return [];
+		}
+		body(){
+			return [];
+		}
+		attr(){
+			return {...(super.attr()), "raggu_web_front_summary_detail_showed": (this.showed())};
+		}
+		sub(){
+			return [(this.Backdrop()), (this.Panel())];
+		}
+		Image(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.image()));
+			return obj;
+		}
+		Fact(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Fact_marker(id)), (this.Fact_text(id))]);
+			return obj;
+		}
+		Links(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.link_rows()));
+			return obj;
+		}
+		Link(id){
+			const obj = new this.$.$mol_link();
+			(obj.uri) = () => ((this.link_uri(id)));
+			(obj.title) = () => ((this.link_label(id)));
+			(obj.attr) = () => ({...(this.$.$mol_link.prototype.attr.call(obj)), "target": "_blank"});
+			return obj;
+		}
+	};
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "close"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Backdrop"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Icon"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Title"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Badge"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Header_text"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Spacer"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Close_btn"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Header"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Content"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Body"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Panel"));
+	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Fact_marker"));
+	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Fact_text"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Image"));
+	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Fact"));
+	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Links"));
+	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Link"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_summary_detail extends $.$raggu_web_front_summary_detail {
+            body() {
+                return [
+                    ...this.image() ? [this.Image()] : [],
+                    ...this.facts().map((_, i) => this.Fact(i)),
+                    ...this.links().length ? [this.Links()] : [],
+                ];
+            }
+            fact(i) {
+                return this.facts()[i];
+            }
+            link_rows() {
+                return this.links().map((_, i) => this.Link(i));
+            }
+            link_uri(i) {
+                return this.links()[i].uri;
+            }
+            link_label(i) {
+                return this.links()[i].label;
+            }
+        }
+        $$.$raggu_web_front_summary_detail = $raggu_web_front_summary_detail;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_summary_detail, {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'none',
+        zIndex: 40,
+        '@': {
+            raggu_web_front_summary_detail_showed: {
+                true: { display: 'flex' },
+            },
+        },
+        Backdrop: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: { color: '#1c1b1a59' },
+        },
+        Panel: {
+            position: 'relative',
+            zIndex: 1,
+            margin: 'auto',
+            width: '760px',
+            maxWidth: $mol_style_func.calc('100vw - 4rem'),
+            maxHeight: $mol_style_func.calc('100vh - 4rem'),
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '12px' },
+            flex: { direction: 'column' },
+            box: {
+                shadow: [{
+                        x: 0,
+                        y: '12px',
+                        blur: '40px',
+                        spread: 0,
+                        color: '#0000001f',
+                    }],
+            },
+        },
+        Header: {
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '20px',
+                right: '20px',
+            },
+            border: {
+                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+            },
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '12px',
+        },
+        Icon: {
+            font: { size: '24px' },
+        },
+        Header_text: {
+            flex: { direction: 'column' },
+        },
+        Title: {
+            font: { weight: 700, size: '16px' },
+        },
+        Badge: {
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 500,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '2px' },
+        },
+        Spacer: {
+            flex: { grow: 1 },
+        },
+        Close_btn: {
+            cursor: 'pointer',
+            color: $bog_builderui_tokens.shade,
+            font: { size: '14px' },
+            padding: {
+                top: '4px',
+                bottom: '4px',
+                left: '8px',
+                right: '8px',
+            },
+        },
+        Content: {
+            padding: {
+                top: '18px',
+                bottom: '18px',
+                left: '20px',
+                right: '20px',
+            },
+            flex: { direction: 'column' },
+            gap: '12px',
+        },
+        Image: {
+            maxWidth: '100%',
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '8px' },
+        },
+        Fact: {
+            flex: { direction: 'row' },
+            gap: '8px',
+            align: { items: 'flex-start' },
+        },
+        Fact_marker: {
+            color: $bog_builderui_tokens.current,
+            font: { weight: 700, size: '13px' },
+        },
+        Fact_text: {
+            font: { size: '13px' },
+            lineHeight: '1.5',
+            flex: { shrink: 1 },
+            minWidth: 0,
+        },
+        Links: {
+            flex: { direction: 'row' },
+            flexWrap: 'wrap',
+            gap: '10px',
+            margin: { top: '4px' },
+        },
+        Link: {
+            font: { weight: 600, size: '12px' },
+            color: $bog_builderui_tokens.current,
+        },
+        '@media': {
+            '(max-width: 720px)': {
+                Panel: {
+                    maxWidth: $mol_style_func.calc('100vw - 1.5rem'),
+                    maxHeight: $mol_style_func.calc('100vh - 1.5rem'),
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$raggu_web_front_summary) = class $raggu_web_front_summary extends ($.$bog_builderui_div) {
+		Header_title(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.header_title_text())]);
+			return obj;
+		}
+		Header_subtitle(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.header_subtitle_text())]);
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Header_title()), (this.Header_subtitle())]);
+			return obj;
+		}
+		card_icon(id){
+			return "";
+		}
+		card_badge(id){
+			return "";
+		}
+		card_title(id){
+			return "";
+		}
+		card_desc(id){
+			return "";
+		}
+		click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Card(id){
+			const obj = new this.$.$raggu_web_front_summary_card();
+			(obj.icon) = () => ((this.card_icon(id)));
+			(obj.badge) = () => ((this.card_badge(id)));
+			(obj.title) = () => ((this.card_title(id)));
+			(obj.desc) = () => ((this.card_desc(id)));
+			(obj.more) = () => ((this.more_text()));
+			(obj.click) = (next) => ((this.click(id, next)));
+			return obj;
+		}
+		rows(){
+			return [(this.Card(id))];
+		}
+		Grid(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.rows()));
+			return obj;
+		}
+		detail_showed(){
+			return false;
+		}
+		opened_icon(){
+			return "";
+		}
+		opened_badge(){
+			return "";
+		}
+		opened_title(){
+			return "";
+		}
+		opened_facts(){
+			return [];
+		}
+		opened_links(){
+			return [];
+		}
+		opened_image(){
+			return "";
+		}
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		opened(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		header_title_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_header_title_text"));
+		}
+		header_subtitle_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_header_subtitle_text"));
+		}
+		more_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_more_text"));
+		}
+		ragu_badge(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_badge"));
+		}
+		ragu_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_desc"));
+		}
+		ragu_fact_1(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_fact_1"));
+		}
+		ragu_fact_2(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_fact_2"));
+		}
+		ragu_fact_3(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_fact_3"));
+		}
+		mol_badge(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_badge"));
+		}
+		mol_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_desc"));
+		}
+		mol_fact_1(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_fact_1"));
+		}
+		mol_fact_2(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_fact_2"));
+		}
+		mol_fact_3(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_fact_3"));
+		}
+		menolite_badge(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_badge"));
+		}
+		menolite_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_desc"));
+		}
+		menolite_fact_1(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_fact_1"));
+		}
+		menolite_fact_2(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_fact_2"));
+		}
+		menolite_fact_3(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_fact_3"));
+		}
+		nerel_badge(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_badge"));
+		}
+		nerel_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_desc"));
+		}
+		nerel_fact_1(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_1"));
+		}
+		nerel_fact_2(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_2"));
+		}
+		nerel_fact_3(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_3"));
+		}
+		ocr_badge(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_badge"));
+		}
+		ocr_desc(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_desc"));
+		}
+		ocr_fact_1(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_1"));
+		}
+		ocr_fact_2(){
+			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_2"));
+		}
+		sub(){
+			return [(this.Header()), (this.Grid())];
+		}
+		Detail(){
+			const obj = new this.$.$raggu_web_front_summary_detail();
+			(obj.showed) = () => ((this.detail_showed()));
+			(obj.icon) = () => ((this.opened_icon()));
+			(obj.badge) = () => ((this.opened_badge()));
+			(obj.title) = () => ((this.opened_title()));
+			(obj.facts) = () => ((this.opened_facts()));
+			(obj.links) = () => ((this.opened_links()));
+			(obj.image) = () => ((this.opened_image()));
+			(obj.close) = (next) => ((this.close(next)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$raggu_web_front_summary.prototype), "Header_title"));
+	($mol_mem(($.$raggu_web_front_summary.prototype), "Header_subtitle"));
+	($mol_mem(($.$raggu_web_front_summary.prototype), "Header"));
+	($mol_mem_key(($.$raggu_web_front_summary.prototype), "click"));
+	($mol_mem_key(($.$raggu_web_front_summary.prototype), "Card"));
+	($mol_mem(($.$raggu_web_front_summary.prototype), "Grid"));
+	($mol_mem(($.$raggu_web_front_summary.prototype), "close"));
+	($mol_mem(($.$raggu_web_front_summary.prototype), "opened"));
+	($mol_mem(($.$raggu_web_front_summary.prototype), "Detail"));
+
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_summary extends $.$raggu_web_front_summary {
+            ids() {
+                return ['ragu', 'mol', 'menolite', 'nerel', 'ocr'];
+            }
+            rows() {
+                return this.ids().map(id => this.Card(id));
+            }
+            card_icon(id) {
+                switch (id) {
+                    case 'ragu': return '🧠';
+                    case 'mol': return '⚡';
+                    case 'menolite': return '🤖';
+                    case 'nerel': return '🏷';
+                    case 'ocr': return '📄';
+                }
+                return '';
+            }
+            card_title(id) {
+                switch (id) {
+                    case 'ragu': return 'RAGU';
+                    case 'mol': return '$mol';
+                    case 'menolite': return 'Meno-Lite-0.1';
+                    case 'nerel': return 'NEREL+';
+                    case 'ocr': return 'OCR';
+                }
+                return '';
+            }
+            card_badge(id) {
+                switch (id) {
+                    case 'ragu': return this.ragu_badge();
+                    case 'mol': return this.mol_badge();
+                    case 'menolite': return this.menolite_badge();
+                    case 'nerel': return this.nerel_badge();
+                    case 'ocr': return this.ocr_badge();
+                }
+                return '';
+            }
+            card_desc(id) {
+                switch (id) {
+                    case 'ragu': return this.ragu_desc();
+                    case 'mol': return this.mol_desc();
+                    case 'menolite': return this.menolite_desc();
+                    case 'nerel': return this.nerel_desc();
+                    case 'ocr': return this.ocr_desc();
+                }
+                return '';
+            }
+            card_facts(id) {
+                switch (id) {
+                    case 'ragu': return [this.ragu_fact_1(), this.ragu_fact_2(), this.ragu_fact_3()];
+                    case 'mol': return [this.mol_fact_1(), this.mol_fact_2(), this.mol_fact_3()];
+                    case 'menolite': return [this.menolite_fact_1(), this.menolite_fact_2(), this.menolite_fact_3()];
+                    case 'nerel': return [this.nerel_fact_1(), this.nerel_fact_2(), this.nerel_fact_3()];
+                    case 'ocr': return [this.ocr_fact_1(), this.ocr_fact_2()];
+                }
+                return [];
+            }
+            card_links(id) {
+                switch (id) {
+                    case 'ragu': return [
+                        { label: 'github.com/RaguTeam/RAGU', uri: 'https://github.com/RaguTeam/RAGU' },
+                    ];
+                    case 'mol': return [
+                        { label: 'github.com/RaguTeam/web', uri: 'https://github.com/RaguTeam/web' },
+                        { label: 'mol.hyoo.ru', uri: 'https://mol.hyoo.ru/' },
+                    ];
+                    case 'menolite': return [
+                        { label: 'huggingface.co/bond005/meno-lite-0.1', uri: 'https://huggingface.co/bond005/meno-lite-0.1' },
+                    ];
+                    case 'nerel': return [
+                        { label: 'NEREL paper (arXiv:2108.13112)', uri: 'https://arxiv.org/abs/2108.13112' },
+                    ];
+                    case 'ocr': return [
+                        { label: 'github.com/AleksanderMerkulov/text_extractor', uri: 'https://github.com/AleksanderMerkulov/text_extractor' },
+                    ];
+                }
+                return [];
+            }
+            card_image(id) {
+                // Архитектура RAGU из статьи, лежит в assets и деплоится через meta.tree.
+                if (id === 'ragu')
+                    return 'raggu/web/front/assets/ragu.jpg';
+                return '';
+            }
+            detail_showed() {
+                return !!this.opened();
+            }
+            opened_icon() { return this.card_icon(this.opened()); }
+            opened_badge() { return this.card_badge(this.opened()); }
+            opened_title() { return this.card_title(this.opened()); }
+            opened_facts() { return this.card_facts(this.opened()); }
+            opened_links() { return this.card_links(this.opened()); }
+            opened_image() { return this.card_image(this.opened()); }
+            click(id) {
+                this.opened(id);
+                return null;
+            }
+            close() {
+                this.opened('');
+                return null;
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_summary.prototype, "click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_summary.prototype, "close", null);
+        $$.$raggu_web_front_summary = $raggu_web_front_summary;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+/** @see $bog_builderui_tokens */
+var $;
+(function ($) {
+    $mol_style_define($raggu_web_front_summary, {
+        flex: { direction: 'column', shrink: 1 },
+        minWidth: 0,
+        padding: {
+            top: '1.5rem',
+            bottom: '1.5rem',
+            left: '1.75rem',
+            right: '1.75rem',
+        },
+        Header: {
+            flex: { direction: 'column' },
+            margin: { bottom: '1.25rem' },
+        },
+        Header_title: {
+            font: { weight: 700, size: '20px' },
+        },
+        Header_subtitle: {
+            font: { size: '13px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '3px' },
+        },
+        Grid: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '16px',
+            minWidth: 0,
+        },
+        '@media': {
+            '(max-width: 720px)': {
+                padding: {
+                    top: '1rem',
+                    bottom: '1rem',
+                    left: '0.75rem',
+                    right: '0.75rem',
+                },
+            },
+        },
+    });
 })($ || ($ = {}));
 
 ;
@@ -16198,6 +17081,273 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_list) = class $mol_list extends ($.$mol_view) {
+		gap_before(){
+			return 0;
+		}
+		Gap_before(){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"paddingTop": (this.gap_before())});
+			return obj;
+		}
+		Empty(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		gap_after(){
+			return 0;
+		}
+		Gap_after(){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"paddingTop": (this.gap_after())});
+			return obj;
+		}
+		rows(){
+			return [
+				(this.Gap_before()), 
+				(this.Empty()), 
+				(this.Gap_after())
+			];
+		}
+		render_visible_only(){
+			return true;
+		}
+		render_over(){
+			return 0.1;
+		}
+		sub(){
+			return (this.rows());
+		}
+		item_height_min(id){
+			return 1;
+		}
+		item_width_min(id){
+			return 1;
+		}
+		view_window_shift(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		view_window(){
+			return [0, 0];
+		}
+	};
+	($mol_mem(($.$mol_list.prototype), "Gap_before"));
+	($mol_mem(($.$mol_list.prototype), "Empty"));
+	($mol_mem(($.$mol_list.prototype), "Gap_after"));
+	($mol_mem(($.$mol_list.prototype), "view_window_shift"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    let cache = null;
+    function $mol_support_css_overflow_anchor() {
+        return cache ?? (cache = this.$mol_dom_context.CSS?.supports('overflow-anchor:auto') ?? false);
+    }
+    $.$mol_support_css_overflow_anchor = $mol_support_css_overflow_anchor;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /**
+         * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
+         * `mol_list` should contain only components that inherits `mol_view`. You should not place raw strings or numbers in list.
+         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
+         */
+        class $mol_list extends $.$mol_list {
+            sub() {
+                const rows = this.rows();
+                const next = (rows.length === 0) ? [this.Empty()] : rows;
+                const prev = $mol_mem_cached(() => this.sub());
+                const [start, end] = $mol_mem_cached(() => this.view_window()) ?? [0, 0];
+                if (prev && $mol_mem_cached(() => prev[start] !== next[start])) {
+                    const index = $mol_mem_cached(() => next.indexOf(prev[start])) ?? -1;
+                    if (index >= 0)
+                        this.view_window_shift(index - start);
+                }
+                return next;
+            }
+            render_visible_only() {
+                return this.$.$mol_support_css_overflow_anchor();
+            }
+            _view_window_last = [0, 0];
+            view_window(next) {
+                const kids = this.sub();
+                if (kids.length < 3)
+                    return [0, kids.length];
+                if (this.$.$mol_print.active())
+                    return [0, kids.length];
+                const rect = this.view_rect();
+                if (next)
+                    return next;
+                let [min, max] = $mol_mem_cached(() => this.view_window()) ?? this._view_window_last;
+                const shift = this.view_window_shift();
+                this.view_window_shift(0);
+                min += shift;
+                max += shift;
+                let max2 = max = Math.min(max, kids.length);
+                let min2 = min = Math.max(0, Math.min(min, max - 1));
+                const anchoring = this.render_visible_only();
+                const window_height = this.$.$mol_window.size().height + 40;
+                const over = Math.ceil(window_height * this.render_over());
+                const limit_top = -over;
+                const limit_bottom = window_height + over;
+                const gap_before = $mol_mem_cached(() => this.gap_before()) ?? 0;
+                const gap_after = $mol_mem_cached(() => this.gap_after()) ?? 0;
+                let top = Math.ceil(rect?.top ?? 0) + gap_before;
+                let bottom = Math.ceil(rect?.bottom ?? 0) - gap_after;
+                // change nothing when already covers all limits
+                if (top <= limit_top && bottom >= limit_bottom) {
+                    return [min2, max2];
+                }
+                // jumps when fully over limits
+                if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
+                    min = 0;
+                    top = Math.ceil(rect?.top ?? 0);
+                    while (min < (kids.length - 1)) {
+                        const height = this.item_height_min(min);
+                        if (top + height >= limit_top)
+                            break;
+                        top += height;
+                        ++min;
+                    }
+                    min2 = min;
+                    max2 = max = min;
+                    bottom = top;
+                }
+                let top2 = top;
+                let bottom2 = bottom;
+                // force recalc min when overlapse top limit
+                if (anchoring && (top < limit_top) && (bottom < limit_bottom) && (max < kids.length)) {
+                    min2 = max;
+                    top2 = bottom;
+                }
+                // force recalc max when overlapse bottom limit
+                if ((bottom > limit_bottom) && (top > limit_top) && (min > 0)) {
+                    max2 = min;
+                    bottom2 = top;
+                }
+                // extend min to cover top limit
+                while (anchoring && ((top2 > limit_top) && (min2 > 0))) {
+                    --min2;
+                    top2 -= this.item_height_min(min2);
+                }
+                // extend max to cover bottom limit
+                while (bottom2 < limit_bottom && max2 < kids.length) {
+                    bottom2 += this.item_height_min(max2);
+                    ++max2;
+                }
+                return [min2, max2];
+            }
+            item_height_min(index) {
+                try {
+                    return this.sub()[index]?.minimal_height() ?? 0;
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return 0;
+                }
+            }
+            row_width_min(index) {
+                try {
+                    return this.sub()[index]?.minimal_width() ?? 0;
+                }
+                catch (error) {
+                    $mol_fail_log(error);
+                    return 0;
+                }
+            }
+            gap_before() {
+                let gap = 0;
+                const skipped = this.view_window()[0];
+                for (let i = 0; i < skipped; ++i)
+                    gap += this.item_height_min(i);
+                return gap;
+            }
+            gap_after() {
+                let gap = 0;
+                const from = this.view_window()[1];
+                const to = this.sub().length;
+                for (let i = from; i < to; ++i)
+                    gap += this.item_height_min(i);
+                return gap;
+            }
+            sub_visible() {
+                return [
+                    ...this.gap_before() ? [this.Gap_before()] : [],
+                    ...this.sub().slice(...this._view_window_last = this.view_window()),
+                    ...this.gap_after() ? [this.Gap_after()] : [],
+                ];
+            }
+            minimal_height() {
+                let height = 0;
+                const len = this.sub().length;
+                for (let i = 0; i < len; ++i)
+                    height += this.item_height_min(i);
+                return height;
+            }
+            minimal_width() {
+                let width = 0;
+                const len = this.sub().length;
+                for (let i = 0; i < len; ++i)
+                    width = Math.max(width, this.item_width_min(i));
+                return width;
+            }
+            force_render(path) {
+                const kids = this.rows();
+                const index = kids.findIndex(item => path.has(item));
+                if (index >= 0) {
+                    const win = this.view_window();
+                    if (index < win[0] || index >= win[1]) {
+                        this.view_window([this.render_visible_only() ? index : 0, index + 1]);
+                    }
+                    kids[index].force_render(path);
+                }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "view_window", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "gap_before", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "gap_after", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "sub_visible", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "minimal_height", null);
+        __decorate([
+            $mol_mem
+        ], $mol_list.prototype, "minimal_width", null);
+        $$.$mol_list = $mol_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: 1.5rem;\n\t/* will-change: contents; */\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
+})($ || ($ = {}));
+
+;
 	($.$mol_icon_close) = class $mol_icon_close extends ($.$mol_icon) {
 		path(){
 			return "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z";
@@ -16913,4612 +18063,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$bog_builderui_skeleton) = class $bog_builderui_skeleton extends ($.$bog_builderui_div) {
-		attr(){
-			return {"mol_view_error": "Promise"};
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("bog/builderui/skeleton/skeleton.view.css", "");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($bog_builderui_skeleton, {
-        minHeight: '1rem',
-    });
-})($ || ($ = {}));
-
-;
-	($.$mol_stack) = class $mol_stack extends ($.$mol_view) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/stack/stack.view.css", "[mol_stack] {\n\tdisplay: grid;\n\t/* width: max-content; */\n\t/* height: max-content; */\n\talign-items: flex-start;\n\tjustify-items: flex-start;\n}\n\n[mol_stack] > * {\n\tgrid-area: 1/1;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    /** Creates lexer by dictionary of lexems. Lexem that started first wins. Then lexem that declared earlier wins. Use regexp capture to take parts of token. */
-    class $mol_syntax2 {
-        lexems;
-        constructor(lexems) {
-            this.lexems = lexems;
-            for (let name in lexems) {
-                this.rules.push({
-                    name: name,
-                    regExp: lexems[name],
-                    size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
-                });
-            }
-            const parts = '(' + this.rules.map(rule => rule.regExp.source).join(')|(') + ')';
-            this.regexp = RegExp(`([\\s\\S]*?)(?:(${parts})|$(?![^]))`, 'gmu');
-        }
-        rules = [];
-        regexp;
-        tokenize(text, handle) {
-            let end = 0;
-            lexing: while (end < text.length) {
-                const start = end;
-                this.regexp.lastIndex = start;
-                var found = this.regexp.exec(text);
-                end = this.regexp.lastIndex;
-                if (start === end)
-                    throw new Error('Empty token');
-                var prefix = found[1];
-                if (prefix)
-                    handle('', prefix, [prefix], start);
-                var suffix = found[2];
-                if (!suffix)
-                    continue;
-                let offset = 4;
-                for (let rule of this.rules) {
-                    if (found[offset - 1]) {
-                        handle(rule.name, suffix, found.slice(offset, offset + rule.size), start + prefix.length);
-                        continue lexing;
-                    }
-                    offset += rule.size + 1;
-                }
-                $mol_fail(new Error('$mol_syntax2 is broken'));
-            }
-        }
-        parse(text, handlers) {
-            this.tokenize(text, (name, ...args) => handlers[name](...args));
-        }
-    }
-    $.$mol_syntax2 = $mol_syntax2;
-})($ || ($ = {}));
-
-;
-	($.$mol_text_code_token) = class $mol_text_code_token extends ($.$mol_dimmer) {
-		type(){
-			return "";
-		}
-		attr(){
-			return {...(super.attr()), "mol_text_code_token_type": (this.type())};
-		}
-	};
-	($.$mol_text_code_token_link) = class $mol_text_code_token_link extends ($.$mol_text_code_token) {
-		uri(){
-			return "";
-		}
-		dom_name(){
-			return "a";
-		}
-		type(){
-			return "code-link";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"href": (this.uri()), 
-				"target": "_blank"
-			};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { hsla } = $mol_style_func;
-        $mol_style_define($mol_text_code_token, {
-            display: 'inline',
-            textDecoration: 'none',
-            '@': {
-                mol_text_code_token_type: {
-                    'code-keyword': {
-                        color: hsla(0, 70, 60, 1),
-                    },
-                    'code-field': {
-                        color: hsla(300, 70, 50, 1),
-                    },
-                    'code-tag': {
-                        color: hsla(330, 70, 50, 1),
-                    },
-                    'code-global': {
-                        color: hsla(30, 80, 50, 1),
-                    },
-                    'code-decorator': {
-                        color: hsla(180, 40, 50, 1),
-                    },
-                    'code-punctuation': {
-                        color: hsla(0, 0, 50, 1),
-                    },
-                    'code-string': {
-                        color: hsla(90, 40, 50, 1),
-                    },
-                    'code-number': {
-                        color: hsla(55, 65, 45, 1),
-                    },
-                    'code-call': {
-                        color: hsla(270, 60, 50, 1),
-                    },
-                    'code-link': {
-                        color: hsla(210, 60, 50, 1),
-                    },
-                    'code-comment-inline': {
-                        opacity: .5,
-                    },
-                    'code-comment-block': {
-                        opacity: .5,
-                    },
-                    'code-docs': {
-                        opacity: .75,
-                    },
-                },
-            }
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_text_code_line) = class $mol_text_code_line extends ($.$mol_paragraph) {
-		numb(){
-			return 0;
-		}
-		token_type(id){
-			return "";
-		}
-		token_text(id){
-			return "";
-		}
-		highlight(){
-			return "";
-		}
-		token_uri(id){
-			return "";
-		}
-		text(){
-			return "";
-		}
-		minimal_height(){
-			return 24;
-		}
-		numb_showed(){
-			return true;
-		}
-		syntax(){
-			return null;
-		}
-		uri_resolve(id){
-			return "";
-		}
-		Numb(){
-			const obj = new this.$.$mol_view();
-			(obj.sub) = () => ([(this.numb())]);
-			return obj;
-		}
-		Token(id){
-			const obj = new this.$.$mol_text_code_token();
-			(obj.type) = () => ((this.token_type(id)));
-			(obj.haystack) = () => ((this.token_text(id)));
-			(obj.needle) = () => ((this.highlight()));
-			return obj;
-		}
-		Token_link(id){
-			const obj = new this.$.$mol_text_code_token_link();
-			(obj.haystack) = () => ((this.token_text(id)));
-			(obj.needle) = () => ((this.highlight()));
-			(obj.uri) = () => ((this.token_uri(id)));
-			return obj;
-		}
-		find_pos(id){
-			return null;
-		}
-	};
-	($mol_mem(($.$mol_text_code_line.prototype), "Numb"));
-	($mol_mem_key(($.$mol_text_code_line.prototype), "Token"));
-	($mol_mem_key(($.$mol_text_code_line.prototype), "Token_link"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_syntax2_md_flow = new $mol_syntax2({
-        'quote': /^((?:(?:[>"] )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
-        'spoiler': /^((?:(?:[\?] )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
-        'header': /^([#=]+)(\s+)(.*?)$([\n\r]*)/,
-        'list': /^((?:(?: ?([*+-])|(?:\d+[\.\)])+) +(?:[^]*?)$(?:\r?\n?)(?:  (?:[^]*?)$(?:\r?\n?))*)+)((?:\r?\n)*)/,
-        'code': /^(```)([\w.-]*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
-        'code-indent': /^((?:(?: |\t)(?:[^]*?)$\r?\n?)+)([\n\r]*)/,
-        'table': /((?:^\|.+?$\r?\n?)+)([\n\r]*)/,
-        'grid': /((?:^ *! .*?$\r?\n?)+)([\n\r]*)/,
-        'cut': /^--+$((?:\r?\n)*)/,
-        'block': /^(.*?)$((?:\r?\n)*)/,
-    });
-    $.$mol_syntax2_md_line = new $mol_syntax2({
-        'strong': /\*\*(.+?)\*\*/,
-        'emphasis': /\*(?!\s)(.+?)\*|\/\/(?!\s)(.+?)\/\//,
-        'code': /```(.+?)```|;;(.+?);;|`(.+?)`/,
-        'insert': /\+\+(.+?)\+\+/,
-        'delete': /~~(.+?)~~|--(.+?)--/,
-        // 'remark' : /(\()(.+?)(\))/ ,
-        // 'quote' : /(")(.+?)(")/ ,
-        'embed': /""(?:(.*?)\\)?(.*?)""/,
-        'link': /\\\\(?:(.*?)\\)?(.*?)\\\\/,
-        'image-link': /!\[([^\[\]]*?)\]\((.*?)\)/,
-        'text-link': /\[(.*?(?:\[[^\[\]]*?\][^\[\]]*?)*)\]\((.*?)\)/,
-        'text-link-http': /\b(https?:\/\/[^\s,.;:!?")]+(?:[,.;:!?")][^\s,.;:!?")]+)+)/,
-    });
-    $.$mol_syntax2_md_code = new $mol_syntax2({
-        'code-indent': /\t+/,
-        'code-docs': /\/\/\/.*?$/,
-        'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/,
-        'code-link': /(?:\w+:\/\/|#)\S+?(?=\s|\\\\|""|$)/,
-        'code-comment-inline': /\/\/.*?(?:$|\/\/)|- \\(?!\\).*|(?<=^| )#!? .*/,
-        'code-string': /(?:".*?"|'.*?'|`.*?`| ?\\\\.+?\\\\|\/.+?\/[dygimsu]*(?!\p{Letter})|[ \t]*\\[^\n]*)/u,
-        'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
-        'code-call': /\.?\w+(?=\()/,
-        'code-sexpr': /\((\w+ )/,
-        'code-field': /(?:(?<=\.|::|->)[a-z][\w-]*|(?<=[, \t] |\t)[\w-]+\??:(?!\/\/|:))/,
-        'code-keyword': /(?<=^|\t|[ )(}{=] )((throw|readonly|unknown|keyof|typeof|never|from|class|struct|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|val|let|const|for|do|while|until|in|out|of|new|if|then|else|switch|case|return|async|await|yield|try|catch|break|continue|get|set|public|private|protected|void|int|float|ref)( |$|;))+/,
-        'code-global': /[$]+\w*|\b[A-Z][a-z0-9]+[A-Z]\w*/,
-        'code-word': /\w+/,
-        'code-decorator': /(?<=^|  |\t)@\s*\S+/,
-        'code-tag': /<\/?[\w-]+\/?>?|&\w+;/,
-        'code-punctuation': /[\-\[\]\{\}\(\)<=>~!\?@#%&\*_\+\\\/\|;:\.,\^]+?/,
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_text_code_line extends $.$mol_text_code_line {
-            maximal_width() {
-                return this.text().length * this.letter_width();
-            }
-            syntax() {
-                return this.$.$mol_syntax2_md_code;
-            }
-            tokens(path) {
-                const tokens = [];
-                const text = (path.length > 0)
-                    // @FIXME: this logic compatible only with `string`
-                    ? this.tokens(path.slice(0, path.length - 1))[path[path.length - 1]].found.slice(1, -1)
-                    : this.text();
-                this.syntax().tokenize(text, (name, found, chunks) => {
-                    if (name === 'code-sexpr') {
-                        tokens.push({ name: 'code-punctuation', found: '(', chunks: [] });
-                        tokens.push({ name: 'code-call', found: chunks[0], chunks: [] });
-                    }
-                    else {
-                        tokens.push({ name, found, chunks });
-                    }
-                });
-                return tokens;
-            }
-            sub() {
-                return [
-                    ...this.numb_showed() ? [this.Numb()] : [],
-                    ...this.row_content([])
-                ];
-            }
-            row_content(path) {
-                const content = this.tokens(path).map((t, i) => this.Token([...path, i]));
-                return content.length ? content : ['\n'];
-            }
-            Token(path) {
-                return this.token_type(path) === 'code-link' ? this.Token_link(path) : super.Token(path);
-            }
-            token_type(path) {
-                return this.tokens([...path.slice(0, path.length - 1)])[path[path.length - 1]].name;
-            }
-            token_content(path) {
-                const tokens = this.tokens([...path.slice(0, path.length - 1)]);
-                const token = tokens[path[path.length - 1]];
-                switch (token.name) {
-                    case 'code-string': return [
-                        token.found[0],
-                        ...this.row_content(path),
-                        token.found[token.found.length - 1],
-                    ];
-                    default: return [token.found];
-                }
-            }
-            token_text(path) {
-                const tokens = this.tokens([...path.slice(0, path.length - 1)]);
-                const token = tokens[path[path.length - 1]];
-                return token.found;
-            }
-            token_uri(path) {
-                const uri = this.token_text(path);
-                return this.uri_resolve(uri);
-            }
-            *view_find(check, path = []) {
-                if (check(this, this.text())) {
-                    yield [...path, this];
-                }
-            }
-            find_pos(offset) {
-                return this.find_token_pos([offset]);
-            }
-            find_token_pos([offset, ...path]) {
-                for (const [index, token] of this.tokens(path).entries()) {
-                    if (token.found.length >= offset) {
-                        const token = this.Token([...path, index]);
-                        return { token, offset };
-                    }
-                    else {
-                        offset -= token.found.length;
-                    }
-                }
-                return null;
-            }
-        }
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "tokens", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "row_content", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "token_type", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "token_content", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "token_text", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "token_uri", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "find_pos", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code_line.prototype, "find_token_pos", null);
-        $$.$mol_text_code_line = $mol_text_code_line;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem } = $mol_style_unit;
-        $mol_style_define($mol_text_code_line, {
-            display: 'block',
-            position: 'relative',
-            font: {
-                family: 'monospace',
-            },
-            Numb: {
-                textAlign: 'right',
-                color: $mol_theme.shade,
-                width: rem(3),
-                margin: {
-                    left: rem(-4),
-                },
-                display: 'inline-block',
-                whiteSpace: 'nowrap',
-                userSelect: 'none',
-                position: 'absolute',
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_blob = ($node.buffer?.Blob ?? $mol_dom_context.Blob);
-})($ || ($ = {}));
-
-;
-	($.$mol_icon_clipboard) = class $mol_icon_clipboard extends ($.$mol_icon) {
-		path(){
-			return "M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_icon_clipboard_outline) = class $mol_icon_clipboard_outline extends ($.$mol_icon) {
-		path(){
-			return "M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M7,7H17V5H19V19H5V5H7V7Z";
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-	($.$mol_button_copy) = class $mol_button_copy extends ($.$mol_button_minor) {
-		text(){
-			return (this.title());
-		}
-		text_blob(next){
-			if(next !== undefined) return next;
-			const obj = new this.$.$mol_blob([(this.text())], {"type": "text/plain"});
-			return obj;
-		}
-		html(){
-			return "";
-		}
-		html_blob(next){
-			if(next !== undefined) return next;
-			const obj = new this.$.$mol_blob([(this.html())], {"type": "text/html"});
-			return obj;
-		}
-		Icon(){
-			const obj = new this.$.$mol_icon_clipboard_outline();
-			return obj;
-		}
-		title(){
-			return "";
-		}
-		blobs(){
-			return [(this.text_blob()), (this.html_blob())];
-		}
-		data(){
-			return {};
-		}
-		sub(){
-			return [(this.Icon()), (this.title())];
-		}
-	};
-	($mol_mem(($.$mol_button_copy.prototype), "text_blob"));
-	($mol_mem(($.$mol_button_copy.prototype), "html_blob"));
-	($mol_mem(($.$mol_button_copy.prototype), "Icon"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    const mapping = {
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        '&': '&amp;',
-    };
-    function $mol_html_encode(text) {
-        return text.replace(/[&<">]/gi, str => mapping[str]);
-    }
-    $.$mol_html_encode = $mol_html_encode;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Button copy text() value to clipboard
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
-         */
-        class $mol_button_copy extends $.$mol_button_copy {
-            data() {
-                return Object.fromEntries(this.blobs().map(blob => [blob.type, blob]));
-            }
-            html() {
-                return $mol_html_encode(this.text());
-            }
-            attachments() {
-                return [new ClipboardItem(this.data())];
-            }
-            click(event) {
-                const cb = $mol_wire_sync(this.$.$mol_dom_context.navigator.clipboard);
-                cb.writeText?.(this.text());
-                cb.write?.(this.attachments());
-                if (cb.writeText === undefined && cb.write === undefined) {
-                    throw new Error("doesn't support copy to clipoard");
-                }
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_button_copy.prototype, "html", null);
-        __decorate([
-            $mol_mem
-        ], $mol_button_copy.prototype, "attachments", null);
-        $$.$mol_button_copy = $mol_button_copy;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_text_code) = class $mol_text_code extends ($.$mol_stack) {
-		sidebar_showed(){
-			return false;
-		}
-		render_visible_only(){
-			return false;
-		}
-		row_numb(id){
-			return 0;
-		}
-		row_theme(id){
-			return "";
-		}
-		row_text(id){
-			return "";
-		}
-		syntax(){
-			return null;
-		}
-		uri_resolve(id){
-			return "";
-		}
-		highlight(){
-			return "";
-		}
-		Row(id){
-			const obj = new this.$.$mol_text_code_line();
-			(obj.numb_showed) = () => ((this.sidebar_showed()));
-			(obj.numb) = () => ((this.row_numb(id)));
-			(obj.theme) = () => ((this.row_theme(id)));
-			(obj.text) = () => ((this.row_text(id)));
-			(obj.syntax) = () => ((this.syntax()));
-			(obj.uri_resolve) = (id) => ((this.uri_resolve(id)));
-			(obj.highlight) = () => ((this.highlight()));
-			return obj;
-		}
-		rows(){
-			return [(this.Row("0"))];
-		}
-		Rows(){
-			const obj = new this.$.$mol_list();
-			(obj.render_visible_only) = () => ((this.render_visible_only()));
-			(obj.rows) = () => ((this.rows()));
-			return obj;
-		}
-		text_export(){
-			return "";
-		}
-		Copy(){
-			const obj = new this.$.$mol_button_copy();
-			(obj.hint) = () => ((this.$.$mol_locale.text("$mol_text_code_Copy_hint")));
-			(obj.text) = () => ((this.text_export()));
-			return obj;
-		}
-		attr(){
-			return {...(super.attr()), "mol_text_code_sidebar_showed": (this.sidebar_showed())};
-		}
-		text(){
-			return "";
-		}
-		text_lines(){
-			return [];
-		}
-		find_pos(id){
-			return null;
-		}
-		uri_base(){
-			return "";
-		}
-		row_themes(){
-			return [];
-		}
-		sub(){
-			return [(this.Rows()), (this.Copy())];
-		}
-	};
-	($mol_mem_key(($.$mol_text_code.prototype), "Row"));
-	($mol_mem(($.$mol_text_code.prototype), "Rows"));
-	($mol_mem(($.$mol_text_code.prototype), "Copy"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Code visualizer.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_text_code_demo
-         */
-        class $mol_text_code extends $.$mol_text_code {
-            render_visible_only() {
-                return this.$.$mol_support_css_overflow_anchor();
-            }
-            text_lines() {
-                return (this.text() ?? '').split('\n');
-            }
-            rows() {
-                return this.text_lines().map((_, index) => this.Row(index + 1));
-            }
-            row_text(index) {
-                return this.text_lines()[index - 1];
-            }
-            row_numb(index) {
-                return index;
-            }
-            find_pos(offset) {
-                for (const [index, line] of this.text_lines().entries()) {
-                    if (line.length >= offset) {
-                        return this.Row(index + 1).find_pos(offset);
-                    }
-                    else {
-                        offset -= line.length + 1;
-                    }
-                }
-                return null;
-            }
-            sub() {
-                return [
-                    this.Rows(),
-                    ...this.sidebar_showed() ? [this.Copy()] : []
-                ];
-            }
-            syntax() {
-                return this.$.$mol_syntax2_md_code;
-            }
-            uri_base() {
-                return $mol_dom_context.document.location.href;
-            }
-            uri_resolve(uri) {
-                if (/^(\w+script+:)+/.test(uri))
-                    return null;
-                try {
-                    const url = new URL(uri, this.uri_base());
-                    return url.toString();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    return null;
-                }
-            }
-            text_export() {
-                return this.text() + '\n';
-            }
-            row_theme(row) {
-                return this.row_themes()[row - 1];
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_text_code.prototype, "text_lines", null);
-        __decorate([
-            $mol_mem
-        ], $mol_text_code.prototype, "rows", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code.prototype, "row_text", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code.prototype, "find_pos", null);
-        __decorate([
-            $mol_mem
-        ], $mol_text_code.prototype, "sub", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_text_code.prototype, "uri_resolve", null);
-        $$.$mol_text_code = $mol_text_code;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const { rem, px } = $mol_style_unit;
-        $mol_style_define($mol_text_code, {
-            whiteSpace: 'pre-wrap',
-            font: {
-                family: 'monospace',
-            },
-            Rows: {
-                padding: $mol_gap.text,
-                minWidth: 0,
-            },
-            Row: {
-                font: {
-                    family: 'inherit',
-                },
-            },
-            Copy: {
-                alignSelf: 'flex-start',
-                justifySelf: 'flex-start',
-            },
-            '@': {
-                'mol_text_code_sidebar_showed': {
-                    true: {
-                        $mol_text_code_line: {
-                            margin: {
-                                left: rem(1.75),
-                            },
-                        },
-                    },
-                },
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_textarea) = class $mol_textarea extends ($.$mol_stack) {
-		clickable(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		sidebar_showed(){
-			return false;
-		}
-		press(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		hover(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hint(){
-			return " ";
-		}
-		enabled(){
-			return true;
-		}
-		spellcheck(){
-			return true;
-		}
-		length_max(){
-			return +Infinity;
-		}
-		selection(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		bring(){
-			return (this.Edit().bring());
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		submit_with_ctrl(){
-			return true;
-		}
-		Edit(){
-			const obj = new this.$.$mol_textarea_edit();
-			(obj.value) = (next) => ((this.value(next)));
-			(obj.hint) = () => ((this.hint()));
-			(obj.enabled) = () => ((this.enabled()));
-			(obj.spellcheck) = () => ((this.spellcheck()));
-			(obj.length_max) = () => ((this.length_max()));
-			(obj.selection) = (next) => ((this.selection(next)));
-			(obj.submit) = (next) => ((this.submit(next)));
-			(obj.submit_with_ctrl) = () => ((this.submit_with_ctrl()));
-			return obj;
-		}
-		row_numb(id){
-			return 0;
-		}
-		highlight(){
-			return "";
-		}
-		syntax(){
-			const obj = new this.$.$mol_syntax2();
-			return obj;
-		}
-		View(){
-			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this.value()));
-			(obj.render_visible_only) = () => (false);
-			(obj.row_numb) = (id) => ((this.row_numb(id)));
-			(obj.sidebar_showed) = () => ((this.sidebar_showed()));
-			(obj.highlight) = () => ((this.highlight()));
-			(obj.syntax) = () => ((this.syntax()));
-			return obj;
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"mol_textarea_clickable": (this.clickable()), 
-				"mol_textarea_sidebar_showed": (this.sidebar_showed())
-			};
-		}
-		event(){
-			return {"keydown": (next) => (this.press(next)), "pointermove": (next) => (this.hover(next))};
-		}
-		sub(){
-			return [(this.Edit()), (this.View())];
-		}
-		symbols_alt(){
-			return {
-				"comma": "<", 
-				"period": ">", 
-				"dash": "−", 
-				"equals": "≈", 
-				"graveAccent": "́", 
-				"forwardSlash": "÷", 
-				"E": "€", 
-				"V": "✔", 
-				"X": "×", 
-				"C": "©", 
-				"P": "§", 
-				"H": "₽", 
-				"key0": "°", 
-				"key8": "•", 
-				"key2": "@", 
-				"key3": "#", 
-				"key4": "$", 
-				"key6": "^", 
-				"key7": "&", 
-				"bracketOpen": "[", 
-				"bracketClose": "]", 
-				"slashBack": "|"
-			};
-		}
-		symbols_alt_ctrl(){
-			return {"space": " "};
-		}
-		symbols_alt_shift(){
-			return {
-				"V": "✅", 
-				"X": "❌", 
-				"O": "⭕", 
-				"key1": "❗", 
-				"key4": "💲", 
-				"key7": "❓", 
-				"comma": "«", 
-				"period": "»", 
-				"semicolon": "“", 
-				"quoteSingle": "”", 
-				"dash": "—", 
-				"equals": "≠", 
-				"graveAccent": "̱", 
-				"bracketOpen": "{", 
-				"bracketClose": "}"
-			};
-		}
-	};
-	($mol_mem(($.$mol_textarea.prototype), "clickable"));
-	($mol_mem(($.$mol_textarea.prototype), "press"));
-	($mol_mem(($.$mol_textarea.prototype), "hover"));
-	($mol_mem(($.$mol_textarea.prototype), "value"));
-	($mol_mem(($.$mol_textarea.prototype), "selection"));
-	($mol_mem(($.$mol_textarea.prototype), "submit"));
-	($mol_mem(($.$mol_textarea.prototype), "Edit"));
-	($mol_mem(($.$mol_textarea.prototype), "syntax"));
-	($mol_mem(($.$mol_textarea.prototype), "View"));
-	($.$mol_textarea_edit) = class $mol_textarea_edit extends ($.$mol_string) {
-		dom_name(){
-			return "textarea";
-		}
-		enter(){
-			return "enter";
-		}
-		field(){
-			return {...(super.field()), "scrollTop": 0};
-		}
-	};
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * An input field for entering multiline text.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
-         */
-        class $mol_textarea extends $.$mol_textarea {
-            indent_inc() {
-                let text = this.value();
-                let [from, to] = this.selection();
-                const rows = text.split('\n');
-                let start = 0;
-                for (let i = 0; i < rows.length; ++i) {
-                    let end = start + rows[i].length;
-                    if (end >= from && start <= to) {
-                        if (to === from || start !== to) {
-                            rows[i] = '\t' + rows[i];
-                            to += 1;
-                            end += 1;
-                        }
-                    }
-                    start = end + 1;
-                }
-                this.value(rows.join('\n'));
-                this.selection([from + 1, to]);
-            }
-            indent_dec() {
-                let text = this.value();
-                let [from, to] = this.selection();
-                const rows = text.split('\n');
-                let start = 0;
-                for (let i = 0; i < rows.length; ++i) {
-                    const end = start + rows[i].length;
-                    if (end >= from && start <= to && rows[i].startsWith('\t')) {
-                        rows[i] = rows[i].slice(1);
-                        to -= 1;
-                        if (start < from)
-                            from -= 1;
-                    }
-                    start = end + 1;
-                }
-                this.value(rows.join('\n'));
-                this.selection([from, to]);
-            }
-            symbol_insert(event) {
-                const symbol = event.shiftKey
-                    ? this.symbols_alt_shift()[$mol_keyboard_code[event.keyCode]]
-                    : event.ctrlKey
-                        ? this.symbols_alt_ctrl()[$mol_keyboard_code[event.keyCode]]
-                        : this.symbols_alt()[$mol_keyboard_code[event.keyCode]];
-                if (!symbol)
-                    return;
-                event.preventDefault();
-                document.execCommand('insertText', false, symbol);
-            }
-            clickable(next) {
-                if (!this.enabled())
-                    return true;
-                return next ?? false;
-            }
-            hover(event) {
-                this.clickable(event.ctrlKey);
-            }
-            press(event) {
-                if (event.altKey) {
-                    this.symbol_insert(event);
-                }
-                else {
-                    switch (event.keyCode) {
-                        case !event.shiftKey && $mol_keyboard_code.tab:
-                            this.indent_inc();
-                            break;
-                        case event.shiftKey && $mol_keyboard_code.tab:
-                            this.indent_dec();
-                            break;
-                        default: return;
-                    }
-                    event.preventDefault();
-                }
-            }
-            row_numb(index) {
-                return index;
-            }
-            syntax() {
-                return this.$.$mol_syntax2_md_code;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_textarea.prototype, "clickable", null);
-        $$.$mol_textarea = $mol_textarea;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/textarea/textarea.view.css", "[mol_textarea] {\n\tflex: 1 0 auto;\n\tflex-direction: column;\n\tvertical-align: top;\n\tmin-height: max-content;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n\tborder-radius: var(--mol_gap_round);\n\tfont-family: monospace;\n\tposition: relative;\n\ttab-size: 4;\n}\n\n[mol_textarea_view] {\n\tpointer-events: none;\n\twhite-space: inherit;\n\tfont-family: inherit;\n\ttab-size: inherit;\n\tuser-select: none;\n}\n\n[mol_textarea_view_copy] {\n\tpointer-events: all;\n}\n\n[mol_textarea_clickable] > [mol_textarea_view] {\n\tpointer-events: all;\n\tuser-select: auto;\n}\n\n[mol_textarea_clickable] > [mol_textarea_edit] {\n\tuser-select: none;\n}\n\n[mol_textarea_edit] {\n\tfont-family: inherit;\n\tpadding: var(--mol_gap_text);\n\tcolor: transparent !important;\n\tcaret-color: var(--mol_theme_text);\n\tresize: none;\n\ttext-align: inherit;\n\twhite-space: inherit;\n\tborder-radius: inherit;\n\toverflow-anchor: none;\n\tposition: absolute;\n\theight: 100%;\n\twidth: 100%;\n\ttab-size: inherit;\n}\n\n[mol_textarea_sidebar_showed] [mol_textarea_edit] {\n\tleft: 1.75rem;\n\twidth: calc( 100% - 1.75rem );\n}\n\n[mol_textarea_edit]:hover + [mol_textarea_view] {\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_textarea_edit]:focus + [mol_textarea_view] {\n\tz-index: var(--mol_layer_focus);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_chat) = class $raggu_web_front_chat extends ($.$bog_builderui_div) {
-		Messages(){
-			const obj = new this.$.$mol_list();
-			(obj.rows) = () => ((this.rows()));
-			return obj;
-		}
-		is_communicating(){
-			return false;
-		}
-		Skel_line_one(){
-			const obj = new this.$.$bog_builderui_skeleton();
-			return obj;
-		}
-		Skel_line_two(){
-			const obj = new this.$.$bog_builderui_skeleton();
-			return obj;
-		}
-		Skel_line_three(){
-			const obj = new this.$.$bog_builderui_skeleton();
-			return obj;
-		}
-		Status(){
-			const obj = new this.$.$bog_builderui_card();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_card.prototype.attr.call(obj)), "raggu_loading": (this.is_communicating())});
-			(obj.sub) = () => ([
-				(this.Skel_line_one()), 
-				(this.Skel_line_two()), 
-				(this.Skel_line_three())
-			]);
-			return obj;
-		}
-		Body_flow(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Messages()), (this.Status())]);
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Body_flow())]);
-			return obj;
-		}
-		use_sug_one(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Sug_one(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sug_one_text())]);
-			(obj.event) = () => ({"click": (next) => (this.use_sug_one(next))});
-			return obj;
-		}
-		use_sug_two(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Sug_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sug_two_text())]);
-			(obj.event) = () => ({"click": (next) => (this.use_sug_two(next))});
-			return obj;
-		}
-		clear_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Clear(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this.clear_text()));
-			(obj.click) = (next) => ((this.clear_click(next)));
-			(obj.sub) = () => (["✕"]);
-			return obj;
-		}
-		Suggestions(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Sug_one()), 
-				(this.Sug_two()), 
-				(this.Clear())
-			]);
-			return obj;
-		}
-		prompt_text(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		prompt_submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Prompt(){
-			const obj = new this.$.$mol_textarea();
-			(obj.hint) = () => ((this.input_hint_text()));
-			(obj.value) = (next) => ((this.prompt_text(next)));
-			(obj.submit) = (next) => ((this.prompt_submit(next)));
-			return obj;
-		}
-		Input_send(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this.send_label_text()));
-			(obj.click) = (next) => ((this.prompt_submit(next)));
-			(obj.sub) = () => (["↑"]);
-			return obj;
-		}
-		Input_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Prompt()), (this.Input_send())]);
-			return obj;
-		}
-		Footer(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Suggestions()), (this.Input_row())]);
-			return obj;
-		}
-		Message_text(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
-			(obj.sub) = () => ([(this.message_text(id))]);
-			return obj;
-		}
-		Message_badge(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_off_graph": (this.message_off_graph(id))});
-			(obj.sub) = () => ([(this.off_graph_text())]);
-			return obj;
-		}
-		dataset_id(){
-			return "";
-		}
-		sug_one_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_one_text"));
-		}
-		sug_two_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_two_text"));
-		}
-		input_hint_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_input_hint_text"));
-		}
-		send_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_send_label_text"));
-		}
-		seed_user_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_seed_user_text"));
-		}
-		seed_assistant_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_seed_assistant_text"));
-		}
-		clear_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_clear_text"));
-		}
-		off_graph_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_off_graph_text"));
-		}
-		rows(){
-			return [];
-		}
-		message_text(id){
-			return "";
-		}
-		message_role(id){
-			return "";
-		}
-		message_off_graph(id){
-			return false;
-		}
-		sub(){
-			return [(this.Body()), (this.Footer())];
-		}
-		Message(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
-			(obj.sub) = () => ([(this.Message_text(id)), (this.Message_badge(id))]);
-			return obj;
-		}
-	};
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Messages"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_one"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_two"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_three"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Status"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Body_flow"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Body"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_one"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_one"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_two"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_two"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "clear_click"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Suggestions"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "prompt_text"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "prompt_submit"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Prompt"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_send"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_row"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Footer"));
-	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_text"));
-	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_badge"));
-	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_data_setup(value, config) {
-        return Object.assign(value, {
-            config,
-            Value: null
-        });
-    }
-    $.$mol_data_setup = $mol_data_setup;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for record of given fields with by its runtypes and returns expected type.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_record_demo
-     */
-    function $mol_data_record(sub) {
-        return $mol_data_setup((val) => {
-            let res = {};
-            for (const field in sub) {
-                try {
-                    res[field] =
-                        sub[field](val[field]);
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        return $mol_fail_hidden(error);
-                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
-                    return $mol_fail(error);
-                }
-            }
-            return res;
-        }, sub);
-    }
-    $.$mol_data_record = $mol_data_record;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_data_error extends $mol_error_mix {
-    }
-    $.$mol_data_error = $mol_data_error;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for equality to given value and returns expected type.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_const_demo
-     */
-    function $mol_data_const(ref) {
-        return $mol_data_setup((val) => {
-            if ($mol_compare_deep(val, ref))
-                return ref;
-            return $mol_fail(new $mol_data_error(`${JSON.stringify(val)} is not ${JSON.stringify(ref)}`));
-        }, ref);
-    }
-    $.$mol_data_const = $mol_data_const;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for string and returns string type.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_string_demo
-     */
-    $.$mol_data_string = (val) => {
-        if (typeof val === 'string')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a string`));
-    };
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for some of given runtype or throws error.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_variant_demo
-     */
-    function $mol_data_variant(...sub) {
-        return $mol_data_setup((val) => {
-            const errors = [];
-            for (const type of sub) {
-                let hidden = $.$mol_fail_hidden;
-                try {
-                    $.$mol_fail = $.$mol_fail_hidden;
-                    return type(val);
-                }
-                catch (error) {
-                    $.$mol_fail = hidden;
-                    if (error instanceof $mol_data_error) {
-                        errors.push(error);
-                    }
-                    else {
-                        return $mol_fail_hidden(error);
-                    }
-                }
-            }
-            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, {}, ...errors));
-        }, sub);
-    }
-    $.$mol_data_variant = $mol_data_variant;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for array of given runtype and returns expected type.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_array_demo
-     */
-    function $mol_data_array(sub) {
-        return $mol_data_setup((val) => {
-            if (!Array.isArray(val))
-                return $mol_fail(new $mol_data_error(`${val} is not an array`));
-            return val.map((item, index) => {
-                try {
-                    return sub(item);
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        return $mol_fail_hidden(error);
-                    error.message = `[${index}] ${error.message}`;
-                    return $mol_fail(error);
-                }
-            });
-        }, sub);
-    }
-    $.$mol_data_array = $mol_data_array;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for null or passing given runtype.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_nullable_demo
-     */
-    function $mol_data_nullable(sub) {
-        return $mol_data_setup((val) => {
-            if (val === null)
-                return null;
-            return sub(val);
-        }, sub);
-    }
-    $.$mol_data_nullable = $mol_data_nullable;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for undefined or passing given runtype.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_optional_demo
-     */
-    function $mol_data_optional(sub, fallback) {
-        return $mol_data_setup((val) => {
-            if (val === undefined) {
-                return fallback?.();
-            }
-            return sub(val);
-        }, { sub, fallback });
-    }
-    $.$mol_data_optional = $mol_data_optional;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_array_shuffle(array) {
-        const res = new Array(array.length);
-        for (let i = 0; i < res.length; ++i) {
-            const j = Math.floor(Math.random() * (i + 1));
-            if (i !== j)
-                res[i] = res[j];
-            res[j] = array[i];
-        }
-        return res;
-    }
-    $.$mol_array_shuffle = $mol_array_shuffle;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_array_shuffle_sync = $mol_wire_sync($mol_array_shuffle);
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    // Make new tokens: https://github.com/settings/personal-access-tokens/new?name=$mol_github_model&user_models=read
-    $.$mol_github_model_keys = [
-        '11AADME3A07jh1teLjee8r_O7MKyAF8rbdIlhk4OwsJHaCnh4CjDNxn1nLNAvW2Hy6OSTIYABWQyp0rOHt',
-        '11AADME3A0q6w8EFz9G9aa_byqEpTuWUa63PKoSAwN1eVi2GyGJ4SxYhm9OhAc2DCTANK2ULBQpQgUu6D9',
-        '11AADME3A0RsfJpmuZfl4r_Nw6G3v7vDgnrqDxmlgF6Gyj9YawDfTqatNUxhwPjzWwYYGIORGETiUtMOmR',
-        '11AADME3A0meTYzVZaOtJF_LrdN2tIDycZHDBN3560V3S2ZWpo07uATZON0XUYF2ZFFC3X2OHSwdUcVfUe',
-        '11AADME3A0myGzFwrNHkV0_InRujMNsqM7cLUWDvKCW5GRy2waC7fHXuSJdzW0mrwvX7VP4I2MoGXRXF6w',
-        '11AADME3A0LF4GM8Qam5xH_LFLHQqgcmudC8eyKLEqc4l5xDPcplSxAcEA3j8BO4MYTAE6FOROqFIuhGfR',
-        '11AADME3A0KUqaRrYVSMzf_rYLJd83byQ1HN8KOIzVnHPBvW6VPei911NJgPucm1hRETR55VB3mdyw2ezI',
-        '11AADME3A0exOKaaQLYR2b_2JKJDHVAWxoqRPlGcugBHNapcZWT9awRic8iBmgOirXRVC5X7ILtz6KDffv',
-        '11AADME3A071WbELDi8THV_v3dkQtbYpSGjUXeWT6dAiPBf5a5b0KDr0E029T6P4CsZOOYO3DPpopBkodL',
-        '11AADME3A0L5oFWUKk62fr_Dcbcn1ZcNBwWaLfbHzlgueGcxBEO5FoOieoowhJ6Q1zIWIIYZBG7XI16O4H',
-        '11ABRVBSY0f8VzkzaCnFmy_PMfBlJqT7DuvxfzbYRUlLOZJenEqBvNpGP7uQKCDOaO6ZKS4DFCG0qYxy2I',
-        '11ABRVBSY0no18F8ngCYoa_60v1HSbYVeEZ2d3tf1ix2Kq7G8ZRYaFFiHImNxERTkqJ5CWMQ6VmjH7ic86',
-        '11ABRVBSY0acYIFJ0b9cAV_0wPJI2JxZgLYasswZjIUMQqxnYcRAUEG68xtsh9uQtNZDYU37IS5GBobX8v',
-        '11ABRVBSY0KhLO9yDqoqMM_B328qDB5kCHqgAJNw3q1MW48gHQ9XYAnnRQFlXkE1MQGX3S5TOK6k4od8C8',
-        '11ABRVBSY04TXJfmvdflXC_o9UQLVNWbPWzaqaaZll9fFn9QLAZotSwi18clpeaaYkTQEHQSW3yvrSAsCb',
-        '11ABRVBSY0n7osgrVkUT0l_PQadBMEjSXLOGZGwuu5wVXydSnwxboWUAxAIdXgXP9hRVQOKM5UNsJaKk0M',
-        '11ABRVBSY0Zctkh9fg9Cpl_nqCk5TSio22hgtvAWqYzGvlsfaIH9e66ery772pkCW0C7EJA7HJrPGxIYQy',
-        '11ABRVBSY0XbD5DK094oOY_8mmeflfbf4mu48bWk7OFQvrxxPXp5gFCxO5PUokPwsw2LZRC6DZSujLHCVt',
-        '11ABRVBSY0AGZyClxdqZDx_gseo5RI9HKRPvlQtRFmmR5An2jaRna9glpzv40wi7MZCCCDAVIWk3l1Nwp9',
-        '11ABRVBSY0SvjU9l1d7DXU_LOZfXdIZuupZCmu1FA4NGUOy572G8ZJ6pzYyzu9RsWfG7HLRMLYIIIE54Mp',
-        '11AACDCYQ0R6jhkMIx4zY4_OlEwnePW3UFhkNsJuyAweBPsHtqlhBW7WD69mWjuuYTTAYOTX7KL4WK1Yg7',
-        '11AACDCYQ0Ai0LkLKrp9kE_D10SuqSODWeGWvA4Rgux6ZXs2AEwl3IqpElNGRI7JG0ZIGVKV5RaUDAchxe',
-        '11AACDCYQ0c94yhWtZq2HX_YFms0ToLulxGTnr80ndTsHZIOfNMl8QdLmoKL75fZ3oK6JN3NOKsnxMZ1qu',
-        '11AACDCYQ0DkrjD2bmmKpL_PcrQXvrbiEnJl0oazFx70p9wdCXd2rP5DhazexPAcygLGKIOQRXeeCXsP7B',
-        '11AACDCYQ0IMIYCLcX3xrO_901enZ0EKxk48giaCI7vkIHZgdOpqrvPyHiF4t02klvCLI7OVRE3uqJ3PKf',
-        '11AACDCYQ0WIjNWbjdJclE_KKiTwAIGNcbpPIO6SJfBxbuUVixxug7QH5KPRcMXAYv3ZOROGOVFvj4GzzG',
-        '11AACDCYQ0tKWudX3T6T6l_wGiLSmI6aYR7Wf5ZXFukZdPuUL7lpGpBIzkm8CSxcaoJQT7GDAU2PtnWWDj',
-        '11AACDCYQ0Ocm4JD37TfHG_0KPjGl3ucMm4ozREvzF1QNY3UECaZNh3SiY49AUzJgGNITGLVH2LdHhz7PT',
-        '11AACDCYQ0R5HgcrZOxDwc_dgCK0jETB27GYYCmh1YMfdE5dPuLNZ1DLiIDi2tQnr0IGUX5WFRNa9oTaSw',
-        '11AZC2M3A02nw2Q86BPmYQ_yl2RFA1RXRuEVWU0ufTjBXl12SvUWyeZxZ9cbZRuind6QWI65J4tXbAfF2p',
-        '11AZC2M3A0gcGTDvExPjEL_m1itogjz24QDTxT0zJTpDJmyZ3sSKO1UXapXfw7q0BLMUIOXP3SB7zRfavu',
-        '11AZC2M3A0Y1oDGiEjDZ1g_t5ry6SPyckVwZvBQvBke09QbNMF8rG1TXdcops2BiDmKDYKOOCV58edg7VY',
-        '11AZC2M3A00bI3vc5JPaA2_MZGbctgtp5KEdBD2dYVW7MaQ2Fqiw8UrIpHKZp8xnczJGHTTJQPa9QxXjrc',
-        '11AZC2M3A0fGlQkvashsda_CuaNQlzrajBrj82VlUzZQ67Qgq9X3QudJ9S3SM3wnzvNIQRQARZoClezK3C',
-        '11AZC2M3A06Zat4wc9fotV_0gdnr4cGXfzD2wTkBIr5QYyj3ErxgMcHJerQb81AtnqBSYKBHIEzBXbqzQr',
-        '11AZC2M3A0V1JUeQY0eOov_rrWyENLMO5Sxa4IEPbZMLippdb8TQi531bmfJQBBaCfQHIC5PQFFwUp49DW',
-        '11AZC2M3A0G89rDbsh2k20_l6kEuOm10kV86RGIp1s5wQ1n6kLe0WFgeCHLthnGNSyDSIBNNC6Q7kjGrem',
-        '11AZC2M3A0tAUQ7dX2dnaI_hvDm1d0lxDpHXkYx1khtJyidfjREBvg2qssXurwxihAHBEMII5T7l5WrXI9',
-        '11AZC2M3A0VPRCdsbErhom_W0wrECR4sbXQZLlG966rsb1G65pOXJGbk4uaV0zUNpMZPDBW5DSTZyRTCJy',
-        '11AZC2M3A06fZVQGXETeaM_KIU5iEeb6UtpBrGZMOG6kQc1r32A5Xh1uxAMdmZRwkHICW2HJMAHcv236fa',
-        '11AZC2M3A0QyPnQfDarLu5_x6eKghOwMB3yX2KPPVGvD3PKKuY5QiK7gJ4eoPiYCSwOBQVU2P6EOzN75xf',
-        '11AZC2M3A0VW9BdSxec56G_P3YnEAFXcC7IMauK8nhxHwFNS09AgIisAuy9Kft19o2LAHR5RXQyMHIl9yQ',
-        '11AZC2M3A0P4o9D1flcC0S_f2NS5FSSogJoFsocKShuv4m7ghDBamKRgPvPqACGEejJRU2BBE2gymGHhk1',
-        '11AZC2M3A0cI704OJ5EVfc_8c1ggPeodHoWEY8lMHH9cvKLGyGvGbgzW7tr4V7E5ITT7RDCHJYzNZoXxGF',
-        '11AZC2M3A0yFNB07z5VFbp_RtEMVMcdKpfFgn0ls2v3hlcJDsIs6v7e64TXSW2muOK5RPKAJ3WxdZS2vzT',
-        '11AZC2M3A06KL2qd1GmlIB_a7tt0VJaKLybMxJLdJ6JPk6iBgNaECXJsFd5FyCl4nSSQT3QSG4ETLYFOwj',
-        '11AZC2M3A0Ui6RqKCiBn6X_6S4OnreMp6Au5JSRwfcWop1SiHV9ooFsBHhYkFEiErAQYHDENGGzLmL1aD9',
-        '11AZC2M3A0hk74xKy52Egx_jYVCEjt9jpT2peCB0qT7JrnSX1a075ZASxKTzaV3KeqTTV5A7SRNxkaElKn',
-        '11AZC2M3A021XEPByvPlBg_rKr4RNMcfeflEKrL5qGxDieXMKLlf4S6FWvtUUzIYaoOK63JXVBv8XPAfi5',
-        '11AZC2M3A0yK6fYUgjj79M_5yu4OE4RdeFk8IoY3kcOC1xemTvjB1B8tOzA1KPmqQSX37EDQIOIuRjf9jF',
-    ].map(str => `github_pat_${str}`);
-    $.$mol_github_model_polyglots = [
-        // 'openai/gpt-4.1', // 50/D too slow
-        // 'openai/gpt-4o', // 50/D bad resp
-        'openai/gpt-4.1-mini', // 150/D
-        // 'openai/gpt-4o-mini', // 150/D bad resp
-        // 'openai/gpt-4.1-nano', // 150/D bad resp
-    ];
-    const Text = $mol_data_record({
-        type: $mol_data_const('text'),
-        text: $mol_data_string,
-    });
-    const Image = $mol_data_record({
-        type: $mol_data_const('image_url'),
-        image_url: $mol_data_record({
-            url: $mol_data_string,
-        }),
-    });
-    const Content_item = $mol_data_variant(Text, Image);
-    const Content = $mol_data_variant($mol_data_string, $mol_data_array(Content_item));
-    const System = $mol_data_record({
-        role: $mol_data_const('system'),
-        content: Content,
-    });
-    const Assistant = $mol_data_record({
-        role: $mol_data_const('assistant'),
-        content: $mol_data_nullable(Content),
-        tool_calls: $mol_data_optional($mol_data_array($mol_data_record({
-            type: $mol_data_const('function'),
-            id: $mol_data_string,
-            function: $mol_data_record({
-                name: $mol_data_string,
-                arguments: $mol_data_string,
-            }),
-        }))),
-    });
-    const User = $mol_data_record({
-        role: $mol_data_const('user'),
-        content: Content,
-    });
-    const Tool = $mol_data_record({
-        role: $mol_data_const('tool'),
-        // name: $mol_data_string,
-        tool_call_id: $mol_data_string,
-        content: Content,
-    });
-    const Message = $mol_data_variant(System, Assistant, User, Tool);
-    const Resp = $mol_data_record({
-        choices: $mol_data_array($mol_data_record({
-            message: Assistant,
-        })),
-    });
-    const RespFail = $mol_data_record({
-        error: $mol_data_record({
-            message: $mol_data_string,
-        }),
-    });
-    function bloat_content(val) {
-        if (typeof val !== 'string')
-            val = JSON.stringify(val);
-        else if (val.startsWith('data:'))
-            return { type: 'image_url', image_url: { url: val } };
-        return { type: 'text', text: val };
-    }
-    /**
-     * Github hosted LLM API.
-     */
-    class $mol_github_model extends $mol_object {
-        // STATIC STATE
-        /** Model names from https://github.com/marketplace/models */
-        names() {
-            return this.$.$mol_github_model_polyglots;
-        }
-        /** System rules */
-        rules() {
-            return '';
-        }
-        /** List of callable functions */
-        tools() {
-            return new Map();
-        }
-        // DYNAMIC STATE
-        /** Actual system state */
-        state(next) {
-            $mol_wire_solid();
-            return next ?? [];
-        }
-        /** Additional model query params */
-        params(next) {
-            $mol_wire_solid();
-            return next ?? {};
-        }
-        /** Dialog history */
-        history(next) {
-            $mol_wire_solid();
-            return next ?? [];
-        }
-        // ACTIONS
-        /** Independent copy of current state. */
-        fork() {
-            const fork = $mol_github_model.make({
-                // static state
-                names: $mol_const(this.names()),
-                rules: $mol_const(this.rules()),
-                tools: $mol_const(this.tools()),
-                state: () => this.state(),
-            });
-            // dynamic state
-            fork.params(this.params());
-            fork.history(this.history());
-            return fork;
-        }
-        /** One-shot stateless prompting */
-        shot(prompt, context, params) {
-            const fork = this.fork();
-            if (params)
-                fork.params({ ...this.params(), ...params });
-            if (context)
-                fork.tell(context);
-            fork.ask(prompt);
-            return fork.response();
-        }
-        /** Add user prompt */
-        ask(chunks) {
-            this.history([
-                ...this.history(),
-                {
-                    role: "user",
-                    content: chunks.map(bloat_content),
-                }
-            ]);
-            return this;
-        }
-        /** Add assistant context */
-        tell(chunks) {
-            this.history([
-                ...this.history(),
-                {
-                    role: "assistant",
-                    content: chunks.map(bloat_content),
-                }
-            ]);
-            return this;
-        }
-        /** Add tools answer */
-        answer(id, chunks) {
-            const history = this.history();
-            const index = 1 + history.findIndex(msg => msg.role === 'tool' && msg.tool_call_id === id);
-            if (!index)
-                this.$.$mol_fail(new Error('Wrong tool call id', { cause: id }));
-            this.history([
-                ...history.slice(0, index),
-                {
-                    role: "tool",
-                    tool_call_id: id,
-                    content: chunks.map(bloat_content),
-                },
-                ...history.slice(index),
-            ]);
-            return this;
-        }
-        // INFERENCE
-        request_body(model) {
-            return JSON.stringify({
-                model,
-                stream: false,
-                response_format: { type: 'json_object' },
-                messages: [
-                    { role: 'system', content: this.rules() },
-                    ...this.history(),
-                    { role: 'system', content: this.state().map(bloat_content) },
-                ],
-                tools: [...this.tools()].map(([name, info]) => ({
-                    type: "function",
-                    function: {
-                        name,
-                        description: info.descr,
-                        strict: true,
-                        parameters: info.params,
-                    },
-                })),
-                ...this.params(),
-            });
-        }
-        request(model, key) {
-            return Resp(this.$.$mol_fetch.json(`https://models.github.ai/inference/chat/completions`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + key,
-                    'Content-Type': 'application/json',
-                },
-                body: this.request_body(model)
-            }));
-        }
-        /** Last response from LLM */
-        response() {
-            const history = this.history();
-            const last = history.at(-1);
-            if (last?.role !== 'user')
-                return null;
-            const models = this.$.$mol_array_shuffle_sync(this.names());
-            const keys = this.$.$mol_array_shuffle_sync($.$mol_github_model_keys);
-            for (const model of models)
-                for (const key of keys) {
-                    try {
-                        const resp = this.request(model, key);
-                        const message = resp.choices[0].message;
-                        this.history([...history, message]);
-                        if (typeof message.content === 'string')
-                            return JSON.parse(message.content);
-                        return message.content;
-                    }
-                    catch (error) {
-                        const resp = error.cause;
-                        if (!resp)
-                            return $mol_fail_hidden(error);
-                        if (resp.code() === 429)
-                            continue; // rate limit
-                        if (resp.code() === 400) {
-                            const message = RespFail(resp.json()).error.message;
-                            this.history([...history, { role: 'system', content: '📛 ' + message }]);
-                            $mol_fail(new Error(message));
-                        }
-                        $mol_fail_hidden(error);
-                    }
-                }
-            return this.$.$mol_fail(new Error('No alive token'));
-        }
-    }
-    __decorate([
-        $mol_memo.method
-    ], $mol_github_model.prototype, "names", null);
-    __decorate([
-        $mol_memo.method
-    ], $mol_github_model.prototype, "tools", null);
-    __decorate([
-        $mol_mem
-    ], $mol_github_model.prototype, "state", null);
-    __decorate([
-        $mol_mem
-    ], $mol_github_model.prototype, "params", null);
-    __decorate([
-        $mol_mem
-    ], $mol_github_model.prototype, "history", null);
-    __decorate([
-        $mol_action
-    ], $mol_github_model.prototype, "fork", null);
-    __decorate([
-        $mol_action
-    ], $mol_github_model.prototype, "shot", null);
-    __decorate([
-        $mol_action
-    ], $mol_github_model.prototype, "ask", null);
-    __decorate([
-        $mol_action
-    ], $mol_github_model.prototype, "tell", null);
-    __decorate([
-        $mol_action
-    ], $mol_github_model.prototype, "answer", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_github_model.prototype, "request_body", null);
-    __decorate([
-        $mol_mem
-    ], $mol_github_model.prototype, "response", null);
-    $.$mol_github_model = $mol_github_model;
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_chat extends $.$raggu_web_front_chat {
-            // История привязана к dataset_id — у каждого корпуса своя ветка чата.
-            // Иначе фолбэк-плашка, полученная на одном датасете (напр. мок без бэка),
-            // висела бы на сообщениях другого, где бэк отвечает через граф.
-            history(next) {
-                const key = `$raggu_web_front_chat.history@${this.dataset_id() || ''}`;
-                const stored = this.$.$mol_state_session.value(key, next);
-                if (stored)
-                    return stored;
-                return [
-                    { role: 'user', text: this.seed_user_text() },
-                    { role: 'assistant', text: this.seed_assistant_text() },
-                ];
-            }
-            prompt_text(next) {
-                return this.$.$mol_state_session.value('$raggu_web_front_chat.prompt_text', next) ?? '';
-            }
-            llm() {
-                // GitHub Models API forces response_format: json_object и требует чтобы
-                // слово "json" присутствовало в messages — иначе 400 Bad Request.
-                // Инструктируем модель отвечать одним JSON-полем reply, чтобы потом
-                // вытащить чистый текст.
-                return $mol_github_model.make({
-                    $: this.$,
-                    rules: () => 'Ты русскоязычный чат-ассистент. Отвечай ВСЕГДА строго валидным JSON вида {"reply": "<твой ответ обычным текстом>"}. Никаких других полей, никаких префиксов, только этот JSON.',
-                });
-            }
-            rows() {
-                return this.history().map((_, i) => this.Message(i));
-            }
-            // Автоскролл вниз при появлении нового сообщения.
-            // auto() вызывается $mol_view.dom_tree после render — DOM уже актуален.
-            auto() {
-                void this.history();
-                const el = this.Body().dom_node();
-                el.scrollTop = el.scrollHeight;
-                return [];
-            }
-            message_text(index) {
-                return this.history()[index]?.text ?? '';
-            }
-            message_role(index) {
-                return this.history()[index]?.role ?? 'user';
-            }
-            message_off_graph(index) {
-                return this.history()[index]?.off_graph ?? false;
-            }
-            prompt_submit() {
-                const text = this.prompt_text().trim();
-                if (!text)
-                    return null;
-                this.history([...this.history(), { role: 'user', text }]);
-                this.prompt_text('');
-                // Ответ в detached wire — не блокирует action, не мутирует state внутри fiber body,
-                // сам ретаинится при suspension от fetch/model.
-                $mol_wire_async(this).ask(text);
-                return null;
-            }
-            // Скелет виден когда мы ждём ответа: последнее сообщение = user.
-            // Реактивно, без ловли suspension: ask сам мутирует history когда ответ придёт,
-            // last=assistant → is_communicating становится false → скелет скрывается.
-            is_communicating() {
-                const h = this.history();
-                if (h.length === 0)
-                    return false;
-                return h[h.length - 1].role === 'user';
-            }
-            // Роутинг ответа. Аргумент text — для уникальности fiber-slot в
-            // $mol_wire_async cache. Основной путь — GraphRAG-агент на бэке RAGU:
-            // он сам достаёт контекст из графа знаний и подмешивает его перед
-            // генерацией. Если датасет не выбран или бэк недоступен — фолбэк на
-            // прямой LLM, чтобы демо не умирало.
-            ask(text) {
-                if (this.dataset_id()) {
-                    try {
-                        return this.ask_backend(text);
-                    }
-                    catch (error) {
-                        if ($mol_promise_like(error))
-                            $mol_fail_hidden(error);
-                        console.error('[raggu chat] GraphRAG backend failed, falling back to direct LLM:', error);
-                        // провалились в фолбэк ниже
-                    }
-                }
-                this.ask_llm(text);
-            }
-            // GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
-            // графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
-            ask_backend(text) {
-                const history = this.history()
-                    .slice(0, -1)
-                    .map(m => ({ role: m.role, content: m.text }));
-                const resp = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_create_agent_message, {
-                    params: { dataset_id: this.dataset_id() },
-                    body: {
-                        message: text,
-                        history,
-                        engine: 'mix',
-                        top_k: 15,
-                        rerank: true,
-                        include_trace: false,
-                        locale: this.$.$mol_locale.lang() === 'en' ? 'en' : 'ru',
-                    },
-                });
-                const reply = resp?.message?.content ?? '';
-                this.history([...this.history(), { role: 'assistant', text: reply }]);
-            }
-            // Лёгкий контекст для фолбэка: сущности графа (лейбл + тип, топ по degree)
-            // прямо с бэка. Полноценного RAG-ретривала тут нет, но модель хотя бы
-            // «видит» какие сущности есть в корпусе и отвечает ближе к теме.
-            // Возвращает '' если графа нет (мок без бэка) — тогда чистый LLM.
-            graph_context() {
-                const id = this.dataset_id();
-                if (!id)
-                    return '';
-                try {
-                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_graph, { params: { dataset_id: id }, query: { limit: 200 } });
-                    const labels = res.nodes
-                        .slice()
-                        .sort((a, b) => (b.degree ?? 0) - (a.degree ?? 0))
-                        .slice(0, 60)
-                        .map((n) => `${n.label} (${n.entity_type})`);
-                    if (!labels.length)
-                        return '';
-                    return `Ключевые сущности из графа знаний этого корпуса: ${labels.join('; ')}. Отвечай, опираясь на них, если вопрос по теме корпуса.`;
-                }
-                catch (error) {
-                    if ($mol_promise_like(error))
-                        $mol_fail_hidden(error);
-                    return '';
-                }
-            }
-            // Фолбэк: прямой LLM. Если удаётся достать граф с бэка — подмешиваем
-            // сущности как контекст, чтобы ответ был ближе к корпусу.
-            ask_llm(text) {
-                const history = this.history();
-                const context = this.graph_context();
-                const model = this.llm().fork();
-                if (context)
-                    model.tell([context]);
-                for (const item of history) {
-                    if (item.role === 'user')
-                        model.ask([item.text]);
-                    else
-                        model.tell([item.text]);
-                }
-                try {
-                    const resp = model.response();
-                    const reply = typeof resp === 'string' ? resp : resp?.reply ?? JSON.stringify(resp, null, 2);
-                    this.history([...this.history(), { role: 'assistant', text: reply, off_graph: true }]);
-                }
-                catch (error) {
-                    if ($mol_promise_like(error))
-                        $mol_fail_hidden(error);
-                    if ($mol_fail_log(error)) {
-                        this.history([...this.history(), { role: 'assistant', text: '📛 ' + (error.message || String(error)), off_graph: true }]);
-                    }
-                }
-            }
-            use_sug_one() {
-                this.prompt_text(this.sug_one_text());
-                return null;
-            }
-            use_sug_two() {
-                this.prompt_text(this.sug_two_text());
-                return null;
-            }
-            clear_click() {
-                this.history([]);
-                return null;
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_chat.prototype, "history", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_chat.prototype, "llm", null);
-        __decorate([
-            $mol_mem
-        ], $raggu_web_front_chat.prototype, "rows", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_chat.prototype, "prompt_submit", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_chat.prototype, "use_sug_one", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_chat.prototype, "use_sug_two", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_chat.prototype, "clear_click", null);
-        $$.$raggu_web_front_chat = $raggu_web_front_chat;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const suggestion = {
-        border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
-        padding: {
-            top: '5px',
-            bottom: '5px',
-            left: '11px',
-            right: '11px',
-        },
-        font: { size: '11px' },
-        color: $bog_builderui_tokens.shade,
-        cursor: 'pointer',
-    };
-    $mol_style_define($raggu_web_front_chat, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        minHeight: 0,
-        height: '100%',
-        Clear: {
-            marginLeft: 'auto',
-            minWidth: '40px',
-            height: '26px',
-            padding: {
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-            },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
-            color: $bog_builderui_tokens.shade,
-            font: { size: '14px', weight: 500 },
-            lineHeight: '1',
-        },
-        Body: {
-            flex: { grow: 1, direction: 'column' },
-            overflow: 'auto',
-            // min-height: 0 обязателен для flex-child с overflow:auto,
-            // иначе элемент раздувается до scrollHeight и внешний контейнер скроллится вместо него.
-            minHeight: 0,
-            padding: {
-                top: '22px',
-                bottom: '22px',
-                left: '22px',
-                right: '22px',
-            },
-        },
-        Body_flow: {
-            flex: { direction: 'column' },
-            gap: '16px',
-        },
-        Status: {
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            borderRadius: '12px 12px 12px 3px',
-            padding: {
-                top: '13px',
-                bottom: '13px',
-                left: '16px',
-                right: '16px',
-            },
-            maxWidth: '78%',
-            align: { self: 'flex-start' },
-            flex: { direction: 'column' },
-            gap: '10px',
-            // По дефолту скрыт. attr raggu_loading=true → показываем скелет.
-            // Boolean false → mol удаляет атрибут → [attr="true"] селектор ниже включает display.
-            display: 'none',
-            '@': {
-                raggu_loading: {
-                    true: {
-                        display: 'flex',
-                    },
-                },
-            },
-        },
-        Skel_line_one: {
-            height: '12px',
-            borderRadius: '4px',
-            minWidth: '260px',
-        },
-        Skel_line_two: {
-            height: '12px',
-            borderRadius: '4px',
-            minWidth: '320px',
-        },
-        Skel_line_three: {
-            height: '12px',
-            borderRadius: '4px',
-            minWidth: '200px',
-        },
-        Messages: {
-            gap: '16px',
-        },
-        Message: {
-            flex: { direction: 'column' },
-            maxWidth: '78%',
-            '@': {
-                raggu_role: {
-                    user: {
-                        align: { self: 'flex-end' },
-                        maxWidth: '70%',
-                    },
-                    assistant: {
-                        align: { self: 'flex-start' },
-                    },
-                },
-            },
-        },
-        Message_text: {
-            font: { size: '13px' },
-            lineHeight: '1.55',
-            '@': {
-                raggu_role: {
-                    user: {
-                        background: { color: $bog_builderui_tokens.current },
-                        color: '#ffffff',
-                        borderRadius: '12px 12px 3px 12px',
-                        padding: {
-                            top: '11px',
-                            bottom: '11px',
-                            left: '15px',
-                            right: '15px',
-                        },
-                    },
-                    assistant: {
-                        background: { color: $bog_builderui_tokens.card },
-                        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-                        borderRadius: '12px 12px 12px 3px',
-                        padding: {
-                            top: '13px',
-                            bottom: '13px',
-                            left: '16px',
-                            right: '16px',
-                        },
-                        color: $bog_builderui_tokens.text,
-                    },
-                },
-            },
-        },
-        Message_badge: {
-            display: 'none',
-            alignSelf: 'flex-start',
-            margin: { top: '6px' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: '#8a6d1b',
-            background: { color: '#f5c84226' },
-            border: { width: '1px', style: 'solid', color: '#d9b23a66', radius: '5px' },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '7px',
-                right: '7px',
-            },
-            '@': {
-                raggu_off_graph: {
-                    true: { display: 'flex' },
-                },
-            },
-        },
-        Footer: {
-            padding: {
-                top: '14px',
-                bottom: '14px',
-                left: '22px',
-                right: '22px',
-            },
-            border: {
-                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            flex: { direction: 'column' },
-        },
-        Suggestions: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '7px',
-            margin: { bottom: '10px' },
-            align: { items: 'center' },
-        },
-        Sug_one: suggestion,
-        Sug_two: suggestion,
-        Input_row: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '8px',
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '12px',
-                right: '8px',
-            },
-            color: $bog_builderui_tokens.shade,
-            font: { size: '13px' },
-        },
-        Prompt: {
-            flex: { grow: 1 },
-            border: { width: 0 },
-            background: { color: 'transparent' },
-            minHeight: '24px',
-            color: $bog_builderui_tokens.text
-        },
-        Input_send: {
-            background: { color: $bog_builderui_tokens.current },
-            color: '#ffffff',
-            border: { radius: '7px' },
-            padding: {
-                top: '6px',
-                bottom: '6px',
-                left: '14px',
-                right: '14px',
-            },
-            font: { size: '12px', weight: 600 },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_dashboard_dist) = class $raggu_web_front_dashboard_dist extends ($.$bog_builderui_div) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("raggu/web/front/dashboard/dist/dist.view.css", "[raggu_web_front_dashboard_dist] {\n\tbackground-image: repeating-linear-gradient(90deg, #efedea 0 7px, #e7e4e0 7px 14px);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-
-;
-	($.$raggu_web_front_dashboard_metric) = class $raggu_web_front_dashboard_metric extends ($.$bog_builderui_div) {
-		Name(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.name())]);
-			return obj;
-		}
-		Bar_fill(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Bar(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Bar_fill())]);
-			return obj;
-		}
-		Value(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.value())]);
-			return obj;
-		}
-		name(){
-			return "";
-		}
-		value(){
-			return "";
-		}
-		pct(){
-			return "0%";
-		}
-		sub(){
-			return [
-				(this.Name()), 
-				(this.Bar()), 
-				(this.Value())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_dashboard_metric.prototype), "Name"));
-	($mol_mem(($.$raggu_web_front_dashboard_metric.prototype), "Bar_fill"));
-	($mol_mem(($.$raggu_web_front_dashboard_metric.prototype), "Bar"));
-	($mol_mem(($.$raggu_web_front_dashboard_metric.prototype), "Value"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_dashboard_metric extends $.$raggu_web_front_dashboard_metric {
-            Bar_fill() {
-                const fill = super.Bar_fill();
-                fill.style = () => ({ width: this.pct() });
-                return fill;
-            }
-        }
-        $$.$raggu_web_front_dashboard_metric = $raggu_web_front_dashboard_metric;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_dashboard_metric, {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '10px',
-        margin: { top: '12px' },
-        Name: {
-            minWidth: '120px',
-            maxWidth: '120px',
-            font: { size: '12px', weight: 600 },
-        },
-        Bar: {
-            flex: { grow: 1 },
-            height: '8px',
-            border: { radius: '4px' },
-            background: { color: $bog_builderui_tokens.field },
-            position: 'relative',
-            overflow: 'hidden',
-        },
-        Bar_fill: {
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            background: { color: $bog_builderui_tokens.current },
-        },
-        Value: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: $bog_builderui_tokens.current,
-            minWidth: '36px',
-            maxWidth: '36px',
-            textAlign: 'right',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_dashboard_stage) = class $raggu_web_front_dashboard_stage extends ($.$bog_builderui_div) {
-		Name(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.name())]);
-			return obj;
-		}
-		Bar_fill(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Bar(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Bar_fill())]);
-			return obj;
-		}
-		Time(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.time())]);
-			return obj;
-		}
-		name(){
-			return "";
-		}
-		time(){
-			return "";
-		}
-		pct(){
-			return "0%";
-		}
-		sub(){
-			return [
-				(this.Name()), 
-				(this.Bar()), 
-				(this.Time())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_dashboard_stage.prototype), "Name"));
-	($mol_mem(($.$raggu_web_front_dashboard_stage.prototype), "Bar_fill"));
-	($mol_mem(($.$raggu_web_front_dashboard_stage.prototype), "Bar"));
-	($mol_mem(($.$raggu_web_front_dashboard_stage.prototype), "Time"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_dashboard_stage extends $.$raggu_web_front_dashboard_stage {
-            Bar_fill() {
-                const fill = super.Bar_fill();
-                fill.style = () => ({ width: this.pct() });
-                return fill;
-            }
-        }
-        $$.$raggu_web_front_dashboard_stage = $raggu_web_front_dashboard_stage;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_dashboard_stage, {
-        flex: { direction: 'row' },
-        align: { items: 'center' },
-        gap: '10px',
-        margin: { top: '10px' },
-        Name: {
-            minWidth: '130px',
-            maxWidth: '130px',
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '11px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Bar: {
-            flex: { grow: 1 },
-            height: '8px',
-            border: { radius: '4px' },
-            background: { color: $bog_builderui_tokens.field },
-            overflow: 'hidden',
-        },
-        Bar_fill: {
-            height: '100%',
-            background: { color: '#a89bf0' },
-        },
-        Time: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            minWidth: '42px',
-            maxWidth: '42px',
-            textAlign: 'right',
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_dashboard_log) = class $raggu_web_front_dashboard_log extends ($.$bog_builderui_div) {
-		expanded(next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		toggle(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Time(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.time())]);
-			return obj;
-		}
-		Text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.text())]);
-			return obj;
-		}
-		Mode(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.mode())]);
-			return obj;
-		}
-		Dur(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.dur())]);
-			return obj;
-		}
-		Arrow(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.arrow())]);
-			return obj;
-		}
-		Head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				event, 
-				(this.Time()), 
-				(this.Text()), 
-				(this.Mode()), 
-				(this.Dur()), 
-				(this.Arrow())
-			]);
-			return obj;
-		}
-		Trace_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_label())]);
-			return obj;
-		}
-		Trace_stat_chunks(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.chunks())]);
-			return obj;
-		}
-		Trace_stat_comms(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.communities())]);
-			return obj;
-		}
-		Trace_stat_retr(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.retrieval())]);
-			return obj;
-		}
-		Trace_stat_gen(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.generation())]);
-			return obj;
-		}
-		Trace_stat_power(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.power())]);
-			return obj;
-		}
-		Trace_stats(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Trace_stat_chunks()), 
-				(this.Trace_stat_comms()), 
-				(this.Trace_stat_retr()), 
-				(this.Trace_stat_gen()), 
-				(this.Trace_stat_power())
-			]);
-			return obj;
-		}
-		Trace_link(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.trace_link())]);
-			return obj;
-		}
-		Trace(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Trace_label()), 
-				(this.Trace_stats()), 
-				(this.Trace_link())
-			]);
-			return obj;
-		}
-		time(){
-			return "";
-		}
-		text(){
-			return "";
-		}
-		mode(){
-			return "";
-		}
-		dur(){
-			return "";
-		}
-		chunks(){
-			return "";
-		}
-		communities(){
-			return "";
-		}
-		retrieval(){
-			return "";
-		}
-		generation(){
-			return "";
-		}
-		power(){
-			return "";
-		}
-		trace_label(){
-			return "";
-		}
-		trace_link(){
-			return "";
-		}
-		arrow(){
-			return "▾";
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_dashboard_log_expanded": (this.expanded())};
-		}
-		sub(){
-			return [(this.Head()), (this.Trace())];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "expanded"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "toggle"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Time"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Text"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Mode"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Dur"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Arrow"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Head"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_label"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_stat_chunks"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_stat_comms"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_stat_retr"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_stat_gen"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_stat_power"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_stats"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace_link"));
-	($mol_mem(($.$raggu_web_front_dashboard_log.prototype), "Trace"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_dashboard_log extends $.$raggu_web_front_dashboard_log {
-            toggle(next) {
-                this.expanded(!this.expanded());
-                return null;
-            }
-            arrow() {
-                return this.expanded() ? '▴' : '▾';
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_dashboard_log.prototype, "toggle", null);
-        $$.$raggu_web_front_dashboard_log = $raggu_web_front_dashboard_log;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const trace_stat = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-    };
-    $mol_style_define($raggu_web_front_dashboard_log, {
-        flex: { direction: 'column' },
-        border: { radius: '6px' },
-        overflow: 'hidden',
-        background: { color: $bog_builderui_tokens.back },
-        Head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '14px',
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '11px',
-            },
-            color: $bog_builderui_tokens.shade,
-            padding: {
-                top: '8px',
-                bottom: '8px',
-                left: '10px',
-                right: '10px',
-            },
-            cursor: 'pointer',
-        },
-        Time: {
-            color: $bog_builderui_tokens.shade,
-        },
-        Text: {
-            flex: { grow: 1 },
-        },
-        Mode: {
-            color: $bog_builderui_tokens.shade,
-        },
-        Dur: {
-            color: '#1f8a5b',
-        },
-        Arrow: {
-            color: $bog_builderui_tokens.shade,
-            minWidth: '12px',
-            textAlign: 'center',
-        },
-        Trace: {
-            display: 'none',
-            flex: { direction: 'column' },
-            gap: '8px',
-            padding: {
-                top: '11px',
-                bottom: '11px',
-                left: '13px',
-                right: '13px',
-            },
-            border: {
-                top: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            transition: 'opacity 0.18s ease',
-        },
-        Trace_label: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Trace_stats: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '14px',
-            margin: { top: '2px' },
-        },
-        Trace_stat_chunks: trace_stat,
-        Trace_stat_comms: trace_stat,
-        Trace_stat_retr: trace_stat,
-        Trace_stat_gen: trace_stat,
-        Trace_stat_power: trace_stat,
-        Trace_link: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.current,
-        },
-        '@': {
-            raggu_web_front_dashboard_log_expanded: {
-                true: {
-                    Trace: {
-                        display: 'flex',
-                    },
-                },
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_dashboard) = class $raggu_web_front_dashboard extends ($.$bog_builderui_div) {
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title_text())]);
-			return obj;
-		}
-		Subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.subtitle_text())]);
-			return obj;
-		}
-		Card_stats_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_stats_label_text())]);
-			return obj;
-		}
-		Stat_nodes_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["2 410"]);
-			return obj;
-		}
-		Stat_nodes_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.stat_nodes_lbl_text())]);
-			return obj;
-		}
-		Stat_nodes(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Stat_nodes_val()), (this.Stat_nodes_lbl())]);
-			return obj;
-		}
-		Stat_edges_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["7 088"]);
-			return obj;
-		}
-		Stat_edges_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.stat_edges_lbl_text())]);
-			return obj;
-		}
-		Stat_edges(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Stat_edges_val()), (this.Stat_edges_lbl())]);
-			return obj;
-		}
-		Stat_comms_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["38"]);
-			return obj;
-		}
-		Stat_comms_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.stat_comms_lbl_text())]);
-			return obj;
-		}
-		Stat_comms(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Stat_comms_val()), (this.Stat_comms_lbl())]);
-			return obj;
-		}
-		Stats_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Stat_nodes()), 
-				(this.Stat_edges()), 
-				(this.Stat_comms())
-			]);
-			return obj;
-		}
-		Stats_dist(){
-			const obj = new this.$.$raggu_web_front_dashboard_dist();
-			(obj.sub) = () => ([(this.stats_dist_text())]);
-			return obj;
-		}
-		Card_stats(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_stats_label()), 
-				(this.Stats_row()), 
-				(this.Stats_dist())
-			]);
-			return obj;
-		}
-		Card_quality_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_quality_label_text())]);
-			return obj;
-		}
-		metric_name(id){
-			return "";
-		}
-		metric_value(id){
-			return "";
-		}
-		metric_pct(id){
-			return "0%";
-		}
-		Metric(id){
-			const obj = new this.$.$raggu_web_front_dashboard_metric();
-			(obj.name) = () => ((this.metric_name(id)));
-			(obj.value) = () => ((this.metric_value(id)));
-			(obj.pct) = () => ((this.metric_pct(id)));
-			return obj;
-		}
-		metric_rows(){
-			return [(this.Metric(id))];
-		}
-		Metric_rows(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.metric_rows()));
-			return obj;
-		}
-		Quality_footer(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.quality_footer_text())]);
-			return obj;
-		}
-		Card_quality(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_quality_label()), 
-				(this.Metric_rows()), 
-				(this.Quality_footer())
-			]);
-			return obj;
-		}
-		Card_energy_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_energy_label_text())]);
-			return obj;
-		}
-		energy_kwh_val(){
-			return "";
-		}
-		Energy_kwh_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_kwh_val())]);
-			return obj;
-		}
-		Energy_kwh_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_kwh_lbl_text())]);
-			return obj;
-		}
-		Energy_kwh(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Energy_kwh_val()), (this.Energy_kwh_lbl())]);
-			return obj;
-		}
-		energy_cost_val(){
-			return "";
-		}
-		Energy_cost_val(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_cost_val())]);
-			return obj;
-		}
-		Energy_cost_lbl(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_cost_lbl_text())]);
-			return obj;
-		}
-		Energy_cost(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Energy_cost_val()), (this.Energy_cost_lbl())]);
-			return obj;
-		}
-		Energy_row(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Energy_kwh()), (this.Energy_cost())]);
-			return obj;
-		}
-		Energy_formula(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_formula_text())]);
-			return obj;
-		}
-		Energy_note(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.energy_note_text())]);
-			return obj;
-		}
-		Card_energy(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_energy_label()), 
-				(this.Energy_row()), 
-				(this.Energy_formula()), 
-				(this.Energy_note())
-			]);
-			return obj;
-		}
-		Card_timings_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_timings_label_text())]);
-			return obj;
-		}
-		stage_name(id){
-			return "";
-		}
-		stage_time(id){
-			return "";
-		}
-		stage_pct(id){
-			return "0%";
-		}
-		Stage(id){
-			const obj = new this.$.$raggu_web_front_dashboard_stage();
-			(obj.name) = () => ((this.stage_name(id)));
-			(obj.time) = () => ((this.stage_time(id)));
-			(obj.pct) = () => ((this.stage_pct(id)));
-			return obj;
-		}
-		stage_rows(){
-			return [(this.Stage(id))];
-		}
-		Stage_rows(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.stage_rows()));
-			return obj;
-		}
-		Card_timings(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Card_timings_label()), (this.Stage_rows())]);
-			return obj;
-		}
-		Card_logs_label(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.card_logs_label_text())]);
-			return obj;
-		}
-		log_time(id){
-			return "";
-		}
-		log_text(id){
-			return "";
-		}
-		log_mode(id){
-			return "";
-		}
-		log_dur(id){
-			return "";
-		}
-		log_expanded(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		log_chunks(id){
-			return "";
-		}
-		log_communities(id){
-			return "";
-		}
-		log_retrieval(id){
-			return "";
-		}
-		log_generation(id){
-			return "";
-		}
-		log_power(id){
-			return "";
-		}
-		Log(id){
-			const obj = new this.$.$raggu_web_front_dashboard_log();
-			(obj.time) = () => ((this.log_time(id)));
-			(obj.text) = () => ((this.log_text(id)));
-			(obj.mode) = () => ((this.log_mode(id)));
-			(obj.dur) = () => ((this.log_dur(id)));
-			(obj.expanded) = (next) => ((this.log_expanded(id, next)));
-			(obj.chunks) = () => ((this.log_chunks(id)));
-			(obj.communities) = () => ((this.log_communities(id)));
-			(obj.retrieval) = () => ((this.log_retrieval(id)));
-			(obj.generation) = () => ((this.log_generation(id)));
-			(obj.power) = () => ((this.log_power(id)));
-			(obj.trace_label) = () => ((this.trace_label_text()));
-			(obj.trace_link) = () => ((this.trace_link_text()));
-			return obj;
-		}
-		log_rows(){
-			return [(this.Log(id))];
-		}
-		Log_list(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.log_rows()));
-			return obj;
-		}
-		Card_logs(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Card_logs_label()), (this.Log_list())]);
-			return obj;
-		}
-		Grid(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Card_stats()), 
-				(this.Card_quality()), 
-				(this.Card_energy()), 
-				(this.Card_timings()), 
-				(this.Card_logs())
-			]);
-			return obj;
-		}
-		metrics(){
-			return [];
-		}
-		stages(){
-			return [];
-		}
-		logs(){
-			return [];
-		}
-		title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_title_text"));
-		}
-		subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_subtitle_text"));
-		}
-		card_stats_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_card_stats_label_text"));
-		}
-		stat_nodes_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_stat_nodes_lbl_text"));
-		}
-		stat_edges_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_stat_edges_lbl_text"));
-		}
-		stat_comms_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_stat_comms_lbl_text"));
-		}
-		stats_dist_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_stats_dist_text"));
-		}
-		card_quality_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_card_quality_label_text"));
-		}
-		quality_footer_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_quality_footer_text"));
-		}
-		card_energy_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_card_energy_label_text"));
-		}
-		energy_kwh_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_energy_kwh_lbl_text"));
-		}
-		energy_cost_lbl_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_energy_cost_lbl_text"));
-		}
-		energy_formula_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_energy_formula_text"));
-		}
-		energy_note_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_energy_note_text"));
-		}
-		card_timings_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_card_timings_label_text"));
-		}
-		card_logs_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_card_logs_label_text"));
-		}
-		trace_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_trace_label_text"));
-		}
-		trace_link_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_dashboard_trace_link_text"));
-		}
-		sub(){
-			return [
-				(this.Title()), 
-				(this.Subtitle()), 
-				(this.Grid())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Subtitle"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_stats_label"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_nodes_val"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_nodes_lbl"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_nodes"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_edges_val"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_edges_lbl"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_edges"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_comms_val"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_comms_lbl"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stat_comms"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stats_row"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stats_dist"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_stats"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_quality_label"));
-	($mol_mem_key(($.$raggu_web_front_dashboard.prototype), "Metric"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Metric_rows"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Quality_footer"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_quality"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_energy_label"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_kwh_val"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_kwh_lbl"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_kwh"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_cost_val"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_cost_lbl"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_cost"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_row"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_formula"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Energy_note"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_energy"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_timings_label"));
-	($mol_mem_key(($.$raggu_web_front_dashboard.prototype), "Stage"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Stage_rows"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_timings"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_logs_label"));
-	($mol_mem_key(($.$raggu_web_front_dashboard.prototype), "log_expanded"));
-	($mol_mem_key(($.$raggu_web_front_dashboard.prototype), "Log"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Log_list"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Card_logs"));
-	($mol_mem(($.$raggu_web_front_dashboard.prototype), "Grid"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const METRICS = [
-            { id: 'correctness', name: 'Answer Correctness', value: '59.0', pct: '59%' },
-            { id: 'recall', name: 'Evidence Recall', value: '84.2', pct: '84%' },
-            { id: 'relevancy', name: 'Context Relevancy', value: '90.8', pct: '91%' },
-        ];
-        const STAGES = [
-            { id: 'chunking', name: 'Chunking', time: '1.2s', pct: '15%' },
-            { id: 'extraction', name: 'Extraction', time: '8.4s', pct: '70%' },
-            { id: 'summarization', name: 'Summarization', time: '3.1s', pct: '38%' },
-            { id: 'communities', name: 'Communities', time: '2.0s', pct: '26%' },
-            { id: 'refinement', name: 'Refinement', time: '0.6s', pct: '9%' },
-        ];
-        const LOGS = [
-            {
-                id: 'q1',
-                time: '12:04:18',
-                text: '«Who wrote the anthem…»',
-                mode: 'LocalSearch',
-                dur: '1.3s',
-                chunks: 'chunks: 3',
-                communities: 'communities: 1',
-                retrieval: 'retrieval 140ms',
-                generation: 'gen 1.2s',
-            },
-            {
-                id: 'q2',
-                time: '12:03:51',
-                text: '«Connection between Ibsen and…»',
-                mode: 'MixSearch',
-                dur: '2.1s',
-                chunks: 'chunks: 7',
-                communities: 'communities: 3',
-                retrieval: 'retrieval 360ms',
-                generation: 'gen 1.7s',
-            },
-        ];
-        // energy assumptions
-        const TDP_W = 300; // meno-lite 7B локально
-        const PUE = 1.4; // дата-центр / охлаждение
-        const KWH_PRICE = 0.15; // $/kWh
-        const GPT4_PRICE = 0.10; // $ per doc (~40k tokens × $2.5/1M)
-        function parse_seconds(time) {
-            // '1.2s' → 1.2  |  '140ms' → 0.14
-            const trimmed = time.trim();
-            if (trimmed.endsWith('ms'))
-                return parseFloat(trimmed) / 1000;
-            if (trimmed.endsWith('s'))
-                return parseFloat(trimmed);
-            return parseFloat(trimmed) || 0;
-        }
-        class $raggu_web_front_dashboard extends $.$raggu_web_front_dashboard {
-            metrics() { return METRICS; }
-            stages() { return STAGES; }
-            logs() { return LOGS; }
-            metric_rows() { return this.metrics().map(m => this.Metric(m.id)); }
-            stage_rows() { return this.stages().map(s => this.Stage(s.id)); }
-            log_rows() { return this.logs().map(l => this.Log(l.id)); }
-            metric(id) { return this.metrics().find(m => m.id === id) ?? METRICS[0]; }
-            stage(id) { return this.stages().find(s => s.id === id) ?? STAGES[0]; }
-            log(id) { return this.logs().find(l => l.id === id) ?? LOGS[0]; }
-            metric_name(id) { return this.metric(id).name; }
-            metric_value(id) { return this.metric(id).value; }
-            metric_pct(id) { return this.metric(id).pct; }
-            stage_name(id) { return this.stage(id).name; }
-            stage_time(id) { return this.stage(id).time; }
-            stage_pct(id) { return this.stage(id).pct; }
-            log_time(id) { return this.log(id).time; }
-            log_text(id) { return this.log(id).text; }
-            log_mode(id) { return this.log(id).mode; }
-            log_dur(id) { return this.log(id).dur; }
-            log_chunks(id) { return this.log(id).chunks; }
-            log_communities(id) { return this.log(id).communities; }
-            log_retrieval(id) { return this.log(id).retrieval; }
-            log_generation(id) { return this.log(id).generation; }
-            // per-query energy estimate: TDP × dur × PUE
-            log_power(id) {
-                const sec = parse_seconds(this.log(id).dur);
-                const wh = TDP_W * (sec / 3600) * PUE;
-                return `≈${wh.toFixed(2)} Wh`;
-            }
-            // total pipeline seconds, reactive on stages
-            pipeline_seconds() {
-                return this.stages().reduce((sum, s) => sum + parse_seconds(s.time), 0);
-            }
-            // kWh = TDP × time_h × PUE / 1000
-            energy_kwh() {
-                const hours = this.pipeline_seconds() / 3600;
-                return (TDP_W * hours * PUE) / 1000;
-            }
-            energy_kwh_val() {
-                return this.energy_kwh().toFixed(2);
-            }
-            // $ saving vs gpt-4o estimate per doc
-            energy_cost_val() {
-                const our = this.energy_kwh() * KWH_PRICE;
-                if (GPT4_PRICE <= 0)
-                    return '0%';
-                const saved_pct = Math.round((1 - our / GPT4_PRICE) * 100);
-                const sign = saved_pct >= 0 ? '−' : '+';
-                return `${sign}${Math.abs(saved_pct)}%`;
-            }
-        }
-        $$.$raggu_web_front_dashboard = $raggu_web_front_dashboard;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    const card_label = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 600,
-            size: '11px',
-        },
-        color: $bog_builderui_tokens.shade,
-        textTransform: 'uppercase',
-        letterSpacing: '0.6px',
-    };
-    const card = {
-        background: { color: $bog_builderui_tokens.card },
-        border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-        padding: {
-            top: '18px',
-            bottom: '18px',
-            left: '18px',
-            right: '18px',
-        },
-        flex: { direction: 'column' },
-    };
-    const stat_val = {
-        font: { weight: 800, size: '26px' },
-    };
-    const stat_lbl = {
-        font: {
-            family: 'ui-monospace, monospace',
-            weight: 500,
-            size: '10px',
-        },
-        color: $bog_builderui_tokens.shade,
-    };
-    $mol_style_define($raggu_web_front_dashboard, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        padding: {
-            top: '1.5rem',
-            bottom: '1.5rem',
-            left: '1.75rem',
-            right: '1.75rem',
-        },
-        Title: {
-            font: { weight: 700, size: '20px' },
-            margin: { bottom: '4px' },
-        },
-        Subtitle: {
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { bottom: '20px' },
-        },
-        Grid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '16px',
-            minWidth: 0,
-        },
-        Card_stats: card,
-        Card_quality: card,
-        Card_energy: card,
-        Card_timings: card,
-        Card_logs: { ...card, gridColumn: '1 / -1' },
-        Card_stats_label: card_label,
-        Card_quality_label: card_label,
-        Card_energy_label: card_label,
-        Card_timings_label: card_label,
-        Card_logs_label: card_label,
-        Stats_row: {
-            flex: { direction: 'row' },
-            gap: '22px',
-            margin: { top: '14px' },
-        },
-        Stat_nodes: { flex: { direction: 'column' } },
-        Stat_edges: { flex: { direction: 'column' } },
-        Stat_comms: { flex: { direction: 'column' } },
-        Stat_nodes_val: stat_val,
-        Stat_edges_val: stat_val,
-        Stat_comms_val: stat_val,
-        Stat_nodes_lbl: stat_lbl,
-        Stat_edges_lbl: stat_lbl,
-        Stat_comms_lbl: stat_lbl,
-        Stats_dist: {
-            margin: { top: '14px' },
-            height: '64px',
-            border: { radius: '6px' },
-            align: { items: 'center' },
-            justify: { content: 'center' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Metric_rows: { flex: { direction: 'column' } },
-        Quality_footer: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '12px' },
-        },
-        Energy_row: {
-            flex: { direction: 'row' },
-            gap: '22px',
-            margin: { top: '14px' },
-            align: { items: 'flex-end' },
-        },
-        Energy_kwh: { flex: { direction: 'column' } },
-        Energy_cost: { flex: { direction: 'column' } },
-        Energy_kwh_val: stat_val,
-        Energy_cost_val: { ...stat_val, color: '#1f8a5b' },
-        Energy_kwh_lbl: stat_lbl,
-        Energy_cost_lbl: stat_lbl,
-        Energy_formula: {
-            margin: { top: '10px' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-        },
-        Energy_note: {
-            margin: { top: '8px' },
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            lineHeight: '1.5',
-            background: { color: $bog_builderui_tokens.back },
-            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '6px' },
-            padding: {
-                top: '9px',
-                bottom: '9px',
-                left: '9px',
-                right: '9px',
-            },
-            whiteSpace: 'pre-line',
-        },
-        Stage_rows: { flex: { direction: 'column' } },
-        Log_list: {
-            flex: { direction: 'column' },
-            gap: '6px',
-            margin: { top: '12px' },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_summary_card) = class $raggu_web_front_summary_card extends ($.$bog_builderui_div) {
-		click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Icon(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.icon())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Badge(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.badge())]);
-			return obj;
-		}
-		Head(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Icon()), 
-				(this.Spacer()), 
-				(this.Badge())
-			]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Desc(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.desc())]);
-			return obj;
-		}
-		More(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.more())]);
-			return obj;
-		}
-		icon(){
-			return "";
-		}
-		badge(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		desc(){
-			return "";
-		}
-		more(){
-			return "";
-		}
-		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
-		}
-		sub(){
-			return [
-				(this.Head()), 
-				(this.Title()), 
-				(this.Desc()), 
-				(this.More())
-			];
-		}
-	};
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "click"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Icon"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Badge"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Head"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "Desc"));
-	($mol_mem(($.$raggu_web_front_summary_card.prototype), "More"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_summary_card, {
-        background: { color: $bog_builderui_tokens.card },
-        border: { width: '2px', style: 'solid', color: $bog_builderui_tokens.line, radius: '10px' },
-        padding: {
-            top: '12px',
-            bottom: '12px',
-            left: '12px',
-            right: '12px',
-        },
-        flex: { direction: 'column' },
-        cursor: 'pointer',
-        ':hover': {
-            border: { color: $bog_builderui_tokens.current },
-        },
-        Head: {
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-        },
-        Icon: {
-            font: { size: '22px' },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Badge: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 600,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            background: { color: $bog_builderui_tokens.field },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '5px' },
-            padding: {
-                top: '2px',
-                bottom: '2px',
-                left: '7px',
-                right: '7px',
-            },
-        },
-        Title: {
-            font: { weight: 700, size: '14px' },
-            margin: { top: '11px' },
-        },
-        Desc: {
-            font: { size: '11px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '4px' },
-            lineHeight: '1.4',
-            flex: { grow: 1 },
-        },
-        More: {
-            font: { weight: 600, size: '11px' },
-            color: $bog_builderui_tokens.current,
-            margin: { top: '10px' },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$mol_image) = class $mol_image extends ($.$mol_view) {
-		uri(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		loading(){
-			return "lazy";
-		}
-		decoding(){
-			return "async";
-		}
-		cors(){
-			return null;
-		}
-		natural_width(){
-			return 0;
-		}
-		natural_height(){
-			return 0;
-		}
-		load(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "img";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"src": (this.uri()), 
-				"title": (this.hint()), 
-				"alt": (this.title()), 
-				"loading": (this.loading()), 
-				"decoding": (this.decoding()), 
-				"crossOrigin": (this.cors()), 
-				"width": (this.natural_width()), 
-				"height": (this.natural_height())
-			};
-		}
-		event(){
-			return {"load": (next) => (this.load(next))};
-		}
-		minimal_width(){
-			return 16;
-		}
-		minimal_height(){
-			return 16;
-		}
-	};
-	($mol_mem(($.$mol_image.prototype), "load"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_image extends $.$mol_image {
-            natural_width(next) {
-                const dom = this.dom_node();
-                if (dom.naturalWidth)
-                    return dom.naturalWidth;
-                const found = this.uri().match(/\bwidth=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            natural_height(next) {
-                const dom = this.dom_node();
-                if (dom.naturalHeight)
-                    return dom.naturalHeight;
-                const found = this.uri().match(/\bheight=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            load() {
-                this.natural_width(null);
-                this.natural_height(null);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_width", null);
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_height", null);
-        $$.$mol_image = $mol_image;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_link) = class $mol_link extends ($.$mol_view) {
-		uri_toggle(){
-			return "";
-		}
-		hint(){
-			return "";
-		}
-		hint_safe(){
-			return (this.hint());
-		}
-		target(){
-			return "_self";
-		}
-		file_name(){
-			return "";
-		}
-		current(){
-			return false;
-		}
-		relation(){
-			return "";
-		}
-		event_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		click(next){
-			return (this.event_click(next));
-		}
-		uri(){
-			return "";
-		}
-		dom_name(){
-			return "a";
-		}
-		uri_off(){
-			return "";
-		}
-		uri_native(){
-			return null;
-		}
-		external(){
-			return false;
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"href": (this.uri_toggle()), 
-				"title": (this.hint_safe()), 
-				"target": (this.target()), 
-				"download": (this.file_name()), 
-				"mol_link_current": (this.current()), 
-				"rel": (this.relation())
-			};
-		}
-		sub(){
-			return [(this.title())];
-		}
-		arg(){
-			return {};
-		}
-		event(){
-			return {...(super.event()), "click": (next) => (this.click(next))};
-		}
-	};
-	($mol_mem(($.$mol_link.prototype), "event_click"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        /**
-         * Dynamic hyperlink. It can add, change or remove parameters. A link that leads to the current page has [mol_link_current] attribute set to true.
-         * @see https://mol.hyoo.ru/#!section=demos/demo=mol_link_demo
-         */
-        class $mol_link extends $.$mol_link {
-            uri_toggle() {
-                return this.current() ? this.uri_off() : this.uri();
-            }
-            uri() {
-                return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
-            }
-            uri_off() {
-                const arg2 = {};
-                for (let i in this.arg())
-                    arg2[i] = null;
-                return new this.$.$mol_state_arg(this.state_key()).link(arg2);
-            }
-            uri_native() {
-                const base = this.$.$mol_state_arg.href();
-                return new URL(this.uri(), base);
-            }
-            current() {
-                const base = this.$.$mol_state_arg.href_normal();
-                const target = this.uri_native().toString();
-                if (base === target)
-                    return true;
-                const args = this.arg();
-                const keys = Object.keys(args).filter(key => args[key] != null);
-                if (keys.length === 0)
-                    return false;
-                for (const key of keys) {
-                    if (this.$.$mol_state_arg.value(key) != args[key])
-                        return false;
-                }
-                return true;
-            }
-            file_name() {
-                return null;
-            }
-            minimal_height() {
-                return Math.max(super.minimal_height(), 24);
-            }
-            external() {
-                return this.uri_native().origin !== $mol_dom_context.location.origin;
-            }
-            target() {
-                return this.external() ? '_blank' : '_self';
-            }
-            hint_safe() {
-                try {
-                    return this.hint();
-                }
-                catch (error) {
-                    $mol_fail_log(error);
-                    if (error instanceof Error)
-                        return '💥' + error.message;
-                    return '';
-                }
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri_toggle", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri_off", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "uri_native", null);
-        __decorate([
-            $mol_mem
-        ], $mol_link.prototype, "current", null);
-        $$.$mol_link = $mol_link;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const { rem } = $mol_style_unit;
-    $mol_style_define($mol_link, {
-        textDecoration: 'none',
-        color: $mol_theme.control,
-        stroke: 'currentcolor',
-        cursor: 'pointer',
-        padding: $mol_gap.text,
-        boxSizing: 'border-box',
-        position: 'relative',
-        minWidth: rem(2.5),
-        minHeight: rem(2.5),
-        gap: $mol_gap.space,
-        border: {
-            radius: $mol_gap.round,
-        },
-        ':hover': {
-            background: {
-                color: $mol_theme.hover,
-            },
-        },
-        ':focus': {
-            outline: 'none',
-        },
-        ':focus-visible': {
-            outline: 'none',
-            background: {
-                color: $mol_theme.hover,
-            }
-        },
-        ':active': {
-            color: $mol_theme.focus,
-        },
-        '@': {
-            mol_link_current: {
-                'true': {
-                    color: $mol_theme.current,
-                    textShadow: '0 0',
-                }
-            }
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_summary_detail) = class $raggu_web_front_summary_detail extends ($.$bog_builderui_div) {
-		close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Backdrop(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			return obj;
-		}
-		Icon(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.icon())]);
-			return obj;
-		}
-		Title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.title())]);
-			return obj;
-		}
-		Badge(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.badge())]);
-			return obj;
-		}
-		Header_text(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Title()), (this.Badge())]);
-			return obj;
-		}
-		Spacer(){
-			const obj = new this.$.$bog_builderui_div();
-			return obj;
-		}
-		Close_btn(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.event) = () => ({"click": (next) => (this.close(next))});
-			(obj.sub) = () => (["✕"]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Icon()), 
-				(this.Header_text()), 
-				(this.Spacer()), 
-				(this.Close_btn())
-			]);
-			return obj;
-		}
-		Content(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.body()));
-			return obj;
-		}
-		Body(){
-			const obj = new this.$.$mol_scroll();
-			(obj.sub) = () => ([(this.Content())]);
-			return obj;
-		}
-		Panel(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header()), (this.Body())]);
-			return obj;
-		}
-		Fact_marker(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => (["—"]);
-			return obj;
-		}
-		fact(id){
-			return "";
-		}
-		Fact_text(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.fact(id))]);
-			return obj;
-		}
-		link_rows(){
-			return [];
-		}
-		link_uri(id){
-			return "";
-		}
-		link_label(id){
-			return "";
-		}
-		showed(){
-			return false;
-		}
-		icon(){
-			return "";
-		}
-		badge(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		image(){
-			return "";
-		}
-		facts(){
-			return [];
-		}
-		links(){
-			return [];
-		}
-		body(){
-			return [];
-		}
-		attr(){
-			return {...(super.attr()), "raggu_web_front_summary_detail_showed": (this.showed())};
-		}
-		sub(){
-			return [(this.Backdrop()), (this.Panel())];
-		}
-		Image(){
-			const obj = new this.$.$mol_image();
-			(obj.uri) = () => ((this.image()));
-			return obj;
-		}
-		Fact(id){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Fact_marker(id)), (this.Fact_text(id))]);
-			return obj;
-		}
-		Links(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.link_rows()));
-			return obj;
-		}
-		Link(id){
-			const obj = new this.$.$mol_link();
-			(obj.uri) = () => ((this.link_uri(id)));
-			(obj.title) = () => ((this.link_label(id)));
-			(obj.attr) = () => ({...(this.$.$mol_link.prototype.attr.call(obj)), "target": "_blank"});
-			return obj;
-		}
-	};
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "close"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Backdrop"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Icon"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Title"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Badge"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Header_text"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Spacer"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Close_btn"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Header"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Content"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Body"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Panel"));
-	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Fact_marker"));
-	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Fact_text"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Image"));
-	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Fact"));
-	($mol_mem(($.$raggu_web_front_summary_detail.prototype), "Links"));
-	($mol_mem_key(($.$raggu_web_front_summary_detail.prototype), "Link"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_summary_detail extends $.$raggu_web_front_summary_detail {
-            body() {
-                return [
-                    ...this.image() ? [this.Image()] : [],
-                    ...this.facts().map((_, i) => this.Fact(i)),
-                    ...this.links().length ? [this.Links()] : [],
-                ];
-            }
-            fact(i) {
-                return this.facts()[i];
-            }
-            link_rows() {
-                return this.links().map((_, i) => this.Link(i));
-            }
-            link_uri(i) {
-                return this.links()[i].uri;
-            }
-            link_label(i) {
-                return this.links()[i].label;
-            }
-        }
-        $$.$raggu_web_front_summary_detail = $raggu_web_front_summary_detail;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_summary_detail, {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'none',
-        zIndex: 40,
-        '@': {
-            raggu_web_front_summary_detail_showed: {
-                true: { display: 'flex' },
-            },
-        },
-        Backdrop: {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            background: { color: '#1c1b1a59' },
-        },
-        Panel: {
-            position: 'relative',
-            zIndex: 1,
-            margin: 'auto',
-            width: '760px',
-            maxWidth: $mol_style_func.calc('100vw - 4rem'),
-            maxHeight: $mol_style_func.calc('100vh - 4rem'),
-            background: { color: $bog_builderui_tokens.card },
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '12px' },
-            flex: { direction: 'column' },
-            box: {
-                shadow: [{
-                        x: 0,
-                        y: '12px',
-                        blur: '40px',
-                        spread: 0,
-                        color: '#0000001f',
-                    }],
-            },
-        },
-        Header: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            border: {
-                bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-            },
-            flex: { direction: 'row' },
-            align: { items: 'center' },
-            gap: '12px',
-        },
-        Icon: {
-            font: { size: '24px' },
-        },
-        Header_text: {
-            flex: { direction: 'column' },
-        },
-        Title: {
-            font: { weight: 700, size: '16px' },
-        },
-        Badge: {
-            font: {
-                family: 'ui-monospace, monospace',
-                weight: 500,
-                size: '10px',
-            },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '2px' },
-        },
-        Spacer: {
-            flex: { grow: 1 },
-        },
-        Close_btn: {
-            cursor: 'pointer',
-            color: $bog_builderui_tokens.shade,
-            font: { size: '14px' },
-            padding: {
-                top: '4px',
-                bottom: '4px',
-                left: '8px',
-                right: '8px',
-            },
-        },
-        Content: {
-            padding: {
-                top: '18px',
-                bottom: '18px',
-                left: '20px',
-                right: '20px',
-            },
-            flex: { direction: 'column' },
-            gap: '12px',
-        },
-        Image: {
-            maxWidth: '100%',
-            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '8px' },
-        },
-        Fact: {
-            flex: { direction: 'row' },
-            gap: '8px',
-            align: { items: 'flex-start' },
-        },
-        Fact_marker: {
-            color: $bog_builderui_tokens.current,
-            font: { weight: 700, size: '13px' },
-        },
-        Fact_text: {
-            font: { size: '13px' },
-            lineHeight: '1.5',
-            flex: { shrink: 1 },
-            minWidth: 0,
-        },
-        Links: {
-            flex: { direction: 'row' },
-            flexWrap: 'wrap',
-            gap: '10px',
-            margin: { top: '4px' },
-        },
-        Link: {
-            font: { weight: 600, size: '12px' },
-            color: $bog_builderui_tokens.current,
-        },
-        '@media': {
-            '(max-width: 720px)': {
-                Panel: {
-                    maxWidth: $mol_style_func.calc('100vw - 1.5rem'),
-                    maxHeight: $mol_style_func.calc('100vh - 1.5rem'),
-                },
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$raggu_web_front_summary) = class $raggu_web_front_summary extends ($.$bog_builderui_div) {
-		Header_title(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.header_title_text())]);
-			return obj;
-		}
-		Header_subtitle(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.header_subtitle_text())]);
-			return obj;
-		}
-		Header(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Header_title()), (this.Header_subtitle())]);
-			return obj;
-		}
-		card_icon(id){
-			return "";
-		}
-		card_badge(id){
-			return "";
-		}
-		card_title(id){
-			return "";
-		}
-		card_desc(id){
-			return "";
-		}
-		click(id, next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Card(id){
-			const obj = new this.$.$raggu_web_front_summary_card();
-			(obj.icon) = () => ((this.card_icon(id)));
-			(obj.badge) = () => ((this.card_badge(id)));
-			(obj.title) = () => ((this.card_title(id)));
-			(obj.desc) = () => ((this.card_desc(id)));
-			(obj.more) = () => ((this.more_text()));
-			(obj.click) = (next) => ((this.click(id, next)));
-			return obj;
-		}
-		rows(){
-			return [(this.Card(id))];
-		}
-		Grid(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ((this.rows()));
-			return obj;
-		}
-		detail_showed(){
-			return false;
-		}
-		opened_icon(){
-			return "";
-		}
-		opened_badge(){
-			return "";
-		}
-		opened_title(){
-			return "";
-		}
-		opened_facts(){
-			return [];
-		}
-		opened_links(){
-			return [];
-		}
-		opened_image(){
-			return "";
-		}
-		close(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		opened(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		header_title_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_header_title_text"));
-		}
-		header_subtitle_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_header_subtitle_text"));
-		}
-		more_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_more_text"));
-		}
-		ragu_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_badge"));
-		}
-		ragu_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_desc"));
-		}
-		ragu_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_fact_1"));
-		}
-		ragu_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_fact_2"));
-		}
-		ragu_fact_3(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ragu_fact_3"));
-		}
-		mol_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_badge"));
-		}
-		mol_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_desc"));
-		}
-		mol_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_fact_1"));
-		}
-		mol_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_fact_2"));
-		}
-		mol_fact_3(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_mol_fact_3"));
-		}
-		menolite_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_badge"));
-		}
-		menolite_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_desc"));
-		}
-		menolite_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_fact_1"));
-		}
-		menolite_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_fact_2"));
-		}
-		menolite_fact_3(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_menolite_fact_3"));
-		}
-		nerel_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_badge"));
-		}
-		nerel_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_desc"));
-		}
-		nerel_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_1"));
-		}
-		nerel_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_2"));
-		}
-		nerel_fact_3(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_nerel_fact_3"));
-		}
-		ocr_badge(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_badge"));
-		}
-		ocr_desc(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_desc"));
-		}
-		ocr_fact_1(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_1"));
-		}
-		ocr_fact_2(){
-			return (this.$.$mol_locale.text("$raggu_web_front_summary_ocr_fact_2"));
-		}
-		sub(){
-			return [(this.Header()), (this.Grid())];
-		}
-		Detail(){
-			const obj = new this.$.$raggu_web_front_summary_detail();
-			(obj.showed) = () => ((this.detail_showed()));
-			(obj.icon) = () => ((this.opened_icon()));
-			(obj.badge) = () => ((this.opened_badge()));
-			(obj.title) = () => ((this.opened_title()));
-			(obj.facts) = () => ((this.opened_facts()));
-			(obj.links) = () => ((this.opened_links()));
-			(obj.image) = () => ((this.opened_image()));
-			(obj.close) = (next) => ((this.close(next)));
-			return obj;
-		}
-	};
-	($mol_mem(($.$raggu_web_front_summary.prototype), "Header_title"));
-	($mol_mem(($.$raggu_web_front_summary.prototype), "Header_subtitle"));
-	($mol_mem(($.$raggu_web_front_summary.prototype), "Header"));
-	($mol_mem_key(($.$raggu_web_front_summary.prototype), "click"));
-	($mol_mem_key(($.$raggu_web_front_summary.prototype), "Card"));
-	($mol_mem(($.$raggu_web_front_summary.prototype), "Grid"));
-	($mol_mem(($.$raggu_web_front_summary.prototype), "close"));
-	($mol_mem(($.$raggu_web_front_summary.prototype), "opened"));
-	($mol_mem(($.$raggu_web_front_summary.prototype), "Detail"));
-
-
-;
-"use strict";
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $raggu_web_front_summary extends $.$raggu_web_front_summary {
-            ids() {
-                return ['ragu', 'mol', 'menolite', 'nerel', 'ocr'];
-            }
-            rows() {
-                return this.ids().map(id => this.Card(id));
-            }
-            card_icon(id) {
-                switch (id) {
-                    case 'ragu': return '🧠';
-                    case 'mol': return '⚡';
-                    case 'menolite': return '🤖';
-                    case 'nerel': return '🏷';
-                    case 'ocr': return '📄';
-                }
-                return '';
-            }
-            card_title(id) {
-                switch (id) {
-                    case 'ragu': return 'RAGU';
-                    case 'mol': return '$mol';
-                    case 'menolite': return 'Meno-Lite-0.1';
-                    case 'nerel': return 'NEREL+';
-                    case 'ocr': return 'OCR';
-                }
-                return '';
-            }
-            card_badge(id) {
-                switch (id) {
-                    case 'ragu': return this.ragu_badge();
-                    case 'mol': return this.mol_badge();
-                    case 'menolite': return this.menolite_badge();
-                    case 'nerel': return this.nerel_badge();
-                    case 'ocr': return this.ocr_badge();
-                }
-                return '';
-            }
-            card_desc(id) {
-                switch (id) {
-                    case 'ragu': return this.ragu_desc();
-                    case 'mol': return this.mol_desc();
-                    case 'menolite': return this.menolite_desc();
-                    case 'nerel': return this.nerel_desc();
-                    case 'ocr': return this.ocr_desc();
-                }
-                return '';
-            }
-            card_facts(id) {
-                switch (id) {
-                    case 'ragu': return [this.ragu_fact_1(), this.ragu_fact_2(), this.ragu_fact_3()];
-                    case 'mol': return [this.mol_fact_1(), this.mol_fact_2(), this.mol_fact_3()];
-                    case 'menolite': return [this.menolite_fact_1(), this.menolite_fact_2(), this.menolite_fact_3()];
-                    case 'nerel': return [this.nerel_fact_1(), this.nerel_fact_2(), this.nerel_fact_3()];
-                    case 'ocr': return [this.ocr_fact_1(), this.ocr_fact_2()];
-                }
-                return [];
-            }
-            card_links(id) {
-                switch (id) {
-                    case 'ragu': return [
-                        { label: 'github.com/RaguTeam/RAGU', uri: 'https://github.com/RaguTeam/RAGU' },
-                    ];
-                    case 'mol': return [
-                        { label: 'github.com/RaguTeam/web', uri: 'https://github.com/RaguTeam/web' },
-                        { label: 'mol.hyoo.ru', uri: 'https://mol.hyoo.ru/' },
-                    ];
-                    case 'menolite': return [
-                        { label: 'huggingface.co/bond005/meno-lite-0.1', uri: 'https://huggingface.co/bond005/meno-lite-0.1' },
-                    ];
-                    case 'nerel': return [
-                        { label: 'NEREL paper (arXiv:2108.13112)', uri: 'https://arxiv.org/abs/2108.13112' },
-                    ];
-                    case 'ocr': return [
-                        { label: 'github.com/AleksanderMerkulov/text_extractor', uri: 'https://github.com/AleksanderMerkulov/text_extractor' },
-                    ];
-                }
-                return [];
-            }
-            card_image(id) {
-                // Архитектура RAGU из статьи, лежит в assets и деплоится через meta.tree.
-                if (id === 'ragu')
-                    return 'raggu/web/front/assets/ragu.jpg';
-                return '';
-            }
-            detail_showed() {
-                return !!this.opened();
-            }
-            opened_icon() { return this.card_icon(this.opened()); }
-            opened_badge() { return this.card_badge(this.opened()); }
-            opened_title() { return this.card_title(this.opened()); }
-            opened_facts() { return this.card_facts(this.opened()); }
-            opened_links() { return this.card_links(this.opened()); }
-            opened_image() { return this.card_image(this.opened()); }
-            click(id) {
-                this.opened(id);
-                return null;
-            }
-            close() {
-                this.opened('');
-                return null;
-            }
-        }
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_summary.prototype, "click", null);
-        __decorate([
-            $mol_action
-        ], $raggu_web_front_summary.prototype, "close", null);
-        $$.$raggu_web_front_summary = $raggu_web_front_summary;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-/** @see $bog_builderui_tokens */
-var $;
-(function ($) {
-    $mol_style_define($raggu_web_front_summary, {
-        flex: { direction: 'column', shrink: 1 },
-        minWidth: 0,
-        padding: {
-            top: '1.5rem',
-            bottom: '1.5rem',
-            left: '1.75rem',
-            right: '1.75rem',
-        },
-        Header: {
-            flex: { direction: 'column' },
-            margin: { bottom: '1.25rem' },
-        },
-        Header_title: {
-            font: { weight: 700, size: '20px' },
-        },
-        Header_subtitle: {
-            font: { size: '13px' },
-            color: $bog_builderui_tokens.shade,
-            margin: { top: '3px' },
-        },
-        Grid: {
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '16px',
-            minWidth: 0,
-        },
-        '@media': {
-            '(max-width: 720px)': {
-                padding: {
-                    top: '1rem',
-                    bottom: '1rem',
-                    left: '0.75rem',
-                    right: '0.75rem',
-                },
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
 	($.$raggu_web_front_app) = class $raggu_web_front_app extends ($.$bog_builderui_div) {
 		favicon_icon(){
 			const obj = new this.$.$mol_icon_graph();
@@ -21603,10 +18147,6 @@ var $;
 			const obj = new this.$.$mol_view();
 			return obj;
 		}
-		ask_chat(next){
-			if(next !== undefined) return next;
-			return null;
-		}
 		screen(next){
 			if(next !== undefined) return next;
 			return "gallery";
@@ -21634,12 +18174,6 @@ var $;
 		}
 		screen_explorer_title(){
 			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_explorer_title"));
-		}
-		screen_chat_title(){
-			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_chat_title"));
-		}
-		screen_dashboard_title(){
-			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_dashboard_title"));
 		}
 		screen_summary_title(){
 			return (this.$.$mol_locale.text("$raggu_web_front_app_screen_summary_title"));
@@ -21682,16 +18216,6 @@ var $;
 		Explorer(){
 			const obj = new this.$.$raggu_web_front_explorer();
 			(obj.dataset_id) = () => ((this.dataset_id()));
-			(obj.ask_click) = (next) => ((this.ask_chat(next)));
-			return obj;
-		}
-		Chat(){
-			const obj = new this.$.$raggu_web_front_chat();
-			(obj.dataset_id) = () => ((this.dataset_id()));
-			return obj;
-		}
-		Dashboard(){
-			const obj = new this.$.$raggu_web_front_dashboard();
 			return obj;
 		}
 		Summary(){
@@ -21711,15 +18235,12 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Help"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Summary_popup"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "ask_chat"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "screen"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "dataset_id"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "help_open"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "sidebar_collapsed"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Gallery"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Explorer"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "Chat"));
-	($mol_mem(($.$raggu_web_front_app.prototype), "Dashboard"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Summary"));
 
 
@@ -21736,14 +18257,16 @@ var $;
         class $raggu_web_front_app extends $.$raggu_web_front_app {
             body() {
                 // Сводка не зависит от датасета, для остальных экранов без него показываем Gallery.
-                if (this.screen() === 'summary')
+                if (this.screen() === "summary")
                     return [this.Summary()];
-                const s = this.dataset_id() ? this.screen() : 'gallery';
+                const s = this.dataset_id() ? this.screen() : "gallery";
                 switch (s) {
-                    case 'gallery': return [this.Gallery()];
-                    case 'explorer': return [this.Explorer()];
-                    case 'chat': return [this.Chat()];
-                    case 'dashboard': return [this.Dashboard()];
+                    case "gallery":
+                        return [this.Gallery()];
+                    case "explorer":
+                        return [this.Explorer()];
+                    // case 'chat': return [ this.Chat() ]
+                    // case 'dashboard': return [ this.Dashboard() ]
                 }
                 return [];
             }
@@ -21762,13 +18285,13 @@ var $;
                         return;
                     root.scroll({
                         left: main.offsetLeft + main.offsetWidth - root.clientWidth,
-                        behavior: 'smooth',
+                        behavior: "smooth",
                     });
                 });
                 return [];
             }
             lights_mode() {
-                return this.Theme_auto().is_light_now() ? 'light' : 'dark';
+                return this.Theme_auto().is_light_now() ? "light" : "dark";
             }
             // Попап деталей сводки рендерим на уровне app: внутри Body его ломает
             // contain:content у скролла — fixed-оверлей позиционируется не от вьюпорта.
@@ -21779,7 +18302,9 @@ var $;
                 this.help_open(true);
                 return null;
             }
-            sidebar_hidden() { return this.sidebar_collapsed(); }
+            sidebar_hidden() {
+                return this.sidebar_collapsed();
+            }
             toggle_sidebar() {
                 this.sidebar_collapsed(!this.sidebar_collapsed());
                 return null;
@@ -21787,7 +18312,9 @@ var $;
             // Gallery владеет фетчем списка датасетов — сайдбар получает данные
             // через эти прокси, чтобы не дублировать remote_datasets.
             dataset_ids() {
-                return this.Gallery().datasets().map((ds) => ds.id);
+                return this.Gallery()
+                    .datasets()
+                    .map((ds) => ds.id);
             }
             sidebar_dataset_name(id) {
                 return this.Gallery().card_title(id);
@@ -21800,36 +18327,39 @@ var $;
                 this.dataset_id(id);
                 return null;
             }
-            ask_chat() {
-                // Переносим выбранное в графе (сущность или связь) в чат: переключаем
-                // экран и сразу кладём заготовку вопроса в поле ввода.
-                const explorer = this.Explorer();
-                const node = explorer.selected();
-                const edge = explorer.selected_edge();
-                this.screen('chat');
-                if (edge) {
-                    const label = `${explorer.node_label(edge.source)} ${edge.relation} ${explorer.node_label(edge.target)}`;
-                    this.Chat().prompt_text(this.ask_relation_template().replace('%s', label));
-                }
-                else if (node?.label) {
-                    this.Chat().prompt_text(this.ask_entity_template().replace('%s', node.label));
-                }
-                return null;
-            }
+            // @$mol_action
+            // ask_chat() {
+            // 	// Переносим выбранное в графе (сущность или связь) в чат: переключаем
+            // 	// экран и сразу кладём заготовку вопроса в поле ввода.
+            // 	const explorer = this.Explorer() as $.$$.$raggu_web_front_explorer
+            // 	const node = explorer.selected()
+            // 	const edge = explorer.selected_edge()
+            // 	this.screen( 'chat' )
+            // 	if( edge ) {
+            // 		const label = `${ explorer.node_label( edge.source ) } ${ edge.relation } ${ explorer.node_label( edge.target ) }`
+            // 		this.Chat().prompt_text( this.ask_relation_template().replace( '%s', label ) )
+            // 	} else if( node?.label ) {
+            // 		this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )
+            // 	}
+            // 	return null
+            // }
             screen_title() {
                 switch (this.screen()) {
-                    case 'gallery': return this.screen_gallery_title();
-                    case 'explorer': return this.screen_explorer_title();
-                    case 'chat': return this.screen_chat_title();
-                    case 'dashboard': return this.screen_dashboard_title();
-                    case 'summary': return this.screen_summary_title();
+                    case "gallery":
+                        return this.screen_gallery_title();
+                    case "explorer":
+                        return this.screen_explorer_title();
+                    // case 'chat': return this.screen_chat_title()
+                    // case 'dashboard': return this.screen_dashboard_title()
+                    case "summary":
+                        return this.screen_summary_title();
                 }
-                return '';
+                return "";
             }
             dataset_title() {
                 const id = this.dataset_id();
                 if (!id)
-                    return '';
+                    return "";
                 return this.Gallery().card_title(id);
             }
             arg_value(key, next, fallback) {
@@ -21839,8 +18369,12 @@ var $;
                 arg.value(key, next === fallback ? null : next);
                 return next;
             }
-            screen(next) { return this.arg_value('screen', next, 'gallery'); }
-            dataset_id(next) { return this.arg_value('ds', next, ''); }
+            screen(next) {
+                return this.arg_value("screen", next, "gallery");
+            }
+            dataset_id(next) {
+                return this.arg_value("ds", next, "");
+            }
         }
         __decorate([
             $mol_mem
@@ -21855,9 +18389,6 @@ var $;
             $mol_action
         ], $raggu_web_front_app.prototype, "select_dataset", null);
         __decorate([
-            $mol_action
-        ], $raggu_web_front_app.prototype, "ask_chat", null);
-        __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "screen", null);
         __decorate([
@@ -21871,7 +18402,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("raggu/web/front/app/app.view.css", "/* Буклетный UX на телефоне (как в $mol_book2): сайдбар и контент — снап-страницы\n   горизонтального скролла. Свайп вправо открывает меню, выбор раздела доскролливает\n   обратно к контенту (см. auto() в app.view.ts).\n   Селекторы задвоены/вложены, чтобы перебить базовые правила из app.view.css.ts. */\n@media (max-width: 720px) {\n\n\t[raggu_web_front_app][raggu_web_front_app] {\n\t\toverflow-x: auto;\n\t\toverflow-y: hidden;\n\t\tscroll-snap-type: x mandatory;\n\t}\n\n\t[raggu_web_front_app] > [raggu_web_front_app_sidebar] {\n\t\tmin-width: 84vw;\n\t\tmax-width: 84vw;\n\t\tscroll-snap-align: start;\n\t\tscroll-snap-stop: always;\n\t}\n\n\t[raggu_web_front_app] > [raggu_web_front_app_main] {\n\t\tmin-width: 100vw;\n\t\tscroll-snap-align: end;\n\t\tscroll-snap-stop: always;\n\t}\n\n}\n");
+    $mol_style_attach("raggu/web/front/app/app.view.css", "/* Буклетный UX на телефоне (как в $mol_book2): сайдбар и контент — снап-страницы\n   горизонтального скролла. Свайп вправо открывает меню, выбор раздела доскролливает\n   обратно к контенту (см. auto() в app.view.ts).\n   Селекторы задвоены/вложены, чтобы перебить базовые правила из app.view.css.ts. */\n@media (max-width: 720px) {\n    [raggu_web_front_app][raggu_web_front_app] {\n        overflow-x: auto;\n        overflow-y: hidden;\n        scroll-snap-type: x mandatory;\n    }\n\n    [raggu_web_front_app] > [raggu_web_front_app_sidebar] {\n        min-width: 84vw;\n        max-width: 84vw;\n        scroll-snap-align: start;\n        scroll-snap-stop: always;\n    }\n\n    [raggu_web_front_app] > [raggu_web_front_app_main] {\n        min-width: 100vw;\n        scroll-snap-align: end;\n        scroll-snap-stop: always;\n    }\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -21880,29 +18411,29 @@ var $;
 var $;
 (function ($) {
     $mol_style_define($raggu_web_front_app, {
-        height: '100vh',
-        width: '100%',
+        height: "100vh",
+        width: "100%",
         background: { color: $bog_builderui_tokens.back },
         color: $bog_builderui_tokens.text,
-        overflow: 'hidden',
+        overflow: "hidden",
         font: {
-            family: 'system-ui, -apple-system, sans-serif',
+            family: "system-ui, -apple-system, sans-serif",
         },
         flex: {
-            direction: 'row',
+            direction: "row",
         },
         Main: {
             flex: {
                 grow: 1,
                 shrink: 1,
-                direction: 'column',
+                direction: "column",
             },
             minWidth: 0,
         },
         Body: {
-            display: 'flex',
-            flex: { grow: 1, shrink: 1, direction: 'column' },
-            align: { items: 'stretch' },
+            display: "flex",
+            flex: { grow: 1, shrink: 1, direction: "column" },
+            align: { items: "stretch" },
             minHeight: 0,
             minWidth: 0,
         },
@@ -25854,41 +22385,6 @@ var $;
 var $;
 (function ($) {
     $mol_test({
-        '$mol_syntax2_md_flow'() {
-            const check = (input, right) => {
-                const tokens = [];
-                $mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
-                $mol_assert_equal(tokens, right);
-            };
-            check('Hello,\nWorld..\r\n\r\n\nof Love!', [
-                ['block', 'Hello,\n', ['Hello,', '\n'], 0],
-                ['block', 'World..\r\n\r\n\n', ['World..', '\r\n\r\n\n'], 7],
-                ['block', 'of Love!', ['of Love!', ''], 19],
-            ]);
-            check('# Header1\n\nHello!\n\n## Header2', [
-                ['header', '# Header1\n\n', ['#', ' ', 'Header1', '\n\n'], 0],
-                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 11],
-                ['header', '## Header2', ['##', ' ', 'Header2', ''], 19],
-            ]);
-            check('```\nstart()\n```\n\n```jam.js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```', [
-                ['code', '```\nstart()\n```\n\n', ['```', '', 'start()\n', '```', '\n\n'], 0],
-                ['code', '```jam.js\nrestart()\n```\n\n', ['```', 'jam.js', 'restart()\n', '```', '\n\n'], 17],
-                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 42],
-                ['code', '```\nstop()\n```', ['```', '', 'stop()\n', '```', ''], 50],
-            ]);
-            check('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n', [
-                ['table', '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n', ['| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n', '\n'], 0],
-                ['table', '| Cell11 | Cell12\n| Cell21 | Cell22\n', ['| Cell11 | Cell12\n| Cell21 | Cell22\n', ''], 68],
-            ]);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
         'null by default'() {
             const key = String(Math.random());
             $mol_assert_equal($mol_state_session.value(key), null);
@@ -25905,332 +22401,103 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'config by value'() {
-            const N = $mol_data_setup((a) => a, 5);
-            $mol_assert_equal(N.config, 5);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for number and returns number type.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_number_demo
-     */
-    $.$mol_data_number = (val) => {
-        if (typeof val === 'number')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a number`));
-    };
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is number'() {
-            $mol_data_number(0);
-        },
-        'Is not number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number('x');
-            }, 'x is not a number');
-        },
-        'Is object number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number(new Number(''));
-            }, '0 is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is string'() {
-            $mol_data_string('');
-        },
-        'Is not string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(0);
-            }, '0 is not a string');
-        },
-        'Is object string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(new String('x'));
-            }, 'x is not a string');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Fit to record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0 });
-        },
-        'Extends record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0, name: 'Jin' });
-        },
-        // 'Recursive record' () {
-        // 	const User = $mol_data_record({
-        // 		name : $mol_data_string ,
-        // 		get kids() { return $mol_data_array( User ) } ,
-        // 	})
-        // 	User({
-        // 		name : 'Jin' ,
-        // 		kids : [
-        // 			{
-        // 				name : 'John' ,
-        // 				kids : [] ,
-        // 			}
-        // 		] ,
-        // 	})
-        // } ,
-        'Shrinks record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
-                User({ age: 0 });
-            }, '["name"] undefined is not a string');
-        },
-        'Shrinks deep record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
-                User({ wife: {} });
-            }, '["wife"] ["age"] undefined is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'is same number'() {
-            const Nan = $mol_data_const(Number.NaN);
-            Nan(Number.NaN);
-        },
-        'is equal object'() {
-            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
-            Tags({ tags: ['deep', 'equals'] });
-        },
-        'is different number'() {
-            const Five = $mol_data_const(5);
-            $mol_assert_fail(() => Five(6), '6 is not 5');
-        },
-        'is different object'() {
-            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
-            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is first'() {
-            $mol_data_variant($mol_data_number, $mol_data_string)(0);
-        },
-        'Is second'() {
-            $mol_data_variant($mol_data_number, $mol_data_string)('');
-        },
-        'Is false'() {
-            $mol_assert_fail(() => {
-                $mol_data_variant($mol_data_number, $mol_data_string)(false);
-            }, 'false is not any of variants');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is empty array'() {
-            $mol_data_array($mol_data_number)([]);
-        },
-        'Is array'() {
-            $mol_data_array($mol_data_number)([1, 2]);
-        },
-        'Is not array'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
-            }, '[object Object] is not an array');
-        },
-        'Has wrong item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)([1, '1']);
-            }, '[1] 1 is not a number');
-        },
-        'Has wrong deep item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
-            }, '[1] [2] false is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is null'() {
-            $mol_data_nullable($mol_data_number)(null);
-        },
-        'Is not null'() {
-            $mol_data_nullable($mol_data_number)(0);
-        },
-        'Is undefined'() {
-            $mol_assert_fail(() => {
-                const Type = $mol_data_nullable($mol_data_number);
-                Type(undefined);
-            }, 'undefined is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const Age = $mol_data_optional($mol_data_number);
-    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
-    $mol_test({
-        'Is not present'() {
-            $mol_assert_equal(Age(undefined), undefined);
-        },
-        'Is present'() {
-            $mol_assert_equal(Age(0), 0);
-        },
-        'Fallbacked'() {
-            $mol_assert_equal(Age_or_zero(undefined), 0);
-        },
-        'Is null'() {
-            $mol_assert_fail(() => Age(null), 'null is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
 var $;
 (function ($_1) {
     var $$;
     (function ($$) {
         function style_rule(component, key) {
             const el = $mol_dom_context.document.getElementById(`$mol_style_attach:${component}`);
-            const css = (el?.textContent ?? '').replace(/\s+/g, ' ');
-            return css.match(new RegExp(`\\[${key}\\][^{]*\\{[^}]*\\}`))?.[0] ?? '';
+            const css = (el?.textContent ?? "").replace(/\s+/g, " ");
+            return css.match(new RegExp(`\\[${key}\\][^{]*\\{[^}]*\\}`))?.[0] ?? "";
         }
         $mol_test({
-            'app.Body: $mol_scroll override is flex column'($) {
-                const rule = style_rule('$raggu_web_front_app', 'raggu_web_front_app_body');
+            "app.Body: $mol_scroll override is flex column"($) {
+                const rule = style_rule("$raggu_web_front_app", "raggu_web_front_app_body");
                 $mol_assert_equal(/display: flex/.test(rule), true);
                 $mol_assert_equal(/flex-direction: column/.test(rule), true);
             },
-            'app: every screen exists as sub-view'($) {
+            "app: every screen exists as sub-view"($) {
                 const v = $raggu_web_front_app.make({ $ });
                 $mol_assert_equal(v.Gallery() instanceof $raggu_web_front_gallery, true);
                 $mol_assert_equal(v.Explorer() instanceof $raggu_web_front_explorer, true);
-                $mol_assert_equal(v.Chat() instanceof $raggu_web_front_chat, true);
-                $mol_assert_equal(v.Dashboard() instanceof $raggu_web_front_dashboard, true);
+                // $mol_assert_equal( v.Chat() instanceof $raggu_web_front_chat, true )
+                // $mol_assert_equal( v.Dashboard() instanceof $raggu_web_front_dashboard, true )
             },
-            'app.body: switches by screen()'($) {
+            "app.body: switches by screen()"($) {
                 const v = $raggu_web_front_app.make({ $ });
                 // body() forces Gallery when no dataset selected — задать датасет чтобы проверить остальные экраны
-                v.dataset_id('wiki');
-                v.screen('gallery');
+                v.dataset_id("wiki");
+                v.screen("gallery");
                 $mol_assert_equal(v.body()[0], v.Gallery());
-                v.screen('explorer');
+                v.screen("explorer");
                 $mol_assert_equal(v.body()[0], v.Explorer());
-                v.screen('chat');
-                $mol_assert_equal(v.body()[0], v.Chat());
-                v.screen('dashboard');
-                $mol_assert_equal(v.body()[0], v.Dashboard());
+                // v.screen( 'chat' )
+                // $mol_assert_equal( v.body()[0], v.Chat() )
+                // v.screen( 'dashboard' )
+                // $mol_assert_equal( v.body()[0], v.Dashboard() )
             },
-            'app.body: forces Gallery when no dataset selected'($) {
+            "app.body: forces Gallery when no dataset selected"($) {
                 const v = $raggu_web_front_app.make({ $ });
-                v.screen('explorer');
-                $mol_assert_equal(v.dataset_id(), '');
+                v.screen("explorer");
+                $mol_assert_equal(v.dataset_id(), "");
                 $mol_assert_equal(v.body()[0], v.Gallery());
             },
-            'dashboard: metric and stage rows match data'($) {
-                const v = $raggu_web_front_dashboard.make({ $ });
-                $mol_assert_equal(v.Metric_rows().sub().length, 3);
-                $mol_assert_equal(v.Stage_rows().sub().length, 5);
-            },
-            'gallery: BUILTIN mock renders two cards (law, wiki)'($) {
+            // 'dashboard: metric and stage rows match data'( $ ) {
+            // const v = $raggu_web_front_dashboard.make({ $ })
+            // $mol_assert_equal( v.Metric_rows().sub().length, 3 )
+            // $mol_assert_equal( v.Stage_rows().sub().length, 5 )
+            // },
+            "gallery: BUILTIN mock renders two cards (law, wiki)"($) {
                 // No live backend in node tests → force ?mock=1 so remote_datasets returns null
                 // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
-                $.$mol_state_arg.value('mock', '1');
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 2);
             },
-            'url state: screen / dataset_id round-trip through $mol_state_arg'($) {
+            "url state: screen / dataset_id round-trip through $mol_state_arg"($) {
                 const app = $raggu_web_front_app.make({ $ });
                 const arg = $.$mol_state_arg;
                 // defaults are NOT written to URL (kept clean)
-                $mol_assert_equal(app.screen(), 'gallery');
-                $mol_assert_equal(arg.value('screen'), null);
+                $mol_assert_equal(app.screen(), "gallery");
+                $mol_assert_equal(arg.value("screen"), null);
                 // non-default values land in $mol_state_arg
-                app.screen('explorer');
-                $mol_assert_equal(arg.value('screen'), 'explorer');
-                app.dataset_id('law');
-                $mol_assert_equal(arg.value('ds'), 'law');
+                app.screen("explorer");
+                $mol_assert_equal(arg.value("screen"), "explorer");
+                app.dataset_id("law");
+                $mol_assert_equal(arg.value("ds"), "law");
                 // resetting to default removes from URL
-                app.screen('gallery');
-                $mol_assert_equal(arg.value('screen'), null);
+                app.screen("gallery");
+                $mol_assert_equal(arg.value("screen"), null);
             },
-            'e2e: full user flow through all screens'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "e2e: full user flow through all screens"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const app = $raggu_web_front_app.make({ $ });
                 // initial: gallery screen, BUILTIN mock has two cards (law, wiki)
-                $mol_assert_equal(app.screen(), 'gallery');
+                $mol_assert_equal(app.screen(), "gallery");
                 $mol_assert_equal(app.body()[0], app.Gallery());
                 $mol_assert_equal(app.Gallery().Grid().sub().length, 2);
                 // user picks dataset first — иначе body() держит Gallery
-                app.dataset_id('law');
+                app.dataset_id("law");
                 // user clicks "Граф" in topbar → explorer
                 app.Topbar().click_explorer();
-                $mol_assert_equal(app.screen(), 'explorer');
+                $mol_assert_equal(app.screen(), "explorer");
                 $mol_assert_equal(app.body()[0], app.Explorer());
                 // user clicks "Чат" → chat
-                app.Topbar().click_chat();
-                $mol_assert_equal(app.screen(), 'chat');
+                // app.Topbar().click_chat()
+                // $mol_assert_equal( app.screen(), 'chat' )
                 // user clicks "Дашборд" → dashboard
-                app.Topbar().click_dashboard();
-                $mol_assert_equal(app.screen(), 'dashboard');
+                // app.Topbar().click_dashboard()
+                // $mol_assert_equal( app.screen(), 'dashboard' )
                 // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
                 app.Topbar().click_gallery();
-                $mol_assert_equal(app.screen(), 'gallery');
-                app.Gallery().click('law');
-                $mol_assert_equal(app.screen(), 'gallery');
-                $mol_assert_equal(app.dataset_id(), 'law');
+                $mol_assert_equal(app.screen(), "gallery");
+                app.Gallery().click("law");
+                $mol_assert_equal(app.screen(), "gallery");
+                $mol_assert_equal(app.dataset_id(), "law");
             },
             // ---- explorer communities dropdown ----
-            'explorer.communities: mock graph groups nodes by community'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "explorer.communities: mock graph groups nodes by community"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_explorer.make({ $ });
                 const comms = v.communities();
                 $mol_assert_equal(comms.length > 1, true);
@@ -26238,87 +22505,89 @@ var $;
                 const total = comms.reduce((s, c) => s + c.size, 0);
                 $mol_assert_equal(total, v.graph_nodes().length);
                 // у каждого сообщества свой цвет
-                const colors = new Set(comms.map(c => v.comm_color_map()[c.id]));
+                const colors = new Set(comms.map((c) => v.comm_color_map()[c.id]));
                 $mol_assert_equal(colors.size, comms.length <= 15 ? comms.length : colors.size);
             },
-            'explorer.comm_click: toggles selection, comm_mark reflects it'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "explorer.comm_click: toggles selection, comm_mark reflects it"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_explorer.make({ $ });
                 $mol_assert_equal(v.comms_selected().length, 0);
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 1);
                 $mol_assert_equal(v.comm_active(0), true);
-                $mol_assert_equal(v.comm_mark(0), '✓');
+                $mol_assert_equal(v.comm_mark(0), "✓");
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 0);
-                $mol_assert_equal(v.comm_mark(0), '');
+                $mol_assert_equal(v.comm_mark(0), "");
             },
-            'forcegraph: community filter dims outsiders, highlights internal edges only'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "forcegraph: community filter dims outsiders, highlights internal edges only"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_explorer.make({ $ });
                 v.comm_click(0);
                 const comm = v.communities()[0].id;
                 const g = v.graph_view();
                 // узел выбранного сообщества виден, чужой — затемнён
-                const inside = v.graph_nodes().find(n => n.community === comm);
-                const outside = v.graph_nodes().find(n => n.community && n.community !== comm);
+                const inside = v.graph_nodes().find((n) => n.community === comm);
+                const outside = v
+                    .graph_nodes()
+                    .find((n) => n.community && n.community !== comm);
                 $mol_assert_equal(g.node_matches(inside.id), true);
                 $mol_assert_equal(g.node_matches(outside.id), false);
                 $mol_assert_equal(g.node_color(inside.id), v.comm_color_map()[comm]);
                 // ребро подсвечено только когда ОБА конца в выбранном сообществе
                 for (const e of v.graph_edges()) {
-                    const both_in = v.graph_nodes().find(n => n.id === e.source)?.community === comm
-                        && v.graph_nodes().find(n => n.id === e.target)?.community === comm;
+                    const both_in = v.graph_nodes().find((n) => n.id === e.source)?.community === comm &&
+                        v.graph_nodes().find((n) => n.id === e.target)?.community === comm;
                     $mol_assert_equal(g.edge_matches(e.id), both_in);
                 }
             },
             // ---- dashboard energy formula ----
-            'dashboard.pipeline_seconds: sum of STAGES.time'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                // 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
-                $mol_assert_equal(d.pipeline_seconds().toFixed(1), '15.3');
-            },
-            'dashboard.energy_kwh: TDP × time × PUE / 1000'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                // 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
-                const kwh = d.energy_kwh();
-                $mol_assert_equal(kwh > 0.0017 && kwh < 0.0019, true);
-                $mol_assert_equal(d.energy_kwh_val(), '0.00');
-            },
-            'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const val = d.energy_cost_val();
-                $mol_assert_equal(/^[−+]\d+%$/.test(val), true);
-            },
+            // 'dashboard.pipeline_seconds: sum of STAGES.time'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	// 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
+            // 	$mol_assert_equal( d.pipeline_seconds().toFixed( 1 ), '15.3' )
+            // },
+            // 'dashboard.energy_kwh: TDP × time × PUE / 1000'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	// 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
+            // 	const kwh = d.energy_kwh()
+            // 	$mol_assert_equal( kwh > 0.0017 && kwh < 0.0019, true )
+            // 	$mol_assert_equal( d.energy_kwh_val(), '0.00' )
+            // },
+            // 'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const val = d.energy_cost_val()
+            // 	$mol_assert_equal( /^[−+]\d+%$/.test( val ), true )
+            // },
             // ---- dashboard log expand ----
-            'dashboard.log: default not expanded'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                $mol_assert_equal(d.Log('q1').expanded(), false);
-            },
-            'dashboard.log.toggle: flips expanded'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const log = d.Log('q1');
-                $mol_assert_equal(log.expanded(), false);
-                log.toggle();
-                $mol_assert_equal(log.expanded(), true);
-                log.toggle();
-                $mol_assert_equal(log.expanded(), false);
-            },
-            'dashboard.log: Trace sub-view exists, attr reflects expanded state'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const log = d.Log('q1');
-                $mol_assert_equal(!!log.Trace(), true);
-                $mol_assert_equal(log.attr().raggu_web_front_dashboard_log_expanded, false);
-                log.toggle();
-                $mol_assert_equal(log.attr().raggu_web_front_dashboard_log_expanded, true);
-            },
-            'dashboard.log.arrow: glyph depends on expanded'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const log = d.Log('q2');
-                $mol_assert_equal(log.arrow(), '▾');
-                log.toggle();
-                $mol_assert_equal(log.arrow(), '▴');
-            },
+            // 'dashboard.log: default not expanded'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	$mol_assert_equal( d.Log( 'q1' ).expanded(), false )
+            // },
+            // 'dashboard.log.toggle: flips expanded'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const log = d.Log( 'q1' )
+            // 	$mol_assert_equal( log.expanded(), false )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.expanded(), true )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.expanded(), false )
+            // },
+            // 'dashboard.log: Trace sub-view exists, attr reflects expanded state'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const log = d.Log( 'q1' )
+            // 	$mol_assert_equal( !! log.Trace(), true )
+            // 	$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, false )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, true )
+            // },
+            // 'dashboard.log.arrow: glyph depends on expanded'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const log = d.Log( 'q2' )
+            // 	$mol_assert_equal( log.arrow(), '▾' )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.arrow(), '▴' )
+            // },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));

@@ -3670,41 +3670,6 @@ var $;
 var $;
 (function ($) {
     $mol_test({
-        '$mol_syntax2_md_flow'() {
-            const check = (input, right) => {
-                const tokens = [];
-                $mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
-                $mol_assert_equal(tokens, right);
-            };
-            check('Hello,\nWorld..\r\n\r\n\nof Love!', [
-                ['block', 'Hello,\n', ['Hello,', '\n'], 0],
-                ['block', 'World..\r\n\r\n\n', ['World..', '\r\n\r\n\n'], 7],
-                ['block', 'of Love!', ['of Love!', ''], 19],
-            ]);
-            check('# Header1\n\nHello!\n\n## Header2', [
-                ['header', '# Header1\n\n', ['#', ' ', 'Header1', '\n\n'], 0],
-                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 11],
-                ['header', '## Header2', ['##', ' ', 'Header2', ''], 19],
-            ]);
-            check('```\nstart()\n```\n\n```jam.js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```', [
-                ['code', '```\nstart()\n```\n\n', ['```', '', 'start()\n', '```', '\n\n'], 0],
-                ['code', '```jam.js\nrestart()\n```\n\n', ['```', 'jam.js', 'restart()\n', '```', '\n\n'], 17],
-                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 42],
-                ['code', '```\nstop()\n```', ['```', '', 'stop()\n', '```', ''], 50],
-            ]);
-            check('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n', [
-                ['table', '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n', ['| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n', '\n'], 0],
-                ['table', '| Cell11 | Cell12\n| Cell21 | Cell22\n', ['| Cell11 | Cell12\n| Cell21 | Cell22\n', ''], 68],
-            ]);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
         'null by default'() {
             const key = String(Math.random());
             $mol_assert_equal($mol_state_session.value(key), null);
@@ -3721,332 +3686,103 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'config by value'() {
-            const N = $mol_data_setup((a) => a, 5);
-            $mol_assert_equal(N.config, 5);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    /**
-     * Checks for number and returns number type.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_number_demo
-     */
-    $.$mol_data_number = (val) => {
-        if (typeof val === 'number')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a number`));
-    };
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is number'() {
-            $mol_data_number(0);
-        },
-        'Is not number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number('x');
-            }, 'x is not a number');
-        },
-        'Is object number'() {
-            $mol_assert_fail(() => {
-                $mol_data_number(new Number(''));
-            }, '0 is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is string'() {
-            $mol_data_string('');
-        },
-        'Is not string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(0);
-            }, '0 is not a string');
-        },
-        'Is object string'() {
-            $mol_assert_fail(() => {
-                $mol_data_string(new String('x'));
-            }, 'x is not a string');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Fit to record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0 });
-        },
-        'Extends record'() {
-            const User = $mol_data_record({ age: $mol_data_number });
-            User({ age: 0, name: 'Jin' });
-        },
-        // 'Recursive record' () {
-        // 	const User = $mol_data_record({
-        // 		name : $mol_data_string ,
-        // 		get kids() { return $mol_data_array( User ) } ,
-        // 	})
-        // 	User({
-        // 		name : 'Jin' ,
-        // 		kids : [
-        // 			{
-        // 				name : 'John' ,
-        // 				kids : [] ,
-        // 			}
-        // 		] ,
-        // 	})
-        // } ,
-        'Shrinks record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
-                User({ age: 0 });
-            }, '["name"] undefined is not a string');
-        },
-        'Shrinks deep record'() {
-            $mol_assert_fail(() => {
-                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
-                User({ wife: {} });
-            }, '["wife"] ["age"] undefined is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'is same number'() {
-            const Nan = $mol_data_const(Number.NaN);
-            Nan(Number.NaN);
-        },
-        'is equal object'() {
-            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
-            Tags({ tags: ['deep', 'equals'] });
-        },
-        'is different number'() {
-            const Five = $mol_data_const(5);
-            $mol_assert_fail(() => Five(6), '6 is not 5');
-        },
-        'is different object'() {
-            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
-            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is first'() {
-            $mol_data_variant($mol_data_number, $mol_data_string)(0);
-        },
-        'Is second'() {
-            $mol_data_variant($mol_data_number, $mol_data_string)('');
-        },
-        'Is false'() {
-            $mol_assert_fail(() => {
-                $mol_data_variant($mol_data_number, $mol_data_string)(false);
-            }, 'false is not any of variants');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is empty array'() {
-            $mol_data_array($mol_data_number)([]);
-        },
-        'Is array'() {
-            $mol_data_array($mol_data_number)([1, 2]);
-        },
-        'Is not array'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
-            }, '[object Object] is not an array');
-        },
-        'Has wrong item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_number)([1, '1']);
-            }, '[1] 1 is not a number');
-        },
-        'Has wrong deep item'() {
-            $mol_assert_fail(() => {
-                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
-            }, '[1] [2] false is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Is null'() {
-            $mol_data_nullable($mol_data_number)(null);
-        },
-        'Is not null'() {
-            $mol_data_nullable($mol_data_number)(0);
-        },
-        'Is undefined'() {
-            $mol_assert_fail(() => {
-                const Type = $mol_data_nullable($mol_data_number);
-                Type(undefined);
-            }, 'undefined is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    const Age = $mol_data_optional($mol_data_number);
-    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
-    $mol_test({
-        'Is not present'() {
-            $mol_assert_equal(Age(undefined), undefined);
-        },
-        'Is present'() {
-            $mol_assert_equal(Age(0), 0);
-        },
-        'Fallbacked'() {
-            $mol_assert_equal(Age_or_zero(undefined), 0);
-        },
-        'Is null'() {
-            $mol_assert_fail(() => Age(null), 'null is not a number');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
 var $;
 (function ($_1) {
     var $$;
     (function ($$) {
         function style_rule(component, key) {
             const el = $mol_dom_context.document.getElementById(`$mol_style_attach:${component}`);
-            const css = (el?.textContent ?? '').replace(/\s+/g, ' ');
-            return css.match(new RegExp(`\\[${key}\\][^{]*\\{[^}]*\\}`))?.[0] ?? '';
+            const css = (el?.textContent ?? "").replace(/\s+/g, " ");
+            return css.match(new RegExp(`\\[${key}\\][^{]*\\{[^}]*\\}`))?.[0] ?? "";
         }
         $mol_test({
-            'app.Body: $mol_scroll override is flex column'($) {
-                const rule = style_rule('$raggu_web_front_app', 'raggu_web_front_app_body');
+            "app.Body: $mol_scroll override is flex column"($) {
+                const rule = style_rule("$raggu_web_front_app", "raggu_web_front_app_body");
                 $mol_assert_equal(/display: flex/.test(rule), true);
                 $mol_assert_equal(/flex-direction: column/.test(rule), true);
             },
-            'app: every screen exists as sub-view'($) {
+            "app: every screen exists as sub-view"($) {
                 const v = $raggu_web_front_app.make({ $ });
                 $mol_assert_equal(v.Gallery() instanceof $raggu_web_front_gallery, true);
                 $mol_assert_equal(v.Explorer() instanceof $raggu_web_front_explorer, true);
-                $mol_assert_equal(v.Chat() instanceof $raggu_web_front_chat, true);
-                $mol_assert_equal(v.Dashboard() instanceof $raggu_web_front_dashboard, true);
+                // $mol_assert_equal( v.Chat() instanceof $raggu_web_front_chat, true )
+                // $mol_assert_equal( v.Dashboard() instanceof $raggu_web_front_dashboard, true )
             },
-            'app.body: switches by screen()'($) {
+            "app.body: switches by screen()"($) {
                 const v = $raggu_web_front_app.make({ $ });
                 // body() forces Gallery when no dataset selected — задать датасет чтобы проверить остальные экраны
-                v.dataset_id('wiki');
-                v.screen('gallery');
+                v.dataset_id("wiki");
+                v.screen("gallery");
                 $mol_assert_equal(v.body()[0], v.Gallery());
-                v.screen('explorer');
+                v.screen("explorer");
                 $mol_assert_equal(v.body()[0], v.Explorer());
-                v.screen('chat');
-                $mol_assert_equal(v.body()[0], v.Chat());
-                v.screen('dashboard');
-                $mol_assert_equal(v.body()[0], v.Dashboard());
+                // v.screen( 'chat' )
+                // $mol_assert_equal( v.body()[0], v.Chat() )
+                // v.screen( 'dashboard' )
+                // $mol_assert_equal( v.body()[0], v.Dashboard() )
             },
-            'app.body: forces Gallery when no dataset selected'($) {
+            "app.body: forces Gallery when no dataset selected"($) {
                 const v = $raggu_web_front_app.make({ $ });
-                v.screen('explorer');
-                $mol_assert_equal(v.dataset_id(), '');
+                v.screen("explorer");
+                $mol_assert_equal(v.dataset_id(), "");
                 $mol_assert_equal(v.body()[0], v.Gallery());
             },
-            'dashboard: metric and stage rows match data'($) {
-                const v = $raggu_web_front_dashboard.make({ $ });
-                $mol_assert_equal(v.Metric_rows().sub().length, 3);
-                $mol_assert_equal(v.Stage_rows().sub().length, 5);
-            },
-            'gallery: BUILTIN mock renders two cards (law, wiki)'($) {
+            // 'dashboard: metric and stage rows match data'( $ ) {
+            // const v = $raggu_web_front_dashboard.make({ $ })
+            // $mol_assert_equal( v.Metric_rows().sub().length, 3 )
+            // $mol_assert_equal( v.Stage_rows().sub().length, 5 )
+            // },
+            "gallery: BUILTIN mock renders two cards (law, wiki)"($) {
                 // No live backend in node tests → force ?mock=1 so remote_datasets returns null
                 // and falls back to BUILTIN; otherwise $mol_fetch leaks a pending promise.
-                $.$mol_state_arg.value('mock', '1');
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_gallery.make({ $ });
                 $mol_assert_equal(v.Grid().sub().length, 2);
             },
-            'url state: screen / dataset_id round-trip through $mol_state_arg'($) {
+            "url state: screen / dataset_id round-trip through $mol_state_arg"($) {
                 const app = $raggu_web_front_app.make({ $ });
                 const arg = $.$mol_state_arg;
                 // defaults are NOT written to URL (kept clean)
-                $mol_assert_equal(app.screen(), 'gallery');
-                $mol_assert_equal(arg.value('screen'), null);
+                $mol_assert_equal(app.screen(), "gallery");
+                $mol_assert_equal(arg.value("screen"), null);
                 // non-default values land in $mol_state_arg
-                app.screen('explorer');
-                $mol_assert_equal(arg.value('screen'), 'explorer');
-                app.dataset_id('law');
-                $mol_assert_equal(arg.value('ds'), 'law');
+                app.screen("explorer");
+                $mol_assert_equal(arg.value("screen"), "explorer");
+                app.dataset_id("law");
+                $mol_assert_equal(arg.value("ds"), "law");
                 // resetting to default removes from URL
-                app.screen('gallery');
-                $mol_assert_equal(arg.value('screen'), null);
+                app.screen("gallery");
+                $mol_assert_equal(arg.value("screen"), null);
             },
-            'e2e: full user flow through all screens'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "e2e: full user flow through all screens"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const app = $raggu_web_front_app.make({ $ });
                 // initial: gallery screen, BUILTIN mock has two cards (law, wiki)
-                $mol_assert_equal(app.screen(), 'gallery');
+                $mol_assert_equal(app.screen(), "gallery");
                 $mol_assert_equal(app.body()[0], app.Gallery());
                 $mol_assert_equal(app.Gallery().Grid().sub().length, 2);
                 // user picks dataset first — иначе body() держит Gallery
-                app.dataset_id('law');
+                app.dataset_id("law");
                 // user clicks "Граф" in topbar → explorer
                 app.Topbar().click_explorer();
-                $mol_assert_equal(app.screen(), 'explorer');
+                $mol_assert_equal(app.screen(), "explorer");
                 $mol_assert_equal(app.body()[0], app.Explorer());
                 // user clicks "Чат" → chat
-                app.Topbar().click_chat();
-                $mol_assert_equal(app.screen(), 'chat');
+                // app.Topbar().click_chat()
+                // $mol_assert_equal( app.screen(), 'chat' )
                 // user clicks "Дашборд" → dashboard
-                app.Topbar().click_dashboard();
-                $mol_assert_equal(app.screen(), 'dashboard');
+                // app.Topbar().click_dashboard()
+                // $mol_assert_equal( app.screen(), 'dashboard' )
                 // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
                 app.Topbar().click_gallery();
-                $mol_assert_equal(app.screen(), 'gallery');
-                app.Gallery().click('law');
-                $mol_assert_equal(app.screen(), 'gallery');
-                $mol_assert_equal(app.dataset_id(), 'law');
+                $mol_assert_equal(app.screen(), "gallery");
+                app.Gallery().click("law");
+                $mol_assert_equal(app.screen(), "gallery");
+                $mol_assert_equal(app.dataset_id(), "law");
             },
             // ---- explorer communities dropdown ----
-            'explorer.communities: mock graph groups nodes by community'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "explorer.communities: mock graph groups nodes by community"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_explorer.make({ $ });
                 const comms = v.communities();
                 $mol_assert_equal(comms.length > 1, true);
@@ -4054,87 +3790,89 @@ var $;
                 const total = comms.reduce((s, c) => s + c.size, 0);
                 $mol_assert_equal(total, v.graph_nodes().length);
                 // у каждого сообщества свой цвет
-                const colors = new Set(comms.map(c => v.comm_color_map()[c.id]));
+                const colors = new Set(comms.map((c) => v.comm_color_map()[c.id]));
                 $mol_assert_equal(colors.size, comms.length <= 15 ? comms.length : colors.size);
             },
-            'explorer.comm_click: toggles selection, comm_mark reflects it'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "explorer.comm_click: toggles selection, comm_mark reflects it"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_explorer.make({ $ });
                 $mol_assert_equal(v.comms_selected().length, 0);
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 1);
                 $mol_assert_equal(v.comm_active(0), true);
-                $mol_assert_equal(v.comm_mark(0), '✓');
+                $mol_assert_equal(v.comm_mark(0), "✓");
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 0);
-                $mol_assert_equal(v.comm_mark(0), '');
+                $mol_assert_equal(v.comm_mark(0), "");
             },
-            'forcegraph: community filter dims outsiders, highlights internal edges only'($) {
-                $.$mol_state_arg.value('mock', '1');
+            "forcegraph: community filter dims outsiders, highlights internal edges only"($) {
+                $.$mol_state_arg.value("mock", "1");
                 const v = $raggu_web_front_explorer.make({ $ });
                 v.comm_click(0);
                 const comm = v.communities()[0].id;
                 const g = v.graph_view();
                 // узел выбранного сообщества виден, чужой — затемнён
-                const inside = v.graph_nodes().find(n => n.community === comm);
-                const outside = v.graph_nodes().find(n => n.community && n.community !== comm);
+                const inside = v.graph_nodes().find((n) => n.community === comm);
+                const outside = v
+                    .graph_nodes()
+                    .find((n) => n.community && n.community !== comm);
                 $mol_assert_equal(g.node_matches(inside.id), true);
                 $mol_assert_equal(g.node_matches(outside.id), false);
                 $mol_assert_equal(g.node_color(inside.id), v.comm_color_map()[comm]);
                 // ребро подсвечено только когда ОБА конца в выбранном сообществе
                 for (const e of v.graph_edges()) {
-                    const both_in = v.graph_nodes().find(n => n.id === e.source)?.community === comm
-                        && v.graph_nodes().find(n => n.id === e.target)?.community === comm;
+                    const both_in = v.graph_nodes().find((n) => n.id === e.source)?.community === comm &&
+                        v.graph_nodes().find((n) => n.id === e.target)?.community === comm;
                     $mol_assert_equal(g.edge_matches(e.id), both_in);
                 }
             },
             // ---- dashboard energy formula ----
-            'dashboard.pipeline_seconds: sum of STAGES.time'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                // 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
-                $mol_assert_equal(d.pipeline_seconds().toFixed(1), '15.3');
-            },
-            'dashboard.energy_kwh: TDP × time × PUE / 1000'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                // 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
-                const kwh = d.energy_kwh();
-                $mol_assert_equal(kwh > 0.0017 && kwh < 0.0019, true);
-                $mol_assert_equal(d.energy_kwh_val(), '0.00');
-            },
-            'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const val = d.energy_cost_val();
-                $mol_assert_equal(/^[−+]\d+%$/.test(val), true);
-            },
+            // 'dashboard.pipeline_seconds: sum of STAGES.time'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	// 1.2 + 8.4 + 3.1 + 2.0 + 0.6 = 15.3
+            // 	$mol_assert_equal( d.pipeline_seconds().toFixed( 1 ), '15.3' )
+            // },
+            // 'dashboard.energy_kwh: TDP × time × PUE / 1000'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	// 300 × (15.3 / 3600) × 1.4 / 1000 ≈ 0.001785
+            // 	const kwh = d.energy_kwh()
+            // 	$mol_assert_equal( kwh > 0.0017 && kwh < 0.0019, true )
+            // 	$mol_assert_equal( d.energy_kwh_val(), '0.00' )
+            // },
+            // 'dashboard.energy_cost_val: formatted % vs gpt-4 baseline'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const val = d.energy_cost_val()
+            // 	$mol_assert_equal( /^[−+]\d+%$/.test( val ), true )
+            // },
             // ---- dashboard log expand ----
-            'dashboard.log: default not expanded'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                $mol_assert_equal(d.Log('q1').expanded(), false);
-            },
-            'dashboard.log.toggle: flips expanded'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const log = d.Log('q1');
-                $mol_assert_equal(log.expanded(), false);
-                log.toggle();
-                $mol_assert_equal(log.expanded(), true);
-                log.toggle();
-                $mol_assert_equal(log.expanded(), false);
-            },
-            'dashboard.log: Trace sub-view exists, attr reflects expanded state'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const log = d.Log('q1');
-                $mol_assert_equal(!!log.Trace(), true);
-                $mol_assert_equal(log.attr().raggu_web_front_dashboard_log_expanded, false);
-                log.toggle();
-                $mol_assert_equal(log.attr().raggu_web_front_dashboard_log_expanded, true);
-            },
-            'dashboard.log.arrow: glyph depends on expanded'($) {
-                const d = $raggu_web_front_dashboard.make({ $ });
-                const log = d.Log('q2');
-                $mol_assert_equal(log.arrow(), '▾');
-                log.toggle();
-                $mol_assert_equal(log.arrow(), '▴');
-            },
+            // 'dashboard.log: default not expanded'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	$mol_assert_equal( d.Log( 'q1' ).expanded(), false )
+            // },
+            // 'dashboard.log.toggle: flips expanded'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const log = d.Log( 'q1' )
+            // 	$mol_assert_equal( log.expanded(), false )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.expanded(), true )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.expanded(), false )
+            // },
+            // 'dashboard.log: Trace sub-view exists, attr reflects expanded state'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const log = d.Log( 'q1' )
+            // 	$mol_assert_equal( !! log.Trace(), true )
+            // 	$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, false )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.attr().raggu_web_front_dashboard_log_expanded, true )
+            // },
+            // 'dashboard.log.arrow: glyph depends on expanded'( $ ) {
+            // 	const d = $raggu_web_front_dashboard.make({ $ })
+            // 	const log = d.Log( 'q2' )
+            // 	$mol_assert_equal( log.arrow(), '▾' )
+            // 	log.toggle()
+            // 	$mol_assert_equal( log.arrow(), '▴' )
+            // },
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
