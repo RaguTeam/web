@@ -8,7 +8,7 @@ import re
 import time
 from ast import literal_eval
 from collections import Counter, defaultdict, deque
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from hashlib import md5
 from html import unescape
@@ -84,10 +84,28 @@ class RaguEmbedderConfig:
     base_url: str | None
     model_name: str | None
     provider: str
+    # Per-index overrides keyed by index folder name or dataset id. Lets a single
+    # deployment serve indexes that were built with different embedding models
+    # (e.g. bge-large-en for the medical graph, gte-multilingual-base for the rest).
+    model_by_index: dict[str, str] = field(default_factory=dict)
+    base_url_by_index: dict[str, str] = field(default_factory=dict)
 
-    @property
-    def is_configured(self) -> bool:
-        return bool(self.model_name and (self.api_key or self.base_url))
+    def model_for(self, *keys: str) -> str | None:
+        for key in keys:
+            if key and key in self.model_by_index:
+                return self.model_by_index[key]
+        return self.model_name
+
+    def base_url_for(self, *keys: str) -> str | None:
+        for key in keys:
+            if key and key in self.base_url_by_index:
+                return self.base_url_by_index[key]
+        return self.base_url
+
+    def is_configured_for(self, *keys: str) -> bool:
+        model = self.model_for(*keys)
+        base_url = self.base_url_for(*keys)
+        return bool(model and (self.api_key or base_url))
 
 
 @dataclass
@@ -159,15 +177,16 @@ class RaguMixSearchAdapter:
         self._engines: dict[str, Any] = {}
 
     async def search(self, index: LoadedIndex, query: str, top_k: int) -> RetrievalResult | None:
-        if not self.config.is_configured:
+        definition = index.definition
+        if not self.config.is_configured_for(definition.path.name, definition.id):
             return None
-        if not _is_ragu_vector_index(index.definition.path):
+        if not _is_ragu_vector_index(definition.path):
             return None
 
-        engine = self._engines.get(index.definition.id)
+        engine = self._engines.get(definition.id)
         if engine is None:
-            engine = self._build_engine(index.definition)
-            self._engines[index.definition.id] = engine
+            engine = self._build_engine(definition)
+            self._engines[definition.id] = engine
 
         result = await engine.a_search(query, top_k=top_k)
         return _retrieval_from_ragu_mix(index, result, top_k)
@@ -185,12 +204,24 @@ class RaguMixSearchAdapter:
         if embedding_dim is None:
             raise RuntimeError(f"RAGU vector index at '{definition.path}' has no embedding_dim.")
 
+        keys = (definition.path.name, definition.id)
+        model_name = self.config.model_for(*keys)
+        base_url = self.config.base_url_for(*keys)
+        api_key = self.config.api_key
+        LOGGER.info(
+            "Building RAGU MixSearch engine for dataset '%s' with embedder '%s' at '%s' (embedding_dim=%s).",
+            definition.id,
+            model_name,
+            base_url,
+            embedding_dim,
+        )
+
         Settings.storage_folder = str(definition.path)
         Settings.language = _ragu_language(definition.language)
 
         client = CachedAsyncOpenAI(
-            base_url=self.config.base_url,
-            api_key=self.config.api_key or "unused",
+            base_url=base_url,
+            api_key=api_key or "unused",
             rate_max_simultaneous=4,
             rate_max_per_minute=240,
             retry_times_sec=None,
@@ -198,7 +229,7 @@ class RaguMixSearchAdapter:
         )
         embedder = EmbedderOpenAI(
             client=client,
-            model_name=self.config.model_name,
+            model_name=model_name,
             dim=embedding_dim,
             batch_size=32,
             max_concurrent_batches=2,
@@ -547,6 +578,13 @@ class IndexRepository:
             badges=[
                 DatasetBadge(label="source", value="RAGU"),
                 DatasetBadge(label="llm", value=self._llm.config.provider),
+                DatasetBadge(
+                    label="embedder",
+                    value=(
+                        self._ragu_search.config.model_for(definition.path.name, definition.id)
+                        or "keyword"
+                    ),
+                ),
             ],
             preview=DatasetPreview(
                 node_count=definition.stats.nodes,
@@ -969,6 +1007,20 @@ def _llm_config_from_env(env: dict[str, str]) -> LLMConfig:
     )
 
 
+def _parse_str_map(raw: str | None) -> dict[str, str]:
+    if not raw or not raw.strip():
+        return {}
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        LOGGER.warning("Ignoring malformed embedder map (invalid JSON): %s", raw[:120])
+        return {}
+    if not isinstance(data, dict):
+        LOGGER.warning("Ignoring embedder map (expected a JSON object): %s", raw[:120])
+        return {}
+    return {str(key): str(value) for key, value in data.items() if key and value}
+
+
 def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
     base_url = (
         env.get("EMBEDDER_BASE_URL")
@@ -987,11 +1039,16 @@ def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
         or env.get("OPENAI_EMBEDDER_MODEL")
         or env.get("LLM_EMBEDDER_MODEL")
     )
+    model_by_index = _parse_str_map(env.get("EMBEDDER_MODEL_MAP"))
+    base_url_by_index = _parse_str_map(env.get("EMBEDDER_BASE_URL_MAP"))
+    configured = bool(model_name or model_by_index)
     return RaguEmbedderConfig(
         api_key=api_key,
         base_url=base_url,
         model_name=model_name,
-        provider="OpenAI-compatible embeddings" if model_name else "not configured",
+        provider="OpenAI-compatible embeddings" if configured else "not configured",
+        model_by_index=model_by_index,
+        base_url_by_index=base_url_by_index,
     )
 
 
