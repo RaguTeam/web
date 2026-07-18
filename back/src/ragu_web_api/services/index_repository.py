@@ -134,6 +134,8 @@ class LLMConfig:
     model_name: str | None
     project: str | None
     provider: str
+    temperature: float = 0.2
+    max_tokens: int = 1500
 
     @property
     def is_configured(self) -> bool:
@@ -159,7 +161,6 @@ class OpenAICompatibleLLM:
                 "api_key": self.config.api_key,
                 "base_url": self.config.base_url,
                 "max_retries": 0,
-                "max_output_tokens": 1500,
             }
             if self.config.project:
                 kwargs["project"] = self.config.project
@@ -168,8 +169,8 @@ class OpenAICompatibleLLM:
         response = await self._client.chat.completions.create(
             model=self.config.model_name,
             messages=messages,
-            temperature=0.2,
-            max_tokens=900,
+            temperature=self.config.temperature,
+            max_tokens=self.config.max_tokens,
         )
         return response.choices[0].message.content or ""
 
@@ -1149,6 +1150,9 @@ def _resolve_indexes_root(env: dict[str, str]) -> Path:
 
 
 def _llm_config_from_env(env: dict[str, str]) -> LLMConfig:
+    temperature = _safe_float(env.get("LLM_TEMPERATURE"), 0.2)
+    max_tokens = _safe_int(env.get("LLM_MAX_TOKENS"), 1500)
+
     yandex_api_key = env.get("YANDEX_API_KEY")
     yandex_folder_id = env.get("YANDEX_FOLDER_ID")
     yandex_model = env.get("YANDEX_LLM_MODEL", "yandexgpt-5-pro/latest")
@@ -1162,8 +1166,12 @@ def _llm_config_from_env(env: dict[str, str]) -> LLMConfig:
             api_key=yandex_api_key,
             base_url=env.get("YANDEX_BASE_URL", "https://ai.api.cloud.yandex.net/v1"),
             model_name=model_name,
-            project=yandex_folder_id,
+            # The folder id already lives inside the gpt:// URI; passing it again
+            # as an OpenAI-Project header is meaningless to Yandex, so don't.
+            project=None,
             provider="YandexGPT",
+            temperature=temperature,
+            max_tokens=max_tokens,
         )
 
     api_key = env.get("OPENAI_API_KEY") or env.get("LLM_API_KEY")
@@ -1174,6 +1182,8 @@ def _llm_config_from_env(env: dict[str, str]) -> LLMConfig:
         model_name=model_name,
         project=env.get("OPENAI_PROJECT"),
         provider="OpenAI-compatible" if api_key and model_name else "not configured",
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
 
 
