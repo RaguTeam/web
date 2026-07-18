@@ -7,7 +7,6 @@ $raggu_web_front_app $bog_builderui_div
 	lights_mode \light
 	screen_gallery_title @ \Datasets
 	screen_explorer_title @ \Knowledge graph
-	screen_chat_title @ \Chat with agent
 	screen_summary_title @ \Solution overview
 	ask_entity_template @ \Tell me about the entity «%s» from the knowledge graph.
 	ask_relation_template @ \Tell me about the relation «%s» from the knowledge graph.
@@ -51,8 +50,5 @@ $raggu_web_front_app $bog_builderui_div
 		dataset_id <= dataset_id
 		select_dataset? <=> select_dataset? null
 	Explorer $raggu_web_front_explorer
-		dataset_id <= dataset_id
-		ask_click? <=> ask_chat? null
-	Chat $raggu_web_front_chat
 		dataset_id <= dataset_id
 	Summary $raggu_web_front_summary
