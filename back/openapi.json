@@ -746,10 +746,9 @@
             "type": "string",
             "enum": [
               "local",
-              "global",
               "naive",
               "mix",
-              "query_plan"
+              "keyword"
             ],
             "title": "Engine"
           },

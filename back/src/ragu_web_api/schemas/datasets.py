@@ -6,6 +6,16 @@ from pydantic import Field
 from ragu_web_api.schemas.common import APIModel
 
 SearchEngine = Literal["local", "global", "naive", "mix", "query_plan"]
+
+# Engines the backend can actually run. "global" needs structured LLM output
+# (GlobalSearchContextModel) and "query_plan" needs LLM query decomposition;
+# neither is reliable through the YandexGPT-compatible endpoint, so they are
+# not advertised. Anything else falls back to "mix".
+SUPPORTED_ENGINES: tuple[str, ...] = ("local", "naive", "mix")
+
+# What actually produced a trace: a RAGU engine, or the local keyword fallback.
+TraceEngine = Literal["local", "naive", "mix", "keyword"]
+
 DatasetLanguage = Literal["ru", "en", "mixed"]
 
 
@@ -45,7 +55,7 @@ class DatasetCard(APIModel):
 class DatasetDetail(DatasetCard):
     default_engine: SearchEngine = "mix"
     available_engines: list[SearchEngine] = Field(
-        default_factory=lambda: ["local", "global", "naive", "mix", "query_plan"]
+        default_factory=lambda: list(SUPPORTED_ENGINES)
     )
     created_at: datetime
     updated_at: datetime

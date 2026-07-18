@@ -4,7 +4,7 @@ from typing import Literal
 from pydantic import Field
 
 from ragu_web_api.schemas.common import APIModel, Locale
-from ragu_web_api.schemas.datasets import SearchEngine
+from ragu_web_api.schemas.datasets import SearchEngine, TraceEngine
 from ragu_web_api.schemas.graph import EntityType
 
 
@@ -71,8 +71,11 @@ class GraphHighlight(APIModel):
 
 
 class AnswerTrace(APIModel):
-    engine: SearchEngine
+    # The engine that actually ran, not the one requested. "keyword" means the
+    # RAGU vector path was unavailable and local keyword retrieval was used.
+    engine: TraceEngine
     top_k: int = Field(ge=1)
+    # Whether reranking actually happened (no reranker is configured, so: False).
     rerank: bool
     entities: list[TraceEntity] = Field(default_factory=list)
     relations: list[TraceRelation] = Field(default_factory=list)
