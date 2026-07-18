@@ -3716,7 +3716,7 @@ declare namespace $.$raggu_web_front_api_ragu {
                  * Engine
                  * @enum {string}
                  */
-                engine: "local" | "global" | "naive" | "mix" | "query_plan";
+                engine: "local" | "naive" | "mix" | "keyword";
                 /** Top K */
                 top_k: number;
                 /** Rerank */
