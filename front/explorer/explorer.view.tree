@@ -9,6 +9,9 @@ $raggu_web_front_explorer $bog_builderui_div
 	rels_collapsed? false
 	aside_collapsed? false
 	ask_click? null
+	selected null
+	selected_edge null
+	node_label* \
 	filter_search_text @ \🔍 Find node…
 	aside_title_text @ \Entity card
 	aside_relation_title_text @ \Relation card

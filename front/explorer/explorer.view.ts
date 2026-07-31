@@ -339,16 +339,16 @@ namespace $.$$ {
 		}
 
 		// Selected node, mirrors $raggu_web_front_explorer_forcegraph internals
-		selected() {
+		override selected() {
 			return this.graph_view().selected_node()
 		}
 
 		// Selected edge — aside shows a relation card instead of an entity card
-		selected_edge() {
+		override selected_edge() {
 			return this.graph_view().selected_edge()
 		}
 
-		node_label( id: string ) {
+		override node_label( id: string ) {
 			return this.graph_nodes().find( n => n.id === id )?.label ?? id
 		}
 

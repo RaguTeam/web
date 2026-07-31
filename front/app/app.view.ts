@@ -85,7 +85,7 @@ namespace $.$$ {
 		ask_chat() {
 			// Переносим выбранное в графе (сущность или связь) в чат: переключаем
 			// экран и сразу кладём заготовку вопроса в поле ввода.
-			const explorer = this.Explorer() as $.$$.$raggu_web_front_explorer
+			const explorer = this.Explorer()
 			const node = explorer.selected()
 			const edge = explorer.selected_edge()
 			this.screen( 'chat' )
