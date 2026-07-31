@@ -11460,6 +11460,15 @@ var $;
 			if(next !== undefined) return next;
 			return false;
 		}
+		selected(){
+			return null;
+		}
+		selected_edge(){
+			return null;
+		}
+		node_label(id){
+			return "";
+		}
 		filter_search_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_filter_search_text"));
 		}

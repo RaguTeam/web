@@ -6367,6 +6367,9 @@ declare namespace $ {
 		legend_collapsed( next?: boolean ): boolean
 		rels_collapsed( next?: boolean ): boolean
 		aside_collapsed( next?: boolean ): boolean
+		selected( ): any
+		selected_edge( ): any
+		node_label( id: any): string
 		filter_search_text( ): string
 		aside_title_text( ): string
 		aside_relation_title_text( ): string
