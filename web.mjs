@@ -12454,6 +12454,21 @@ var $;
         Rel: relation_card,
         Rel_type: relation_type,
         Rel_target: relation_target,
+        Ask_btn: {
+            margin: { top: '16px' },
+            background: { color: $bog_builderui_tokens.current },
+            color: '#ffffff',
+            border: { radius: '7px' },
+            padding: {
+                top: '10px',
+                bottom: '10px',
+                left: '10px',
+                right: '10px',
+            },
+            textAlign: 'center',
+            font: { size: '12px', weight: 600 },
+            cursor: 'pointer',
+        },
         '@media': {
             '(max-width: 720px)': {
                 flex: { direction: 'column' },
