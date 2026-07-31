@@ -236,6 +236,12 @@ $raggu_web_front_topbar $bog_builderui_div
 				active <= is_explorer false
 				disabled <= no_dataset false
 				click? <=> click_explorer? null
+			<= Nav_chat $raggu_web_front_topbar_nav
+				icon \💬
+				hint @ \Chat
+				active <= is_chat false
+				disabled <= no_dataset false
+				click? <=> click_chat? null
 			<= Nav_summary $raggu_web_front_topbar_nav
 				icon \✦
 				hint @ \Summary
@@ -653,11 +659,13 @@ $raggu_web_front_explorer $bog_builderui_div
 	legend_collapsed? false
 	rels_collapsed? false
 	aside_collapsed? false
+	ask_click? null
 	filter_search_text @ \🔍 Find node…
 	aside_title_text @ \Entity card
 	aside_relation_title_text @ \Relation card
 	aside_empty_text @ \Click a node or an edge
 	relations_title_template @ \Relations (%s)
+	ask_btn_text @ \💬 Ask about this entity
 	legend_title_text @ \Entity Types
 	legend_label* \
 	legend_count* \
@@ -794,134 +802,23 @@ $raggu_web_front_explorer $bog_builderui_div
 						<= Rel* $bog_builderui_div sub /
 							<= Rel_type* $bog_builderui_div sub / <= rel_type* \
 							<= Rel_target* $bog_builderui_div sub / <= rel_target* \
+					<= Ask_btn $bog_builderui_div
+						sub / <= ask_btn_text
+						event * click? <=> ask_click? null
 
-$raggu_web_front_summary_card $bog_builderui_div
-	icon \
-	badge \
-	title \
-	desc \
-	more \
-	click? null
-	event *
-		^
-		click? <=> click? null
-	sub /
-		<= Head $bog_builderui_div sub /
-			<= Icon $bog_builderui_div sub / <= icon
-			<= Spacer $bog_builderui_div
-			<= Badge $bog_builderui_div sub / <= badge
-		<= Title $bog_builderui_div sub / <= title
-		<= Desc $bog_builderui_div sub / <= desc
-		<= More $bog_builderui_div sub / <= more
-
-$mol_link $mol_view
-	uri \
-	dom_name \a
-	uri_off \
-	uri_native null
-	external false
-	attr *
-		^
-		href <= uri_toggle \
-		title <= hint_safe <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-		rel <= relation \
-	sub /$mol_view_content
-		<= title
-	arg *
-	event *
-		^
-		click? <=> click? <=> event_click? null
-
-$raggu_web_front_summary_detail $bog_builderui_div
-	showed false
-	icon \
-	badge \
-	title \
-	image \
-	facts /
-	links /
-	body /
-	close? null
-	attr *
-		^
-		raggu_web_front_summary_detail_showed <= showed
-	sub /
-		<= Backdrop $bog_builderui_div
-			event * click? <=> close? null
-		<= Panel $bog_builderui_div sub /
-			<= Header $bog_builderui_div sub /
-				<= Icon $bog_builderui_div sub / <= icon
-				<= Header_text $bog_builderui_div sub /
-					<= Title $bog_builderui_div sub / <= title
-					<= Badge $bog_builderui_div sub / <= badge
-				<= Spacer $bog_builderui_div
-				<= Close_btn $bog_builderui_div
-					event * click? <=> close? null
-					sub / \✕
-			<= Body $mol_scroll sub /
-				<= Content $bog_builderui_div sub <= body
-	Image $mol_image
-		uri <= image
-	Fact* $bog_builderui_div sub /
-		<= Fact_marker* $bog_builderui_div sub / \—
-		<= Fact_text* $bog_builderui_div sub / <= fact* \
-	Links $bog_builderui_div sub <= link_rows /
-	Link* $mol_link
-		uri <= link_uri* \
-		title <= link_label* \
-		attr *
-			^
-			target \_blank
-
-$raggu_web_front_summary $bog_builderui_div
-	opened? \
-	header_title_text @ \Solution overview
-	header_subtitle_text @ \Key technologies of the pipeline — click a card for details
-	more_text @ \Details →
-	ragu_badge @ \GraphRAG engine
-	ragu_desc @ \Open-source GraphRAG engine: builds a knowledge graph from documents and answers questions with sources.
-	ragu_fact_1 @ \Indexing pipeline: chunking → entity and relation extraction → community summarization → search index.
-	ragu_fact_2 @ \Combines local graph search, global community summaries and a vector index.
-	ragu_fact_3 @ \Fully open stack, runs on-premise — data stays inside the contour.
-	mol_badge @ \Frontend
-	mol_desc @ \This interface is built with $mol — a reactive TypeScript framework with lazy rendering.
-	mol_fact_1 @ \Lazy rendering out of the box: a knowledge graph with thousands of nodes stays responsive.
-	mol_fact_2 @ \Tiny bundle and zero runtime dependencies.
-	mol_fact_3 @ \UI source code is open.
-	menolite_badge @ \LLM
-	menolite_desc @ \Open LLM (bond005/meno-lite-0.1) used for entity and relation extraction.
-	menolite_fact_1 @ \Open weights on Hugging Face — fits the open-source stack requirement.
-	menolite_fact_2 @ \Extracts typed entities and relations from Russian scientific text.
-	menolite_fact_3 @ \Used at indexing time; answers are generated with the same open stack.
-	nerel_badge @ \Annotation schema
-	nerel_desc @ \NEREL — the largest Russian dataset for named entities, relations and events; used as the annotation schema.
-	nerel_fact_1 @ \56K+ annotated entities and 39K+ relations across Russian news texts.
-	nerel_fact_2 @ \29 entity types and 49 relation types, with support for nested entities and events.
-	nerel_fact_3 @ \The schema lives at prompt level — extends without model retraining.
-	sub /
-		<= Header $bog_builderui_div sub /
-			<= Header_title $bog_builderui_div sub / <= header_title_text
-			<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
-		<= Grid $bog_builderui_div sub <= rows /
-			<= Card* $raggu_web_front_summary_card
-				icon <= card_icon* \
-				badge <= card_badge* \
-				title <= card_title* \
-				desc <= card_desc* \
-				more <= more_text
-				click? <=> click*? null
-	Detail $raggu_web_front_summary_detail
-		showed <= detail_showed false
-		icon <= opened_icon \
-		badge <= opened_badge \
-		title <= opened_title \
-		facts <= opened_facts /
-		links <= opened_links /
-		image <= opened_image \
-		close? <=> close? null
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
 
 $bog_builderui_card $bog_builderui_div
 
@@ -1313,20 +1210,6 @@ $mol_nav $mol_plugin
 		^
 		keydown? <=> event_key? null
 
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0.1
-	sub <= rows /$mol_view
-		<= Gap_before $mol_view style * paddingTop <= gap_before 0
-		<= Empty $mol_view
-		<= Gap_after $mol_view style * paddingTop <= gap_after 0
-	item_height_min* 1
-	item_width_min* 1
-	view_window_shift? 0
-	view_window /
-		0
-		0
-
 $mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
 
 $mol_search $mol_pop
@@ -1421,6 +1304,358 @@ $mol_pop_over $mol_pop
 
 $bog_builderui_tooltip $mol_pop_over
 
+$bog_builderui_skeleton $bog_builderui_div
+	attr *
+		mol_view_error \Promise
+
+$mol_stack $mol_view
+
+$mol_text_code_token $mol_dimmer
+	attr *
+		^
+		mol_text_code_token_type <= type \
+
+$mol_text_code_token_link $mol_text_code_token
+	dom_name \a
+	type \code-link
+	attr *
+		^
+		href <= uri \
+		target \_blank
+
+$mol_text_code_line $mol_paragraph
+	text \
+	minimal_height 24
+	numb_showed true
+	syntax null
+	uri_resolve* \
+	Numb $mol_view
+		sub /
+			<= numb 0
+	Token* $mol_text_code_token
+		type <= token_type* \
+		haystack <= token_text* \
+		needle <= highlight \
+	Token_link* $mol_text_code_token_link
+		haystack <= token_text* \
+		needle <= highlight \
+		uri <= token_uri* \
+	find_pos* null
+
+$mol_icon_clipboard $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3
+
+$mol_icon_clipboard_outline $mol_icon path \M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M7,7H17V5H19V19H5V5H7V7Z
+
+$mol_button_copy $mol_button_minor
+	blobs /$mol_blob
+		<= text_blob? $mol_blob /
+			/BlobPart <= text <= title
+			* type \text/plain
+		<= html_blob? $mol_blob /
+			/BlobPart <= html \
+			* type \text/html
+	data *
+	sub /
+		<= Icon $mol_icon_clipboard_outline
+		<= title \
+
+$mol_text_code $mol_stack
+	attr *
+		^
+		mol_text_code_sidebar_showed <= sidebar_showed false
+	text \
+	text_lines /string
+	find_pos* null
+	uri_base \
+	row_themes /string
+	sub /
+		<= Rows $mol_list
+			render_visible_only <= render_visible_only false
+			rows <= rows /
+				<= Row*0 $mol_text_code_line
+					numb_showed <= sidebar_showed
+					numb <= row_numb* 0
+					theme <= row_theme* \
+					text <= row_text* \
+					syntax <= syntax null
+					uri_resolve* <= uri_resolve* \
+					highlight <= highlight \
+		<= Copy $mol_button_copy
+			hint @ \Copy whole code
+			text <= text_export \
+
+$mol_textarea $mol_stack
+	attr *
+		^
+		mol_textarea_clickable <= clickable? false
+		mol_textarea_sidebar_showed <= sidebar_showed false
+	event *
+		keydown? <=> press? null
+		pointermove? <=> hover? null
+	sub /
+		<= Edit $mol_textarea_edit
+			value? <=> value? \
+			hint <= hint \ 
+			enabled <= enabled true
+			spellcheck <= spellcheck true
+			length_max <= length_max +Infinity
+			selection? <=> selection? /number
+			bring => bring
+			submit? <=> submit? null
+			submit_with_ctrl <= submit_with_ctrl true
+		<= View $mol_text_code
+			text <= value
+			render_visible_only false
+			row_numb* <= row_numb* 0
+			sidebar_showed <= sidebar_showed
+			highlight <= highlight \
+			syntax <= syntax $mol_syntax2
+	symbols_alt *string
+		comma \<
+		period \>
+		dash \−
+		equals \≈
+		graveAccent \́
+		forwardSlash \÷
+		E \€
+		V \✔
+		X \×
+		C \©
+		P \§
+		H \₽
+		key0 \°
+		key8 \•
+		key2 \@
+		key3 \#
+		key4 \$
+		key6 \^
+		key7 \&
+		bracketOpen \[
+		bracketClose \]
+		slashBack \|
+	symbols_alt_ctrl *string
+		space \ 
+	symbols_alt_shift *string
+		V \✅
+		X \❌
+		O \⭕
+		key1 \❗
+		key4 \💲
+		key7 \❓
+		comma \«
+		period \»
+		semicolon \“
+		quoteSingle \”
+		dash \—
+		equals \≠
+		graveAccent \̱
+		bracketOpen \{
+		bracketClose \}
+
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	enter \enter
+	field *
+		^
+		scrollTop 0
+
+$raggu_web_front_chat $bog_builderui_div
+	dataset_id \
+	sug_one_text @ \Who received the Nobel Prize?
+	sug_two_text @ \Connection between Ibsen and Bjørnson?
+	input_hint_text @ \Ask anything about the corpus…
+	send_label_text @ \Send
+	seed_user_text @ \Who wrote the Norwegian anthem and when?
+	seed_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
+	clear_text @ \Clear
+	off_graph_text @ \⚠ Off-graph answer (LLM without retrieval)
+	prompt_text? \
+	prompt_submit? null
+	use_sug_one? null
+	use_sug_two? null
+	clear_click? null
+	rows /
+	message_text* \
+	message_role* \
+	message_off_graph* false
+	sub /
+		<= Body $mol_scroll
+			sub /
+				<= Body_flow $bog_builderui_div sub /
+					<= Messages $mol_list rows <= rows
+					<= Status $bog_builderui_card
+						attr *
+							^
+							raggu_loading <= is_communicating false
+						sub /
+							<= Skel_line_one $bog_builderui_skeleton
+							<= Skel_line_two $bog_builderui_skeleton
+							<= Skel_line_three $bog_builderui_skeleton
+		<= Footer $bog_builderui_div sub /
+			<= Suggestions $bog_builderui_div sub /
+				<= Sug_one $bog_builderui_div
+					sub / <= sug_one_text
+					event * click? <=> use_sug_one? null
+				<= Sug_two $bog_builderui_div
+					sub / <= sug_two_text
+					event * click? <=> use_sug_two? null
+				<= Clear $mol_button_minor
+					hint <= clear_text
+					click? <=> clear_click? null
+					sub / \✕
+			<= Input_row $bog_builderui_div sub /
+				<= Prompt $mol_textarea
+					hint <= input_hint_text
+					value? <=> prompt_text? \
+					submit? <=> prompt_submit? null
+				<= Input_send $mol_button_minor
+					hint <= send_label_text
+					click? <=> prompt_submit? null
+					sub / \↑
+	Message* $bog_builderui_div
+		attr *
+			^
+			raggu_role <= message_role*
+		sub /
+			<= Message_text* $bog_builderui_div
+				attr *
+					^
+					raggu_role <= message_role*
+				sub / <= message_text*
+			<= Message_badge* $bog_builderui_div
+				attr *
+					^
+					raggu_off_graph <= message_off_graph*
+				sub / <= off_graph_text
+
+$raggu_web_front_summary_card $bog_builderui_div
+	icon \
+	badge \
+	title \
+	desc \
+	more \
+	click? null
+	event *
+		^
+		click? <=> click? null
+	sub /
+		<= Head $bog_builderui_div sub /
+			<= Icon $bog_builderui_div sub / <= icon
+			<= Spacer $bog_builderui_div
+			<= Badge $bog_builderui_div sub / <= badge
+		<= Title $bog_builderui_div sub / <= title
+		<= Desc $bog_builderui_div sub / <= desc
+		<= More $bog_builderui_div sub / <= more
+
+$mol_link $mol_view
+	uri \
+	dom_name \a
+	uri_off \
+	uri_native null
+	external false
+	attr *
+		^
+		href <= uri_toggle \
+		title <= hint_safe <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+		rel <= relation \
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click? <=> click? <=> event_click? null
+
+$raggu_web_front_summary_detail $bog_builderui_div
+	showed false
+	icon \
+	badge \
+	title \
+	image \
+	facts /
+	links /
+	body /
+	close? null
+	attr *
+		^
+		raggu_web_front_summary_detail_showed <= showed
+	sub /
+		<= Backdrop $bog_builderui_div
+			event * click? <=> close? null
+		<= Panel $bog_builderui_div sub /
+			<= Header $bog_builderui_div sub /
+				<= Icon $bog_builderui_div sub / <= icon
+				<= Header_text $bog_builderui_div sub /
+					<= Title $bog_builderui_div sub / <= title
+					<= Badge $bog_builderui_div sub / <= badge
+				<= Spacer $bog_builderui_div
+				<= Close_btn $bog_builderui_div
+					event * click? <=> close? null
+					sub / \✕
+			<= Body $mol_scroll sub /
+				<= Content $bog_builderui_div sub <= body
+	Image $mol_image
+		uri <= image
+	Fact* $bog_builderui_div sub /
+		<= Fact_marker* $bog_builderui_div sub / \—
+		<= Fact_text* $bog_builderui_div sub / <= fact* \
+	Links $bog_builderui_div sub <= link_rows /
+	Link* $mol_link
+		uri <= link_uri* \
+		title <= link_label* \
+		attr *
+			^
+			target \_blank
+
+$raggu_web_front_summary $bog_builderui_div
+	opened? \
+	header_title_text @ \Solution overview
+	header_subtitle_text @ \Key technologies of the pipeline — click a card for details
+	more_text @ \Details →
+	ragu_badge @ \GraphRAG engine
+	ragu_desc @ \Open-source GraphRAG engine: builds a knowledge graph from documents and answers questions with sources.
+	ragu_fact_1 @ \Indexing pipeline: chunking → entity and relation extraction → community summarization → search index.
+	ragu_fact_2 @ \Combines local graph search, global community summaries and a vector index.
+	ragu_fact_3 @ \Fully open stack, runs on-premise — data stays inside the contour.
+	mol_badge @ \Frontend
+	mol_desc @ \This interface is built with $mol — a reactive TypeScript framework with lazy rendering.
+	mol_fact_1 @ \Lazy rendering out of the box: a knowledge graph with thousands of nodes stays responsive.
+	mol_fact_2 @ \Tiny bundle and zero runtime dependencies.
+	mol_fact_3 @ \UI source code is open.
+	menolite_badge @ \LLM
+	menolite_desc @ \Open LLM (bond005/meno-lite-0.1) used for entity and relation extraction.
+	menolite_fact_1 @ \Open weights on Hugging Face — fits the open-source stack requirement.
+	menolite_fact_2 @ \Extracts typed entities and relations from Russian scientific text.
+	menolite_fact_3 @ \Used at indexing time; answers are generated with the same open stack.
+	nerel_badge @ \Annotation schema
+	nerel_desc @ \NEREL — the largest Russian dataset for named entities, relations and events; used as the annotation schema.
+	nerel_fact_1 @ \56K+ annotated entities and 39K+ relations across Russian news texts.
+	nerel_fact_2 @ \29 entity types and 49 relation types, with support for nested entities and events.
+	nerel_fact_3 @ \The schema lives at prompt level — extends without model retraining.
+	sub /
+		<= Header $bog_builderui_div sub /
+			<= Header_title $bog_builderui_div sub / <= header_title_text
+			<= Header_subtitle $bog_builderui_div sub / <= header_subtitle_text
+		<= Grid $bog_builderui_div sub <= rows /
+			<= Card* $raggu_web_front_summary_card
+				icon <= card_icon* \
+				badge <= card_badge* \
+				title <= card_title* \
+				desc <= card_desc* \
+				more <= more_text
+				click? <=> click*? null
+	Detail $raggu_web_front_summary_detail
+		showed <= detail_showed false
+		icon <= opened_icon \
+		badge <= opened_badge \
+		title <= opened_title \
+		facts <= opened_facts /
+		links <= opened_links /
+		image <= opened_image \
+		close? <=> close? null
+
 $raggu_web_front_app $bog_builderui_div
 	screen? \gallery
 	dataset_id? \
@@ -1430,6 +1665,7 @@ $raggu_web_front_app $bog_builderui_div
 	lights_mode \light
 	screen_gallery_title @ \Datasets
 	screen_explorer_title @ \Knowledge graph
+	screen_chat_title @ \Chat with agent
 	screen_summary_title @ \Solution overview
 	ask_entity_template @ \Tell me about the entity «%s» from the knowledge graph.
 	ask_relation_template @ \Tell me about the relation «%s» from the knowledge graph.
@@ -1473,5 +1709,8 @@ $raggu_web_front_app $bog_builderui_div
 		dataset_id <= dataset_id
 		select_dataset? <=> select_dataset? null
 	Explorer $raggu_web_front_explorer
+		dataset_id <= dataset_id
+		ask_click? <=> ask_chat? null
+	Chat $raggu_web_front_chat
 		dataset_id <= dataset_id
 	Summary $raggu_web_front_summary

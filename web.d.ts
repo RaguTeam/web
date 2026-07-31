@@ -2900,43 +2900,68 @@ declare namespace $ {
 		ReturnType< $raggu_web_front_topbar_nav['hint'] >
 	>
 	type $raggu_web_front_topbar_nav__active_raggu_web_front_topbar_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_topbar['is_chat'] >
+		,
+		ReturnType< $raggu_web_front_topbar_nav['active'] >
+	>
+	type $raggu_web_front_topbar_nav__disabled_raggu_web_front_topbar_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_topbar['no_dataset'] >
+		,
+		ReturnType< $raggu_web_front_topbar_nav['disabled'] >
+	>
+	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_topbar['click_chat'] >
+		,
+		ReturnType< $raggu_web_front_topbar_nav['click'] >
+	>
+	type $raggu_web_front_topbar_nav__icon_raggu_web_front_topbar_18 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_front_topbar_nav['icon'] >
+	>
+	type $raggu_web_front_topbar_nav__hint_raggu_web_front_topbar_19 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_front_topbar_nav['hint'] >
+	>
+	type $raggu_web_front_topbar_nav__active_raggu_web_front_topbar_20 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_topbar['is_summary'] >
 		,
 		ReturnType< $raggu_web_front_topbar_nav['active'] >
 	>
-	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_16 = $mol_type_enforce<
+	type $raggu_web_front_topbar_nav__click_raggu_web_front_topbar_21 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_topbar['click_summary'] >
 		,
 		ReturnType< $raggu_web_front_topbar_nav['click'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_17 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_22 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_topbar_18 = $mol_type_enforce<
+	type $bog_builderui_div__event_raggu_web_front_topbar_23 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_topbar['open_help'] > ): ReturnType< $raggu_web_front_topbar['open_help'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['event'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_19 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_24 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_20 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_25 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_21 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_26 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_topbar_22 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_topbar_27 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -2951,6 +2976,9 @@ declare namespace $ {
 		no_dataset( ): boolean
 		click_explorer( next?: any ): any
 		Nav_explorer( ): $raggu_web_front_topbar_nav
+		is_chat( ): boolean
+		click_chat( next?: any ): any
+		Nav_chat( ): $raggu_web_front_topbar_nav
 		is_summary( ): boolean
 		click_summary( next?: any ): any
 		Nav_summary( ): $raggu_web_front_topbar_nav
@@ -2976,10 +3004,12 @@ declare namespace $.$$ {
     class $raggu_web_front_topbar extends $.$raggu_web_front_topbar {
         is_gallery(): boolean;
         is_explorer(): boolean;
+        is_chat(): boolean;
         is_summary(): boolean;
         no_dataset(): boolean;
         click_gallery(): null;
         click_explorer(): null;
+        click_chat(): null;
         click_summary(): null;
     }
 }
@@ -6214,14 +6244,26 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_explorer_68 = $mol_type_enforce<
+	type $bog_builderui_div__event_raggu_web_front_explorer_68 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_explorer['ask_click'] > ): ReturnType< $raggu_web_front_explorer['ask_click'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_explorer_69 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_explorer_70 = $mol_type_enforce<
 		({ 
 			'raggu_web_front_explorer_aside_collapsed': ReturnType< $raggu_web_front_explorer['aside_collapsed'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_explorer_69 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_explorer_71 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -6312,6 +6354,8 @@ declare namespace $ {
 		Rel( id: any): $bog_builderui_div
 		rel_rows( ): readonly(any)[]
 		Relations_list( ): $bog_builderui_div
+		ask_click( next?: any ): any
+		Ask_btn( ): $bog_builderui_div
 		Aside_body( ): $bog_builderui_div
 		Aside( ): $bog_builderui_div
 		dataset_id( ): string
@@ -6328,6 +6372,7 @@ declare namespace $ {
 		aside_relation_title_text( ): string
 		aside_empty_text( ): string
 		relations_title_template( ): string
+		ask_btn_text( ): string
 		legend_title_text( ): string
 		rels_title_text( ): string
 		comms_open( next?: boolean ): boolean
@@ -6434,450 +6479,66 @@ declare namespace $ {
 }
 
 declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_front_summary_card_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_card_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_card_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_card_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_card_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_card_6 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	export class $raggu_web_front_summary_card extends $bog_builderui_div {
-		click( next?: any ): any
-		Icon( ): $bog_builderui_div
-		Spacer( ): $bog_builderui_div
-		Badge( ): $bog_builderui_div
-		Head( ): $bog_builderui_div
-		Title( ): $bog_builderui_div
-		Desc( ): $bog_builderui_div
-		More( ): $bog_builderui_div
-		icon( ): string
-		badge( ): string
-		title( ): string
-		desc( ): string
-		more( ): string
-		event( ): ({ 
-			click( next?: ReturnType< $raggu_web_front_summary_card['click'] > ): ReturnType< $raggu_web_front_summary_card['click'] >,
-		})  & ReturnType< $bog_builderui_div['event'] >
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=card.view.tree.d.ts.map
-/** @see $bog_builderui_tokens */
-declare namespace $ {
+    function $mol_support_css_overflow_anchor(this: $): boolean;
 }
 
 declare namespace $ {
 
-	export class $mol_link extends $mol_view {
-		uri_toggle( ): string
-		hint( ): string
-		hint_safe( ): ReturnType< $mol_link['hint'] >
-		target( ): string
-		file_name( ): string
-		current( ): boolean
-		relation( ): string
-		event_click( next?: any ): any
-		click( next?: ReturnType< $mol_link['event_click'] > ): ReturnType< $mol_link['event_click'] >
-		uri( ): string
-		dom_name( ): string
-		uri_off( ): string
-		uri_native( ): any
-		external( ): boolean
-		attr( ): ({ 
-			'href': ReturnType< $mol_link['uri_toggle'] >,
-			'title': ReturnType< $mol_link['hint_safe'] >,
-			'target': ReturnType< $mol_link['target'] >,
-			'download': ReturnType< $mol_link['file_name'] >,
-			'mol_link_current': ReturnType< $mol_link['current'] >,
-			'rel': ReturnType< $mol_link['relation'] >,
-		})  & ReturnType< $mol_view['attr'] >
-		sub( ): readonly($mol_view_content)[]
-		arg( ): Record<string, any>
-		event( ): ({ 
-			click( next?: ReturnType< $mol_link['click'] > ): ReturnType< $mol_link['click'] >,
-		})  & ReturnType< $mol_view['event'] >
+	type $mol_view__style_mol_list_1 = $mol_type_enforce<
+		({ 
+			'paddingTop': ReturnType< $mol_list['gap_before'] >,
+		}) 
+		,
+		ReturnType< $mol_view['style'] >
+	>
+	type $mol_view__style_mol_list_2 = $mol_type_enforce<
+		({ 
+			'paddingTop': ReturnType< $mol_list['gap_after'] >,
+		}) 
+		,
+		ReturnType< $mol_view['style'] >
+	>
+	export class $mol_list extends $mol_view {
+		gap_before( ): number
+		Gap_before( ): $mol_view
+		Empty( ): $mol_view
+		gap_after( ): number
+		Gap_after( ): $mol_view
+		rows( ): readonly($mol_view)[]
+		render_visible_only( ): boolean
+		render_over( ): number
+		sub( ): ReturnType< $mol_list['rows'] >
+		item_height_min( id: any): number
+		item_width_min( id: any): number
+		view_window_shift( next?: number ): number
+		view_window( ): readonly(any)[]
 	}
 	
 }
 
-//# sourceMappingURL=link.view.tree.d.ts.map
+//# sourceMappingURL=list.view.tree.d.ts.map
 declare namespace $.$$ {
     /**
-     * Dynamic hyperlink. It can add, change or remove parameters. A link that leads to the current page has [mol_link_current] attribute set to true.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_link_demo
+     * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
+     * `mol_list` should contain only components that inherits `mol_view`. You should not place raw strings or numbers in list.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
      */
-    class $mol_link extends $.$mol_link {
-        uri_toggle(): string;
-        uri(): string;
-        uri_off(): string;
-        uri_native(): URL;
-        current(): boolean;
-        file_name(): string;
+    class $mol_list extends $.$mol_list {
+        sub(): readonly $mol_view[];
+        render_visible_only(): boolean;
+        _view_window_last: number[];
+        view_window(next?: [number, number]): [number, number];
+        item_height_min(index: number): number;
+        row_width_min(index: number): number;
+        gap_before(): number;
+        gap_after(): number;
+        sub_visible(): $mol_view[];
         minimal_height(): number;
-        external(): boolean;
-        target(): '_self' | '_blank' | '_top' | '_parent' | string;
-        hint_safe(): string;
+        minimal_width(): number;
+        force_render(path: Set<$mol_view>): void;
     }
 }
 
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__event_raggu_web_front_summary_detail_1 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_summary_detail['close'] > ): ReturnType< $raggu_web_front_summary_detail['close'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_4 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_5 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__event_raggu_web_front_summary_detail_6 = $mol_type_enforce<
-		({ 
-			click( next?: ReturnType< $raggu_web_front_summary_detail['close'] > ): ReturnType< $raggu_web_front_summary_detail['close'] >,
-		}) 
-		,
-		ReturnType< $bog_builderui_div['event'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_7 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_8 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_9 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary_detail['body'] >
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $mol_scroll__sub_raggu_web_front_summary_detail_10 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_scroll['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_11 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_12 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_13 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $mol_image__uri_raggu_web_front_summary_detail_14 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary_detail['image'] >
-		,
-		ReturnType< $mol_image['uri'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_15 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_detail_16 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary_detail['link_rows'] >
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $mol_link__uri_raggu_web_front_summary_detail_17 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary_detail['link_uri'] >
-		,
-		ReturnType< $mol_link['uri'] >
-	>
-	type $mol_link__title_raggu_web_front_summary_detail_18 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary_detail['link_label'] >
-		,
-		ReturnType< $mol_link['title'] >
-	>
-	type $mol_link__attr_raggu_web_front_summary_detail_19 = $mol_type_enforce<
-		({ 
-			'target': string,
-		})  & ReturnType< $mol_link['attr'] >
-		,
-		ReturnType< $mol_link['attr'] >
-	>
-	export class $raggu_web_front_summary_detail extends $bog_builderui_div {
-		close( next?: any ): any
-		Backdrop( ): $bog_builderui_div
-		Icon( ): $bog_builderui_div
-		Title( ): $bog_builderui_div
-		Badge( ): $bog_builderui_div
-		Header_text( ): $bog_builderui_div
-		Spacer( ): $bog_builderui_div
-		Close_btn( ): $bog_builderui_div
-		Header( ): $bog_builderui_div
-		Content( ): $bog_builderui_div
-		Body( ): $mol_scroll
-		Panel( ): $bog_builderui_div
-		Fact_marker( id: any): $bog_builderui_div
-		fact( id: any): string
-		Fact_text( id: any): $bog_builderui_div
-		link_rows( ): readonly(any)[]
-		link_uri( id: any): string
-		link_label( id: any): string
-		showed( ): boolean
-		icon( ): string
-		badge( ): string
-		title( ): string
-		image( ): string
-		facts( ): readonly(any)[]
-		links( ): readonly(any)[]
-		body( ): readonly(any)[]
-		attr( ): ({ 
-			'raggu_web_front_summary_detail_showed': ReturnType< $raggu_web_front_summary_detail['showed'] >,
-		})  & ReturnType< $bog_builderui_div['attr'] >
-		sub( ): readonly(any)[]
-		Image( ): $mol_image
-		Fact( id: any): $bog_builderui_div
-		Links( ): $bog_builderui_div
-		Link( id: any): $mol_link
-	}
-	
-}
-
-//# sourceMappingURL=detail.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $raggu_web_front_summary_detail extends $.$raggu_web_front_summary_detail {
-        body(): ($bog_builderui_div | $.$mol_image)[];
-        fact(i: number): any;
-        link_rows(): $.$mol_link[];
-        link_uri(i: number): any;
-        link_label(i: number): any;
-    }
-}
-
-/** @see $bog_builderui_tokens */
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	type $bog_builderui_div__sub_raggu_web_front_summary_1 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_2 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_3 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_front_summary_card__icon_raggu_web_front_summary_4 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['card_icon'] >
-		,
-		ReturnType< $raggu_web_front_summary_card['icon'] >
-	>
-	type $raggu_web_front_summary_card__badge_raggu_web_front_summary_5 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['card_badge'] >
-		,
-		ReturnType< $raggu_web_front_summary_card['badge'] >
-	>
-	type $raggu_web_front_summary_card__title_raggu_web_front_summary_6 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['card_title'] >
-		,
-		ReturnType< $raggu_web_front_summary_card['title'] >
-	>
-	type $raggu_web_front_summary_card__desc_raggu_web_front_summary_7 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['card_desc'] >
-		,
-		ReturnType< $raggu_web_front_summary_card['desc'] >
-	>
-	type $raggu_web_front_summary_card__more_raggu_web_front_summary_8 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['more_text'] >
-		,
-		ReturnType< $raggu_web_front_summary_card['more'] >
-	>
-	type $raggu_web_front_summary_card__click_raggu_web_front_summary_9 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['click'] >
-		,
-		ReturnType< $raggu_web_front_summary_card['click'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_summary_10 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['rows'] >
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
-	type $raggu_web_front_summary_detail__showed_raggu_web_front_summary_11 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['detail_showed'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['showed'] >
-	>
-	type $raggu_web_front_summary_detail__icon_raggu_web_front_summary_12 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['opened_icon'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['icon'] >
-	>
-	type $raggu_web_front_summary_detail__badge_raggu_web_front_summary_13 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['opened_badge'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['badge'] >
-	>
-	type $raggu_web_front_summary_detail__title_raggu_web_front_summary_14 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['opened_title'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['title'] >
-	>
-	type $raggu_web_front_summary_detail__facts_raggu_web_front_summary_15 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['opened_facts'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['facts'] >
-	>
-	type $raggu_web_front_summary_detail__links_raggu_web_front_summary_16 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['opened_links'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['links'] >
-	>
-	type $raggu_web_front_summary_detail__image_raggu_web_front_summary_17 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['opened_image'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['image'] >
-	>
-	type $raggu_web_front_summary_detail__close_raggu_web_front_summary_18 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_summary['close'] >
-		,
-		ReturnType< $raggu_web_front_summary_detail['close'] >
-	>
-	export class $raggu_web_front_summary extends $bog_builderui_div {
-		Header_title( ): $bog_builderui_div
-		Header_subtitle( ): $bog_builderui_div
-		Header( ): $bog_builderui_div
-		card_icon( id: any): string
-		card_badge( id: any): string
-		card_title( id: any): string
-		card_desc( id: any): string
-		click( id: any, next?: any ): any
-		Card( id: any): $raggu_web_front_summary_card
-		rows( ): readonly(any)[]
-		Grid( ): $bog_builderui_div
-		detail_showed( ): boolean
-		opened_icon( ): string
-		opened_badge( ): string
-		opened_title( ): string
-		opened_facts( ): readonly(any)[]
-		opened_links( ): readonly(any)[]
-		opened_image( ): string
-		close( next?: any ): any
-		opened( next?: string ): string
-		header_title_text( ): string
-		header_subtitle_text( ): string
-		more_text( ): string
-		ragu_badge( ): string
-		ragu_desc( ): string
-		ragu_fact_1( ): string
-		ragu_fact_2( ): string
-		ragu_fact_3( ): string
-		mol_badge( ): string
-		mol_desc( ): string
-		mol_fact_1( ): string
-		mol_fact_2( ): string
-		mol_fact_3( ): string
-		menolite_badge( ): string
-		menolite_desc( ): string
-		menolite_fact_1( ): string
-		menolite_fact_2( ): string
-		menolite_fact_3( ): string
-		nerel_badge( ): string
-		nerel_desc( ): string
-		nerel_fact_1( ): string
-		nerel_fact_2( ): string
-		nerel_fact_3( ): string
-		sub( ): readonly(any)[]
-		Detail( ): $raggu_web_front_summary_detail
-	}
-	
-}
-
-//# sourceMappingURL=summary.view.tree.d.ts.map
-declare namespace $.$$ {
-    type TechLink = {
-        label: string;
-        uri: string;
-    };
-    export class $raggu_web_front_summary extends $.$raggu_web_front_summary {
-        ids(): string[];
-        rows(): $raggu_web_front_summary_card[];
-        card_icon(id: string): "" | "🧠" | "⚡" | "🤖" | "🏷";
-        card_title(id: string): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL";
-        card_badge(id: string): string;
-        card_desc(id: string): string;
-        card_facts(id: string): string[];
-        card_links(id: string): TechLink[];
-        card_image(id: string): "" | "raggu/web/front/assets/ragu.jpg";
-        detail_showed(): boolean;
-        opened_icon(): "" | "🧠" | "⚡" | "🤖" | "🏷";
-        opened_badge(): string;
-        opened_title(): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL";
-        opened_facts(): string[];
-        opened_links(): TechLink[];
-        opened_image(): "" | "raggu/web/front/assets/ragu.jpg";
-        click(id: string): null;
-        close(): null;
-    }
-    export {};
-}
-
-/** @see $bog_builderui_tokens */
 declare namespace $ {
 }
 
@@ -8159,70 +7820,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    function $mol_support_css_overflow_anchor(this: $): boolean;
-}
-
-declare namespace $ {
-
-	type $mol_view__style_mol_list_1 = $mol_type_enforce<
-		({ 
-			'paddingTop': ReturnType< $mol_list['gap_before'] >,
-		}) 
-		,
-		ReturnType< $mol_view['style'] >
-	>
-	type $mol_view__style_mol_list_2 = $mol_type_enforce<
-		({ 
-			'paddingTop': ReturnType< $mol_list['gap_after'] >,
-		}) 
-		,
-		ReturnType< $mol_view['style'] >
-	>
-	export class $mol_list extends $mol_view {
-		gap_before( ): number
-		Gap_before( ): $mol_view
-		Empty( ): $mol_view
-		gap_after( ): number
-		Gap_after( ): $mol_view
-		rows( ): readonly($mol_view)[]
-		render_visible_only( ): boolean
-		render_over( ): number
-		sub( ): ReturnType< $mol_list['rows'] >
-		item_height_min( id: any): number
-		item_width_min( id: any): number
-		view_window_shift( next?: number ): number
-		view_window( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=list.view.tree.d.ts.map
-declare namespace $.$$ {
-    /**
-     * The list of rows with lazy/virtual rendering support based on `minimal_height` of rows.
-     * `mol_list` should contain only components that inherits `mol_view`. You should not place raw strings or numbers in list.
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_list_demo
-     */
-    class $mol_list extends $.$mol_list {
-        sub(): readonly $mol_view[];
-        render_visible_only(): boolean;
-        _view_window_last: number[];
-        view_window(next?: [number, number]): [number, number];
-        item_height_min(index: number): number;
-        row_width_min(index: number): number;
-        gap_before(): number;
-        gap_after(): number;
-        sub_visible(): $mol_view[];
-        minimal_height(): number;
-        minimal_width(): number;
-        force_render(path: Set<$mol_view>): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
 
 	export class $mol_icon_close extends $mol_icon {
 		path( ): string
@@ -8604,6 +8201,2528 @@ declare namespace $ {
 
 declare namespace $ {
 
+	export class $bog_builderui_skeleton extends $bog_builderui_div {
+		attr( ): ({ 
+			'mol_view_error': string,
+		}) 
+	}
+	
+}
+
+//# sourceMappingURL=skeleton.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_stack extends $mol_view {
+	}
+	
+}
+
+//# sourceMappingURL=stack.view.tree.d.ts.map
+declare namespace $ {
+    /** Creates lexer by dictionary of lexems. Lexem that started first wins. Then lexem that declared earlier wins. Use regexp capture to take parts of token. */
+    class $mol_syntax2<Lexems extends {
+        [name: string]: RegExp;
+    } = {}> {
+        lexems: Lexems;
+        constructor(lexems: Lexems);
+        rules: Array<{
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }>;
+        regexp: RegExp;
+        tokenize(text: string, handle: (name: string, found: string, chunks: string[], offset: number) => void): void;
+        parse(text: string, handlers: {
+            [key in keyof Lexems | '']: (found: string, chunks: string[], offset: number) => void;
+        }): void;
+    }
+}
+
+declare namespace $ {
+
+	export class $mol_text_code_token extends $mol_dimmer {
+		type( ): string
+		attr( ): ({ 
+			'mol_text_code_token_type': ReturnType< $mol_text_code_token['type'] >,
+		})  & ReturnType< $mol_dimmer['attr'] >
+	}
+	
+	export class $mol_text_code_token_link extends $mol_text_code_token {
+		uri( ): string
+		dom_name( ): string
+		type( ): string
+		attr( ): ({ 
+			'href': ReturnType< $mol_text_code_token_link['uri'] >,
+			'target': string,
+		})  & ReturnType< $mol_text_code_token['attr'] >
+	}
+	
+}
+
+//# sourceMappingURL=token.view.tree.d.ts.map
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+    var $mol_syntax2_md_flow: $mol_syntax2<{
+        quote: RegExp;
+        spoiler: RegExp;
+        header: RegExp;
+        list: RegExp;
+        code: RegExp;
+        'code-indent': RegExp;
+        table: RegExp;
+        grid: RegExp;
+        cut: RegExp;
+        block: RegExp;
+    }>;
+    var $mol_syntax2_md_line: $mol_syntax2<{
+        strong: RegExp;
+        emphasis: RegExp;
+        code: RegExp;
+        insert: RegExp;
+        delete: RegExp;
+        embed: RegExp;
+        link: RegExp;
+        'image-link': RegExp;
+        'text-link': RegExp;
+        'text-link-http': RegExp;
+    }>;
+    const $mol_syntax2_md_code: $mol_syntax2<{
+        'code-indent': RegExp;
+        'code-docs': RegExp;
+        'code-comment-block': RegExp;
+        'code-link': RegExp;
+        'code-comment-inline': RegExp;
+        'code-string': RegExp;
+        'code-number': RegExp;
+        'code-call': RegExp;
+        'code-sexpr': RegExp;
+        'code-field': RegExp;
+        'code-keyword': RegExp;
+        'code-global': RegExp;
+        'code-word': RegExp;
+        'code-decorator': RegExp;
+        'code-tag': RegExp;
+        'code-punctuation': RegExp;
+    }>;
+}
+
+declare namespace $ {
+
+	type $mol_view__sub_mol_text_code_line_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_text_code_token__type_mol_text_code_line_2 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_type'] >
+		,
+		ReturnType< $mol_text_code_token['type'] >
+	>
+	type $mol_text_code_token__haystack_mol_text_code_line_3 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_text'] >
+		,
+		ReturnType< $mol_text_code_token['haystack'] >
+	>
+	type $mol_text_code_token__needle_mol_text_code_line_4 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['highlight'] >
+		,
+		ReturnType< $mol_text_code_token['needle'] >
+	>
+	type $mol_text_code_token_link__haystack_mol_text_code_line_5 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_text'] >
+		,
+		ReturnType< $mol_text_code_token_link['haystack'] >
+	>
+	type $mol_text_code_token_link__needle_mol_text_code_line_6 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['highlight'] >
+		,
+		ReturnType< $mol_text_code_token_link['needle'] >
+	>
+	type $mol_text_code_token_link__uri_mol_text_code_line_7 = $mol_type_enforce<
+		ReturnType< $mol_text_code_line['token_uri'] >
+		,
+		ReturnType< $mol_text_code_token_link['uri'] >
+	>
+	export class $mol_text_code_line extends $mol_paragraph {
+		numb( ): number
+		token_type( id: any): string
+		token_text( id: any): string
+		highlight( ): string
+		token_uri( id: any): string
+		text( ): string
+		minimal_height( ): number
+		numb_showed( ): boolean
+		syntax( ): any
+		uri_resolve( id: any): string
+		Numb( ): $mol_view
+		Token( id: any): $mol_text_code_token
+		Token_link( id: any): $mol_text_code_token_link
+		find_pos( id: any): any
+	}
+	
+}
+
+//# sourceMappingURL=line.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_text_code_line extends $.$mol_text_code_line {
+        maximal_width(): number;
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+        tokens(path: number[]): Readonly<{
+            name: string;
+            found: string;
+            chunks: string[];
+        }[]>;
+        sub(): (string | $mol_view)[];
+        row_content(path: number[]): string[] | $mol_text_code_token[];
+        Token(path: number[]): $mol_text_code_token;
+        token_type(path: number[]): string;
+        token_content(path: number[]): (string | $mol_text_code_token)[];
+        token_text(path: number[]): string;
+        token_uri(path: number[]): string;
+        view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
+        find_pos(offset: number): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
+        find_token_pos([offset, ...path]: number[]): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare var $node: any;
+
+declare namespace $ {
+    type $mol_blob = Blob;
+    let $mol_blob: {
+        prototype: Blob;
+        new (blobParts?: readonly BlobPart[], options?: BlobPropertyBag): Blob;
+    };
+}
+
+declare namespace $ {
+
+	export class $mol_icon_clipboard extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=clipboard.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $mol_icon_clipboard_outline extends $mol_icon {
+		path( ): string
+	}
+	
+}
+
+//# sourceMappingURL=outline.view.tree.d.ts.map
+declare namespace $ {
+    function $mol_html_encode(text: string): string;
+}
+
+declare namespace $ {
+
+	type $mol_blob__mol_button_copy_1 = $mol_type_enforce<
+		[ readonly(BlobPart)[], ({ 
+			'type': string,
+		})  ]
+		,
+		ConstructorParameters< typeof $mol_blob >
+	>
+	type $mol_blob__mol_button_copy_2 = $mol_type_enforce<
+		[ readonly(BlobPart)[], ({ 
+			'type': string,
+		})  ]
+		,
+		ConstructorParameters< typeof $mol_blob >
+	>
+	export class $mol_button_copy extends $mol_button_minor {
+		text( ): ReturnType< $mol_button_copy['title'] >
+		text_blob( next?: $mol_blob ): $mol_blob
+		html( ): string
+		html_blob( next?: $mol_blob ): $mol_blob
+		Icon( ): $mol_icon_clipboard_outline
+		title( ): string
+		blobs( ): readonly($mol_blob)[]
+		data( ): Record<string, any>
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=copy.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Button copy text() value to clipboard
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+     */
+    class $mol_button_copy extends $.$mol_button_copy {
+        data(): {
+            [k: string]: Blob;
+        };
+        html(): string;
+        attachments(): ClipboardItem[];
+        click(event?: Event): void;
+    }
+}
+
+declare namespace $ {
+
+	type $mol_text_code_line__numb_showed_mol_text_code_1 = $mol_type_enforce<
+		ReturnType< $mol_text_code['sidebar_showed'] >
+		,
+		ReturnType< $mol_text_code_line['numb_showed'] >
+	>
+	type $mol_text_code_line__numb_mol_text_code_2 = $mol_type_enforce<
+		ReturnType< $mol_text_code['row_numb'] >
+		,
+		ReturnType< $mol_text_code_line['numb'] >
+	>
+	type $mol_text_code_line__theme_mol_text_code_3 = $mol_type_enforce<
+		ReturnType< $mol_text_code['row_theme'] >
+		,
+		ReturnType< $mol_text_code_line['theme'] >
+	>
+	type $mol_text_code_line__text_mol_text_code_4 = $mol_type_enforce<
+		ReturnType< $mol_text_code['row_text'] >
+		,
+		ReturnType< $mol_text_code_line['text'] >
+	>
+	type $mol_text_code_line__syntax_mol_text_code_5 = $mol_type_enforce<
+		ReturnType< $mol_text_code['syntax'] >
+		,
+		ReturnType< $mol_text_code_line['syntax'] >
+	>
+	type $mol_text_code_line__uri_resolve_mol_text_code_6 = $mol_type_enforce<
+		ReturnType< $mol_text_code['uri_resolve'] >
+		,
+		ReturnType< $mol_text_code_line['uri_resolve'] >
+	>
+	type $mol_text_code_line__highlight_mol_text_code_7 = $mol_type_enforce<
+		ReturnType< $mol_text_code['highlight'] >
+		,
+		ReturnType< $mol_text_code_line['highlight'] >
+	>
+	type $mol_list__render_visible_only_mol_text_code_8 = $mol_type_enforce<
+		ReturnType< $mol_text_code['render_visible_only'] >
+		,
+		ReturnType< $mol_list['render_visible_only'] >
+	>
+	type $mol_list__rows_mol_text_code_9 = $mol_type_enforce<
+		ReturnType< $mol_text_code['rows'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $mol_button_copy__hint_mol_text_code_10 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_button_copy['hint'] >
+	>
+	type $mol_button_copy__text_mol_text_code_11 = $mol_type_enforce<
+		ReturnType< $mol_text_code['text_export'] >
+		,
+		ReturnType< $mol_button_copy['text'] >
+	>
+	export class $mol_text_code extends $mol_stack {
+		sidebar_showed( ): boolean
+		render_visible_only( ): boolean
+		row_numb( id: any): number
+		row_theme( id: any): string
+		row_text( id: any): string
+		syntax( ): any
+		uri_resolve( id: any): string
+		highlight( ): string
+		Row( id: any): $mol_text_code_line
+		rows( ): readonly(any)[]
+		Rows( ): $mol_list
+		text_export( ): string
+		Copy( ): $mol_button_copy
+		attr( ): ({ 
+			'mol_text_code_sidebar_showed': ReturnType< $mol_text_code['sidebar_showed'] >,
+		})  & ReturnType< $mol_stack['attr'] >
+		text( ): string
+		text_lines( ): readonly(string)[]
+		find_pos( id: any): any
+		uri_base( ): string
+		row_themes( ): readonly(string)[]
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=code.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Code visualizer.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_text_code_demo
+     */
+    class $mol_text_code extends $.$mol_text_code {
+        render_visible_only(): boolean;
+        text_lines(): readonly string[];
+        rows(): $.$mol_text_code_line[];
+        row_text(index: number): string;
+        row_numb(index: number): number;
+        find_pos(offset: number): any;
+        sub(): ($.$mol_list | $.$mol_button_copy)[];
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+        uri_base(): string;
+        uri_resolve(uri: string): string;
+        text_export(): string;
+        row_theme(row: number): string;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
+
+	type $mol_textarea_edit__value_mol_textarea_1 = $mol_type_enforce<
+		ReturnType< $mol_textarea['value'] >
+		,
+		ReturnType< $mol_textarea_edit['value'] >
+	>
+	type $mol_textarea_edit__hint_mol_textarea_2 = $mol_type_enforce<
+		ReturnType< $mol_textarea['hint'] >
+		,
+		ReturnType< $mol_textarea_edit['hint'] >
+	>
+	type $mol_textarea_edit__enabled_mol_textarea_3 = $mol_type_enforce<
+		ReturnType< $mol_textarea['enabled'] >
+		,
+		ReturnType< $mol_textarea_edit['enabled'] >
+	>
+	type $mol_textarea_edit__spellcheck_mol_textarea_4 = $mol_type_enforce<
+		ReturnType< $mol_textarea['spellcheck'] >
+		,
+		ReturnType< $mol_textarea_edit['spellcheck'] >
+	>
+	type $mol_textarea_edit__length_max_mol_textarea_5 = $mol_type_enforce<
+		ReturnType< $mol_textarea['length_max'] >
+		,
+		ReturnType< $mol_textarea_edit['length_max'] >
+	>
+	type $mol_textarea_edit__selection_mol_textarea_6 = $mol_type_enforce<
+		ReturnType< $mol_textarea['selection'] >
+		,
+		ReturnType< $mol_textarea_edit['selection'] >
+	>
+	type $mol_textarea_edit__submit_mol_textarea_7 = $mol_type_enforce<
+		ReturnType< $mol_textarea['submit'] >
+		,
+		ReturnType< $mol_textarea_edit['submit'] >
+	>
+	type $mol_textarea_edit__submit_with_ctrl_mol_textarea_8 = $mol_type_enforce<
+		ReturnType< $mol_textarea['submit_with_ctrl'] >
+		,
+		ReturnType< $mol_textarea_edit['submit_with_ctrl'] >
+	>
+	type $mol_text_code__text_mol_textarea_9 = $mol_type_enforce<
+		ReturnType< $mol_textarea['value'] >
+		,
+		ReturnType< $mol_text_code['text'] >
+	>
+	type $mol_text_code__render_visible_only_mol_textarea_10 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $mol_text_code['render_visible_only'] >
+	>
+	type $mol_text_code__row_numb_mol_textarea_11 = $mol_type_enforce<
+		ReturnType< $mol_textarea['row_numb'] >
+		,
+		ReturnType< $mol_text_code['row_numb'] >
+	>
+	type $mol_text_code__sidebar_showed_mol_textarea_12 = $mol_type_enforce<
+		ReturnType< $mol_textarea['sidebar_showed'] >
+		,
+		ReturnType< $mol_text_code['sidebar_showed'] >
+	>
+	type $mol_text_code__highlight_mol_textarea_13 = $mol_type_enforce<
+		ReturnType< $mol_textarea['highlight'] >
+		,
+		ReturnType< $mol_text_code['highlight'] >
+	>
+	type $mol_text_code__syntax_mol_textarea_14 = $mol_type_enforce<
+		ReturnType< $mol_textarea['syntax'] >
+		,
+		ReturnType< $mol_text_code['syntax'] >
+	>
+	export class $mol_textarea extends $mol_stack {
+		clickable( next?: boolean ): boolean
+		sidebar_showed( ): boolean
+		press( next?: any ): any
+		hover( next?: any ): any
+		value( next?: string ): string
+		hint( ): string
+		enabled( ): boolean
+		spellcheck( ): boolean
+		length_max( ): number
+		selection( next?: readonly(number)[] ): readonly(number)[]
+		bring( ): ReturnType< ReturnType< $mol_textarea['Edit'] >['bring'] >
+		submit( next?: any ): any
+		submit_with_ctrl( ): boolean
+		Edit( ): $mol_textarea_edit
+		row_numb( id: any): number
+		highlight( ): string
+		syntax( ): $mol_syntax2
+		View( ): $mol_text_code
+		attr( ): ({ 
+			'mol_textarea_clickable': ReturnType< $mol_textarea['clickable'] >,
+			'mol_textarea_sidebar_showed': ReturnType< $mol_textarea['sidebar_showed'] >,
+		})  & ReturnType< $mol_stack['attr'] >
+		event( ): ({ 
+			keydown( next?: ReturnType< $mol_textarea['press'] > ): ReturnType< $mol_textarea['press'] >,
+			pointermove( next?: ReturnType< $mol_textarea['hover'] > ): ReturnType< $mol_textarea['hover'] >,
+		}) 
+		sub( ): readonly(any)[]
+		symbols_alt( ): Record<string, string>
+		symbols_alt_ctrl( ): Record<string, string>
+		symbols_alt_shift( ): Record<string, string>
+	}
+	
+	export class $mol_textarea_edit extends $mol_string {
+		dom_name( ): string
+		enter( ): string
+		field( ): ({ 
+			'scrollTop': number,
+		})  & ReturnType< $mol_string['field'] >
+	}
+	
+}
+
+//# sourceMappingURL=textarea.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * An input field for entering multiline text.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+     */
+    class $mol_textarea extends $.$mol_textarea {
+        indent_inc(): void;
+        indent_dec(): void;
+        symbol_insert(event: KeyboardEvent): void;
+        clickable(next?: boolean): boolean;
+        hover(event: PointerEvent): void;
+        press(event: KeyboardEvent): void;
+        row_numb(index: number): number;
+        syntax(): $mol_syntax2<{
+            'code-indent': RegExp;
+            'code-docs': RegExp;
+            'code-comment-block': RegExp;
+            'code-link': RegExp;
+            'code-comment-inline': RegExp;
+            'code-string': RegExp;
+            'code-number': RegExp;
+            'code-call': RegExp;
+            'code-sexpr': RegExp;
+            'code-field': RegExp;
+            'code-keyword': RegExp;
+            'code-global': RegExp;
+            'code-word': RegExp;
+            'code-decorator': RegExp;
+            'code-tag': RegExp;
+            'code-punctuation': RegExp;
+        }>;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    type $mol_data_value<Input = any, Output = any> = (val: Input) => Output;
+}
+
+declare namespace $ {
+    /**
+     * Fields that can be set to undefined makes optional
+     *
+     * 	type User = $mol_type_partial_undefined<{ name : string , age : number | undefined }> // { name : string , age? : number | undefined }
+     */
+    type $mol_type_partial_undefined<Val> = $mol_type_merge<$mol_type_override<Partial<Val>, Pick<Val, {
+        [Field in keyof Val]: undefined extends Val[Field] ? never : Field;
+    }[keyof Val]>>>;
+}
+
+declare namespace $ {
+    function $mol_data_setup<Value extends $mol_data_value, Config = never>(value: Value, config: Config): Value & {
+        config: Config;
+        Value: ReturnType<Value>;
+    };
+}
+
+declare namespace $ {
+    /**
+     * Checks for record of given fields with by its runtypes and returns expected type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_record_demo
+     */
+    function $mol_data_record<Sub extends Record<string, $mol_data_value>>(sub: Sub): ((val: $mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }>, Pick<{ [key in keyof Sub]: Parameters<Sub[key]>[0]; }, { [Field in keyof { [key in keyof Sub]: Parameters<Sub[key]>[0]; }]: undefined extends { [key in keyof Sub]: Parameters<Sub[key]>[0]; }[Field] ? never : Field; }[keyof Sub]>>>) => Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }>, Pick<{ [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }, { [Field_1 in keyof { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }]: undefined extends { [key_1 in keyof Sub]: ReturnType<Sub[key_1]>; }[Field_1] ? never : Field_1; }[keyof Sub]>>>>) & {
+        config: Sub;
+        Value: Readonly<$mol_type_merge<$mol_type_override<Partial<{ [key in keyof Sub]: ReturnType<Sub[key]>; }>, Pick<{ [key in keyof Sub]: ReturnType<Sub[key]>; }, { [Field in keyof { [key in keyof Sub]: ReturnType<Sub[key]>; }]: undefined extends { [key in keyof Sub]: ReturnType<Sub[key]>; }[Field] ? never : Field; }[keyof Sub]>>>>;
+    };
+}
+
+declare namespace $ {
+    class $mol_data_error extends $mol_error_mix {
+    }
+}
+
+declare namespace $ {
+    /**
+     * Checks for equality to given value and returns expected type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_const_demo
+     */
+    function $mol_data_const<const Val>(ref: Val): ((val: Val) => Val) & {
+        config: Val;
+        Value: Val;
+    };
+}
+
+declare namespace $ {
+    /**
+     * Checks for string and returns string type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_string_demo
+     */
+    let $mol_data_string: (val: string) => string;
+}
+
+declare namespace $ {
+    /**
+     * Checks for some of given runtype or throws error.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_variant_demo
+     */
+    function $mol_data_variant<Sub extends $mol_data_value[]>(...sub: Sub): ((val: Parameters<Sub[number]>[0]) => ReturnType<Sub[number]>) & {
+        config: Sub;
+        Value: ReturnType<Sub[number]>;
+    };
+}
+
+declare namespace $ {
+    /**
+     * Checks for array of given runtype and returns expected type.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_array_demo
+     */
+    function $mol_data_array<Sub extends $mol_data_value>(sub: Sub): ((val: readonly Parameters<Sub>[0][]) => readonly ReturnType<Sub>[]) & {
+        config: Sub;
+        Value: readonly ReturnType<Sub>[];
+    };
+}
+
+declare namespace $ {
+    /**
+     * Checks for null or passing given runtype.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_nullable_demo
+     */
+    function $mol_data_nullable<Sub extends $mol_data_value>(sub: Sub): ((val: Parameters<Sub>[0] | null) => ReturnType<Sub> | null) & {
+        config: Sub;
+        Value: ReturnType<Sub> | null;
+    };
+}
+
+declare namespace $ {
+    /**
+     * Checks for undefined or passing given runtype.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_data_optional_demo
+     */
+    function $mol_data_optional<Sub extends $mol_data_value, Fallback extends undefined | (() => ReturnType<Sub>)>(sub: Sub, fallback?: Fallback): ((val: Parameters<Sub>[0] | undefined) => ReturnType<Sub> | (Fallback extends undefined ? undefined : ReturnType<Extract<Fallback, () => any>>)) & {
+        config: {
+            sub: Sub;
+            fallback: Fallback | undefined;
+        };
+        Value: ReturnType<Sub> | (Fallback extends undefined ? undefined : ReturnType<Extract<Fallback, () => any>>);
+    };
+}
+
+declare namespace $ {
+    function $mol_array_shuffle<Item>(array: readonly Item[]): any[];
+}
+
+declare namespace $ {
+    let $mol_array_shuffle_sync: typeof $mol_array_shuffle;
+}
+
+declare namespace $ {
+    export const $mol_github_model_keys: string[];
+    export const $mol_github_model_polyglots: string[];
+    const Message: ((val: {
+        content: string | readonly ({
+            text: string;
+            type: "text";
+        } | {
+            type: "image_url";
+            image_url: {
+                url: string;
+            };
+        })[];
+        role: "system";
+    } | {
+        tool_calls?: readonly {
+            function: {
+                name: string;
+                arguments: string;
+            };
+            id: string;
+            type: "function";
+        }[] | undefined;
+        content: string | readonly ({
+            text: string;
+            type: "text";
+        } | {
+            type: "image_url";
+            image_url: {
+                url: string;
+            };
+        })[] | null;
+        role: "assistant";
+    } | {
+        content: string | readonly ({
+            text: string;
+            type: "text";
+        } | {
+            type: "image_url";
+            image_url: {
+                url: string;
+            };
+        })[];
+        role: "user";
+    } | {
+        content: string | readonly ({
+            text: string;
+            type: "text";
+        } | {
+            type: "image_url";
+            image_url: {
+                url: string;
+            };
+        })[];
+        role: "tool";
+        tool_call_id: string;
+    }) => Readonly<{
+        content: string | readonly (Readonly<{
+            text: string;
+            type: "text";
+        }> | Readonly<{
+            type: "image_url";
+            image_url: Readonly<{
+                url: string;
+            }>;
+        }>)[];
+        role: "system";
+    }> | Readonly<{
+        tool_calls?: readonly Readonly<{
+            function: Readonly<{
+                name: string;
+                arguments: string;
+            }>;
+            id: string;
+            type: "function";
+        }>[] | undefined;
+        content: string | readonly (Readonly<{
+            text: string;
+            type: "text";
+        }> | Readonly<{
+            type: "image_url";
+            image_url: Readonly<{
+                url: string;
+            }>;
+        }>)[] | null;
+        role: "assistant";
+    }> | Readonly<{
+        content: string | readonly (Readonly<{
+            text: string;
+            type: "text";
+        }> | Readonly<{
+            type: "image_url";
+            image_url: Readonly<{
+                url: string;
+            }>;
+        }>)[];
+        role: "user";
+    }> | Readonly<{
+        content: string | readonly (Readonly<{
+            text: string;
+            type: "text";
+        }> | Readonly<{
+            type: "image_url";
+            image_url: Readonly<{
+                url: string;
+            }>;
+        }>)[];
+        role: "tool";
+        tool_call_id: string;
+    }>) & {
+        config: [((val: {
+            content: string | readonly ({
+                text: string;
+                type: "text";
+            } | {
+                type: "image_url";
+                image_url: {
+                    url: string;
+                };
+            })[];
+            role: "system";
+        }) => Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "system";
+        }>) & {
+            config: {
+                role: ((val: "system") => "system") & {
+                    config: "system";
+                    Value: "system";
+                };
+                content: ((val: string | readonly ({
+                    text: string;
+                    type: "text";
+                } | {
+                    type: "image_url";
+                    image_url: {
+                        url: string;
+                    };
+                })[]) => string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[]) & {
+                    config: [(val: string) => string, ((val: readonly ({
+                        text: string;
+                        type: "text";
+                    } | {
+                        type: "image_url";
+                        image_url: {
+                            url: string;
+                        };
+                    })[]) => readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[]) & {
+                        config: ((val: {
+                            text: string;
+                            type: "text";
+                        } | {
+                            type: "image_url";
+                            image_url: {
+                                url: string;
+                            };
+                        }) => Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>) & {
+                            config: [((val: {
+                                text: string;
+                                type: "text";
+                            }) => Readonly<{
+                                text: string;
+                                type: "text";
+                            }>) & {
+                                config: {
+                                    type: ((val: "text") => "text") & {
+                                        config: "text";
+                                        Value: "text";
+                                    };
+                                    text: (val: string) => string;
+                                };
+                                Value: Readonly<{
+                                    text: string;
+                                    type: "text";
+                                }>;
+                            }, ((val: {
+                                type: "image_url";
+                                image_url: {
+                                    url: string;
+                                };
+                            }) => Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>) & {
+                                config: {
+                                    type: ((val: "image_url") => "image_url") & {
+                                        config: "image_url";
+                                        Value: "image_url";
+                                    };
+                                    image_url: ((val: {
+                                        url: string;
+                                    }) => Readonly<{
+                                        url: string;
+                                    }>) & {
+                                        config: {
+                                            url: (val: string) => string;
+                                        };
+                                        Value: Readonly<{
+                                            url: string;
+                                        }>;
+                                    };
+                                };
+                                Value: Readonly<{
+                                    type: "image_url";
+                                    image_url: Readonly<{
+                                        url: string;
+                                    }>;
+                                }>;
+                            }];
+                            Value: Readonly<{
+                                text: string;
+                                type: "text";
+                            }> | Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>;
+                        };
+                        Value: readonly (Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>)[];
+                    }];
+                    Value: string | readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[];
+                };
+            };
+            Value: Readonly<{
+                content: string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[];
+                role: "system";
+            }>;
+        }, ((val: {
+            tool_calls?: readonly {
+                function: {
+                    name: string;
+                    arguments: string;
+                };
+                id: string;
+                type: "function";
+            }[] | undefined;
+            content: string | readonly ({
+                text: string;
+                type: "text";
+            } | {
+                type: "image_url";
+                image_url: {
+                    url: string;
+                };
+            })[] | null;
+            role: "assistant";
+        }) => Readonly<{
+            tool_calls?: readonly Readonly<{
+                function: Readonly<{
+                    name: string;
+                    arguments: string;
+                }>;
+                id: string;
+                type: "function";
+            }>[] | undefined;
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[] | null;
+            role: "assistant";
+        }>) & {
+            config: {
+                role: ((val: "assistant") => "assistant") & {
+                    config: "assistant";
+                    Value: "assistant";
+                };
+                content: ((val: string | readonly ({
+                    text: string;
+                    type: "text";
+                } | {
+                    type: "image_url";
+                    image_url: {
+                        url: string;
+                    };
+                })[] | null) => string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[] | null) & {
+                    config: ((val: string | readonly ({
+                        text: string;
+                        type: "text";
+                    } | {
+                        type: "image_url";
+                        image_url: {
+                            url: string;
+                        };
+                    })[]) => string | readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[]) & {
+                        config: [(val: string) => string, ((val: readonly ({
+                            text: string;
+                            type: "text";
+                        } | {
+                            type: "image_url";
+                            image_url: {
+                                url: string;
+                            };
+                        })[]) => readonly (Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>)[]) & {
+                            config: ((val: {
+                                text: string;
+                                type: "text";
+                            } | {
+                                type: "image_url";
+                                image_url: {
+                                    url: string;
+                                };
+                            }) => Readonly<{
+                                text: string;
+                                type: "text";
+                            }> | Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>) & {
+                                config: [((val: {
+                                    text: string;
+                                    type: "text";
+                                }) => Readonly<{
+                                    text: string;
+                                    type: "text";
+                                }>) & {
+                                    config: {
+                                        type: ((val: "text") => "text") & {
+                                            config: "text";
+                                            Value: "text";
+                                        };
+                                        text: (val: string) => string;
+                                    };
+                                    Value: Readonly<{
+                                        text: string;
+                                        type: "text";
+                                    }>;
+                                }, ((val: {
+                                    type: "image_url";
+                                    image_url: {
+                                        url: string;
+                                    };
+                                }) => Readonly<{
+                                    type: "image_url";
+                                    image_url: Readonly<{
+                                        url: string;
+                                    }>;
+                                }>) & {
+                                    config: {
+                                        type: ((val: "image_url") => "image_url") & {
+                                            config: "image_url";
+                                            Value: "image_url";
+                                        };
+                                        image_url: ((val: {
+                                            url: string;
+                                        }) => Readonly<{
+                                            url: string;
+                                        }>) & {
+                                            config: {
+                                                url: (val: string) => string;
+                                            };
+                                            Value: Readonly<{
+                                                url: string;
+                                            }>;
+                                        };
+                                    };
+                                    Value: Readonly<{
+                                        type: "image_url";
+                                        image_url: Readonly<{
+                                            url: string;
+                                        }>;
+                                    }>;
+                                }];
+                                Value: Readonly<{
+                                    text: string;
+                                    type: "text";
+                                }> | Readonly<{
+                                    type: "image_url";
+                                    image_url: Readonly<{
+                                        url: string;
+                                    }>;
+                                }>;
+                            };
+                            Value: readonly (Readonly<{
+                                text: string;
+                                type: "text";
+                            }> | Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>)[];
+                        }];
+                        Value: string | readonly (Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>)[];
+                    };
+                    Value: string | readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[] | null;
+                };
+                tool_calls: ((val: readonly {
+                    function: {
+                        name: string;
+                        arguments: string;
+                    };
+                    id: string;
+                    type: "function";
+                }[] | undefined) => readonly Readonly<{
+                    function: Readonly<{
+                        name: string;
+                        arguments: string;
+                    }>;
+                    id: string;
+                    type: "function";
+                }>[] | undefined) & {
+                    config: {
+                        sub: ((val: readonly {
+                            function: {
+                                name: string;
+                                arguments: string;
+                            };
+                            id: string;
+                            type: "function";
+                        }[]) => readonly Readonly<{
+                            function: Readonly<{
+                                name: string;
+                                arguments: string;
+                            }>;
+                            id: string;
+                            type: "function";
+                        }>[]) & {
+                            config: ((val: {
+                                function: {
+                                    name: string;
+                                    arguments: string;
+                                };
+                                id: string;
+                                type: "function";
+                            }) => Readonly<{
+                                function: Readonly<{
+                                    name: string;
+                                    arguments: string;
+                                }>;
+                                id: string;
+                                type: "function";
+                            }>) & {
+                                config: {
+                                    type: ((val: "function") => "function") & {
+                                        config: "function";
+                                        Value: "function";
+                                    };
+                                    id: (val: string) => string;
+                                    function: ((val: {
+                                        name: string;
+                                        arguments: string;
+                                    }) => Readonly<{
+                                        name: string;
+                                        arguments: string;
+                                    }>) & {
+                                        config: {
+                                            name: (val: string) => string;
+                                            arguments: (val: string) => string;
+                                        };
+                                        Value: Readonly<{
+                                            name: string;
+                                            arguments: string;
+                                        }>;
+                                    };
+                                };
+                                Value: Readonly<{
+                                    function: Readonly<{
+                                        name: string;
+                                        arguments: string;
+                                    }>;
+                                    id: string;
+                                    type: "function";
+                                }>;
+                            };
+                            Value: readonly Readonly<{
+                                function: Readonly<{
+                                    name: string;
+                                    arguments: string;
+                                }>;
+                                id: string;
+                                type: "function";
+                            }>[];
+                        };
+                        fallback: (() => readonly Readonly<{
+                            function: Readonly<{
+                                name: string;
+                                arguments: string;
+                            }>;
+                            id: string;
+                            type: "function";
+                        }>[]) | undefined;
+                    };
+                    Value: readonly Readonly<{
+                        function: Readonly<{
+                            name: string;
+                            arguments: string;
+                        }>;
+                        id: string;
+                        type: "function";
+                    }>[] | undefined;
+                };
+            };
+            Value: Readonly<{
+                tool_calls?: readonly Readonly<{
+                    function: Readonly<{
+                        name: string;
+                        arguments: string;
+                    }>;
+                    id: string;
+                    type: "function";
+                }>[] | undefined;
+                content: string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[] | null;
+                role: "assistant";
+            }>;
+        }, ((val: {
+            content: string | readonly ({
+                text: string;
+                type: "text";
+            } | {
+                type: "image_url";
+                image_url: {
+                    url: string;
+                };
+            })[];
+            role: "user";
+        }) => Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "user";
+        }>) & {
+            config: {
+                role: ((val: "user") => "user") & {
+                    config: "user";
+                    Value: "user";
+                };
+                content: ((val: string | readonly ({
+                    text: string;
+                    type: "text";
+                } | {
+                    type: "image_url";
+                    image_url: {
+                        url: string;
+                    };
+                })[]) => string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[]) & {
+                    config: [(val: string) => string, ((val: readonly ({
+                        text: string;
+                        type: "text";
+                    } | {
+                        type: "image_url";
+                        image_url: {
+                            url: string;
+                        };
+                    })[]) => readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[]) & {
+                        config: ((val: {
+                            text: string;
+                            type: "text";
+                        } | {
+                            type: "image_url";
+                            image_url: {
+                                url: string;
+                            };
+                        }) => Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>) & {
+                            config: [((val: {
+                                text: string;
+                                type: "text";
+                            }) => Readonly<{
+                                text: string;
+                                type: "text";
+                            }>) & {
+                                config: {
+                                    type: ((val: "text") => "text") & {
+                                        config: "text";
+                                        Value: "text";
+                                    };
+                                    text: (val: string) => string;
+                                };
+                                Value: Readonly<{
+                                    text: string;
+                                    type: "text";
+                                }>;
+                            }, ((val: {
+                                type: "image_url";
+                                image_url: {
+                                    url: string;
+                                };
+                            }) => Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>) & {
+                                config: {
+                                    type: ((val: "image_url") => "image_url") & {
+                                        config: "image_url";
+                                        Value: "image_url";
+                                    };
+                                    image_url: ((val: {
+                                        url: string;
+                                    }) => Readonly<{
+                                        url: string;
+                                    }>) & {
+                                        config: {
+                                            url: (val: string) => string;
+                                        };
+                                        Value: Readonly<{
+                                            url: string;
+                                        }>;
+                                    };
+                                };
+                                Value: Readonly<{
+                                    type: "image_url";
+                                    image_url: Readonly<{
+                                        url: string;
+                                    }>;
+                                }>;
+                            }];
+                            Value: Readonly<{
+                                text: string;
+                                type: "text";
+                            }> | Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>;
+                        };
+                        Value: readonly (Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>)[];
+                    }];
+                    Value: string | readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[];
+                };
+            };
+            Value: Readonly<{
+                content: string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[];
+                role: "user";
+            }>;
+        }, ((val: {
+            content: string | readonly ({
+                text: string;
+                type: "text";
+            } | {
+                type: "image_url";
+                image_url: {
+                    url: string;
+                };
+            })[];
+            role: "tool";
+            tool_call_id: string;
+        }) => Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "tool";
+            tool_call_id: string;
+        }>) & {
+            config: {
+                role: ((val: "tool") => "tool") & {
+                    config: "tool";
+                    Value: "tool";
+                };
+                tool_call_id: (val: string) => string;
+                content: ((val: string | readonly ({
+                    text: string;
+                    type: "text";
+                } | {
+                    type: "image_url";
+                    image_url: {
+                        url: string;
+                    };
+                })[]) => string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[]) & {
+                    config: [(val: string) => string, ((val: readonly ({
+                        text: string;
+                        type: "text";
+                    } | {
+                        type: "image_url";
+                        image_url: {
+                            url: string;
+                        };
+                    })[]) => readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[]) & {
+                        config: ((val: {
+                            text: string;
+                            type: "text";
+                        } | {
+                            type: "image_url";
+                            image_url: {
+                                url: string;
+                            };
+                        }) => Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>) & {
+                            config: [((val: {
+                                text: string;
+                                type: "text";
+                            }) => Readonly<{
+                                text: string;
+                                type: "text";
+                            }>) & {
+                                config: {
+                                    type: ((val: "text") => "text") & {
+                                        config: "text";
+                                        Value: "text";
+                                    };
+                                    text: (val: string) => string;
+                                };
+                                Value: Readonly<{
+                                    text: string;
+                                    type: "text";
+                                }>;
+                            }, ((val: {
+                                type: "image_url";
+                                image_url: {
+                                    url: string;
+                                };
+                            }) => Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>) & {
+                                config: {
+                                    type: ((val: "image_url") => "image_url") & {
+                                        config: "image_url";
+                                        Value: "image_url";
+                                    };
+                                    image_url: ((val: {
+                                        url: string;
+                                    }) => Readonly<{
+                                        url: string;
+                                    }>) & {
+                                        config: {
+                                            url: (val: string) => string;
+                                        };
+                                        Value: Readonly<{
+                                            url: string;
+                                        }>;
+                                    };
+                                };
+                                Value: Readonly<{
+                                    type: "image_url";
+                                    image_url: Readonly<{
+                                        url: string;
+                                    }>;
+                                }>;
+                            }];
+                            Value: Readonly<{
+                                text: string;
+                                type: "text";
+                            }> | Readonly<{
+                                type: "image_url";
+                                image_url: Readonly<{
+                                    url: string;
+                                }>;
+                            }>;
+                        };
+                        Value: readonly (Readonly<{
+                            text: string;
+                            type: "text";
+                        }> | Readonly<{
+                            type: "image_url";
+                            image_url: Readonly<{
+                                url: string;
+                            }>;
+                        }>)[];
+                    }];
+                    Value: string | readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[];
+                };
+            };
+            Value: Readonly<{
+                content: string | readonly (Readonly<{
+                    text: string;
+                    type: "text";
+                }> | Readonly<{
+                    type: "image_url";
+                    image_url: Readonly<{
+                        url: string;
+                    }>;
+                }>)[];
+                role: "tool";
+                tool_call_id: string;
+            }>;
+        }];
+        Value: Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "system";
+        }> | Readonly<{
+            tool_calls?: readonly Readonly<{
+                function: Readonly<{
+                    name: string;
+                    arguments: string;
+                }>;
+                id: string;
+                type: "function";
+            }>[] | undefined;
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[] | null;
+            role: "assistant";
+        }> | Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "user";
+        }> | Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "tool";
+            tool_call_id: string;
+        }>;
+    };
+    type Primitive<Type extends 'string' | 'number' | 'integer' | 'boolean'> = Readonly<{
+        type: Type;
+        enum?: Type[];
+    }>;
+    type Obj<Params extends Record<string, Type>> = Readonly<{
+        type: 'object';
+        parameters: Params;
+        required: keyof Params;
+    }>;
+    type List<Item extends Type> = Readonly<{
+        type: 'array';
+        items: Item;
+    }>;
+    type Type = Obj<any> | List<any> | Primitive<any>;
+    /**
+     * Github hosted LLM API.
+     */
+    export class $mol_github_model extends $mol_object {
+        /** Model names from https://github.com/marketplace/models */
+        names(): string[];
+        /** System rules */
+        rules(): string;
+        /** List of callable functions */
+        tools(): Map<string, {
+            descr: string;
+            params: Obj<any>;
+            func: Function;
+        }>;
+        /** Actual system state */
+        state(next?: readonly string[]): readonly string[];
+        /** Additional model query params */
+        params(next?: {}): {};
+        /** Dialog history */
+        history(next?: typeof Message.Value[]): (Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "system";
+        }> | Readonly<{
+            tool_calls?: readonly Readonly<{
+                function: Readonly<{
+                    name: string;
+                    arguments: string;
+                }>;
+                id: string;
+                type: "function";
+            }>[] | undefined;
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[] | null;
+            role: "assistant";
+        }> | Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "user";
+        }> | Readonly<{
+            content: string | readonly (Readonly<{
+                text: string;
+                type: "text";
+            }> | Readonly<{
+                type: "image_url";
+                image_url: Readonly<{
+                    url: string;
+                }>;
+            }>)[];
+            role: "tool";
+            tool_call_id: string;
+        }>)[];
+        /** Independent copy of current state. */
+        fork(): $mol_github_model;
+        /** One-shot stateless prompting */
+        shot(prompt: any[], context?: any, params?: {}): any;
+        /** Add user prompt */
+        ask(chunks: any[]): this;
+        /** Add assistant context */
+        tell(chunks: any[]): this;
+        /** Add tools answer */
+        answer(id: string, chunks: any[]): this;
+        request_body(model: string): string;
+        request(model: string, key: string): Readonly<{
+            choices: readonly Readonly<{
+                message: Readonly<{
+                    tool_calls?: readonly Readonly<{
+                        function: Readonly<{
+                            name: string;
+                            arguments: string;
+                        }>;
+                        id: string;
+                        type: "function";
+                    }>[] | undefined;
+                    content: string | readonly (Readonly<{
+                        text: string;
+                        type: "text";
+                    }> | Readonly<{
+                        type: "image_url";
+                        image_url: Readonly<{
+                            url: string;
+                        }>;
+                    }>)[] | null;
+                    role: "assistant";
+                }>;
+            }>[];
+        }>;
+        /** Last response from LLM */
+        response(): any;
+    }
+    export {};
+}
+
+declare namespace $ {
+
+	type $mol_list__rows_raggu_web_front_chat_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['rows'] >
+		,
+		ReturnType< $mol_list['rows'] >
+	>
+	type $bog_builderui_card__attr_raggu_web_front_chat_2 = $mol_type_enforce<
+		({ 
+			'raggu_loading': ReturnType< $raggu_web_front_chat['is_communicating'] >,
+		})  & ReturnType< $bog_builderui_card['attr'] >
+		,
+		ReturnType< $bog_builderui_card['attr'] >
+	>
+	type $bog_builderui_card__sub_raggu_web_front_chat_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_card['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_scroll__sub_raggu_web_front_chat_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_scroll['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_chat_7 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['use_sug_one'] > ): ReturnType< $raggu_web_front_chat['use_sug_one'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_chat_9 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['use_sug_two'] > ): ReturnType< $raggu_web_front_chat['use_sug_two'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $mol_button_minor__hint_raggu_web_front_chat_10 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['clear_text'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_raggu_web_front_chat_11 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['clear_click'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_raggu_web_front_chat_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_textarea__hint_raggu_web_front_chat_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['input_hint_text'] >
+		,
+		ReturnType< $mol_textarea['hint'] >
+	>
+	type $mol_textarea__value_raggu_web_front_chat_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['prompt_text'] >
+		,
+		ReturnType< $mol_textarea['value'] >
+	>
+	type $mol_textarea__submit_raggu_web_front_chat_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['prompt_submit'] >
+		,
+		ReturnType< $mol_textarea['submit'] >
+	>
+	type $mol_button_minor__hint_raggu_web_front_chat_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['send_label_text'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__click_raggu_web_front_chat_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['prompt_submit'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_raggu_web_front_chat_19 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_21 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_22 = $mol_type_enforce<
+		({ 
+			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_24 = $mol_type_enforce<
+		({ 
+			'raggu_off_graph': ReturnType< $raggu_web_front_chat['message_off_graph'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_26 = $mol_type_enforce<
+		({ 
+			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_front_chat extends $bog_builderui_div {
+		Messages( ): $mol_list
+		is_communicating( ): boolean
+		Skel_line_one( ): $bog_builderui_skeleton
+		Skel_line_two( ): $bog_builderui_skeleton
+		Skel_line_three( ): $bog_builderui_skeleton
+		Status( ): $bog_builderui_card
+		Body_flow( ): $bog_builderui_div
+		Body( ): $mol_scroll
+		use_sug_one( next?: any ): any
+		Sug_one( ): $bog_builderui_div
+		use_sug_two( next?: any ): any
+		Sug_two( ): $bog_builderui_div
+		clear_click( next?: any ): any
+		Clear( ): $mol_button_minor
+		Suggestions( ): $bog_builderui_div
+		prompt_text( next?: string ): string
+		prompt_submit( next?: any ): any
+		Prompt( ): $mol_textarea
+		Input_send( ): $mol_button_minor
+		Input_row( ): $bog_builderui_div
+		Footer( ): $bog_builderui_div
+		Message_text( id: any): $bog_builderui_div
+		Message_badge( id: any): $bog_builderui_div
+		dataset_id( ): string
+		sug_one_text( ): string
+		sug_two_text( ): string
+		input_hint_text( ): string
+		send_label_text( ): string
+		seed_user_text( ): string
+		seed_assistant_text( ): string
+		clear_text( ): string
+		off_graph_text( ): string
+		rows( ): readonly(any)[]
+		message_text( id: any): string
+		message_role( id: any): string
+		message_off_graph( id: any): boolean
+		sub( ): readonly(any)[]
+		Message( id: any): $bog_builderui_div
+	}
+	
+}
+
+//# sourceMappingURL=chat.view.tree.d.ts.map
+declare namespace $.$$ {
+    type Raggu_chat_role = 'user' | 'assistant';
+    type Raggu_chat_item = {
+        role: Raggu_chat_role;
+        text: string;
+        /** Отвечено фолбэком (прямой LLM без графа), а не GraphRAG-бэком. */
+        off_graph?: boolean;
+    };
+    class $raggu_web_front_chat extends $.$raggu_web_front_chat {
+        history(next?: Raggu_chat_item[]): Raggu_chat_item[];
+        prompt_text(next?: string): string;
+        llm(): $mol_github_model;
+        rows(): $bog_builderui_div[];
+        auto(): any;
+        message_text(index: number): string;
+        message_role(index: number): Raggu_chat_role;
+        message_off_graph(index: number): boolean;
+        prompt_submit(): null;
+        is_communicating(): boolean;
+        ask(text: string): void;
+        ask_backend(text: string): void;
+        graph_context(): string;
+        ask_llm(text: string): void;
+        use_sug_one(): null;
+        use_sug_two(): null;
+        clear_click(): null;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_front_summary_card_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_card_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_card_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_card_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_card_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_card_6 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	export class $raggu_web_front_summary_card extends $bog_builderui_div {
+		click( next?: any ): any
+		Icon( ): $bog_builderui_div
+		Spacer( ): $bog_builderui_div
+		Badge( ): $bog_builderui_div
+		Head( ): $bog_builderui_div
+		Title( ): $bog_builderui_div
+		Desc( ): $bog_builderui_div
+		More( ): $bog_builderui_div
+		icon( ): string
+		badge( ): string
+		title( ): string
+		desc( ): string
+		more( ): string
+		event( ): ({ 
+			click( next?: ReturnType< $raggu_web_front_summary_card['click'] > ): ReturnType< $raggu_web_front_summary_card['click'] >,
+		})  & ReturnType< $bog_builderui_div['event'] >
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=card.view.tree.d.ts.map
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_link extends $mol_view {
+		uri_toggle( ): string
+		hint( ): string
+		hint_safe( ): ReturnType< $mol_link['hint'] >
+		target( ): string
+		file_name( ): string
+		current( ): boolean
+		relation( ): string
+		event_click( next?: any ): any
+		click( next?: ReturnType< $mol_link['event_click'] > ): ReturnType< $mol_link['event_click'] >
+		uri( ): string
+		dom_name( ): string
+		uri_off( ): string
+		uri_native( ): any
+		external( ): boolean
+		attr( ): ({ 
+			'href': ReturnType< $mol_link['uri_toggle'] >,
+			'title': ReturnType< $mol_link['hint_safe'] >,
+			'target': ReturnType< $mol_link['target'] >,
+			'download': ReturnType< $mol_link['file_name'] >,
+			'mol_link_current': ReturnType< $mol_link['current'] >,
+			'rel': ReturnType< $mol_link['relation'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		sub( ): readonly($mol_view_content)[]
+		arg( ): Record<string, any>
+		event( ): ({ 
+			click( next?: ReturnType< $mol_link['click'] > ): ReturnType< $mol_link['click'] >,
+		})  & ReturnType< $mol_view['event'] >
+	}
+	
+}
+
+//# sourceMappingURL=link.view.tree.d.ts.map
+declare namespace $.$$ {
+    /**
+     * Dynamic hyperlink. It can add, change or remove parameters. A link that leads to the current page has [mol_link_current] attribute set to true.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_link_demo
+     */
+    class $mol_link extends $.$mol_link {
+        uri_toggle(): string;
+        uri(): string;
+        uri_off(): string;
+        uri_native(): URL;
+        current(): boolean;
+        file_name(): string;
+        minimal_height(): number;
+        external(): boolean;
+        target(): '_self' | '_blank' | '_top' | '_parent' | string;
+        hint_safe(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__event_raggu_web_front_summary_detail_1 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_summary_detail['close'] > ): ReturnType< $raggu_web_front_summary_detail['close'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_5 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_summary_detail_6 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_summary_detail['close'] > ): ReturnType< $raggu_web_front_summary_detail['close'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_8 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary_detail['body'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_scroll__sub_raggu_web_front_summary_detail_10 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_scroll['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_12 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_image__uri_raggu_web_front_summary_detail_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary_detail['image'] >
+		,
+		ReturnType< $mol_image['uri'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_detail_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary_detail['link_rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_link__uri_raggu_web_front_summary_detail_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary_detail['link_uri'] >
+		,
+		ReturnType< $mol_link['uri'] >
+	>
+	type $mol_link__title_raggu_web_front_summary_detail_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary_detail['link_label'] >
+		,
+		ReturnType< $mol_link['title'] >
+	>
+	type $mol_link__attr_raggu_web_front_summary_detail_19 = $mol_type_enforce<
+		({ 
+			'target': string,
+		})  & ReturnType< $mol_link['attr'] >
+		,
+		ReturnType< $mol_link['attr'] >
+	>
+	export class $raggu_web_front_summary_detail extends $bog_builderui_div {
+		close( next?: any ): any
+		Backdrop( ): $bog_builderui_div
+		Icon( ): $bog_builderui_div
+		Title( ): $bog_builderui_div
+		Badge( ): $bog_builderui_div
+		Header_text( ): $bog_builderui_div
+		Spacer( ): $bog_builderui_div
+		Close_btn( ): $bog_builderui_div
+		Header( ): $bog_builderui_div
+		Content( ): $bog_builderui_div
+		Body( ): $mol_scroll
+		Panel( ): $bog_builderui_div
+		Fact_marker( id: any): $bog_builderui_div
+		fact( id: any): string
+		Fact_text( id: any): $bog_builderui_div
+		link_rows( ): readonly(any)[]
+		link_uri( id: any): string
+		link_label( id: any): string
+		showed( ): boolean
+		icon( ): string
+		badge( ): string
+		title( ): string
+		image( ): string
+		facts( ): readonly(any)[]
+		links( ): readonly(any)[]
+		body( ): readonly(any)[]
+		attr( ): ({ 
+			'raggu_web_front_summary_detail_showed': ReturnType< $raggu_web_front_summary_detail['showed'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		sub( ): readonly(any)[]
+		Image( ): $mol_image
+		Fact( id: any): $bog_builderui_div
+		Links( ): $bog_builderui_div
+		Link( id: any): $mol_link
+	}
+	
+}
+
+//# sourceMappingURL=detail.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_summary_detail extends $.$raggu_web_front_summary_detail {
+        body(): ($bog_builderui_div | $.$mol_image)[];
+        fact(i: number): any;
+        link_rows(): $.$mol_link[];
+        link_uri(i: number): any;
+        link_label(i: number): any;
+    }
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $bog_builderui_div__sub_raggu_web_front_summary_1 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_2 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_3 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_front_summary_card__icon_raggu_web_front_summary_4 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['card_icon'] >
+		,
+		ReturnType< $raggu_web_front_summary_card['icon'] >
+	>
+	type $raggu_web_front_summary_card__badge_raggu_web_front_summary_5 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['card_badge'] >
+		,
+		ReturnType< $raggu_web_front_summary_card['badge'] >
+	>
+	type $raggu_web_front_summary_card__title_raggu_web_front_summary_6 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['card_title'] >
+		,
+		ReturnType< $raggu_web_front_summary_card['title'] >
+	>
+	type $raggu_web_front_summary_card__desc_raggu_web_front_summary_7 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['card_desc'] >
+		,
+		ReturnType< $raggu_web_front_summary_card['desc'] >
+	>
+	type $raggu_web_front_summary_card__more_raggu_web_front_summary_8 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['more_text'] >
+		,
+		ReturnType< $raggu_web_front_summary_card['more'] >
+	>
+	type $raggu_web_front_summary_card__click_raggu_web_front_summary_9 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['click'] >
+		,
+		ReturnType< $raggu_web_front_summary_card['click'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_summary_10 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $raggu_web_front_summary_detail__showed_raggu_web_front_summary_11 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['detail_showed'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['showed'] >
+	>
+	type $raggu_web_front_summary_detail__icon_raggu_web_front_summary_12 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['opened_icon'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['icon'] >
+	>
+	type $raggu_web_front_summary_detail__badge_raggu_web_front_summary_13 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['opened_badge'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['badge'] >
+	>
+	type $raggu_web_front_summary_detail__title_raggu_web_front_summary_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['opened_title'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['title'] >
+	>
+	type $raggu_web_front_summary_detail__facts_raggu_web_front_summary_15 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['opened_facts'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['facts'] >
+	>
+	type $raggu_web_front_summary_detail__links_raggu_web_front_summary_16 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['opened_links'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['links'] >
+	>
+	type $raggu_web_front_summary_detail__image_raggu_web_front_summary_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['opened_image'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['image'] >
+	>
+	type $raggu_web_front_summary_detail__close_raggu_web_front_summary_18 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_summary['close'] >
+		,
+		ReturnType< $raggu_web_front_summary_detail['close'] >
+	>
+	export class $raggu_web_front_summary extends $bog_builderui_div {
+		Header_title( ): $bog_builderui_div
+		Header_subtitle( ): $bog_builderui_div
+		Header( ): $bog_builderui_div
+		card_icon( id: any): string
+		card_badge( id: any): string
+		card_title( id: any): string
+		card_desc( id: any): string
+		click( id: any, next?: any ): any
+		Card( id: any): $raggu_web_front_summary_card
+		rows( ): readonly(any)[]
+		Grid( ): $bog_builderui_div
+		detail_showed( ): boolean
+		opened_icon( ): string
+		opened_badge( ): string
+		opened_title( ): string
+		opened_facts( ): readonly(any)[]
+		opened_links( ): readonly(any)[]
+		opened_image( ): string
+		close( next?: any ): any
+		opened( next?: string ): string
+		header_title_text( ): string
+		header_subtitle_text( ): string
+		more_text( ): string
+		ragu_badge( ): string
+		ragu_desc( ): string
+		ragu_fact_1( ): string
+		ragu_fact_2( ): string
+		ragu_fact_3( ): string
+		mol_badge( ): string
+		mol_desc( ): string
+		mol_fact_1( ): string
+		mol_fact_2( ): string
+		mol_fact_3( ): string
+		menolite_badge( ): string
+		menolite_desc( ): string
+		menolite_fact_1( ): string
+		menolite_fact_2( ): string
+		menolite_fact_3( ): string
+		nerel_badge( ): string
+		nerel_desc( ): string
+		nerel_fact_1( ): string
+		nerel_fact_2( ): string
+		nerel_fact_3( ): string
+		sub( ): readonly(any)[]
+		Detail( ): $raggu_web_front_summary_detail
+	}
+	
+}
+
+//# sourceMappingURL=summary.view.tree.d.ts.map
+declare namespace $.$$ {
+    type TechLink = {
+        label: string;
+        uri: string;
+    };
+    export class $raggu_web_front_summary extends $.$raggu_web_front_summary {
+        ids(): string[];
+        rows(): $raggu_web_front_summary_card[];
+        card_icon(id: string): "" | "🧠" | "⚡" | "🤖" | "🏷";
+        card_title(id: string): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL";
+        card_badge(id: string): string;
+        card_desc(id: string): string;
+        card_facts(id: string): string[];
+        card_links(id: string): TechLink[];
+        card_image(id: string): "" | "raggu/web/front/assets/ragu.jpg";
+        detail_showed(): boolean;
+        opened_icon(): "" | "🧠" | "⚡" | "🤖" | "🏷";
+        opened_badge(): string;
+        opened_title(): "" | "RAGU" | "$mol" | "Meno-Lite-0.1" | "NEREL";
+        opened_facts(): string[];
+        opened_links(): TechLink[];
+        opened_image(): "" | "raggu/web/front/assets/ragu.jpg";
+        click(id: string): null;
+        close(): null;
+    }
+    export {};
+}
+
+/** @see $bog_builderui_tokens */
+declare namespace $ {
+}
+
+declare namespace $ {
+
 	type $bog_favicon__Icon_raggu_web_front_app_1 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['favicon_icon'] >
 		,
@@ -8706,6 +10825,16 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_explorer['dataset_id'] >
 	>
+	type $raggu_web_front_explorer__ask_click_raggu_web_front_app_21 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['ask_chat'] >
+		,
+		ReturnType< $raggu_web_front_explorer['ask_click'] >
+	>
+	type $raggu_web_front_chat__dataset_id_raggu_web_front_app_22 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['dataset_id'] >
+		,
+		ReturnType< $raggu_web_front_chat['dataset_id'] >
+	>
 	export class $raggu_web_front_app extends $bog_builderui_div {
 		favicon_icon( ): $mol_icon_graph
 		Favicon( ): $bog_favicon
@@ -8725,6 +10854,7 @@ declare namespace $ {
 		Main( ): $bog_builderui_div
 		Help( ): $raggu_web_front_help
 		Summary_popup( ): $mol_view
+		ask_chat( next?: any ): any
 		screen( next?: string ): string
 		dataset_id( next?: string ): string
 		help_open( next?: boolean ): boolean
@@ -8733,6 +10863,7 @@ declare namespace $ {
 		lights_mode( ): string
 		screen_gallery_title( ): string
 		screen_explorer_title( ): string
+		screen_chat_title( ): string
 		screen_summary_title( ): string
 		ask_entity_template( ): string
 		ask_relation_template( ): string
@@ -8749,6 +10880,7 @@ declare namespace $ {
 		sub( ): readonly(any)[]
 		Gallery( ): $raggu_web_front_gallery
 		Explorer( ): $raggu_web_front_explorer
+		Chat( ): $raggu_web_front_chat
 		Summary( ): $raggu_web_front_summary
 	}
 	
@@ -8757,7 +10889,7 @@ declare namespace $ {
 //# sourceMappingURL=app.view.tree.d.ts.map
 declare namespace $.$$ {
     class $raggu_web_front_app extends $.$raggu_web_front_app {
-        body(): $.$raggu_web_front_summary[] | $.$raggu_web_front_gallery[] | $.$raggu_web_front_explorer[];
+        body(): $.$raggu_web_front_summary[] | $.$raggu_web_front_gallery[] | $.$raggu_web_front_explorer[] | $.$raggu_web_front_chat[];
         auto(): any;
         lights_mode(): "light" | "dark";
         Summary_popup(): $.$raggu_web_front_summary_detail;
@@ -8768,6 +10900,7 @@ declare namespace $.$$ {
         sidebar_dataset_name(id: string): string;
         sidebar_dataset_meta(id: string): string;
         select_dataset(id: string): null;
+        ask_chat(): null;
         screen_title(): string;
         dataset_title(): string;
         arg_value(key: string, next: string | undefined, fallback: string): string;
