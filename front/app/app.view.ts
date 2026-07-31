@@ -9,8 +9,8 @@ namespace $.$$ {
 			switch( s ) {
 				case 'gallery': return [ this.Gallery() ]
 				case 'explorer': return [ this.Explorer() ]
-				// Чат и дашборд спрятаны до готовности бэка:
-				// case 'chat': return [ this.Chat() ]
+				case 'chat': return [ this.Chat() ]
+				// Дашборд спрятан до готовности бэка:
 				// case 'dashboard': return [ this.Dashboard() ]
 			}
 			return []
@@ -81,29 +81,28 @@ namespace $.$$ {
 			return null
 		}
 
-		// Спрятано вместе с чатом — вернуть при включении вкладки:
-		// @$mol_action
-		// ask_chat() {
-		// 	// Переносим выбранное в графе (сущность или связь) в чат: переключаем
-		// 	// экран и сразу кладём заготовку вопроса в поле ввода.
-		// 	const explorer = this.Explorer()
-		// 	const node = explorer.selected()
-		// 	const edge = explorer.selected_edge()
-		// 	this.screen( 'chat' )
-		// 	if( edge ) {
-		// 		const label = `${ explorer.node_label( edge.source ) } ${ edge.relation } ${ explorer.node_label( edge.target ) }`
-		// 		this.Chat().prompt_text( this.ask_relation_template().replace( '%s', label ) )
-		// 	} else if( node?.label ) {
-		// 		this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )
-		// 	}
-		// 	return null
-		// }
+		@$mol_action
+		ask_chat() {
+			// Переносим выбранное в графе (сущность или связь) в чат: переключаем
+			// экран и сразу кладём заготовку вопроса в поле ввода.
+			const explorer = this.Explorer() as $.$$.$raggu_web_front_explorer
+			const node = explorer.selected()
+			const edge = explorer.selected_edge()
+			this.screen( 'chat' )
+			if( edge ) {
+				const label = `${ explorer.node_label( edge.source ) } ${ edge.relation } ${ explorer.node_label( edge.target ) }`
+				this.Chat().prompt_text( this.ask_relation_template().replace( '%s', label ) )
+			} else if( node?.label ) {
+				this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )
+			}
+			return null
+		}
 
 		screen_title() {
 			switch( this.screen() ) {
 				case 'gallery': return this.screen_gallery_title()
 				case 'explorer': return this.screen_explorer_title()
-				// case 'chat': return this.screen_chat_title()
+				case 'chat': return this.screen_chat_title()
 				case 'summary': return this.screen_summary_title()
 			}
 			return ''
