@@ -55,6 +55,8 @@
 	pack tracker git \https://github.com/b-on-g/tracker.git
 	pack builderui git \https://github.com/b-on-g/builderui.git
 	pack music git \https://github.com/b-on-g/music.git
+	pack journal git \https://github.com/b-on-g/journal.git
+	pack figmol git \https://github.com/b-on-g/figmol.git
 \/raggu/web/front/app
 	deploy \/mol/offline/install
 	deploy \/raggu/web/front/assets

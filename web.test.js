@@ -3670,25 +3670,6 @@ var $;
 var $;
 (function ($) {
     $mol_test({
-        'null by default'() {
-            const key = String(Math.random());
-            $mol_assert_equal($mol_state_session.value(key), null);
-        },
-        'storing'() {
-            const key = String(Math.random());
-            $mol_state_session.value(key, '$mol_state_session_test');
-            $mol_assert_equal($mol_state_session.value(key), '$mol_state_session_test');
-            $mol_state_session.value(key, null);
-            $mol_assert_equal($mol_state_session.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
         '$mol_syntax2_md_flow'() {
             const check = (input, right) => {
                 const tokens = [];
@@ -3715,6 +3696,25 @@ var $;
                 ['table', '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n', ['| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n', '\n'], 0],
                 ['table', '| Cell11 | Cell12\n| Cell21 | Cell22\n', ['| Cell11 | Cell12\n| Cell21 | Cell22\n', ''], 68],
             ]);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'null by default'() {
+            const key = String(Math.random());
+            $mol_assert_equal($mol_state_session.value(key), null);
+        },
+        'storing'() {
+            const key = String(Math.random());
+            $mol_state_session.value(key, '$mol_state_session_test');
+            $mol_assert_equal($mol_state_session.value(key), '$mol_state_session_test');
+            $mol_state_session.value(key, null);
+            $mol_assert_equal($mol_state_session.value(key), null);
         },
     });
 })($ || ($ = {}));
@@ -3950,6 +3950,34 @@ var $;
 
 ;
 "use strict";
+/** @jsx $mol_jsx */
+/** @jsxFrag $mol_jsx_frag */
+var $;
+(function ($) {
+    $mol_test({
+        'safe tag'() {
+            $mol_assert_equal($mol_dom_serialize($$.$mol_dom_safe([$mol_jsx("div", null, "foo")])[0]), $mol_dom_serialize($mol_jsx("div", null, "foo")));
+        },
+        'bad tag'() {
+            $mol_assert_equal($mol_dom_serialize($$.$mol_dom_safe([$mol_jsx("script", null, "alert('ahtung!')")])[0]), $mol_dom_serialize($mol_jsx($mol_jsx_frag, null, "alert('ahtung!')")));
+        },
+        'common attr'() {
+            $mol_assert_equal($mol_dom_serialize($$.$mol_dom_safe([$mol_jsx("a", { id: "foo" }, "foo")])[0]), $mol_dom_serialize($mol_jsx("a", { id: "foo" }, "foo")));
+        },
+        'safe attr'() {
+            $mol_assert_equal($mol_dom_serialize($$.$mol_dom_safe([$mol_jsx("a", { href: "https://example.org/" }, "foo")])[0]), $mol_dom_serialize($mol_jsx("a", { href: "https://example.org/" }, "foo")));
+        },
+        'bad attr'() {
+            $mol_assert_equal($mol_dom_serialize($$.$mol_dom_safe([$mol_jsx("a", { onclick: "alert('ahtung!')" }, "foo")])[0]), $mol_dom_serialize($mol_jsx("a", null, "foo")));
+        },
+        'danger attr'() {
+            $mol_assert_equal($mol_dom_serialize($$.$mol_dom_safe([$mol_jsx("a", { href: "javascript:alert('ahtung!')" }, "foo")])[0]), $mol_dom_serialize($mol_jsx("a", { href: "about:blank#javascript:alert('ahtung!')" }, "foo")));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
 var $;
 (function ($_1) {
     var $$;
@@ -4020,12 +4048,31 @@ var $;
                 app.Topbar().click_explorer();
                 $mol_assert_equal(app.screen(), 'explorer');
                 $mol_assert_equal(app.body()[0], app.Explorer());
-                // user navigates back to Датасеты and clicks a card → dataset selected, screen stays
+                // user navigates back to Датасеты and clicks a card → корпус выбран
+                // и мы сразу в графе, без промежуточного шага
                 app.Topbar().click_gallery();
                 $mol_assert_equal(app.screen(), 'gallery');
                 app.Gallery().click('law');
-                $mol_assert_equal(app.screen(), 'gallery');
                 $mol_assert_equal(app.dataset_id(), 'law');
+                $mol_assert_equal(app.screen(), 'explorer');
+                $mol_assert_equal(app.body()[0], app.Explorer());
+            },
+            'gallery card click jumps straight to the graph'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const app = $raggu_web_front_app.make({ $ });
+                $mol_assert_equal(app.screen(), 'gallery');
+                app.Gallery().click('wiki');
+                $mol_assert_equal(app.dataset_id(), 'wiki');
+                $mol_assert_equal(app.screen(), 'explorer');
+            },
+            'sidebar dataset click keeps the current screen'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const app = $raggu_web_front_app.make({ $ });
+                app.dataset_id('law');
+                app.screen('chat');
+                app.select_dataset('wiki');
+                $mol_assert_equal(app.dataset_id(), 'wiki');
+                $mol_assert_equal(app.screen(), 'chat');
             },
             // ---- explorer communities dropdown ----
             'explorer.communities: mock graph groups nodes by community'($) {
@@ -4051,6 +4098,62 @@ var $;
                 v.comm_click(0);
                 $mol_assert_equal(v.comms_selected().length, 0);
                 $mol_assert_equal(v.comm_mark(0), '');
+            },
+            'explorer.comms_clear: drops the whole selection'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_explorer.make({ $ });
+                $mol_assert_equal(v.has_comms_selection(), false);
+                v.comm_click(0);
+                v.comm_click(1);
+                $mol_assert_equal(v.comms_selected().length, 2);
+                $mol_assert_equal(v.has_comms_selection(), true);
+                v.comms_clear();
+                $mol_assert_equal(v.comms_selected().length, 0);
+                $mol_assert_equal(v.has_comms_selection(), false);
+                $mol_assert_equal(v.comm_mark(0), '');
+            },
+            // Плашка лимита живёт на meta с бэка: на моке её нет — и не должно быть.
+            'explorer.limit badge: hidden without backend meta'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_explorer.make({ $ });
+                $mol_assert_equal(v.graph_meta(), null);
+                $mol_assert_equal(v.is_limited(), false);
+                $mol_assert_equal(v.limit_text(), '');
+            },
+            'explorer.graph_limit: default stays out of the URL, raise writes it'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_explorer.make({ $ });
+                $mol_assert_equal(v.graph_limit(), 500);
+                $mol_assert_equal($.$mol_state_arg.value('limit'), null);
+                v.graph_limit(2000);
+                $mol_assert_equal(v.graph_limit(), 2000);
+                $mol_assert_equal($.$mol_state_arg.value('limit'), '2000');
+                $mol_assert_equal(v.can_show_more(), true);
+                v.graph_limit(5000);
+                $mol_assert_equal(v.can_show_more(), false);
+                v.graph_limit(500);
+                $mol_assert_equal($.$mol_state_arg.value('limit'), null);
+            },
+            // ---- chat ----
+            'chat: starts empty, no seeded conversation'($) {
+                $.$mol_state_arg.value('mock', '1');
+                const v = $raggu_web_front_chat.make({ $ });
+                $mol_assert_equal(v.history().length, 0);
+                $mol_assert_equal(v.is_empty(), true);
+                $mol_assert_equal(v.rows().length, 0);
+            },
+            'chat: fallback suggestions are per corpus, three of them'($) {
+                $.$mol_state_arg.value('mock', '1');
+                // dataset_id — не сеттер, задаём его override'ом при создании
+                const chat = (id) => $raggu_web_front_chat.make({ $, dataset_id: () => id });
+                const generic = chat('').fallback_suggestions();
+                const law = chat('law').fallback_suggestions();
+                const wiki = chat('wiki').fallback_suggestions();
+                $mol_assert_equal(generic.length, 3);
+                $mol_assert_equal(law.length, 3);
+                $mol_assert_equal(wiki.length, 3);
+                $mol_assert_equal(law[0] === wiki[0], false);
+                $mol_assert_equal(law[0] === generic[0], false);
             },
             'forcegraph: community filter dims outsiders, highlights internal edges only'($) {
                 $.$mol_state_arg.value('mock', '1');

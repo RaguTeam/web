@@ -283,7 +283,8 @@
     "$raggu_web_front_summary",
     "$raggu_web_front_summary_card",
     "$raggu_web_front_summary_detail",
-    "$mol_link"
+    "$mol_link",
+    "$mol_dom_safe"
   ],
   "dependencies": {
     "autoinstall": "*",

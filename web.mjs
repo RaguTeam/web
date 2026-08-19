@@ -1085,7 +1085,7 @@ var $;
         'color': 'gray',
     });
     $.$mol_dev_format_indent = $.$mol_dev_format_div.bind(null, {
-        'margin-left': '13px'
+        'margin-inline-start': '13px'
     });
     class Stack extends Array {
         // [ Symbol.toPrimitive ]() {
@@ -1945,12 +1945,12 @@ var $;
                 reuse: if (existen) {
                     if (!existen.temp)
                         break reuse;
-                    if (existen.task !== task) {
-                        cause = 'task';
-                        break reuse;
-                    }
                     if (existen.host !== host) {
                         cause = 'host';
+                        break reuse;
+                    }
+                    if (existen.task !== task) {
+                        cause = 'task';
                         break reuse;
                     }
                     if (!$mol_compare_deep(existen.args, args)) {
@@ -2934,7 +2934,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/view/view/view.css", "@view-transition {\n\tnavigation: auto;\n}\n\n[mol_view] {\n\ttransition-property: height, width, min-height, min-width, max-width, max-height, transform, scale, translate, rotate;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\tcontain: style;\n\tscrollbar-color: var(--mol_theme_line) transparent;\n\tscrollbar-width: thin;\n\ttext-wrap-style: pretty;\n}\t\n\n[mol_view]::selection {\n\tbackground: var(--mol_theme_line);\n}\t\n\n[mol_view]::-webkit-scrollbar {\n\twidth: .25rem;\n\theight: .25rem;\n}\n\n[mol_view]::-webkit-scrollbar-corner {\n\tbackground-color: var(--mol_theme_line);\n}\n\n[mol_view]::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n}\n\n[mol_view]::-webkit-scrollbar-thumb {\n\tbackground-color: var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont-family: system-ui, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t/* background: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text); */\n\tcontain: unset; /** Fixes bg ignoring when applied to body on Chrome */\n\ttab-size: 4;\n\t/*overscroll-behavior: contain; /** Disable navigation gestures **/\n}\n\n@media print {\n\t[mol_view_root] {\n\t\theight: auto;\n\t}\n}\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"], [mol_view_error=\"$mol_promise_blocker\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t-45deg,\n\t\t#f92323,\n\t\t#f92323 .5rem,\n\t\t#ff3d3d .5rem,\n\t\t#ff3d3d 1.5rem\n\t);\n\tcolor: black;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n@keyframes mol_view_wait {\n\tfrom {\n\t\topacity: .25;\n\t}\n\t20% {\n\t\topacity: .75;\n\t}\n\tto {\n\t\topacity: .25;\n\t}\n}\n\n:where([mol_view][mol_view_error=\"$mol_promise_blocker\"]),\n:where([mol_view][mol_view_error=\"Promise\"]) {\n\tbackground: var(--mol_theme_hover);\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait 1s steps(20,end) infinite;\n}\n");
+    $mol_style_attach("mol/view/view/view.css", "@view-transition {\n\tnavigation: auto;\n}\n\n[mol_view] {\n\ttransition-property: height, width, min-height, min-width, max-width, max-height, transform, scale, translate, rotate;\n\ttransition-duration: .2s;\n\ttransition-timing-function: ease-out;\n\t-webkit-appearance: none;\n\tbox-sizing: border-box;\n\tdisplay: flex;\n\tflex-shrink: 0;\n\tcontain: style;\n\tscrollbar-color: var(--mol_theme_line) transparent;\n\tscrollbar-width: thin;\n\ttext-wrap-style: pretty;\n\tunicode-bidi: plaintext\n}\n\n[mol_view]::selection {\n\tbackground: var(--mol_theme_line);\n}\t\n\n[mol_view]::-webkit-scrollbar {\n\twidth: .25rem;\n\theight: .25rem;\n}\n\n[mol_view]::-webkit-scrollbar-corner {\n\tbackground-color: var(--mol_theme_line);\n}\n\n[mol_view]::-webkit-scrollbar-track {\n\tbackground-color: transparent;\n}\n\n[mol_view]::-webkit-scrollbar-thumb {\n\tbackground-color: var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_view] > * {\n\tword-break: inherit;\n}\n\n[mol_view_root] {\n\tmargin: 0;\n\tpadding: 0;\n\twidth: 100%;\n\theight: 100%;\n\tbox-sizing: border-box;\n\tfont-family: system-ui, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t/* background: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text); */\n\tcontain: unset; /** Fixes bg ignoring when applied to body on Chrome */\n\ttab-size: 4;\n\t/*overscroll-behavior: contain; /** Disable navigation gestures **/\n}\n\n@media print {\n\t[mol_view_root] {\n\t\theight: auto;\n\t}\n}\n[mol_view][mol_view_error]:not([mol_view_error=\"Promise\"], [mol_view_error=\"$mol_promise_blocker\"]) {\n\tbackground-image: repeating-linear-gradient(\n\t\t-45deg,\n\t\t#f92323,\n\t\t#f92323 .5rem,\n\t\t#ff3d3d .5rem,\n\t\t#ff3d3d 1.5rem\n\t);\n\tcolor: black;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n@keyframes mol_view_wait {\n\tfrom {\n\t\topacity: .25;\n\t}\n\t20% {\n\t\topacity: .75;\n\t}\n\tto {\n\t\topacity: .25;\n\t}\n}\n\n:where([mol_view][mol_view_error=\"$mol_promise_blocker\"]),\n:where([mol_view][mol_view_error=\"Promise\"]) {\n\tbackground: var(--mol_theme_hover);\n}\n\n[mol_view][mol_view_error=\"Promise\"] {\n\tanimation: mol_view_wait 1s steps(20,end) infinite;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -5964,6 +5964,9 @@ var $;
         static lang(next) {
             return this.$.$mol_state_local.value('locale', next) || $mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
+        static direction() {
+            return new Intl.Locale(this.lang()).getTextInfo().direction ?? 'ltr';
+        }
         static source(lang) {
             return JSON.parse(this.$.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
@@ -6004,6 +6007,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_locale, "lang", null);
+    __decorate([
+        $mol_mem
+    ], $mol_locale, "direction", null);
     __decorate([
         $mol_mem_key
     ], $mol_locale, "source", null);
@@ -6757,8 +6763,11 @@ var $;
                 this.select_dataset(id);
                 return null;
             }
-            is_en() { return this.$.$mol_locale.lang() === 'en'; }
+            // Русский — единственная не-базовая локаль: всё остальное (включая
+            // незнакомый navigator.language) рендерится английскими строками
+            // view.tree, значит и подсвечивать надо EN.
             is_ru() { return this.$.$mol_locale.lang() === 'ru'; }
+            is_en() { return !this.is_ru(); }
             click_en() { this.$.$mol_locale.lang('en'); return null; }
             click_ru() { this.$.$mol_locale.lang('ru'); return null; }
         }
@@ -8189,6 +8198,16 @@ var $;
     }
     $.$raggu_web_front_api_endpoint = $raggu_web_front_api_endpoint;
     /**
+     * Локаль для бэкенда: RAGU принимает только `ru` | `en`, а $mol_locale.lang()
+     * отдаёт что угодно из navigator.language. Всё, что не русское, считаем
+     * английским — тексты view.tree по умолчанию тоже английские.
+     * Реактивно: смена языка в сайдбаре перефетчивает карточки и подсказки.
+     */
+    function $raggu_web_front_api_locale() {
+        return $mol_locale.lang() === 'ru' ? 'ru' : 'en';
+    }
+    $.$raggu_web_front_api_locale = $raggu_web_front_api_locale;
+    /**
      * Детали ребра — симметрично get_node. На бэке ручки ПОКА НЕТ, дескриптор
      * написан руками под согласованный контракт. Когда бэк добавит её в
      * openapi.json, генератор создаст одноимённую константу в ragu.openapi.ts —
@@ -8258,11 +8277,13 @@ var $;
             // Reactive fetch of preindexed datasets. While loading, the wire promise
             // is rethrown as usual; a real transport error falls back to BUILTIN moks
             // so the demo stays alive without the backend.
+            // Локаль читается реактивно — переключение EN/RU перезапрашивает карточки
+            // уже переведёнными бэком (title/domain/description).
             remote_datasets() {
                 if (this.mock_flag())
                     return null;
                 try {
-                    const cards = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_list_datasets, { query: { locale: 'ru' } });
+                    const cards = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_list_datasets, { query: { locale: $raggu_web_front_api_locale() } });
                     return cards.map((c) => ({
                         id: c.id,
                         nodes: format_count(c.stats.nodes),
@@ -11004,7 +11025,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/string/string.view.css", "[mol_string] {\n\tbox-sizing: border-box;\n\toutline-offset: 0;\n\tborder: none;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tposition: relative;\n\tfont: inherit;\n\tflex: 1 1 auto;\n\tbackground: transparent;\n\tmin-width: 0;\n\tcolor: inherit;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_string]:disabled:not(:placeholder-shown) {\n\tbackground-color: transparent;\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_string]:where(:not(:disabled)) {\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_string]:where(:not(:disabled)):hover {\n\tbox-shadow: inset 0 0 0 2px var(--mol_theme_line);\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_string]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_focus);\n}\n\n[mol_string]::placeholder {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_string]::-ms-clear {\n\tdisplay: none;\n}\n");
+    $mol_style_attach("mol/string/string.view.css", "[mol_string] {\n\tbox-sizing: border-box;\n\toutline-offset: 0;\n\tborder: none;\n\tborder-radius: var(--mol_gap_round);\n\twhite-space: pre-line;\n\toverflow: hidden;\n\ttext-overflow: ellipsis;\n\tpadding: var(--mol_gap_text);\n\ttext-align: start;\n\tposition: relative;\n\tfont: inherit;\n\tflex: 1 1 auto;\n\tbackground: transparent;\n\tmin-width: 0;\n\tcolor: inherit;\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_string]:disabled:not(:placeholder-shown) {\n\tbackground-color: transparent;\n\tcolor: var(--mol_theme_text);\n}\n\n[mol_string]:where(:not(:disabled)) {\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n}\n\n[mol_string]:where(:not(:disabled)):hover {\n\tbox-shadow: inset 0 0 0 2px var(--mol_theme_line);\n\tz-index: var(--mol_layer_hover);\n}\n\n[mol_string]:focus {\n\toutline: none;\n\tz-index: var(--mol_layer_focus);\n\tcolor: var(--mol_theme_text);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_focus);\n}\n\n[mol_string]::placeholder {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_string]::-ms-clear {\n\tdisplay: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -11069,6 +11090,20 @@ var $;
 			(obj.sub) = () => ([(this.comms_btn_label())]);
 			return obj;
 		}
+		has_comms_selection(){
+			return false;
+		}
+		comms_clear(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Comms_clear(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_clear_showed": (this.has_comms_selection())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.comms_clear(next))});
+			(obj.sub) = () => ([(this.comms_clear_text())]);
+			return obj;
+		}
 		comm_active(id){
 			return false;
 		}
@@ -11119,9 +11154,14 @@ var $;
 		comm_rows(){
 			return [(this.Comm_row(id))];
 		}
-		Comms_list(){
+		Comms_rows(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ((this.comm_rows()));
+			return obj;
+		}
+		Comms_list(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.Comms_clear()), (this.Comms_rows())]);
 			return obj;
 		}
 		Comms(){
@@ -11291,13 +11331,45 @@ var $;
 			(obj.sub) = () => ([(this.mock_badge_text())]);
 			return obj;
 		}
+		is_limited(){
+			return false;
+		}
+		limit_text(){
+			return "";
+		}
+		Limit_text(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.limit_text())]);
+			return obj;
+		}
+		can_show_more(){
+			return false;
+		}
+		limit_more(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Limit_more(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_limit_more_showed": (this.can_show_more())});
+			(obj.event) = () => ({...(this.$.$bog_builderui_div.prototype.event.call(obj)), "click": (next) => (this.limit_more(next))});
+			(obj.sub) = () => ([(this.limit_more_text())]);
+			return obj;
+		}
+		Limit_badge(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_web_front_explorer_limit_badge_showed": (this.is_limited())});
+			(obj.sub) = () => ([(this.Limit_text()), (this.Limit_more())]);
+			return obj;
+		}
 		Canvas(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
 				(this.Canvas_bg()), 
 				(this.Filters()), 
 				(this.Legends()), 
-				(this.Mock_badge())
+				(this.Mock_badge()), 
+				(this.Limit_badge())
 			]);
 			return obj;
 		}
@@ -11500,6 +11572,15 @@ var $;
 		comms_btn_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_comms_btn_text"));
 		}
+		comms_clear_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_comms_clear_text"));
+		}
+		limit_template(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_limit_template"));
+		}
+		limit_more_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_explorer_limit_more_text"));
+		}
 		mock_badge_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_explorer_mock_badge_text"));
 		}
@@ -11516,12 +11597,15 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filter_search"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "comms_toggle"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms_btn"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "comms_clear"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms_clear"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "comm_click"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_mark"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_dot"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_label"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_count"));
 	($mol_mem_key(($.$raggu_web_front_explorer.prototype), "Comm_row"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms_rows"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms_list"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Comms"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Filters"));
@@ -11548,6 +11632,10 @@ var $;
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Rels"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Legends"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Mock_badge"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Limit_text"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "limit_more"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Limit_more"));
+	($mol_mem(($.$raggu_web_front_explorer.prototype), "Limit_badge"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Canvas"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "aside_toggle"));
 	($mol_mem(($.$raggu_web_front_explorer.prototype), "Aside_toggle"));
@@ -11594,6 +11682,10 @@ var $;
         // switching tabs drops the @$mol_mem cell's subscribers and resets it, so
         // without this every return to the graph re-fetches and re-runs the layout.
         const $raggu_web_front_explorer_graph_cache = new Map();
+        // Потолок бэка: get_graph валидирует limit <= 5000 и отвечает 422 выше.
+        // Кнопка «показать больше» упирается в него; URL-арг `limit` — нет,
+        // чтобы можно было проверить поднятый лимит без пересборки фронта.
+        const GRAPH_LIMIT_MAX = 5000;
         class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
             // URL flag `?mock=1` forces the built-in PRNG mock — used for offline demo
             // and jsdom tests where no live backend is available.
@@ -11602,10 +11694,17 @@ var $;
             }
             // Размер выборки графа — URL-арг `limit` (например #!limit=5000).
             // По умолчанию 500: SVG на тысячах узлов заметно тяжелеет.
-            // Сверху НЕ ограничиваем: сейчас бэк режет на 5000 (422), но лимит там
-            // собираются поднимать — фронт должен позволять это проверить.
-            graph_limit() {
-                const raw = Number(this.$.$mol_state_arg.value('limit') ?? '');
+            // Пишется кнопкой «показать больше» на плашке лимита; при значении
+            // по умолчанию арг убирается из URL, чтобы ссылка оставалась чистой.
+            // Чтение сверху НЕ ограничиваем: сейчас бэк режет на 5000 (422), но лимит
+            // там собираются поднимать — фронт должен позволять это проверить.
+            graph_limit(next) {
+                const arg = this.$.$mol_state_arg;
+                if (next !== undefined) {
+                    arg.value('limit', next === GRAPH_LIMIT ? null : String(next));
+                    return next;
+                }
+                const raw = Number(arg.value('limit') ?? '');
                 if (!Number.isFinite(raw) || raw <= 0)
                     return GRAPH_LIMIT;
                 return Math.round(raw);
@@ -11649,7 +11748,13 @@ var $;
                         relation: e.relation_type,
                         description: e.description ?? '',
                     }));
-                    const result = { nodes, edges };
+                    const m = res.meta;
+                    const meta = m ? {
+                        total_nodes: m.total_nodes,
+                        returned_nodes: m.returned_nodes,
+                        limit: m.limit,
+                    } : null;
+                    const result = { nodes, edges, meta };
                     $raggu_web_front_explorer_graph_cache.set(key, result);
                     return result;
                 }
@@ -11831,6 +11936,11 @@ var $;
                     : [...cur, id]);
                 return null;
             }
+            has_comms_selection() { return this.comms_checked().length > 0; }
+            comms_clear() {
+                this.comms_selected([]);
+                return null;
+            }
             comms_toggle() {
                 this.comms_open(!this.comms_open());
                 return null;
@@ -11870,6 +11980,36 @@ var $;
             graph_data() {
                 return this.graph_remote()
                     ?? $raggu_web_front_explorer_forcegraph_build_mock(42, 80, 130);
+            }
+            // --- Плашка лимита: сколько вершин реально на канве против всего в корпусе ---
+            graph_meta() {
+                return this.graph_remote()?.meta ?? null;
+            }
+            // Показываем только когда выборка действительно урезана — на полном
+            // графе плашка была бы шумом.
+            is_limited() {
+                const m = this.graph_meta();
+                return !!m && m.returned_nodes < m.total_nodes;
+            }
+            limit_text() {
+                const m = this.graph_meta();
+                if (!m)
+                    return '';
+                return this.limit_template()
+                    .replace('%1', String(m.returned_nodes))
+                    .replace('%2', String(m.total_nodes));
+            }
+            can_show_more() {
+                return this.graph_limit() < GRAPH_LIMIT_MAX;
+            }
+            // Удваиваем выборку, но не выше потолка бэка и не выше размера корпуса.
+            limit_more() {
+                const m = this.graph_meta();
+                const total = m?.total_nodes ?? GRAPH_LIMIT_MAX;
+                const next = Math.min(this.graph_limit() * 2, total, GRAPH_LIMIT_MAX);
+                if (next > this.graph_limit())
+                    this.graph_limit(next);
+                return null;
             }
             graph_nodes() { return this.graph_data().nodes; }
             graph_edges() { return this.graph_data().edges; }
@@ -12013,6 +12153,9 @@ var $;
         ], $raggu_web_front_explorer.prototype, "comm_click", null);
         __decorate([
             $mol_action
+        ], $raggu_web_front_explorer.prototype, "comms_clear", null);
+        __decorate([
+            $mol_action
         ], $raggu_web_front_explorer.prototype, "comms_toggle", null);
         __decorate([
             $mol_action
@@ -12029,6 +12172,9 @@ var $;
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer.prototype, "graph_data", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_explorer.prototype, "limit_more", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_explorer.prototype, "edge_remote_desc", null);
@@ -12228,8 +12374,40 @@ var $;
             left: 0,
             width: '250px',
             maxHeight: '320px',
-            overflow: 'auto',
             zIndex: 5,
+        },
+        // Кнопка «очистить выбор» приколочена к шапке выпадашки, скроллится
+        // только список сообществ под ней. Прячется, когда выбирать нечего.
+        Comms_clear: {
+            display: 'none',
+            align: { self: 'stretch', items: 'center' },
+            justify: { content: 'center' },
+            margin: { bottom: '8px' },
+            padding: {
+                top: '5px',
+                bottom: '5px',
+                left: '8px',
+                right: '8px',
+            },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.current,
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+            '@': {
+                raggu_web_front_explorer_clear_showed: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        Comms_rows: {
+            flex: { direction: 'column', shrink: 1 },
+            minHeight: 0,
+            overflow: 'auto',
         },
         Comm_row: legend_row,
         Comm_mark: {
@@ -12333,6 +12511,55 @@ var $;
             },
             '@': {
                 raggu_web_front_explorer_mock_badge_showed: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        // Плашка выборки: сколько вершин на канве против размера корпуса.
+        // Живёт там же, где Mock_badge — они взаимоисключающие: meta приходит
+        // только с живого бэка, а мок-плашка только при его отсутствии.
+        Limit_badge: {
+            display: 'none',
+            position: 'absolute',
+            bottom: '14px',
+            left: '14px',
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '8px',
+            font: {
+                family: 'ui-monospace, monospace',
+                weight: 600,
+                size: '11px',
+            },
+            color: $bog_builderui_tokens.shade,
+            background: { color: '#1c1b1ae6' },
+            border: { width: '1px', style: 'solid', color: '#3a3937', radius: '6px' },
+            padding: {
+                top: '4px',
+                bottom: '4px',
+                left: '9px',
+                right: '9px',
+            },
+            maxWidth: $mol_style_func.calc('100% - 28px'),
+            '@': {
+                raggu_web_front_explorer_limit_badge_showed: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        Limit_text: {
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+        },
+        Limit_more: {
+            display: 'none',
+            color: $bog_builderui_tokens.current,
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+            textDecoration: 'underline',
+            '@': {
+                raggu_web_front_explorer_limit_more_showed: {
                     true: { display: 'flex' },
                 },
             },
@@ -12757,7 +12984,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\tmin-height: 1.5rem;\n\t/* will-change: contents; */\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
+    $mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex-shrink: 0;\n\tmax-width: 100%;\n\t/* display: flex;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n\t/* will-change: contents; */\n}\n\n[mol_list]:where([mol_view_error]) {\n\tmin-height: 1.5rem;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -14801,7 +15028,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/check/check.css", "[mol_check] {\n\tflex: 0 0 auto;\n\tjustify-content: flex-start;\n\talign-content: center;\n\t/* align-items: flex-start; */\n\tborder: none;\n\tfont-weight: inherit;\n\tbox-shadow: none;\n\ttext-align: left;\n\tdisplay: inline-flex;\n\tflex-wrap: nowrap;\n}\n\n[mol_check_title] {\n\tflex-shrink: 1;\n}\n");
+    $mol_style_attach("mol/check/check.css", "[mol_check] {\n\tflex: 0 0 auto;\n\tjustify-content: flex-start;\n\talign-content: center;\n\t/* align-items: flex-start; */\n\tborder: none;\n\tfont-weight: inherit;\n\tbox-shadow: none;\n\ttext-align: start;\n\tdisplay: inline-flex;\n\tflex-wrap: nowrap;\n}\n\n[mol_check_title] {\n\tflex-shrink: 1;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -15834,7 +16061,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/search/search.view.css", "[mol_search] {\n\talign-self: flex-start;\n\tflex: auto;\n}\n\n[mol_search_anchor] {\n\tflex: 1 1 auto;\n}\n\n[mol_search_query] {\n\tflex-grow: 1;\n}\n\n[mol_search_menu] {\n\tmin-height: .75rem;\n\tdisplay: flex;\n}\n\n[mol_search_suggest] {\n\ttext-align: left;\n}\n\n[mol_search_suggest_label_high] {\n\tcolor: var(--mol_theme_shade);\n\ttext-shadow: none;\n}\n");
+    $mol_style_attach("mol/search/search.view.css", "[mol_search] {\n\talign-self: flex-start;\n\tflex: auto;\n}\n\n[mol_search_anchor] {\n\tflex: 1 1 auto;\n}\n\n[mol_search_query] {\n\tflex-grow: 1;\n}\n\n[mol_search_menu] {\n\tmin-height: .75rem;\n\tdisplay: flex;\n}\n\n[mol_search_suggest] {\n\ttext-align: start;\n}\n\n[mol_search_suggest_label_high] {\n\tcolor: var(--mol_theme_shade);\n\ttext-shadow: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -16098,7 +16325,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_filter] {\n\tflex: 1 0 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tmin-height: 1.5em;\n\tdisplay: block;\n\twhite-space: nowrap;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: left;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: left;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n}\n\n[mol_select_trigger] > * {\n\tmargin-right: -1rem;\n}\n\n[mol_select_trigger] > *:last-child {\n\tmargin-right: 0;\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
+    $mol_style_attach("mol/select/select.view.css", "[mol_select] {\n\tdisplay: flex;\n\tword-break: normal;\n\talign-self: flex-start;\n}\n\n[mol_select_option_row] {\n\tmin-width: 100%;\n\tpadding: 0;\n\tjustify-content: flex-start;\n}\n\n[mol_select_filter] {\n\tflex: 1 0 auto;\n\talign-self: stretch;\n}\n\n[mol_select_option_label] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: start;\n\tmin-height: 1.5em;\n\tdisplay: block;\n\twhite-space: nowrap;\n}\n\n[mol_select_clear_option_content] {\n\tpadding: .5em 1rem .5rem 0;\n\ttext-align: start;\n\tbox-shadow: var(--mol_theme_line);\n\tflex: 1 0 auto;\n}\n\n[mol_select_no_options] {\n\tpadding: var(--mol_gap_text);\n\ttext-align: start;\n\tdisplay: block;\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_select_trigger] {\n\tpadding: 0;\n\tflex: 1 1 auto;\n\tdisplay: flex;\n}\n\n[mol_select_trigger] > * {\n\tmargin-inline-end: -1rem;\n}\n\n[mol_select_trigger] > *:last-child {\n\tmargin-inline-end: 0;\n}\n\n[mol_select_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n");
 })($ || ($ = {}));
 
 ;
@@ -16718,11 +16945,11 @@ var $;
                 family: 'monospace',
             },
             Numb: {
-                textAlign: 'right',
+                textAlign: 'end',
                 color: $mol_theme.shade,
                 width: rem(3),
                 margin: {
-                    left: rem(-4),
+                    inlineStart: '-4rem',
                 },
                 display: 'inline-block',
                 whiteSpace: 'nowrap',
@@ -17077,7 +17304,7 @@ var $;
                     true: {
                         $mol_text_code_line: {
                             margin: {
-                                left: rem(1.75),
+                                inlineStart: '1.75rem',
                             },
                         },
                     },
@@ -17361,6 +17588,15 @@ var $;
 
 ;
 	($.$raggu_web_front_chat) = class $raggu_web_front_chat extends ($.$bog_builderui_div) {
+		is_empty(){
+			return false;
+		}
+		Empty(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_empty": (this.is_empty())});
+			(obj.sub) = () => ([(this.empty_text())]);
+			return obj;
+		}
 		Messages(){
 			const obj = new this.$.$mol_list();
 			(obj.rows) = () => ((this.rows()));
@@ -17393,7 +17629,11 @@ var $;
 		}
 		Body_flow(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.Messages()), (this.Status())]);
+			(obj.sub) = () => ([
+				(this.Empty()), 
+				(this.Messages()), 
+				(this.Status())
+			]);
 			return obj;
 		}
 		Body(){
@@ -17401,44 +17641,12 @@ var $;
 			(obj.sub) = () => ([(this.Body_flow())]);
 			return obj;
 		}
-		use_sug_one(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Sug_one(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sug_one_text())]);
-			(obj.event) = () => ({"click": (next) => (this.use_sug_one(next))});
-			return obj;
-		}
-		use_sug_two(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Sug_two(){
-			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.sug_two_text())]);
-			(obj.event) = () => ({"click": (next) => (this.use_sug_two(next))});
-			return obj;
-		}
-		clear_click(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Clear(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.hint) = () => ((this.clear_text()));
-			(obj.click) = (next) => ((this.clear_click(next)));
-			(obj.sub) = () => (["✕"]);
-			return obj;
+		suggestion_rows(){
+			return [];
 		}
 		Suggestions(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([
-				(this.Sug_one()), 
-				(this.Sug_two()), 
-				(this.Clear())
-			]);
+			(obj.sub) = () => ((this.suggestion_rows()));
 			return obj;
 		}
 		prompt_text(next){
@@ -17473,6 +17681,14 @@ var $;
 			(obj.sub) = () => ([(this.Suggestions()), (this.Input_row())]);
 			return obj;
 		}
+		sug_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		clear_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		Message_text(id){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
@@ -17488,23 +17704,11 @@ var $;
 		dataset_id(){
 			return "";
 		}
-		sug_one_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_one_text"));
-		}
-		sug_two_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_two_text"));
-		}
 		input_hint_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_input_hint_text"));
 		}
 		send_label_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_send_label_text"));
-		}
-		seed_user_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_seed_user_text"));
-		}
-		seed_assistant_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_chat_seed_assistant_text"));
 		}
 		clear_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_clear_text"));
@@ -17512,8 +17716,41 @@ var $;
 		off_graph_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_off_graph_text"));
 		}
+		empty_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_empty_text"));
+		}
+		sug_law_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_law_one_text"));
+		}
+		sug_law_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_law_two_text"));
+		}
+		sug_law_three_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_law_three_text"));
+		}
+		sug_wiki_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_wiki_one_text"));
+		}
+		sug_wiki_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_wiki_two_text"));
+		}
+		sug_wiki_three_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_wiki_three_text"));
+		}
+		sug_any_one_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_any_one_text"));
+		}
+		sug_any_two_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_any_two_text"));
+		}
+		sug_any_three_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_sug_any_three_text"));
+		}
 		rows(){
 			return [];
+		}
+		sug_text(id){
+			return "";
 		}
 		message_text(id){
 			return "";
@@ -17527,6 +17764,19 @@ var $;
 		sub(){
 			return [(this.Body()), (this.Footer())];
 		}
+		Sug(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.sug_text(id))]);
+			(obj.event) = () => ({"click": (next) => (this.sug_click(id, next))});
+			return obj;
+		}
+		Clear(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.clear_text()));
+			(obj.click) = (next) => ((this.clear_click(next)));
+			(obj.sub) = () => (["✕"]);
+			return obj;
+		}
 		Message(id){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
@@ -17534,6 +17784,7 @@ var $;
 			return obj;
 		}
 	};
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Empty"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Messages"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_one"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_two"));
@@ -17541,12 +17792,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Status"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Body_flow"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Body"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_one"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_one"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "use_sug_two"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Sug_two"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "clear_click"));
-	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Suggestions"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "prompt_text"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "prompt_submit"));
@@ -17554,8 +17799,12 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_send"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_row"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Footer"));
+	($mol_mem_key(($.$raggu_web_front_chat.prototype), "sug_click"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "clear_click"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_text"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_badge"));
+	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Sug"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message"));
 
 
@@ -18112,13 +18361,9 @@ var $;
             history(next) {
                 const key = `$raggu_web_front_chat.history@${this.dataset_id() || ''}`;
                 const stored = this.$.$mol_state_session.value(key, next);
-                if (stored)
-                    return stored;
-                return [
-                    { role: 'user', text: this.seed_user_text() },
-                    { role: 'assistant', text: this.seed_assistant_text() },
-                ];
+                return stored ?? [];
             }
+            is_empty() { return this.history().length === 0; }
             prompt_text(next) {
                 return this.$.$mol_state_session.value('$raggu_web_front_chat.prompt_text', next) ?? '';
             }
@@ -18127,9 +18372,12 @@ var $;
                 // слово "json" присутствовало в messages — иначе 400 Bad Request.
                 // Инструктируем модель отвечать одним JSON-полем reply, чтобы потом
                 // вытащить чистый текст.
+                const ru = $raggu_web_front_api_locale() === 'ru';
                 return $mol_github_model.make({
                     $: this.$,
-                    rules: () => 'Ты русскоязычный чат-ассистент. Отвечай ВСЕГДА строго валидным JSON вида {"reply": "<твой ответ обычным текстом>"}. Никаких других полей, никаких префиксов, только этот JSON.',
+                    rules: () => ru
+                        ? 'Ты русскоязычный чат-ассистент. Отвечай ВСЕГДА строго валидным JSON вида {"reply": "<твой ответ обычным текстом>"}. Никаких других полей, никаких префиксов, только этот JSON.'
+                        : 'You are a chat assistant answering in English. ALWAYS reply with strictly valid JSON of the form {"reply": "<your answer as plain text>"}. No other fields, no prefixes, just this JSON.',
                 });
             }
             rows() {
@@ -18206,7 +18454,7 @@ var $;
                         top_k: 15,
                         rerank: true,
                         include_trace: false,
-                        locale: this.$.$mol_locale.lang() === 'en' ? 'en' : 'ru',
+                        locale: $raggu_web_front_api_locale(),
                     },
                 });
                 const reply = resp?.message?.content ?? '';
@@ -18229,7 +18477,10 @@ var $;
                         .map((n) => `${n.label} (${n.entity_type})`);
                     if (!labels.length)
                         return '';
-                    return `Ключевые сущности из графа знаний этого корпуса: ${labels.join('; ')}. Отвечай, опираясь на них, если вопрос по теме корпуса.`;
+                    const list = labels.join('; ');
+                    return $raggu_web_front_api_locale() === 'ru'
+                        ? `Ключевые сущности из графа знаний этого корпуса: ${list}. Отвечай, опираясь на них, если вопрос по теме корпуса.`
+                        : `Key entities from the knowledge graph of this corpus: ${list}. Rely on them when the question is about the corpus.`;
                 }
                 catch (error) {
                     if ($mol_promise_like(error))
@@ -18264,12 +18515,52 @@ var $;
                     }
                 }
             }
-            use_sug_one() {
-                this.prompt_text(this.sug_one_text());
-                return null;
+            // Заготовки вопросов бэк отдаёт под конкретный корпус и локаль — они
+            // построены на реальных сущностях индекса, поэтому лучше любых наших.
+            // Читаются внутри Suggestions, так что подвисание фетча гасит только
+            // строку подсказок, а не весь чат.
+            // URL-флаг `?mock=1` — как в галерее и графе: демо и node-тесты без бэка
+            // не должны ронять в чат висящий $mol_fetch.
+            mock_flag() {
+                return this.$.$mol_state_arg.value('mock') === '1';
             }
-            use_sug_two() {
-                this.prompt_text(this.sug_two_text());
+            remote_suggestions() {
+                const id = this.dataset_id();
+                if (!id || this.mock_flag())
+                    return null;
+                try {
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_agent_suggestions, { params: { dataset_id: id }, query: { locale: $raggu_web_front_api_locale() } });
+                    const list = res?.suggestions;
+                    return list?.length ? list : null;
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    console.warn('[raggu chat] suggestions fetch failed, falling back to built-ins:', error);
+                    return null;
+                }
+            }
+            // Фолбэк без бэка: свои 3 вопроса на встроенные корпуса, общие — на всё
+            // остальное. Строки объявлены в view.tree, значит переводятся локалью.
+            fallback_suggestions() {
+                switch (this.dataset_id()) {
+                    case 'law': return [this.sug_law_one_text(), this.sug_law_two_text(), this.sug_law_three_text()];
+                    case 'wiki': return [this.sug_wiki_one_text(), this.sug_wiki_two_text(), this.sug_wiki_three_text()];
+                }
+                return [this.sug_any_one_text(), this.sug_any_two_text(), this.sug_any_three_text()];
+            }
+            suggestions() {
+                return (this.remote_suggestions() ?? this.fallback_suggestions()).slice(0, 3);
+            }
+            // Кнопка очистки живёт в том же ряду — у неё margin-left:auto в стилях.
+            suggestion_rows() {
+                return [...this.suggestions().map((_, i) => this.Sug(i)), this.Clear()];
+            }
+            sug_text(index) {
+                return this.suggestions()[index] ?? '';
+            }
+            sug_click(index) {
+                this.prompt_text(this.sug_text(index));
                 return null;
             }
             clear_click() {
@@ -18290,11 +18581,11 @@ var $;
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
         __decorate([
-            $mol_action
-        ], $raggu_web_front_chat.prototype, "use_sug_one", null);
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "remote_suggestions", null);
         __decorate([
             $mol_action
-        ], $raggu_web_front_chat.prototype, "use_sug_two", null);
+        ], $raggu_web_front_chat.prototype, "sug_click", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "clear_click", null);
@@ -18307,18 +18598,6 @@ var $;
 /** @see $bog_builderui_tokens */
 var $;
 (function ($) {
-    const suggestion = {
-        border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
-        padding: {
-            top: '5px',
-            bottom: '5px',
-            left: '11px',
-            right: '11px',
-        },
-        font: { size: '11px' },
-        color: $bog_builderui_tokens.shade,
-        cursor: 'pointer',
-    };
     $mol_style_define($raggu_web_front_chat, {
         flex: { direction: 'column', shrink: 1 },
         minWidth: 0,
@@ -18400,6 +18679,22 @@ var $;
         },
         Messages: {
             gap: '16px',
+        },
+        // Пустая история: приветственная подсказка вместо заглушечной переписки.
+        Empty: {
+            display: 'none',
+            align: { self: 'center' },
+            margin: { top: '48px' },
+            maxWidth: '380px',
+            textAlign: 'center',
+            font: { size: '13px' },
+            lineHeight: '1.6',
+            color: $bog_builderui_tokens.shade,
+            '@': {
+                raggu_empty: {
+                    true: { display: 'flex' },
+                },
+            },
         },
         Message: {
             flex: { direction: 'column' },
@@ -18490,8 +18785,24 @@ var $;
             margin: { bottom: '10px' },
             align: { items: 'center' },
         },
-        Sug_one: suggestion,
-        Sug_two: suggestion,
+        Sug: {
+            border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
+            padding: {
+                top: '5px',
+                bottom: '5px',
+                left: '11px',
+                right: '11px',
+            },
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            cursor: 'pointer',
+            // Длинный вопрос с бэка не должен растягивать футер шире чата.
+            maxWidth: '100%',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            display: 'block',
+        },
         Input_row: {
             flex: { direction: 'row' },
             align: { items: 'center' },
@@ -18682,6 +18993,9 @@ var $;
 		uri_toggle(){
 			return "";
 		}
+		uri_unsafe(){
+			return (this.uri_toggle());
+		}
 		hint(){
 			return "";
 		}
@@ -18725,7 +19039,7 @@ var $;
 		attr(){
 			return {
 				...(super.attr()), 
-				"href": (this.uri_toggle()), 
+				"href": (this.uri_unsafe()), 
 				"title": (this.hint_safe()), 
 				"target": (this.target()), 
 				"download": (this.file_name()), 
@@ -18745,6 +19059,85 @@ var $;
 	};
 	($mol_mem(($.$mol_link.prototype), "event_click"));
 
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_safe_uri(uri) {
+        return uri.replace(/^(?=\w+script+:)/, 'about:blank#');
+    }
+    $.$mol_dom_safe_uri = $mol_dom_safe_uri;
+    function $mol_dom_safe_attr(val) {
+        return val;
+    }
+    $.$mol_dom_safe_attr = $mol_dom_safe_attr;
+    $.$mol_dom_safe_rules = {
+        // defaults
+        '': { id: $mol_dom_safe_attr },
+        // special
+        a: { href: $mol_dom_safe_uri },
+        img: { src: $mol_dom_safe_uri },
+        object: { src: $mol_dom_safe_uri },
+        // blocks
+        div: {},
+        p: {},
+        h1: {},
+        h2: {},
+        h3: {},
+        h4: {},
+        h5: {},
+        h6: {},
+        blockquote: {},
+        pre: {},
+        ul: {},
+        ol: {},
+        li: {},
+        details: {},
+        summary: {},
+        hr: {},
+        table: {},
+        tr: {},
+        td: {},
+        // inlines
+        span: {},
+        strong: {},
+        em: {},
+        br: {},
+        ins: {},
+        del: {},
+        code: {},
+    };
+    function $mol_dom_safe(nodes) {
+        const res = [];
+        for (const node of nodes) {
+            if (node.nodeType === node.TEXT_NODE) {
+                res.push(node);
+                continue;
+            }
+            if (node.nodeType === node.ELEMENT_NODE) {
+                const kids = this.$mol_dom_safe([...node.childNodes]);
+                const allowed = this.$mol_dom_safe_rules[node.localName];
+                if (!allowed) {
+                    res.push(...kids);
+                    continue;
+                }
+                for (const attr of [...node.attributes]) {
+                    const proc = allowed[attr.localName] ?? this.$mol_dom_safe_rules[''][attr.localName];
+                    if (proc)
+                        attr.nodeValue = proc(attr.nodeValue);
+                    else
+                        node.removeAttribute(attr.nodeName);
+                }
+                $mol_dom_render_children(node, kids);
+                res.push(node);
+                continue;
+            }
+        }
+        return res;
+    }
+    $.$mol_dom_safe = $mol_dom_safe;
+})($ || ($ = {}));
 
 ;
 "use strict";
@@ -18814,6 +19207,9 @@ var $;
                         return '💥' + error.message;
                     return '';
                 }
+            }
+            uri_unsafe() {
+                return $mol_dom_safe_uri(super.uri_unsafe());
             }
         }
         __decorate([
@@ -19640,6 +20036,10 @@ var $;
 			const obj = new this.$.$mol_view();
 			return obj;
 		}
+		open_dataset(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		ask_chat(next){
 			if(next !== undefined) return next;
 			return null;
@@ -19710,7 +20110,7 @@ var $;
 		Gallery(){
 			const obj = new this.$.$raggu_web_front_gallery();
 			(obj.dataset_id) = () => ((this.dataset_id()));
-			(obj.select_dataset) = (next) => ((this.select_dataset(next)));
+			(obj.select_dataset) = (next) => ((this.open_dataset(next)));
 			return obj;
 		}
 		Explorer(){
@@ -19741,6 +20141,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Help"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Summary_popup"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "open_dataset"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "ask_chat"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "screen"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "dataset_id"));
@@ -19830,6 +20231,14 @@ var $;
                 this.dataset_id(id);
                 return null;
             }
+            // Клик по карточке в галерее — сразу в граф: выбрать корпус и значит
+            // начать его смотреть, отдельный шаг «выбрал и стой на галерее» лишний.
+            // Сайдбар остаётся мягким переключателем — там select_dataset без прыжка.
+            open_dataset(id) {
+                this.dataset_id(id);
+                this.screen('explorer');
+                return null;
+            }
             ask_chat() {
                 // Переносим выбранное в графе (сущность или связь) в чат: переключаем
                 // экран и сразу кладём заготовку вопроса в поле ввода.
@@ -19883,6 +20292,9 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "select_dataset", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_app.prototype, "open_dataset", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "ask_chat", null);
