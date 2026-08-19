@@ -3,5 +3,6 @@
 	"$raggu_web_front_topbar_Sidebar_btn_hint": "Свернуть/развернуть панель",
 	"$raggu_web_front_topbar_Nav_gallery_hint": "Датасеты",
 	"$raggu_web_front_topbar_Nav_explorer_hint": "Граф",
-	"$raggu_web_front_topbar_Nav_summary_hint": "Сводка"
+	"$raggu_web_front_topbar_Nav_summary_hint": "Сводка",
+	"$raggu_web_front_topbar_Nav_chat_hint": "Чат"
 }

@@ -49,7 +49,7 @@ $raggu_web_front_app $bog_builderui_div
 		<= Summary_popup $mol_view
 	Gallery $raggu_web_front_gallery
 		dataset_id <= dataset_id
-		select_dataset? <=> select_dataset? null
+		select_dataset? <=> open_dataset? null
 	Explorer $raggu_web_front_explorer
 		dataset_id <= dataset_id
 		ask_click? <=> ask_chat? null

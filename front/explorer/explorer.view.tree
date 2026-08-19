@@ -30,6 +30,11 @@ $raggu_web_front_explorer $bog_builderui_div
 	rel_legend_click*? null
 	comms_open? false
 	comms_btn_text @ \Communities
+	comms_clear_text @ \Clear selection
+	comms_clear? null
+	limit_template @ \Showing %1 of %2 nodes — the graph is capped for performance
+	limit_more_text @ \Show more
+	limit_more? null
 	comm_label* \
 	comm_count* \
 	comm_active* false
@@ -67,19 +72,28 @@ $raggu_web_front_explorer $bog_builderui_div
 								^
 								click? <=> comms_toggle? null
 							sub / <= comms_btn_label \
-						<= Comms_list $bog_builderui_div sub <= comm_rows /
-							<= Comm_row* $bog_builderui_div
+						<= Comms_list $bog_builderui_div sub /
+							<= Comms_clear $bog_builderui_div
 								attr *
 									^
-									raggu_web_front_explorer_legend_on <= comm_active* false
+									raggu_web_front_explorer_clear_showed <= has_comms_selection false
 								event *
 									^
-									click? <=> comm_click*? null
-								sub /
-									<= Comm_mark* $bog_builderui_div sub / <= comm_mark* \
-									<= Comm_dot* $bog_builderui_div
-									<= Comm_label* $bog_builderui_div sub / <= comm_label* \
-									<= Comm_count* $bog_builderui_div sub / <= comm_count* \
+									click? <=> comms_clear? null
+								sub / <= comms_clear_text
+							<= Comms_rows $bog_builderui_div sub <= comm_rows /
+								<= Comm_row* $bog_builderui_div
+									attr *
+										^
+										raggu_web_front_explorer_legend_on <= comm_active* false
+									event *
+										^
+										click? <=> comm_click*? null
+									sub /
+										<= Comm_mark* $bog_builderui_div sub / <= comm_mark* \
+										<= Comm_dot* $bog_builderui_div
+										<= Comm_label* $bog_builderui_div sub / <= comm_label* \
+										<= Comm_count* $bog_builderui_div sub / <= comm_count* \
 			<= Legends $bog_builderui_div sub /
 				<= Legend $bog_builderui_div
 					attr *
@@ -133,6 +147,20 @@ $raggu_web_front_explorer $bog_builderui_div
 					^
 					raggu_web_front_explorer_mock_badge_showed <= is_mock false
 				sub / <= mock_badge_text
+			<= Limit_badge $bog_builderui_div
+				attr *
+					^
+					raggu_web_front_explorer_limit_badge_showed <= is_limited false
+				sub /
+					<= Limit_text $bog_builderui_div sub / <= limit_text \
+					<= Limit_more $bog_builderui_div
+						attr *
+							^
+							raggu_web_front_explorer_limit_more_showed <= can_show_more false
+						event *
+							^
+							click? <=> limit_more? null
+						sub / <= limit_more_text
 		<= Aside $bog_builderui_div
 			attr *
 				^

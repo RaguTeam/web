@@ -14,8 +14,11 @@ namespace $.$$ {
 			return null
 		}
 
-		is_en() { return this.$.$mol_locale.lang() === 'en' }
+		// Русский — единственная не-базовая локаль: всё остальное (включая
+		// незнакомый navigator.language) рендерится английскими строками
+		// view.tree, значит и подсвечивать надо EN.
 		is_ru() { return this.$.$mol_locale.lang() === 'ru' }
+		is_en() { return !this.is_ru() }
 
 		@$mol_action click_en() { this.$.$mol_locale.lang( 'en' ); return null }
 		@$mol_action click_ru() { this.$.$mol_locale.lang( 'ru' ); return null }

@@ -199,8 +199,40 @@ namespace $ {
 			left: 0,
 			width: '250px',
 			maxHeight: '320px',
-			overflow: 'auto',
 			zIndex: 5,
+		},
+		// Кнопка «очистить выбор» приколочена к шапке выпадашки, скроллится
+		// только список сообществ под ней. Прячется, когда выбирать нечего.
+		Comms_clear: {
+			display: 'none',
+			align: { self: 'stretch', items: 'center' },
+			justify: { content: 'center' },
+			margin: { bottom: '8px' },
+			padding: {
+				top: '5px',
+				bottom: '5px',
+				left: '8px',
+				right: '8px',
+			},
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '6px' },
+			font: {
+				family: 'ui-monospace, monospace',
+				weight: 600,
+				size: '10px',
+			},
+			color: $bog_builderui_tokens.current,
+			cursor: 'pointer',
+			whiteSpace: 'nowrap',
+			'@': {
+				raggu_web_front_explorer_clear_showed: {
+					true: { display: 'flex' },
+				},
+			},
+		},
+		Comms_rows: {
+			flex: { direction: 'column', shrink: 1 },
+			minHeight: 0,
+			overflow: 'auto',
 		},
 		Comm_row: legend_row,
 		Comm_mark: {
@@ -307,6 +339,56 @@ namespace $ {
 			},
 			'@': {
 				raggu_web_front_explorer_mock_badge_showed: {
+					true: { display: 'flex' },
+				},
+			},
+		},
+
+		// Плашка выборки: сколько вершин на канве против размера корпуса.
+		// Живёт там же, где Mock_badge — они взаимоисключающие: meta приходит
+		// только с живого бэка, а мок-плашка только при его отсутствии.
+		Limit_badge: {
+			display: 'none',
+			position: 'absolute',
+			bottom: '14px',
+			left: '14px',
+			flex: { direction: 'row' },
+			align: { items: 'center' },
+			gap: '8px',
+			font: {
+				family: 'ui-monospace, monospace',
+				weight: 600,
+				size: '11px',
+			},
+			color: $bog_builderui_tokens.shade,
+			background: { color: '#1c1b1ae6' },
+			border: { width: '1px', style: 'solid', color: '#3a3937', radius: '6px' },
+			padding: {
+				top: '4px',
+				bottom: '4px',
+				left: '9px',
+				right: '9px',
+			},
+			maxWidth: $mol_style_func.calc( '100% - 28px' ),
+			'@': {
+				raggu_web_front_explorer_limit_badge_showed: {
+					true: { display: 'flex' },
+				},
+			},
+		},
+		Limit_text: {
+			overflow: 'hidden',
+			whiteSpace: 'nowrap',
+			textOverflow: 'ellipsis',
+		},
+		Limit_more: {
+			display: 'none',
+			color: $bog_builderui_tokens.current,
+			cursor: 'pointer',
+			whiteSpace: 'nowrap',
+			textDecoration: 'underline',
+			'@': {
+				raggu_web_front_explorer_limit_more_showed: {
 					true: { display: 'flex' },
 				},
 			},

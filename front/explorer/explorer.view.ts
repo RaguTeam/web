@@ -6,10 +6,18 @@ namespace $.$$ {
 	// Default page size for the graph endpoint.
 	const GRAPH_LIMIT = 500
 
+	// Сводка выборки из GraphResponse.meta — источник цифр для плашки лимита.
+	type GraphMeta = { total_nodes: number, returned_nodes: number, limit: number }
+
 	// Module-scoped cache keyed by dataset_id. Survives component remount:
 	// switching tabs drops the @$mol_mem cell's subscribers and resets it, so
 	// without this every return to the graph re-fetches and re-runs the layout.
-	const $raggu_web_front_explorer_graph_cache = new Map< string, { nodes: GraphNode[], edges: GraphEdge[] } >()
+	const $raggu_web_front_explorer_graph_cache = new Map< string, { nodes: GraphNode[], edges: GraphEdge[], meta: GraphMeta | null } >()
+
+	// Потолок бэка: get_graph валидирует limit <= 5000 и отвечает 422 выше.
+	// Кнопка «показать больше» упирается в него; URL-арг `limit` — нет,
+	// чтобы можно было проверить поднятый лимит без пересборки фронта.
+	const GRAPH_LIMIT_MAX = 5000
 
 	export class $raggu_web_front_explorer extends $.$raggu_web_front_explorer {
 
@@ -21,11 +29,18 @@ namespace $.$$ {
 
 		// Размер выборки графа — URL-арг `limit` (например #!limit=5000).
 		// По умолчанию 500: SVG на тысячах узлов заметно тяжелеет.
-		// Сверху НЕ ограничиваем: сейчас бэк режет на 5000 (422), но лимит там
-		// собираются поднимать — фронт должен позволять это проверить.
+		// Пишется кнопкой «показать больше» на плашке лимита; при значении
+		// по умолчанию арг убирается из URL, чтобы ссылка оставалась чистой.
+		// Чтение сверху НЕ ограничиваем: сейчас бэк режет на 5000 (422), но лимит
+		// там собираются поднимать — фронт должен позволять это проверить.
 		@$mol_mem
-		graph_limit(): number {
-			const raw = Number( this.$.$mol_state_arg.value( 'limit' ) ?? '' )
+		graph_limit( next?: number ): number {
+			const arg = this.$.$mol_state_arg
+			if ( next !== undefined ) {
+				arg.value( 'limit', next === GRAPH_LIMIT ? null : String( next ) )
+				return next
+			}
+			const raw = Number( arg.value( 'limit' ) ?? '' )
 			if ( !Number.isFinite( raw ) || raw <= 0 ) return GRAPH_LIMIT
 			return Math.round( raw )
 		}
@@ -39,7 +54,7 @@ namespace $.$$ {
 		// usual; a real transport error falls back to the built-in mock graph
 		// so the demo stays alive without the backend.
 		@$mol_mem
-		graph_remote(): { nodes: GraphNode[], edges: GraphEdge[] } | null {
+		graph_remote(): { nodes: GraphNode[], edges: GraphEdge[], meta: GraphMeta | null } | null {
 			const id = this.dataset_id()
 			if ( !id ) return null
 			if ( this.mock_flag() ) return null
@@ -71,7 +86,13 @@ namespace $.$$ {
 					relation: e.relation_type,
 					description: e.description ?? '',
 				} ) )
-				const result = { nodes, edges }
+				const m = ( res as any ).meta
+				const meta: GraphMeta | null = m ? {
+					total_nodes: m.total_nodes,
+					returned_nodes: m.returned_nodes,
+					limit: m.limit,
+				} : null
+				const result = { nodes, edges, meta }
 				$raggu_web_front_explorer_graph_cache.set( key, result )
 				return result
 			} catch( error ) {
@@ -280,6 +301,14 @@ namespace $.$$ {
 			return null
 		}
 
+		has_comms_selection() { return this.comms_checked().length > 0 }
+
+		@$mol_action
+		comms_clear() {
+			this.comms_selected( [] )
+			return null
+		}
+
 		@$mol_action
 		comms_toggle() {
 			this.comms_open( !this.comms_open() )
@@ -328,6 +357,41 @@ namespace $.$$ {
 		graph_data(): { nodes: readonly GraphNode[], edges: readonly GraphEdge[] } {
 			return this.graph_remote()
 				?? $raggu_web_front_explorer_forcegraph_build_mock( 42, 80, 130 )
+		}
+
+		// --- Плашка лимита: сколько вершин реально на канве против всего в корпусе ---
+
+		graph_meta(): GraphMeta | null {
+			return this.graph_remote()?.meta ?? null
+		}
+
+		// Показываем только когда выборка действительно урезана — на полном
+		// графе плашка была бы шумом.
+		is_limited(): boolean {
+			const m = this.graph_meta()
+			return !!m && m.returned_nodes < m.total_nodes
+		}
+
+		limit_text(): string {
+			const m = this.graph_meta()
+			if ( !m ) return ''
+			return this.limit_template()
+				.replace( '%1', String( m.returned_nodes ) )
+				.replace( '%2', String( m.total_nodes ) )
+		}
+
+		can_show_more(): boolean {
+			return this.graph_limit() < GRAPH_LIMIT_MAX
+		}
+
+		// Удваиваем выборку, но не выше потолка бэка и не выше размера корпуса.
+		@$mol_action
+		limit_more() {
+			const m = this.graph_meta()
+			const total = m?.total_nodes ?? GRAPH_LIMIT_MAX
+			const next = Math.min( this.graph_limit() * 2, total, GRAPH_LIMIT_MAX )
+			if ( next > this.graph_limit() ) this.graph_limit( next )
+			return null
 		}
 
 		graph_nodes(): readonly GraphNode[] { return this.graph_data().nodes }

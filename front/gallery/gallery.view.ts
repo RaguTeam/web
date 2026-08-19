@@ -34,13 +34,15 @@ namespace $.$$ {
 		// Reactive fetch of preindexed datasets. While loading, the wire promise
 		// is rethrown as usual; a real transport error falls back to BUILTIN moks
 		// so the demo stays alive without the backend.
+		// Локаль читается реактивно — переключение EN/RU перезапрашивает карточки
+		// уже переведёнными бэком (title/domain/description).
 		@$mol_mem
 		remote_datasets(): DatasetStats[] | null {
 			if ( this.mock_flag() ) return null
 			try {
 				const cards = this.$.$raggu_web_front_api(
 					$raggu_web_front_api_ragu_list_datasets,
-					{ query: { locale: 'ru' } },
+					{ query: { locale: $raggu_web_front_api_locale() } },
 				)
 				return cards.map( ( c: any ) => ( {
 					id: c.id,

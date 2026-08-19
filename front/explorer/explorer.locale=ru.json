@@ -7,5 +7,9 @@
 	"$raggu_web_front_explorer_relations_title_template": "Связи (%s)",
 	"$raggu_web_front_explorer_legend_title_text": "Типы сущностей",
 	"$raggu_web_front_explorer_rels_title_text": "Типы связей",
-	"$raggu_web_front_explorer_mock_badge_text": "⚠ Мок-данные — бэкенд не подключён"
+	"$raggu_web_front_explorer_mock_badge_text": "⚠ Мок-данные — бэкенд не подключён",
+	"$raggu_web_front_explorer_comms_clear_text": "Очистить выбор",
+	"$raggu_web_front_explorer_limit_template": "Показано %1 из %2 вершин — выборка урезана ради скорости",
+	"$raggu_web_front_explorer_limit_more_text": "Показать больше",
+	"$raggu_web_front_explorer_ask_btn_text": "💬 Спросить про эту сущность"
 }

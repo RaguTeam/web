@@ -1,19 +1,6 @@
 /** @see $bog_builderui_tokens */
 namespace $ {
 
-	const suggestion = {
-		border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
-		padding: {
-			top: '5px',
-			bottom: '5px',
-			left: '11px',
-			right: '11px',
-		},
-		font: { size: '11px' },
-		color: $bog_builderui_tokens.shade,
-		cursor: 'pointer',
-	} as const
-
 	$mol_style_define( $raggu_web_front_chat, {
 		flex: { direction: 'column', shrink: 1 },
 		minWidth: 0,
@@ -97,6 +84,23 @@ namespace $ {
 		},
 		Messages: {
 			gap: '16px',
+		},
+
+		// Пустая история: приветственная подсказка вместо заглушечной переписки.
+		Empty: {
+			display: 'none',
+			align: { self: 'center' },
+			margin: { top: '48px' },
+			maxWidth: '380px',
+			textAlign: 'center',
+			font: { size: '13px' },
+			lineHeight: '1.6',
+			color: $bog_builderui_tokens.shade,
+			'@': {
+				raggu_empty: {
+					true: { display: 'flex' },
+				},
+			},
 		},
 
 		Message: {
@@ -190,8 +194,24 @@ namespace $ {
 			margin: { bottom: '10px' },
 			align: { items: 'center' },
 		},
-		Sug_one: suggestion,
-		Sug_two: suggestion,
+		Sug: {
+			border: { width: '1px', style: 'dashed', color: $bog_builderui_tokens.line, radius: '14px' },
+			padding: {
+				top: '5px',
+				bottom: '5px',
+				left: '11px',
+				right: '11px',
+			},
+			font: { size: '11px' },
+			color: $bog_builderui_tokens.shade,
+			cursor: 'pointer',
+			// Длинный вопрос с бэка не должен растягивать футер шире чата.
+			maxWidth: '100%',
+			overflow: 'hidden',
+			whiteSpace: 'nowrap',
+			textOverflow: 'ellipsis',
+			display: 'block',
+		},
 		Input_row: {
 			flex: { direction: 'row' },
 			align: { items: 'center' },

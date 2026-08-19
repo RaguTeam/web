@@ -1,19 +1,25 @@
 $raggu_web_front_chat $bog_builderui_div
 	dataset_id \
-	sug_one_text @ \Who received the Nobel Prize?
-	sug_two_text @ \Connection between Ibsen and Bjørnson?
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send
-	seed_user_text @ \Who wrote the Norwegian anthem and when?
-	seed_assistant_text @ \The Norwegian anthem was written by Bjørnstjerne Bjørnson in 1859…
 	clear_text @ \Clear
 	off_graph_text @ \⚠ Off-graph answer (LLM without retrieval)
+	empty_text @ \No messages yet. Start with one of the suggested questions below, or ask your own.
+	sug_law_one_text @ \Which authorities issue the most norms in this corpus?
+	sug_law_two_text @ \How are the Civil Code and the Tax Code connected?
+	sug_law_three_text @ \Summarize the key legal concepts of this corpus.
+	sug_wiki_one_text @ \Who received the Nobel Prize?
+	sug_wiki_two_text @ \How are Ibsen and Bjørnson connected?
+	sug_wiki_three_text @ \Which institutions appear most often in the graph?
+	sug_any_one_text @ \What are the key entities in this graph?
+	sug_any_two_text @ \Which relations are the most common?
+	sug_any_three_text @ \Summarize this corpus briefly.
 	prompt_text? \
 	prompt_submit? null
-	use_sug_one? null
-	use_sug_two? null
 	clear_click? null
 	rows /
+	sug_text* \
+	sug_click*? null
 	message_text* \
 	message_role* \
 	message_off_graph* false
@@ -21,6 +27,11 @@ $raggu_web_front_chat $bog_builderui_div
 		<= Body $mol_scroll
 			sub /
 				<= Body_flow $bog_builderui_div sub /
+					<= Empty $bog_builderui_div
+						attr *
+							^
+							raggu_empty <= is_empty false
+						sub / <= empty_text
 					<= Messages $mol_list rows <= rows
 					<= Status $bog_builderui_card
 						attr *
@@ -31,17 +42,7 @@ $raggu_web_front_chat $bog_builderui_div
 							<= Skel_line_two $bog_builderui_skeleton
 							<= Skel_line_three $bog_builderui_skeleton
 		<= Footer $bog_builderui_div sub /
-			<= Suggestions $bog_builderui_div sub /
-				<= Sug_one $bog_builderui_div
-					sub / <= sug_one_text
-					event * click? <=> use_sug_one? null
-				<= Sug_two $bog_builderui_div
-					sub / <= sug_two_text
-					event * click? <=> use_sug_two? null
-				<= Clear $mol_button_minor
-					hint <= clear_text
-					click? <=> clear_click? null
-					sub / \✕
+			<= Suggestions $bog_builderui_div sub <= suggestion_rows /
 			<= Input_row $bog_builderui_div sub /
 				<= Prompt $mol_textarea
 					hint <= input_hint_text
@@ -51,6 +52,13 @@ $raggu_web_front_chat $bog_builderui_div
 					hint <= send_label_text
 					click? <=> prompt_submit? null
 					sub / \↑
+	Sug* $bog_builderui_div
+		sub / <= sug_text*
+		event * click? <=> sug_click*? null
+	Clear $mol_button_minor
+		hint <= clear_text
+		click? <=> clear_click? null
+		sub / \✕
 	Message* $bog_builderui_div
 		attr *
 			^

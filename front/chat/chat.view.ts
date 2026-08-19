@@ -18,12 +18,10 @@ namespace $.$$ {
 		history( next?: Raggu_chat_item[] ): Raggu_chat_item[] {
 			const key = `$raggu_web_front_chat.history@${ this.dataset_id() || '' }`
 			const stored = this.$.$mol_state_session.value( key, next as any ) as Raggu_chat_item[] | null
-			if( stored ) return stored
-			return [
-				{ role: 'user', text: this.seed_user_text() },
-				{ role: 'assistant', text: this.seed_assistant_text() },
-			]
+			return stored ?? []
 		}
+
+		is_empty() { return this.history().length === 0 }
 
 		override prompt_text( next?: string ) {
 			return this.$.$mol_state_session.value( '$raggu_web_front_chat.prompt_text', next ) ?? ''
@@ -35,9 +33,12 @@ namespace $.$$ {
 			// слово "json" присутствовало в messages — иначе 400 Bad Request.
 			// Инструктируем модель отвечать одним JSON-полем reply, чтобы потом
 			// вытащить чистый текст.
+			const ru = $raggu_web_front_api_locale() === 'ru'
 			return $mol_github_model.make({
 				$: this.$,
-				rules: () => 'Ты русскоязычный чат-ассистент. Отвечай ВСЕГДА строго валидным JSON вида {"reply": "<твой ответ обычным текстом>"}. Никаких других полей, никаких префиксов, только этот JSON.',
+				rules: () => ru
+					? 'Ты русскоязычный чат-ассистент. Отвечай ВСЕГДА строго валидным JSON вида {"reply": "<твой ответ обычным текстом>"}. Никаких других полей, никаких префиксов, только этот JSON.'
+					: 'You are a chat assistant answering in English. ALWAYS reply with strictly valid JSON of the form {"reply": "<your answer as plain text>"}. No other fields, no prefixes, just this JSON.',
 			})
 		}
 
@@ -123,7 +124,7 @@ namespace $.$$ {
 						top_k: 15,
 						rerank: true,
 						include_trace: false,
-						locale: this.$.$mol_locale.lang() === 'en' ? 'en' : 'ru',
+						locale: $raggu_web_front_api_locale(),
 					},
 				},
 			)
@@ -149,7 +150,10 @@ namespace $.$$ {
 					.slice( 0, 60 )
 					.map( ( n: any ) => `${ n.label } (${ n.entity_type })` )
 				if( !labels.length ) return ''
-				return `Ключевые сущности из графа знаний этого корпуса: ${ labels.join( '; ' ) }. Отвечай, опираясь на них, если вопрос по теме корпуса.`
+				const list = labels.join( '; ' )
+				return $raggu_web_front_api_locale() === 'ru'
+					? `Ключевые сущности из графа знаний этого корпуса: ${ list }. Отвечай, опираясь на них, если вопрос по теме корпуса.`
+					: `Key entities from the knowledge graph of this corpus: ${ list }. Rely on them when the question is about the corpus.`
 			} catch( error: any ) {
 				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
 				return ''
@@ -179,15 +183,60 @@ namespace $.$$ {
 			}
 		}
 
-		@ $mol_action
-		override use_sug_one() {
-			this.prompt_text( this.sug_one_text() )
-			return null
+		// Заготовки вопросов бэк отдаёт под конкретный корпус и локаль — они
+		// построены на реальных сущностях индекса, поэтому лучше любых наших.
+		// Читаются внутри Suggestions, так что подвисание фетча гасит только
+		// строку подсказок, а не весь чат.
+		// URL-флаг `?mock=1` — как в галерее и графе: демо и node-тесты без бэка
+		// не должны ронять в чат висящий $mol_fetch.
+		mock_flag(): boolean {
+			return this.$.$mol_state_arg.value( 'mock' ) === '1'
+		}
+
+		@ $mol_mem
+		remote_suggestions(): readonly string[] | null {
+			const id = this.dataset_id()
+			if( !id || this.mock_flag() ) return null
+			try {
+				const res = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_get_agent_suggestions,
+					{ params: { dataset_id: id }, query: { locale: $raggu_web_front_api_locale() } },
+				)
+				const list = ( res as any )?.suggestions as string[] | undefined
+				return list?.length ? list : null
+			} catch( error: any ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				console.warn( '[raggu chat] suggestions fetch failed, falling back to built-ins:', error )
+				return null
+			}
+		}
+
+		// Фолбэк без бэка: свои 3 вопроса на встроенные корпуса, общие — на всё
+		// остальное. Строки объявлены в view.tree, значит переводятся локалью.
+		fallback_suggestions(): readonly string[] {
+			switch( this.dataset_id() ) {
+				case 'law': return [ this.sug_law_one_text(), this.sug_law_two_text(), this.sug_law_three_text() ]
+				case 'wiki': return [ this.sug_wiki_one_text(), this.sug_wiki_two_text(), this.sug_wiki_three_text() ]
+			}
+			return [ this.sug_any_one_text(), this.sug_any_two_text(), this.sug_any_three_text() ]
+		}
+
+		suggestions(): readonly string[] {
+			return ( this.remote_suggestions() ?? this.fallback_suggestions() ).slice( 0, 3 )
+		}
+
+		// Кнопка очистки живёт в том же ряду — у неё margin-left:auto в стилях.
+		suggestion_rows() {
+			return [ ... this.suggestions().map( ( _, i ) => this.Sug( i ) ), this.Clear() ]
+		}
+
+		sug_text( index: number ) {
+			return this.suggestions()[ index ] ?? ''
 		}
 
 		@ $mol_action
-		override use_sug_two() {
-			this.prompt_text( this.sug_two_text() )
+		sug_click( index: number ) {
+			this.prompt_text( this.sug_text( index ) )
 			return null
 		}
 

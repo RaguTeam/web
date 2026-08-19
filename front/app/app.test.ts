@@ -84,12 +84,33 @@ namespace $.$$ {
 			$mol_assert_equal( app.screen(), 'explorer' )
 			$mol_assert_equal( app.body()[0], app.Explorer() )
 
-			// user navigates back to Датасеты and clicks a card → dataset selected, screen stays
+			// user navigates back to Датасеты and clicks a card → корпус выбран
+			// и мы сразу в графе, без промежуточного шага
 			app.Topbar().click_gallery()
 			$mol_assert_equal( app.screen(), 'gallery' )
 			app.Gallery().click( 'law' )
-			$mol_assert_equal( app.screen(), 'gallery' )
 			$mol_assert_equal( app.dataset_id(), 'law' )
+			$mol_assert_equal( app.screen(), 'explorer' )
+			$mol_assert_equal( app.body()[0], app.Explorer() )
+		},
+
+		'gallery card click jumps straight to the graph'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			const app = $raggu_web_front_app.make({ $ })
+			$mol_assert_equal( app.screen(), 'gallery' )
+			app.Gallery().click( 'wiki' )
+			$mol_assert_equal( app.dataset_id(), 'wiki' )
+			$mol_assert_equal( app.screen(), 'explorer' )
+		},
+
+		'sidebar dataset click keeps the current screen'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			const app = $raggu_web_front_app.make({ $ })
+			app.dataset_id( 'law' )
+			app.screen( 'chat' )
+			app.select_dataset( 'wiki' )
+			$mol_assert_equal( app.dataset_id(), 'wiki' )
+			$mol_assert_equal( app.screen(), 'chat' )
 		},
 
 		// ---- explorer communities dropdown ----
@@ -118,6 +139,68 @@ namespace $.$$ {
 			v.comm_click( 0 )
 			$mol_assert_equal( v.comms_selected().length, 0 )
 			$mol_assert_equal( v.comm_mark( 0 ), '' )
+		},
+
+		'explorer.comms_clear: drops the whole selection'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			const v = $raggu_web_front_explorer.make({ $ })
+			$mol_assert_equal( v.has_comms_selection(), false )
+			v.comm_click( 0 )
+			v.comm_click( 1 )
+			$mol_assert_equal( v.comms_selected().length, 2 )
+			$mol_assert_equal( v.has_comms_selection(), true )
+			v.comms_clear()
+			$mol_assert_equal( v.comms_selected().length, 0 )
+			$mol_assert_equal( v.has_comms_selection(), false )
+			$mol_assert_equal( v.comm_mark( 0 ), '' )
+		},
+
+		// Плашка лимита живёт на meta с бэка: на моке её нет — и не должно быть.
+		'explorer.limit badge: hidden without backend meta'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			const v = $raggu_web_front_explorer.make({ $ })
+			$mol_assert_equal( v.graph_meta(), null )
+			$mol_assert_equal( v.is_limited(), false )
+			$mol_assert_equal( v.limit_text(), '' )
+		},
+
+		'explorer.graph_limit: default stays out of the URL, raise writes it'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			const v = $raggu_web_front_explorer.make({ $ })
+			$mol_assert_equal( v.graph_limit(), 500 )
+			$mol_assert_equal( $.$mol_state_arg.value( 'limit' ), null )
+			v.graph_limit( 2000 )
+			$mol_assert_equal( v.graph_limit(), 2000 )
+			$mol_assert_equal( $.$mol_state_arg.value( 'limit' ), '2000' )
+			$mol_assert_equal( v.can_show_more(), true )
+			v.graph_limit( 5000 )
+			$mol_assert_equal( v.can_show_more(), false )
+			v.graph_limit( 500 )
+			$mol_assert_equal( $.$mol_state_arg.value( 'limit' ), null )
+		},
+
+		// ---- chat ----
+
+		'chat: starts empty, no seeded conversation'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			const v = $raggu_web_front_chat.make({ $ })
+			$mol_assert_equal( v.history().length, 0 )
+			$mol_assert_equal( v.is_empty(), true )
+			$mol_assert_equal( v.rows().length, 0 )
+		},
+
+		'chat: fallback suggestions are per corpus, three of them'( $ ) {
+			$.$mol_state_arg.value( 'mock', '1' )
+			// dataset_id — не сеттер, задаём его override'ом при создании
+			const chat = ( id: string ) => $raggu_web_front_chat.make({ $, dataset_id: () => id })
+			const generic = chat( '' ).fallback_suggestions()
+			const law = chat( 'law' ).fallback_suggestions()
+			const wiki = chat( 'wiki' ).fallback_suggestions()
+			$mol_assert_equal( generic.length, 3 )
+			$mol_assert_equal( law.length, 3 )
+			$mol_assert_equal( wiki.length, 3 )
+			$mol_assert_equal( law[0] === wiki[0], false )
+			$mol_assert_equal( law[0] === generic[0], false )
 		},
 
 		'forcegraph: community filter dims outsiders, highlights internal edges only'( $ ) {
