@@ -206,7 +206,20 @@ class RaguSearchAdapter:
             engine = self._build_engine(definition, engine_name)
             self._engines[cache_key] = engine
 
-        result = await engine.a_search(query, top_k=top_k)
+        try:
+            from ragu.search_engine.base_engine import EngineParams
+        except Exception as exc:
+            raise RuntimeError(f"RAGU EngineParams is unavailable: {exc}") from exc
+
+        from dataclasses import make_dataclass
+
+        DynamicParams = make_dataclass(
+            "DynamicParams", [("top_k", int)], bases=(EngineParams,)
+        )
+
+        params = DynamicParams(top_k=top_k)
+
+        result = await engine.a_search(query, params)
         _warn_on_dropped_engines(engine, result, definition.id)
         return _retrieval_from_ragu_mix(index, result, top_k)
 
@@ -272,7 +285,11 @@ class RaguSearchAdapter:
 
     def _build_engine(self, definition: IndexDefinition, engine_name: str) -> Any:
         try:
-            from ragu import LocalSearchEngine, MixSearchEngine, NaiveSearchEngine
+            from ragu import (
+                LocalSearchEngine,
+                MixSearchEngine,
+                NaiveSearchEngine,
+            )
         except Exception as exc:
             raise RuntimeError(f"RAGU search package is unavailable: {exc}") from exc
 
