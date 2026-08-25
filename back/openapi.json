@@ -722,6 +722,7 @@
               "en"
             ],
             "title": "Locale",
+            "description": "Interface locale. Does not control the answer language, which is detected from the user's message.",
             "default": "ru"
           }
         },

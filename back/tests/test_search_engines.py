@@ -89,9 +89,12 @@ def test_mix_forwards_construction_params_to_children() -> None:
     assert naive.seen == NaiveSearchParams(top_k=7)
 
 
-def test_engine_cache_key_includes_top_k(monkeypatch: pytest.MonkeyPatch) -> None:
-    """A cached engine can only serve the top_k it was built with, so two
-    different top_k values must not share one cached engine."""
+def test_engine_cache_key_includes_top_k_and_language(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An engine is built with its top_k and its output language baked in, so it
+    can only serve that pair. Keying on the dataset alone would let the first
+    request pin both for every request after it."""
     import asyncio
 
     adapter = RaguSearchAdapter(
@@ -102,14 +105,16 @@ def test_engine_cache_key_includes_top_k(monkeypatch: pytest.MonkeyPatch) -> Non
             provider="test",
         )
     )
-    built: list[int] = []
+    built: list[tuple[int, str]] = []
 
     class _Engine:
         async def search(self, query: str, params: object) -> object:
             return SimpleNamespace(result=None, metrics={})
 
-    def _build(definition: object, engine_name: str, top_k: int) -> object:
-        built.append(top_k)
+    def _build(
+        definition: object, engine_name: str, top_k: int, language: str
+    ) -> object:
+        built.append((top_k, language))
         return _Engine()
 
     monkeypatch.setattr(adapter, "supports", lambda definition: True)
@@ -118,12 +123,15 @@ def test_engine_cache_key_includes_top_k(monkeypatch: pytest.MonkeyPatch) -> Non
 
     index = SimpleNamespace(definition=SimpleNamespace(id="wiki", path=Path("wiki")))
 
-    assert asyncio.run(adapter.search(index, "q", 8, "mix")) == "retrieved"
-    assert asyncio.run(adapter.search(index, "q", 8, "mix")) == "retrieved"
-    assert asyncio.run(adapter.search(index, "q", 25, "mix")) == "retrieved"
+    def _search(top_k: int, language: str) -> object:
+        return asyncio.run(adapter.search(index, "q", top_k, "mix", language))
 
-    # Same top_k reuses the cached engine; a different top_k builds a new one.
-    assert built == [8, 25]
+    assert _search(8, "ru") == "retrieved"
+    _search(8, "ru")  # cached
+    _search(25, "ru")  # new top_k
+    _search(8, "en")  # same top_k, other language
+
+    assert built == [(8, "ru"), (25, "ru"), (8, "en")]
 
 
 # ---------- F6: global Settings is restored ----------

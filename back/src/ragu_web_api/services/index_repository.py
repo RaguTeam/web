@@ -209,7 +209,7 @@ class RaguSearchAdapter:
     def __init__(self, config: RaguEmbedderConfig) -> None:
         self.config = config
         self._graphs: dict[str, tuple[Any, Any]] = {}
-        self._engines: dict[tuple[str, str, int], Any] = {}
+        self._engines: dict[tuple[str, str, int, str], Any] = {}
 
     def supports(self, definition: IndexDefinition) -> bool:
         return bool(
@@ -218,19 +218,26 @@ class RaguSearchAdapter:
         )
 
     async def search(
-        self, index: LoadedIndex, query: str, top_k: int, engine_name: str
+        self,
+        index: LoadedIndex,
+        query: str,
+        top_k: int,
+        engine_name: str,
+        language: Locale,
     ) -> RetrievalResult | None:
         definition = index.definition
         if not self.supports(definition):
             return None
 
-        # top_k belongs in the cache key: MixSearchEngine takes its children's
-        # params at construction time (see _build_engine), so a cached engine can
-        # only ever serve the top_k it was built with.
-        cache_key = (definition.id, engine_name, top_k)
+        # top_k and language both belong in the cache key: MixSearchEngine takes
+        # its children's params, and every engine takes its output language, at
+        # construction time (see _build_engine). A cached engine can therefore
+        # only ever serve the top_k and language it was built with — keying on
+        # dataset alone would let the first request pin both for everyone after.
+        cache_key = (definition.id, engine_name, top_k, language)
         engine = self._engines.get(cache_key)
         if engine is None:
-            engine = self._build_engine(definition, engine_name, top_k)
+            engine = self._build_engine(definition, engine_name, top_k, language)
             self._engines[cache_key] = engine
 
         result = await engine.search(query, _search_params(engine_name, top_k))
@@ -251,6 +258,11 @@ class RaguSearchAdapter:
         keys = (definition.path.name, definition.id)
         model_name = self.config.model_for(*keys)
         base_url = self.config.base_url_for(*keys)
+        # The corpus language, and the one place it legitimately reaches RAGU: the
+        # graph is a storage handle, cached per dataset, and its `language` drives
+        # only the build pipeline this path never runs. The language the user is
+        # answered in is a per-request decision and lives on the engines instead
+        # (see _build_engine) — do not "unify" the two.
         language = _ragu_language(definition.language)
         LOGGER.info(
             "Building RAGU knowledge graph for dataset '%s' with embedder '%s' at '%s' (embedding_dim=%s).",
@@ -291,17 +303,28 @@ class RaguSearchAdapter:
         return knowledge_graph, embedder
 
     def _build_engine(
-        self, definition: IndexDefinition, engine_name: str, top_k: int
+        self,
+        definition: IndexDefinition,
+        engine_name: str,
+        top_k: int,
+        language: Locale,
     ) -> Any:
         knowledge_graph, embedder = self._knowledge_graph(definition)
-        # Pass language explicitly: Settings is global, so a cached graph would
-        # otherwise hand the last-built dataset's language to these engines.
-        language = _ragu_language(definition.language)
+        # The engine's `language` is the language the ANSWER is written in — RAGU
+        # renders it straight into the prompt ("Provide the answer in the following
+        # language: {{ language }}"). It has to follow the question, not the
+        # corpus: binding it to the index made every answer about an English
+        # corpus come back in English, whatever the user asked in.
+        #
+        # Passed explicitly rather than left to Settings, which is global and
+        # would otherwise hand over the last-built dataset's value.
+        ragu_language = _ragu_language(language)
         LOGGER.info(
-            "Building RAGU '%s' engine for dataset '%s' (top_k=%d).",
+            "Building RAGU '%s' engine for dataset '%s' (top_k=%d, language=%s).",
             engine_name,
             definition.id,
             top_k,
+            ragu_language,
         )
 
         def _local() -> Any:
@@ -309,7 +332,7 @@ class RaguSearchAdapter:
                 llm=_RaguSearchOnlyLLM(),
                 knowledge_graph=knowledge_graph,
                 embedder=embedder,
-                language=language,
+                language=ragu_language,
             )
 
         def _naive() -> Any:
@@ -317,7 +340,7 @@ class RaguSearchAdapter:
                 llm=_RaguSearchOnlyLLM(),
                 knowledge_graph=knowledge_graph,
                 embedder=embedder,
-                language=language,
+                language=ragu_language,
             )
 
         if engine_name == "local":
@@ -333,7 +356,7 @@ class RaguSearchAdapter:
             # `engines` above.
             engine_params=[LocalParams(top_k=top_k), NaiveSearchParams(top_k=top_k)],
             allow_partial_failures=True,
-            language=language,
+            language=ragu_language,
         )
 
 
@@ -649,23 +672,30 @@ class IndexRepository:
 
     async def answer(self, dataset_id: str, request: AgentRequest) -> AgentResponse:
         index = self._load_index(dataset_id)
+        # Decided once, from the user's own words, and threaded through retrieval,
+        # generation and the fallback so every part of the reply agrees on it.
+        language = _answer_language(request)
 
         retrieval_start = time.perf_counter()
         # Планирование внутри замера ретривала: это лишний вызов LLM перед
         # поиском, и прятать его из timings значило бы занижать реальную задержку.
         plan = await self._plan_queries(request)
-        retrieval, engine_used = await self._retrieve_with_ragu(index, request, plan)
+        retrieval, engine_used = await self._retrieve_with_ragu(
+            index, request, language, plan
+        )
         retrieval_ms = int((time.perf_counter() - retrieval_start) * 1000)
 
         generation_start = time.perf_counter()
         llm_error: str | None = None
         answer = None
         try:
-            answer = await self._answer_with_llm(index, request, retrieval, plan)
+            answer = await self._answer_with_llm(
+                index, request, retrieval, language, plan
+            )
         except Exception as exc:
             llm_error = f"{type(exc).__name__}: {exc}"
         if not answer:
-            answer = self._fallback_answer(request, retrieval, llm_error)
+            answer = self._fallback_answer(request, retrieval, language, llm_error)
         generation_ms = int((time.perf_counter() - generation_start) * 1000)
         total_ms = retrieval_ms + generation_ms
 
@@ -1045,15 +1075,19 @@ class IndexRepository:
         return plan[:_QUERY_PLAN_MAX]
 
     async def _retrieve_with_ragu(
-        self, index: LoadedIndex, request: AgentRequest, queries: list[str] | None = None
+        self,
+        index: LoadedIndex,
+        request: AgentRequest,
+        language: Locale,
+        queries: list[str] | None = None,
     ) -> tuple[RetrievalResult, TraceEngine]:
         """Returns the retrieval and the engine that actually produced it."""
         if queries:
-            return await self._retrieve_planned(index, request, queries)
+            return await self._retrieve_planned(index, request, language, queries)
         engine_name = _resolve_engine(request.engine)
         try:
             retrieval = await self._ragu_search.search(
-                index, request.message, request.top_k, engine_name
+                index, request.message, request.top_k, engine_name, language
             )
         except Exception as exc:
             LOGGER.warning(
@@ -1079,7 +1113,11 @@ class IndexRepository:
         return retrieval, engine_name  # type: ignore[return-value]
 
     async def _retrieve_planned(
-        self, index: LoadedIndex, request: AgentRequest, queries: list[str]
+        self,
+        index: LoadedIndex,
+        request: AgentRequest,
+        language: Locale,
+        queries: list[str],
     ) -> tuple[RetrievalResult, TraceEngine]:
         """One retrieval pass per sub-question, merged into a single context.
 
@@ -1096,7 +1134,7 @@ class IndexRepository:
         for query in queries:
             try:
                 retrieval = await self._ragu_search.search(
-                    index, query, request.top_k, engine_name
+                    index, query, request.top_k, engine_name, language
                 )
             except Exception as exc:
                 LOGGER.warning(
@@ -1196,6 +1234,7 @@ class IndexRepository:
         index: LoadedIndex,
         request: AgentRequest,
         retrieval: RetrievalResult,
+        language: Locale,
         plan: list[str] | None = None,
     ) -> str | None:
         context = _render_context(index, retrieval)
@@ -1212,8 +1251,15 @@ class IndexRepository:
                 "content": (
                     "You are a graph RAG assistant. Answer only from the supplied graph "
                     "context and chunks. If the context is insufficient, say that clearly. "
-                    "Reply in the user's language. Keep the answer concise and cite chunk "
-                    "or entity IDs when useful."
+                    # Naming the language beats "reply in the user's language": the
+                    # context is usually English while the question may not be, and
+                    # without the second sentence the model drifts into the language
+                    # of the context it is reading.
+                    f"Write the entire answer in {_llm_language_name(language)}. "
+                    "The graph context is often in another language — translate what "
+                    "you use from it. Never switch the answer to the language of the "
+                    "context. Keep the answer concise and cite chunk or entity IDs "
+                    "when useful."
                 ),
             },
             *history,
@@ -1241,6 +1287,7 @@ class IndexRepository:
         self,
         request: AgentRequest,
         retrieval: RetrievalResult,
+        language: Locale,
         llm_error: str | None,
     ) -> str:
         nodes = (
@@ -1251,7 +1298,9 @@ class IndexRepository:
         evidence = "\n".join(
             f"[{chunk.id}] {_shorten(chunk.content, 420)}" for chunk, _ in chunks
         )
-        if request.locale == "ru":
+        # Language of the question, not `request.locale`: this text replaces an
+        # answer, so it follows the same rule the answer does.
+        if language == "ru":
             prefix = (
                 "LLM не настроена"
                 if not self._llm.config.is_configured
@@ -1500,6 +1549,55 @@ def _ragu_embedding_dim(path: Path) -> int | None:
 
 def _ragu_language(language: str) -> str:
     return "russian" if language == "ru" else "english"
+
+
+def _llm_language_name(language: Locale) -> str:
+    return "Russian" if language == "ru" else "English"
+
+
+# Below this many letters of one script a message carries no usable signal —
+# "RAGU?", "ok", "да". Guessing from those would flip the answer language on a
+# short follow-up, so we look further back in the conversation instead.
+_LANGUAGE_MIN_LETTERS = 3
+
+
+def _script_language(text: str) -> Locale | None:
+    """Answer language implied by one message, or None when it says nothing.
+
+    Deliberately asymmetric rather than a majority vote. Russian questions
+    routinely carry Latin technical terms — "Что такое BRCA1?", "причины
+    prostate cancer" — while English questions essentially never carry Cyrillic.
+    Counting scripts against each other would mis-read exactly the mixed
+    questions a bilingual medical corpus attracts, so any real amount of
+    Cyrillic decides for Russian.
+    """
+    cyrillic = len(re.findall(r"[А-Яа-яЁё]", text))
+    if cyrillic >= _LANGUAGE_MIN_LETTERS:
+        return "ru"
+    if len(re.findall(r"[A-Za-z]", text)) >= _LANGUAGE_MIN_LETTERS:
+        return "en"
+    return None
+
+
+def _answer_language(request: AgentRequest) -> Locale:
+    """The language to answer in, decided by the user's own words.
+
+    `request.locale` is deliberately not consulted: it mirrors the UI language
+    toggle, and someone typing Russian into an English interface still wants a
+    Russian answer. Earlier user turns are the fallback so that a bare follow-up
+    ("а почему?" / "why?") keeps the language of the conversation.
+    """
+    candidates = [request.message]
+    candidates.extend(
+        message.content
+        for message in reversed(request.history)
+        if message.role == "user"
+    )
+    for text in candidates:
+        language = _script_language(text)
+        if language is not None:
+            return language
+    return "ru"
 
 
 def _retrieval_from_ragu_mix(
