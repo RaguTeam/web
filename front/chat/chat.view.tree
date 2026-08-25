@@ -1,4 +1,5 @@
 $raggu_web_front_chat $bog_builderui_div
+	engine \mix
 	dataset_id \
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send

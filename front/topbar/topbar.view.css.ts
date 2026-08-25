@@ -56,6 +56,27 @@ namespace $ {
 			flex: { grow: 1 },
 		},
 
+		// Шестерёнка стоит одна справа, без групповой подложки, какая есть у
+		// Nav_row — серым по светлой карточке её не видно. Даём рамку, как у
+		// «Помощи», обычный цвет текста и икону покрупнее.
+		//
+		// Активное состояние переигрываем здесь же: правило акцента живёт в
+		// nav.view.css.ts, специфичность у обоих одинаковая, и кто победит —
+		// решал бы порядок файлов в бандле.
+		Nav_settings: {
+			color: $bog_builderui_tokens.text,
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+			font: { size: '17px' },
+			'@': {
+				raggu_web_front_topbar_nav_active: {
+					true: {
+						background: { color: $bog_builderui_tokens.current },
+						color: '#ffffff',
+					},
+				},
+			},
+		},
+
 		Help_btn: {
 			flex: { direction: 'row' },
 			align: { items: 'center' },

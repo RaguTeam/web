@@ -127,6 +127,15 @@ namespace $.$$ {
 
 		// GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
 		// графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
+		/**
+		 * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
+		 * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
+		 * `mix` — бэк из неподдерживаемых движков всё равно падает в него.
+		 */
+		override engine(): 'mix' | 'naive' {
+			return super.engine() === 'naive' ? 'naive' : 'mix'
+		}
+
 		ask_backend( text: string ) {
 			const history = this.history()
 				.slice( 0, -1 )
@@ -138,7 +147,7 @@ namespace $.$$ {
 					body: {
 						message: text,
 						history,
-						engine: 'mix',
+						engine: this.engine(),
 						top_k: 15,
 						rerank: true,
 						include_trace: false,

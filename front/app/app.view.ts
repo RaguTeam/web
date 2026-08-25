@@ -120,6 +120,20 @@ namespace $.$$ {
 			return null
 		}
 
+		/**
+		 * Переключалка «Граф при поиске» ложится прямо на поле `engine` запроса
+		 * к агенту, отдельная ручка на бэке не нужна: `naive` ищет только по
+		 * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
+		 * (`SUPPORTED_ENGINES` в schemas/datasets.py).
+		 *
+		 * Вторая переключалка, QueryPlanEngine, сюда пока не заводится: `query_plan`
+		 * в enum есть, но в `SUPPORTED_ENGINES` его нет — бэк молча свалится в
+		 * `mix`, и тумблер врал бы. Ждём готовности декомпозиции.
+		 */
+		chat_engine() {
+			return this.Settings().use_graph() === 'on' ? 'mix' : 'naive'
+		}
+
 		screen_title() {
 			switch( this.screen() ) {
 				case 'gallery': return this.screen_gallery_title()

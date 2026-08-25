@@ -61,4 +61,5 @@ $raggu_web_front_app $bog_builderui_div
 		ask_click? <=> ask_chat? null
 	Chat $raggu_web_front_chat
 		dataset_id <= dataset_id
+		engine <= chat_engine \mix
 	Summary $raggu_web_front_summary
