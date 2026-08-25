@@ -67,11 +67,11 @@ $raggu_web_front_chat $bog_builderui_div
 			^
 			raggu_role <= message_role*
 		sub /
-			<= Message_text* $bog_builderui_div
+			<= Message_text* $mol_text
 				attr *
 					^
 					raggu_role <= message_role*
-				sub / <= message_text*
+				text <= message_text*
 			<= Message_badge* $bog_builderui_div
 				attr *
 					^
