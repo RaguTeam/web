@@ -10,23 +10,13 @@ $raggu_web_front_settings $bog_builderui_div
 		<= Panel $bog_builderui_div sub /
 			<= Header $bog_builderui_div sub /
 				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / \Настройки движка RAGU
-					<= Header_sub $bog_builderui_div sub / \пресет + ручной режим
+					<= Header_title $bog_builderui_div sub / <= header_title_text @ \Settings
+					<= Header_sub $bog_builderui_div sub / <= header_sub_text @ \how the agent searches
 				<= Spacer $bog_builderui_div
 				<= Close_btn $bog_builderui_div
 					event * click? <=> close? null
 					sub / \✕
 			<= Body $mol_scroll sub /
-				<= Presets $bog_builderui_div sub /
-					<= Preset_fast $bog_builderui_button
-						title @ \⚡ Fast
-						click? <=> preset_fast? null
-					<= Preset_accurate $bog_builderui_button
-						title @ \🎯 Accurate
-						click? <=> preset_accurate? null
-					<= Preset_demo $bog_builderui_button
-						title @ \🎬 Demo
-						click? <=> preset_demo? null
 				<= Group_retrieval $raggu_web_front_settings_group
 					step \Поиск
 					title \Retrieval
@@ -53,113 +43,3 @@ $raggu_web_front_settings $bog_builderui_div
 								dictionary *
 									on @ \On
 									off @ \Off
-				<= Group_chunking $raggu_web_front_settings_group
-					step \Шаг 1
-					title \Chunking
-					opts \Simple / SemanticText / SmartSemantic · размер · overlap
-					reindex true
-					controls /
-						<= Chunking_strategy $bog_builderui_select
-							value? <=> chunking_strategy? \SmartSemantic
-							dictionary *
-								Simple \Simple
-								SemanticText \SemanticText
-								SmartSemantic \SmartSemantic
-						<= Chunking_size_row $bog_builderui_div sub /
-							<= Chunking_size_label $bog_builderui_div sub / <= chunking_size_label_text @ \chunk size
-							<= Chunking_size_input $bog_builderui_field
-								type \number
-								value? <=> chunking_size_str? \512
-						<= Chunking_overlap_row $bog_builderui_div sub /
-							<= Chunking_overlap_label $bog_builderui_div sub / <= chunking_overlap_label_text @ \overlap
-							<= Chunking_overlap_input $bog_builderui_field
-								type \number
-								value? <=> chunking_overlap_str? \64
-				<= Group_extraction $raggu_web_front_settings_group
-					step \Шаг 2
-					title \Extraction
-					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
-					reindex true
-					controls /
-						<= Extraction_mode $bog_builderui_select
-							value? <=> extraction_mode? \two-stage
-							dictionary *
-								single @ \single-stage
-								two-stage @ \two-stage
-						<= Extraction_model $bog_builderui_select
-							value? <=> extraction_model? \meno-lite-7b
-							dictionary *
-								meno-lite-7b \meno-lite 7B
-								gpt-4 \GPT-4
-								llama3-70b \Llama 3 70B
-						<= Extraction_icl $bog_builderui_select
-							value? <=> extraction_icl? \hybrid
-							dictionary *
-								semantic @ \ICL semantic
-								BM25 @ \ICL BM25
-								hybrid @ \ICL hybrid
-								random @ \ICL random
-				<= Group_summarization $raggu_web_front_settings_group
-					step \Шаг 3
-					title \Summarization
-					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
-					reindex true
-					controls /
-						<= Summarization_dbscan $mol_check_box
-							checked? <=> summarization_dbscan? false
-							title @ \DBSCAN clustering
-						<= Summarization_llm $mol_check_box
-							checked? <=> summarization_llm? false
-							title @ \LLM summarization
-				<= Group_communities $raggu_web_front_settings_group
-					step \Шаг 4
-					title \Communities
-					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
-					reindex true
-					controls /
-						<= Communities_algo $bog_builderui_select
-							value? <=> communities_algo? \Leiden
-							dictionary *
-								Leiden \Leiden
-						<= Communities_resolution_row $bog_builderui_div sub /
-							<= Communities_resolution_label $bog_builderui_div sub / <= communities_resolution_label_text @ \resolution
-							<= Communities_resolution_value $bog_builderui_div sub / <= communities_resolution_label \1.0
-						<= Communities_resolution $bog_builderui_slider
-							value? <=> communities_resolution_x10? 10
-							min 5
-							max 20
-							step 1
-				<= Group_refinement $raggu_web_front_settings_group
-					step \Шаг 5
-					title \Refinement
-					opts \RemoveIsolatedNodes и пост-обработчики
-					reindex true
-					controls /
-						<= Refinement_isolated $mol_check_box
-							checked? <=> refinement_isolated? false
-							title @ \RemoveIsolatedNodes
-				<= Group_search $raggu_web_front_settings_group
-					step \Шаг 6
-					title \Search
-					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
-					reindex false
-					controls /
-						<= Search_mode $bog_builderui_select
-							value? <=> search_mode? \Local
-							dictionary *
-								Local \LocalSearch
-								Global \GlobalSearch
-								Naive \NaiveSearch
-								Mix \MixSearch
-								QueryPlan \QueryPlan
-						<= Search_rerank $mol_check_box
-							checked? <=> search_rerank? false
-							title @ \rerank
-						<= Search_topk_row $bog_builderui_div sub /
-							<= Search_topk_label $bog_builderui_div sub / <= search_topk_label_text @ \top-k
-							<= Search_topk_value $bog_builderui_div sub / <= search_topk_label \8
-						<= Search_topk $bog_builderui_slider
-							value? <=> search_topk? 8
-							min 1
-							max 50
-							step 1

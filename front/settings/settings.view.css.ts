@@ -100,17 +100,6 @@ namespace $ {
 			gap: '18px',
 		},
 
-		Presets: {
-			flex: { direction: 'row' },
-			gap: '6px',
-			padding: {
-				bottom: '6px',
-			},
-			border: {
-				bottom: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
-			},
-		},
-
 		// Метка, вопросик-подсказка и переключалка — одной строкой.
 		// $bog_builderui_div по умолчанию колонка, без этого «?» уезжает вниз.
 		Use_graph_row: {
@@ -151,69 +140,6 @@ namespace $ {
 			color: $bog_builderui_tokens.shade,
 			font: { size: '10px', weight: 700 },
 			cursor: 'help',
-		},
-
-		Chunking_size_row: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			gap: '8px',
-		},
-		Chunking_overlap_row: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			gap: '8px',
-		},
-		Communities_resolution_row: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			justify: { content: 'space-between' },
-		},
-		Search_topk_row: {
-			flex: { direction: 'row' },
-			align: { items: 'center' },
-			justify: { content: 'space-between' },
-		},
-
-		Chunking_size_label: {
-			minWidth: '90px',
-			color: $bog_builderui_tokens.shade,
-			font: { size: '11px' },
-		},
-		Chunking_overlap_label: {
-			minWidth: '90px',
-			color: $bog_builderui_tokens.shade,
-			font: { size: '11px' },
-		},
-		Communities_resolution_label: {
-			color: $bog_builderui_tokens.shade,
-			font: { size: '11px' },
-		},
-		Search_topk_label: {
-			color: $bog_builderui_tokens.shade,
-			font: { size: '11px' },
-		},
-		Communities_resolution_value: {
-			color: $bog_builderui_tokens.text,
-			font: {
-				family: 'ui-monospace, monospace',
-				size: '11px',
-				weight: 600,
-			},
-		},
-		Search_topk_value: {
-			color: $bog_builderui_tokens.text,
-			font: {
-				family: 'ui-monospace, monospace',
-				size: '11px',
-				weight: 600,
-			},
-		},
-
-		Chunking_size_input: {
-			flex: { grow: 1 },
-		},
-		Chunking_overlap_input: {
-			flex: { grow: 1 },
 		},
 
 		'@media': {

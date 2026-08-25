@@ -67,6 +67,12 @@ namespace $ {
 			color: $bog_builderui_tokens.text,
 			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
 			font: { size: '17px' },
+			// С подписью кнопка перестаёт быть квадратной иконкой: ширину задаёт
+			// содержимое, minWidth из базового стиля тут только мешал бы.
+			flex: { direction: 'row', shrink: 0 },
+			gap: '7px',
+			minWidth: 'auto',
+			padding: { left: '10px', right: '12px' },
 			'@': {
 				raggu_web_front_topbar_nav_active: {
 					true: {

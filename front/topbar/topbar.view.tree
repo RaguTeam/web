@@ -45,6 +45,7 @@ $raggu_web_front_topbar $bog_builderui_div
 		<= Spacer $bog_builderui_div
 		<= Nav_settings $raggu_web_front_topbar_nav
 			icon \⚙
+			label @ \Settings
 			hint @ \Settings
 			active <= settings_open false
 			click? <=> open_settings? null

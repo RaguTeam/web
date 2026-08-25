@@ -9,6 +9,13 @@ namespace $ {
 		font: { size: '15px' },
 		cursor: 'pointer',
 		color: $bog_builderui_tokens.shade,
+		// Подпись мельче иконки: размер шрифта кнопки — это размер самой иконки.
+		// Рендерится только у кнопок с непустым label (см. nav.view.ts).
+		Label: {
+			font: { size: '12px', weight: 600 },
+			whiteSpace: 'nowrap',
+		},
+
 		'@': {
 			raggu_web_front_topbar_nav_active: {
 				true: {

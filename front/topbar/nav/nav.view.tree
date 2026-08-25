@@ -1,5 +1,6 @@
 $raggu_web_front_topbar_nav $bog_builderui_div
 	icon \
+	label \
 	hint \
 	active false
 	disabled false
@@ -14,3 +15,4 @@ $raggu_web_front_topbar_nav $bog_builderui_div
 		click? <=> click? null
 	sub /
 		<= Icon $bog_builderui_div sub / <= icon
+		<= Label $bog_builderui_div sub / <= label
