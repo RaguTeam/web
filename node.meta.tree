@@ -57,6 +57,7 @@
 	pack music git \https://github.com/b-on-g/music.git
 	pack journal git \https://github.com/b-on-g/journal.git
 	pack figmol git \https://github.com/b-on-g/figmol.git
+	pack smalljs git \https://github.com/b-on-g/smalljs.git
 \/raggu/web/front/app
 	deploy \/mol/offline/install
 	deploy \/raggu/web/front/assets
