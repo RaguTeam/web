@@ -134,6 +134,56 @@ def test_engine_cache_key_includes_top_k_and_language(
     assert built == [(8, "ru"), (25, "ru"), (8, "en")]
 
 
+# ---------- the keyword fallback explains itself ----------
+
+
+def _definition(path: Path) -> SimpleNamespace:
+    return SimpleNamespace(id=path.name, path=path, language="en")
+
+
+def _vector_index(tmp_path: Path, *, skip: str | None = None) -> Path:
+    path = tmp_path / "wiki"
+    path.mkdir()
+    for name in repo.RAGU_VECTOR_FILES:
+        if name != skip:
+            (path / name).write_text("{}", encoding="utf-8")
+    return path
+
+
+def _adapter(model_name: str | None) -> RaguSearchAdapter:
+    return RaguSearchAdapter(
+        RaguEmbedderConfig(
+            api_key=None,
+            base_url="http://embedder:8001/v1" if model_name else None,
+            model_name=model_name,
+            provider="test",
+        )
+    )
+
+
+def test_unsupported_reason_names_the_missing_vector_file(tmp_path: Path) -> None:
+    path = _vector_index(tmp_path, skip="vdb_entity.json")
+    reason = _adapter("stub-model").unsupported_reason(_definition(path))
+    assert reason is not None
+    assert "vdb_entity.json" in reason
+
+
+def test_unsupported_reason_names_a_missing_embedder(tmp_path: Path) -> None:
+    """A complete index with no embedder configured is a different problem from
+    an index with no vectors, and used to look identical from outside."""
+    path = _vector_index(tmp_path)
+    reason = _adapter(None).unsupported_reason(_definition(path))
+    assert reason is not None
+    assert "embedder" in reason
+
+
+def test_supported_index_has_no_reason(tmp_path: Path) -> None:
+    path = _vector_index(tmp_path)
+    adapter = _adapter("stub-model")
+    assert adapter.unsupported_reason(_definition(path)) is None
+    assert adapter.supports(_definition(path)) is True
+
+
 # ---------- F6: global Settings is restored ----------
 
 

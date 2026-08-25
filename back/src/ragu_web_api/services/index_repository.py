@@ -211,11 +211,26 @@ class RaguSearchAdapter:
         self._graphs: dict[str, tuple[Any, Any]] = {}
         self._engines: dict[tuple[str, str, int, str], Any] = {}
 
+    def unsupported_reason(self, definition: IndexDefinition) -> str | None:
+        """Why RAGU search cannot run for this index, or None when it can.
+
+        Split out of `supports` so the keyword fallback can say which
+        precondition failed. "index was built without vectors" and "no embedder
+        is configured" need completely different fixes, and from the outside
+        both looked identical: a trace that just said "keyword".
+        """
+        missing = _missing_vector_files(definition.path)
+        if missing:
+            return f"index has no RAGU vector store (missing {', '.join(missing)})"
+        if not self.config.is_configured_for(definition.path.name, definition.id):
+            return (
+                "no embedder is configured for this index "
+                "(needs EMBEDDER_MODEL_NAME or EMBEDDER_MODEL_MAP, plus an endpoint)"
+            )
+        return None
+
     def supports(self, definition: IndexDefinition) -> bool:
-        return bool(
-            self.config.is_configured_for(definition.path.name, definition.id)
-            and _is_ragu_vector_index(definition.path)
-        )
+        return self.unsupported_reason(definition) is None
 
     async def search(
         self,
@@ -502,6 +517,46 @@ class IndexRepository:
         self._loaded: dict[str, LoadedIndex] = {}
         self._llm = OpenAICompatibleLLM(llm_config or _llm_config_from_env(env))
         self._ragu_search = RaguSearchAdapter(_ragu_embedder_config_from_env(env))
+        # Datasets we have already explained the keyword fallback for. The reason
+        # never changes at runtime, so saying it once per dataset beats one line
+        # per request.
+        self._unsupported_logged: set[str] = set()
+        self._log_startup_summary()
+
+    def _log_startup_summary(self) -> None:
+        """Report at boot which datasets can actually use RAGU search.
+
+        Everything here is knowable before the first request, and finding it out
+        by reading `engine: "keyword"` off a trace — the way this went unnoticed
+        for a long time — is far too late.
+        """
+        LOGGER.info(
+            "Indexes root: %s | LLM: %s | embedder: %s",
+            self.indexes_root,
+            self._llm.config.provider,
+            self._ragu_search.config.model_name or "not configured",
+        )
+        if not self._definitions:
+            LOGGER.warning("No RAGU indexes discovered under '%s'.", self.indexes_root)
+            return
+        for definition in self._definitions.values():
+            reason = self._ragu_search.unsupported_reason(definition)
+            if reason is None:
+                LOGGER.info(
+                    "Dataset '%s': RAGU search enabled (embedder '%s', index dim %s).",
+                    definition.id,
+                    self._ragu_search.config.model_for(
+                        definition.path.name, definition.id
+                    ),
+                    _ragu_embedding_dim(definition.path),
+                )
+            else:
+                self._unsupported_logged.add(definition.id)
+                LOGGER.warning(
+                    "Dataset '%s': keyword retrieval only — %s.",
+                    definition.id,
+                    reason,
+                )
 
     def list_datasets(self, locale: Locale = "ru") -> list[DatasetCard]:
         return [self._dataset_card(item, locale) for item in self._definitions.values()]
@@ -1074,6 +1129,26 @@ class IndexRepository:
             return []
         return plan[:_QUERY_PLAN_MAX]
 
+    def _note_ragu_unsupported(self, definition: IndexDefinition) -> None:
+        """Say once, per dataset, why answers are coming from keyword retrieval.
+
+        Without this the most common degradation is completely silent: `supports`
+        returns False, no exception is raised, and the only trace of it is
+        `engine: "keyword"` in a response nobody is reading logs for.
+        """
+        if definition.id in self._unsupported_logged:
+            return
+        reason = self._ragu_search.unsupported_reason(definition)
+        if reason is None:
+            return
+        self._unsupported_logged.add(definition.id)
+        LOGGER.warning(
+            "RAGU search is unavailable for dataset '%s': %s. "
+            "Answers for it will use local keyword retrieval.",
+            definition.id,
+            reason,
+        )
+
     async def _retrieve_with_ragu(
         self,
         index: LoadedIndex,
@@ -1099,7 +1174,9 @@ class IndexRepository:
             retrieval = None
 
         if retrieval is None:
-            # Either RAGU vector search is not configured for this index, or it failed.
+            # Either RAGU search does not apply to this index, or it just failed —
+            # the failure already logged itself above, so this covers the other case.
+            self._note_ragu_unsupported(index.definition)
             return self._retrieve(index, request.message, request.top_k), "keyword"
 
         if not (retrieval.nodes or retrieval.chunks):
@@ -1146,6 +1223,7 @@ class IndexRepository:
                 )
                 retrieval = None
             if retrieval is None:
+                self._note_ragu_unsupported(index.definition)
                 results.append(self._retrieve(index, query, request.top_k))
             else:
                 ragu_hits += 1
@@ -1523,16 +1601,20 @@ def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
     )
 
 
+RAGU_VECTOR_FILES = (
+    "knowledge_graph.gml",
+    "kv_chunks.json",
+    "vdb_entity.json",
+    "vdb_chunk.json",
+)
+
+
+def _missing_vector_files(path: Path) -> list[str]:
+    return [name for name in RAGU_VECTOR_FILES if not (path / name).exists()]
+
+
 def _is_ragu_vector_index(path: Path) -> bool:
-    return all(
-        (path / filename).exists()
-        for filename in (
-            "knowledge_graph.gml",
-            "kv_chunks.json",
-            "vdb_entity.json",
-            "vdb_chunk.json",
-        )
-    )
+    return not _missing_vector_files(path)
 
 
 def _ragu_embedding_dim(path: Path) -> int | None:
