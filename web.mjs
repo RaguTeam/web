@@ -7403,6 +7403,26 @@ var $;
         Spacer: {
             flex: { grow: 1 },
         },
+        // Шестерёнка стоит одна справа, без групповой подложки, какая есть у
+        // Nav_row — серым по светлой карточке её не видно. Даём рамку, как у
+        // «Помощи», обычный цвет текста и икону покрупнее.
+        //
+        // Активное состояние переигрываем здесь же: правило акцента живёт в
+        // nav.view.css.ts, специфичность у обоих одинаковая, и кто победит —
+        // решал бы порядок файлов в бандле.
+        Nav_settings: {
+            color: $bog_builderui_tokens.text,
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '7px' },
+            font: { size: '17px' },
+            '@': {
+                raggu_web_front_topbar_nav_active: {
+                    true: {
+                        background: { color: $bog_builderui_tokens.current },
+                        color: '#ffffff',
+                    },
+                },
+            },
+        },
         Help_btn: {
             flex: { direction: 'row' },
             align: { items: 'center' },
@@ -19411,6 +19431,9 @@ var $;
 			(obj.sub) = () => ([(this.off_graph_text())]);
 			return obj;
 		}
+		engine(){
+			return "mix";
+		}
 		dataset_id(){
 			return "";
 		}
@@ -20171,6 +20194,14 @@ var $;
             }
             // GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
             // графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
+            /**
+             * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
+             * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
+             * `mix` — бэк из неподдерживаемых движков всё равно падает в него.
+             */
+            engine() {
+                return super.engine() === 'naive' ? 'naive' : 'mix';
+            }
             ask_backend(text) {
                 const history = this.history()
                     .slice(0, -1)
@@ -20180,7 +20211,7 @@ var $;
                     body: {
                         message: text,
                         history,
-                        engine: 'mix',
+                        engine: this.engine(),
                         top_k: 15,
                         rerank: true,
                         include_trace: false,
@@ -21794,6 +21825,9 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
+		chat_engine(){
+			return "mix";
+		}
 		screen(next){
 			if(next !== undefined) return next;
 			return "gallery";
@@ -21873,6 +21907,7 @@ var $;
 		Chat(){
 			const obj = new this.$.$raggu_web_front_chat();
 			(obj.dataset_id) = () => ((this.dataset_id()));
+			(obj.engine) = () => ((this.chat_engine()));
 			return obj;
 		}
 		Summary(){
@@ -22017,6 +22052,19 @@ var $;
                     this.Chat().prompt_text(this.ask_entity_template().replace('%s', node.label));
                 }
                 return null;
+            }
+            /**
+             * Переключалка «Граф при поиске» ложится прямо на поле `engine` запроса
+             * к агенту, отдельная ручка на бэке не нужна: `naive` ищет только по
+             * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
+             * (`SUPPORTED_ENGINES` в schemas/datasets.py).
+             *
+             * Вторая переключалка, QueryPlanEngine, сюда пока не заводится: `query_plan`
+             * в enum есть, но в `SUPPORTED_ENGINES` его нет — бэк молча свалится в
+             * `mix`, и тумблер врал бы. Ждём готовности декомпозиции.
+             */
+            chat_engine() {
+                return this.Settings().use_graph() === 'on' ? 'mix' : 'naive';
             }
             screen_title() {
                 switch (this.screen()) {

@@ -11328,6 +11328,7 @@ declare namespace $ {
 		clear_click( next?: any ): any
 		Message_text( id: any): $bog_builderui_div
 		Message_badge( id: any): $bog_builderui_div
+		engine( ): string
 		dataset_id( ): string
 		input_hint_text( ): string
 		send_label_text( ): string
@@ -11389,6 +11390,12 @@ declare namespace $.$$ {
         prompt_submit(): null;
         is_communicating(): boolean;
         ask(text: string): void;
+        /**
+         * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
+         * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
+         * `mix` — бэк из неподдерживаемых движков всё равно падает в него.
+         */
+        engine(): 'mix' | 'naive';
         ask_backend(text: string): void;
         graph_context(): string;
         ask_llm(text: string): void;
@@ -11998,6 +12005,11 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_chat['dataset_id'] >
 	>
+	type $raggu_web_front_chat__engine_raggu_web_front_app_27 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['chat_engine'] >
+		,
+		ReturnType< $raggu_web_front_chat['engine'] >
+	>
 	export class $raggu_web_front_app extends $bog_builderui_div {
 		favicon_icon( ): $mol_icon_graph
 		Favicon( ): $bog_favicon
@@ -12023,6 +12035,7 @@ declare namespace $ {
 		Summary_popup( ): $mol_view
 		open_dataset( next?: any ): any
 		ask_chat( next?: any ): any
+		chat_engine( ): string
 		screen( next?: string ): string
 		dataset_id( next?: string ): string
 		help_open( next?: boolean ): boolean
@@ -12072,6 +12085,17 @@ declare namespace $.$$ {
         select_dataset(id: string): null;
         open_dataset(id: string): null;
         ask_chat(): null;
+        /**
+         * Переключалка «Граф при поиске» ложится прямо на поле `engine` запроса
+         * к агенту, отдельная ручка на бэке не нужна: `naive` ищет только по
+         * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
+         * (`SUPPORTED_ENGINES` в schemas/datasets.py).
+         *
+         * Вторая переключалка, QueryPlanEngine, сюда пока не заводится: `query_plan`
+         * в enum есть, но в `SUPPORTED_ENGINES` его нет — бэк молча свалится в
+         * `mix`, и тумблер врал бы. Ждём готовности декомпозиции.
+         */
+        chat_engine(): "mix" | "naive";
         screen_title(): string;
         dataset_title(): string;
         arg_value(key: string, next: string | undefined, fallback: string): string;
