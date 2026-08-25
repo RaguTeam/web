@@ -9,3 +9,6 @@ __pycache__
 indexes/
 tools/
 .env
+# RAGU's Settings.init_storage_folder() creates this next to the CWD whenever a
+# KnowledgeGraph is built without storage_folder pointed at an index.
+ragu_working_dir/
