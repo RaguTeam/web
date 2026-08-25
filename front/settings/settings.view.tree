@@ -49,7 +49,7 @@ $raggu_web_front_settings $bog_builderui_div
 								attr * title <= query_plan_hint_text @ \Enable/disable decomposition of complex questions.
 								sub / \?
 							<= Query_plan $bog_builderui_select
-								value? <=> query_plan? \on
+								value? <=> query_plan? \off
 								dictionary *
 									on @ \On
 									off @ \Off

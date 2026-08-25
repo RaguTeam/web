@@ -20,6 +20,7 @@ from ragu_web_api.schemas.agent import (
     TraceCommunity,
     TraceEnergy,
     TraceEntity,
+    TraceQueryPlan,
     TraceRelation,
     TraceTimings,
 )
@@ -214,6 +215,19 @@ class MockRepository:
                 engine=request.engine,
                 top_k=request.top_k,
                 rerank=request.rerank,
+                # Мок отвечает мгновенно и без LLM, поэтому «план» тут выдуманный:
+                # два подвопроса из исходного, лишь бы фронт видел форму ответа.
+                query_plan=(
+                    TraceQueryPlan(
+                        used=True,
+                        sub_questions=[
+                            f"{request.message} — часть 1",
+                            f"{request.message} — часть 2",
+                        ],
+                    )
+                    if request.use_query_plan
+                    else None
+                ),
                 entities=[
                     TraceEntity(
                         id=node.id,

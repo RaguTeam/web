@@ -693,6 +693,11 @@
             "title": "Engine",
             "default": "mix"
           },
+          "use_query_plan": {
+            "type": "boolean",
+            "title": "Use Query Plan",
+            "default": false
+          },
           "top_k": {
             "type": "integer",
             "maximum": 50.0,
@@ -760,6 +765,16 @@
           "rerank": {
             "type": "boolean",
             "title": "Rerank"
+          },
+          "query_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TraceQueryPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "entities": {
             "items": {
@@ -2008,6 +2023,27 @@
           "score"
         ],
         "title": "TraceEntity"
+      },
+      "TraceQueryPlan": {
+        "properties": {
+          "used": {
+            "type": "boolean",
+            "title": "Used"
+          },
+          "sub_questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sub Questions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "used"
+        ],
+        "title": "TraceQueryPlan"
       },
       "TraceRelation": {
         "properties": {

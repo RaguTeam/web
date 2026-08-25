@@ -62,4 +62,5 @@ $raggu_web_front_app $bog_builderui_div
 	Chat $raggu_web_front_chat
 		dataset_id <= dataset_id
 		engine <= chat_engine \mix
+		use_query_plan <= chat_query_plan false
 	Summary $raggu_web_front_summary

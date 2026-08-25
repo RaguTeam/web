@@ -28,6 +28,7 @@ from ragu_web_api.schemas.agent import (
     TraceCommunity,
     TraceEnergy,
     TraceEntity,
+    TraceQueryPlan,
     TraceRelation,
     TraceTimings,
 )
@@ -348,6 +349,62 @@ def _warn_on_dropped_engines(engine: Any, result: Any, dataset_id: str) -> None:
     )
 
 
+# Cap on sub-questions. Each one is a full retrieval pass against the index, and
+# this box runs a single worker: four already multiplies retrieval latency by four.
+_QUERY_PLAN_MAX = 4
+
+
+def _parse_query_plan(raw: str) -> list[str]:
+    """Sub-questions out of an LLM reply, or [] if there is nothing usable.
+
+    Deliberately tolerant. The endpoint behind this backend is not reliable for
+    structured output — that is exactly why RAGU's own `query_plan` engine is not
+    advertised — so a plain numbered list has to work as well as a JSON array.
+    """
+    text = raw.strip()
+    start, end = text.find("["), text.rfind("]")
+    if start >= 0 and end > start:
+        try:
+            parsed = json.loads(text[start : end + 1])
+        except ValueError:
+            parsed = None
+        if isinstance(parsed, list):
+            items = [str(item).strip() for item in parsed if str(item).strip()]
+            if items:
+                return items
+    # Fallback: one question per line, with "1.", "-" and friends stripped.
+    items = []
+    for line in text.splitlines():
+        cleaned = re.sub(r"^\s*(?:\d+[.)]|[-*•])\s*", "", line).strip()
+        if len(cleaned) > 3:
+            items.append(cleaned)
+    return items
+
+
+def _merge_retrievals(results: list[RetrievalResult], limit: int) -> RetrievalResult:
+    """Union of per-sub-question retrievals, best score per item wins.
+
+    Not a sum: the same entity surfaces for several sub-questions, and adding the
+    scores up would rank "mentioned often" above "matched well".
+    """
+
+    def merge(groups: Iterable[list[tuple[Any, float]]]) -> list[tuple[Any, float]]:
+        best: dict[str, tuple[Any, float]] = {}
+        for group in groups:
+            for item, score in group:
+                current = best.get(item.id)
+                if current is None or score > current[1]:
+                    best[item.id] = (item, score)
+        return sorted(best.values(), key=lambda pair: -pair[1])[:limit]
+
+    return RetrievalResult(
+        nodes=merge(result.nodes for result in results),
+        edges=merge(result.edges for result in results),
+        chunks=merge(result.chunks for result in results),
+        communities=merge(result.communities for result in results),
+    )
+
+
 def _resolve_engine(requested: str) -> str:
     if requested in SUPPORTED_ENGINES:
         return requested
@@ -548,14 +605,17 @@ class IndexRepository:
         index = self._load_index(dataset_id)
 
         retrieval_start = time.perf_counter()
-        retrieval, engine_used = await self._retrieve_with_ragu(index, request)
+        # Планирование внутри замера ретривала: это лишний вызов LLM перед
+        # поиском, и прятать его из timings значило бы занижать реальную задержку.
+        plan = await self._plan_queries(request)
+        retrieval, engine_used = await self._retrieve_with_ragu(index, request, plan)
         retrieval_ms = int((time.perf_counter() - retrieval_start) * 1000)
 
         generation_start = time.perf_counter()
         llm_error: str | None = None
         answer = None
         try:
-            answer = await self._answer_with_llm(index, request, retrieval)
+            answer = await self._answer_with_llm(index, request, retrieval, plan)
         except Exception as exc:
             llm_error = f"{type(exc).__name__}: {exc}"
         if not answer:
@@ -579,6 +639,12 @@ class IndexRepository:
                 # No reranker is wired into the engines, so RAGU's _rerank_items is a
                 # no-op. Reporting request.rerank here would be a lie.
                 rerank=False,
+                # Ровно то, что произошло: план мог быть запрошен и не состояться.
+                query_plan=(
+                    TraceQueryPlan(used=bool(plan), sub_questions=plan)
+                    if request.use_query_plan
+                    else None
+                ),
                 entities=[
                     TraceEntity(
                         id=node.id,
@@ -881,10 +947,63 @@ class IndexRepository:
             other_node_label=other_node.label,
         )
 
+    async def _plan_queries(self, request: AgentRequest) -> list[str]:
+        """Sub-questions for a complex query, or [] when no plan was produced.
+
+        Decomposition runs on this backend's own LLM, not RAGU's QueryPlanEngine:
+        the RAGU engines here are wired to `_RaguSearchOnlyLLM`, which raises on
+        any generation call, so RAGU could not decompose anything even if asked.
+
+        Every failure path returns [] rather than raising — planning is an
+        optimisation, and a broken plan must not cost the user their answer.
+        """
+        if not request.use_query_plan:
+            return []
+        if not self._llm.config.is_configured:
+            LOGGER.info("Query planning requested but no LLM is configured; skipping.")
+            return []
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You split a complex question into independent, self-contained "
+                    "sub-questions that can be searched separately. Reply with a JSON "
+                    f"array of at most {_QUERY_PLAN_MAX} strings and nothing else. "
+                    "Keep the language of the question. If the question is already "
+                    "simple, reply with an empty array."
+                ),
+            },
+            {"role": "user", "content": request.message},
+        ]
+        try:
+            raw = await self._llm.complete(messages)
+        except Exception as exc:
+            LOGGER.warning("Query planning failed: %s", exc)
+            return []
+        if not raw:
+            return []
+
+        seen: set[str] = set()
+        plan: list[str] = []
+        for question in _parse_query_plan(raw):
+            key = question.casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            plan.append(question)
+        # One sub-question is just the original question reworded — no reason to
+        # pay for a second retrieval pass and claim a plan happened.
+        if len(plan) < 2:
+            return []
+        return plan[:_QUERY_PLAN_MAX]
+
     async def _retrieve_with_ragu(
-        self, index: LoadedIndex, request: AgentRequest
+        self, index: LoadedIndex, request: AgentRequest, queries: list[str] | None = None
     ) -> tuple[RetrievalResult, TraceEngine]:
         """Returns the retrieval and the engine that actually produced it."""
+        if queries:
+            return await self._retrieve_planned(index, request, queries)
         engine_name = _resolve_engine(request.engine)
         try:
             retrieval = await self._ragu_search.search(
@@ -912,6 +1031,52 @@ class IndexRepository:
                 index.definition.id,
             )
         return retrieval, engine_name  # type: ignore[return-value]
+
+    async def _retrieve_planned(
+        self, index: LoadedIndex, request: AgentRequest, queries: list[str]
+    ) -> tuple[RetrievalResult, TraceEngine]:
+        """One retrieval pass per sub-question, merged into a single context.
+
+        A sub-question that finds nothing is not an error: the plan is a guess, and
+        the remaining branches still carry the answer. Only when every branch had to
+        fall back to keyword search do we report "keyword" — reporting the RAGU
+        engine then would hide that the graph never ran.
+        """
+        engine_name = _resolve_engine(request.engine)
+        # Each branch gets the full top_k so a strong hit is not squeezed out by a
+        # weaker sibling; the merge below trims back to the requested size.
+        results: list[RetrievalResult] = []
+        ragu_hits = 0
+        for query in queries:
+            try:
+                retrieval = await self._ragu_search.search(
+                    index, query, request.top_k, engine_name
+                )
+            except Exception as exc:
+                LOGGER.warning(
+                    "RAGU '%s' search failed for sub-question %r of dataset '%s': %s",
+                    engine_name,
+                    _shorten(query, 80),
+                    index.definition.id,
+                    exc,
+                )
+                retrieval = None
+            if retrieval is None:
+                results.append(self._retrieve(index, query, request.top_k))
+            else:
+                ragu_hits += 1
+                results.append(retrieval)
+
+        merged = _merge_retrievals(results, request.top_k)
+        if ragu_hits and ragu_hits < len(queries):
+            LOGGER.warning(
+                "Query plan for dataset '%s': only %d of %d sub-questions went "
+                "through RAGU, the rest fell back to keyword retrieval.",
+                index.definition.id,
+                ragu_hits,
+                len(queries),
+            )
+        return merged, (engine_name if ragu_hits else "keyword")  # type: ignore[return-value]
 
     def _retrieve(self, index: LoadedIndex, query: str, top_k: int) -> RetrievalResult:
         terms = _query_terms(query)
@@ -985,6 +1150,7 @@ class IndexRepository:
         index: LoadedIndex,
         request: AgentRequest,
         retrieval: RetrievalResult,
+        plan: list[str] | None = None,
     ) -> str | None:
         context = _render_context(index, retrieval)
         if not context.strip():
@@ -1007,7 +1173,20 @@ class IndexRepository:
             *history,
             {
                 "role": "user",
-                "content": f"Question: {request.message}\n\nGraph context:\n{context}",
+                # Подвопросы идут в промпт, а не только в ретривал: иначе модель
+                # видит склеенный контекст и отвечает на исходный вопрос целиком,
+                # теряя те ветки, ради которых декомпозиция и затевалась.
+                "content": (
+                    f"Question: {request.message}\n\n"
+                    + (
+                        "Answer it by covering each of these sub-questions:\n"
+                        + "\n".join(f"- {item}" for item in plan)
+                        + "\n\n"
+                        if plan
+                        else ""
+                    )
+                    + f"Graph context:\n{context}"
+                ),
             },
         ]
         return await self._llm.complete(messages)

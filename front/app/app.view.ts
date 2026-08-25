@@ -126,12 +126,17 @@ namespace $.$$ {
 		 * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
 		 * (`SUPPORTED_ENGINES` в schemas/datasets.py).
 		 *
-		 * Вторая переключалка, QueryPlanEngine, сюда пока не заводится: `query_plan`
-		 * в enum есть, но в `SUPPORTED_ENGINES` его нет — бэк молча свалится в
-		 * `mix`, и тумблер врал бы. Ждём готовности декомпозиции.
+		 * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
+		 * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
+		 * плюс декомпозиция включена» нельзя было бы выразить.
 		 */
 		chat_engine() {
 			return this.Settings().use_graph() === 'on' ? 'mix' : 'naive'
+		}
+
+		/** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */
+		chat_query_plan() {
+			return this.Settings().query_plan() === 'on'
 		}
 
 		screen_title() {

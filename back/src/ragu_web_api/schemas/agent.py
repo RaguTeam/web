@@ -17,6 +17,11 @@ class AgentRequest(APIModel):
     message: str = Field(min_length=1, examples=["Who wrote the Norwegian anthem?"])
     history: list[ChatMessage] = Field(default_factory=list)
     engine: SearchEngine = "mix"
+    # Decompose a complex question into sub-questions before retrieval. Orthogonal
+    # to `engine`: the plan runs each sub-question through the engine picked above.
+    # Not folded into the SearchEngine enum on purpose — the two are independent
+    # switches in the UI, and "no graph + planning" has to stay expressible.
+    use_query_plan: bool = False
     top_k: int = Field(default=8, ge=1, le=50)
     rerank: bool = True
     include_trace: bool = True
@@ -52,6 +57,14 @@ class TraceCommunity(APIModel):
     score: float = Field(ge=0.0, le=1.0)
 
 
+class TraceQueryPlan(APIModel):
+    # Whether decomposition actually ran. False when it was asked for but the LLM
+    # was unavailable or returned nothing usable — the answer then came from the
+    # original question alone, and saying otherwise would be a lie.
+    used: bool
+    sub_questions: list[str] = Field(default_factory=list)
+
+
 class TraceTimings(APIModel):
     retrieval_ms: int = Field(ge=0)
     generation_ms: int = Field(ge=0)
@@ -77,6 +90,8 @@ class AnswerTrace(APIModel):
     top_k: int = Field(ge=1)
     # Whether reranking actually happened (no reranker is configured, so: False).
     rerank: bool
+    # None when planning was not requested.
+    query_plan: TraceQueryPlan | None = None
     entities: list[TraceEntity] = Field(default_factory=list)
     relations: list[TraceRelation] = Field(default_factory=list)
     chunks: list[TraceChunk] = Field(default_factory=list)

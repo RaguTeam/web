@@ -125,8 +125,6 @@ namespace $.$$ {
 			this.ask_llm( text )
 		}
 
-		// GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
-		// графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
 		/**
 		 * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
 		 * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
@@ -136,23 +134,33 @@ namespace $.$$ {
 			return super.engine() === 'naive' ? 'naive' : 'mix'
 		}
 
+		// GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
+		// графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
 		ask_backend( text: string ) {
 			const history = this.history()
 				.slice( 0, -1 )
 				.map( m => ( { role: m.role, content: m.text } ) )
+			// `use_query_plan` кладём в тело, ТОЛЬКО когда план включён. У бэка
+			// APIModel с extra="forbid", и задеплоенная версия, которая про это
+			// поле ещё не знает, отвечает 422 на весь запрос. Пока она не
+			// обновилась, выключенный тумблер = прежний контракт, включённый —
+			// осознанный опт-ин. Каст нужен потому, что генератор помечает поля
+			// с дефолтом как обязательные: опустить их типом нельзя.
+			const body = {
+				message: text,
+				history,
+				engine: this.engine(),
+				top_k: 15,
+				rerank: true,
+				include_trace: false,
+				locale: $raggu_web_front_api_locale(),
+				...( this.use_query_plan() ? { use_query_plan: true } : {} ),
+			}
 			const resp = this.$.$raggu_web_front_api(
 				$raggu_web_front_api_ragu_create_agent_message,
 				{
 					params: { dataset_id: this.dataset_id() },
-					body: {
-						message: text,
-						history,
-						engine: this.engine(),
-						top_k: 15,
-						rerank: true,
-						include_trace: false,
-						locale: $raggu_web_front_api_locale(),
-					},
+					body: body as typeof $raggu_web_front_api_ragu_create_agent_message.body,
 				},
 			)
 			const reply = ( resp as any )?.message?.content ?? ''

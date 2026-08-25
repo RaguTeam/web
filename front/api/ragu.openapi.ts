@@ -195,6 +195,11 @@ namespace $.$raggu_web_front_api_ragu {
 	             */
 	            engine: "local" | "global" | "naive" | "mix" | "query_plan";
 	            /**
+	             * Use Query Plan
+	             * @default false
+	             */
+	            use_query_plan: boolean;
+	            /**
 	             * Top K
 	             * @default 8
 	             */
@@ -231,6 +236,7 @@ namespace $.$raggu_web_front_api_ragu {
 	            top_k: number;
 	            /** Rerank */
 	            rerank: boolean;
+	            query_plan?: components["schemas"]["TraceQueryPlan"] | null;
 	            /** Entities */
 	            entities?: components["schemas"]["TraceEntity"][];
 	            /** Relations */
@@ -763,6 +769,13 @@ namespace $.$raggu_web_front_api_ragu {
 	            entity_type: string;
 	            /** Score */
 	            score: number;
+	        };
+	        /** TraceQueryPlan */
+	        TraceQueryPlan: {
+	            /** Used */
+	            used: boolean;
+	            /** Sub Questions */
+	            sub_questions?: string[];
 	        };
 	        /** TraceRelation */
 	        TraceRelation: {
