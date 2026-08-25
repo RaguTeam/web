@@ -58,11 +58,13 @@ pytest -k query_plan         # by keyword
 ```
 (`uv run --project back pytest` also works if using `uv`.) Note: `tests/test_api.py` needs a real prebuilt RAGU index discoverable via `RAGU_INDEXES_DIR` (or the default `../RAGU/indexes` / `./indexes` lookup) — it exercises the live discovery/graph/agent endpoints. `tests/test_query_plan.py` stubs the LLM and repository internals directly, so it runs in a bare checkout with no index on disk.
 
-Regenerate the OpenAPI contract after changing any Pydantic schema or route:
+After changing any Pydantic schema or route, regenerate the contract **and** the frontend client — one script does both:
 ```bash
-python -c 'from ragu_web_api.main import create_app; import json; print(json.dumps(create_app().openapi(), indent=2))' > openapi.json
+bash back/scripts/regen-openapi.sh
 ```
-Then regenerate the frontend's typed client (`front/api/ragu.openapi.ts`) with `openapi-typescript` from the updated spec.
+It dumps `back/openapi.json` straight from `create_app()` (no running server), then runs `back/scripts/regen-openapi-client.mjs`, which shells out to `npx openapi-typescript` and rewrites `front/api/ragu.openapi.ts` (types block + one operation descriptor per `operationId`). It skips with exit 0 when Python or `ragu_web_api` is unavailable, so a git hook can call it safely. Override the interpreter with `PYTHON=…` if autodetection picks the wrong one.
+
+`back/openapi.json` is the single source of truth for the contract, and `front/api/ragu.openapi.ts` is generated — never hand-edit either. Note the spec is stored with **LF** endings and `.gitattributes` sets `* -text`, so nothing normalizes them: dumping it through a shell redirect on Windows produces CRLF and turns the whole 2000-line file into a diff. The script writes it from Python with an explicit `newline="\n"` for that reason — do the same if regenerating by hand.
 
 ### Docker
 

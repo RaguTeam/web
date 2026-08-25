@@ -13,7 +13,9 @@ REPO="$( cd "$BACK/../../.." && pwd )"
 
 PYTHON="${PYTHON:-}"
 if [ -z "$PYTHON" ]; then
-	for candidate in "$BACK/.venv/bin/python" /tmp/ragu_venv/bin/python python3 python; do
+	# .venv/Scripts is the Windows layout — without it this skips with exit 0 on
+	# a Windows checkout even though the venv is right there.
+	for candidate in "$BACK/.venv/bin/python" "$BACK/.venv/Scripts/python.exe" /tmp/ragu_venv/bin/python python3 python; do
 		if command -v "$candidate" >/dev/null 2>&1; then PYTHON="$candidate"; break; fi
 	done
 fi
@@ -28,7 +30,15 @@ if ! "$PYTHON" -c 'import ragu_web_api' >/dev/null 2>&1; then
 	exit 0
 fi
 
-"$PYTHON" -c 'from ragu_web_api.main import create_app; import json; print(json.dumps(create_app().openapi(), indent=2))' > "$BACK/openapi.json"
+# Written from Python with an explicit newline rather than a shell redirect:
+# on Windows a redirected `print` emits CRLF, and openapi.json is stored with LF,
+# so every line of a 2000-line file would show up as changed.
+OPENAPI_PATH="$BACK/openapi.json" "$PYTHON" -c '
+import json, os, pathlib
+from ragu_web_api.main import create_app
+spec = json.dumps(create_app().openapi(), indent=2) + "\n"
+pathlib.Path(os.environ["OPENAPI_PATH"]).write_text(spec, encoding="utf-8", newline="\n")
+'
 
 cd "$REPO"
 node "$HERE/regen-openapi-client.mjs"
