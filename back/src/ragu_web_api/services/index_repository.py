@@ -8,14 +8,37 @@ import re
 import time
 from ast import literal_eval
 from collections import Counter, defaultdict, deque
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from hashlib import md5
 from html import unescape
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 from fastapi import HTTPException
+
+# graph_ragu 0.0.5 has no top-level `ragu/__init__.py` — it is a namespace package
+# and re-exports live in the subpackages. `from ragu import KnowledgeGraph` raises
+# ImportError here, which is why these are imported by their real paths.
+#
+# Imported at module level on purpose: graph-ragu is a hard dependency, and a
+# missing one must break process start-up. The previous lazy-import-inside-try
+# turned exactly this failure into a silent per-request keyword fallback.
+from ragu.common.global_parameters import Settings as RaguSettings
+from ragu.graph.index import StorageArguments
+from ragu.graph.knowledge_graph import KnowledgeGraph
+from ragu.models.embedder import EmbedderOpenAI
+from ragu.models.llm import LLM as RaguLLM
+from ragu.models.openai import CachedAsyncOpenAI
+from ragu.search_engine import (
+    LocalSearchEngine,
+    MixSearchEngine,
+    NaiveSearchEngine,
+)
+from ragu.search_engine.base_engine import EngineParams
+from ragu.search_engine.local_search import LocalParams
+from ragu.search_engine.naive_search import NaiveSearchParams
 
 from ragu_web_api.schemas.agent import (
     AgentRequest,
@@ -186,7 +209,7 @@ class RaguSearchAdapter:
     def __init__(self, config: RaguEmbedderConfig) -> None:
         self.config = config
         self._graphs: dict[str, tuple[Any, Any]] = {}
-        self._engines: dict[tuple[str, str], Any] = {}
+        self._engines: dict[tuple[str, str, int], Any] = {}
 
     def supports(self, definition: IndexDefinition) -> bool:
         return bool(
@@ -201,26 +224,16 @@ class RaguSearchAdapter:
         if not self.supports(definition):
             return None
 
-        cache_key = (definition.id, engine_name)
+        # top_k belongs in the cache key: MixSearchEngine takes its children's
+        # params at construction time (see _build_engine), so a cached engine can
+        # only ever serve the top_k it was built with.
+        cache_key = (definition.id, engine_name, top_k)
         engine = self._engines.get(cache_key)
         if engine is None:
-            engine = self._build_engine(definition, engine_name)
+            engine = self._build_engine(definition, engine_name, top_k)
             self._engines[cache_key] = engine
 
-        try:
-            from ragu.search_engine.base_engine import EngineParams
-        except Exception as exc:
-            raise RuntimeError(f"RAGU EngineParams is unavailable: {exc}") from exc
-
-        from dataclasses import make_dataclass
-
-        DynamicParams = make_dataclass(
-            "DynamicParams", [("top_k", int)], bases=(EngineParams,)
-        )
-
-        params = DynamicParams(top_k=top_k)
-
-        result = await engine.a_search(query, params)
+        result = await engine.search(query, _search_params(engine_name, top_k))
         _warn_on_dropped_engines(engine, result, definition.id)
         return _retrieval_from_ragu_mix(index, result, top_k)
 
@@ -228,14 +241,6 @@ class RaguSearchAdapter:
         cached = self._graphs.get(definition.id)
         if cached is not None:
             return cached
-
-        try:
-            from ragu import KnowledgeGraph, Settings
-            from ragu.graph.index import StorageArguments
-            from ragu.models.embedder import EmbedderOpenAI
-            from ragu.models.openai import CachedAsyncOpenAI
-        except Exception as exc:
-            raise RuntimeError(f"RAGU search package is unavailable: {exc}") from exc
 
         embedding_dim = _ragu_embedding_dim(definition.path)
         if embedding_dim is None:
@@ -255,11 +260,6 @@ class RaguSearchAdapter:
             embedding_dim,
         )
 
-        # Storage backends resolve their filenames from the global Settings when the
-        # Index is constructed, so this must be set right before building the graph.
-        Settings.storage_folder = str(definition.path)
-        Settings.language = language
-
         client = CachedAsyncOpenAI(
             base_url=base_url,
             api_key=self.config.api_key or "unused",
@@ -275,31 +275,33 @@ class RaguSearchAdapter:
             batch_size=32,
             max_concurrent_batches=2,
         )
-        knowledge_graph = KnowledgeGraph(
-            llm=_RaguSearchOnlyLLM(),
-            embedder=embedder,
-            storage_settings=StorageArguments(),
-            language=language,
-        )
+        # Storage backends resolve their filenames from the global Settings when the
+        # Index is constructed, so it has to be set around this call — and restored
+        # afterwards, or the language of the last-built dataset leaks into the next.
+        with _ragu_settings(definition.path, language):
+            knowledge_graph = KnowledgeGraph(
+                # Search-only: nothing on this path generates text, and
+                # KnowledgeGraph accepts `llm=None` for exactly that case.
+                llm=None,
+                embedder=embedder,
+                storage_settings=StorageArguments(),
+                language=language,
+            )
         self._graphs[definition.id] = (knowledge_graph, embedder)
         return knowledge_graph, embedder
 
-    def _build_engine(self, definition: IndexDefinition, engine_name: str) -> Any:
-        try:
-            from ragu import (
-                LocalSearchEngine,
-                MixSearchEngine,
-                NaiveSearchEngine,
-            )
-        except Exception as exc:
-            raise RuntimeError(f"RAGU search package is unavailable: {exc}") from exc
-
+    def _build_engine(
+        self, definition: IndexDefinition, engine_name: str, top_k: int
+    ) -> Any:
         knowledge_graph, embedder = self._knowledge_graph(definition)
         # Pass language explicitly: Settings is global, so a cached graph would
         # otherwise hand the last-built dataset's language to these engines.
         language = _ragu_language(definition.language)
         LOGGER.info(
-            "Building RAGU '%s' engine for dataset '%s'.", engine_name, definition.id
+            "Building RAGU '%s' engine for dataset '%s' (top_k=%d).",
+            engine_name,
+            definition.id,
+            top_k,
         )
 
         def _local() -> Any:
@@ -325,6 +327,11 @@ class RaguSearchAdapter:
         return MixSearchEngine(
             llm=_RaguSearchOnlyLLM(),
             engines=[_local(), _naive()],
+            # The only way top_k reaches the children: MixSearchEngine.batch_search
+            # ignores the params handed to it ("children use their own defaults")
+            # and forwards these construction-time ones instead. Order must match
+            # `engines` above.
+            engine_params=[LocalParams(top_k=top_k), NaiveSearchParams(top_k=top_k)],
             allow_partial_failures=True,
             language=language,
         )
@@ -347,6 +354,38 @@ def _warn_on_dropped_engines(engine: Any, result: Any, dataset_id: str) -> None:
         len(children),
         len(expected),
     )
+
+
+@contextmanager
+def _ragu_settings(storage_folder: Path, language: str) -> Iterator[None]:
+    """Point RAGU's global Settings at one index for the duration of a build.
+
+    `Index.__init__` reads `Settings.storage_folder` at construction time, so the
+    value has to be global at that moment. Restoring both fields afterwards keeps
+    the next dataset from inheriting this one's folder or language.
+    """
+    previous_folder = RaguSettings.storage_folder
+    previous_language = RaguSettings.language
+    RaguSettings.storage_folder = str(storage_folder)
+    RaguSettings.language = language
+    try:
+        yield
+    finally:
+        RaguSettings.storage_folder = previous_folder
+        RaguSettings.language = previous_language
+
+
+def _search_params(engine_name: str, top_k: int) -> EngineParams | None:
+    """Retrieval params for a single-engine search.
+
+    `mix` gets None on purpose: MixSearchEngine.batch_search ignores the params
+    handed to it, so its top_k is baked in at construction time instead.
+    """
+    if engine_name == "local":
+        return LocalParams(top_k=top_k)
+    if engine_name == "naive":
+        return NaiveSearchParams(top_k=top_k)
+    return None
 
 
 # Cap on sub-questions. Each one is a full retrieval pass against the index, and
@@ -414,7 +453,14 @@ def _resolve_engine(requested: str) -> str:
     return "mix"
 
 
-class _RaguSearchOnlyLLM:
+class _RaguSearchOnlyLLM(RaguLLM):
+    """Guard LLM for the search-only path.
+
+    The engines require an LLM for answer generation, which this backend does
+    itself (see `_answer_with_llm`). Subclassing the real `LLM` satisfies the
+    engines' type contract while keeping an accidental generation call loud.
+    """
+
     async def chat_completion(self, *_args: Any, **_kwargs: Any) -> str:
         raise RuntimeError(
             "RAGU LLM generation is disabled in the web API search adapter."
