@@ -15,7 +15,12 @@ namespace $ {
 			right: '1.25rem',
 		},
 
-		Nav: {
+		// Не `Nav`: имя свойства даёт атрибут `raggu_web_front_topbar_nav`, а он
+		// совпадает с именем класса кнопки $raggu_web_front_topbar_nav — стиль
+		// контейнера красил и сами кнопки. Специфичность у обоих правил равна
+		// (`:where` у активного состояния не добавляет веса), решал порядок
+		// файлов, и фон контейнера перебивал акцент активной вкладки.
+		Nav_row: {
 			flex: { direction: 'row' },
 			gap: '0.125rem',
 			background: { color: $bog_builderui_tokens.field },

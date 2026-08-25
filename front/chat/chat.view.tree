@@ -48,6 +48,7 @@ $raggu_web_front_chat $bog_builderui_div
 					hint <= input_hint_text
 					value? <=> prompt_text? \
 					submit? <=> prompt_submit? null
+					press? <=> prompt_press? null
 				<= Input_send $mol_button_minor
 					hint <= send_label_text
 					click? <=> prompt_submit? null

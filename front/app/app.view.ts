@@ -52,6 +52,18 @@ namespace $.$$ {
 			return null
 		}
 
+		@$mol_action
+		open_settings() {
+			this.settings_open( true )
+			return null
+		}
+
+		@$mol_action
+		close_settings() {
+			this.settings_open( false )
+			return null
+		}
+
 		sidebar_hidden() { return this.sidebar_collapsed() }
 
 		@$mol_action

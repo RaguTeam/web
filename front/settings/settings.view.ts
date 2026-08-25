@@ -117,6 +117,25 @@ namespace $.$$ {
 			return null
 		}
 
+		// ---- runtime-переключалки поиска ----
+		//
+		// В отличие от остальных полей панели (мок движка индексации) эти два
+		// относятся к самому запросу и должны уехать на бэк. Пока бэк не готов,
+		// держим их там же, в local-state: когда появятся эндпоинты, здесь
+		// добавится отправка, а вся остальная панель не затрагивается.
+
+		/** Граф при поиске: 'on' → MixSearchEngine (чанки + граф), 'off' → NaiveSearchEngine (только чанки). */
+		@$mol_mem
+		use_graph( next?: string ): string {
+			return this.$.$mol_state_local.value( '$raggu_web_front_settings.use_graph', next ?? null ) ?? 'on'
+		}
+
+		/** QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG. */
+		@$mol_mem
+		query_plan( next?: string ): string {
+			return this.$.$mol_state_local.value( '$raggu_web_front_settings.query_plan', next ?? null ) ?? 'on'
+		}
+
 		// ---- local-state-backed fields ----
 
 		@$mol_mem

@@ -27,6 +27,32 @@ $raggu_web_front_settings $bog_builderui_div
 					<= Preset_demo $bog_builderui_button
 						title @ \🎬 Demo
 						click? <=> preset_demo? null
+				<= Group_retrieval $raggu_web_front_settings_group
+					step \Поиск
+					title \Retrieval
+					opts @ \graph in answering · decomposition of complex questions
+					reindex false
+					controls /
+						<= Use_graph_row $bog_builderui_div sub /
+							<= Use_graph_label $bog_builderui_div sub / <= use_graph_label_text @ \Graph in search
+							<= Use_graph_help $bog_builderui_div
+								attr * title <= use_graph_hint_text @ \Enable/disable use of the graph when answering.
+								sub / \?
+							<= Use_graph $bog_builderui_select
+								value? <=> use_graph? \on
+								dictionary *
+									on @ \On
+									off @ \Off
+						<= Query_plan_row $bog_builderui_div sub /
+							<= Query_plan_label $bog_builderui_div sub / <= query_plan_label_text @ \QueryPlanEngine in search
+							<= Query_plan_help $bog_builderui_div
+								attr * title <= query_plan_hint_text @ \Enable/disable decomposition of complex questions.
+								sub / \?
+							<= Query_plan $bog_builderui_select
+								value? <=> query_plan? \on
+								dictionary *
+									on @ \On
+									off @ \Off
 				<= Group_chunking $raggu_web_front_settings_group
 					step \Шаг 1
 					title \Chunking

@@ -15,5 +15,14 @@
 	"$raggu_web_front_settings_communities_resolution_label_text": "разрешение",
 	"$raggu_web_front_settings_Refinement_isolated_title": "RemoveIsolatedNodes",
 	"$raggu_web_front_settings_Search_rerank_title": "rerank",
-	"$raggu_web_front_settings_search_topk_label_text": "top-k"
+	"$raggu_web_front_settings_search_topk_label_text": "top-k",
+	"$raggu_web_front_settings_Group_retrieval_opts": "граф в ответе · декомпозиция сложных вопросов",
+	"$raggu_web_front_settings_use_graph_label_text": "Граф при поиске",
+	"$raggu_web_front_settings_use_graph_hint_text": "Включить/Выключить использование графа при ответе на запрос: при выключенном графе поиск производится только по чанкам через NaiveSearchEngine; при включенном — по чанкам и по графу в local-режиме через MixSearchEngine",
+	"$raggu_web_front_settings_Use_graph_dictionary_on": "Включен",
+	"$raggu_web_front_settings_Use_graph_dictionary_off": "Выключен",
+	"$raggu_web_front_settings_query_plan_label_text": "QueryPlanEngine при поиске",
+	"$raggu_web_front_settings_query_plan_hint_text": "Включить/Выключить обработку сложных вопросов с помощью декомпозиции на простые подвопросы через DAG-дерево",
+	"$raggu_web_front_settings_Query_plan_dictionary_on": "Включен",
+	"$raggu_web_front_settings_Query_plan_dictionary_off": "Выключен"
 }

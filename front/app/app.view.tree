@@ -2,6 +2,7 @@ $raggu_web_front_app $bog_builderui_div
 	screen? \gallery
 	dataset_id? \
 	help_open? false
+	settings_open? false
 	sidebar_collapsed? false
 	body /
 	lights_mode \light
@@ -42,10 +43,15 @@ $raggu_web_front_app $bog_builderui_div
 				dataset_title <= dataset_title \
 				screen_title <= screen_title \
 				open_help? <=> open_help? null
+				open_settings? <=> open_settings? null
+				settings_open <= settings_open false
 				toggle_sidebar? <=> toggle_sidebar? null
 			<= Body $mol_scroll sub <= body
 		<= Help $raggu_web_front_help
 			showed? <=> help_open?
+		<= Settings $raggu_web_front_settings
+			showed? <=> settings_open?
+			close? <=> close_settings? null
 		<= Summary_popup $mol_view
 	Gallery $raggu_web_front_gallery
 		dataset_id <= dataset_id

@@ -4,6 +4,8 @@ $raggu_web_front_topbar $bog_builderui_div
 	dataset_title \
 	screen_title \
 	open_help? null
+	open_settings? null
+	settings_open false
 	toggle_sidebar? null
 	help_btn_text @ \? Help
 	sub /
@@ -11,7 +13,7 @@ $raggu_web_front_topbar $bog_builderui_div
 			icon \◫
 			hint @ \Toggle sidebar
 			click? <=> toggle_sidebar? null
-		<= Nav $bog_builderui_div sub /
+		<= Nav_row $bog_builderui_div sub /
 			<= Nav_gallery $raggu_web_front_topbar_nav
 				icon \▤
 				hint @ \Datasets
@@ -41,3 +43,8 @@ $raggu_web_front_topbar $bog_builderui_div
 			<= Title $bog_builderui_div sub / <= screen_title
 			<= Subtitle $bog_builderui_div sub / <= dataset_title
 		<= Spacer $bog_builderui_div
+		<= Nav_settings $raggu_web_front_topbar_nav
+			icon \⚙
+			hint @ \Settings
+			active <= settings_open false
+			click? <=> open_settings? null

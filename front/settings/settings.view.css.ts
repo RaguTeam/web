@@ -111,6 +111,48 @@ namespace $ {
 			},
 		},
 
+		// Метка, вопросик-подсказка и переключалка — одной строкой.
+		// $bog_builderui_div по умолчанию колонка, без этого «?» уезжает вниз.
+		Use_graph_row: {
+			flex: { direction: 'row', wrap: 'wrap' },
+			align: { items: 'center' },
+			gap: '8px',
+		},
+		Query_plan_row: {
+			flex: { direction: 'row', wrap: 'wrap' },
+			align: { items: 'center' },
+			gap: '8px',
+		},
+		Use_graph_label: {
+			font: { size: '12px', weight: 600 },
+		},
+		Query_plan_label: {
+			font: { size: '12px', weight: 600 },
+		},
+		// Кружок с «?»: подсказка висит нативным title, всплывает по наведению.
+		Use_graph_help: {
+			width: '16px',
+			height: '16px',
+			flex: { shrink: 0 },
+			align: { items: 'center' },
+			justify: { content: 'center' },
+			border: { radius: '50%', width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+			color: $bog_builderui_tokens.shade,
+			font: { size: '10px', weight: 700 },
+			cursor: 'help',
+		},
+		Query_plan_help: {
+			width: '16px',
+			height: '16px',
+			flex: { shrink: 0 },
+			align: { items: 'center' },
+			justify: { content: 'center' },
+			border: { radius: '50%', width: '1px', style: 'solid', color: $bog_builderui_tokens.line },
+			color: $bog_builderui_tokens.shade,
+			font: { size: '10px', weight: 700 },
+			cursor: 'help',
+		},
+
 		Chunking_size_row: {
 			flex: { direction: 'row' },
 			align: { items: 'center' },

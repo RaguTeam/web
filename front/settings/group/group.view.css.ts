@@ -29,9 +29,13 @@ namespace $ {
 				right: '6px',
 			},
 			font: { size: '9px', weight: 600 },
+			// Атрибут НЕ `..._reindex`: так зовётся сам под-вид Reindex, и его
+			// имя уже висит на элементе. Совпади они — при reindex=false атрибут
+			// удалялся бы целиком, вместе с ним переставало совпадать базовое
+			// правило с display:none, и плашка вылезала голым текстом.
 			display: 'none',
 			'@': {
-				raggu_web_front_settings_group_reindex: {
+				raggu_web_front_settings_group_need_reindex: {
 					true: { display: 'flex' },
 				},
 			},

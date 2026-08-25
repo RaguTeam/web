@@ -68,6 +68,24 @@ namespace $.$$ {
 			return this.history()[ index ]?.off_graph ?? false
 		}
 
+		/**
+		 * Enter отправляет, Shift+Enter переносит строку.
+		 *
+		 * Штатный submit у $mol_textarea висит на Ctrl+Enter (`submit_with_ctrl`),
+		 * а голый Enter вставляет перенос. Переключить один флаг мало: хоткей не
+		 * гасит ввод символа, и в очищенное после отправки поле прилетел бы
+		 * перенос строки. Поэтому ловим сами и гасим событие первым же действием —
+		 * обработчик обёрнут в $mol_wire_async и выполняется синхронно лишь до
+		 * первой приостановки, так что preventDefault должен успеть до чтений.
+		 */
+		prompt_press( event?: KeyboardEvent ) {
+			if( event?.key !== 'Enter' ) return null
+			if( event.shiftKey || event.ctrlKey || event.metaKey || event.altKey ) return null
+			event.preventDefault()
+			this.prompt_submit()
+			return null
+		}
+
 		@ $mol_action
 		override prompt_submit() {
 			const text = this.prompt_text().trim()
