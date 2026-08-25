@@ -307,9 +307,14 @@ class RaguSearchAdapter:
         # afterwards, or the language of the last-built dataset leaks into the next.
         with _ragu_settings(definition.path, language):
             knowledge_graph = KnowledgeGraph(
-                # Search-only: nothing on this path generates text, and
-                # KnowledgeGraph accepts `llm=None` for exactly that case.
-                llm=None,
+                # NOT `llm=None`, even though the signature is `Optional[LLM]` and
+                # nothing on the search path generates text. KnowledgeGraph builds
+                # an InMemoryGraphBuilder eagerly, which builds an EntitySummarizer,
+                # which raises "LLM summarization is enabled but no client is
+                # provided" whenever `use_llm_summarization` (default True) meets a
+                # None llm. The guard stub satisfies that check and still makes any
+                # real generation attempt fail loudly.
+                llm=_RaguSearchOnlyLLM(),
                 embedder=embedder,
                 storage_settings=StorageArguments(),
                 language=language,

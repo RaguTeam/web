@@ -184,6 +184,37 @@ def test_supported_index_has_no_reason(tmp_path: Path) -> None:
     assert adapter.supports(_definition(path)) is True
 
 
+# ---------- the graph needs a non-None llm ----------
+
+
+def test_knowledge_graph_is_built_with_an_llm(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """`llm=None` looks legal — the parameter is `Optional[LLM]` and this path
+    never generates text — but KnowledgeGraph eagerly builds an
+    InMemoryGraphBuilder, whose EntitySummarizer raises "LLM summarization is
+    enabled but no client is provided" on a None llm. Passing None broke every
+    search on the deployed backend while still answering 200, because the
+    failure was swallowed by the keyword fallback.
+    """
+    path = _vector_index(tmp_path)
+    (path / "vdb_entity.json").write_text('{"embedding_dim": 768}', encoding="utf-8")
+
+    captured: dict[str, object] = {}
+
+    def _fake_graph(**kwargs: object) -> object:
+        captured.update(kwargs)
+        return SimpleNamespace()
+
+    monkeypatch.setattr(repo, "KnowledgeGraph", _fake_graph)
+
+    adapter = _adapter("stub-model")
+    adapter._knowledge_graph(_definition(path))
+
+    assert captured["llm"] is not None
+    assert isinstance(captured["llm"], LLM)
+
+
 # ---------- F6: global Settings is restored ----------
 
 
