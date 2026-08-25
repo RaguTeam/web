@@ -991,7 +991,7 @@ $raggu_web_front_settings $bog_builderui_div
 								attr * title <= query_plan_hint_text @ \Enable/disable decomposition of complex questions.
 								sub / \?
 							<= Query_plan $bog_builderui_select
-								value? <=> query_plan? \on
+								value? <=> query_plan? \off
 								dictionary *
 									on @ \On
 									off @ \Off
@@ -1751,6 +1751,7 @@ $mol_textarea_edit $mol_string
 
 $raggu_web_front_chat $bog_builderui_div
 	engine \mix
+	use_query_plan false
 	dataset_id \
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send
@@ -2020,4 +2021,5 @@ $raggu_web_front_app $bog_builderui_div
 	Chat $raggu_web_front_chat
 		dataset_id <= dataset_id
 		engine <= chat_engine \mix
+		use_query_plan <= chat_query_plan false
 	Summary $raggu_web_front_summary

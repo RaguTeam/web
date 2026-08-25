@@ -12984,7 +12984,7 @@ var $;
 		}
 		query_plan(next){
 			if(next !== undefined) return next;
-			return "on";
+			return "off";
 		}
 		Query_plan(){
 			const obj = new this.$.$bog_builderui_select();
@@ -13518,16 +13518,23 @@ var $;
             // ---- runtime-переключалки поиска ----
             //
             // В отличие от остальных полей панели (мок движка индексации) эти два
-            // относятся к самому запросу и должны уехать на бэк. Пока бэк не готов,
-            // держим их там же, в local-state: когда появятся эндпоинты, здесь
-            // добавится отправка, а вся остальная панель не затрагивается.
+            // реально уезжают на бэк — полями запроса к агенту, а не отдельной
+            // ручкой настроек: они относятся к конкретному вопросу, и хранить их
+            // на сервере значило бы разводить состояние между вкладками.
+            // Читает их app: chat_engine() и chat_query_plan().
             /** Граф при поиске: 'on' → MixSearchEngine (чанки + граф), 'off' → NaiveSearchEngine (только чанки). */
             use_graph(next) {
                 return this.$.$mol_state_local.value('$raggu_web_front_settings.use_graph', next ?? null) ?? 'on';
             }
-            /** QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG. */
+            /**
+             * QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG.
+             *
+             * По умолчанию ВЫКЛЮЧЕН, пока бэк с `use_query_plan` не выкачен: у него
+             * extra="forbid", и старая версия отвечает 422 на весь запрос. Включённый
+             * по умолчанию тумблер сломал бы чат всем сразу после деплоя фронта.
+             */
             query_plan(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.query_plan', next ?? null) ?? 'on';
+                return this.$.$mol_state_local.value('$raggu_web_front_settings.query_plan', next ?? null) ?? 'off';
             }
             // ---- local-state-backed fields ----
             chunking_strategy(next) {
@@ -20053,6 +20060,9 @@ var $;
 		engine(){
 			return "mix";
 		}
+		use_query_plan(){
+			return false;
+		}
 		dataset_id(){
 			return "";
 		}
@@ -20811,8 +20821,6 @@ var $;
                 }
                 this.ask_llm(text);
             }
-            // GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
-            // графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
             /**
              * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
              * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
@@ -20821,21 +20829,31 @@ var $;
             engine() {
                 return super.engine() === 'naive' ? 'naive' : 'mix';
             }
+            // GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
+            // графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
             ask_backend(text) {
                 const history = this.history()
                     .slice(0, -1)
                     .map(m => ({ role: m.role, content: m.text }));
+                // `use_query_plan` кладём в тело, ТОЛЬКО когда план включён. У бэка
+                // APIModel с extra="forbid", и задеплоенная версия, которая про это
+                // поле ещё не знает, отвечает 422 на весь запрос. Пока она не
+                // обновилась, выключенный тумблер = прежний контракт, включённый —
+                // осознанный опт-ин. Каст нужен потому, что генератор помечает поля
+                // с дефолтом как обязательные: опустить их типом нельзя.
+                const body = {
+                    message: text,
+                    history,
+                    engine: this.engine(),
+                    top_k: 15,
+                    rerank: true,
+                    include_trace: false,
+                    locale: $raggu_web_front_api_locale(),
+                    ...(this.use_query_plan() ? { use_query_plan: true } : {}),
+                };
                 const resp = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_create_agent_message, {
                     params: { dataset_id: this.dataset_id() },
-                    body: {
-                        message: text,
-                        history,
-                        engine: this.engine(),
-                        top_k: 15,
-                        rerank: true,
-                        include_trace: false,
-                        locale: $raggu_web_front_api_locale(),
-                    },
+                    body: body,
                 });
                 const reply = resp?.message?.content ?? '';
                 this.history([...this.history(), { role: 'assistant', text: reply }]);
@@ -22447,6 +22465,9 @@ var $;
 		chat_engine(){
 			return "mix";
 		}
+		chat_query_plan(){
+			return false;
+		}
 		screen(next){
 			if(next !== undefined) return next;
 			return "gallery";
@@ -22527,6 +22548,7 @@ var $;
 			const obj = new this.$.$raggu_web_front_chat();
 			(obj.dataset_id) = () => ((this.dataset_id()));
 			(obj.engine) = () => ((this.chat_engine()));
+			(obj.use_query_plan) = () => ((this.chat_query_plan()));
 			return obj;
 		}
 		Summary(){
@@ -22678,12 +22700,16 @@ var $;
              * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
              * (`SUPPORTED_ENGINES` в schemas/datasets.py).
              *
-             * Вторая переключалка, QueryPlanEngine, сюда пока не заводится: `query_plan`
-             * в enum есть, но в `SUPPORTED_ENGINES` его нет — бэк молча свалится в
-             * `mix`, и тумблер врал бы. Ждём готовности декомпозиции.
+             * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
+             * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
+             * плюс декомпозиция включена» нельзя было бы выразить.
              */
             chat_engine() {
                 return this.Settings().use_graph() === 'on' ? 'mix' : 'naive';
+            }
+            /** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */
+            chat_query_plan() {
+                return this.Settings().query_plan() === 'on';
             }
             screen_title() {
                 switch (this.screen()) {

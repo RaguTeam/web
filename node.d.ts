@@ -6107,7 +6107,13 @@ declare namespace $.$$ {
         apply_preset(name: string): null;
         /** Граф при поиске: 'on' → MixSearchEngine (чанки + граф), 'off' → NaiveSearchEngine (только чанки). */
         use_graph(next?: string): string;
-        /** QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG. */
+        /**
+         * QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG.
+         *
+         * По умолчанию ВЫКЛЮЧЕН, пока бэк с `use_query_plan` не выкачен: у него
+         * extra="forbid", и старая версия отвечает 422 на весь запрос. Включённый
+         * по умолчанию тумблер сломал бы чат всем сразу после деплоя фронта.
+         */
         query_plan(next?: string): string;
         chunking_strategy(next?: string): string;
         chunking_size_str(next?: string): string;
@@ -6552,6 +6558,11 @@ declare namespace $.$raggu_web_front_api_ragu {
                  */
                 engine: "local" | "global" | "naive" | "mix" | "query_plan";
                 /**
+                 * Use Query Plan
+                 * @default false
+                 */
+                use_query_plan: boolean;
+                /**
                  * Top K
                  * @default 8
                  */
@@ -6588,6 +6599,7 @@ declare namespace $.$raggu_web_front_api_ragu {
                 top_k: number;
                 /** Rerank */
                 rerank: boolean;
+                query_plan?: components["schemas"]["TraceQueryPlan"] | null;
                 /** Entities */
                 entities?: components["schemas"]["TraceEntity"][];
                 /** Relations */
@@ -7120,6 +7132,13 @@ declare namespace $.$raggu_web_front_api_ragu {
                 entity_type: string;
                 /** Score */
                 score: number;
+            };
+            /** TraceQueryPlan */
+            TraceQueryPlan: {
+                /** Used */
+                used: boolean;
+                /** Sub Questions */
+                sub_questions?: string[];
             };
             /** TraceRelation */
             TraceRelation: {
@@ -11529,6 +11548,7 @@ declare namespace $ {
 		Message_text( id: any): $bog_builderui_div
 		Message_badge( id: any): $bog_builderui_div
 		engine( ): string
+		use_query_plan( ): boolean
 		dataset_id( ): string
 		input_hint_text( ): string
 		send_label_text( ): string
@@ -12210,6 +12230,11 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_chat['engine'] >
 	>
+	type $raggu_web_front_chat__use_query_plan_raggu_web_front_app_28 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['chat_query_plan'] >
+		,
+		ReturnType< $raggu_web_front_chat['use_query_plan'] >
+	>
 	export class $raggu_web_front_app extends $bog_builderui_div {
 		favicon_icon( ): $mol_icon_graph
 		Favicon( ): $bog_favicon
@@ -12236,6 +12261,7 @@ declare namespace $ {
 		open_dataset( next?: any ): any
 		ask_chat( next?: any ): any
 		chat_engine( ): string
+		chat_query_plan( ): boolean
 		screen( next?: string ): string
 		dataset_id( next?: string ): string
 		help_open( next?: boolean ): boolean
@@ -12291,11 +12317,13 @@ declare namespace $.$$ {
          * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
          * (`SUPPORTED_ENGINES` в schemas/datasets.py).
          *
-         * Вторая переключалка, QueryPlanEngine, сюда пока не заводится: `query_plan`
-         * в enum есть, но в `SUPPORTED_ENGINES` его нет — бэк молча свалится в
-         * `mix`, и тумблер врал бы. Ждём готовности декомпозиции.
+         * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
+         * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
+         * плюс декомпозиция включена» нельзя было бы выразить.
          */
         chat_engine(): "mix" | "naive";
+        /** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */
+        chat_query_plan(): boolean;
         screen_title(): string;
         dataset_title(): string;
         arg_value(key: string, next: string | undefined, fallback: string): string;
