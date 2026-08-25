@@ -196,6 +196,7 @@ $raggu_web_front_sidebar $bog_builderui_div
 
 $raggu_web_front_topbar_nav $bog_builderui_div
 	icon \
+	label \
 	hint \
 	active false
 	disabled false
@@ -210,6 +211,7 @@ $raggu_web_front_topbar_nav $bog_builderui_div
 		click? <=> click? null
 	sub /
 		<= Icon $bog_builderui_div sub / <= icon
+		<= Label $bog_builderui_div sub / <= label
 
 $raggu_web_front_topbar $bog_builderui_div
 	screen? \gallery
@@ -258,6 +260,7 @@ $raggu_web_front_topbar $bog_builderui_div
 		<= Spacer $bog_builderui_div
 		<= Nav_settings $raggu_web_front_topbar_nav
 			icon \⚙
+			label @ \Settings
 			hint @ \Settings
 			active <= settings_open false
 			click? <=> open_settings? null
@@ -310,7 +313,134 @@ $raggu_web_front_help $bog_builderui_div
 					title @ \Summary
 					desc @ \Overview of the RAGU solution: what it consists of and how the pieces fit together.
 
-$bog_builderui_card $bog_builderui_div
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_follower $mol_ghost
+	Anchor $mol_view
+	align /number
+		-.5
+		-.5
+	offset /number
+		0
+		0
+	style *
+		^
+		transform <= transform \
+
+$mol_pop $mol_view
+	showed? false
+	align_vert \
+	align_hor \
+	align \bottom_center
+	prefer \vert
+	auto /
+		<= bubble null
+	sub /
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Follower $mol_follower
+			offset <= bubble_offset /number
+				0
+				1
+			align <= bubble_align /number
+				0
+				0
+			Anchor <= Anchor
+			Sub <= Bubble $mol_pop_bubble
+				content <= bubble_content /$mol_view_content
+				height_max <= height_max 9999
+
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		tabindex 0
+		popover \manual
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked? false
+		aria-checked <= aria_checked \false
+		role <= aria_role \checkbox
+	sub /$mol_view_content
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_pick $mol_pop
+	event *
+		^
+		keydown? <=> keydown? null
+	Anchor <= Trigger $mol_check
+		minimal_width 40
+		minimal_height 40
+		enabled <= trigger_enabled true
+		checked? <=> showed?
+		clicks? <=> clicks? null
+		sub <= trigger_content /$mol_view_content
+			<= title
+		hint <= hint \
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 7
+	width_limit +Infinity
+	row_width 0
+	sub / <= title
+
+$mol_dimmer $mol_paragraph
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low* $mol_paragraph
+		sub /
+			<= string* \
+	High* $mol_paragraph
+		sub /
+			<= string* \
+
+$mol_nav $mol_plugin
+	cycle? false
+	-
+	mod_ctrl false
+	mod_shift false
+	mod_alt false
+	-
+	keys_x? /
+	keys_y? /
+	-
+	current_x? null
+	current_y? null
+	-
+	event_up? null
+	event_down? null
+	event_left? null
+	event_right? null
+	event *
+		^
+		keydown? <=> event_key? null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0.1
+	sub <= rows /$mol_view
+		<= Gap_before $mol_view style * paddingTop <= gap_before 0
+		<= Empty $mol_view
+		<= Gap_after $mol_view style * paddingTop <= gap_after 0
+	item_height_min* 1
+	item_width_min* 1
+	view_window_shift? 0
+	view_window /
+		0
+		0
 
 $mol_hotkey $mol_plugin
 	event *
@@ -354,6 +484,107 @@ $mol_string $mol_view
 		<= Submit $mol_hotkey
 			mod_ctrl <= submit_with_ctrl false
 			key * enter? <=> submit? null
+
+$mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
+
+$mol_search $mol_pop
+	query? \
+	suggests /string
+	plugins /$mol_plugin
+		^
+		<= Hotkey $mol_hotkey
+			key * escape? <=> clear? null
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y? <=> nav_focused? null
+	showed? <=> suggests_showed? false
+	align_hor \right
+	Anchor $mol_view
+		sub <= anchor_content /
+			<= Query $mol_string
+				value? <=> query? \
+				hint <= hint @ \Search...
+				submit? <=> submit? null
+				enabled <= enabled true
+				keyboard <= keyboard \search
+				enter <= enter \search
+				bring => bring
+			<= Clear $mol_button_minor
+				hint @ \Clear
+				enabled <= enabled true
+				click? <=> clear? null
+				sub /
+					<= Clear_icon $mol_icon_close
+	bubble_content /$mol_view_content
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_items /$mol_view
+	Suggest* $mol_button_minor
+		click? <=> suggest_select*? null
+		sub <= suggest_content* /$mol_view_content
+			<= Suggest_label* $mol_dimmer
+				haystack <= suggest_label* \
+				needle <= query? \
+
+$mol_icon_dots_vertical $mol_icon path \M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z
+
+$mol_select $mol_pick
+	dictionary? *
+	options /string
+	value? \
+	option_label_default \
+	Option_row* $mol_button_minor
+		enabled <= enabled true
+		event_click? <=> event_select*? null
+		sub <= option_content* /
+			<= Option_label* $mol_dimmer
+				haystack <= option_label* \
+				needle <= filter_pattern? \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y? <=> option_focused? null
+			cycle? <=> nav_cycle? true
+	hint @ \Pick..
+	bubble_content /
+		<= Filter
+		<= Bubble_pane $mol_scroll
+			sub /
+				<= Menu $mol_list
+					rows <= menu_content /$mol_view
+	Filter $mol_search
+		query? <=> filter_pattern? \
+		hint <= filter_hint @ \Filter..
+		submit? <=> submit? null
+		enabled <= enabled true
+	Trigger_icon $mol_icon_dots_vertical
+	trigger_enabled <= enabled
+
+$bog_builderui_select $mol_select
+
+$raggu_web_front_settings_group $bog_builderui_div
+	step \
+	title \
+	opts \
+	controls /
+	reindex true
+	reindex_text @ \requires reindexing
+	sub /
+		<= Head $bog_builderui_div sub /
+			<= Step $bog_builderui_div sub / <= step
+			<= Reindex $bog_builderui_div
+				attr * raggu_web_front_settings_group_need_reindex <= reindex
+				sub / <= reindex_text
+		<= Title $bog_builderui_div sub / <= title
+		<= Opts $bog_builderui_div sub / <= opts
+		<= Controls $bog_builderui_div sub <= controls
+
+$bog_builderui_card $bog_builderui_div
 
 $bog_builderui_field $mol_string
 	minimal_height 36
@@ -631,217 +862,6 @@ $mol_chart $mol_view
 
 $bog_builderui_chart $mol_chart
 
-$mol_ghost $mol_view
-	Sub $mol_view
-
-$mol_follower $mol_ghost
-	Anchor $mol_view
-	align /number
-		-.5
-		-.5
-	offset /number
-		0
-		0
-	style *
-		^
-		transform <= transform \
-
-$mol_pop $mol_view
-	showed? false
-	align_vert \
-	align_hor \
-	align \bottom_center
-	prefer \vert
-	auto /
-		<= bubble null
-	sub /
-		<= Anchor null
-	sub_visible /
-		<= Anchor
-		<= Follower $mol_follower
-			offset <= bubble_offset /number
-				0
-				1
-			align <= bubble_align /number
-				0
-				0
-			Anchor <= Anchor
-			Sub <= Bubble $mol_pop_bubble
-				content <= bubble_content /$mol_view_content
-				height_max <= height_max 9999
-
-$mol_pop_bubble $mol_view
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
-	attr *
-		^
-		tabindex 0
-		popover \manual
-
-$mol_check $mol_button_minor
-	attr *
-		^
-		mol_check_checked <= checked? false
-		aria-checked <= aria_checked \false
-		role <= aria_role \checkbox
-	sub /$mol_view_content
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
-$mol_pick $mol_pop
-	event *
-		^
-		keydown? <=> keydown? null
-	Anchor <= Trigger $mol_check
-		minimal_width 40
-		minimal_height 40
-		enabled <= trigger_enabled true
-		checked? <=> showed?
-		clicks? <=> clicks? null
-		sub <= trigger_content /$mol_view_content
-			<= title
-		hint <= hint \
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 7
-	width_limit +Infinity
-	row_width 0
-	sub / <= title
-
-$mol_dimmer $mol_paragraph
-	haystack \
-	needle \
-	sub <= parts /$mol_view_content
-	Low* $mol_paragraph
-		sub /
-			<= string* \
-	High* $mol_paragraph
-		sub /
-			<= string* \
-
-$mol_nav $mol_plugin
-	cycle? false
-	-
-	mod_ctrl false
-	mod_shift false
-	mod_alt false
-	-
-	keys_x? /
-	keys_y? /
-	-
-	current_x? null
-	current_y? null
-	-
-	event_up? null
-	event_down? null
-	event_left? null
-	event_right? null
-	event *
-		^
-		keydown? <=> event_key? null
-
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0.1
-	sub <= rows /$mol_view
-		<= Gap_before $mol_view style * paddingTop <= gap_before 0
-		<= Empty $mol_view
-		<= Gap_after $mol_view style * paddingTop <= gap_after 0
-	item_height_min* 1
-	item_width_min* 1
-	view_window_shift? 0
-	view_window /
-		0
-		0
-
-$mol_icon_close $mol_icon path \M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z
-
-$mol_search $mol_pop
-	query? \
-	suggests /string
-	plugins /$mol_plugin
-		^
-		<= Hotkey $mol_hotkey
-			key * escape? <=> clear? null
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y? <=> nav_focused? null
-	showed? <=> suggests_showed? false
-	align_hor \right
-	Anchor $mol_view
-		sub <= anchor_content /
-			<= Query $mol_string
-				value? <=> query? \
-				hint <= hint @ \Search...
-				submit? <=> submit? null
-				enabled <= enabled true
-				keyboard <= keyboard \search
-				enter <= enter \search
-				bring => bring
-			<= Clear $mol_button_minor
-				hint @ \Clear
-				enabled <= enabled true
-				click? <=> clear? null
-				sub /
-					<= Clear_icon $mol_icon_close
-	bubble_content /$mol_view_content
-		<= Bubble_pane $mol_scroll
-			sub /
-				<= Menu $mol_list
-					rows <= menu_items /$mol_view
-	Suggest* $mol_button_minor
-		click? <=> suggest_select*? null
-		sub <= suggest_content* /$mol_view_content
-			<= Suggest_label* $mol_dimmer
-				haystack <= suggest_label* \
-				needle <= query? \
-
-$mol_icon_dots_vertical $mol_icon path \M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z
-
-$mol_select $mol_pick
-	dictionary? *
-	options /string
-	value? \
-	option_label_default \
-	Option_row* $mol_button_minor
-		enabled <= enabled true
-		event_click? <=> event_select*? null
-		sub <= option_content* /
-			<= Option_label* $mol_dimmer
-				haystack <= option_label* \
-				needle <= filter_pattern? \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
-		^
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y? <=> option_focused? null
-			cycle? <=> nav_cycle? true
-	hint @ \Pick..
-	bubble_content /
-		<= Filter
-		<= Bubble_pane $mol_scroll
-			sub /
-				<= Menu $mol_list
-					rows <= menu_content /$mol_view
-	Filter $mol_search
-		query? <=> filter_pattern? \
-		hint <= filter_hint @ \Filter..
-		submit? <=> submit? null
-		enabled <= enabled true
-	Trigger_icon $mol_icon_dots_vertical
-	trigger_enabled <= enabled
-
-$bog_builderui_select $mol_select
-
 $mol_pop_over $mol_pop
 	showed <= hovered? false
 	attr *
@@ -853,92 +873,6 @@ $mol_pop_over $mol_pop
 		mouseleave? <=> event_hide? null
 
 $bog_builderui_tooltip $mol_pop_over
-
-$bog_builderui_button $mol_button_minor
-	minimal_height 32
-	minimal_width 0
-	variant \default
-	attr *
-		^
-		bog_builderui_button_variant <= variant
-
-$raggu_web_front_settings_group $bog_builderui_div
-	step \
-	title \
-	opts \
-	controls /
-	reindex true
-	reindex_text @ \requires reindexing
-	sub /
-		<= Head $bog_builderui_div sub /
-			<= Step $bog_builderui_div sub / <= step
-			<= Reindex $bog_builderui_div
-				attr * raggu_web_front_settings_group_need_reindex <= reindex
-				sub / <= reindex_text
-		<= Title $bog_builderui_div sub / <= title
-		<= Opts $bog_builderui_div sub / <= opts
-		<= Controls $bog_builderui_div sub <= controls
-
-$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
-
-$mol_check_box $mol_check
-	Icon $mol_icon_tick
-
-$rise_range $mol_view
-	minimal_height 48
-	unit \
-	medium? 5
-	enabled true
-	sub /
-		<= Labels $mol_view
-			sub /
-				<= Min $mol_view
-					sub / <= label_min \
-				<= Medium $mol_view
-					sub / <= label_medium \
-				<= Max $mol_view
-					sub / <= label_max \
-		<= Input $rise_range_input
-			disabled <= disabled false
-			min <= min? 0
-			max <= max? 10
-			step <= step? 1
-			value? <=> value? 0
-			event_input? <=> event_input? null
-		<= Current $mol_view
-			sub /
-				<= Value $rise_range_value
-					sub / <= value
-					disabled <= disabled
-	attr *
-		^
-		disabled <= disabled
-	style *
-		^
-		--rise_range_percent <= percent \0%
-
-$rise_range_input $mol_view
-	dom_name \input
-	attr *
-		^
-		type \range
-		disabled <= disabled false
-	field *
-		^
-		min <= min? 0
-		max <= max? 10
-		step <= step? 1
-		value <= value? 0
-	event *
-		^
-		input? <=> event_input? null
-
-$rise_range_value $mol_view
-	attr *
-		^
-		disabled <= disabled false
-
-$bog_builderui_slider $rise_range
 
 $raggu_web_front_settings $bog_builderui_div
 	showed? false
@@ -952,23 +886,13 @@ $raggu_web_front_settings $bog_builderui_div
 		<= Panel $bog_builderui_div sub /
 			<= Header $bog_builderui_div sub /
 				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / \Настройки движка RAGU
-					<= Header_sub $bog_builderui_div sub / \пресет + ручной режим
+					<= Header_title $bog_builderui_div sub / <= header_title_text @ \Settings
+					<= Header_sub $bog_builderui_div sub / <= header_sub_text @ \how the agent searches
 				<= Spacer $bog_builderui_div
 				<= Close_btn $bog_builderui_div
 					event * click? <=> close? null
 					sub / \✕
 			<= Body $mol_scroll sub /
-				<= Presets $bog_builderui_div sub /
-					<= Preset_fast $bog_builderui_button
-						title @ \⚡ Fast
-						click? <=> preset_fast? null
-					<= Preset_accurate $bog_builderui_button
-						title @ \🎯 Accurate
-						click? <=> preset_accurate? null
-					<= Preset_demo $bog_builderui_button
-						title @ \🎬 Demo
-						click? <=> preset_demo? null
 				<= Group_retrieval $raggu_web_front_settings_group
 					step \Поиск
 					title \Retrieval
@@ -995,116 +919,6 @@ $raggu_web_front_settings $bog_builderui_div
 								dictionary *
 									on @ \On
 									off @ \Off
-				<= Group_chunking $raggu_web_front_settings_group
-					step \Шаг 1
-					title \Chunking
-					opts \Simple / SemanticText / SmartSemantic · размер · overlap
-					reindex true
-					controls /
-						<= Chunking_strategy $bog_builderui_select
-							value? <=> chunking_strategy? \SmartSemantic
-							dictionary *
-								Simple \Simple
-								SemanticText \SemanticText
-								SmartSemantic \SmartSemantic
-						<= Chunking_size_row $bog_builderui_div sub /
-							<= Chunking_size_label $bog_builderui_div sub / <= chunking_size_label_text @ \chunk size
-							<= Chunking_size_input $bog_builderui_field
-								type \number
-								value? <=> chunking_size_str? \512
-						<= Chunking_overlap_row $bog_builderui_div sub /
-							<= Chunking_overlap_label $bog_builderui_div sub / <= chunking_overlap_label_text @ \overlap
-							<= Chunking_overlap_input $bog_builderui_field
-								type \number
-								value? <=> chunking_overlap_str? \64
-				<= Group_extraction $raggu_web_front_settings_group
-					step \Шаг 2
-					title \Extraction
-					opts \single ↔ two-stage · валидация NEREL · ICL (semantic/BM25/hybrid/random) · модель
-					reindex true
-					controls /
-						<= Extraction_mode $bog_builderui_select
-							value? <=> extraction_mode? \two-stage
-							dictionary *
-								single @ \single-stage
-								two-stage @ \two-stage
-						<= Extraction_model $bog_builderui_select
-							value? <=> extraction_model? \meno-lite-7b
-							dictionary *
-								meno-lite-7b \meno-lite 7B
-								gpt-4 \GPT-4
-								llama3-70b \Llama 3 70B
-						<= Extraction_icl $bog_builderui_select
-							value? <=> extraction_icl? \hybrid
-							dictionary *
-								semantic @ \ICL semantic
-								BM25 @ \ICL BM25
-								hybrid @ \ICL hybrid
-								random @ \ICL random
-				<= Group_summarization $raggu_web_front_settings_group
-					step \Шаг 3
-					title \Summarization
-					opts \DBSCAN (eps, min_samples) · LLM-суммаризация сущностей/связей
-					reindex true
-					controls /
-						<= Summarization_dbscan $mol_check_box
-							checked? <=> summarization_dbscan? false
-							title @ \DBSCAN clustering
-						<= Summarization_llm $mol_check_box
-							checked? <=> summarization_llm? false
-							title @ \LLM summarization
-				<= Group_communities $raggu_web_front_settings_group
-					step \Шаг 4
-					title \Communities
-					opts \Hierarchical Leiden (resolution, levels) · суммаризация сообществ
-					reindex true
-					controls /
-						<= Communities_algo $bog_builderui_select
-							value? <=> communities_algo? \Leiden
-							dictionary *
-								Leiden \Leiden
-						<= Communities_resolution_row $bog_builderui_div sub /
-							<= Communities_resolution_label $bog_builderui_div sub / <= communities_resolution_label_text @ \resolution
-							<= Communities_resolution_value $bog_builderui_div sub / <= communities_resolution_label \1.0
-						<= Communities_resolution $bog_builderui_slider
-							value? <=> communities_resolution_x10? 10
-							min 5
-							max 20
-							step 1
-				<= Group_refinement $raggu_web_front_settings_group
-					step \Шаг 5
-					title \Refinement
-					opts \RemoveIsolatedNodes и пост-обработчики
-					reindex true
-					controls /
-						<= Refinement_isolated $mol_check_box
-							checked? <=> refinement_isolated? false
-							title @ \RemoveIsolatedNodes
-				<= Group_search $raggu_web_front_settings_group
-					step \Шаг 6
-					title \Search
-					opts \Local/Global/Naive/Mix/QueryPlan · rerank · hybrid (BM25/BM42/SPLADE) · top-k
-					reindex false
-					controls /
-						<= Search_mode $bog_builderui_select
-							value? <=> search_mode? \Local
-							dictionary *
-								Local \LocalSearch
-								Global \GlobalSearch
-								Naive \NaiveSearch
-								Mix \MixSearch
-								QueryPlan \QueryPlan
-						<= Search_rerank $mol_check_box
-							checked? <=> search_rerank? false
-							title @ \rerank
-						<= Search_topk_row $bog_builderui_div sub /
-							<= Search_topk_label $bog_builderui_div sub / <= search_topk_label_text @ \top-k
-							<= Search_topk_value $bog_builderui_div sub / <= search_topk_label \8
-						<= Search_topk $bog_builderui_slider
-							value? <=> search_topk? 8
-							min 1
-							max 50
-							step 1
 
 $raggu_web_front_gallery_card_preview $bog_builderui_div
 
