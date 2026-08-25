@@ -7,7 +7,14 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from ragu_web_api import __version__
-from ragu_web_api.routers import api_router
+from ragu_web_api.logging_setup import configure_logging
+
+# Must run before the routers import: that import builds the IndexRepository
+# singleton, which logs its startup diagnostics on the way up. Configure the
+# handler after it and those lines are already gone.
+configure_logging()
+
+from ragu_web_api.routers import api_router  # noqa: E402
 
 
 # Use the endpoint function name as the OpenAPI operationId so codegen produces
