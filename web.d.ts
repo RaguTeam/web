@@ -11750,65 +11750,70 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_text__attr_raggu_web_front_chat_18 = $mol_type_enforce<
+	type $mol_text__render_visible_only_raggu_web_front_chat_18 = $mol_type_enforce<
+		boolean
+		,
+		ReturnType< $mol_text['render_visible_only'] >
+	>
+	type $mol_text__attr_raggu_web_front_chat_19 = $mol_type_enforce<
 		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $mol_text['attr'] >
 		,
 		ReturnType< $mol_text['attr'] >
 	>
-	type $mol_text__text_raggu_web_front_chat_19 = $mol_type_enforce<
+	type $mol_text__text_raggu_web_front_chat_20 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['message_text'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_20 = $mol_type_enforce<
+	type $bog_builderui_div__attr_raggu_web_front_chat_21 = $mol_type_enforce<
 		({ 
 			'raggu_off_graph': ReturnType< $raggu_web_front_chat['message_off_graph'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_21 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_22 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_chat_23 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_23 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_chat_24 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_chat['sug_click'] > ): ReturnType< $raggu_web_front_chat['sug_click'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['event'] >
 	>
-	type $mol_button_minor__hint_raggu_web_front_chat_24 = $mol_type_enforce<
+	type $mol_button_minor__hint_raggu_web_front_chat_25 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['clear_text'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click_raggu_web_front_chat_25 = $mol_type_enforce<
+	type $mol_button_minor__click_raggu_web_front_chat_26 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['clear_click'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_raggu_web_front_chat_26 = $mol_type_enforce<
+	type $mol_button_minor__sub_raggu_web_front_chat_27 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_27 = $mol_type_enforce<
+	type $bog_builderui_div__attr_raggu_web_front_chat_28 = $mol_type_enforce<
 		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_28 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_29 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -11918,6 +11923,9 @@ declare namespace $.$$ {
         sug_click(index: number): null;
         clear_click(): null;
     }
+}
+
+declare namespace $ {
 }
 
 /** @see $bog_builderui_tokens */

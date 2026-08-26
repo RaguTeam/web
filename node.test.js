@@ -21095,6 +21095,7 @@ var $;
 		}
 		Message_text(id){
 			const obj = new this.$.$mol_text();
+			(obj.render_visible_only) = () => (false);
 			(obj.attr) = () => ({...(this.$.$mol_text.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
 			(obj.text) = () => ((this.message_text(id)));
 			return obj;
@@ -22041,6 +22042,13 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    $mol_style_attach("raggu/web/front/chat/chat.view.css", "/*\n\t$mol_text помечает **жирный** атрибутом mol_text_type=\"strong\", но рисует его\n\tчерез `text-shadow: 0 0` + `filter: contrast(1.5)` — приём, рассчитанный на\n\tконтрастный фон документа. В пузыре чата на цвете card он практически\n\tнеразличим, и заголовки списков от LLM читались как обычный текст.\n\n\tПравится только здесь: $mol_style_define адресует свои под-компоненты, а это\n\tатрибут на вложенном span чужого компонента.\n*/\n[raggu_web_front_chat_message_text] [mol_text_type=\"strong\"] {\n\tfont-weight: 600;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
 /** @see $bog_builderui_tokens */
 var $;
 (function ($) {
@@ -22159,13 +22167,11 @@ var $;
         },
         // $mol_text парсит markdown и раскладывает блоки колонкой. Ответ LLM
         // приходит с настоящими \n и разметкой — обычный div схлопывал переносы
-        // в пробелы, а `**` и `1.` показывал буквально.
+        // в пробелы, а `**` и `1.` показывал буквально. Отступы между блоками
+        // задаёт сам $mol_text, здесь их не трогаем.
         Message_text: {
             font: { size: '13px' },
             lineHeight: '1.55',
-            // Абзацы и пункты списка внутри пузыря: свой отступ вместо
-            // дефолтного $mol_text, рассчитанного на страницу документа.
-            gap: '8px',
             '@': {
                 raggu_role: {
                     user: {
