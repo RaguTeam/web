@@ -81,9 +81,10 @@ ANSWERS = Counter(
     ["dataset"],
 )
 
-# Виды обращений, которые предсоздаются на старте. Держим списком, чтобы
+# Виды обращений, которые предсоздаются на старте. Держим списками, чтобы
 # предсоздание и реальные вызовы не разъехались.
 _DATASET_KINDS = ("detail", "graph", "communities", "agent")
+_ENGINES_USED = ("mix", "naive", "local", "keyword")
 
 
 def init_dataset(dataset: str) -> None:
@@ -91,13 +92,18 @@ def init_dataset(dataset: str) -> None:
 
     Без этого счётчик не существует, пока по нему не пришёл первый запрос, а
     `increase()` по несуществующему ряду не возвращает ничего — не ноль. В
-    сводной таблице такой корпус выглядел просто пустой строкой, и отличить
-    «никто не заходил» от «метрика сломалась» было нельзя.
+    сводной таблице такой корпус выглядел пустой строкой, и отличить «никто не
+    заходил» от «метрика сломалась» было нельзя.
+
+    Отдельно важно для ENGINE_USED: доля keyword считается делением одного ряда
+    на другой, и без нулевого знаменателя получается не ноль, а пустая ячейка.
     """
     ANSWERS.labels(dataset=dataset).inc(0)
     EMPTY_RETRIEVALS.labels(dataset=dataset).inc(0)
     for kind in _DATASET_KINDS:
         DATASET_REQUESTS.labels(dataset=dataset, kind=kind).inc(0)
+    for engine in _ENGINES_USED:
+        ENGINE_USED.labels(dataset=dataset, engine_used=engine).inc(0)
 
 
 def observe_answer(

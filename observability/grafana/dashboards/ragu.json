@@ -195,7 +195,7 @@
     {
       "type": "table",
       "title": "Сводка по корпусам",
-      "description": "Заходы в граф и карточку, вопросы, ответы без найденного контекста и доля запасного ранкера.",
+      "description": "«Открытий» — загрузки графа и карточки корпуса, то есть заходы через интерфейс. Вопросы считаются отдельно и могут прийти прямым вызовом API мимо интерфейса, поэтому расхождение между колонками нормально.",
       "gridPos": { "h": 9, "w": 12, "x": 0, "y": 31 },
       "fieldConfig": {
         "defaults": { "decimals": 0, "custom": { "align": "auto" } },
@@ -232,7 +232,7 @@
             "excludeByName": { "Time": true, "Time 1": true, "Time 2": true, "Time 3": true, "Time 4": true },
             "renameByName": {
               "dataset": "Корпус",
-              "Value #A": "Заходы",
+              "Value #A": "Открытий",
               "Value #B": "Вопросы",
               "Value #C": "Без контекста",
               "Value #D": "Доля keyword"
@@ -315,9 +315,10 @@
       },
       "targets": [
         {
-          "expr": "sum by (le) (increase(http_request_duration_seconds_bucket{handler=~\".*agent/messages.*\"}[$__interval]))",
+          "expr": "sum by (le) (increase(http_request_duration_seconds_bucket{handler=~\".*agent/messages.*\"}[$__rate_interval]))",
           "format": "heatmap",
           "legendFormat": "{{le}}",
+          "range": true,
           "refId": "A"
         }
       ]
