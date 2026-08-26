@@ -90,6 +90,14 @@ namespace $.$$ {
 		override prompt_submit() {
 			const text = this.prompt_text().trim()
 			if( !text ) return null
+			// Само действие, без текста вопроса: аналитике нужна частота, а не
+			// содержание, и чужие вопросы — не то, что стоит выгружать наружу.
+			$raggu_web_front_analytics_event( 'question_asked', {
+				dataset: this.dataset_id(),
+				engine: this.engine(),
+				query_plan: this.use_query_plan(),
+				length: text.length,
+			} )
 			this.history( [ ... this.history(), { role: 'user', text } ] )
 			this.prompt_text( '' )
 			// Ответ в detached wire — не блокирует action, не мутирует state внутри fiber body,
