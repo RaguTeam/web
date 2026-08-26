@@ -40,6 +40,7 @@ from ragu.search_engine.base_engine import EngineParams
 from ragu.search_engine.local_search import LocalParams
 from ragu.search_engine.naive_search import NaiveSearchParams
 
+from ragu_web_api.metrics import observe_answer, observe_dataset_request
 from ragu_web_api.schemas.agent import (
     AgentRequest,
     AgentResponse,
@@ -567,6 +568,7 @@ class IndexRepository:
         return [self._dataset_card(item, locale) for item in self._definitions.values()]
 
     def get_dataset(self, dataset_id: str, locale: Locale = "ru") -> DatasetDetail:
+        observe_dataset_request(dataset_id, "detail")
         definition = self._require_definition(dataset_id)
         dataset = self._dataset_card(definition, locale)
         return DatasetDetail(
@@ -587,6 +589,7 @@ class IndexRepository:
         min_strength: float = 0.0,
         include_communities: bool = True,
     ) -> GraphResponse:
+        observe_dataset_request(dataset_id, "graph")
         index = self._load_index(dataset_id)
         nodes = self._filter_nodes(
             index.nodes,
@@ -716,6 +719,7 @@ class IndexRepository:
         )
 
     def get_communities(self, dataset_id: str) -> GraphCommunitiesResponse:
+        observe_dataset_request(dataset_id, "communities")
         index = self._load_index(dataset_id)
         return GraphCommunitiesResponse(
             dataset_id=dataset_id, communities=index.communities
@@ -765,6 +769,20 @@ class IndexRepository:
         selected_communities = [
             item[0] for item in retrieval.communities[: request.top_k]
         ]
+
+        # Метрики пишем здесь, а не в роутере: движок, который реально отработал,
+        # и размер собранного контекста известны только после поиска.
+        observe_answer(
+            dataset=dataset_id,
+            engine_requested=request.engine,
+            engine_used=engine_used,
+            language=language,
+            query_plan=request.use_query_plan,
+            retrieval_ms=retrieval_ms,
+            generation_ms=generation_ms,
+            chunks=len(selected_chunks),
+        )
+        observe_dataset_request(dataset_id, "agent")
 
         trace = None
         if request.include_trace:

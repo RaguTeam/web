@@ -136,6 +136,161 @@
           "refId": "A"
         }
       ]
+    },
+
+    {
+      "type": "row",
+      "title": "По корпусам",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "type": "barchart",
+      "title": "Вопросов по корпусам",
+      "description": "За выбранный период. Показывает, какой корпус вообще интересует посетителей.",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 23 },
+      "fieldConfig": { "defaults": { "unit": "short", "decimals": 0 } },
+      "options": { "legend": { "showLegend": false }, "xTickLabelRotation": -30 },
+      "targets": [
+        {
+          "expr": "sum by (dataset) (increase(ragu_agent_questions_total[$__range]))",
+          "legendFormat": "{{dataset}}",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "piechart",
+      "title": "Язык вопросов",
+      "description": "Язык определяется по самому вопросу, а не по переключателю интерфейса.",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 23 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "values": ["value"] } },
+      "targets": [
+        {
+          "expr": "sum by (language) (increase(ragu_agent_questions_total[$__range]))",
+          "legendFormat": "{{language}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "piechart",
+      "title": "Движок: что реально отработал",
+      "description": "keyword означает, что векторный поиск был недоступен или упал — это деградация, а не режим работы.",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "values": ["value"] } },
+      "targets": [
+        {
+          "expr": "sum by (engine_used) (increase(ragu_agent_engine_used_total[$__range]))",
+          "legendFormat": "{{engine_used}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Сводка по корпусам",
+      "description": "Заходы в граф и карточку, вопросы, ответы без найденного контекста и доля запасного ранкера.",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 31 },
+      "fieldConfig": {
+        "defaults": { "decimals": 0, "custom": { "align": "auto" } },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Доля keyword" },
+            "properties": [
+              { "id": "unit", "value": "percentunit" },
+              { "id": "decimals", "value": 2 },
+              {
+                "id": "custom.cellOptions",
+                "value": { "type": "color-background", "mode": "gradient" }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    { "color": "green", "value": null },
+                    { "color": "orange", "value": 0.2 },
+                    { "color": "red", "value": 0.5 }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "dataset", "mode": "outer" } },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true, "Time 1": true, "Time 2": true, "Time 3": true, "Time 4": true },
+            "renameByName": {
+              "dataset": "Корпус",
+              "Value #A": "Заходы",
+              "Value #B": "Вопросы",
+              "Value #C": "Без контекста",
+              "Value #D": "Доля keyword"
+            }
+          }
+        }
+      ],
+      "targets": [
+        {
+          "expr": "sum by (dataset) (increase(ragu_dataset_requests_total{kind=~\"graph|detail\"}[$__range]))",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (dataset) (increase(ragu_agent_questions_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "refId": "B"
+        },
+        {
+          "expr": "sum by (dataset) (increase(ragu_agent_empty_retrievals_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "refId": "C"
+        },
+        {
+          "expr": "sum by (dataset) (increase(ragu_agent_engine_used_total{engine_used=\"keyword\"}[$__range])) / clamp_min(sum by (dataset) (increase(ragu_agent_engine_used_total[$__range])), 1)",
+          "format": "table",
+          "instant": true,
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Ретрив против генерации, p95",
+      "description": "Где именно уходит время ответа: поиск контекста или вызов LLM.",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 31 },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "fillOpacity": 20, "lineWidth": 2, "stacking": { "mode": "normal" }, "showPoints": "never" }
+        }
+      },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(ragu_agent_retrieval_seconds_bucket[5m])))",
+          "legendFormat": "поиск контекста",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(ragu_agent_generation_seconds_bucket[5m])))",
+          "legendFormat": "генерация LLM",
+          "refId": "B"
+        }
+      ]
     }
   ]
 }
