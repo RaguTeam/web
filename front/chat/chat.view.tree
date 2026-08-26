@@ -68,6 +68,7 @@ $raggu_web_front_chat $bog_builderui_div
 			raggu_role <= message_role*
 		sub /
 			<= Message_text* $mol_text
+				render_visible_only false
 				attr *
 					^
 					raggu_role <= message_role*
