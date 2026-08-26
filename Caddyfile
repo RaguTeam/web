@@ -8,7 +8,15 @@
 		respond 404
 	}
 
-	handle_path /grafana/* {
+	# Без слеша путь не совпал бы с матчером ниже и ушёл в catch-all к бэкенду,
+	# который ответил бы 404.
+	redir /grafana /grafana/ 301
+
+	# `handle`, а НЕ `handle_path`: последний срезает префикс, а Grafana поднята
+	# с GF_SERVER_SERVE_FROM_SUB_PATH=true и ждёт его на месте. Со срезанием она
+	# получает "/", решает что должна жить в /grafana/, редиректит туда, Caddy
+	# снова срезает — и это бесконечный цикл, ERR_TOO_MANY_REDIRECTS.
+	handle /grafana/* {
 		reverse_proxy grafana:3000
 	}
 
