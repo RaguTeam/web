@@ -14,6 +14,10 @@ from ragu_web_api.logging_setup import configure_logging
 # handler after it and those lines are already gone.
 configure_logging()
 
+from ragu_web_api.middleware import (  # noqa: E402
+    REQUEST_ID_HEADER,
+    RequestContextMiddleware,
+)
 from ragu_web_api.routers import api_router  # noqa: E402
 
 
@@ -75,7 +79,14 @@ def create_app() -> FastAPI:
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        # The browser can only read a response header we expose. Without this the
+        # frontend cannot show the request id, which defeats the point of
+        # returning it: a visitor could not quote it back to us.
+        expose_headers=[REQUEST_ID_HEADER],
     )
+    # Added last so it wraps CORS too — an id is assigned before anything else
+    # can log, including preflight handling.
+    app.add_middleware(RequestContextMiddleware)
 
     @app.get("/", include_in_schema=False)
     async def root():

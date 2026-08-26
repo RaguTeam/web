@@ -25,10 +25,21 @@ services:
       RAGU_INDEXES_DIR: /data/indexes              # путь к индексам внутри контейнера
       EMBEDDER_BASE_URL: http://embedder:8001/v1   # OpenAI-совместимый эндпоинт эмбеддера
       EMBEDDER_MODEL_NAME: Alibaba-NLP/gte-multilingual-base   # дефолт для всех индексов
-      EMBEDDER_MODEL_MAP: '{"medical":"BAAI/bge-large-en-v1.5"}'  # переопределение по имени папки индекса
+      EMBEDDER_MODEL_MAP: '{}'                     # все индексы на gte-768, переопределять нечего
       EMBEDDER_API_KEY: unused
+      # Одна JSON-строка на запись: поля остаются полями, а не подстроками для
+      # grep. Локально переменную не задают — там читаемый текстовый формат.
+      LOG_FORMAT: json
+      LOG_LEVEL: INFO
     volumes:
       - ./indexes:/data/indexes:ro
+    logging:
+      # json-file по умолчанию растёт без предела. На машине свободно ~9 ГБ,
+      # а стендовая сессия — это всплеск трафика.
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
     expose:
       - "8000"                            # только внутрь сети docker
 
