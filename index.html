@@ -46,6 +46,14 @@
 			"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 		}
 		</script>
+		<!--
+			Аналитика (Umami Cloud). Без кук и без персональных данных.
+			data-website-id заменить на идентификатор сайта из панели Umami.
+			Экранные просмотры шлёт front/analytics/analytics.ts: $mol роутится
+			хешем, а автотрекинг Umami считает переходы по смене пути и склеил бы
+			все экраны в один просмотр.
+		-->
+		<script defer src="https://cloud.umami.is/script.js" data-website-id="ed5de530-84ef-44be-9c78-555667ab8340"></script>
 	</head>
 	<body mol_view_root>
 		<div mol_view_root="$raggu_web_front_app">

@@ -21758,6 +21758,53 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    /**
+     * Тонкая обёртка над трекером Umami.
+     *
+     * Зачем она нужна отдельно, а не вызовы `umami.track()` по месту:
+     *
+     * 1. Трекера может не быть — локальная разработка, блокировщик рекламы,
+     *    отсутствие сети у стенда. Аналитика не тот повод, чтобы ронять UI,
+     *    поэтому здесь всё молча превращается в no-op.
+     * 2. $mol маршрутизирует хешем (`#!screen=chat/ds=medical`), а не путём.
+     *    Автотрекинг Umami считает переходы по смене пути, поэтому все экраны
+     *    склеились бы в один просмотр `/web/`. Экранные просмотры отправляем
+     *    руками — см. `pageview`.
+     */
+    function umami() {
+        return $mol_dom_context.umami ?? null;
+    }
+    /** Просмотр экрана. `screen` и `dataset` — то, что реально определяет страницу. */
+    function $raggu_web_front_analytics_pageview(screen, dataset) {
+        const api = umami();
+        if (!api)
+            return;
+        const url = dataset ? `/${screen}/${dataset}` : `/${screen}`;
+        try {
+            api.track({ url, title: screen });
+        }
+        catch {
+            // Сеть, блокировщик, смена контракта трекера — не наше дело.
+        }
+    }
+    $.$raggu_web_front_analytics_pageview = $raggu_web_front_analytics_pageview;
+    /** Именованное действие пользователя: выбор корпуса, отправка вопроса и т.п. */
+    function $raggu_web_front_analytics_event(event, data) {
+        const api = umami();
+        if (!api)
+            return;
+        try {
+            api.track(event, data);
+        }
+        catch { }
+    }
+    $.$raggu_web_front_analytics_event = $raggu_web_front_analytics_event;
+})($ || ($ = {}));
+
+;
+"use strict";
 
 
 ;
@@ -21835,6 +21882,14 @@ var $;
                 const text = this.prompt_text().trim();
                 if (!text)
                     return null;
+                // Само действие, без текста вопроса: аналитике нужна частота, а не
+                // содержание, и чужие вопросы — не то, что стоит выгружать наружу.
+                $raggu_web_front_analytics_event('question_asked', {
+                    dataset: this.dataset_id(),
+                    engine: this.engine(),
+                    query_plan: this.use_query_plan(),
+                    length: text.length,
+                });
                 this.history([...this.history(), { role: 'user', text }]);
                 this.prompt_text('');
                 // Ответ в detached wire — не блокирует action, не мутирует state внутри fiber body,
@@ -23385,6 +23440,7 @@ var $;
             // и scrollWidth равен clientWidth.
             auto() {
                 void this.screen();
+                this.track_screen();
                 new this.$.$mol_after_timeout(100, () => {
                     const root = this.dom_node();
                     const main = this.Main().dom_node();
@@ -23398,6 +23454,16 @@ var $;
                     });
                 });
                 return [];
+            }
+            /**
+             * Просмотр экрана в аналитику. Через `@$mol_mem`, чтобы отправка шла на
+             * смену экрана или корпуса, а не на каждый перерисованный кадр.
+             */
+            track_screen() {
+                const screen = this.screen();
+                const dataset = this.dataset_id();
+                $raggu_web_front_analytics_pageview(screen, dataset);
+                return `${screen}/${dataset}`;
             }
             lights_mode() {
                 return this.Theme_auto().is_light_now() ? 'light' : 'dark';
@@ -23444,6 +23510,7 @@ var $;
             // начать его смотреть, отдельный шаг «выбрал и стой на галерее» лишний.
             // Сайдбар остаётся мягким переключателем — там select_dataset без прыжка.
             open_dataset(id) {
+                $raggu_web_front_analytics_event('dataset_open', { dataset: id });
                 this.dataset_id(id);
                 this.screen('explorer');
                 return null;
@@ -23454,6 +23521,10 @@ var $;
                 const explorer = this.Explorer();
                 const node = explorer.selected();
                 const edge = explorer.selected_edge();
+                $raggu_web_front_analytics_event('ask_from_graph', {
+                    kind: edge ? 'relation' : 'entity',
+                    dataset: this.dataset_id(),
+                });
                 this.screen('chat');
                 if (edge) {
                     const label = `${explorer.node_label(edge.source)} ${edge.relation} ${explorer.node_label(edge.target)}`;
@@ -23506,6 +23577,9 @@ var $;
             screen(next) { return this.arg_value('screen', next, 'gallery'); }
             dataset_id(next) { return this.arg_value('ds', next, ''); }
         }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_app.prototype, "track_screen", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "lights_mode", null);

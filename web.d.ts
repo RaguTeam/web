@@ -11660,6 +11660,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /** Просмотр экрана. `screen` и `dataset` — то, что реально определяет страницу. */
+    function $raggu_web_front_analytics_pageview(screen: string, dataset: string): void;
+    /** Именованное действие пользователя: выбор корпуса, отправка вопроса и т.п. */
+    function $raggu_web_front_analytics_event(event: string, data?: Record<string, string | number | boolean>): void;
+}
+
+declare namespace $ {
 
 	type $bog_builderui_div__attr_raggu_web_front_chat_1 = $mol_type_enforce<
 		({ 
@@ -12530,6 +12537,11 @@ declare namespace $.$$ {
     class $raggu_web_front_app extends $.$raggu_web_front_app {
         body(): $.$raggu_web_front_summary[] | $.$raggu_web_front_gallery[] | $.$raggu_web_front_explorer[] | $.$raggu_web_front_chat[];
         auto(): any;
+        /**
+         * Просмотр экрана в аналитику. Через `@$mol_mem`, чтобы отправка шла на
+         * смену экрана или корпуса, а не на каждый перерисованный кадр.
+         */
+        track_screen(): string;
         lights_mode(): "light" | "dark";
         Summary_popup(): $.$raggu_web_front_summary_detail;
         open_help(): null;

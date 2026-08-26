@@ -300,6 +300,7 @@
     "$mol_data_optional",
     "$mol_array_shuffle_sync",
     "$mol_array_shuffle",
+    "$raggu_web_front_analytics",
     "$raggu_web_front_summary",
     "$raggu_web_front_summary_card",
     "$raggu_web_front_summary_detail"
