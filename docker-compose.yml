@@ -43,10 +43,51 @@ services:
     expose:
       - "8000"                            # только внутрь сети docker
 
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    restart: unless-stopped
+    depends_on: [back]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      # На диске свободно ~9 ГБ. Двух недель хватает на стенд с запасом, а без
+      # лимита TSDB растёт молча, пока место не кончится.
+      - --storage.tsdb.retention.time=14d
+      - --storage.tsdb.retention.size=2GB
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    expose:
+      - "9090"                            # наружу не выставляем
+
+  grafana:
+    image: grafana/grafana:11.5.1
+    restart: unless-stopped
+    depends_on: [prometheus]
+    environment:
+      # Пароль обязательно поменять до выкатки — панель публична под /grafana/.
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?задайте GRAFANA_PASSWORD в .env}
+      # Grafana живёт в подпути за Caddy, без этих двух переменных она уводит
+      # ссылки и статику на корень домена.
+      GF_SERVER_ROOT_URL: https://ragu-back.duckdns.org/grafana/
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+    volumes:
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      # Не внутрь /var/lib/grafana: там именованный том, и вложенное
+      # монтирование поверх него работает только за счёт порядка путей.
+      - ./observability/grafana/dashboards:/etc/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    expose:
+      - "3000"
+
   caddy:
     image: caddy:2
     restart: unless-stopped
-    depends_on: [back]
+    depends_on: [back, grafana]
     ports:
       - "80:80"
       - "443:443"
@@ -60,3 +101,5 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  prometheus_data:
+  grafana_data:
