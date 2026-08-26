@@ -71,6 +71,34 @@ DATASET_REQUESTS = Counter(
     ["dataset", "kind"],
 )
 
+ANSWERS = Counter(
+    "ragu_agent_answers_total",
+    (
+        "Ответы агента по корпусам, без дополнительных меток. Дублирует сумму "
+        "ragu_agent_questions_total намеренно: сводную таблицу надо строить на "
+        "ряде с одной меткой, иначе join по корпусу разъезжается."
+    ),
+    ["dataset"],
+)
+
+# Виды обращений, которые предсоздаются на старте. Держим списком, чтобы
+# предсоздание и реальные вызовы не разъехались.
+_DATASET_KINDS = ("detail", "graph", "communities", "agent")
+
+
+def init_dataset(dataset: str) -> None:
+    """Создать нулевые ряды для корпуса при старте.
+
+    Без этого счётчик не существует, пока по нему не пришёл первый запрос, а
+    `increase()` по несуществующему ряду не возвращает ничего — не ноль. В
+    сводной таблице такой корпус выглядел просто пустой строкой, и отличить
+    «никто не заходил» от «метрика сломалась» было нельзя.
+    """
+    ANSWERS.labels(dataset=dataset).inc(0)
+    EMPTY_RETRIEVALS.labels(dataset=dataset).inc(0)
+    for kind in _DATASET_KINDS:
+        DATASET_REQUESTS.labels(dataset=dataset, kind=kind).inc(0)
+
 
 def observe_answer(
     *,
@@ -94,6 +122,7 @@ def observe_answer(
         language=language,
         query_plan=str(query_plan).lower(),
     ).inc()
+    ANSWERS.labels(dataset=dataset).inc()
     ENGINE_USED.labels(dataset=dataset, engine_used=engine_used).inc()
     RETRIEVAL_SECONDS.labels(dataset=dataset).observe(retrieval_ms / 1000)
     GENERATION_SECONDS.labels(dataset=dataset).observe(generation_ms / 1000)

@@ -40,7 +40,11 @@ from ragu.search_engine.base_engine import EngineParams
 from ragu.search_engine.local_search import LocalParams
 from ragu.search_engine.naive_search import NaiveSearchParams
 
-from ragu_web_api.metrics import observe_answer, observe_dataset_request
+from ragu_web_api.metrics import (
+    init_dataset,
+    observe_answer,
+    observe_dataset_request,
+)
 from ragu_web_api.schemas.agent import (
     AgentRequest,
     AgentResponse,
@@ -546,6 +550,9 @@ class IndexRepository:
             LOGGER.warning("No RAGU indexes discovered under '%s'.", self.indexes_root)
             return
         for definition in self._definitions.values():
+            # Нулевые ряды заранее: иначе корпус без единого обращения просто
+            # отсутствует в метриках, и в сводке это неотличимо от поломки.
+            init_dataset(definition.id)
             reason = self._ragu_search.unsupported_reason(definition)
             if reason is None:
                 LOGGER.info(
@@ -783,6 +790,35 @@ class IndexRepository:
             chunks=len(selected_chunks),
         )
         observe_dataset_request(dataset_id, "agent")
+
+        # Разбивка по конкретному запросу. Метрики отвечают «сколько и как
+        # быстро вообще», а этот ряд — «что произошло вот с этим вопросом»:
+        # с request_id из middleware он связывается однозначно. Поля идут
+        # через extra=, поэтому в json-формате остаются полями, а не подстрокой.
+        LOGGER.info(
+            "answered dataset=%s engine=%s in %dms (retrieval %dms, generation %dms)",
+            dataset_id,
+            engine_used,
+            total_ms,
+            retrieval_ms,
+            generation_ms,
+            extra={
+                "event": "agent_answer",
+                "dataset_id": dataset_id,
+                "engine_requested": request.engine,
+                "engine_used": engine_used,
+                "language": language,
+                "query_plan": bool(plan),
+                "sub_questions": len(plan),
+                "top_k": request.top_k,
+                "entities": len(selected_nodes),
+                "chunks": len(selected_chunks),
+                "retrieval_ms": retrieval_ms,
+                "generation_ms": generation_ms,
+                "total_ms": total_ms,
+                "llm_error": llm_error,
+            },
+        )
 
         trace = None
         if request.include_trace:
