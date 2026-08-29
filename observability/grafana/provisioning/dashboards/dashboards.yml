@@ -1,0 +1,14 @@
+apiVersion: 1
+
+providers:
+  - name: RAGU
+    orgId: 1
+    type: file
+    disableDeletion: false
+    # Дашборд лежит в репозитории и переезжает вместе с ним: правки в UI
+    # переживут перезапуск только если их экспортировать обратно в файл.
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/dashboards
+      foldersFromFilesStructure: false

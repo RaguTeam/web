@@ -25,7 +25,16 @@ class AgentRequest(APIModel):
     top_k: int = Field(default=8, ge=1, le=50)
     rerank: bool = True
     include_trace: bool = True
-    locale: Locale = "ru"
+    # UI language only — it does NOT choose the answer's language. That follows the
+    # user's own last message, so someone typing Russian into an English interface
+    # still gets a Russian answer (see `_answer_language`).
+    locale: Locale = Field(
+        default="ru",
+        description=(
+            "Interface locale. Does not control the answer language, which is "
+            "detected from the user's message."
+        ),
+    )
 
 
 class TraceEntity(APIModel):

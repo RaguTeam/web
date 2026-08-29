@@ -22,6 +22,7 @@ namespace $.$$ {
 		// и scrollWidth равен clientWidth.
 		override auto() {
 			void this.screen()
+			this.track_screen()
 			new this.$.$mol_after_timeout( 100, () => {
 				const root = this.dom_node() as HTMLElement
 				const main = this.Main().dom_node() as HTMLElement
@@ -33,6 +34,18 @@ namespace $.$$ {
 				} )
 			} )
 			return [] as any
+		}
+
+		/**
+		 * Просмотр экрана в аналитику. Через `@$mol_mem`, чтобы отправка шла на
+		 * смену экрана или корпуса, а не на каждый перерисованный кадр.
+		 */
+		@$mol_mem
+		track_screen() {
+			const screen = this.screen()
+			const dataset = this.dataset_id()
+			$raggu_web_front_analytics_pageview( screen, dataset )
+			return `${ screen }/${ dataset }`
 		}
 
 		@$mol_mem
@@ -98,6 +111,7 @@ namespace $.$$ {
 		// Сайдбар остаётся мягким переключателем — там select_dataset без прыжка.
 		@$mol_action
 		open_dataset( id: string ) {
+			$raggu_web_front_analytics_event( 'dataset_open', { dataset: id } )
 			this.dataset_id( id )
 			this.screen( 'explorer' )
 			return null
@@ -110,6 +124,10 @@ namespace $.$$ {
 			const explorer = this.Explorer()
 			const node = explorer.selected()
 			const edge = explorer.selected_edge()
+			$raggu_web_front_analytics_event( 'ask_from_graph', {
+				kind: edge ? 'relation' : 'entity',
+				dataset: this.dataset_id(),
+			} )
 			this.screen( 'chat' )
 			if( edge ) {
 				const label = `${ explorer.node_label( edge.source ) } ${ edge.relation } ${ explorer.node_label( edge.target ) }`

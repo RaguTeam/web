@@ -216,6 +216,7 @@ namespace $.$raggu_web_front_api_ragu {
 	            include_trace: boolean;
 	            /**
 	             * Locale
+	             * @description Interface locale. Does not control the answer language, which is detected from the user's message.
 	             * @default ru
 	             * @enum {string}
 	             */

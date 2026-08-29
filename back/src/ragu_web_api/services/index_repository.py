@@ -8,15 +8,43 @@ import re
 import time
 from ast import literal_eval
 from collections import Counter, defaultdict, deque
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from hashlib import md5
 from html import unescape
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 from fastapi import HTTPException
 
+# graph_ragu 0.0.5 has no top-level `ragu/__init__.py` — it is a namespace package
+# and re-exports live in the subpackages. `from ragu import KnowledgeGraph` raises
+# ImportError here, which is why these are imported by their real paths.
+#
+# Imported at module level on purpose: graph-ragu is a hard dependency, and a
+# missing one must break process start-up. The previous lazy-import-inside-try
+# turned exactly this failure into a silent per-request keyword fallback.
+from ragu.common.global_parameters import Settings as RaguSettings
+from ragu.graph.index import StorageArguments
+from ragu.graph.knowledge_graph import KnowledgeGraph
+from ragu.models.embedder import EmbedderOpenAI
+from ragu.models.llm import LLM as RaguLLM
+from ragu.models.openai import CachedAsyncOpenAI
+from ragu.search_engine import (
+    LocalSearchEngine,
+    MixSearchEngine,
+    NaiveSearchEngine,
+)
+from ragu.search_engine.base_engine import EngineParams
+from ragu.search_engine.local_search import LocalParams
+from ragu.search_engine.naive_search import NaiveSearchParams
+
+from ragu_web_api.metrics import (
+    init_dataset,
+    observe_answer,
+    observe_dataset_request,
+)
 from ragu_web_api.schemas.agent import (
     AgentRequest,
     AgentResponse,
@@ -186,41 +214,53 @@ class RaguSearchAdapter:
     def __init__(self, config: RaguEmbedderConfig) -> None:
         self.config = config
         self._graphs: dict[str, tuple[Any, Any]] = {}
-        self._engines: dict[tuple[str, str], Any] = {}
+        self._engines: dict[tuple[str, str, int, str], Any] = {}
+
+    def unsupported_reason(self, definition: IndexDefinition) -> str | None:
+        """Why RAGU search cannot run for this index, or None when it can.
+
+        Split out of `supports` so the keyword fallback can say which
+        precondition failed. "index was built without vectors" and "no embedder
+        is configured" need completely different fixes, and from the outside
+        both looked identical: a trace that just said "keyword".
+        """
+        missing = _missing_vector_files(definition.path)
+        if missing:
+            return f"index has no RAGU vector store (missing {', '.join(missing)})"
+        if not self.config.is_configured_for(definition.path.name, definition.id):
+            return (
+                "no embedder is configured for this index "
+                "(needs EMBEDDER_MODEL_NAME or EMBEDDER_MODEL_MAP, plus an endpoint)"
+            )
+        return None
 
     def supports(self, definition: IndexDefinition) -> bool:
-        return bool(
-            self.config.is_configured_for(definition.path.name, definition.id)
-            and _is_ragu_vector_index(definition.path)
-        )
+        return self.unsupported_reason(definition) is None
 
     async def search(
-        self, index: LoadedIndex, query: str, top_k: int, engine_name: str
+        self,
+        index: LoadedIndex,
+        query: str,
+        top_k: int,
+        engine_name: str,
+        language: Locale,
     ) -> RetrievalResult | None:
         definition = index.definition
         if not self.supports(definition):
             return None
 
-        cache_key = (definition.id, engine_name)
+        # top_k and language both belong in the cache key: MixSearchEngine takes
+        # its children's params, and every engine takes its output language, at
+        # construction time (see _build_engine). A cached engine can therefore
+        # only ever serve the top_k and language it was built with — keying on
+        # dataset alone would let the first request pin both for everyone after.
+        cache_key = (definition.id, engine_name, top_k, language)
         engine = self._engines.get(cache_key)
         if engine is None:
-            engine = self._build_engine(definition, engine_name)
+            engine = self._build_engine(definition, engine_name, top_k, language)
             self._engines[cache_key] = engine
 
-        try:
-            from ragu.search_engine.base_engine import EngineParams
-        except Exception as exc:
-            raise RuntimeError(f"RAGU EngineParams is unavailable: {exc}") from exc
-
-        from dataclasses import make_dataclass
-
-        DynamicParams = make_dataclass(
-            "DynamicParams", [("top_k", int)], bases=(EngineParams,)
-        )
-
-        params = DynamicParams(top_k=top_k)
-
-        result = await engine.a_search(query, params)
+        result = await engine.search(query, _search_params(engine_name, top_k))
         _warn_on_dropped_engines(engine, result, definition.id)
         return _retrieval_from_ragu_mix(index, result, top_k)
 
@@ -228,14 +268,6 @@ class RaguSearchAdapter:
         cached = self._graphs.get(definition.id)
         if cached is not None:
             return cached
-
-        try:
-            from ragu import KnowledgeGraph, Settings
-            from ragu.graph.index import StorageArguments
-            from ragu.models.embedder import EmbedderOpenAI
-            from ragu.models.openai import CachedAsyncOpenAI
-        except Exception as exc:
-            raise RuntimeError(f"RAGU search package is unavailable: {exc}") from exc
 
         embedding_dim = _ragu_embedding_dim(definition.path)
         if embedding_dim is None:
@@ -246,6 +278,11 @@ class RaguSearchAdapter:
         keys = (definition.path.name, definition.id)
         model_name = self.config.model_for(*keys)
         base_url = self.config.base_url_for(*keys)
+        # The corpus language, and the one place it legitimately reaches RAGU: the
+        # graph is a storage handle, cached per dataset, and its `language` drives
+        # only the build pipeline this path never runs. The language the user is
+        # answered in is a per-request decision and lives on the engines instead
+        # (see _build_engine) — do not "unify" the two.
         language = _ragu_language(definition.language)
         LOGGER.info(
             "Building RAGU knowledge graph for dataset '%s' with embedder '%s' at '%s' (embedding_dim=%s).",
@@ -254,11 +291,6 @@ class RaguSearchAdapter:
             base_url,
             embedding_dim,
         )
-
-        # Storage backends resolve their filenames from the global Settings when the
-        # Index is constructed, so this must be set right before building the graph.
-        Settings.storage_folder = str(definition.path)
-        Settings.language = language
 
         client = CachedAsyncOpenAI(
             base_url=base_url,
@@ -275,31 +307,49 @@ class RaguSearchAdapter:
             batch_size=32,
             max_concurrent_batches=2,
         )
-        knowledge_graph = KnowledgeGraph(
-            llm=_RaguSearchOnlyLLM(),
-            embedder=embedder,
-            storage_settings=StorageArguments(),
-            language=language,
-        )
+        # Storage backends resolve their filenames from the global Settings when the
+        # Index is constructed, so it has to be set around this call — and restored
+        # afterwards, or the language of the last-built dataset leaks into the next.
+        with _ragu_settings(definition.path, language):
+            knowledge_graph = KnowledgeGraph(
+                # NOT `llm=None`, even though the signature is `Optional[LLM]` and
+                # nothing on the search path generates text. KnowledgeGraph builds
+                # an InMemoryGraphBuilder eagerly, which builds an EntitySummarizer,
+                # which raises "LLM summarization is enabled but no client is
+                # provided" whenever `use_llm_summarization` (default True) meets a
+                # None llm. The guard stub satisfies that check and still makes any
+                # real generation attempt fail loudly.
+                llm=_RaguSearchOnlyLLM(),
+                embedder=embedder,
+                storage_settings=StorageArguments(),
+                language=language,
+            )
         self._graphs[definition.id] = (knowledge_graph, embedder)
         return knowledge_graph, embedder
 
-    def _build_engine(self, definition: IndexDefinition, engine_name: str) -> Any:
-        try:
-            from ragu import (
-                LocalSearchEngine,
-                MixSearchEngine,
-                NaiveSearchEngine,
-            )
-        except Exception as exc:
-            raise RuntimeError(f"RAGU search package is unavailable: {exc}") from exc
-
+    def _build_engine(
+        self,
+        definition: IndexDefinition,
+        engine_name: str,
+        top_k: int,
+        language: Locale,
+    ) -> Any:
         knowledge_graph, embedder = self._knowledge_graph(definition)
-        # Pass language explicitly: Settings is global, so a cached graph would
-        # otherwise hand the last-built dataset's language to these engines.
-        language = _ragu_language(definition.language)
+        # The engine's `language` is the language the ANSWER is written in — RAGU
+        # renders it straight into the prompt ("Provide the answer in the following
+        # language: {{ language }}"). It has to follow the question, not the
+        # corpus: binding it to the index made every answer about an English
+        # corpus come back in English, whatever the user asked in.
+        #
+        # Passed explicitly rather than left to Settings, which is global and
+        # would otherwise hand over the last-built dataset's value.
+        ragu_language = _ragu_language(language)
         LOGGER.info(
-            "Building RAGU '%s' engine for dataset '%s'.", engine_name, definition.id
+            "Building RAGU '%s' engine for dataset '%s' (top_k=%d, language=%s).",
+            engine_name,
+            definition.id,
+            top_k,
+            ragu_language,
         )
 
         def _local() -> Any:
@@ -307,7 +357,7 @@ class RaguSearchAdapter:
                 llm=_RaguSearchOnlyLLM(),
                 knowledge_graph=knowledge_graph,
                 embedder=embedder,
-                language=language,
+                language=ragu_language,
             )
 
         def _naive() -> Any:
@@ -315,7 +365,7 @@ class RaguSearchAdapter:
                 llm=_RaguSearchOnlyLLM(),
                 knowledge_graph=knowledge_graph,
                 embedder=embedder,
-                language=language,
+                language=ragu_language,
             )
 
         if engine_name == "local":
@@ -325,8 +375,13 @@ class RaguSearchAdapter:
         return MixSearchEngine(
             llm=_RaguSearchOnlyLLM(),
             engines=[_local(), _naive()],
+            # The only way top_k reaches the children: MixSearchEngine.batch_search
+            # ignores the params handed to it ("children use their own defaults")
+            # and forwards these construction-time ones instead. Order must match
+            # `engines` above.
+            engine_params=[LocalParams(top_k=top_k), NaiveSearchParams(top_k=top_k)],
             allow_partial_failures=True,
-            language=language,
+            language=ragu_language,
         )
 
 
@@ -347,6 +402,38 @@ def _warn_on_dropped_engines(engine: Any, result: Any, dataset_id: str) -> None:
         len(children),
         len(expected),
     )
+
+
+@contextmanager
+def _ragu_settings(storage_folder: Path, language: str) -> Iterator[None]:
+    """Point RAGU's global Settings at one index for the duration of a build.
+
+    `Index.__init__` reads `Settings.storage_folder` at construction time, so the
+    value has to be global at that moment. Restoring both fields afterwards keeps
+    the next dataset from inheriting this one's folder or language.
+    """
+    previous_folder = RaguSettings.storage_folder
+    previous_language = RaguSettings.language
+    RaguSettings.storage_folder = str(storage_folder)
+    RaguSettings.language = language
+    try:
+        yield
+    finally:
+        RaguSettings.storage_folder = previous_folder
+        RaguSettings.language = previous_language
+
+
+def _search_params(engine_name: str, top_k: int) -> EngineParams | None:
+    """Retrieval params for a single-engine search.
+
+    `mix` gets None on purpose: MixSearchEngine.batch_search ignores the params
+    handed to it, so its top_k is baked in at construction time instead.
+    """
+    if engine_name == "local":
+        return LocalParams(top_k=top_k)
+    if engine_name == "naive":
+        return NaiveSearchParams(top_k=top_k)
+    return None
 
 
 # Cap on sub-questions. Each one is a full retrieval pass against the index, and
@@ -414,7 +501,14 @@ def _resolve_engine(requested: str) -> str:
     return "mix"
 
 
-class _RaguSearchOnlyLLM:
+class _RaguSearchOnlyLLM(RaguLLM):
+    """Guard LLM for the search-only path.
+
+    The engines require an LLM for answer generation, which this backend does
+    itself (see `_answer_with_llm`). Subclassing the real `LLM` satisfies the
+    engines' type contract while keeping an accidental generation call loud.
+    """
+
     async def chat_completion(self, *_args: Any, **_kwargs: Any) -> str:
         raise RuntimeError(
             "RAGU LLM generation is disabled in the web API search adapter."
@@ -433,11 +527,55 @@ class IndexRepository:
         self._loaded: dict[str, LoadedIndex] = {}
         self._llm = OpenAICompatibleLLM(llm_config or _llm_config_from_env(env))
         self._ragu_search = RaguSearchAdapter(_ragu_embedder_config_from_env(env))
+        # Datasets we have already explained the keyword fallback for. The reason
+        # never changes at runtime, so saying it once per dataset beats one line
+        # per request.
+        self._unsupported_logged: set[str] = set()
+        self._log_startup_summary()
+
+    def _log_startup_summary(self) -> None:
+        """Report at boot which datasets can actually use RAGU search.
+
+        Everything here is knowable before the first request, and finding it out
+        by reading `engine: "keyword"` off a trace — the way this went unnoticed
+        for a long time — is far too late.
+        """
+        LOGGER.info(
+            "Indexes root: %s | LLM: %s | embedder: %s",
+            self.indexes_root,
+            self._llm.config.provider,
+            self._ragu_search.config.model_name or "not configured",
+        )
+        if not self._definitions:
+            LOGGER.warning("No RAGU indexes discovered under '%s'.", self.indexes_root)
+            return
+        for definition in self._definitions.values():
+            # Нулевые ряды заранее: иначе корпус без единого обращения просто
+            # отсутствует в метриках, и в сводке это неотличимо от поломки.
+            init_dataset(definition.id)
+            reason = self._ragu_search.unsupported_reason(definition)
+            if reason is None:
+                LOGGER.info(
+                    "Dataset '%s': RAGU search enabled (embedder '%s', index dim %s).",
+                    definition.id,
+                    self._ragu_search.config.model_for(
+                        definition.path.name, definition.id
+                    ),
+                    _ragu_embedding_dim(definition.path),
+                )
+            else:
+                self._unsupported_logged.add(definition.id)
+                LOGGER.warning(
+                    "Dataset '%s': keyword retrieval only — %s.",
+                    definition.id,
+                    reason,
+                )
 
     def list_datasets(self, locale: Locale = "ru") -> list[DatasetCard]:
         return [self._dataset_card(item, locale) for item in self._definitions.values()]
 
     def get_dataset(self, dataset_id: str, locale: Locale = "ru") -> DatasetDetail:
+        observe_dataset_request(dataset_id, "detail")
         definition = self._require_definition(dataset_id)
         dataset = self._dataset_card(definition, locale)
         return DatasetDetail(
@@ -458,6 +596,7 @@ class IndexRepository:
         min_strength: float = 0.0,
         include_communities: bool = True,
     ) -> GraphResponse:
+        observe_dataset_request(dataset_id, "graph")
         index = self._load_index(dataset_id)
         nodes = self._filter_nodes(
             index.nodes,
@@ -587,6 +726,7 @@ class IndexRepository:
         )
 
     def get_communities(self, dataset_id: str) -> GraphCommunitiesResponse:
+        observe_dataset_request(dataset_id, "communities")
         index = self._load_index(dataset_id)
         return GraphCommunitiesResponse(
             dataset_id=dataset_id, communities=index.communities
@@ -603,23 +743,30 @@ class IndexRepository:
 
     async def answer(self, dataset_id: str, request: AgentRequest) -> AgentResponse:
         index = self._load_index(dataset_id)
+        # Decided once, from the user's own words, and threaded through retrieval,
+        # generation and the fallback so every part of the reply agrees on it.
+        language = _answer_language(request)
 
         retrieval_start = time.perf_counter()
         # Планирование внутри замера ретривала: это лишний вызов LLM перед
         # поиском, и прятать его из timings значило бы занижать реальную задержку.
         plan = await self._plan_queries(request)
-        retrieval, engine_used = await self._retrieve_with_ragu(index, request, plan)
+        retrieval, engine_used = await self._retrieve_with_ragu(
+            index, request, language, plan
+        )
         retrieval_ms = int((time.perf_counter() - retrieval_start) * 1000)
 
         generation_start = time.perf_counter()
         llm_error: str | None = None
         answer = None
         try:
-            answer = await self._answer_with_llm(index, request, retrieval, plan)
+            answer = await self._answer_with_llm(
+                index, request, retrieval, language, plan
+            )
         except Exception as exc:
             llm_error = f"{type(exc).__name__}: {exc}"
         if not answer:
-            answer = self._fallback_answer(request, retrieval, llm_error)
+            answer = self._fallback_answer(request, retrieval, language, llm_error)
         generation_ms = int((time.perf_counter() - generation_start) * 1000)
         total_ms = retrieval_ms + generation_ms
 
@@ -629,6 +776,49 @@ class IndexRepository:
         selected_communities = [
             item[0] for item in retrieval.communities[: request.top_k]
         ]
+
+        # Метрики пишем здесь, а не в роутере: движок, который реально отработал,
+        # и размер собранного контекста известны только после поиска.
+        observe_answer(
+            dataset=dataset_id,
+            engine_requested=request.engine,
+            engine_used=engine_used,
+            language=language,
+            query_plan=request.use_query_plan,
+            retrieval_ms=retrieval_ms,
+            generation_ms=generation_ms,
+            chunks=len(selected_chunks),
+        )
+        observe_dataset_request(dataset_id, "agent")
+
+        # Разбивка по конкретному запросу. Метрики отвечают «сколько и как
+        # быстро вообще», а этот ряд — «что произошло вот с этим вопросом»:
+        # с request_id из middleware он связывается однозначно. Поля идут
+        # через extra=, поэтому в json-формате остаются полями, а не подстрокой.
+        LOGGER.info(
+            "answered dataset=%s engine=%s in %dms (retrieval %dms, generation %dms)",
+            dataset_id,
+            engine_used,
+            total_ms,
+            retrieval_ms,
+            generation_ms,
+            extra={
+                "event": "agent_answer",
+                "dataset_id": dataset_id,
+                "engine_requested": request.engine,
+                "engine_used": engine_used,
+                "language": language,
+                "query_plan": bool(plan),
+                "sub_questions": len(plan),
+                "top_k": request.top_k,
+                "entities": len(selected_nodes),
+                "chunks": len(selected_chunks),
+                "retrieval_ms": retrieval_ms,
+                "generation_ms": generation_ms,
+                "total_ms": total_ms,
+                "llm_error": llm_error,
+            },
+        )
 
         trace = None
         if request.include_trace:
@@ -998,16 +1188,40 @@ class IndexRepository:
             return []
         return plan[:_QUERY_PLAN_MAX]
 
+    def _note_ragu_unsupported(self, definition: IndexDefinition) -> None:
+        """Say once, per dataset, why answers are coming from keyword retrieval.
+
+        Without this the most common degradation is completely silent: `supports`
+        returns False, no exception is raised, and the only trace of it is
+        `engine: "keyword"` in a response nobody is reading logs for.
+        """
+        if definition.id in self._unsupported_logged:
+            return
+        reason = self._ragu_search.unsupported_reason(definition)
+        if reason is None:
+            return
+        self._unsupported_logged.add(definition.id)
+        LOGGER.warning(
+            "RAGU search is unavailable for dataset '%s': %s. "
+            "Answers for it will use local keyword retrieval.",
+            definition.id,
+            reason,
+        )
+
     async def _retrieve_with_ragu(
-        self, index: LoadedIndex, request: AgentRequest, queries: list[str] | None = None
+        self,
+        index: LoadedIndex,
+        request: AgentRequest,
+        language: Locale,
+        queries: list[str] | None = None,
     ) -> tuple[RetrievalResult, TraceEngine]:
         """Returns the retrieval and the engine that actually produced it."""
         if queries:
-            return await self._retrieve_planned(index, request, queries)
+            return await self._retrieve_planned(index, request, language, queries)
         engine_name = _resolve_engine(request.engine)
         try:
             retrieval = await self._ragu_search.search(
-                index, request.message, request.top_k, engine_name
+                index, request.message, request.top_k, engine_name, language
             )
         except Exception as exc:
             LOGGER.warning(
@@ -1019,7 +1233,9 @@ class IndexRepository:
             retrieval = None
 
         if retrieval is None:
-            # Either RAGU vector search is not configured for this index, or it failed.
+            # Either RAGU search does not apply to this index, or it just failed —
+            # the failure already logged itself above, so this covers the other case.
+            self._note_ragu_unsupported(index.definition)
             return self._retrieve(index, request.message, request.top_k), "keyword"
 
         if not (retrieval.nodes or retrieval.chunks):
@@ -1033,7 +1249,11 @@ class IndexRepository:
         return retrieval, engine_name  # type: ignore[return-value]
 
     async def _retrieve_planned(
-        self, index: LoadedIndex, request: AgentRequest, queries: list[str]
+        self,
+        index: LoadedIndex,
+        request: AgentRequest,
+        language: Locale,
+        queries: list[str],
     ) -> tuple[RetrievalResult, TraceEngine]:
         """One retrieval pass per sub-question, merged into a single context.
 
@@ -1050,7 +1270,7 @@ class IndexRepository:
         for query in queries:
             try:
                 retrieval = await self._ragu_search.search(
-                    index, query, request.top_k, engine_name
+                    index, query, request.top_k, engine_name, language
                 )
             except Exception as exc:
                 LOGGER.warning(
@@ -1062,6 +1282,7 @@ class IndexRepository:
                 )
                 retrieval = None
             if retrieval is None:
+                self._note_ragu_unsupported(index.definition)
                 results.append(self._retrieve(index, query, request.top_k))
             else:
                 ragu_hits += 1
@@ -1150,6 +1371,7 @@ class IndexRepository:
         index: LoadedIndex,
         request: AgentRequest,
         retrieval: RetrievalResult,
+        language: Locale,
         plan: list[str] | None = None,
     ) -> str | None:
         context = _render_context(index, retrieval)
@@ -1166,8 +1388,15 @@ class IndexRepository:
                 "content": (
                     "You are a graph RAG assistant. Answer only from the supplied graph "
                     "context and chunks. If the context is insufficient, say that clearly. "
-                    "Reply in the user's language. Keep the answer concise and cite chunk "
-                    "or entity IDs when useful."
+                    # Naming the language beats "reply in the user's language": the
+                    # context is usually English while the question may not be, and
+                    # without the second sentence the model drifts into the language
+                    # of the context it is reading.
+                    f"Write the entire answer in {_llm_language_name(language)}. "
+                    "The graph context is often in another language — translate what "
+                    "you use from it. Never switch the answer to the language of the "
+                    "context. Keep the answer concise and cite chunk or entity IDs "
+                    "when useful."
                 ),
             },
             *history,
@@ -1195,6 +1424,7 @@ class IndexRepository:
         self,
         request: AgentRequest,
         retrieval: RetrievalResult,
+        language: Locale,
         llm_error: str | None,
     ) -> str:
         nodes = (
@@ -1205,7 +1435,9 @@ class IndexRepository:
         evidence = "\n".join(
             f"[{chunk.id}] {_shorten(chunk.content, 420)}" for chunk, _ in chunks
         )
-        if request.locale == "ru":
+        # Language of the question, not `request.locale`: this text replaces an
+        # answer, so it follows the same rule the answer does.
+        if language == "ru":
             prefix = (
                 "LLM не настроена"
                 if not self._llm.config.is_configured
@@ -1428,16 +1660,20 @@ def _ragu_embedder_config_from_env(env: dict[str, str]) -> RaguEmbedderConfig:
     )
 
 
+RAGU_VECTOR_FILES = (
+    "knowledge_graph.gml",
+    "kv_chunks.json",
+    "vdb_entity.json",
+    "vdb_chunk.json",
+)
+
+
+def _missing_vector_files(path: Path) -> list[str]:
+    return [name for name in RAGU_VECTOR_FILES if not (path / name).exists()]
+
+
 def _is_ragu_vector_index(path: Path) -> bool:
-    return all(
-        (path / filename).exists()
-        for filename in (
-            "knowledge_graph.gml",
-            "kv_chunks.json",
-            "vdb_entity.json",
-            "vdb_chunk.json",
-        )
-    )
+    return not _missing_vector_files(path)
 
 
 def _ragu_embedding_dim(path: Path) -> int | None:
@@ -1454,6 +1690,55 @@ def _ragu_embedding_dim(path: Path) -> int | None:
 
 def _ragu_language(language: str) -> str:
     return "russian" if language == "ru" else "english"
+
+
+def _llm_language_name(language: Locale) -> str:
+    return "Russian" if language == "ru" else "English"
+
+
+# Below this many letters of one script a message carries no usable signal —
+# "RAGU?", "ok", "да". Guessing from those would flip the answer language on a
+# short follow-up, so we look further back in the conversation instead.
+_LANGUAGE_MIN_LETTERS = 3
+
+
+def _script_language(text: str) -> Locale | None:
+    """Answer language implied by one message, or None when it says nothing.
+
+    Deliberately asymmetric rather than a majority vote. Russian questions
+    routinely carry Latin technical terms — "Что такое BRCA1?", "причины
+    prostate cancer" — while English questions essentially never carry Cyrillic.
+    Counting scripts against each other would mis-read exactly the mixed
+    questions a bilingual medical corpus attracts, so any real amount of
+    Cyrillic decides for Russian.
+    """
+    cyrillic = len(re.findall(r"[А-Яа-яЁё]", text))
+    if cyrillic >= _LANGUAGE_MIN_LETTERS:
+        return "ru"
+    if len(re.findall(r"[A-Za-z]", text)) >= _LANGUAGE_MIN_LETTERS:
+        return "en"
+    return None
+
+
+def _answer_language(request: AgentRequest) -> Locale:
+    """The language to answer in, decided by the user's own words.
+
+    `request.locale` is deliberately not consulted: it mirrors the UI language
+    toggle, and someone typing Russian into an English interface still wants a
+    Russian answer. Earlier user turns are the fallback so that a bare follow-up
+    ("а почему?" / "why?") keeps the language of the conversation.
+    """
+    candidates = [request.message]
+    candidates.extend(
+        message.content
+        for message in reversed(request.history)
+        if message.role == "user"
+    )
+    for text in candidates:
+        language = _script_language(text)
+        if language is not None:
+            return language
+    return "ru"
 
 
 def _retrieval_from_ragu_mix(

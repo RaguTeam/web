@@ -19,4 +19,8 @@ RUN mkdir -p "$TIKTOKEN_CACHE_DIR" \
     && python -c "import tiktoken; [tiktoken.encoding_for_model(m) for m in ('gpt-4', 'gpt-4o', 'text-embedding-3-large')]"
 
 EXPOSE 8000
-CMD ["uvicorn", "ragu_web_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# --no-access-log: RequestContextMiddleware logs one richer line per request
+# (request id, duration, status, client), and uvicorn's own access line would
+# just duplicate it — doubling the noise from bot scans, which is most of the
+# traffic this host sees.
+CMD ["uvicorn", "ragu_web_api.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]

@@ -2,5 +2,18 @@
 # large CUDA wheel; sentence-transformers reuses it.
 fastapi>=0.115.0
 uvicorn[standard]>=0.30.0
-sentence-transformers>=3.0.0
+
+# Upper bounds matter here. Alibaba-NLP/gte-multilingual-base runs custom
+# remote code (`new-impl`) whose model card only states lower bounds
+# (transformers>=4.36, sentence-transformers>=3.0.0). Under sentence-transformers
+# 5.x that code receives an uninitialised `position_ids` and dies inside its own
+# rotary embedding:
+#
+#   modeling.py:392  rope_cos = rope_cos[position_ids].unsqueeze(2)
+#   IndexError: index 134857007040544 is out of bounds for dimension 0 with size 11
+#
+# The model still *loads* — /health reports it ready — so the break only shows up
+# per request, as a bare 500 that the caller degrades to keyword search.
+sentence-transformers>=3.0.0,<5.0.0
+transformers>=4.41.0,<4.52.0
 einops>=0.7.0
