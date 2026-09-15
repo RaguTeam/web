@@ -1896,51 +1896,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
-    class $mol_state_arg extends $mol_object {
-        prefix: string;
-        static href(next?: string): string;
-        static href_normal(): string;
-        static href_absolute(): string;
-        static dict(next?: {
-            [key: string]: string | null;
-        }): Readonly<{
-            [key: string]: string;
-        }>;
-        static dict_cut(except: string[]): {
-            [key: string]: string;
-        };
-        static value(key: string, next?: string | null): string | null;
-        static link(next: Record<string, string | null>): string;
-        static prolog: string;
-        static separator: string;
-        static make_link(next: {
-            [key: string]: string | null;
-        }): string;
-        static commit(): void;
-        static go(next: {
-            [key: string]: string | null;
-        }): void;
-        static encode(str: string): string;
-        constructor(prefix?: string);
-        value(key: string, next?: string): string | null;
-        sub(postfix: string): $mol_state_arg;
-        link(next: Record<string, string | null>): string;
-    }
-}
-
-declare namespace $ {
     class $mol_media extends $mol_object2 {
         static match(query: string, next?: boolean): boolean;
     }
-}
-
-declare namespace $ {
-    /**
-     * Switcher between light/dark themes (usually for `mol_theme_auto` plugin).
-     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_lights_demo
-     */
-    function $mol_lights(this: $, next?: boolean): boolean;
 }
 
 declare namespace $ {
@@ -1977,6 +1935,7 @@ declare namespace $.$$ {
         click_step(next?: number): number;
         /** 3-click cycle: opposite → back → system. */
         mode_next(): void;
+        system_light(): boolean;
         is_light_now(): any;
         theme_index(next?: number): number;
         system_theme_index(): number;
@@ -3366,6 +3325,7 @@ declare namespace $ {
 		ReturnType< $mol_follower['Sub'] >
 	>
 	export class $mol_pop extends $mol_view {
+		align( ): string
 		bubble( ): any
 		Anchor( ): any
 		bubble_offset( ): readonly(number)[]
@@ -3377,7 +3337,8 @@ declare namespace $ {
 		showed( next?: boolean ): boolean
 		align_vert( ): string
 		align_hor( ): string
-		align( ): string
+		direction( ): string
+		align_enriched( ): ReturnType< $mol_pop['align'] >
 		prefer( ): string
 		auto( ): readonly(any)[]
 		sub( ): readonly(any)[]
@@ -3412,6 +3373,8 @@ declare namespace $.$$ {
         align(): string;
         align_vert(): "suspense" | "top" | "bottom";
         align_hor(): "suspense" | "left" | "right";
+        direction(): "ltr" | "rtl";
+        align_enriched(): string;
         bubble_offset(): number[];
         bubble_align(): number[];
         bubble(): void;
@@ -3953,6 +3916,7 @@ declare namespace $.$$ {
      */
     class $mol_string extends $.$mol_string {
         event_change(next?: Event): void;
+        value_changed(next?: string): string;
         error_report(): void;
         hint_visible(): string;
         disabled(): boolean;
@@ -4203,32 +4167,37 @@ declare namespace $ {
 		,
 		ReturnType< $mol_button_minor['event_click'] >
 	>
-	type $mol_button_minor__sub_mol_select_10 = $mol_type_enforce<
+	type $mol_button_minor__hint_mol_select_10 = $mol_type_enforce<
+		ReturnType< $mol_select['option_hint'] >
+		,
+		ReturnType< $mol_button_minor['hint'] >
+	>
+	type $mol_button_minor__sub_mol_select_11 = $mol_type_enforce<
 		ReturnType< $mol_select['option_content'] >
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $mol_view__sub_mol_select_11 = $mol_type_enforce<
+	type $mol_view__sub_mol_select_12 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_search__query_mol_select_12 = $mol_type_enforce<
+	type $mol_search__query_mol_select_13 = $mol_type_enforce<
 		ReturnType< $mol_select['filter_pattern'] >
 		,
 		ReturnType< $mol_search['query'] >
 	>
-	type $mol_search__hint_mol_select_13 = $mol_type_enforce<
+	type $mol_search__hint_mol_select_14 = $mol_type_enforce<
 		ReturnType< $mol_select['filter_hint'] >
 		,
 		ReturnType< $mol_search['hint'] >
 	>
-	type $mol_search__submit_mol_select_14 = $mol_type_enforce<
+	type $mol_search__submit_mol_select_15 = $mol_type_enforce<
 		ReturnType< $mol_select['submit'] >
 		,
 		ReturnType< $mol_search['submit'] >
 	>
-	type $mol_search__enabled_mol_select_15 = $mol_type_enforce<
+	type $mol_search__enabled_mol_select_16 = $mol_type_enforce<
 		ReturnType< $mol_select['enabled'] >
 		,
 		ReturnType< $mol_search['enabled'] >
@@ -4236,6 +4205,7 @@ declare namespace $ {
 	export class $mol_select extends $mol_pick {
 		enabled( ): boolean
 		event_select( id: any, next?: any ): any
+		option_hint( id: any): any
 		option_label( id: any): string
 		filter_pattern( next?: string ): string
 		Option_label( id: any): $mol_dimmer
@@ -4278,6 +4248,7 @@ declare namespace $.$$ {
         options(): readonly string[];
         options_filtered(): readonly string[];
         option_label(id: string): any;
+        option_hint(id: string): string;
         option_rows(): $mol_button_minor[];
         option_focused(component?: $mol_view): $mol_view | $.$mol_search | null;
         event_select(id: string, event?: MouseEvent): void;
@@ -5500,6 +5471,40 @@ declare namespace $.$$ {
 
 /** @see $bog_builderui_tokens */
 declare namespace $ {
+}
+
+declare namespace $ {
+    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static href_normal(): string;
+        static href_absolute(): string;
+        static dict(next?: {
+            [key: string]: string | null;
+        }): Readonly<{
+            [key: string]: string;
+        }>;
+        static dict_cut(except: string[]): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string | null): string | null;
+        static link(next: Record<string, string | null>): string;
+        static prolog: string;
+        static separator: string;
+        static make_link(next: {
+            [key: string]: string | null;
+        }): string;
+        static commit(): void;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
+        static encode(str: string): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string | null;
+        sub(postfix: string): $mol_state_arg;
+        link(next: Record<string, string | null>): string;
+    }
 }
 
 declare namespace $.$raggu_web_front_api_ragu {
@@ -9131,32 +9136,39 @@ declare namespace $ {
 		,
 		ReturnType< $mol_textarea_edit['submit_with_ctrl'] >
 	>
-	type $mol_text_code__text_mol_textarea_9 = $mol_type_enforce<
+	type $mol_text_code__attr_mol_textarea_9 = $mol_type_enforce<
+		({ 
+			'inert': string,
+		})  & ReturnType< $mol_text_code['attr'] >
+		,
+		ReturnType< $mol_text_code['attr'] >
+	>
+	type $mol_text_code__text_mol_textarea_10 = $mol_type_enforce<
 		ReturnType< $mol_textarea['value'] >
 		,
 		ReturnType< $mol_text_code['text'] >
 	>
-	type $mol_text_code__render_visible_only_mol_textarea_10 = $mol_type_enforce<
+	type $mol_text_code__render_visible_only_mol_textarea_11 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_text_code['render_visible_only'] >
 	>
-	type $mol_text_code__row_numb_mol_textarea_11 = $mol_type_enforce<
+	type $mol_text_code__row_numb_mol_textarea_12 = $mol_type_enforce<
 		ReturnType< $mol_textarea['row_numb'] >
 		,
 		ReturnType< $mol_text_code['row_numb'] >
 	>
-	type $mol_text_code__sidebar_showed_mol_textarea_12 = $mol_type_enforce<
+	type $mol_text_code__sidebar_showed_mol_textarea_13 = $mol_type_enforce<
 		ReturnType< $mol_textarea['sidebar_showed'] >
 		,
 		ReturnType< $mol_text_code['sidebar_showed'] >
 	>
-	type $mol_text_code__highlight_mol_textarea_13 = $mol_type_enforce<
+	type $mol_text_code__highlight_mol_textarea_14 = $mol_type_enforce<
 		ReturnType< $mol_textarea['highlight'] >
 		,
 		ReturnType< $mol_text_code['highlight'] >
 	>
-	type $mol_text_code__syntax_mol_textarea_14 = $mol_type_enforce<
+	type $mol_text_code__syntax_mol_textarea_15 = $mol_type_enforce<
 		ReturnType< $mol_textarea['syntax'] >
 		,
 		ReturnType< $mol_text_code['syntax'] >

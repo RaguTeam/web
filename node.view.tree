@@ -332,7 +332,8 @@ $mol_pop $mol_view
 	showed? false
 	align_vert \
 	align_hor \
-	align \bottom_center
+	direction \ltr
+	align_enriched <= align \bottom_center
 	prefer \vert
 	auto /
 		<= bubble null
@@ -537,6 +538,7 @@ $mol_select $mol_pick
 	Option_row* $mol_button_minor
 		enabled <= enabled true
 		event_click? <=> event_select*? null
+		hint <= option_hint* null
 		sub <= option_content* /
 			<= Option_label* $mol_dimmer
 				haystack <= option_label* \
@@ -1508,6 +1510,9 @@ $mol_textarea $mol_stack
 			submit? <=> submit? null
 			submit_with_ctrl <= submit_with_ctrl true
 		<= View $mol_text_code
+			attr *
+				^
+				inert \
 			text <= value
 			render_visible_only false
 			row_numb* <= row_numb* 0
