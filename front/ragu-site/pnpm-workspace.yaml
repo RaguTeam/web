@@ -1,0 +1,33 @@
+packages:
+  - 'apps/*'
+allowBuilds:
+  esbuild: true
+# nanoid <3.3.18 is vulnerable to GHSA-2v37-7h3g-55p8 (high), reached only
+# transitively via vite > postcss. Drop once postcss widens its nanoid range.
+overrides:
+  nanoid: '3.3.18'
+
+catalog:
+  tsx: '4.23.5'
+  vite: '8.2.0'
+  react: '19.2.8'
+  react-dom: '19.2.8'
+  '@types/react': '19.2.18'
+  '@types/react-dom': '19.2.5'
+  '@vitejs/plugin-react': '6.1.0'
+  '@tanstack/react-router': '1.170.32'
+  '@tanstack/react-query': '5.102.7'
+  tailwindcss: '4.3.3'
+  '@tailwindcss/vite': '4.3.3'
+  three: '0.185.1'
+  '@types/three': '0.185.4'
+  '@react-three/fiber': '9.7.0'
+  '@react-three/drei': '10.7.8'
+  '@base-ui/react': '1.7.0'
+  motion: '13.1.1'
+  clsx: '2.1.1'
+  tailwind-merge: '3.6.0'
+  '@types/node': '26.4.0'
+  vite-plugin-singlefile: '2.3.3'
+minimumReleaseAgeExclude:
+  - '*'

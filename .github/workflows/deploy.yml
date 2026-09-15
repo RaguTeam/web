@@ -24,11 +24,38 @@ jobs:
                   package: "raggu/web"
                   modules: 'front/app'
 
+            - uses: pnpm/action-setup@v4
+              with:
+                  version: 11.20.0
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 26
+                  cache: pnpm
+                  cache-dependency-path: raggu/web/front/ragu-site/pnpm-lock.yaml
+
+            - name: Build site
+              working-directory: raggu/web/front/ragu-site
+              env:
+                  RAGU_BASE: /web/site/
+              run: |
+                  pnpm install --frozen-lockfile
+                  pnpm --filter @ugar/ragu-site build
+
             - name: Deploy main
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
                   folder: "raggu/web/front/app/-"
+                  clean-exclude: |
+                      site
+
+            - name: Deploy site
+              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+              uses: hyoo-ru/gh-deploy@v4.4.1
+              with:
+                  folder: "raggu/web/front/ragu-site/apps/ragu-site/dist"
+                  target-folder: site
 
             - name: Deploy feature branch
               if: startsWith(github.ref, 'refs/heads/feature/')
@@ -57,4 +84,3 @@ jobs:
                     git commit -m "Clean up preview for deleted branch: $BRANCH_NAME"
                     git push
                   fi
-

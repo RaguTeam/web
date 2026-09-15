@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <path id="r" fill-rule="evenodd"
+          d="M12 8 H40 C50 8 56 14 56 22 C56 29 52 34 45.5 36 L58 56 H44 L33.5 38 H24 V56 H12 Z
+             M24 18 V28 H39 C42.6 28 45 26 45 23 C45 20 42.6 18 39 18 Z"/>
+    <clipPath id="c"><use href="#r"/></clipPath>
+    <pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1.6" cy="1.6" r="1.15" fill="#0A111C"/>
+    </pattern>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0A111C"/>
+  <g clip-path="url(#c)">
+    <rect x="8" y="6" width="52" height="17" fill="#E4573D"/>
+    <rect x="8" y="23" width="52" height="15" fill="#33465C"/>
+    <rect x="8" y="38" width="52" height="20" fill="#E4573D"/>
+    <g stroke="#0A111C" stroke-width="1.7" fill="#0A111C">
+      <path d="M14 18 L26 12 L38 17 L50 11" fill="none"/>
+      <circle cx="14" cy="18" r="2.4"/><circle cx="26" cy="12" r="2.4"/>
+      <circle cx="38" cy="17" r="2.4"/><circle cx="50" cy="11" r="2.4"/>
+    </g>
+    <g stroke="#DDE3EA" stroke-width=".9" fill="none">
+      <path d="M9 31 L19 26 L29 31 L39 26 L49 31 L59 26"/>
+      <path d="M9 31 L19 36 L29 31 L39 36 L49 31 L59 36"/>
+      <path d="M19 26 V36 M39 26 V36"/>
+    </g>
+    <rect x="8" y="39" width="52" height="19" fill="url(#dots)"/>
+  </g>
+</svg>

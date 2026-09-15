@@ -1,0 +1,14 @@
+{
+    "name": "ugar",
+    "private": true,
+    "engines": {
+        "node": ">=22.13"
+    },
+    "scripts": {
+        "dev": "pnpm run -F ./apps/ragu-site dev"
+    },
+    "volta": {
+        "node": "26.6.0",
+        "pnpm": "11.20.0"
+    }
+}
