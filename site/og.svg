@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0a111c"/>
+      <stop offset="1" stop-color="#04070c"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="0.82" cy="0.12" r="0.62">
+      <stop offset="0" stop-color="#ff6e4e" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ff6e4e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cool" cx="0.18" cy="0.88" r="0.7">
+      <stop offset="0" stop-color="#3a6094" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#3a6094" stop-opacity="0"/>
+    </radialGradient>
+    <path id="mark" fill-rule="evenodd"
+          d="M12 8 H40 C50 8 56 14 56 22 C56 29 52 34 45.5 36 L58 56 H44 L33.5 38 H24 V56 H12 Z
+             M24 18 V28 H39 C42.6 28 45 26 45 23 C45 20 42.6 18 39 18 Z"/>
+    <clipPath id="markClip"><use href="#mark"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#warm)"/>
+  <rect width="1200" height="630" fill="url(#cool)"/>
+
+  <g transform="translate(880 200) scale(1.35)" opacity="0.85">
+    <g stroke="#3f5f8c" stroke-width="0.9" fill="none" opacity="0.7">
+      <path d="M-120 -40 L-40 -90 L40 -50 L110 -95 M-40 -90 L-10 10 M40 -50 L60 40 M-10 10 L60 40 M-10 10 L-90 60 M60 40 L120 20 M-90 60 L10 110 M10 110 L60 40"/>
+    </g>
+    <g fill="#6da7ec">
+      <circle cx="-120" cy="-40" r="5"/><circle cx="-40" cy="-90" r="9"/><circle cx="40" cy="-50" r="7"/>
+      <circle cx="110" cy="-95" r="4.5"/><circle cx="-10" cy="10" r="13" fill="#9ec5f4"/><circle cx="60" cy="40" r="10"/>
+      <circle cx="-90" cy="60" r="6"/><circle cx="120" cy="20" r="4"/><circle cx="10" cy="110" r="7.5"/>
+    </g>
+    <circle cx="-10" cy="10" r="26" fill="#9ec5f4" opacity="0.14"/>
+    <circle cx="-40" cy="-90" r="20" fill="#6da7ec" opacity="0.12"/>
+  </g>
+
+  <g transform="translate(96 92)">
+    <g transform="scale(1.05)">
+      <rect width="64" height="64" rx="14" fill="#0a111c"/>
+      <g clip-path="url(#markClip)">
+        <rect x="8" y="6" width="52" height="17" fill="#e4573d"/>
+        <rect x="8" y="23" width="52" height="15" fill="#33465c"/>
+        <rect x="8" y="38" width="52" height="20" fill="#e4573d"/>
+        <g stroke="#0a111c" stroke-width="1.7" fill="#0a111c">
+          <path d="M14 18 L26 12 L38 17 L50 11" fill="none"/>
+          <circle cx="14" cy="18" r="2.4"/><circle cx="26" cy="12" r="2.4"/>
+          <circle cx="38" cy="17" r="2.4"/><circle cx="50" cy="11" r="2.4"/>
+        </g>
+        <g stroke="#dde3ea" stroke-width=".9" fill="none">
+          <path d="M9 31 L19 26 L29 31 L39 26 L49 31 L59 26"/>
+          <path d="M9 31 L19 36 L29 31 L39 36 L49 31 L59 36"/>
+        </g>
+      </g>
+    </g>
+    <text x="86" y="30" font-family="Georgia, serif" font-size="30" fill="#e9ecf1" letter-spacing="0.5">RAGU</text>
+    <text x="86" y="54" font-family="ui-monospace, monospace" font-size="14" fill="#74818f" letter-spacing="2.4">OPEN SOURCE GRAPHRAG</text>
+  </g>
+
+  <text x="96" y="330" font-family="Georgia, 'Times New Roman', serif" font-size="66" fill="#e9ecf1" letter-spacing="-1.6">
+    Every document becomes a graph.
+  </text>
+  <text x="96" y="404" font-family="Georgia, 'Times New Roman', serif" font-size="66" font-style="italic" fill="#a4b0c0" letter-spacing="-1.6">
+    Every answer cites it.
+  </text>
+
+  <g font-family="ui-monospace, monospace" font-size="15" letter-spacing="2.2" fill="#74818f">
+    <text x="96" y="500">29 ENTITY TYPES</text>
+    <text x="330" y="500">49 RELATION TYPES</text>
+    <text x="600" y="500">MIT LICENSED</text>
+  </g>
+  <rect x="96" y="524" width="1008" height="1" fill="#1e2937"/>
+</svg>

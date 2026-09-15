@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <title>RAGU — a knowledge graph you can question</title>
+    <meta name="description"
+          content="RAGU turns raw documents into a typed knowledge graph and answers questions over it with sources attached. Explore three prebuilt corpora in 3D."/>
+    <meta name="color-scheme" content="light dark"/>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="RAGU — a knowledge graph you can question"/>
+    <meta property="og:description"
+          content="Typed entities, typed relations, community summaries. Explore three prebuilt corpora in 3D and ask the graph."/>
+    <meta property="og:image" content="./og.svg"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"/>
+
+    <script>
+        // Resolve the theme before first paint so the page never flashes the wrong surface.
+        // Values are JSON — the same encoding the app's store writes.
+        (function () {
+            function read(key, fallback) {
+                try {
+                    var raw = localStorage.getItem(key);
+                    return raw === null ? fallback : JSON.parse(raw);
+                } catch (e) {
+                    return fallback;
+                }
+            }
+
+            try {
+                var stored = read('ragu.theme', 'system');
+                var dark = stored === 'dark' || (stored !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+                document.documentElement.lang = read('ragu.lang', 'en') === 'ru' ? 'ru' : 'en';
+            } catch (e) { /* private mode — fall back to the markup default */ }
+        })();
+    </script>
+  <script type="module" crossorigin src="/web/site/assets/index-C19Nb-H9.js"></script>
+  <link rel="modulepreload" crossorigin href="/web/site/assets/store-NNtQSTZI.js">
+  <link rel="modulepreload" crossorigin href="/web/site/assets/settings-L4mMJDRj.js">
+  <link rel="stylesheet" crossorigin href="/web/site/assets/index-BixhJFMj.css">
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
