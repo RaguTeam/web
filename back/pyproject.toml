@@ -31,4 +31,6 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 
 [tool.uv.sources]
-graph-ragu = { git = "https://github.com/AsphodelRem/RAGU.git" }
+# Ветка feature/api: в ней пакет ragu.api — HTTP-сервис поверх готового графа
+# и типизированный клиент RaguClient, на которые переезжает этот бэкенд.
+graph-ragu = { git = "https://github.com/m0tbka/RAGU.git", branch = "feature/api" }

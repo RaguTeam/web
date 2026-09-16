@@ -374,8 +374,8 @@ wheels = [
 
 [[package]]
 name = "graph-ragu"
-version = "0.0.5"
-source = { git = "https://github.com/AsphodelRem/RAGU.git#0d17d89eef585ff9aab3b32796365c786fb88b8d" }
+version = "0.1.0"
+source = { git = "https://github.com/m0tbka/RAGU.git?branch=feature%2Fapi#d7d8ac66d043e2eefc1b6f1afe9de236a8ea4106" }
 dependencies = [
     { name = "aiolimiter" },
     { name = "diskcache" },
@@ -2157,7 +2157,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.115.0" },
-    { name = "graph-ragu", git = "https://github.com/AsphodelRem/RAGU.git" },
+    { name = "graph-ragu", git = "https://github.com/m0tbka/RAGU.git?branch=feature%2Fapi" },
     { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.27.0" },
     { name = "openai", specifier = ">=2.32.0" },
     { name = "prometheus-fastapi-instrumentator", specifier = ">=7.0.0" },
