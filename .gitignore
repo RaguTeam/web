@@ -12,3 +12,6 @@ tools/
 # RAGU's Settings.init_storage_folder() creates this next to the CWD whenever a
 # KnowledgeGraph is built without storage_folder pointed at an index.
 ragu_working_dir/
+# Собранная спецификация: 5.7 МБ из-за вшитого mermaid.min.js, пересобирается
+# из docs/spec/. В git лежат источники — см. docs/spec/README.md.
+docs/backend-target-spec.html

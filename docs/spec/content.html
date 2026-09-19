@@ -1,0 +1,756 @@
+<section id="purpose" data-nav="Зачем документ">
+  <span class="tag">1 · Назначение</span>
+  <h2>Документ закрывается вместе с задачей</h2>
+  <p class="intro">Фиксирует целевое устройство бэкенда демо после переезда на <code>ragu.api</code>. Сверочный: каждый пункт приёмки закрывается отдельно.</p>
+
+  <div class="grid g3">
+    <div class="c info">
+      <div class="hd"><h4>Для чего</h4><span class="pill info">норма</span></div>
+      <p>Сверяться при реализации. Расхождение кода с этим документом — либо баг реализации, либо повод править документ осознанно.</p>
+    </div>
+    <div class="c note">
+      <div class="hd"><h4>Когда закрыт</h4><span class="pill note">критерий</span></div>
+      <p>Все 14 пунктов главы 13 отмечены. Это и означает готовность MVP к тестированию командой.</p>
+    </div>
+    <div class="c warn">
+      <div class="hd"><h4>Чего здесь нет</h4><span class="pill warn">граница</span></div>
+      <p>Устройство самого <code>ragu.api</code> — у него своя документация. Здесь только то, как демо его использует.</p>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="h">Главное архитектурное решение</span>
+    Бэкенд демо перестаёт знать про граф и про LLM. Он становится BFF: презентация, язык ответа, трейс для фронта и контракт с <code>$mol</code>. Всё остальное делает <code>ragu.api</code>.
+  </div>
+</section>
+
+
+<section id="glossary" data-nav="Словарь">
+  <span class="tag">2 · Словарь</span>
+  <h2>Термины, которые дальше не поясняются</h2>
+  <p class="intro">Определения идут до того, как термины начнут употребляться.</p>
+
+  <div class="tbl-scroll">
+    <table class="big" id="gloss">
+      <thead><tr>
+        <th data-sort="text">Термин</th>
+        <th data-sort="text">Значение</th>
+        <th data-sort="text">Где живёт</th>
+      </tr></thead>
+      <tbody>
+        <tr data-cat="svc"><td><span class="tname">ragu-web-api</span><span class="tsub">демо</span></td><td class="det">Бэкенд демо. После переезда — BFF без знания о графе.</td><td><code>back/</code></td></tr>
+        <tr data-cat="svc"><td><span class="tname">ragu-api</span><span class="tsub">сервис</span></td><td class="det">HTTP-сервис RAGU поверх готового графа. 54 операции.</td><td>пакет <code>ragu.api</code></td></tr>
+        <tr data-cat="svc"><td><span class="tname">RaguClient</span><span class="tsub">клиент</span></td><td class="det">Типизированный асинхронный клиент к ragu-api. Возвращает те же модели, что отдаёт сервис.</td><td><code>ragu.api.client</code></td></tr>
+        <tr data-cat="data"><td><span class="tname">Корпус</span><span class="tsub">dataset / graph</span></td><td class="det">Один готовый индекс RAGU. В демо — «датасет», в ragu-api — «граф». Одно и то же.</td><td><code>indexes/&lt;id&gt;</code></td></tr>
+        <tr data-cat="data"><td><span class="tname">Индуцированный подграф</span><span class="tsub">канвас</span></td><td class="det">Набор сущностей плюс связи, у которых <b>оба</b> конца в этом наборе.</td><td>экран графа</td></tr>
+        <tr data-cat="mode"><td><span class="tname">Режим поиска</span><span class="tsub">mode</span></td><td class="det"><code>global</code>, <code>local</code>, <code>naive</code>, <code>mix</code>. Доступность зависит от того, какие хранилища заполнены при сборке графа.</td><td>ragu-api</td></tr>
+        <tr data-cat="mode"><td><span class="tname">retrieve</span><span class="tsub">форма запроса</span></td><td class="det">Поиск без генерации. Дешевле и быстрее, ответ собирает клиент.</td><td>ragu-api</td></tr>
+        <tr data-cat="mode"><td><span class="tname">Деградация</span><span class="tsub">engines.degraded</span></td><td class="det">Ребёнок ансамбля или реранкер не дал вклада. Ответ есть, качество ниже заявленного.</td><td>поле ответа</td></tr>
+        <tr data-cat="ui"><td><span class="tname">Тред</span><span class="tsub">чат корпуса</span></td><td class="det">Отдельный диалог внутри корпуса со своими настройками режима. Живёт в браузере.</td><td>фронт</td></tr>
+        <tr data-cat="ui"><td><span class="tname">Трейс</span><span class="tsub">AnswerTrace</span></td><td class="det">Разбор ответа для UI: сущности, связи, чанки, сообщества, тайминги, стоимость, энергия.</td><td>контракт фронта</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<section id="today" data-nav="Что есть сейчас">
+  <span class="tag">3 · Исходная точка</span>
+  <h2>Больше половины бэкенда живёт в одном файле</h2>
+  <p class="intro">Замеры сняты с файлов ветки <code>main</code> демо на 19 сентября 2026.</p>
+
+  <div class="bars">
+    <div class="brow"><span class="bl">services/index_repository.py</span><span class="bt"><i class="bf" style="width:100%;background:var(--al)"></i></span><span class="bv">2361</span></div>
+    <div class="brow"><span class="bl">services/mock_repository.py</span><span class="bt"><i class="bf" style="width:21%;background:var(--wr)"></i></span><span class="bv">503</span></div>
+    <div class="brow"><span class="bl">fixtures/mock_data.py</span><span class="bt"><i class="bf" style="width:11%;background:var(--wr)"></i></span><span class="bv">269</span></div>
+    <div class="brow"><span class="bl">metrics.py</span><span class="bt"><i class="bf" style="width:6%;background:var(--ok)"></i></span><span class="bv">141</span></div>
+    <div class="brow"><span class="bl">schemas/agent.py</span><span class="bt"><i class="bf" style="width:5%;background:var(--ok)"></i></span><span class="bv">127</span></div>
+    <div class="brow"><span class="bl">main.py</span><span class="bt"><i class="bf" style="width:5%;background:var(--ok)"></i></span><span class="bv">127</span></div>
+    <div class="brow"><span class="bl">остальные 15 модулей</span><span class="bt"><i class="bf" style="width:28%;background:var(--ok)"></i></span><span class="bv">647</span></div>
+  </div>
+
+  <div class="grid g4">
+    <div class="c alert"><div class="hd"><h4>4175</h4><span class="pill alert">строк</span></div><p>21 модуль в <code>ragu_web_api</code>.</p></div>
+    <div class="c alert"><div class="hd"><h4>57%</h4><span class="pill alert">в одном файле</span></div><p><code>index_repository.py</code> — парсер GML, поиск, LLM, планировщик, трейс.</p></div>
+    <div class="c warn"><div class="hd"><h4>772</h4><span class="pill warn">строк моков</span></div><p>Заменяются stub-бэкендом ragu-api, который ходит теми же путями кода, что настоящий.</p></div>
+    <div class="c note"><div class="hd"><h4>945</h4><span class="pill note">строк тестов</span></div><p>6 файлов. Шесть тестов в <code>test_api.py</code> требуют индекс на диске и локально падают.</p></div>
+  </div>
+
+  <div class="box warn">
+    <span class="h">Что именно дублируется</span>
+    Ручной построчный парсер GML, восстановление сообществ Leiden, конструирование <code>KnowledgeGraph</code> и движков, определение возможностей корпуса, keyword-ранкер как запасной путь. Всё это <code>ragu.api</code> уже делает — и делает лучше, потому что там это основная задача, а не побочная.
+  </div>
+</section>
+
+
+<section id="topology" data-nav="Топология">
+  <span class="tag">4 · Топология</span>
+  <h2>Два сервиса вместо одного</h2>
+  <p class="intro">Граф, поиск и генерация уезжают в отдельный контейнер. Демо остаётся тонким.</p>
+
+  <div class="diagram-card">
+    <h3>Целевая топология</h3>
+    <p class="sub">Стрелки — направление вызова. Пунктир — то, чего в демо-бэкенде больше нет.</p>
+    <div class="diagram-controls">
+      <div class="dz-group">
+        <button type="button" data-dz="out" title="Отдалить">−</button>
+        <button type="button" data-dz="in" title="Приблизить">+</button>
+        <button type="button" data-dz="reset" title="Сбросить масштаб">⟲</button>
+        <button type="button" data-dz="full" title="На весь экран">⛶</button>
+      </div>
+      <div class="dz-group">
+        <button type="button" class="txt" data-dz="copy" title="Скопировать код диаграммы">Копировать</button>
+        <button type="button" class="txt" data-dz="dl" title="Скачать как .md">Скачать .md</button>
+      </div>
+    </div>
+    <div class="diagram-stage">
+      <pre class="mermaid">
+flowchart LR
+  subgraph browser["Браузер"]
+    F["$mol-фронт · gh-pages"]
+  end
+  subgraph vm["Одна VM · 4 CPU · 7.8 ГБ"]
+    C["Caddy · TLS"]
+    W["ragu-web-api · BFF"]
+    R["ragu-api · поиск и генерация"]
+    E["embedder gte 768"]
+    K["reranker CPU"]
+    P["Prometheus + Grafana"]
+  end
+  L["YandexGPT"]
+  I[("indexes · готовые графы")]
+
+  F -->|"/api/v1"| C
+  C --> W
+  W -->|"RaguClient"| R
+  R --> E
+  R -.->|"rerank"| K
+  R --> L
+  R --> I
+  W --> P
+  R --> P
+      </pre>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="stk">
+      <div class="hd"><h4>ragu-web-api</h4><span class="pill info">наш</span></div>
+      <div class="flow">HTTP фронта → <b>презентация и трейс</b> → RaguClient</div>
+      <p class="yn p"><i>владеет</i>Контрактом с <code>$mol</code>, координатами канваса, карточками галереи, языком ответа, сборкой трейса.</p>
+      <p class="yn m"><i>не владеет</i>Графом, поиском, LLM, бюджетами, возможностями корпуса.</p>
+    </div>
+    <div class="stk">
+      <div class="hd"><h4>ragu-api</h4><span class="pill note">внешний</span></div>
+      <div class="flow">HTTP → <b>registry графов</b> → движки RAGU</div>
+      <p class="yn p"><i>владеет</i>Чтением графа, режимами поиска, генерацией, учётом токенов, бюджетами, admission control, реранкером.</p>
+      <p class="yn m"><i>не владеет</i>Ничем, что относится к внешнему виду демо.</p>
+    </div>
+  </div>
+
+  <div class="box alert">
+    <span class="h">Решение по развёртыванию</span>
+    Отдельный контейнер, не in-process. Причина: аутентификация, бюджеты, таймауты, admission control и собственные метрики приходят даром и не требуют повторной реализации. Память графов при этом не удваивается — она просто живёт в другом процессе.
+  </div>
+</section>
+
+
+<section id="modules" data-nav="Модули">
+  <span class="tag">5 · Модули</span>
+  <h2>Каждый файл отвечает за одно</h2>
+  <p class="intro">Целевое дерево. Объёмы — оценка, а не замер: этих модулей ещё нет.</p>
+
+  <div class="codehd">back/src/ragu_web_api/ — после переезда</div>
+  <pre class="code">main.py              <span class="cm"># фабрика, CORS, статика фронта, инструментатор</span>
+config.py            <span class="cm"># адрес и ключ ragu-api, цены токенов, размеры страниц</span>
+errors.py            <span class="cm"># RaguApiError → конверт для фронта</span>
+logging_setup.py     <span class="cm"># без изменений: json-логи, request_id</span>
+middleware.py        <span class="cm"># без изменений: request_id, проброс в ragu-api</span>
+metrics.py           <span class="cm"># только BFF-метрики; поисковые берутся у ragu-api</span>
+schemas/             <span class="cm"># контракт с фронтом, не меняется до шага 10</span>
+routers/             <span class="cm"># без изменений</span>
+
+ragu_gateway.py      <span class="cm"># ≈120 · RaguClient, ретраи, маппинг ошибок</span>
+catalog.py           <span class="cm"># ≈90  · /v1/graphs + /stats + /capabilities → карточки</span>
+graph_view.py        <span class="cm"># ≈120 · подграф канваса, пагинация, фильтры</span>
+answer.py            <span class="cm"># ≈110 · вопрос → search → трейс</span>
+
+presentation/
+  layout.py          <span class="cm"># ≈30  · координаты узлов канваса</span>
+  cards.py           <span class="cm"># ≈80  · домен, описание, бейджи, стартовые вопросы</span>
+  trace.py           <span class="cm"># ≈70  · sources.meta + engines + usage → AnswerTrace</span>
+  language.py        <span class="cm"># ≈40  · язык ответа по последнему сообщению</span></pre>
+
+  <div class="diagram-card">
+    <h3>Зависимости между модулями</h3>
+    <p class="sub">Стрелка — «импортирует». Ни один модуль презентации не знает про HTTP.</p>
+    <div class="diagram-controls">
+      <div class="dz-group">
+        <button type="button" data-dz="out" title="Отдалить">−</button>
+        <button type="button" data-dz="in" title="Приблизить">+</button>
+        <button type="button" data-dz="reset" title="Сбросить масштаб">⟲</button>
+        <button type="button" data-dz="full" title="На весь экран">⛶</button>
+      </div>
+      <div class="dz-group">
+        <button type="button" class="txt" data-dz="copy" title="Скопировать код диаграммы">Копировать</button>
+        <button type="button" class="txt" data-dz="dl" title="Скачать как .md">Скачать .md</button>
+      </div>
+    </div>
+    <div class="diagram-stage">
+      <pre class="mermaid">
+flowchart TD
+  subgraph http["Слой HTTP"]
+    RT["routers/"]
+    SC["schemas/"]
+    ER["errors.py"]
+  end
+  subgraph app["Слой сценариев"]
+    CA["catalog.py"]
+    GV["graph_view.py"]
+    AN["answer.py"]
+  end
+  subgraph gw["Слой доступа"]
+    GA["ragu_gateway.py"]
+  end
+  subgraph pres["Презентация · чистые функции"]
+    LA["layout.py"]
+    CD["cards.py"]
+    TR["trace.py"]
+    LN["language.py"]
+  end
+
+  RT --> CA
+  RT --> GV
+  RT --> AN
+  RT --> SC
+  CA --> GA
+  GV --> GA
+  AN --> GA
+  AN --> LN
+  AN --> TR
+  CA --> CD
+  GV --> LA
+  GA --> ER
+      </pre>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="h">Инвариант, который проверяется на ревью</span>
+    Пакет <code>presentation/</code> не импортирует ни <code>ragu_gateway</code>, ни <code>fastapi</code>. Это чистые функции над готовыми данными — они тестируются без сети, без индексов и без поднятого сервиса.
+  </div>
+</section>
+
+
+<section id="flows" data-nav="Потоки">
+  <span class="tag">6 · Потоки</span>
+  <h2>Три экрана, три разных маршрута</h2>
+  <p class="intro">Каждый экран имеет ровно один источник данных.</p>
+
+  <span class="tag">6.1 · Чат</span>
+  <h3 id="flow-chat" data-nav="Чат">Вопрос уходит целиком в сервис</h3>
+
+  <div class="diagram-card">
+    <h3>Ответ агента</h3>
+    <p class="sub">Генерация делегирована. Наш бэкенд не обращается к LLM вообще.</p>
+    <div class="diagram-controls">
+      <div class="dz-group">
+        <button type="button" data-dz="out" title="Отдалить">−</button>
+        <button type="button" data-dz="in" title="Приблизить">+</button>
+        <button type="button" data-dz="reset" title="Сбросить масштаб">⟲</button>
+        <button type="button" data-dz="full" title="На весь экран">⛶</button>
+      </div>
+      <div class="dz-group">
+        <button type="button" class="txt" data-dz="copy" title="Скопировать код диаграммы">Копировать</button>
+        <button type="button" class="txt" data-dz="dl" title="Скачать как .md">Скачать .md</button>
+      </div>
+    </div>
+    <div class="diagram-stage">
+      <pre class="mermaid">
+sequenceDiagram
+  participant F as Фронт
+  participant W as ragu-web-api
+  participant N as language.py
+  participant R as ragu-api
+  participant T as trace.py
+
+  F->>W: POST /agent/messages
+  W->>N: язык по последнему сообщению
+  N-->>W: ru или en
+  W->>R: search(mode, query, language, use_query_plan, rerank, params)
+  Note over R: ретрив, реранк, генерация, учёт токенов
+  R-->>W: answer, sources.meta, engines, usage
+  W->>T: собрать AnswerTrace
+  T-->>W: сущности, связи, чанки, тайминги, стоимость, энергия
+  W-->>F: AgentResponse
+      </pre>
+    </div>
+  </div>
+
+  <div class="box info">
+    <span class="h">Почему язык считаем сами, а промпт не переопределяем</span>
+    Проверка на живой LLM: пять разных русских вопросов, английский контекст, <code>language=russian</code>, температура 1.0 — пять русских ответов. Промпт RAGU язык держит. Прежнее сползание вызывалось тем, что в движок передавался язык <b>индекса</b>, а не вопроса.
+  </div>
+
+  <span class="tag">6.2 · Галерея</span>
+  <h3 id="flow-gallery" data-nav="Галерея">Карточки собираются из трёх вызовов</h3>
+
+  <div class="pipe s4">
+    <div class="pl"><div class="pn">1 · Каталог</div><h4>GET /v1/graphs</h4><ul><li>какие корпуса есть</li><li>какие загрузились</li><li>причина отказа</li></ul><span class="ar">→</span></div>
+    <div class="pl"><div class="pn">2 · Размеры</div><h4>GET /stats</h4><ul><li>сущности, связи</li><li>чанки, документы</li><li>embedding_dim</li></ul><span class="ar">→</span></div>
+    <div class="pl"><div class="pn">3 · Режимы</div><h4>GET /capabilities</h4><ul><li>что корпус умеет</li><li>чего не умеет и почему</li></ul><span class="ar">→</span></div>
+    <div class="pl"><div class="pn">4 · Витрина</div><h4>cards.py</h4><ul><li>домен по типам сущностей</li><li>бейджи, описание</li><li>стартовые вопросы</li></ul></div>
+  </div>
+
+  <span class="tag">6.3 · Граф</span>
+  <h3 id="flow-graph" data-nav="Граф">Канвас требует индуцированного подграфа</h3>
+
+  <div class="diagram-card">
+    <h3>Сборка подграфа</h3>
+    <p class="sub">Красный путь — то, чего в API ещё нет. Без него возвращается кэш графа в памяти демо.</p>
+    <div class="diagram-controls">
+      <div class="dz-group">
+        <button type="button" data-dz="out" title="Отдалить">−</button>
+        <button type="button" data-dz="in" title="Приблизить">+</button>
+        <button type="button" data-dz="reset" title="Сбросить масштаб">⟲</button>
+        <button type="button" data-dz="full" title="На весь экран">⛶</button>
+      </div>
+      <div class="dz-group">
+        <button type="button" class="txt" data-dz="copy" title="Скопировать код диаграммы">Копировать</button>
+        <button type="button" class="txt" data-dz="dl" title="Скачать как .md">Скачать .md</button>
+      </div>
+    </div>
+    <div class="diagram-stage">
+      <pre class="mermaid">
+flowchart TD
+  A["Запрос канваса"] --> B["GET /entities · sort=degree"]
+  B --> C["Множество node_ids"]
+  C --> D{"Есть relations/select?"}
+  D -->|"да"| E["Связи одним запросом"]
+  D -->|"нет"| F["Все связи постранично · 123 запроса"]
+  F --> G["Кэш всех связей в памяти"]
+  E --> H["layout.py · координаты"]
+  G --> H
+  H --> I["GraphResponse фронту"]
+
+  style D fill:#7f1d1d,color:#fff
+  style F fill:#7f1d1d,color:#fff
+  style G fill:#7f1d1d,color:#fff
+      </pre>
+    </div>
+  </div>
+</section>
+
+
+<section id="contracts" data-nav="Контракты">
+  <span class="tag">7 · Контракты</span>
+  <h2>Что чьё и что не меняется</h2>
+  <p class="intro">Два контракта: наш с фронтом и наш с сервисом. Первый заморожен до шага 10.</p>
+
+  <div class="mtx">
+    <table>
+      <thead><tr><th>Зона ответственности</th><th>ragu-web-api</th><th>ragu-api</th><th>Фронт</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Чтение графа<br><span class="tsub">сущности, связи, чанки</span></td><td><span class="cell na">—</span></td><td><span class="cell good">владеет</span></td><td><span class="cell na">—</span></td></tr>
+        <tr><td class="lab">Режимы поиска<br><span class="tsub">и их доступность</span></td><td><span class="cell mid">проксирует</span></td><td><span class="cell good">владеет</span></td><td><span class="cell mid">показывает</span></td></tr>
+        <tr><td class="lab">Генерация ответа<br><span class="tsub">промпт, LLM</span></td><td><span class="cell na">—</span></td><td><span class="cell good">владеет</span></td><td><span class="cell na">—</span></td></tr>
+        <tr><td class="lab">Язык ответа<br><span class="tsub">по сообщению</span></td><td><span class="cell good">владеет</span></td><td><span class="cell mid">исполняет</span></td><td><span class="cell na">—</span></td></tr>
+        <tr><td class="lab">Учёт токенов<br><span class="tsub">и деньги</span></td><td><span class="cell mid">считает цену</span></td><td><span class="cell good">считает токены</span></td><td><span class="cell mid">показывает</span></td></tr>
+        <tr><td class="lab">Координаты канваса</td><td><span class="cell good">владеет</span></td><td><span class="cell na">—</span></td><td><span class="cell mid">рисует</span></td></tr>
+        <tr><td class="lab">Карточки галереи<br><span class="tsub">домен, бейджи</span></td><td><span class="cell good">владеет</span></td><td><span class="cell na">—</span></td><td><span class="cell mid">показывает</span></td></tr>
+        <tr><td class="lab">Треды чатов<br><span class="tsub">и их настройки</span></td><td><span class="cell na">—</span></td><td><span class="cell na">—</span></td><td><span class="cell good">владеет</span></td></tr>
+        <tr><td class="lab">Форма трейса</td><td><span class="cell good">владеет</span></td><td><span class="cell mid">даёт сырьё</span></td><td><span class="cell mid">показывает</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <span class="h">Заморозка контракта фронта</span>
+    <code>back/openapi.json</code> и сгенерированный из него <code>front/api/ragu.openapi.ts</code> не меняются на шагах 1–9. Первое разрешённое изменение — шаг 10, стоимость в трейсе; оно идёт одним коммитом вместе с регенерацией клиента через <code>bash back/scripts/regen-openapi.sh</code>.
+  </div>
+</section>
+
+
+<section id="cache" data-nav="Кэш и состояние">
+  <span class="tag">8 · Состояние</span>
+  <h2>Полного графа в памяти демо быть не должно</h2>
+  <p class="intro">Ради этого затевался переезд. Всё, что кэшируется, кэшируется с TTL и без права быть источником правды.</p>
+
+  <div class="tbl-scroll">
+    <table class="big" id="cachetbl">
+      <thead><tr>
+        <th data-sort="text">Что</th>
+        <th data-sort="text">Ключ</th>
+        <th data-sort="text">Жизнь</th>
+        <th data-sort="text">Зачем</th>
+      </tr></thead>
+      <tbody>
+        <tr data-cat="yes"><td><span class="tname">Каталог корпусов</span></td><td><code>—</code></td><td><span class="pill note">TTL 60 с</span></td><td class="det">Галерея открывается часто, список меняется редко.</td></tr>
+        <tr data-cat="yes"><td><span class="tname">stats + capabilities</span></td><td><code>dataset_id</code></td><td><span class="pill note">TTL 300 с</span></td><td class="det">Меняются только при пересборке графа.</td></tr>
+        <tr data-cat="yes"><td><span class="tname">Подграф канваса</span></td><td><code>(dataset, limit, фильтры)</code></td><td><span class="pill note">TTL 300 с</span></td><td class="det">Пересобирать на каждый клик по фильтру дорого.</td></tr>
+        <tr data-cat="no"><td><span class="tname">Полный список сущностей</span></td><td><code>—</code></td><td><span class="pill alert">не кэшируем</span></td><td class="det">Это и была материализованная копия графа.</td></tr>
+        <tr data-cat="no"><td><span class="tname">Полный список связей</span></td><td><code>—</code></td><td><span class="pill alert">не кэшируем</span></td><td class="det">Допустимо только как временная мера до появления <code>/relations/select</code>.</td></tr>
+        <tr data-cat="no"><td><span class="tname">Ответы агента</span></td><td><code>—</code></td><td><span class="pill alert">не кэшируем</span></td><td class="det">У ragu-api свой кэш LLM.</td></tr>
+        <tr data-cat="no"><td><span class="tname">История диалога</span></td><td><code>—</code></td><td><span class="pill alert">не храним</span></td><td class="det">Треды живут в браузере. БД в MVP не вводится.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<section id="errors" data-nav="Ошибки">
+  <span class="tag">9 · Ошибки</span>
+  <h2>Каждый отказ виден и назван</h2>
+  <p class="intro">Правило единое: сбой подсистемы не роняет запрос, но обязан быть в логе и в трейсе. Обратное стоило недели диагностики.</p>
+
+  <div class="diagram-card">
+    <h3>Маппинг ошибок сервиса</h3>
+    <p class="sub">Клиент ветвится по <code>code</code>, а не по тексту сообщения.</p>
+    <div class="diagram-controls">
+      <div class="dz-group">
+        <button type="button" data-dz="out" title="Отдалить">−</button>
+        <button type="button" data-dz="in" title="Приблизить">+</button>
+        <button type="button" data-dz="reset" title="Сбросить масштаб">⟲</button>
+        <button type="button" data-dz="full" title="На весь экран">⛶</button>
+      </div>
+      <div class="dz-group">
+        <button type="button" class="txt" data-dz="copy" title="Скопировать код диаграммы">Копировать</button>
+        <button type="button" class="txt" data-dz="dl" title="Скачать как .md">Скачать .md</button>
+      </div>
+    </div>
+    <div class="diagram-stage">
+      <pre class="mermaid">
+flowchart TD
+  A["RaguApiError"] --> B{"code"}
+  B -->|"CAPABILITY_UNAVAILABLE · способность названа"| C["409 · режим гасится до конца сессии"]
+  B -->|"CAPABILITY_UNAVAILABLE · null"| D["200 · пустой трейс, переформулировать"]
+  B -->|"GRAPH_BUSY"| E["409 · корпус пересобирается"]
+  B -->|"SERVICE_NOT_READY"| F["503 + Retry-After"]
+  B -->|"TOO_MANY_REQUESTS"| G["429 · повторить с паузой"]
+  B -->|"BUDGET_EXCEEDED"| H["429 · НЕ повторять"]
+  B -->|"REQUEST_TIMEOUT"| I["504"]
+  B -->|"INTERNAL_ERROR"| J["500 + request_id пользователю"]
+      </pre>
+    </div>
+  </div>
+
+  <div class="grid g3">
+    <div class="c alert">
+      <div class="hd"><h4>Два разных 409</h4><span class="pill alert">не путать</span></div>
+      <p>С названной способностью — режим на этом корпусе не заработает никогда. С <code>null</code> — хранилище есть, но запрос ничего не извлёк.</p>
+      <div class="fact">по missing_capability</div>
+    </div>
+    <div class="c warn">
+      <div class="hd"><h4>Два разных 429</h4><span class="pill warn">ретраи</span></div>
+      <p><code>TOO_MANY_REQUESTS</code> повторять с паузой. <code>BUDGET_EXCEEDED</code> повторять бессмысленно — лимит запроса исчерпан.</p>
+      <div class="fact">слепой ретрай на 429 — ошибка</div>
+    </div>
+    <div class="c info">
+      <div class="hd"><h4>Сквозной id</h4><span class="pill info">есть</span></div>
+      <p>Наш <code>request_id</code> уходит в ragu-api заголовком. Одна строка ищется в логах обоих сервисов.</p>
+      <div class="fact">X-Request-ID</div>
+    </div>
+  </div>
+
+  <div class="box alert">
+    <span class="h">Деградация обязана быть видна</span>
+    Поля <code>engines.degraded</code>, <code>engines.children</code> и <code>engines.rerank_error</code> переносятся в трейс и показываются в UI. Тихая потеря качества, выглядящая как нормальный ответ, — та самая ошибка, которую мы уже совершили один раз.
+  </div>
+</section>
+
+
+<section id="features" data-nav="Новые фичи">
+  <span class="tag">10 · Новые фичи</span>
+  <h2>Четыре добавления поверх переезда</h2>
+  <p class="intro">Каждая опирается на то, что уже отдаёт сервис.</p>
+
+  <div class="grid g2">
+    <div class="c info">
+      <div class="hd"><h4>Реранкер</h4><span class="pill info">CPU</span></div>
+      <div class="sub">gte-multilingual-reranker-base · вне процесса API</div>
+      <p>Сервис реранкер не конструирует, принимает снаружи. Модель живёт в контейнере эмбеддера — там уже torch и проверенные пины.</p>
+      <div class="kv">
+        <b>по умолчанию</b><span class="dn">выключен, базовая задержка не меняется</span>
+        <b>при отказе</b><span class="up">ответ без реранка, причина в rerank_error</span>
+      </div>
+      <div class="fact">2 батча по 16, не 30</div>
+    </div>
+    <div class="c info">
+      <div class="hd"><h4>Токены и деньги</h4><span class="pill info">витрина</span></div>
+      <div class="sub">usage из ответа сервиса</div>
+      <p>Токены считает ragu-api и честно помечает <code>estimated</code>: они снимаются токенизатором, а не берутся у провайдера. Цену за 1000 задаём мы.</p>
+      <div class="kv">
+        <b>годится</b><span class="up">оценить запрос, остановить разогнавшийся</span>
+        <b>не годится</b><span class="dn">выставить счёт</span>
+      </div>
+      <div class="fact">разбивка по стадиям</div>
+    </div>
+    <div class="c note">
+      <div class="hd"><h4>Режимы в интерфейсе</h4><span class="pill note">UI</span></div>
+      <div class="sub">вместо двух галочек</div>
+      <p>Явный выбор <code>local</code> / <code>naive</code> / <code>mix</code>, отдельно декомпозиция и реранкер. Недоступные для корпуса режимы гасятся по <code>/capabilities</code>, а не выясняются отказом.</p>
+      <div class="fact">состав mix задаётся запросом</div>
+    </div>
+    <div class="c note">
+      <div class="hd"><h4>Треды внутри корпуса</h4><span class="pill note">клиент</span></div>
+      <div class="sub">состояние в браузере</div>
+      <p>Несколько диалогов на корпус, у каждого свои режим, реранк, декомпозиция и <code>top_k</code>. Бэкенд остаётся без состояния — запрос несёт все настройки.</p>
+      <div class="fact">$mol_state_local</div>
+    </div>
+  </div>
+
+  <div class="diagram-card">
+    <h3>Жизненный цикл треда</h3>
+    <p class="sub">Целиком на фронте. Серверной персистентности в MVP нет.</p>
+    <div class="diagram-controls">
+      <div class="dz-group">
+        <button type="button" data-dz="out" title="Отдалить">−</button>
+        <button type="button" data-dz="in" title="Приблизить">+</button>
+        <button type="button" data-dz="reset" title="Сбросить масштаб">⟲</button>
+        <button type="button" data-dz="full" title="На весь экран">⛶</button>
+      </div>
+      <div class="dz-group">
+        <button type="button" class="txt" data-dz="copy" title="Скопировать код диаграммы">Копировать</button>
+        <button type="button" class="txt" data-dz="dl" title="Скачать как .md">Скачать .md</button>
+      </div>
+    </div>
+    <div class="diagram-stage">
+      <pre class="mermaid">
+stateDiagram-v2
+  [*] --> Пустой: создан в корпусе
+  Пустой --> Активный: первый вопрос
+  Пустой --> [*]: удалён
+  Активный --> Активный: вопрос или смена настроек
+  Активный --> Фоновый: переключились на другой тред
+  Фоновый --> Активный: вернулись
+  Активный --> [*]: удалён
+  Фоновый --> [*]: удалён
+      </pre>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <span class="h">Ограничение, которое фиксируем сознательно</span>
+    Треды живут в браузере и не переносятся между устройствами. Серверная персистентность потребовала бы базы данных — за пределами MVP.
+  </div>
+</section>
+
+
+<section id="config" data-nav="Конфигурация">
+  <span class="tag">11 · Конфигурация</span>
+  <h2>Ключи LLM уезжают из нашего контейнера</h2>
+  <p class="intro">После переезда демо-бэкенд не знает ни про эмбеддер, ни про модель.</p>
+
+  <div class="grid g2">
+    <div class="stk">
+      <div class="hd"><h4>ragu-web-api</h4><span class="pill info">остаётся</span></div>
+      <div class="flow">адрес сервиса → <b>цены</b> → размеры страниц</div>
+      <p class="yn p"><i>есть</i><code>RAGU_API_URL</code>, <code>RAGU_API_KEY</code>, <code>RAGU_API_TIMEOUT</code>, <code>TOKEN_PRICE_*</code>, <code>LOG_FORMAT</code>, <code>LOG_LEVEL</code>.</p>
+      <p class="yn m"><i>уходит</i><code>YANDEX_*</code>, <code>OPENAI_*</code>, <code>EMBEDDER_*</code>, <code>RAGU_INDEXES_DIR</code>.</p>
+    </div>
+    <div class="stk">
+      <div class="hd"><h4>ragu-api</h4><span class="pill note">новый</span></div>
+      <div class="flow">графы → <b>модель</b> → бюджеты</div>
+      <p class="yn p"><i>есть</i><code>RAGU_API_GRAPHS</code> со списком корпусов, <code>API_KEYS</code>, <code>EMBEDDER_DIM=768</code>, <code>LANGUAGE</code>, <code>MAX_*</code>, <code>REQUEST_TIMEOUT</code>, <code>RERANK_TIMEOUT</code>.</p>
+      <p class="yn m"><i>важно</i>Клиентский таймаут должен быть <b>меньше</b> серверного, иначе оплаченный запрос бросается впустую.</p>
+    </div>
+  </div>
+
+  <div class="codehd">docker-compose.yml — состав после переезда</div>
+  <pre class="code">embedder    <span class="cm"># gte-multilingual-base 768 + реранкер, sentence-transformers&lt;5</span>
+ragu-api    <span class="cm"># графы, поиск, генерация; монтирует ./indexes</span>
+back        <span class="cm"># BFF; знает только адрес ragu-api</span>
+prometheus  <span class="cm"># скрапит back и ragu-api</span>
+grafana     <span class="cm"># дашборд под /grafana/</span>
+caddy       <span class="cm"># TLS, /metrics закрыт снаружи</span></pre>
+
+  <div class="box alert">
+    <span class="h">Dockerfile обязателен к правке</span>
+    Сейчас <code>back/Dockerfile</code> ставит зависимости через <code>pip install .</code>, а <code>[tool.uv.sources]</code> — таблица только для uv. В образ приедет <code>graph-ragu</code> с PyPI, где пакета <code>ragu.api</code> нет. Собранный до этой правки образ упадёт на импорте.
+  </div>
+</section>
+
+
+<section id="deleted" data-nav="Что удаляется">
+  <span class="tag">12 · Удаление</span>
+  <h2>Уходит три четверти бэкенда</h2>
+  <p class="intro">Замеры текущих объёмов — фактические, по файлам.</p>
+
+  <div class="board">
+    <div class="bcol alert">
+      <h4>Удаляется целиком</h4>
+      <div class="chips">
+        <span class="chip">парсер GML</span><span class="chip">дискавери индексов</span><span class="chip">LoadedIndex</span><span class="chip">RaguSearchAdapter</span><span class="chip">свой mapping</span><span class="chip">keyword-фолбэк</span><span class="chip">OpenAICompatibleLLM</span><span class="chip">_plan_queries</span><span class="chip">mock_repository</span><span class="chip">mock_data</span>
+      </div>
+      <p class="note-t">≈2900 строк вместе с моками.</p>
+    </div>
+    <div class="bcol warn">
+      <h4>Переписывается</h4>
+      <div class="chips">
+        <span class="chip">answer.py</span><span class="chip">карточки галереи</span><span class="chip">подграф канваса</span><span class="chip">сборка трейса</span><span class="chip">метрики</span>
+      </div>
+      <p class="note-t">Логика сохраняется, источник данных меняется.</p>
+    </div>
+    <div class="bcol info">
+      <h4>Не трогается</h4>
+      <div class="chips">
+        <span class="chip">logging_setup</span><span class="chip">middleware</span><span class="chip">schemas</span><span class="chip">routers</span><span class="chip">language</span><span class="chip">координаты канваса</span>
+      </div>
+      <p class="note-t">Проверено рабочим кодом, переписывать незачем.</p>
+    </div>
+  </div>
+
+  <div class="bars">
+    <div class="brow"><span class="bl">Сегодня</span><span class="bt"><i class="bf" style="width:100%;background:var(--al)"></i></span><span class="bv">4175</span></div>
+    <div class="brow"><span class="bl">После переезда</span><span class="bt"><i class="bf" style="width:15%;background:var(--ok)"></i></span><span class="bv">≈620</span></div>
+  </div>
+
+  <div class="box info">
+    <span class="h">Про моки</span>
+    <code>mock_repository.py</code> и <code>mock_data.py</code> существуют, чтобы фронт разрабатывался без индексов. У <code>ragu.api</code> для этого есть stub-бэкенд, который ходит по тем же путям кода, что настоящий, — то есть делает это честнее. Наши моки удаляются.
+  </div>
+</section>
+
+
+<section id="checklist" data-nav="Чек-лист приёмки">
+  <span class="tag">13 · Приёмка</span>
+  <h2>Четырнадцать пунктов, закрытие которых означает готовность</h2>
+  <p class="intro">Главная таблица документа. Фильтры — по фазе. Статус ведётся по мере реализации.</p>
+
+  <div class="controls" data-target="acctbl">
+    <button class="active" data-f="all">Все</button>
+    <button data-f="migration">Переезд</button>
+    <button data-f="feature">Фичи</button>
+    <button data-f="quality">Качество</button>
+  </div>
+
+  <div class="tbl-scroll">
+    <table class="big" id="acctbl" style="min-width:1100px">
+      <thead><tr>
+        <th data-sort="num">#</th>
+        <th data-sort="text">Пункт</th>
+        <th data-sort="text">Критерий закрытия</th>
+        <th data-sort="text">Блокер</th>
+        <th data-sort="text">Статус</th>
+      </tr></thead>
+      <tbody>
+        <tr data-cat="migration"><td data-v="1">1</td><td><span class="tname">ragu-api в compose</span><span class="tsub">инфраструктура</span></td><td class="det">Три корпуса в <code>RAGU_API_GRAPHS</code>, <code>/health/ready</code> отдаёт 200, <code>/capabilities</code> у medical перечисляет режимы.</td><td>—</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="2">2</td><td><span class="tname">ragu_gateway.py</span><span class="tsub">доступ</span></td><td class="det"><code>RaguApiError</code> отображается по таблице главы 9; <code>request_id</code> виден в логах обоих сервисов по одному значению.</td><td>1</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="3">3</td><td><span class="tname">Галерея на сервисе</span><span class="tsub">catalog.py</span></td><td class="det">Карточки строятся из <code>/v1/graphs</code>+<code>/stats</code>+<code>/capabilities</code>; <code>openapi.json</code> не изменился.</td><td>2</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="4">4</td><td><span class="tname">Чат на сервисе</span><span class="tsub">answer.py</span></td><td class="det">Русский вопрос к англоязычному корпусу даёт русский ответ; трейс содержит типизированные сущности, связи, чанки; <code>engines</code> и <code>usage</code> доехали.</td><td>2</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="5">5</td><td><span class="tname">Удалить генерацию</span><span class="tsub">чистка</span></td><td class="det">В <code>back/pyproject.toml</code> нет <code>openai</code>; в коде нет обращений к LLM; keyword-фолбэк и <code>RaguSearchAdapter</code> удалены.</td><td>4</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="6">6</td><td><span class="tname">Dockerfile на uv</span><span class="tsub">сборка</span></td><td class="det">Образ собирается из <code>uv.lock</code>, <code>ragu.api</code> импортируется внутри контейнера.</td><td>—</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="7">7</td><td><span class="tname">Граф на сервисе</span><span class="tsub">graph_view.py</span></td><td class="det">Канвас строится без кэша полного графа; выдача не ограничена 5000 вершин; связи получены одним запросом.</td><td><span class="pill alert">API №11</span></td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="migration"><td data-v="8">8</td><td><span class="tname">Удалить index/</span><span class="tsub">чистка</span></td><td class="det">Парсера GML, дискавери и <code>LoadedIndex</code> в репозитории нет. Моки удалены.</td><td>7</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="feature"><td data-v="9">9</td><td><span class="tname">Реранкер</span><span class="tsub">качество выдачи</span></td><td class="det">Модель поднята в контейнере эмбеддера; <code>rerank=true</code> меняет порядок источников; отказ даёт ответ без реранка и заполненный <code>rerank_error</code>; задержка стадии видна на дашборде.</td><td>4</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="feature"><td data-v="10">10</td><td><span class="tname">Токены и деньги</span><span class="tsub">витрина</span></td><td class="det">Стоимость вопроса видна в UI и на дашборде; сумма по стадиям сходится с общей; <code>openapi.json</code> и клиент фронта перегенерированы одним коммитом.</td><td>4</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="feature"><td data-v="11">11</td><td><span class="tname">Режимы в UI</span><span class="tsub">управление</span></td><td class="det">Явный выбор режима вместо галочки; недоступные гасятся по <code>/capabilities</code>; реально отработавший движок виден в трейсе.</td><td>9</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="feature"><td data-v="12">12</td><td><span class="tname">Треды в корпусе</span><span class="tsub">чаты</span></td><td class="det">Два треда одного корпуса с разными режимами дают разный <code>trace.engine</code>; треды переживают перезагрузку; переключение корпуса показывает его треды.</td><td>11</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="quality"><td data-v="13">13</td><td><span class="tname">Тесты без сети</span><span class="tsub">качество</span></td><td class="det">Презентационный слой и маппинг ошибок покрыты тестами, не требующими ни индекса, ни поднятого сервиса; полный прогон зелёный.</td><td>8</td><td><span class="pill mute">не начато</span></td></tr>
+        <tr data-cat="quality"><td data-v="14">14</td><td><span class="tname">Ни одного модуля &gt;400 строк</span><span class="tsub">структура</span></td><td class="det">Замер по файлам <code>back/src/ragu_web_api</code> подтверждает; суммарный объём ≈620 строк.</td><td>8</td><td><span class="pill mute">не начато</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box info">
+    <span class="h">Порядок</span>
+    Пункты 1–6 не зависят от доработок API и делаются сразу. Пункты 7–8 ждут <code>POST /relations/select</code>. Экран графа до этого момента работает на текущем коде — он рабочий, ломать его незачем.
+  </div>
+</section>
+
+
+<section id="risks" data-nav="Риски">
+  <span class="tag">14 · Риски</span>
+  <h2>Что может пойти не так</h2>
+  <p class="intro">Перечислены только те риски, у которых есть конкретный признак и конкретное действие.</p>
+
+  <div class="tbl-scroll">
+    <table class="big" id="risktbl">
+      <thead><tr>
+        <th data-sort="text">Риск</th>
+        <th data-sort="text">Признак</th>
+        <th data-sort="text">Действие</th>
+        <th data-sort="text">Вес</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="tname">№11 не приедет</span><span class="tsub">relations/select</span></td><td class="det">Пункты 7–8 не закрываются</td><td class="det">Временный кэш связей с TTL, помеченный к удалению; пункт 14 тогда не закрывается</td><td><span class="pill alert">высокий</span></td></tr>
+        <tr><td><span class="tname">Реранкер несовместим</span><span class="tsub">версии</span></td><td class="det"><code>IndexError</code> в <code>rope_cos</code> при загруженной модели</td><td class="det">Та же беда, что с эмбеддером: держать <code>sentence-transformers&lt;5</code>; проверять инференсом, а не загрузкой</td><td><span class="pill alert">высокий</span></td></tr>
+        <tr><td><span class="tname">Память VM</span><span class="tsub">ресурсы</span></td><td class="det">Реранкер плюс два графа в ragu-api при 4.5 ГБ свободных</td><td class="det">Замерить <code>docker stats</code> после шага 9; при нехватке — выгружать реранкер по TTL</td><td><span class="pill warn">средний</span></td></tr>
+        <tr><td><span class="tname">Таймауты не сходятся</span><span class="tsub">конфиг</span></td><td class="det">504 вместо ответа либо брошенный оплаченный запрос</td><td class="det">Клиентский таймаут строго меньше <code>REQUEST_TIMEOUT</code>; зафиксировать в <code>config.py</code></td><td><span class="pill warn">средний</span></td></tr>
+        <tr><td><span class="tname">Провенанс сущности</span><span class="tsub">потеря</span></td><td class="det">Карточка не показывает фрагменты-источники</td><td class="det">Закрыто: <code>source_chunk_ids</code> добавлены в <code>EntityItem</code> и <code>RelationItem</code></td><td><span class="pill info">снят</span></td></tr>
+        <tr><td><span class="tname">Сползание языка</span><span class="tsub">генерация</span></td><td class="det">Английский ответ на русский вопрос</td><td class="det">Проверено на живой LLM: 5 из 5 по-русски. Причина прежнего бага — язык индекса вместо языка вопроса</td><td><span class="pill info">снят</span></td></tr>
+        <tr><td><span class="tname">dennis_ritchie</span><span class="tsub">данные</span></td><td class="det">1536 измерений против 768 у эмбеддера</td><td class="det">Переиндекс на кластере; до него корпус светится в столбце «доля keyword» на дашборде</td><td><span class="pill warn">средний</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<section id="done" data-nav="Выводы">
+  <span class="tag">15 · Выводы</span>
+  <h2>Что этот переезд меняет по сути</h2>
+
+  <div class="tks">
+    <div class="tk"><span class="n">1</span>
+      <h4>Бэкенд демо перестаёт быть вторым движком RAGU</h4>
+      <p>Сегодня он параллельно читает граф, строит движки и определяет возможности корпуса. После переезда он про граф не знает.</p>
+    </div>
+    <div class="tk"><span class="n">2</span>
+      <h4>Деградация становится наблюдаемой по контракту</h4>
+      <p><code>engines.degraded</code> и <code>rerank_error</code> приходят полем, а не выводятся из косвенных признаков. Тихая потеря качества, стоившая недели, структурно исключается.</p>
+    </div>
+    <div class="tk"><span class="n">3</span>
+      <h4>Язык ответа остаётся нашим продуктовым решением</h4>
+      <p>Определяем по сообщению пользователя и передаём параметром. Промпт и генерация — сервиса, правило — наше.</p>
+    </div>
+    <div class="tk"><span class="n">4</span>
+      <h4>Один пункт API решает, будет ли бэкенд без состояния</h4>
+      <p><code>POST /relations/select</code> — граница между «прокси» и «материализованная копия графа». Остальные девять пунктов уже закрыты.</p>
+    </div>
+    <div class="tk"><span class="n">5</span>
+      <h4>Закрытие чек-листа и есть готовность MVP</h4>
+      <p>Четырнадцать пунктов покрывают переезд, четыре новые фичи и два критерия качества. После них — тестирование командой.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="src" data-nav="Источники">
+  <span class="tag">16 · Методология</span>
+  <h2>Источники и честные оговорки</h2>
+
+  <h3>Что использовалось</h3>
+  <div class="srclist">
+    <div class="src"><div class="sb">
+      <a class="st" href="https://github.com/m0tbka/RAGU/tree/feature/api/ragu/api" target="_blank" rel="noopener">m0tbka/RAGU, ветка feature/api, пакет ragu/api</a>
+      <span class="meta">GitHub <span class="loc">· 20 модулей, коммит 9d3c9a0</span></span>
+    </div></div>
+    <div class="src"><div class="sb">
+      <a class="st" href="https://github.com/m0tbka/RAGU/blob/feature/api/ragu/api/models.py" target="_blank" rel="noopener">ragu/api/models.py — схемы запроса и ответа</a>
+      <span class="meta">GitHub <span class="loc">· SourceItem.meta, EntityItem.source_chunk_ids, CommunityItem.title</span></span>
+    </div></div>
+    <div class="src"><div class="sb">
+      <a class="st" href="https://github.com/m0tbka/RAGU/blob/feature/api/ragu/api/routes.py" target="_blank" rel="noopener">ragu/api/routes.py — маршруты и их параметры</a>
+      <span class="meta">GitHub <span class="loc">· потолки limit, фильтры /entities и /relations</span></span>
+    </div></div>
+    <div class="src"><div class="sb">
+      <a class="st" href="https://github.com/RaguTeam/web" target="_blank" rel="noopener">RaguTeam/web — репозиторий демо</a>
+      <span class="meta">GitHub <span class="loc">· back/src/ragu_web_api, замеры строк на коммите 1b250c4</span></span>
+    </div></div>
+    <div class="src"><div class="sb">
+      <a class="st" href="https://github.com/m0tbka/RAGU/blob/feature/api/docs/ru/api.md" target="_blank" rel="noopener">docs/ru/api.md — построчный контракт RAGU API</a>
+      <span class="meta">GitHub <span class="loc">· маршруты, схемы, коды ошибок</span></span>
+    </div></div>
+    <div class="src"><div class="sb">
+      <a class="st" href="https://github.com/m0tbka/RAGU/blob/feature/api/ragu/api/README.md" target="_blank" rel="noopener">ragu/api/README.md — развёртывание и как добавить режим</a>
+      <span class="meta">GitHub <span class="loc">· ServiceSettings, устройство пакета</span></span>
+    </div></div>
+  </div>
+
+  <h3>Оговорки</h3>
+  <p class="cav">Объёмы целевых модулей (<code>≈120</code>, <code>≈90</code> и далее) — оценка модели Claude Opus 5, а не замер: этих файлов ещё не существует. Замеренными являются только текущие цифры главы 3, снятые подсчётом строк по файлам.</p>
+  <p class="cav">Оценка «123 запроса на ragu_bio» получена делением 61 200 связей на потолок страницы 500. Задержка сборки в секундах не замерялась — это расчёт, а не измерение.</p>
+  <p class="cav">Проверка удержания языка проведена на одной модели (<code>yandexgpt-5-pro</code>), одном шаблоне (<code>local_search</code>) и синтетическом контексте, пять прогонов. На другой модели или на длинном реальном контексте поведение может отличаться.</p>
+  <p class="cav">Вес риска (высокий, средний) — суждение модели Claude Opus 5, не вычисленная метрика.</p>
+  <p class="cav">Ссылка на артефакт с контрактом RAGU API открывается только у владельца рабочего пространства.</p>
+</section>
