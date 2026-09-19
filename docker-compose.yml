@@ -11,13 +11,57 @@ services:
     expose:
       - "8001"                            # только внутрь сети docker
 
+  ragu-api:
+    # Сервис RAGU поверх готового графа: чтение, режимы поиска, генерация,
+    # бюджеты, учёт токенов. Бэкенд демо ходит сюда клиентом и сам про граф
+    # ничего не знает.
+    build:
+      context: ./back
+      dockerfile: Dockerfile.ragu-api
+    image: ragu-api:local
+    restart: unless-stopped
+    depends_on: [embedder]
+    env_file: .env
+    environment:
+      # host по умолчанию 127.0.0.1 — внутри контейнера это делает сервис
+      # недостижимым для соседей по сети.
+      RAGU_API_HOST: 0.0.0.0
+      RAGU_API_PORT: "8020"
+      # Каждый корпус — своя папка. Первый в списке становится графом по
+      # умолчанию для плоских путей /v1/search/*.
+      RAGU_API_GRAPHS: >-
+        [{"id":"medical","storage_folder":"/data/indexes/medical","language":"russian","embedder_dim":768},
+         {"id":"ragu-bio","storage_folder":"/data/indexes/ragu_bio","language":"russian","embedder_dim":768},
+         {"id":"dennis-ritchie","storage_folder":"/data/indexes/dennis_ritchie","language":"english","embedder_dim":1536}]
+      # Пусто — сервис отвечает всем, кто до него дотянется, а каждый запрос
+      # стоит вызовов LLM. Наружу он не выставлен, но ключ всё равно задаём.
+      RAGU_API_API_KEYS: ${RAGU_API_KEY:?задайте RAGU_API_KEY в .env}
+      # Клиентский таймаут в back меньше этого: иначе отвалится сервер и придёт
+      # 504 вместо ответа.
+      RAGU_API_REQUEST_TIMEOUT: "300"
+      RAGU_API_RERANK_TIMEOUT: "10"
+      # Эмбеддер и LLM берутся из общего окружения RAGU, не из ServiceSettings.
+      EMBEDDER_BASE_URL: http://embedder:8001/v1
+      EMBEDDER_MODEL_NAME: Alibaba-NLP/gte-multilingual-base
+      EMBEDDER_MODEL_MAP: '{}'
+      EMBEDDER_API_KEY: unused
+    volumes:
+      - ./indexes:/data/indexes:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+    expose:
+      - "8020"                            # только внутрь сети docker
+
   back:
     build:
       context: ./back
       dockerfile: Dockerfile
     image: ragu-web-api:local
     restart: unless-stopped
-    depends_on: [embedder]
+    depends_on: [embedder, ragu-api]
     env_file: .env
     environment:
       # Эти значения переопределяют .env (compose environment > env_file), чтобы
@@ -27,6 +71,12 @@ services:
       EMBEDDER_MODEL_NAME: Alibaba-NLP/gte-multilingual-base   # дефолт для всех индексов
       EMBEDDER_MODEL_MAP: '{}'                     # все индексы на gte-768, переопределять нечего
       EMBEDDER_API_KEY: unused
+      # Адрес сервиса RAGU. Таймаут строго меньше его RAGU_API_REQUEST_TIMEOUT:
+      # больше — отвалится сервер и придёт 504; меньше на порядок — бросим
+      # запрос, за который уже заплачено вызовами LLM.
+      RAGU_API_URL: http://ragu-api:8020
+      RAGU_API_KEY: ${RAGU_API_KEY:?задайте RAGU_API_KEY в .env}
+      RAGU_API_TIMEOUT: "240"
       # Одна JSON-строка на запись: поля остаются полями, а не подстроками для
       # grep. Локально переменную не задают — там читаемый текстовый формат.
       LOG_FORMAT: json

@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1
+#
+# Сервис RAGU поверх готовых графов. Отдельный образ от back: у них разные
+# зависимости и разный жизненный цикл — back не должен тянуть движки RAGU,
+# а этот образ не должен знать про фронт.
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    UV_LINK_MODE=copy
+
+WORKDIR /app
+
+# git нужен для установки graph-ragu из ветки; build-essential — на случай
+# нативных колёс.
+RUN apt-get update && apt-get install -y --no-install-recommends git build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /usr/local/bin/uv
+
+# Коммит зафиксирован намеренно: ветка движется, а образ должен собираться
+# воспроизводимо. Поднимать одновременно с graph-ragu в back/uv.lock, иначе
+# бэкенд и сервис разойдутся по версии контракта.
+ARG RAGU_REF=8499c1bb3c8208e56e61c6550011f98919df4179
+RUN uv pip install --system --no-cache \
+    "graph-ragu[api] @ git+https://github.com/m0tbka/RAGU.git@${RAGU_REF}"
+
+# Движки строят TokenTruncation при конструировании, а он скачивает словарь
+# BPE. Запекаем на сборке: иначе первый запрос уходит в сеть, а офлайновое
+# развёртывание не работает вовсе.
+ENV TIKTOKEN_CACHE_DIR=/opt/tiktoken_cache
+RUN mkdir -p "$TIKTOKEN_CACHE_DIR" \
+    && python -c "import tiktoken; [tiktoken.encoding_for_model(m) for m in ('gpt-4', 'gpt-4o', 'text-embedding-3-large')]"
+
+EXPOSE 8020
+
+# Запуск через -m: только он заворачивает стандартный logging и httpx в единый
+# сток. Импорт create_app из другого места этого намеренно не делает.
+CMD ["python", "-m", "ragu.api"]

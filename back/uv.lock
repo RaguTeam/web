@@ -375,7 +375,7 @@ wheels = [
 [[package]]
 name = "graph-ragu"
 version = "0.1.0"
-source = { git = "https://github.com/m0tbka/RAGU.git?branch=feature%2Fapi#9d3c9a03cc50efed8414ca39a847495a73c00862" }
+source = { git = "https://github.com/m0tbka/RAGU.git?branch=feature%2Fapi#8499c1bb3c8208e56e61c6550011f98919df4179" }
 dependencies = [
     { name = "aiolimiter" },
     { name = "diskcache" },
