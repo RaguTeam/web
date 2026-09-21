@@ -40,11 +40,22 @@ services:
       # 504 вместо ответа.
       RAGU_API_REQUEST_TIMEOUT: "300"
       RAGU_API_RERANK_TIMEOUT: "10"
-      # Эмбеддер и LLM берутся из общего окружения RAGU, не из ServiceSettings.
+      # Эмбеддер и LLM берутся из общего окружения RAGU (ragu.common.env.Env),
+      # не из ServiceSettings.
       EMBEDDER_BASE_URL: http://embedder:8001/v1
       EMBEDDER_MODEL_NAME: Alibaba-NLP/gte-multilingual-base
       EMBEDDER_MODEL_MAP: '{}'
       EMBEDDER_API_KEY: unused
+      # Обязательны: в Env у них нет значений по умолчанию, и без них сервис не
+      # поднимется. Проверяем здесь, чтобы отказ был внятным на старте compose,
+      # а не ошибкой валидации в логе контейнера.
+      #
+      # Для YandexGPT: LLM_MODEL_NAME=gpt://<folder-id>/<модель>,
+      # LLM_BASE_URL=https://ai.api.cloud.yandex.net/v1, LLM_API_KEY=<ключ>.
+      # Прежние YANDEX_* читал старый бэкенд; RAGU их игнорирует.
+      LLM_MODEL_NAME: ${LLM_MODEL_NAME:?задайте LLM_MODEL_NAME в .env}
+      LLM_BASE_URL: ${LLM_BASE_URL:?задайте LLM_BASE_URL в .env}
+      LLM_API_KEY: ${LLM_API_KEY:?задайте LLM_API_KEY в .env}
     volumes:
       - ./indexes:/data/indexes:ro
     logging:
@@ -64,13 +75,6 @@ services:
     depends_on: [embedder, ragu-api]
     env_file: .env
     environment:
-      # Эти значения переопределяют .env (compose environment > env_file), чтобы
-      # старые строки в .env (напр. Yandex-эмбеддер) не ломали векторный поиск.
-      RAGU_INDEXES_DIR: /data/indexes              # путь к индексам внутри контейнера
-      EMBEDDER_BASE_URL: http://embedder:8001/v1   # OpenAI-совместимый эндпоинт эмбеддера
-      EMBEDDER_MODEL_NAME: Alibaba-NLP/gte-multilingual-base   # дефолт для всех индексов
-      EMBEDDER_MODEL_MAP: '{}'                     # все индексы на gte-768, переопределять нечего
-      EMBEDDER_API_KEY: unused
       # Адрес сервиса RAGU. Таймаут строго меньше его RAGU_API_REQUEST_TIMEOUT:
       # больше — отвалится сервер и придёт 504; меньше на порядок — бросим
       # запрос, за который уже заплачено вызовами LLM.
@@ -81,8 +85,8 @@ services:
       # grep. Локально переменную не задают — там читаемый текстовый формат.
       LOG_FORMAT: json
       LOG_LEVEL: INFO
-    volumes:
-      - ./indexes:/data/indexes:ro
+    # Индексы не монтируются: бэкенд их не открывает. Файлы графа видит только
+    # ragu-api.
     logging:
       # json-file по умолчанию растёт без предела. На машине свободно ~9 ГБ,
       # а стендовая сессия — это всплеск трафика.

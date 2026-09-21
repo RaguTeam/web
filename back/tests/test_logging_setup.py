@@ -61,7 +61,7 @@ def test_level_is_overridable(clean_logger, monkeypatch: pytest.MonkeyPatch) -> 
 
 
 def test_info_from_a_child_logger_is_emitted(clean_logger, capsys) -> None:
-    """The real case: index_repository logs through a child of the package logger."""
+    """The real case: a scenario module logs through a child of the package logger."""
     configure_logging()
-    logging.getLogger("ragu_web_api.services.index_repository").info("dataset ready")
+    logging.getLogger("ragu_web_api.catalog").info("dataset ready")
     assert "dataset ready" in capsys.readouterr().out

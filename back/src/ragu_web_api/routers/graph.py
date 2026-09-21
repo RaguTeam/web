@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
+from ragu_web_api.dependencies import get_graph_view
 from ragu_web_api.graph_view import GraphView
 from ragu_web_api.schemas.common import ErrorResponse
 from ragu_web_api.schemas.graph import (
@@ -10,7 +11,6 @@ from ragu_web_api.schemas.graph import (
     GraphResponse,
     NodeDetailResponse,
 )
-from ragu_web_api.services.dependencies import get_graph_view
 
 router = APIRouter(
     prefix="/datasets/{dataset_id}/graph",

@@ -3,9 +3,9 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 
 from ragu_web_api.catalog import Catalog
+from ragu_web_api.dependencies import get_catalog
 from ragu_web_api.schemas.common import ErrorResponse, Locale
 from ragu_web_api.schemas.datasets import DatasetCard, DatasetDetail
-from ragu_web_api.services.dependencies import get_catalog
 
 router = APIRouter(
     prefix="/datasets",

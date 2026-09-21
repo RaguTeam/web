@@ -3,9 +3,9 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 
 from ragu_web_api.answer import Answerer
+from ragu_web_api.dependencies import get_answerer
 from ragu_web_api.schemas.agent import AgentRequest, AgentResponse, SuggestionsResponse
 from ragu_web_api.schemas.common import ErrorResponse, Locale
-from ragu_web_api.services.dependencies import get_answerer
 
 router = APIRouter(
     prefix="/datasets/{dataset_id}/agent",

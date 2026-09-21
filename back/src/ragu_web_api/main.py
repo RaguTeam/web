@@ -11,15 +11,15 @@ from prometheus_fastapi_instrumentator import Instrumentator, metrics
 from ragu_web_api import __version__
 from ragu_web_api.logging_setup import configure_logging
 
-# Must run before the routers import: that import builds the IndexRepository
-# singleton, which logs its startup diagnostics on the way up. Configure the
-# handler after it and those lines are already gone.
+# Must run before the routers import: that import builds the process singletons,
+# which log their startup diagnostics on the way up. Configure the handler after
+# it and those lines are already gone.
 configure_logging()
 
 from ragu_web_api.logging_setup import REQUEST_ID_HEADER  # noqa: E402
 from ragu_web_api.middleware import RequestContextMiddleware  # noqa: E402
 from ragu_web_api.routers import api_router  # noqa: E402
-from ragu_web_api.services.dependencies import gateway  # noqa: E402
+from ragu_web_api.dependencies import gateway  # noqa: E402
 
 
 @asynccontextmanager
