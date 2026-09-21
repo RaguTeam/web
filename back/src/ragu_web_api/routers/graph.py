@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
+from ragu_web_api.graph_view import GraphView
 from ragu_web_api.schemas.common import ErrorResponse
 from ragu_web_api.schemas.graph import (
     EntityType,
@@ -9,8 +10,7 @@ from ragu_web_api.schemas.graph import (
     GraphResponse,
     NodeDetailResponse,
 )
-from ragu_web_api.services.dependencies import get_repository
-from ragu_web_api.services.index_repository import IndexRepository
+from ragu_web_api.services.dependencies import get_graph_view
 
 router = APIRouter(
     prefix="/datasets/{dataset_id}/graph",
@@ -26,16 +26,19 @@ router = APIRouter(
 )
 async def get_graph(
     dataset_id: str,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
-    limit: Annotated[int, Query(ge=1, le=5000)] = 500,
+    view: Annotated[GraphView, Depends(get_graph_view)],
+    # Без верхней границы намеренно. Прежние 5000 были потолком страницы
+    # сервиса, который по недосмотру стал потолком выдачи: корпус крупнее
+    # обрезался молча. Теперь это размер шага, а не предел.
+    limit: Annotated[int, Query(ge=1)] = 500,
     search: Annotated[str | None, Query(min_length=1)] = None,
     entity_types: Annotated[list[EntityType] | None, Query()] = None,
     community_ids: Annotated[list[str] | None, Query()] = None,
     min_strength: Annotated[float, Query(ge=0.0, le=1.0)] = 0.0,
     include_communities: bool = True,
 ) -> GraphResponse:
-    return repository.get_graph(
-        dataset_id=dataset_id,
+    return await view.graph(
+        dataset_id,
         limit=limit,
         search=search,
         entity_types=entity_types,
@@ -53,9 +56,9 @@ async def get_graph(
 async def get_node(
     dataset_id: str,
     node_id: str,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    view: Annotated[GraphView, Depends(get_graph_view)],
 ) -> NodeDetailResponse:
-    return repository.get_node_detail(dataset_id=dataset_id, node_id=node_id)
+    return await view.node(dataset_id, node_id)
 
 
 @router.get(
@@ -66,14 +69,14 @@ async def get_node(
 async def get_node_neighbors(
     dataset_id: str,
     node_id: str,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    view: Annotated[GraphView, Depends(get_graph_view)],
     depth: Annotated[int, Query(ge=1, le=3)] = 1,
     limit: Annotated[int, Query(ge=1, le=1000)] = 100,
     min_strength: Annotated[float, Query(ge=0.0, le=1.0)] = 0.0,
 ) -> GraphResponse:
-    return repository.get_neighbors(
-        dataset_id=dataset_id,
-        node_id=node_id,
+    return await view.neighbors(
+        dataset_id,
+        node_id,
         depth=depth,
         limit=limit,
         min_strength=min_strength,
@@ -87,6 +90,6 @@ async def get_node_neighbors(
 )
 async def get_communities(
     dataset_id: str,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    view: Annotated[GraphView, Depends(get_graph_view)],
 ) -> GraphCommunitiesResponse:
-    return repository.get_communities(dataset_id=dataset_id)
+    return await view.communities(dataset_id)

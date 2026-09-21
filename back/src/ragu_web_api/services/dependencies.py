@@ -8,6 +8,7 @@
 from ragu_web_api.answer import Answerer
 from ragu_web_api.catalog import Catalog
 from ragu_web_api.config import load_settings
+from ragu_web_api.graph_view import GraphView
 from ragu_web_api.ragu_gateway import RaguGateway
 from ragu_web_api.services.index_repository import IndexRepository
 
@@ -18,6 +19,7 @@ settings = load_settings()
 gateway = RaguGateway(settings)
 catalog = Catalog(gateway, settings)
 answerer = Answerer(gateway, catalog, settings)
+graph_view = GraphView(gateway, catalog, settings)
 
 repository = IndexRepository()
 
@@ -32,6 +34,10 @@ def get_catalog() -> Catalog:
 
 def get_answerer() -> Answerer:
     return answerer
+
+
+def get_graph_view() -> GraphView:
+    return graph_view
 
 
 def get_gateway() -> RaguGateway:

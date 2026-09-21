@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from ragu.api.models import EngineReport, SearchResponse, UsageModel
 
+from ragu_web_api.presentation import graph
 from ragu_web_api.schemas.agent import (
     AnswerTrace,
     GraphHighlight,
@@ -39,9 +40,6 @@ _ENGINE_BY_CLASS: dict[str, TraceEngine] = {
 # считает не счёт за электричество, а порядок величины.
 _WATT_HOURS_PER_SECOND = 0.11
 
-# Сила связи в RAGU — целое примерно до пяти, в контракте фронта — доля.
-_STRENGTH_SCALE = 5.0
-
 
 def engine_used(engines: EngineReport) -> TraceEngine:
     """Режим, который реально отработал.
@@ -62,10 +60,6 @@ def _score(value: float | None) -> float:
     if value is None:
         return 0.0
     return max(0.0, min(1.0, float(value)))
-
-
-def _strength(value: float) -> float:
-    return max(0.0, min(1.0, value / _STRENGTH_SCALE if value > 1.0 else value))
 
 
 def timings(usage: UsageModel | None, total_ms: int) -> TraceTimings:
@@ -121,7 +115,7 @@ def build(
                     source=meta.subject_id,
                     target=meta.object_id,
                     relation_type=meta.type,
-                    strength=_strength(meta.strength),
+                    strength=graph.strength(meta.strength),
                 )
             )
         elif meta.kind == "chunk":

@@ -14,7 +14,9 @@ from typing import Any
 
 from ragu.api.client import RaguApiError, RaguClient
 from ragu.api.models import (
+    ChunkPage,
     CommunityPage,
+    Neighborhood,
     EntityItem,
     EntityPage,
     GraphDetail,
@@ -96,11 +98,12 @@ class _ExtendedClient(RaguClient):
         limit: int = 50,
         offset: int = 0,
         ids: list[str] | None = None,
-    ) -> dict[str, Any]:
+    ) -> ChunkPage:
         params: dict[str, Any] = {"limit": limit, "offset": offset}
         if ids:
             params["ids"] = list(ids)
-        return await self._get(f"{self._prefix(graph)}/chunks", **params)
+        payload = await self._get(f"{self._prefix(graph)}/chunks", **params)
+        return ChunkPage.model_validate(payload)
 
     async def select_relations(
         self,
@@ -192,10 +195,17 @@ class RaguGateway:
             self._client.select_relations(entity_ids, graph=dataset, **kwargs)
         )
 
+    async def neighbors(
+        self, dataset: str, entity_id: str, *, depth: int = 1, limit: int = 200
+    ) -> Neighborhood:
+        return await self._call(
+            self._client.neighbors(entity_id, graph=dataset, depth=depth, limit=limit)
+        )
+
     async def communities(self, dataset: str, **kwargs: Any) -> CommunityPage:
         return await self._call(self._client.communities(graph=dataset, **kwargs))
 
-    async def chunks_by_ids(self, dataset: str, ids: list[str]) -> dict[str, Any]:
+    async def chunks_by_ids(self, dataset: str, ids: list[str]) -> ChunkPage:
         return await self._call(
             self._client.chunks_page(
                 graph=dataset, ids=ids[:RAGU_IDS_MAX], limit=RAGU_IDS_MAX

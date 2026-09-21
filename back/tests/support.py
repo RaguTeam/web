@@ -14,6 +14,10 @@ from typing import Any
 
 from fastapi import HTTPException
 from ragu.api.models import (
+    ChunkItem,
+    ChunkPage,
+    CommunityItem,
+    CommunityPage,
     EngineReport,
     EntityItem,
     EntityPage,
@@ -21,7 +25,10 @@ from ragu.api.models import (
     GraphInfo,
     GraphListResponse,
     ModeAvailability,
+    Neighborhood,
     PageInfo,
+    RelationItem,
+    RelationPage,
     SearchResponse,
 )
 
@@ -104,16 +111,74 @@ def search_response(**overrides) -> SearchResponse:
     return SearchResponse(**payload)
 
 
+def entity(entity_id: str, **overrides) -> EntityItem:
+    payload: dict[str, Any] = {
+        "id": entity_id,
+        "name": entity_id.upper(),
+        "type": "PERSON",
+        "description": "…",
+        "degree": 1,
+    }
+    payload.update(overrides)
+    return EntityItem(**payload)
+
+
+def relation(relation_id: str, subject: str, obj: str, **overrides) -> RelationItem:
+    payload: dict[str, Any] = {
+        "id": relation_id,
+        "subject_id": subject,
+        "object_id": obj,
+        "subject_name": subject.upper(),
+        "object_name": obj.upper(),
+        "type": "RELATED_TO",
+        "strength": 5.0,
+    }
+    payload.update(overrides)
+    return RelationItem(**payload)
+
+
+def community(community_id: str, **overrides) -> CommunityItem:
+    payload: dict[str, Any] = {
+        "id": community_id,
+        "level": 0,
+        "cluster_id": 1,
+        "entity_count": 8,
+        "title": "Сообщество",
+        "summary": "свод",
+        "entity_ids": ["e0"],
+    }
+    payload.update(overrides)
+    return CommunityItem(**payload)
+
+
 class FakeGateway:
     """Поверхность шлюза, которую зовут сценарии, плюс журнал обращений."""
 
-    def __init__(self, infos: list[GraphInfo], details=None, types=None, answer=None):
+    def __init__(
+        self,
+        infos: list[GraphInfo],
+        details=None,
+        types=None,
+        answer=None,
+        entities=None,
+        relations=None,
+        communities=None,
+        chunks=None,
+        neighborhood=None,
+    ):
         self._infos = infos
         self._details = details or {item.id: detail(item.id) for item in infos}
         self._types = types or {}
         self._answer = answer or search_response()
+        self._entities = entities
+        self._relations = relations or []
+        self._communities = communities or []
+        self._chunks = chunks or []
+        self._neighborhood = neighborhood
         self.calls: dict[str, int] = {}
         self.searches: list[dict[str, Any]] = []
+        self.selections: list[dict[str, Any]] = []
+        self.entity_queries: list[dict[str, Any]] = []
         self.fail_on_graphs = False
 
     def _count(self, name: str) -> None:
@@ -136,13 +201,66 @@ class FakeGateway:
 
     async def entities(self, dataset: str, **kwargs) -> EntityPage:
         self._count("entities")
-        names = self._types.get(dataset, ["PERSON"])
-        entities = [
-            EntityItem(id=f"e{index}", name=f"e{index}", type=name)
-            for index, name in enumerate(names)
-        ]
+        self.entity_queries.append(kwargs)
+        if self._entities is None:
+            names = self._types.get(dataset, ["PERSON"])
+            items = [
+                EntityItem(id=f"e{index}", name=f"e{index}", type=name)
+                for index, name in enumerate(names)
+            ]
+        else:
+            items = list(self._entities)
+            if kwargs.get("type"):
+                items = [item for item in items if item.type == kwargs["type"]]
+        total = len(items)
+        offset = kwargs.get("offset", 0)
+        limit = kwargs.get("limit", 50)
         return EntityPage(
-            page=PageInfo(total=len(entities), limit=500, offset=0), entities=entities
+            page=PageInfo(total=total, limit=limit, offset=offset),
+            entities=items[offset : offset + limit],
+        )
+
+    async def entity(self, dataset: str, entity_id: str) -> EntityItem:
+        self._count("entity")
+        for item in self._entities or []:
+            if item.id == entity_id:
+                return item
+        return entity(entity_id)
+
+    async def select_relations(self, dataset: str, entity_ids, **kwargs) -> RelationPage:
+        self._count("select_relations")
+        self.selections.append({"entity_ids": list(entity_ids), **kwargs})
+        offset = kwargs.get("offset", 0)
+        limit = kwargs.get("limit", 500)
+        items = self._relations[offset : offset + limit]
+        return RelationPage(
+            page=PageInfo(total=len(self._relations), limit=limit, offset=offset),
+            relations=items,
+        )
+
+    async def neighbors(self, dataset: str, entity_id: str, **kwargs) -> Neighborhood:
+        self._count("neighbors")
+        if self._neighborhood is not None:
+            return self._neighborhood
+        return Neighborhood(
+            root=entity_id,
+            depth=kwargs.get("depth", 1),
+            entities=list(self._entities or []),
+            relations=list(self._relations),
+        )
+
+    async def communities(self, dataset: str, **kwargs) -> CommunityPage:
+        self._count("communities")
+        return CommunityPage(
+            page=PageInfo(total=len(self._communities), limit=500, offset=0),
+            communities=list(self._communities),
+        )
+
+    async def chunks_by_ids(self, dataset: str, ids) -> ChunkPage:
+        self._count("chunks")
+        items = [item for item in self._chunks if item.id in set(ids)]
+        return ChunkPage(
+            page=PageInfo(total=len(items), limit=500, offset=0), chunks=items
         )
 
     async def search(self, dataset: str, mode: str, query: str, **body) -> SearchResponse:
