@@ -139,17 +139,46 @@ namespace $.$$ {
 		}
 
 		/**
-		 * Переключалка «Граф при поиске» ложится прямо на поле `engine` запроса
-		 * к агенту, отдельная ручка на бэке не нужна: `naive` ищет только по
-		 * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
-		 * (`SUPPORTED_ENGINES` в schemas/datasets.py).
+		 * Режимы, которые обслуживает выбранный корпус.
+		 *
+		 * Спрашиваем у бэка, а не перечисляем сами: хранилища у корпусов разные,
+		 * и режим без своего хранилища не заработает здесь никогда. Раньше набор
+		 * был захардкожен, и интерфейс предлагал то, что заведомо не отвечало.
+		 *
+		 * Отказ — не повод ломать чат: без списка остаётся mix, а бэк всё равно
+		 * подставит доступный и назовёт его в трейсе.
+		 */
+		@$mol_mem
+		dataset_engines(): readonly string[] {
+			const id = this.dataset_id()
+			if( !id || this.$.$mol_state_arg.value( 'mock' ) === '1' ) return [ 'mix' ]
+			try {
+				const res = this.$.$raggu_web_front_api(
+					$raggu_web_front_api_ragu_get_dataset,
+					{ params: { dataset_id: id }, query: {} },
+				)
+				const list = ( res as any )?.available_engines as string[] | undefined
+				return list?.length ? list : [ 'mix' ]
+			} catch( error: any ) {
+				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
+				console.warn( '[raggu app] capabilities fetch failed, offering mix only:', error )
+				return [ 'mix' ]
+			}
+		}
+
+		/**
+		 * Режим поиска для запроса к агенту.
+		 *
+		 * Берём у панели уже разрешённое значение: выбранный режим, если корпус
+		 * его обслуживает, иначе первый доступный. Разрешение живёт в одном
+		 * месте — иначе интерфейс показывал бы одно, а отправлял другое.
 		 *
 		 * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
 		 * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
 		 * плюс декомпозиция включена» нельзя было бы выразить.
 		 */
 		chat_engine() {
-			return this.Settings().use_graph() === 'on' ? 'mix' : 'naive'
+			return this.Settings().engine_value()
 		}
 
 		/** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */

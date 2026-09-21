@@ -50,6 +50,7 @@ $raggu_web_front_app $bog_builderui_div
 		<= Help $raggu_web_front_help
 			showed? <=> help_open?
 		<= Settings $raggu_web_front_settings
+			available_engines <= dataset_engines /
 			showed? <=> settings_open?
 			close? <=> close_settings? null
 		<= Summary_popup $mol_view
