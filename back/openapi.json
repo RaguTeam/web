@@ -818,6 +818,16 @@
           "timings": {
             "$ref": "#/components/schemas/TraceTimings"
           },
+          "usage": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TraceUsage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "energy": {
             "$ref": "#/components/schemas/TraceEnergy"
           },
@@ -2092,6 +2102,41 @@
         ],
         "title": "TraceRelation"
       },
+      "TraceStageUsage": {
+        "properties": {
+          "stage": {
+            "type": "string",
+            "title": "Stage",
+            "examples": [
+              "mix"
+            ]
+          },
+          "calls": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Calls"
+          },
+          "prompt_tokens": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Prompt Tokens"
+          },
+          "completion_tokens": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Completion Tokens"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "stage",
+          "calls",
+          "prompt_tokens",
+          "completion_tokens"
+        ],
+        "title": "TraceStageUsage"
+      },
       "TraceTimings": {
         "properties": {
           "retrieval_ms": {
@@ -2118,6 +2163,71 @@
           "total_ms"
         ],
         "title": "TraceTimings"
+      },
+      "TraceUsage": {
+        "properties": {
+          "estimated": {
+            "type": "boolean",
+            "title": "Estimated",
+            "default": true
+          },
+          "calls": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Calls"
+          },
+          "prompt_tokens": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Prompt Tokens"
+          },
+          "completion_tokens": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Completion Tokens"
+          },
+          "total_tokens": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Total Tokens"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/TraceStageUsage"
+            },
+            "type": "array",
+            "title": "Stages"
+          },
+          "cost": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Cost"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "default": "",
+            "examples": [
+              "\u20bd"
+            ]
+          },
+          "priced": {
+            "type": "boolean",
+            "title": "Priced",
+            "description": "Whether token prices are configured at all"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "calls",
+          "prompt_tokens",
+          "completion_tokens",
+          "total_tokens",
+          "cost",
+          "priced"
+        ],
+        "title": "TraceUsage"
       },
       "ValidationError": {
         "properties": {

@@ -755,6 +755,95 @@
           "refId": "B"
         }
       ]
+    },
+    {
+      "type": "row",
+      "title": "Токены и деньги",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 65
+      },
+      "panels": []
+    },
+    {
+      "type": "stat",
+      "title": "Токенов на вопрос",
+      "description": "Считано токенизатором сервиса, а не выставлено провайдером: годится, чтобы сравнить два вопроса, не годится для счёта.",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 66
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(ragu_agent_tokens_total[$__range])) / clamp_min(sum(increase(ragu_agent_answers_total[$__range])), 1)",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "piechart",
+      "title": "Промпт против ответа",
+      "description": "Перекос в сторону промпта означает, что в контекст уезжает больше, чем модели нужно: там же и основная цена.",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 66
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "values": [
+            "value"
+          ]
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (kind) (increase(ragu_agent_tokens_total[$__range]))",
+          "legendFormat": "{{kind}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "barchart",
+      "title": "Стоимость по корпусам",
+      "description": "В единицах TOKEN_PRICE_*. Ноль по всем корпусам означает, что цены не заданы, а не что вопросы бесплатные.",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 66
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "expr": "sum by (dataset) (increase(ragu_agent_cost_total[$__range]))",
+          "legendFormat": "{{dataset}}",
+          "instant": true,
+          "refId": "A"
+        }
+      ]
     }
   ]
 }

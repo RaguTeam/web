@@ -198,7 +198,8 @@ def _sourced(**overrides):
 def test_sources_become_typed_lists() -> None:
     """Сервис отдаёт вид источника в meta.kind — разбирать чужие структуры
     больше не нужно."""
-    built = trace.build(_sourced(), top_k=8, total_ms=100, query_plan_requested=False)
+    built = trace.build(
+        _sourced(), settings=settings(), top_k=8, total_ms=100, query_plan_requested=False)
     assert [item.label for item in built.entities] == ["Dennis Ritchie"]
     assert [item.relation_type for item in built.relations] == ["AUTHORED"]
     assert [item.doc_id for item in built.chunks] == ["doc-1"]
@@ -206,7 +207,8 @@ def test_sources_become_typed_lists() -> None:
 
 
 def test_highlight_points_at_the_same_ids_the_canvas_uses() -> None:
-    built = trace.build(_sourced(), top_k=8, total_ms=100, query_plan_requested=False)
+    built = trace.build(
+        _sourced(), settings=settings(), top_k=8, total_ms=100, query_plan_requested=False)
     assert built.highlight.node_ids == ["ent-1"]
     assert built.highlight.edge_ids == ["rel-1"]
     assert built.highlight.community_ids == ["com-1"]
@@ -214,19 +216,22 @@ def test_highlight_points_at_the_same_ids_the_canvas_uses() -> None:
 
 def test_relation_strength_is_scaled_into_the_contract() -> None:
     """В RAGU сила — целое примерно до пяти, в контракте фронта — доля."""
-    built = trace.build(_sourced(), top_k=8, total_ms=100, query_plan_requested=False)
+    built = trace.build(
+        _sourced(), settings=settings(), top_k=8, total_ms=100, query_plan_requested=False)
     assert built.relations[0].strength == pytest.approx(0.8)
 
 
 def test_missing_score_is_zero_not_invented() -> None:
-    built = trace.build(_sourced(), top_k=8, total_ms=100, query_plan_requested=False)
+    built = trace.build(
+        _sourced(), settings=settings(), top_k=8, total_ms=100, query_plan_requested=False)
     assert built.relations and built.entities[0].score == pytest.approx(0.8)
     assert built.communities[0].score == 0.0
 
 
 def test_source_without_meta_is_dropped_rather_than_guessed() -> None:
     response = search_response(sources=[SourceItem(id="x", type="chunk", content="…")])
-    built = trace.build(response, top_k=8, total_ms=1, query_plan_requested=False)
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=1, query_plan_requested=False)
     assert built.chunks == []
 
 
@@ -235,7 +240,8 @@ def test_trace_names_the_engine_that_ran_not_the_one_requested() -> None:
     response = search_response(
         engines=EngineReport(requested="mix", used="NaiveSearchEngine", degraded=True)
     )
-    built = trace.build(response, top_k=8, total_ms=1, query_plan_requested=False)
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=1, query_plan_requested=False)
     assert built.engine == "naive"
 
 
@@ -249,7 +255,8 @@ def test_rerank_reports_what_happened_not_what_was_asked() -> None:
             children=[ChildEngineReport(engine="LocalSearchEngine", ok=False)],
         )
     )
-    built = trace.build(response, top_k=8, total_ms=1, query_plan_requested=False)
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=1, query_plan_requested=False)
     assert built.rerank is False
     assert built.rerank_error == "reranker timed out"
 
@@ -275,7 +282,7 @@ def test_rerank_outcome_separates_silence_from_failure(
 
 def test_query_plan_is_absent_when_it_was_not_requested() -> None:
     built = trace.build(
-        search_response(), top_k=8, total_ms=1, query_plan_requested=False
+        search_response(), settings=settings(), top_k=8, total_ms=1, query_plan_requested=False
     )
     assert built.query_plan is None
 
@@ -285,7 +292,8 @@ def test_query_plan_reports_the_service_not_the_request() -> None:
     response = search_response(
         used_query_plan=True, subqueries=[SubqueryItem(query="кто такой Ритчи")]
     )
-    built = trace.build(response, top_k=8, total_ms=1, query_plan_requested=True)
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=1, query_plan_requested=True)
     assert built.query_plan.used is True
     assert built.query_plan.sub_questions == ["кто такой Ритчи"]
 
@@ -301,9 +309,74 @@ def test_stage_timings_come_from_the_service_total_from_our_clock() -> None:
             }
         )
     )
-    built = trace.build(response, top_k=8, total_ms=4900, query_plan_requested=False)
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=4900, query_plan_requested=False)
     assert (built.timings.retrieval_ms, built.timings.generation_ms) == (1200, 3400)
     assert built.timings.total_ms == 4900
+
+
+# ---------- токены и деньги ----------
+
+
+def _usage(**stages) -> UsageModel:
+    return UsageModel(
+        calls=99,
+        prompt_tokens=0,
+        completion_tokens=0,
+        stages={name: StageUsageModel(**fields) for name, fields in stages.items()},
+    )
+
+
+def test_totals_are_the_sum_of_the_stages() -> None:
+    """Итоги считаем по стадиям, а не берём поля сервиса: так разбивка и сумма
+    в интерфейсе сходятся по построению."""
+    response = search_response(
+        usage=_usage(
+            mix={"calls": 2, "prompt_tokens": 1000, "completion_tokens": 100},
+            plan={"calls": 1, "prompt_tokens": 200, "completion_tokens": 40},
+        )
+    )
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=1, query_plan_requested=False
+    )
+    assert built.usage.calls == 3
+    assert built.usage.prompt_tokens == 1200
+    assert built.usage.completion_tokens == 140
+    assert built.usage.total_tokens == 1340
+    assert sum(s.prompt_tokens for s in built.usage.stages) == built.usage.prompt_tokens
+
+
+def test_cost_is_per_thousand_tokens() -> None:
+    response = search_response(
+        usage=_usage(mix={"prompt_tokens": 2000, "completion_tokens": 1000})
+    )
+    built = trace.build(
+        response,
+        settings=settings(token_price_prompt=0.5, token_price_completion=1.5),
+        top_k=8,
+        total_ms=1,
+        query_plan_requested=False,
+    )
+    assert built.usage.cost == pytest.approx(2.5)
+    assert built.usage.priced is True
+
+
+def test_unset_prices_mean_not_priced_not_free() -> None:
+    response = search_response(usage=_usage(mix={"prompt_tokens": 2000}))
+    built = trace.build(
+        response, settings=settings(), top_k=8, total_ms=1, query_plan_requested=False
+    )
+    assert built.usage.cost == 0.0
+    assert built.usage.priced is False
+
+
+def test_no_usage_from_the_service_is_not_a_zero_usage() -> None:
+    """Ноль токенов и «сервис ничего не сказал» — разные вещи."""
+    built = trace.build(
+        search_response(), settings=settings(), top_k=8, total_ms=1,
+        query_plan_requested=False,
+    )
+    assert built.usage is None
 
 
 # ---------- подсказки ----------

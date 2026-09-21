@@ -60,6 +60,8 @@ class Settings:
     # поэтому годятся для оценки запроса, но не для счёта.
     token_price_prompt: float
     token_price_completion: float
+    # Только подпись к числу: валюту цен мы ниоткуда не знаем.
+    token_price_currency: str
 
     # TTL кэшей BFF. Полный граф не кэшируется вовсе — ради этого затевался
     # переезд.
@@ -82,6 +84,7 @@ def load_settings() -> Settings:
         graph_page_size=max(1, min(page, RAGU_PAGE_MAX)),
         token_price_prompt=_env_float("TOKEN_PRICE_PROMPT", 0.0),
         token_price_completion=_env_float("TOKEN_PRICE_COMPLETION", 0.0),
+        token_price_currency=os.getenv("TOKEN_PRICE_CURRENCY", ""),
         catalog_ttl=_env_float("CATALOG_TTL", 60.0),
         dataset_ttl=_env_float("DATASET_TTL", 300.0),
         subgraph_ttl=_env_float("SUBGRAPH_TTL", 300.0),

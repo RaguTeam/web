@@ -83,6 +83,7 @@ class Answerer:
 
         answer_trace = trace.build(
             response,
+            settings=self._settings,
             top_k=request.top_k,
             total_ms=total_ms,
             query_plan_requested=request.use_query_plan,
@@ -200,6 +201,7 @@ class Answerer:
         Пишется здесь, а не в роутере: режим, который реально отработал, и
         размер контекста известны только после того, как сервис ответил.
         """
+        usage = answer_trace.usage
         observe_answer(
             dataset=dataset_id,
             engine_requested=request.engine,
@@ -211,6 +213,9 @@ class Answerer:
             retrieval_ms=answer_trace.timings.retrieval_ms,
             generation_ms=answer_trace.timings.generation_ms,
             chunks=len(answer_trace.chunks),
+            prompt_tokens=usage.prompt_tokens if usage else 0,
+            completion_tokens=usage.completion_tokens if usage else 0,
+            cost=usage.cost if usage else 0.0,
         )
         engines = response.engines
         LOGGER.info(
@@ -240,6 +245,8 @@ class Answerer:
                 "retrieval_ms": answer_trace.timings.retrieval_ms,
                 "generation_ms": answer_trace.timings.generation_ms,
                 "total_ms": answer_trace.timings.total_ms,
-                "total_tokens": response.usage.total_tokens if response.usage else None,
+                "prompt_tokens": usage.prompt_tokens if usage else None,
+                "completion_tokens": usage.completion_tokens if usage else None,
+                "cost": usage.cost if usage else None,
             },
         )

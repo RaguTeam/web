@@ -89,6 +89,24 @@ EMPTY_RETRIEVALS = Counter(
     ["dataset"],
 )
 
+TOKENS = Counter(
+    "ragu_agent_tokens_total",
+    (
+        "Токены, посчитанные сервисом токенизатором, а не выставленные "
+        "провайдером: годятся, чтобы сравнить два вопроса, не годятся для счёта."
+    ),
+    ["dataset", "kind"],
+)
+
+COST = Counter(
+    "ragu_agent_cost_total",
+    (
+        "Стоимость в единицах TOKEN_PRICE_*. Ноль означает, что цены не заданы, "
+        "а не что вопросы бесплатные."
+    ),
+    ["dataset"],
+)
+
 DATASET_REQUESTS = Counter(
     "ragu_dataset_requests_total",
     "Обращения к корпусу по видам: карточка, граф, соседи, сообщества, агент.",
@@ -110,6 +128,7 @@ ANSWERS = Counter(
 _DATASET_KINDS = ("detail", "graph", "communities", "agent")
 _ENGINES_USED = ("mix", "naive", "local", "global")
 _RERANK_OUTCOMES = ("applied", "skipped", "failed")
+_TOKEN_KINDS = ("prompt", "completion")
 
 
 def init_dataset(dataset: str) -> None:
@@ -132,6 +151,9 @@ def init_dataset(dataset: str) -> None:
         ENGINE_USED.labels(dataset=dataset, engine_used=engine).inc(0)
     for outcome in _RERANK_OUTCOMES:
         RERANK_OUTCOME.labels(dataset=dataset, outcome=outcome).inc(0)
+    for kind in _TOKEN_KINDS:
+        TOKENS.labels(dataset=dataset, kind=kind).inc(0)
+    COST.labels(dataset=dataset).inc(0)
 
 
 def observe_answer(
@@ -146,6 +168,9 @@ def observe_answer(
     retrieval_ms: int,
     generation_ms: int,
     chunks: int,
+    prompt_tokens: int = 0,
+    completion_tokens: int = 0,
+    cost: float = 0.0,
 ) -> None:
     """Записать один ответ агента.
 
@@ -166,6 +191,9 @@ def observe_answer(
     ).observe(retrieval_ms / 1000)
     GENERATION_SECONDS.labels(dataset=dataset).observe(generation_ms / 1000)
     CONTEXT_CHUNKS.labels(dataset=dataset).observe(chunks)
+    TOKENS.labels(dataset=dataset, kind="prompt").inc(prompt_tokens)
+    TOKENS.labels(dataset=dataset, kind="completion").inc(completion_tokens)
+    COST.labels(dataset=dataset).inc(cost)
     if degraded:
         DEGRADED.labels(dataset=dataset).inc()
     if chunks == 0:

@@ -58,6 +58,7 @@ def settings(**overrides) -> Settings:
         "graph_page_size": 1000,
         "token_price_prompt": 0.0,
         "token_price_completion": 0.0,
+        "token_price_currency": "",
         "catalog_ttl": 60.0,
         "dataset_ttl": 300.0,
         "subgraph_ttl": 300.0,

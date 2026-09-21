@@ -10,9 +10,12 @@
 
 from __future__ import annotations
 
+import logging
+
 from ragu.api.models import EngineReport, SearchResponse, UsageModel
 
 from ragu_web_api.presentation import graph
+from ragu_web_api.config import Settings
 from ragu_web_api.schemas.agent import (
     AnswerTrace,
     GraphHighlight,
@@ -22,9 +25,13 @@ from ragu_web_api.schemas.agent import (
     TraceEntity,
     TraceQueryPlan,
     TraceRelation,
+    TraceStageUsage,
     TraceTimings,
+    TraceUsage,
 )
 from ragu_web_api.schemas.datasets import TraceEngine
+
+LOGGER = logging.getLogger(__name__)
 
 # Класс движка → режим. Сервис сообщает, какой класс отработал, а интерфейс
 # оперирует режимами, и подставлять имя класса значило бы показать посетителю
@@ -62,6 +69,63 @@ def _score(value: float | None) -> float:
     return max(0.0, min(1.0, float(value)))
 
 
+# Цены задаются за тысячу токенов — так их публикуют провайдеры.
+_PRICE_PER = 1000
+
+
+def usage(model: UsageModel | None, settings: Settings) -> TraceUsage | None:
+    """Токены и деньги одного запроса.
+
+    Итоги считаются по стадиям, а не берутся из собственных полей сервиса: так
+    сумма в интерфейсе сходится с разбивкой по построению. Расхождение между
+    этими двумя источниками было бы ошибкой сервиса, и оно попадает в лог, а не
+    в глаза посетителю в виде противоречащей самой себе витрины.
+    """
+    if model is None:
+        return None
+
+    stages = [
+        TraceStageUsage(
+            stage=name,
+            calls=stage.calls,
+            prompt_tokens=stage.prompt_tokens,
+            completion_tokens=stage.completion_tokens,
+        )
+        for name, stage in sorted(model.stages.items())
+    ]
+    prompt = sum(stage.prompt_tokens for stage in stages)
+    completion = sum(stage.completion_tokens for stage in stages)
+    calls = sum(stage.calls for stage in stages)
+
+    if (prompt, completion) != (model.prompt_tokens, model.completion_tokens):
+        LOGGER.warning(
+            "Usage totals disagree with the per-stage sums: service says "
+            "%d/%d, stages add up to %d/%d.",
+            model.prompt_tokens,
+            model.completion_tokens,
+            prompt,
+            completion,
+            extra={"event": "usage_mismatch"},
+        )
+
+    priced = bool(settings.token_price_prompt or settings.token_price_completion)
+    cost = (
+        prompt * settings.token_price_prompt
+        + completion * settings.token_price_completion
+    ) / _PRICE_PER
+    return TraceUsage(
+        estimated=model.estimated,
+        calls=calls,
+        prompt_tokens=prompt,
+        completion_tokens=completion,
+        total_tokens=prompt + completion,
+        stages=stages,
+        cost=round(cost, 6),
+        currency=settings.token_price_currency,
+        priced=priced,
+    )
+
+
 def timings(usage: UsageModel | None, total_ms: int) -> TraceTimings:
     """Стадии по данным сервиса, общее время — по нашим часам.
 
@@ -83,6 +147,7 @@ def timings(usage: UsageModel | None, total_ms: int) -> TraceTimings:
 def build(
     response: SearchResponse,
     *,
+    settings: Settings,
     top_k: int,
     total_ms: int,
     query_plan_requested: bool,
@@ -156,6 +221,7 @@ def build(
         chunks=chunks,
         communities=communities,
         timings=timings(response.usage, total_ms),
+        usage=usage(response.usage, settings),
         energy=TraceEnergy(
             watt_hours=round((total_ms / 1000) * _WATT_HOURS_PER_SECOND, 3),
             estimated=True,
