@@ -27,7 +27,7 @@ from ragu.api.models import (
 
 from ragu_web_api.config import RAGU_IDS_MAX, Settings
 from ragu_web_api.errors import as_http_exception
-from ragu_web_api.logging_setup import request_id_var
+from ragu_web_api.logging_setup import REQUEST_ID_HEADER, request_id_var
 
 LOGGER = logging.getLogger(__name__)
 
@@ -44,6 +44,17 @@ class _ExtendedClient(RaguClient):
     переезжают на его собственные методы — опора на приватные помощники чужого
     пакета того не стоит.
     """
+
+    async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+        """Добавить сквозной идентификатор к любому вызову.
+
+        Именно здесь, а не в отдельных методах: `_get` складывает всё, что ему
+        передали, в query-строку и заголовки принимать не умеет, а переопределять
+        каждый метод клиента значило бы забыть про новый при обновлении пакета.
+        """
+        headers = dict(kwargs.pop("headers", None) or {})
+        headers.setdefault(REQUEST_ID_HEADER, request_id_var.get())
+        return await super()._request(method, path, headers=headers, **kwargs)
 
     async def entities_page(
         self,
@@ -121,29 +132,27 @@ class _ExtendedClient(RaguClient):
 class RaguGateway:
     """Обёртка над клиентом: один экземпляр на процесс."""
 
-    def __init__(self, settings: Settings) -> None:
+    def __init__(self, settings: Settings, transport: Any = None) -> None:
         self._settings = settings
+        # transport — шов для тестов: с поддельным можно проверить, что уходит
+        # на провод, не поднимая сервис. В рантайме всегда None.
         self._client = _ExtendedClient(
             settings.ragu_api_url,
             api_key=settings.ragu_api_key,
             timeout=settings.ragu_api_timeout,
+            transport=transport,
         )
         if not settings.has_api_key:
             # Сервис без ключа отвечает всем, кто до него дотянется, и каждый
             # запрос стоит вызовов LLM. Внутри docker-сети это терпимо, наружу
             # выставлять нельзя.
             LOGGER.warning(
-                "RAGU_API_KEY не задан: обращения к ragu-api идут без ключа",
+                "RAGU_API_KEY is not set: calling ragu-api without a key",
                 extra={"event": "ragu_api_no_key"},
             )
 
     async def aclose(self) -> None:
         await self._client.aclose()
-
-    @property
-    def headers(self) -> dict[str, str]:
-        """Заголовки одного запроса: сквозной идентификатор."""
-        return {"X-Request-ID": request_id_var.get()}
 
     # --- каталог и свойства корпуса -------------------------------------
 

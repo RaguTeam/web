@@ -88,7 +88,7 @@ def as_http_exception(error: RaguApiError) -> HTTPException:
     """
     mapped = map_error(error)
     LOGGER.warning(
-        "ragu-api ответил %s %s → %s",
+        "ragu-api answered %s %s -> %s",
         error.status_code,
         error.code,
         mapped.status,

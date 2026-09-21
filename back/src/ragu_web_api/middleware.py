@@ -17,11 +17,9 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.types import ASGIApp
 
-from ragu_web_api.logging_setup import request_id_var
+from ragu_web_api.logging_setup import REQUEST_ID_HEADER, request_id_var
 
 LOGGER = logging.getLogger(__name__)
-
-REQUEST_ID_HEADER = "X-Request-ID"
 
 # Callers may supply their own id so a trace spans the proxy and the app. Cap the
 # length and keep it to safe characters: it ends up in log lines and a response

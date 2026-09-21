@@ -2,10 +2,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
+from ragu_web_api.catalog import Catalog
 from ragu_web_api.schemas.common import ErrorResponse, Locale
 from ragu_web_api.schemas.datasets import DatasetCard, DatasetDetail
-from ragu_web_api.services.dependencies import get_repository
-from ragu_web_api.services.index_repository import IndexRepository
+from ragu_web_api.services.dependencies import get_catalog
 
 router = APIRouter(
     prefix="/datasets",
@@ -20,10 +20,10 @@ router = APIRouter(
     summary="List preindexed datasets",
 )
 async def list_datasets(
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    catalog: Annotated[Catalog, Depends(get_catalog)],
     locale: Annotated[Locale, Query(description="Response locale.")] = "ru",
 ) -> list[DatasetCard]:
-    return repository.list_datasets(locale=locale)
+    return await catalog.cards(locale=locale)
 
 
 @router.get(
@@ -33,7 +33,7 @@ async def list_datasets(
 )
 async def get_dataset(
     dataset_id: str,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    catalog: Annotated[Catalog, Depends(get_catalog)],
     locale: Annotated[Locale, Query(description="Response locale.")] = "ru",
 ) -> DatasetDetail:
-    return repository.get_dataset(dataset_id=dataset_id, locale=locale)
+    return await catalog.detail(dataset_id=dataset_id, locale=locale)

@@ -30,6 +30,11 @@ from contextvars import ContextVar
 PACKAGE_LOGGER = "ragu_web_api"
 DEFAULT_LEVEL = "INFO"
 
+# Carried in and out on this header, and on to ragu-api, so one string found in
+# devtools locates the request in the logs of both processes. Declared here
+# rather than in middleware.py: the gateway needs it and must not pull starlette.
+REQUEST_ID_HEADER = "X-Request-ID"
+
 # Set by RequestContextMiddleware for the duration of one request. A ContextVar
 # rather than a global: requests are served concurrently on one event loop, and
 # a plain global would hand every task the last-started request's id.
