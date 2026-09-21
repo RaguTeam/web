@@ -232,7 +232,7 @@ namespace $.$raggu_web_front_api_ragu {
 	             * Engine
 	             * @enum {string}
 	             */
-	            engine: "local" | "naive" | "mix" | "keyword";
+	            engine: "local" | "global" | "naive" | "mix" | "keyword";
 	            /** Top K */
 	            top_k: number;
 	            /** Rerank */

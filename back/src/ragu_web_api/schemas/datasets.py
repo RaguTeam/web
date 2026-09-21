@@ -14,7 +14,10 @@ SearchEngine = Literal["local", "global", "naive", "mix", "query_plan"]
 SUPPORTED_ENGINES: tuple[str, ...] = ("local", "naive", "mix")
 
 # What actually produced a trace: a RAGU engine, or the local keyword fallback.
-TraceEngine = Literal["local", "naive", "mix", "keyword"]
+# "global" is reportable because the service decides per corpus which modes it
+# can serve; a mode that can run but cannot be named would make the trace lie
+# about what answered. "keyword" survives only until the fallback is deleted.
+TraceEngine = Literal["local", "global", "naive", "mix", "keyword"]
 
 DatasetLanguage = Literal["ru", "en", "mixed"]
 

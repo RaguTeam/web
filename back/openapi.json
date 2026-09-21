@@ -752,6 +752,7 @@
             "type": "string",
             "enum": [
               "local",
+              "global",
               "naive",
               "mix",
               "keyword"

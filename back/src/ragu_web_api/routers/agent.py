@@ -2,10 +2,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
 
+from ragu_web_api.answer import Answerer
 from ragu_web_api.schemas.agent import AgentRequest, AgentResponse, SuggestionsResponse
 from ragu_web_api.schemas.common import ErrorResponse, Locale
-from ragu_web_api.services.dependencies import get_repository
-from ragu_web_api.services.index_repository import IndexRepository
+from ragu_web_api.services.dependencies import get_answerer
 
 router = APIRouter(
     prefix="/datasets/{dataset_id}/agent",
@@ -22,9 +22,9 @@ router = APIRouter(
 async def create_agent_message(
     dataset_id: str,
     request: AgentRequest,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    answerer: Annotated[Answerer, Depends(get_answerer)],
 ) -> AgentResponse:
-    return await repository.answer(dataset_id=dataset_id, request=request)
+    return await answerer.answer(dataset_id=dataset_id, request=request)
 
 
 @router.get(
@@ -34,7 +34,7 @@ async def create_agent_message(
 )
 async def get_agent_suggestions(
     dataset_id: str,
-    repository: Annotated[IndexRepository, Depends(get_repository)],
+    answerer: Annotated[Answerer, Depends(get_answerer)],
     locale: Annotated[Locale, Query(description="Response locale.")] = "ru",
 ) -> SuggestionsResponse:
-    return repository.get_suggestions(dataset_id=dataset_id, locale=locale)
+    return await answerer.suggestions(dataset_id=dataset_id, locale=locale)

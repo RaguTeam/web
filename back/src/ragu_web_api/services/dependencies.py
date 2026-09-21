@@ -1,10 +1,11 @@
 """Синглтоны процесса.
 
-Два набора живут рядом, пока идёт переезд: `repository` обслуживает граф и чат
-со старого пути, `catalog` — галерею с нового. По мере того как остальные
-сценарии переезжают на сервис, репозиторий уходит целиком.
+Два набора живут рядом, пока идёт переезд: `repository` обслуживает граф со
+старого пути, `catalog` и `answerer` — галерею и чат с нового. Когда на сервис
+переедет граф, репозиторий уйдёт целиком.
 """
 
+from ragu_web_api.answer import Answerer
 from ragu_web_api.catalog import Catalog
 from ragu_web_api.config import load_settings
 from ragu_web_api.ragu_gateway import RaguGateway
@@ -16,6 +17,7 @@ settings = load_settings()
 # процесс, иначе каждый запрос открывал бы своё TCP-соединение к сервису.
 gateway = RaguGateway(settings)
 catalog = Catalog(gateway, settings)
+answerer = Answerer(gateway, catalog, settings)
 
 repository = IndexRepository()
 
@@ -26,6 +28,10 @@ def get_repository() -> IndexRepository:
 
 def get_catalog() -> Catalog:
     return catalog
+
+
+def get_answerer() -> Answerer:
+    return answerer
 
 
 def get_gateway() -> RaguGateway:

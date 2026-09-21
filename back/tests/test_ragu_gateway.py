@@ -5,40 +5,13 @@
 на живом стенде, — что уезжает на провод.
 """
 
-import asyncio
-import functools
-
 import httpx
 import pytest
 from fastapi import HTTPException
+from support import asyncio_test, settings
 
-from ragu_web_api.config import Settings
 from ragu_web_api.logging_setup import REQUEST_ID_HEADER, request_id_var
 from ragu_web_api.ragu_gateway import RaguGateway
-
-
-def asyncio_test(fn):
-    @functools.wraps(fn)
-    def wrapper(*args, **kwargs):
-        return asyncio.run(fn(*args, **kwargs))
-
-    return wrapper
-
-
-def _settings(**overrides) -> Settings:
-    payload = {
-        "ragu_api_url": "http://ragu-api:8020",
-        "ragu_api_key": "secret",
-        "ragu_api_timeout": 240.0,
-        "graph_page_size": 1000,
-        "token_price_prompt": 0.0,
-        "token_price_completion": 0.0,
-        "catalog_ttl": 60.0,
-        "dataset_ttl": 300.0,
-        "subgraph_ttl": 300.0,
-    }
-    payload.update(overrides)
-    return Settings(**payload)
 
 
 class Wire:
@@ -58,7 +31,7 @@ class Wire:
 
 
 def _gateway(wire: Wire, **overrides) -> RaguGateway:
-    return RaguGateway(_settings(**overrides), transport=wire.transport())
+    return RaguGateway(settings(**overrides), transport=wire.transport())
 
 
 _EMPTY_GRAPHS = {"default": "medical", "graphs": []}

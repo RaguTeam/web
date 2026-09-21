@@ -84,7 +84,7 @@ ANSWERS = Counter(
 # Виды обращений, которые предсоздаются на старте. Держим списками, чтобы
 # предсоздание и реальные вызовы не разъехались.
 _DATASET_KINDS = ("detail", "graph", "communities", "agent")
-_ENGINES_USED = ("mix", "naive", "local", "keyword")
+_ENGINES_USED = ("mix", "naive", "local", "global", "keyword")
 
 
 def init_dataset(dataset: str) -> None:
