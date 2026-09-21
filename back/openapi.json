@@ -766,6 +766,17 @@
             "type": "boolean",
             "title": "Rerank"
           },
+          "rerank_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rerank Error"
+          },
           "query_plan": {
             "anyOf": [
               {

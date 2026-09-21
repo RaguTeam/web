@@ -56,6 +56,13 @@ services:
       LLM_MODEL_NAME: ${LLM_MODEL_NAME:?задайте LLM_MODEL_NAME в .env}
       LLM_BASE_URL: ${LLM_BASE_URL:?задайте LLM_BASE_URL в .env}
       LLM_API_KEY: ${LLM_API_KEY:?задайте LLM_API_KEY в .env}
+      # Реранкер в контейнере эмбеддера, на CPU. Слеш на конце обязателен:
+      # клиент RAGU дописывает `score` без разделителя.
+      # Отсутствие этих переменных — рабочий режим: сервис ответит без
+      # переупорядочивания и скажет об этом в engines.rerank_error.
+      RERANKER_BASE_URL: http://embedder:8001/v1/
+      RERANKER_MODEL_NAME: BAAI/bge-reranker-base
+      RERANKER_API_KEY: unused
     volumes:
       - ./indexes:/data/indexes:ro
     logging:

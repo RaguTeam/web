@@ -46,9 +46,24 @@ DEGRADED = Counter(
 
 RETRIEVAL_SECONDS = Histogram(
     "ragu_agent_retrieval_seconds",
-    "Время поиска контекста, включая декомпозицию вопроса.",
-    ["dataset"],
+    (
+        "Время поиска контекста, включая декомпозицию вопроса и реранк. Метка "
+        "reranked разделяет ретривал с переупорядочиванием и без: сервис не "
+        "выделяет реранк в отдельную стадию, и разница между этими рядами — "
+        "единственный способ увидеть, сколько он стоит."
+    ),
+    ["dataset", "reranked"],
     buckets=_STAGE_BUCKETS,
+)
+
+RERANK_OUTCOME = Counter(
+    "ragu_agent_rerank_total",
+    (
+        "Чем кончился реранк: applied — порядок переставлен, skipped — не "
+        "просили или реранкер не настроен, failed — реранкер отказал, и ответ "
+        "собран в исходном порядке."
+    ),
+    ["dataset", "outcome"],
 )
 
 GENERATION_SECONDS = Histogram(
@@ -94,6 +109,7 @@ ANSWERS = Counter(
 # предсоздание и реальные вызовы не разъехались.
 _DATASET_KINDS = ("detail", "graph", "communities", "agent")
 _ENGINES_USED = ("mix", "naive", "local", "global")
+_RERANK_OUTCOMES = ("applied", "skipped", "failed")
 
 
 def init_dataset(dataset: str) -> None:
@@ -114,6 +130,8 @@ def init_dataset(dataset: str) -> None:
         DATASET_REQUESTS.labels(dataset=dataset, kind=kind).inc(0)
     for engine in _ENGINES_USED:
         ENGINE_USED.labels(dataset=dataset, engine_used=engine).inc(0)
+    for outcome in _RERANK_OUTCOMES:
+        RERANK_OUTCOME.labels(dataset=dataset, outcome=outcome).inc(0)
 
 
 def observe_answer(
@@ -124,6 +142,7 @@ def observe_answer(
     language: str,
     query_plan: bool,
     degraded: bool,
+    rerank: str,
     retrieval_ms: int,
     generation_ms: int,
     chunks: int,
@@ -141,7 +160,10 @@ def observe_answer(
     ).inc()
     ANSWERS.labels(dataset=dataset).inc()
     ENGINE_USED.labels(dataset=dataset, engine_used=engine_used).inc()
-    RETRIEVAL_SECONDS.labels(dataset=dataset).observe(retrieval_ms / 1000)
+    RERANK_OUTCOME.labels(dataset=dataset, outcome=rerank).inc()
+    RETRIEVAL_SECONDS.labels(
+        dataset=dataset, reranked=str(rerank == "applied").lower()
+    ).observe(retrieval_ms / 1000)
     GENERATION_SECONDS.labels(dataset=dataset).observe(generation_ms / 1000)
     CONTEXT_CHUNKS.labels(dataset=dataset).observe(chunks)
     if degraded:

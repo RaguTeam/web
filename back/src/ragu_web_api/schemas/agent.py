@@ -97,8 +97,11 @@ class AnswerTrace(APIModel):
     # a different mode than the UI offered, and the trace has to say so.
     engine: TraceEngine
     top_k: int = Field(ge=1)
-    # Whether reranking actually happened (no reranker is configured, so: False).
+    # Whether reranking actually reordered the sources, not whether it was asked
+    # for. False with `rerank_error` set means the reranker was there and failed:
+    # the answer is the un-reranked one, which is a quality note, not an outage.
     rerank: bool
+    rerank_error: str | None = None
     # None when planning was not requested.
     query_plan: TraceQueryPlan | None = None
     entities: list[TraceEntity] = Field(default_factory=list)

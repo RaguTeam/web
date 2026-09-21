@@ -142,6 +142,7 @@ def build(
         top_k=top_k,
         # Не то, что просили, а то, что реранкер действительно переставил.
         rerank=response.engines.reranked,
+        rerank_error=response.engines.rerank_error,
         query_plan=(
             TraceQueryPlan(
                 used=response.used_query_plan,

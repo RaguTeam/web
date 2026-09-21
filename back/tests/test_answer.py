@@ -29,7 +29,7 @@ from support import (
     settings,
 )
 
-from ragu_web_api.answer import Answerer
+from ragu_web_api.answer import Answerer, _rerank_outcome
 from ragu_web_api.catalog import Catalog
 from ragu_web_api.presentation import trace
 from ragu_web_api.schemas.agent import AgentRequest, ChatMessage
@@ -251,6 +251,26 @@ def test_rerank_reports_what_happened_not_what_was_asked() -> None:
     )
     built = trace.build(response, top_k=8, total_ms=1, query_plan_requested=False)
     assert built.rerank is False
+    assert built.rerank_error == "reranker timed out"
+
+
+@pytest.mark.parametrize(
+    ("reranked", "error", "outcome"),
+    [
+        (True, None, "applied"),
+        (False, "reranker timed out", "failed"),
+        (False, None, "skipped"),
+    ],
+)
+def test_rerank_outcome_separates_silence_from_failure(
+    reranked: bool, error: str | None, outcome: str
+) -> None:
+    """На дашборде это разные новости: «не просили» штатно, «отказал» значит,
+    что ответы хуже, чем могли бы быть."""
+    engines = EngineReport(
+        requested="mix", used="MixSearchEngine", reranked=reranked, rerank_error=error
+    )
+    assert _rerank_outcome(engines) == outcome
 
 
 def test_query_plan_is_absent_when_it_was_not_requested() -> None:

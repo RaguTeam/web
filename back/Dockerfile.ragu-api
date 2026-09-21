@@ -32,8 +32,11 @@ ENV TIKTOKEN_CACHE_DIR=/opt/tiktoken_cache
 RUN mkdir -p "$TIKTOKEN_CACHE_DIR" \
     && python -c "import tiktoken; [tiktoken.encoding_for_model(m) for m in ('gpt-4', 'gpt-4o', 'text-embedding-3-large')]"
 
+# Своя точка входа вместо `python -m ragu.api`: тот зовёт create_app без
+# реранкера и передать его не даёт. Логирование настраивается тем же
+# configure_logging, так что единый сток сохраняется.
+COPY ragu_api_service.py ./
+
 EXPOSE 8020
 
-# Запуск через -m: только он заворачивает стандартный logging и httpx в единый
-# сток. Импорт create_app из другого места этого намеренно не делает.
-CMD ["python", "-m", "ragu.api"]
+CMD ["python", "ragu_api_service.py"]

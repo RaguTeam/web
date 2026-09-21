@@ -237,6 +237,8 @@ namespace $.$raggu_web_front_api_ragu {
 	            top_k: number;
 	            /** Rerank */
 	            rerank: boolean;
+	            /** Rerank Error */
+	            rerank_error?: string | null;
 	            query_plan?: components["schemas"]["TraceQueryPlan"] | null;
 	            /** Entities */
 	            entities?: components["schemas"]["TraceEntity"][];

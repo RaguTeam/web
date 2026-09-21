@@ -42,6 +42,18 @@ LOGGER = logging.getLogger(__name__)
 _MIX_CHILDREN: tuple[SearchEngine, ...] = ("local", "naive")
 
 
+def _rerank_outcome(engines: Any) -> str:
+    """Чем кончился реранк — тремя различимыми исходами.
+
+    `reranked=False` само по себе не отличает «не просили» от «реранкер
+    отказал», а на дашборде это разные новости: первое штатно, второе значит,
+    что ответы хуже, чем могли бы быть, и никто об этом не знает.
+    """
+    if engines.reranked:
+        return "applied"
+    return "failed" if engines.rerank_error else "skipped"
+
+
 class Answerer:
     """Чат по одному корпусу. Один экземпляр на процесс."""
 
@@ -195,6 +207,7 @@ class Answerer:
             language=answer_language,
             query_plan=request.use_query_plan,
             degraded=response.engines.degraded,
+            rerank=_rerank_outcome(response.engines),
             retrieval_ms=answer_trace.timings.retrieval_ms,
             generation_ms=answer_trace.timings.generation_ms,
             chunks=len(answer_trace.chunks),
