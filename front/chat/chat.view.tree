@@ -25,6 +25,9 @@ $raggu_web_front_chat $bog_builderui_div
 	message_text* \
 	message_role* \
 	message_off_graph* false
+	message_trace* \
+	message_trace_hint* \
+	message_has_trace* false
 	sub /
 		<= Body $mol_scroll
 			sub /
@@ -78,3 +81,9 @@ $raggu_web_front_chat $bog_builderui_div
 					^
 					raggu_off_graph <= message_off_graph*
 				sub / <= off_graph_text
+			<= Message_trace* $bog_builderui_div
+				attr *
+					^
+					raggu_has_trace <= message_has_trace*
+					title <= message_trace_hint*
+				sub / <= message_trace*

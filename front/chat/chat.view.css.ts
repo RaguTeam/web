@@ -179,6 +179,25 @@ namespace $ {
 			},
 		},
 
+		// Служебная строка под ответом: чем искали, сколько нашли, сколько
+		// стоило. Приглушена намеренно — это сноска к ответу, а не его часть.
+		Message_trace: {
+			display: 'none',
+			alignSelf: 'flex-start',
+			margin: { top: '6px' },
+			font: {
+				family: 'ui-monospace, monospace',
+				size: '10px',
+			},
+			color: $bog_builderui_tokens.shade,
+			cursor: 'default',
+			'@': {
+				raggu_has_trace: {
+					true: { display: 'flex' },
+				},
+			},
+		},
+
 		Footer: {
 			padding: {
 				top: '14px',

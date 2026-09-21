@@ -2,11 +2,34 @@ namespace $.$$ {
 
 	export type Raggu_chat_role = 'user' | 'assistant'
 
+	/**
+	 * Сжатый трейс: только то, что показывается под ответом.
+	 *
+	 * Целиком ответ бэка сюда не кладётся намеренно — история живёт в
+	 * sessionStorage, а полный трейс несёт тексты всех найденных фрагментов и
+	 * раздул бы её на порядок.
+	 */
+	export type Raggu_chat_trace = {
+		engine: string
+		entities: number
+		chunks: number
+		total_ms: number
+		tokens: number
+		cost: number
+		currency: string
+		priced: boolean
+		/** Реранкер был и отказал: ответ собран в исходном порядке. */
+		rerank_error?: string | null
+		/** Режим, который просили, если сервис отработал другим. */
+		requested?: string
+	}
+
 	export type Raggu_chat_item = {
 		role: Raggu_chat_role
 		text: string
 		/** Отвечено фолбэком (прямой LLM без графа), а не GraphRAG-бэком. */
 		off_graph?: boolean
+		trace?: Raggu_chat_trace
 	}
 
 	export class $raggu_web_front_chat extends $.$raggu_web_front_chat {
@@ -66,6 +89,48 @@ namespace $.$$ {
 
 		message_off_graph( index: number ) {
 			return this.history()[ index ]?.off_graph ?? false
+		}
+
+		message_has_trace( index: number ) {
+			return Boolean( this.history()[ index ]?.trace )
+		}
+
+		/**
+		 * Одна строка под ответом: чем искали, сколько нашли, сколько это стоило.
+		 *
+		 * Стоимость показывается, только когда цены заданы. Ноль в рублях рядом с
+		 * реальным вопросом читался бы как «бесплатно», а означает «не оценено».
+		 */
+		message_trace( index: number ) {
+			const trace = this.history()[ index ]?.trace
+			if( !trace ) return ''
+			const parts = [
+				trace.engine,
+				`${ trace.entities } сущн · ${ trace.chunks } фрагм`,
+				`${ ( trace.total_ms / 1000 ).toFixed( 1 ) } с`,
+			]
+			if( trace.tokens ) parts.push( `${ trace.tokens } ток` )
+			if( trace.priced ) parts.push( `${ trace.cost.toFixed( 4 ) } ${ trace.currency }`.trim() )
+			if( trace.rerank_error ) parts.push( 'без реранка' )
+			return parts.join( ' · ' )
+		}
+
+		/** Подробности в подсказку: в строку они не влезают, а объясняют её. */
+		message_trace_hint( index: number ) {
+			const trace = this.history()[ index ]?.trace
+			if( !trace ) return ''
+			const lines: string[] = []
+			if( trace.requested && trace.requested !== trace.engine ) {
+				lines.push( `Запрошен режим ${ trace.requested }, корпус его не обслуживает — отработал ${ trace.engine }.` )
+			}
+			if( trace.rerank_error ) {
+				lines.push( `Реранкер отказал (${ trace.rerank_error }); порядок источников исходный.` )
+			}
+			if( trace.tokens && !trace.priced ) {
+				lines.push( 'Цены токенов не заданы, поэтому стоимость не показана.' )
+			}
+			lines.push( 'Токены посчитаны токенизатором, а не выставлены провайдером.' )
+			return lines.join( ' ' )
 		}
 
 		/**
@@ -160,7 +225,7 @@ namespace $.$$ {
 				engine: this.engine(),
 				top_k: 15,
 				rerank: true,
-				include_trace: false,
+				include_trace: true,
 				locale: $raggu_web_front_api_locale(),
 				...( this.use_query_plan() ? { use_query_plan: true } : {} ),
 			}
@@ -171,8 +236,31 @@ namespace $.$$ {
 					body: body as typeof $raggu_web_front_api_ragu_create_agent_message.body,
 				},
 			)
-			const reply = ( resp as any )?.message?.content ?? ''
-			this.history( [ ... this.history(), { role: 'assistant', text: reply } ] )
+			const message = ( resp as any )?.message
+			const reply = message?.content ?? ''
+			this.history( [
+				... this.history(),
+				{ role: 'assistant', text: reply, trace: this.compact_trace( message?.trace, this.engine() ) },
+			] )
+		}
+
+		/** Из трейса бэка — только показываемое. Формы ответа держимся мягко:
+		 * старый бэк мог не знать про usage, и падать из-за этого ответ не должен. */
+		compact_trace( trace: any, requested: string ): Raggu_chat_trace | undefined {
+			if( !trace ) return undefined
+			const usage = trace.usage
+			return {
+				engine: trace.engine ?? '',
+				entities: trace.entities?.length ?? 0,
+				chunks: trace.chunks?.length ?? 0,
+				total_ms: trace.timings?.total_ms ?? 0,
+				tokens: usage?.total_tokens ?? 0,
+				cost: usage?.cost ?? 0,
+				currency: usage?.currency ?? '',
+				priced: Boolean( usage?.priced ),
+				rerank_error: trace.rerank_error ?? null,
+				requested,
+			}
 		}
 
 		// Лёгкий контекст для фолбэка: сущности графа (лейбл + тип, топ по degree)
