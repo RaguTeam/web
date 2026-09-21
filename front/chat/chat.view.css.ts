@@ -179,6 +179,41 @@ namespace $ {
 			},
 		},
 
+		// Полоса тредов над перепиской. Один корпус — несколько разговоров, и у
+		// каждого свой режим: иначе сравнить mix и naive не на чем.
+		Threads: {
+			flex: { direction: 'row', wrap: 'wrap' },
+			align: { items: 'center' },
+			gap: '6px',
+			margin: { bottom: '10px' },
+		},
+		Thread: {
+			font: { size: '11px' },
+			color: $bog_builderui_tokens.shade,
+			background: { color: $bog_builderui_tokens.card },
+			border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '999px' },
+			padding: { top: '3px', bottom: '3px', left: '10px', right: '10px' },
+			cursor: 'pointer',
+			maxWidth: '220px',
+			overflow: 'hidden',
+			whiteSpace: 'nowrap',
+			textOverflow: 'ellipsis',
+			display: 'block',
+			'@': {
+				raggu_current: {
+					true: {
+						color: $bog_builderui_tokens.text,
+						border: { color: $bog_builderui_tokens.current },
+					},
+				},
+			},
+		},
+		Thread_add: {
+			font: { size: '11px' },
+			color: $bog_builderui_tokens.shade,
+			padding: { top: '3px', bottom: '3px', left: '8px', right: '8px' },
+		},
+
 		// Служебная строка под ответом: чем искали, сколько нашли, сколько
 		// стоило. Приглушена намеренно — это сноска к ответу, а не его часть.
 		Message_trace: {

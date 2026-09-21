@@ -8,7 +8,10 @@ namespace $.$$ {
 	 */
 	let seq = 0
 	function chat( $: $ ) {
-		return $raggu_web_front_chat.make( { $, dataset_id: () => `trace-test-${ ++seq }` } )
+		// Идентификатор считается один раз на вид: он входит в ключ хранилища,
+		// и счётчик внутри геттера давал бы новый ключ на каждое обращение.
+		const id = `trace-test-${ ++seq }`
+		return $raggu_web_front_chat.make( { $, dataset_id: () => id } )
 	}
 
 	const full_trace = {
@@ -82,6 +85,80 @@ namespace $.$$ {
 			v.history( [ { role: 'user', text: 'вопрос' } ] )
 			$mol_assert_equal( v.message_has_trace( 0 ), false )
 			$mol_assert_equal( v.message_trace( 0 ), '' )
+		},
+
+		// ---- треды ----
+
+		'chat.threads: a corpus starts with one thread to write into'( $ ) {
+			const v = chat( $ )
+			$mol_assert_equal( v.threads().length, 1 )
+			$mol_assert_equal( v.history().length, 0 )
+		},
+
+		'chat.threads: two threads of one corpus keep separate modes'( $ ) {
+			// Ровно то, ради чего треды и заводились: сравнить mix и naive на
+			// одном корпусе, не переписывая условия уже состоявшегося разговора.
+			const v = chat( $ )
+			v.thread_engine( 'mix' )
+			$mol_assert_equal( v.threads()[ 0 ].engine, 'mix' )
+			v.thread_add()
+			$mol_assert_equal( v.threads().length, 2 )
+			$mol_assert_equal( v.thread_id(), v.threads()[ 1 ].id )
+			v.thread_engine( 'naive' )
+			$mol_assert_equal( v.threads()[ 1 ].engine, 'naive' )
+			$mol_assert_equal( v.engine(), 'naive' )
+			v.thread_click( 0 )
+			$mol_assert_equal( v.engine(), 'mix' )
+		},
+
+		'chat.threads: histories do not leak between threads'( $ ) {
+			const v = chat( $ )
+			v.history( [ { role: 'user', text: 'первый' } ] )
+			v.thread_add()
+			$mol_assert_equal( v.history().length, 0 )
+			v.thread_click( 0 )
+			$mol_assert_equal( v.history()[ 0 ].text, 'первый' )
+		},
+
+		'chat.thread_add: a new thread continues in the same mode'( $ ) {
+			const v = chat( $ )
+			v.thread_engine( 'local' )
+			v.thread_add()
+			$mol_assert_equal( v.engine(), 'local' )
+		},
+
+		'chat.thread_title: named by its first question, not by a number'( $ ) {
+			// По номеру нельзя вспомнить, о чём тред, а сравнивают их именно по
+			// содержанию.
+			const v = chat( $ )
+			v.thread_engine( 'naive' )
+			v.history( [ { role: 'user', text: 'Кто написал язык C?' } ] )
+			$mol_assert_equal( /Кто написал/.test( v.thread_title( 0 ) ), true )
+			$mol_assert_equal( /naive/.test( v.thread_title( 0 ) ), true )
+		},
+
+		'chat.threads: switching corpus shows that corpus threads'( $ ) {
+			const one = $raggu_web_front_chat.make( { $, dataset_id: () => 'corpus-a' } )
+			const two = $raggu_web_front_chat.make( { $, dataset_id: () => 'corpus-b' } )
+			one.history( [ { role: 'user', text: 'только в A' } ] )
+			$mol_assert_equal( two.history().length, 0 )
+			$mol_assert_equal( one.history().length, 1 )
+		},
+
+		'chat.threads: survive a reload'( $ ) {
+			// local, а не session: переписка, пропадающая с вкладкой, сравнением
+			// двух режимов быть не может.
+			const v = chat( $ )
+			const key = v.threads_key()
+			v.thread_engine( 'naive' )
+			const stored = $.$mol_state_local.value( key ) as any
+			$mol_assert_equal( stored[ 0 ].engine, 'naive' )
+		},
+
+		'chat.thread_id: a stale id does not leave the chat without a thread'( $ ) {
+			const v = chat( $ )
+			v.thread_id( 'удалённый' )
+			$mol_assert_equal( v.thread_id(), v.threads()[ 0 ].id )
 		},
 
 	} )

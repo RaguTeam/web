@@ -12,5 +12,7 @@
 	"$raggu_web_front_chat_sug_wiki_three_text": "Какие институции чаще всего встречаются в графе?",
 	"$raggu_web_front_chat_sug_any_one_text": "Какие ключевые сущности есть в этом графе?",
 	"$raggu_web_front_chat_sug_any_two_text": "Какие связи встречаются чаще всего?",
-	"$raggu_web_front_chat_sug_any_three_text": "Кратко перескажи содержание корпуса."
+	"$raggu_web_front_chat_sug_any_three_text": "Кратко перескажи содержание корпуса.",
+	"$raggu_web_front_chat_thread_new_text": "Новый тред",
+	"$raggu_web_front_chat_thread_add_text": "+ тред"
 }

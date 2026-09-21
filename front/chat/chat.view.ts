@@ -24,6 +24,20 @@ namespace $.$$ {
 		requested?: string
 	}
 
+	/**
+	 * Тред — это переписка ВМЕСТЕ с настройками, которыми её вели.
+	 *
+	 * Режим хранится в треде, а не рядом с корпусом: сравнить mix и naive на
+	 * одном корпусе можно только так — иначе переключение режима переписывало бы
+	 * условия уже состоявшегося разговора, и сравнивать стало бы не с чем.
+	 */
+	export type Raggu_chat_thread = {
+		id: string
+		engine: string
+		query_plan: boolean
+		items: Raggu_chat_item[]
+	}
+
 	export type Raggu_chat_item = {
 		role: Raggu_chat_role
 		text: string
@@ -34,14 +48,115 @@ namespace $.$$ {
 
 	export class $raggu_web_front_chat extends $.$raggu_web_front_chat {
 
-		// История привязана к dataset_id — у каждого корпуса своя ветка чата.
-		// Иначе фолбэк-плашка, полученная на одном датасете (напр. мок без бэка),
-		// висела бы на сообщениях другого, где бэк отвечает через граф.
+		// ---- треды ----
+		//
+		// Хранятся по корпусам и в local, а не в session: переписка, пропадающая
+		// при закрытии вкладки, сравнением двух режимов быть не может.
+
+		threads_key() {
+			return `$raggu_web_front_chat.threads@${ this.dataset_id() || '' }`
+		}
+
 		@ $mol_mem
+		threads( next?: Raggu_chat_thread[] ): Raggu_chat_thread[] {
+			const stored = this.$.$mol_state_local.value( this.threads_key(), next as any ) as Raggu_chat_thread[] | null
+			// Пустой корпус начинается с одного треда: пустой список тредов
+			// означал бы чат без места, куда писать.
+			return stored?.length ? stored : [ this.blank_thread() ]
+		}
+
+		blank_thread(): Raggu_chat_thread {
+			return { id: 't1', engine: 'mix', query_plan: false, items: [] }
+		}
+
+		thread_id( next?: string ): string {
+			const key = `$raggu_web_front_chat.thread@${ this.dataset_id() || '' }`
+			// Именно next, а не `next ?? null`: у $mol_state_local значение null
+			// означает «удалить ключ», и чтение стирало бы то, что читает.
+			const stored = this.$.$mol_state_local.value( key, next ) as string | null
+			const threads = this.threads()
+			// Сохранённый идентификатор мог остаться от удалённого треда.
+			return threads.some( t => t.id === stored ) ? stored! : threads[ 0 ].id
+		}
+
+		thread(): Raggu_chat_thread {
+			const id = this.thread_id()
+			return this.threads().find( t => t.id === id ) ?? this.threads()[ 0 ]
+		}
+
+		/**
+		 * Записать изменение активного треда обратно в список.
+		 *
+		 * Без $mol_action и без $mol_mem у вызывающих: запись в мемоизированную
+		 * ячейку из тела другой мемоизированной ячейки — это мутация состояния
+		 * внутри фибера, и прочитанное следом значение оказывается прежним.
+		 */
+		thread_patch( patch: Partial< Raggu_chat_thread > ) {
+			const id = this.thread_id()
+			this.threads( this.threads().map( t => t.id === id ? { ... t, ... patch } : t ) )
+			return null
+		}
+
+		thread_ids() {
+			return this.threads().map( t => t.id )
+		}
+
+		thread_rows() {
+			return [ ... this.threads().map( ( _, i ) => this.Thread( i ) ), this.Thread_add() ]
+		}
+
+		/**
+		 * Подпись треда — первый вопрос, обрезанный. Не «Тред 2»: по номеру
+		 * нельзя вспомнить, о чём он, а сравнивают треды именно по содержанию.
+		 */
+		thread_title( index: number ) {
+			const thread = this.threads()[ index ]
+			if( !thread ) return ''
+			const first = thread.items.find( item => item.role === 'user' )?.text
+			const label = first ? first.slice( 0, 24 ) : this.thread_new_text()
+			return `${ label } · ${ thread.engine }`
+		}
+
+		thread_current( index: number ) {
+			return this.threads()[ index ]?.id === this.thread_id()
+		}
+
+		@ $mol_action
+		thread_click( index: number ) {
+			const id = this.threads()[ index ]?.id
+			if( id ) this.thread_id( id )
+			return null
+		}
+
+		/** Новый тред наследует режим текущего: чаще всего продолжают в том же. */
+		@ $mol_action
+		thread_add() {
+			const threads = this.threads()
+			const id = `t${ Date.now().toString( 36 ) }`
+			const current = this.thread()
+			this.threads( [ ... threads, { id, engine: current.engine, query_plan: current.query_plan, items: [] } ] )
+			this.thread_id( id )
+			return null
+		}
+
+		/** Режим этого треда. Панель настроек правит именно его. */
+		override thread_engine( next?: string ): string {
+			if( next !== undefined ) this.thread_patch( { engine: next } )
+			return this.thread().engine
+		}
+
+		override thread_query_plan( next?: boolean ): boolean {
+			if( next !== undefined ) this.thread_patch( { query_plan: next } )
+			return this.thread().query_plan
+		}
+
+		/** Режим и план запроса берутся из треда, а не из props. */
+		engine() { return this.thread_engine() }
+		use_query_plan() { return this.thread_query_plan() }
+
 		history( next?: Raggu_chat_item[] ): Raggu_chat_item[] {
-			const key = `$raggu_web_front_chat.history@${ this.dataset_id() || '' }`
-			const stored = this.$.$mol_state_session.value( key, next as any ) as Raggu_chat_item[] | null
-			return stored ?? []
+			if( next !== undefined ) this.thread_patch( { items: next } )
+			return this.thread().items
 		}
 
 		is_empty() { return this.history().length === 0 }

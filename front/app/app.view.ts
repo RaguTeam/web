@@ -177,13 +177,22 @@ namespace $.$$ {
 		 * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
 		 * плюс декомпозиция включена» нельзя было бы выразить.
 		 */
-		chat_engine() {
-			return this.Settings().engine_value()
+		@$mol_mem
+		chat_engine( next?: string ): string {
+			if( next !== undefined ) return this.Chat().thread_engine( next )
+			const available = this.dataset_engines()
+			const chosen = this.Chat().thread_engine()
+			return available.includes( chosen ) ? chosen : ( available[ 0 ] ?? 'mix' )
 		}
 
-		/** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */
-		chat_query_plan() {
-			return this.Settings().query_plan() === 'on'
+		/**
+		 * Вторая переключалка панели — декомпозиция вопроса — тоже принадлежит
+		 * треду: она меняет и цену, и ответ, а значит относится к разговору.
+		 */
+		@$mol_mem
+		chat_query_plan( next?: string ): string {
+			if( next !== undefined ) this.Chat().thread_query_plan( next === 'on' )
+			return this.Chat().thread_query_plan() ? 'on' : 'off'
 		}
 
 		screen_title() {

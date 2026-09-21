@@ -2,6 +2,8 @@ $raggu_web_front_settings $bog_builderui_div
 	showed? false
 	close? null
 	available_engines /\string
+	engine? \mix
+	query_plan? \off
 	engine_mix_text @ \mix - graph and chunks
 	engine_local_text @ \local - entities and relations
 	engine_naive_text @ \naive - chunks only

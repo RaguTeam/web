@@ -1,7 +1,7 @@
 $raggu_web_front_chat $bog_builderui_div
-	engine \mix
-	use_query_plan false
 	dataset_id \
+	thread_engine? \mix
+	thread_query_plan? false
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send
 	clear_text @ \Clear
@@ -28,10 +28,18 @@ $raggu_web_front_chat $bog_builderui_div
 	message_trace* \
 	message_trace_hint* \
 	message_has_trace* false
+	thread_new_text @ \New thread
+	thread_add_text @ \+ thread
+	thread_rows /
+	thread_title* \
+	thread_current* false
+	thread_click*? null
+	thread_add? null
 	sub /
 		<= Body $mol_scroll
 			sub /
 				<= Body_flow $bog_builderui_div sub /
+					<= Threads $bog_builderui_div sub <= thread_rows /
 					<= Empty $bog_builderui_div
 						attr *
 							^
@@ -58,6 +66,15 @@ $raggu_web_front_chat $bog_builderui_div
 					hint <= send_label_text
 					click? <=> prompt_submit? null
 					sub / \↑
+	Thread* $bog_builderui_div
+		attr *
+			^
+			raggu_current <= thread_current*
+		sub / <= thread_title*
+		event * click? <=> thread_click*? null
+	Thread_add $mol_button_minor
+		click? <=> thread_add? null
+		sub / <= thread_add_text
 	Sug* $bog_builderui_div
 		sub / <= sug_text*
 		event * click? <=> sug_click*? null
