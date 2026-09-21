@@ -194,6 +194,7 @@ class Answerer:
             engine_used=answer_trace.engine,
             language=answer_language,
             query_plan=request.use_query_plan,
+            degraded=response.engines.degraded,
             retrieval_ms=answer_trace.timings.retrieval_ms,
             generation_ms=answer_trace.timings.generation_ms,
             chunks=len(answer_trace.chunks),

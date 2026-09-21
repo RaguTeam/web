@@ -93,8 +93,8 @@ class GraphHighlight(APIModel):
 
 
 class AnswerTrace(APIModel):
-    # The engine that actually ran, not the one requested. "keyword" means the
-    # RAGU vector path was unavailable and local keyword retrieval was used.
+    # The engine that actually ran, not the one requested: the service may serve
+    # a different mode than the UI offered, and the trace has to say so.
     engine: TraceEngine
     top_k: int = Field(ge=1)
     # Whether reranking actually happened (no reranker is configured, so: False).

@@ -2142,7 +2142,7 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "graph-ragu" },
-    { name = "openai" },
+    { name = "httpx" },
     { name = "prometheus-fastapi-instrumentator" },
     { name = "pydantic" },
     { name = "uvicorn", extra = ["standard"] },
@@ -2150,7 +2150,6 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
-    { name = "httpx" },
     { name = "pytest" },
 ]
 
@@ -2158,8 +2157,7 @@ dev = [
 requires-dist = [
     { name = "fastapi", specifier = ">=0.115.0" },
     { name = "graph-ragu", git = "https://github.com/m0tbka/RAGU.git?branch=feature%2Fapi" },
-    { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.27.0" },
-    { name = "openai", specifier = ">=2.32.0" },
+    { name = "httpx", specifier = ">=0.27.0" },
     { name = "prometheus-fastapi-instrumentator", specifier = ">=7.0.0" },
     { name = "pydantic", specifier = ">=2.8.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },

@@ -180,7 +180,7 @@
     {
       "type": "piechart",
       "title": "Движок: что реально отработал",
-      "description": "keyword означает, что векторный поиск был недоступен или упал — это деградация, а не режим работы.",
+      "description": "Режим, который реально отработал. Расхождение с запрошенным означает, что корпус не обслуживает выбранный и был подставлен доступный.",
       "gridPos": { "h": 8, "w": 8, "x": 16, "y": 23 },
       "options": { "legend": { "displayMode": "list", "placement": "bottom", "values": ["value"] } },
       "targets": [
@@ -195,13 +195,13 @@
     {
       "type": "table",
       "title": "Сводка по корпусам",
-      "description": "«Открытий» — загрузки графа и карточки корпуса, то есть заходы через интерфейс. Вопросы считаются отдельно и могут прийти прямым вызовом API мимо интерфейса, поэтому расхождение между колонками нормально.",
+      "description": "«Открытий» — загрузки графа и карточки корпуса, то есть заходы через интерфейс. Вопросы считаются отдельно и могут прийти прямым вызовом API мимо интерфейса, поэтому расхождение между колонками нормально. «Доля деградаций» — ответы, собранные не всеми движками ансамбля: снаружи такой ответ выглядит просто слабым.",
       "gridPos": { "h": 9, "w": 12, "x": 0, "y": 31 },
       "fieldConfig": {
         "defaults": { "decimals": 0, "custom": { "align": "auto" } },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Доля keyword" },
+            "matcher": { "id": "byName", "options": "Доля деградаций" },
             "properties": [
               { "id": "unit", "value": "percentunit" },
               { "id": "decimals", "value": 2 },
@@ -235,7 +235,7 @@
               "Value #A": "Открытий",
               "Value #B": "Вопросы",
               "Value #C": "Без контекста",
-              "Value #D": "Доля keyword"
+              "Value #D": "Доля деградаций"
             }
           }
         }
@@ -260,7 +260,7 @@
           "refId": "C"
         },
         {
-          "expr": "sum by (dataset) (increase(ragu_agent_engine_used_total{engine_used=\"keyword\"}[$__range])) / clamp_min(sum by (dataset) (increase(ragu_agent_engine_used_total[$__range])), 1)",
+          "expr": "sum by (dataset) (increase(ragu_agent_degraded_total[$__range])) / clamp_min(sum by (dataset) (increase(ragu_agent_answers_total[$__range])), 1)",
           "format": "table",
           "instant": true,
           "refId": "D"
