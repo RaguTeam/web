@@ -269,7 +269,9 @@ ${ CHAT.answer }
 			document.body.appendChild( a )
 			a.click()
 			a.remove()
-			setTimeout( () => URL.revokeObjectURL( url ), 1000 )
+			// Отзыв ссылки тоже через wire-aware таймер: иначе он доживает до
+			// уже уничтоженного контекста.
+			new this.$.$mol_after_timeout( 1000, () => URL.revokeObjectURL( url ) )
 		}
 
 	}

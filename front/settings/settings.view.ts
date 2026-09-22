@@ -25,17 +25,38 @@ namespace $.$$ {
 		// состоявшегося разговора, и сравнивать два режима стало бы не с чем.
 
 		/**
+		 * Все режимы, какие вообще бывают, в порядке предпочтения.
+		 *
+		 * Список отдельно от подписей намеренно: какие режимы существуют и
+		 * какой из них доступен — это факт, а подпись к нему — представление.
+		 * Смешав их, любую проверку логики пришлось бы вести через локали.
+		 */
+		engine_all(): readonly string[] {
+			return [ 'mix', 'local', 'naive', 'global' ]
+		}
+
+		/**
 		 * Что предложить в выпадающем списке.
 		 *
 		 * Только то, что этот корпус обслуживает. Недоступный режим в списке
-		 * был бы кнопкой, на которую некому ответить, — а какие именно отсутствуют
-		 * и почему, говорит строка ниже.
+		 * был бы кнопкой, на которую некому ответить.
 		 */
+		engine_options(): readonly string[] {
+			const available = new Set( this.available_engines() )
+			return this.engine_all().filter( mode => available.has( mode ) )
+		}
+
+		/** Каких режимов этот корпус не обслуживает. */
+		engine_missing(): readonly string[] {
+			const available = new Set( this.available_engines() )
+			return this.engine_all().filter( mode => !available.has( mode ) )
+		}
+
 		@$mol_mem
 		engine_dictionary(): Record<string, string> {
 			const labels = this.engine_labels()
 			const dictionary: Record<string, string> = {}
-			for( const mode of this.available_engines() ) dictionary[ mode ] = labels[ mode ] ?? mode
+			for( const mode of this.engine_options() ) dictionary[ mode ] = labels[ mode ] ?? mode
 			return dictionary
 		}
 
@@ -52,15 +73,14 @@ namespace $.$$ {
 		@$mol_mem
 		engine_value( next?: string ): string {
 			if( next !== undefined ) return this.engine( next )
-			const available = this.available_engines()
+			const options = this.engine_options()
 			const chosen = this.engine()
-			return available.includes( chosen ) ? chosen : ( available[ 0 ] ?? 'mix' )
+			return options.includes( chosen ) ? chosen : ( options[ 0 ] ?? 'mix' )
 		}
 
-		/** Каких режимов этот корпус не обслуживает — словами, а не молчанием. */
+		/** То же самое словами, а не молчанием. */
 		engine_missing_text() {
-			const available = new Set( this.available_engines() )
-			const missing = Object.keys( this.engine_labels() ).filter( mode => !available.has( mode ) )
+			const missing = this.engine_missing()
 			if( !missing.length ) return ''
 			return this.engine_missing_prefix_text() + ' ' + missing.join( ', ' )
 		}

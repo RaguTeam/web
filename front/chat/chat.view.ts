@@ -109,6 +109,7 @@ namespace $.$$ {
 		 * Подпись треда — первый вопрос, обрезанный. Не «Тред 2»: по номеру
 		 * нельзя вспомнить, о чём он, а сравнивают треды именно по содержанию.
 		 */
+		@ $mol_mem_key
 		thread_title( index: number ) {
 			const thread = this.threads()[ index ]
 			if( !thread ) return ''
@@ -117,6 +118,7 @@ namespace $.$$ {
 			return `${ label } · ${ thread.engine }`
 		}
 
+		@ $mol_mem_key
 		thread_current( index: number ) {
 			return this.threads()[ index ]?.id === this.thread_id()
 		}
@@ -185,27 +187,55 @@ namespace $.$$ {
 			return this.history().map( ( _, i ) => this.Message( i ) )
 		}
 
-		// Автоскролл вниз при появлении нового сообщения.
-		// auto() вызывается $mol_view.dom_tree после render — DOM уже актуален.
-		override auto() {
+		// ---- автоскролл вниз при новом сообщении ----
+		//
+		// Через явные мем-каналы, а не записью в scrollTop из auto(). Прямая
+		// запись обходит реактивность: она работает лишь до тех пор, пока
+		// кто-то в теле метода случайно подписан на history(), и отваливается
+		// молча, стоит этой подписке измениться — что и произошло, когда
+		// история переехала в треды.
+		//
+		// Цепочка history → scroll_height → dom_tree видна в графе
+		// зависимостей, поэтому инвалидация детерминированна: к моменту, когда
+		// scroll_height читает scrollHeight, super.dom_tree() новое сообщение
+		// уже отрисовал.
+
+		@ $mol_mem
+		scroll_height(): number {
 			void this.history()
-			const el = this.Body().dom_node() as HTMLElement
-			el.scrollTop = el.scrollHeight
-			return [] as any
+			return ( this.Body().dom_node() as HTMLElement ).scrollHeight
 		}
 
+		@ $mol_mem
+		scroll_top( next?: number ): number {
+			const el = this.Body().dom_node() as HTMLElement
+			if( next !== undefined ) el.scrollTop = next
+			return el.scrollTop
+		}
+
+		@ $mol_mem
+		override dom_tree( next?: Element ): Element {
+			const node = super.dom_tree( next )
+			this.scroll_top( this.scroll_height() )
+			return node
+		}
+
+		@ $mol_mem_key
 		message_text( index: number ) {
 			return this.history()[ index ]?.text ?? ''
 		}
 
+		@ $mol_mem_key
 		message_role( index: number ) {
 			return this.history()[ index ]?.role ?? 'user'
 		}
 
+		@ $mol_mem_key
 		message_off_graph( index: number ) {
 			return this.history()[ index ]?.off_graph ?? false
 		}
 
+		@ $mol_mem_key
 		message_has_trace( index: number ) {
 			return Boolean( this.history()[ index ]?.trace )
 		}
@@ -216,6 +246,7 @@ namespace $.$$ {
 		 * Стоимость показывается, только когда цены заданы. Ноль в рублях рядом с
 		 * реальным вопросом читался бы как «бесплатно», а означает «не оценено».
 		 */
+		@ $mol_mem_key
 		message_trace( index: number ) {
 			const trace = this.history()[ index ]?.trace
 			if( !trace ) return ''
@@ -231,6 +262,7 @@ namespace $.$$ {
 		}
 
 		/** Подробности в подсказку: в строку они не влезают, а объясняют её. */
+		@ $mol_mem_key
 		message_trace_hint( index: number ) {
 			const trace = this.history()[ index ]?.trace
 			if( !trace ) return ''
@@ -448,10 +480,25 @@ namespace $.$$ {
 			}
 		}
 
+		/**
+		 * Какой набор встроенных подсказок подходит корпусу.
+		 *
+		 * Отдельно от самих строк: выбор набора — факт, проверяемый без локали,
+		 * а чтение @-строк в свежем $ даёт фантомные «Not translated» уже после
+		 * прогона тестов.
+		 */
+		fallback_kind(): 'law' | 'wiki' | 'any' {
+			switch( this.dataset_id() ) {
+				case 'law': return 'law'
+				case 'wiki': return 'wiki'
+			}
+			return 'any'
+		}
+
 		// Фолбэк без бэка: свои 3 вопроса на встроенные корпуса, общие — на всё
 		// остальное. Строки объявлены в view.tree, значит переводятся локалью.
 		fallback_suggestions(): readonly string[] {
-			switch( this.dataset_id() ) {
+			switch( this.fallback_kind() ) {
 				case 'law': return [ this.sug_law_one_text(), this.sug_law_two_text(), this.sug_law_three_text() ]
 				case 'wiki': return [ this.sug_wiki_one_text(), this.sug_wiki_two_text(), this.sug_wiki_three_text() ]
 			}
@@ -467,6 +514,7 @@ namespace $.$$ {
 			return [ ... this.suggestions().map( ( _, i ) => this.Sug( i ) ), this.Clear() ]
 		}
 
+		@ $mol_mem_key
 		sug_text( index: number ) {
 			return this.suggestions()[ index ] ?? ''
 		}

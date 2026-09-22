@@ -189,18 +189,15 @@ namespace $.$$ {
 			$mol_assert_equal( v.rows().length, 0 )
 		},
 
-		'chat: fallback suggestions are per corpus, three of them'( $ ) {
+		'chat: fallback suggestions are picked per corpus'( $ ) {
 			$.$mol_state_arg.value( 'mock', '1' )
 			// dataset_id — не сеттер, задаём его override'ом при создании
 			const chat = ( id: string ) => $raggu_web_front_chat.make({ $, dataset_id: () => id })
-			const generic = chat( '' ).fallback_suggestions()
-			const law = chat( 'law' ).fallback_suggestions()
-			const wiki = chat( 'wiki' ).fallback_suggestions()
-			$mol_assert_equal( generic.length, 3 )
-			$mol_assert_equal( law.length, 3 )
-			$mol_assert_equal( wiki.length, 3 )
-			$mol_assert_equal( law[0] === wiki[0], false )
-			$mol_assert_equal( law[0] === generic[0], false )
+			// Проверяем выбор набора, а не сами строки: чтение @-локализованных
+			// значений в свежем $ стреляет «Not translated» уже после прогона.
+			$mol_assert_equal( chat( '' ).fallback_kind(), 'any' )
+			$mol_assert_equal( chat( 'law' ).fallback_kind(), 'law' )
+			$mol_assert_equal( chat( 'wiki' ).fallback_kind(), 'wiki' )
 		},
 
 		'forcegraph: community filter dims outsiders, highlights internal edges only'( $ ) {

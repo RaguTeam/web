@@ -621,12 +621,17 @@ namespace $.$$ {
 
 		// Ховер срабатывает после паузы курсора (dwell): быстрое проведение
 		// по графу не дёргает подсветку. Снятие — мгновенное.
-		hover_timer: any = null
+		hover_timer: { destructor(): void } | null = null
 		readonly HOVER_DWELL_MS = 200
 
 		hover_after( fire: () => void ) {
-			clearTimeout( this.hover_timer )
-			this.hover_timer = setTimeout( fire, this.HOVER_DWELL_MS )
+			this.hover_cancel()
+			this.hover_timer = new this.$.$mol_after_timeout( this.HOVER_DWELL_MS, fire )
+		}
+
+		hover_cancel() {
+			this.hover_timer?.destructor()
+			this.hover_timer = null
 		}
 
 		@$mol_action
@@ -637,7 +642,7 @@ namespace $.$$ {
 
 		@$mol_action
 		hover_leave() {
-			clearTimeout( this.hover_timer )
+			this.hover_cancel()
 			this.hovered_id( '' )
 			return null
 		}
@@ -709,7 +714,7 @@ namespace $.$$ {
 
 		@$mol_action
 		edge_hover_leave() {
-			clearTimeout( this.hover_timer )
+			this.hover_cancel()
 			this.hovered_edge_id( '' )
 			return null
 		}
