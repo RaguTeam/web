@@ -882,6 +882,14 @@ $bog_builderui_tooltip $mol_pop_over
 $raggu_web_front_settings $bog_builderui_div
 	showed? false
 	close? null
+	available_engines /\string
+	engine? \mix
+	query_plan? \off
+	engine_mix_text @ \mix - graph and chunks
+	engine_local_text @ \local - entities and relations
+	engine_naive_text @ \naive - chunks only
+	engine_global_text @ \global - community summaries
+	engine_missing_prefix_text @ \This corpus does not serve:
 	attr *
 		^
 		raggu_web_front_settings_showed <= showed?
@@ -904,16 +912,15 @@ $raggu_web_front_settings $bog_builderui_div
 					opts @ \graph in answering · decomposition of complex questions
 					reindex false
 					controls /
-						<= Use_graph_row $bog_builderui_div sub /
-							<= Use_graph_label $bog_builderui_div sub / <= use_graph_label_text @ \Graph in search
-							<= Use_graph_help $bog_builderui_div
-								attr * title <= use_graph_hint_text @ \Enable/disable use of the graph when answering.
+						<= Engine_row $bog_builderui_div sub /
+							<= Engine_label $bog_builderui_div sub / <= engine_label_text @ \Search mode
+							<= Engine_help $bog_builderui_div
+								attr * title <= engine_hint_text @ \Which stores the search reads. Only the modes this corpus serves are offered.
 								sub / \?
-							<= Use_graph $bog_builderui_select
-								value? <=> use_graph? \on
-								dictionary *
-									on @ \On
-									off @ \Off
+							<= Engine $bog_builderui_select
+								value? <=> engine_value? \mix
+								dictionary <= engine_dictionary *
+						<= Engine_missing $bog_builderui_div sub / <= engine_missing_text \
 						<= Query_plan_row $bog_builderui_div sub /
 							<= Query_plan_label $bog_builderui_div sub / <= query_plan_label_text @ \QueryPlanEngine in search
 							<= Query_plan_help $bog_builderui_div
@@ -1869,9 +1876,9 @@ $mol_text_list_item $mol_paragraph
 		mol_text_list_item_index <= index 0
 
 $raggu_web_front_chat $bog_builderui_div
-	engine \mix
-	use_query_plan false
 	dataset_id \
+	thread_engine? \mix
+	thread_query_plan? false
 	input_hint_text @ \Ask anything about the corpus…
 	send_label_text @ \Send
 	clear_text @ \Clear
@@ -1895,10 +1902,21 @@ $raggu_web_front_chat $bog_builderui_div
 	message_text* \
 	message_role* \
 	message_off_graph* false
+	message_trace* \
+	message_trace_hint* \
+	message_has_trace* false
+	thread_new_text @ \New thread
+	thread_add_text @ \+ thread
+	thread_rows /
+	thread_title* \
+	thread_current* false
+	thread_click*? null
+	thread_add? null
 	sub /
 		<= Body $mol_scroll
 			sub /
 				<= Body_flow $bog_builderui_div sub /
+					<= Threads $bog_builderui_div sub <= thread_rows /
 					<= Empty $bog_builderui_div
 						attr *
 							^
@@ -1925,6 +1943,15 @@ $raggu_web_front_chat $bog_builderui_div
 					hint <= send_label_text
 					click? <=> prompt_submit? null
 					sub / \↑
+	Thread* $bog_builderui_div
+		attr *
+			^
+			raggu_current <= thread_current*
+		sub / <= thread_title*
+		event * click? <=> thread_click*? null
+	Thread_add $mol_button_minor
+		click? <=> thread_add? null
+		sub / <= thread_add_text
 	Sug* $bog_builderui_div
 		sub / <= sug_text*
 		event * click? <=> sug_click*? null
@@ -1948,6 +1975,12 @@ $raggu_web_front_chat $bog_builderui_div
 					^
 					raggu_off_graph <= message_off_graph*
 				sub / <= off_graph_text
+			<= Message_trace* $bog_builderui_div
+				attr *
+					^
+					raggu_has_trace <= message_has_trace*
+					title <= message_trace_hint*
+				sub / <= message_trace*
 
 $raggu_web_front_summary_card $bog_builderui_div
 	icon \
@@ -2108,6 +2141,9 @@ $raggu_web_front_app $bog_builderui_div
 		<= Help $raggu_web_front_help
 			showed? <=> help_open?
 		<= Settings $raggu_web_front_settings
+			available_engines <= dataset_engines /
+			engine? <=> chat_engine? \mix
+			query_plan? <=> chat_query_plan? \off
 			showed? <=> settings_open?
 			close? <=> close_settings? null
 		<= Summary_popup $mol_view
@@ -2119,6 +2155,4 @@ $raggu_web_front_app $bog_builderui_div
 		ask_click? <=> ask_chat? null
 	Chat $raggu_web_front_chat
 		dataset_id <= dataset_id
-		engine <= chat_engine \mix
-		use_query_plan <= chat_query_plan false
 	Summary $raggu_web_front_summary

@@ -5223,7 +5223,7 @@ declare namespace $ {
 	>
 	type $bog_builderui_div__attr_raggu_web_front_settings_9 = $mol_type_enforce<
 		({ 
-			'title': ReturnType< $raggu_web_front_settings['use_graph_hint_text'] >,
+			'title': ReturnType< $raggu_web_front_settings['engine_hint_text'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['attr'] >
@@ -5234,15 +5234,12 @@ declare namespace $ {
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_select__value_raggu_web_front_settings_11 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_settings['use_graph'] >
+		ReturnType< $raggu_web_front_settings['engine_value'] >
 		,
 		ReturnType< $bog_builderui_select['value'] >
 	>
 	type $bog_builderui_select__dictionary_raggu_web_front_settings_12 = $mol_type_enforce<
-		({ 
-			'on': string,
-			'off': string,
-		}) 
+		ReturnType< $raggu_web_front_settings['engine_dictionary'] >
 		,
 		ReturnType< $bog_builderui_select['dictionary'] >
 	>
@@ -5256,24 +5253,29 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_settings_15 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_settings_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_settings_16 = $mol_type_enforce<
 		({ 
 			'title': ReturnType< $raggu_web_front_settings['query_plan_hint_text'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_settings_16 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_settings_17 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_select__value_raggu_web_front_settings_17 = $mol_type_enforce<
+	type $bog_builderui_select__value_raggu_web_front_settings_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_settings['query_plan'] >
 		,
 		ReturnType< $bog_builderui_select['value'] >
 	>
-	type $bog_builderui_select__dictionary_raggu_web_front_settings_18 = $mol_type_enforce<
+	type $bog_builderui_select__dictionary_raggu_web_front_settings_19 = $mol_type_enforce<
 		({ 
 			'on': string,
 			'off': string,
@@ -5281,42 +5283,42 @@ declare namespace $ {
 		,
 		ReturnType< $bog_builderui_select['dictionary'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_settings_19 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_settings_20 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $raggu_web_front_settings_group__step_raggu_web_front_settings_20 = $mol_type_enforce<
+	type $raggu_web_front_settings_group__step_raggu_web_front_settings_21 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_settings_group['step'] >
 	>
-	type $raggu_web_front_settings_group__title_raggu_web_front_settings_21 = $mol_type_enforce<
+	type $raggu_web_front_settings_group__title_raggu_web_front_settings_22 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_settings_group['title'] >
 	>
-	type $raggu_web_front_settings_group__opts_raggu_web_front_settings_22 = $mol_type_enforce<
+	type $raggu_web_front_settings_group__opts_raggu_web_front_settings_23 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_settings_group['opts'] >
 	>
-	type $raggu_web_front_settings_group__reindex_raggu_web_front_settings_23 = $mol_type_enforce<
+	type $raggu_web_front_settings_group__reindex_raggu_web_front_settings_24 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $raggu_web_front_settings_group['reindex'] >
 	>
-	type $raggu_web_front_settings_group__controls_raggu_web_front_settings_24 = $mol_type_enforce<
+	type $raggu_web_front_settings_group__controls_raggu_web_front_settings_25 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $raggu_web_front_settings_group['controls'] >
 	>
-	type $mol_scroll__sub_raggu_web_front_settings_25 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_front_settings_26 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_settings_26 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_settings_27 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
@@ -5332,13 +5334,16 @@ declare namespace $ {
 		Spacer( ): $bog_builderui_div
 		Close_btn( ): $bog_builderui_div
 		Header( ): $bog_builderui_div
-		use_graph_label_text( ): string
-		Use_graph_label( ): $bog_builderui_div
-		use_graph_hint_text( ): string
-		Use_graph_help( ): $bog_builderui_div
-		use_graph( next?: string ): string
-		Use_graph( ): $bog_builderui_select
-		Use_graph_row( ): $bog_builderui_div
+		engine_label_text( ): string
+		Engine_label( ): $bog_builderui_div
+		engine_hint_text( ): string
+		Engine_help( ): $bog_builderui_div
+		engine_value( next?: string ): string
+		engine_dictionary( ): Record<string, any>
+		Engine( ): $bog_builderui_select
+		Engine_row( ): $bog_builderui_div
+		engine_missing_text( ): string
+		Engine_missing( ): $bog_builderui_div
 		query_plan_label_text( ): string
 		Query_plan_label( ): $bog_builderui_div
 		query_plan_hint_text( ): string
@@ -5350,6 +5355,13 @@ declare namespace $ {
 		Body( ): $mol_scroll
 		Panel( ): $bog_builderui_div
 		showed( next?: boolean ): boolean
+		available_engines( ): readonly(any)[]
+		engine( next?: string ): string
+		engine_mix_text( ): string
+		engine_local_text( ): string
+		engine_naive_text( ): string
+		engine_global_text( ): string
+		engine_missing_prefix_text( ): string
 		attr( ): ({ 
 			'raggu_web_front_settings_showed': ReturnType< $raggu_web_front_settings['showed'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
@@ -5371,16 +5383,29 @@ declare namespace $.$$ {
      */
     class $raggu_web_front_settings extends $.$raggu_web_front_settings {
         close(): null;
-        /** Граф при поиске: 'on' → MixSearchEngine (чанки + граф), 'off' → NaiveSearchEngine (только чанки). */
-        use_graph(next?: string): string;
         /**
-         * QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG.
+         * Все режимы, какие вообще бывают, в порядке предпочтения.
          *
-         * По умолчанию ВЫКЛЮЧЕН, пока бэк с `use_query_plan` не выкачен: у него
-         * extra="forbid", и старая версия отвечает 422 на весь запрос. Включённый
-         * по умолчанию тумблер сломал бы чат всем сразу после деплоя фронта.
+         * Список отдельно от подписей намеренно: какие режимы существуют и
+         * какой из них доступен — это факт, а подпись к нему — представление.
+         * Смешав их, любую проверку логики пришлось бы вести через локали.
          */
-        query_plan(next?: string): string;
+        engine_all(): readonly string[];
+        /**
+         * Что предложить в выпадающем списке.
+         *
+         * Только то, что этот корпус обслуживает. Недоступный режим в списке
+         * был бы кнопкой, на которую некому ответить.
+         */
+        engine_options(): readonly string[];
+        /** Каких режимов этот корпус не обслуживает. */
+        engine_missing(): readonly string[];
+        engine_dictionary(): Record<string, string>;
+        engine_labels(): Record<string, string>;
+        /** Значение селекта: выбранное, если корпус его обслуживает. */
+        engine_value(next?: string): string;
+        /** То же самое словами, а не молчанием. */
+        engine_missing_text(): string;
     }
 }
 
@@ -5761,11 +5786,13 @@ declare namespace $.$raggu_web_front_api_ragu {
                  * Engine
                  * @enum {string}
                  */
-                engine: "local" | "naive" | "mix" | "keyword";
+                engine: "local" | "global" | "naive" | "mix";
                 /** Top K */
                 top_k: number;
                 /** Rerank */
                 rerank: boolean;
+                /** Rerank Error */
+                rerank_error?: string | null;
                 query_plan?: components["schemas"]["TraceQueryPlan"] | null;
                 /** Entities */
                 entities?: components["schemas"]["TraceEntity"][];
@@ -5776,6 +5803,7 @@ declare namespace $.$raggu_web_front_api_ragu {
                 /** Communities */
                 communities?: components["schemas"]["TraceCommunity"][];
                 timings: components["schemas"]["TraceTimings"];
+                usage?: components["schemas"]["TraceUsage"] | null;
                 energy: components["schemas"]["TraceEnergy"];
                 highlight: components["schemas"]["GraphHighlight"];
             };
@@ -6320,6 +6348,20 @@ declare namespace $.$raggu_web_front_api_ragu {
                 /** Strength */
                 strength: number;
             };
+            /** TraceStageUsage */
+            TraceStageUsage: {
+                /**
+                 * Stage
+                 * @example mix
+                 */
+                stage: string;
+                /** Calls */
+                calls: number;
+                /** Prompt Tokens */
+                prompt_tokens: number;
+                /** Completion Tokens */
+                completion_tokens: number;
+            };
             /** TraceTimings */
             TraceTimings: {
                 /** Retrieval Ms */
@@ -6328,6 +6370,37 @@ declare namespace $.$raggu_web_front_api_ragu {
                 generation_ms: number;
                 /** Total Ms */
                 total_ms: number;
+            };
+            /** TraceUsage */
+            TraceUsage: {
+                /**
+                 * Estimated
+                 * @default true
+                 */
+                estimated: boolean;
+                /** Calls */
+                calls: number;
+                /** Prompt Tokens */
+                prompt_tokens: number;
+                /** Completion Tokens */
+                completion_tokens: number;
+                /** Total Tokens */
+                total_tokens: number;
+                /** Stages */
+                stages?: components["schemas"]["TraceStageUsage"][];
+                /** Cost */
+                cost: number;
+                /**
+                 * Currency
+                 * @default
+                 * @example ₽
+                 */
+                currency: string;
+                /**
+                 * Priced
+                 * @description Whether token prices are configured at all
+                 */
+                priced: boolean;
             };
             /** ValidationError */
             ValidationError: {
@@ -7924,9 +7997,12 @@ declare namespace $.$$ {
         edge_endpoint(id: string): boolean;
         active_node_hood(): Set<string> | null;
         node_opacity(id: string): "1" | "0.12";
-        hover_timer: any;
+        hover_timer: {
+            destructor(): void;
+        } | null;
         readonly HOVER_DWELL_MS = 200;
         hover_after(fire: () => void): void;
+        hover_cancel(): void;
         hover_enter(id: string): null;
         hover_leave(): null;
         edge_by_id(): Record<string, GraphEdge>;
@@ -11701,164 +11777,213 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $bog_builderui_div__attr_raggu_web_front_chat_1 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['thread_rows'] >
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_2 = $mol_type_enforce<
 		({ 
 			'raggu_empty': ReturnType< $raggu_web_front_chat['is_empty'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_2 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_list__rows_raggu_web_front_chat_3 = $mol_type_enforce<
+	type $mol_list__rows_raggu_web_front_chat_4 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['rows'] >
 		,
 		ReturnType< $mol_list['rows'] >
 	>
-	type $bog_builderui_card__attr_raggu_web_front_chat_4 = $mol_type_enforce<
+	type $bog_builderui_card__attr_raggu_web_front_chat_5 = $mol_type_enforce<
 		({ 
 			'raggu_loading': ReturnType< $raggu_web_front_chat['is_communicating'] >,
 		})  & ReturnType< $bog_builderui_card['attr'] >
 		,
 		ReturnType< $bog_builderui_card['attr'] >
 	>
-	type $bog_builderui_card__sub_raggu_web_front_chat_5 = $mol_type_enforce<
+	type $bog_builderui_card__sub_raggu_web_front_chat_6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_card['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_6 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_7 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_scroll__sub_raggu_web_front_chat_7 = $mol_type_enforce<
+	type $mol_scroll__sub_raggu_web_front_chat_8 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_scroll['sub'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_8 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_9 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['suggestion_rows'] >
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_textarea__hint_raggu_web_front_chat_9 = $mol_type_enforce<
+	type $mol_textarea__hint_raggu_web_front_chat_10 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['input_hint_text'] >
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_textarea__value_raggu_web_front_chat_10 = $mol_type_enforce<
+	type $mol_textarea__value_raggu_web_front_chat_11 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_text'] >
 		,
 		ReturnType< $mol_textarea['value'] >
 	>
-	type $mol_textarea__submit_raggu_web_front_chat_11 = $mol_type_enforce<
+	type $mol_textarea__submit_raggu_web_front_chat_12 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_submit'] >
 		,
 		ReturnType< $mol_textarea['submit'] >
 	>
-	type $mol_textarea__press_raggu_web_front_chat_12 = $mol_type_enforce<
+	type $mol_textarea__press_raggu_web_front_chat_13 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_press'] >
 		,
 		ReturnType< $mol_textarea['press'] >
 	>
-	type $mol_button_minor__hint_raggu_web_front_chat_13 = $mol_type_enforce<
+	type $mol_button_minor__hint_raggu_web_front_chat_14 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['send_label_text'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click_raggu_web_front_chat_14 = $mol_type_enforce<
+	type $mol_button_minor__click_raggu_web_front_chat_15 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['prompt_submit'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_raggu_web_front_chat_15 = $mol_type_enforce<
+	type $mol_button_minor__sub_raggu_web_front_chat_16 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
-	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_16 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
 	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_17 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $mol_text__render_visible_only_raggu_web_front_chat_18 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $mol_text__render_visible_only_raggu_web_front_chat_19 = $mol_type_enforce<
 		boolean
 		,
 		ReturnType< $mol_text['render_visible_only'] >
 	>
-	type $mol_text__attr_raggu_web_front_chat_19 = $mol_type_enforce<
+	type $mol_text__attr_raggu_web_front_chat_20 = $mol_type_enforce<
 		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $mol_text['attr'] >
 		,
 		ReturnType< $mol_text['attr'] >
 	>
-	type $mol_text__text_raggu_web_front_chat_20 = $mol_type_enforce<
+	type $mol_text__text_raggu_web_front_chat_21 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['message_text'] >
 		,
 		ReturnType< $mol_text['text'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_21 = $mol_type_enforce<
+	type $bog_builderui_div__attr_raggu_web_front_chat_22 = $mol_type_enforce<
 		({ 
 			'raggu_off_graph': ReturnType< $raggu_web_front_chat['message_off_graph'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_22 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $bog_builderui_div['sub'] >
-	>
 	type $bog_builderui_div__sub_raggu_web_front_chat_23 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
-	type $bog_builderui_div__event_raggu_web_front_chat_24 = $mol_type_enforce<
+	type $bog_builderui_div__attr_raggu_web_front_chat_24 = $mol_type_enforce<
+		({ 
+			'raggu_has_trace': ReturnType< $raggu_web_front_chat['message_has_trace'] >,
+			'title': ReturnType< $raggu_web_front_chat['message_trace_hint'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__attr_raggu_web_front_chat_26 = $mol_type_enforce<
+		({ 
+			'raggu_current': ReturnType< $raggu_web_front_chat['thread_current'] >,
+		})  & ReturnType< $bog_builderui_div['attr'] >
+		,
+		ReturnType< $bog_builderui_div['attr'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_27 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_chat_28 = $mol_type_enforce<
+		({ 
+			click( next?: ReturnType< $raggu_web_front_chat['thread_click'] > ): ReturnType< $raggu_web_front_chat['thread_click'] >,
+		}) 
+		,
+		ReturnType< $bog_builderui_div['event'] >
+	>
+	type $mol_button_minor__click_raggu_web_front_chat_29 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chat['thread_add'] >
+		,
+		ReturnType< $mol_button_minor['click'] >
+	>
+	type $mol_button_minor__sub_raggu_web_front_chat_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button_minor['sub'] >
+	>
+	type $bog_builderui_div__sub_raggu_web_front_chat_31 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $bog_builderui_div['sub'] >
+	>
+	type $bog_builderui_div__event_raggu_web_front_chat_32 = $mol_type_enforce<
 		({ 
 			click( next?: ReturnType< $raggu_web_front_chat['sug_click'] > ): ReturnType< $raggu_web_front_chat['sug_click'] >,
 		}) 
 		,
 		ReturnType< $bog_builderui_div['event'] >
 	>
-	type $mol_button_minor__hint_raggu_web_front_chat_25 = $mol_type_enforce<
+	type $mol_button_minor__hint_raggu_web_front_chat_33 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['clear_text'] >
 		,
 		ReturnType< $mol_button_minor['hint'] >
 	>
-	type $mol_button_minor__click_raggu_web_front_chat_26 = $mol_type_enforce<
+	type $mol_button_minor__click_raggu_web_front_chat_34 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_chat['clear_click'] >
 		,
 		ReturnType< $mol_button_minor['click'] >
 	>
-	type $mol_button_minor__sub_raggu_web_front_chat_27 = $mol_type_enforce<
+	type $mol_button_minor__sub_raggu_web_front_chat_35 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button_minor['sub'] >
 	>
-	type $bog_builderui_div__attr_raggu_web_front_chat_28 = $mol_type_enforce<
+	type $bog_builderui_div__attr_raggu_web_front_chat_36 = $mol_type_enforce<
 		({ 
 			'raggu_role': ReturnType< $raggu_web_front_chat['message_role'] >,
 		})  & ReturnType< $bog_builderui_div['attr'] >
 		,
 		ReturnType< $bog_builderui_div['attr'] >
 	>
-	type $bog_builderui_div__sub_raggu_web_front_chat_29 = $mol_type_enforce<
+	type $bog_builderui_div__sub_raggu_web_front_chat_37 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $bog_builderui_div['sub'] >
 	>
 	export class $raggu_web_front_chat extends $bog_builderui_div {
+		thread_rows( ): readonly(any)[]
+		Threads( ): $bog_builderui_div
 		is_empty( ): boolean
 		Empty( ): $bog_builderui_div
 		Messages( ): $mol_list
@@ -11878,13 +12003,16 @@ declare namespace $ {
 		Input_send( ): $mol_button_minor
 		Input_row( ): $bog_builderui_div
 		Footer( ): $bog_builderui_div
+		thread_click( id: any, next?: any ): any
+		thread_add( next?: any ): any
 		sug_click( id: any, next?: any ): any
 		clear_click( next?: any ): any
 		Message_text( id: any): $mol_text
 		Message_badge( id: any): $bog_builderui_div
-		engine( ): string
-		use_query_plan( ): boolean
+		Message_trace( id: any): $bog_builderui_div
 		dataset_id( ): string
+		thread_engine( next?: string ): string
+		thread_query_plan( next?: boolean ): boolean
 		input_hint_text( ): string
 		send_label_text( ): string
 		clear_text( ): string
@@ -11904,7 +12032,16 @@ declare namespace $ {
 		message_text( id: any): string
 		message_role( id: any): string
 		message_off_graph( id: any): boolean
+		message_trace( id: any): string
+		message_trace_hint( id: any): string
+		message_has_trace( id: any): boolean
+		thread_new_text( ): string
+		thread_add_text( ): string
+		thread_title( id: any): string
+		thread_current( id: any): boolean
 		sub( ): readonly(any)[]
+		Thread( id: any): $bog_builderui_div
+		Thread_add( ): $mol_button_minor
 		Sug( id: any): $bog_builderui_div
 		Clear( ): $mol_button_minor
 		Message( id: any): $bog_builderui_div
@@ -11915,22 +12052,99 @@ declare namespace $ {
 //# sourceMappingURL=chat.view.tree.d.ts.map
 declare namespace $.$$ {
     type Raggu_chat_role = 'user' | 'assistant';
+    /**
+     * Сжатый трейс: только то, что показывается под ответом.
+     *
+     * Целиком ответ бэка сюда не кладётся намеренно — история живёт в
+     * sessionStorage, а полный трейс несёт тексты всех найденных фрагментов и
+     * раздул бы её на порядок.
+     */
+    type Raggu_chat_trace = {
+        engine: string;
+        entities: number;
+        chunks: number;
+        total_ms: number;
+        tokens: number;
+        cost: number;
+        currency: string;
+        priced: boolean;
+        /** Реранкер был и отказал: ответ собран в исходном порядке. */
+        rerank_error?: string | null;
+        /** Режим, который просили, если сервис отработал другим. */
+        requested?: string;
+    };
+    /**
+     * Тред — это переписка ВМЕСТЕ с настройками, которыми её вели.
+     *
+     * Режим хранится в треде, а не рядом с корпусом: сравнить mix и naive на
+     * одном корпусе можно только так — иначе переключение режима переписывало бы
+     * условия уже состоявшегося разговора, и сравнивать стало бы не с чем.
+     */
+    type Raggu_chat_thread = {
+        id: string;
+        engine: string;
+        query_plan: boolean;
+        items: Raggu_chat_item[];
+    };
     type Raggu_chat_item = {
         role: Raggu_chat_role;
         text: string;
         /** Отвечено фолбэком (прямой LLM без графа), а не GraphRAG-бэком. */
         off_graph?: boolean;
+        trace?: Raggu_chat_trace;
     };
     class $raggu_web_front_chat extends $.$raggu_web_front_chat {
+        threads_key(): string;
+        threads(next?: Raggu_chat_thread[]): Raggu_chat_thread[];
+        blank_thread(): Raggu_chat_thread;
+        thread_id(next?: string): string;
+        thread(): Raggu_chat_thread;
+        /**
+         * Записать изменение активного треда обратно в список.
+         *
+         * Без $mol_action и без $mol_mem у вызывающих: запись в мемоизированную
+         * ячейку из тела другой мемоизированной ячейки — это мутация состояния
+         * внутри фибера, и прочитанное следом значение оказывается прежним.
+         */
+        thread_patch(patch: Partial<Raggu_chat_thread>): null;
+        thread_ids(): string[];
+        thread_rows(): ($bog_builderui_div | $mol_button_minor)[];
+        /**
+         * Подпись треда — первый вопрос, обрезанный. Не «Тред 2»: по номеру
+         * нельзя вспомнить, о чём он, а сравнивают треды именно по содержанию.
+         */
+        thread_title(index: number): string;
+        thread_current(index: number): boolean;
+        thread_click(index: number): null;
+        /** Новый тред наследует режим текущего: чаще всего продолжают в том же. */
+        thread_add(): null;
+        /** Режим этого треда. Панель настроек правит именно его. */
+        thread_engine(next?: string): string;
+        thread_query_plan(next?: boolean): boolean;
+        /** Режим и план запроса берутся из треда, а не из props. */
+        engine(): string;
+        use_query_plan(): boolean;
         history(next?: Raggu_chat_item[]): Raggu_chat_item[];
         is_empty(): boolean;
         prompt_text(next?: string): string;
         llm(): $mol_github_model;
         rows(): $bog_builderui_div[];
-        auto(): any;
+        scroll_height(): number;
+        scroll_top(next?: number): number;
+        dom_tree(next?: Element): Element;
         message_text(index: number): string;
         message_role(index: number): Raggu_chat_role;
         message_off_graph(index: number): boolean;
+        message_has_trace(index: number): boolean;
+        /**
+         * Одна строка под ответом: чем искали, сколько нашли, сколько это стоило.
+         *
+         * Стоимость показывается, только когда цены заданы. Ноль в рублях рядом с
+         * реальным вопросом читался бы как «бесплатно», а означает «не оценено».
+         */
+        message_trace(index: number): string;
+        /** Подробности в подсказку: в строку они не влезают, а объясняют её. */
+        message_trace_hint(index: number): string;
         /**
          * Enter отправляет, Shift+Enter переносит строку.
          *
@@ -11945,17 +12159,22 @@ declare namespace $.$$ {
         prompt_submit(): null;
         is_communicating(): boolean;
         ask(text: string): void;
-        /**
-         * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
-         * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
-         * `mix` — бэк из неподдерживаемых движков всё равно падает в него.
-         */
-        engine(): 'mix' | 'naive';
         ask_backend(text: string): void;
+        /** Из трейса бэка — только показываемое. Формы ответа держимся мягко:
+         * старый бэк мог не знать про usage, и падать из-за этого ответ не должен. */
+        compact_trace(trace: any, requested: string): Raggu_chat_trace | undefined;
         graph_context(): string;
         ask_llm(text: string): void;
         mock_flag(): boolean;
         remote_suggestions(): readonly string[] | null;
+        /**
+         * Какой набор встроенных подсказок подходит корпусу.
+         *
+         * Отдельно от самих строк: выбор набора — факт, проверяемый без локали,
+         * а чтение @-строк в свежем $ даёт фантомные «Not translated» уже после
+         * прогона тестов.
+         */
+        fallback_kind(): 'law' | 'wiki' | 'any';
         fallback_suggestions(): readonly string[];
         suggestions(): readonly string[];
         suggestion_rows(): ($bog_builderui_div | $mol_button_minor)[];
@@ -12462,50 +12681,55 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_help['showed'] >
 	>
-	type $raggu_web_front_settings__showed_raggu_web_front_app_20 = $mol_type_enforce<
+	type $raggu_web_front_settings__available_engines_raggu_web_front_app_20 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['dataset_engines'] >
+		,
+		ReturnType< $raggu_web_front_settings['available_engines'] >
+	>
+	type $raggu_web_front_settings__engine_raggu_web_front_app_21 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['chat_engine'] >
+		,
+		ReturnType< $raggu_web_front_settings['engine'] >
+	>
+	type $raggu_web_front_settings__query_plan_raggu_web_front_app_22 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['chat_query_plan'] >
+		,
+		ReturnType< $raggu_web_front_settings['query_plan'] >
+	>
+	type $raggu_web_front_settings__showed_raggu_web_front_app_23 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['settings_open'] >
 		,
 		ReturnType< $raggu_web_front_settings['showed'] >
 	>
-	type $raggu_web_front_settings__close_raggu_web_front_app_21 = $mol_type_enforce<
+	type $raggu_web_front_settings__close_raggu_web_front_app_24 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['close_settings'] >
 		,
 		ReturnType< $raggu_web_front_settings['close'] >
 	>
-	type $raggu_web_front_gallery__dataset_id_raggu_web_front_app_22 = $mol_type_enforce<
+	type $raggu_web_front_gallery__dataset_id_raggu_web_front_app_25 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_front_gallery['dataset_id'] >
 	>
-	type $raggu_web_front_gallery__select_dataset_raggu_web_front_app_23 = $mol_type_enforce<
+	type $raggu_web_front_gallery__select_dataset_raggu_web_front_app_26 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['open_dataset'] >
 		,
 		ReturnType< $raggu_web_front_gallery['select_dataset'] >
 	>
-	type $raggu_web_front_explorer__dataset_id_raggu_web_front_app_24 = $mol_type_enforce<
+	type $raggu_web_front_explorer__dataset_id_raggu_web_front_app_27 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_front_explorer['dataset_id'] >
 	>
-	type $raggu_web_front_explorer__ask_click_raggu_web_front_app_25 = $mol_type_enforce<
+	type $raggu_web_front_explorer__ask_click_raggu_web_front_app_28 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['ask_chat'] >
 		,
 		ReturnType< $raggu_web_front_explorer['ask_click'] >
 	>
-	type $raggu_web_front_chat__dataset_id_raggu_web_front_app_26 = $mol_type_enforce<
+	type $raggu_web_front_chat__dataset_id_raggu_web_front_app_29 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['dataset_id'] >
 		,
 		ReturnType< $raggu_web_front_chat['dataset_id'] >
-	>
-	type $raggu_web_front_chat__engine_raggu_web_front_app_27 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_app['chat_engine'] >
-		,
-		ReturnType< $raggu_web_front_chat['engine'] >
-	>
-	type $raggu_web_front_chat__use_query_plan_raggu_web_front_app_28 = $mol_type_enforce<
-		ReturnType< $raggu_web_front_app['chat_query_plan'] >
-		,
-		ReturnType< $raggu_web_front_chat['use_query_plan'] >
 	>
 	export class $raggu_web_front_app extends $bog_builderui_div {
 		favicon_icon( ): $mol_icon_graph
@@ -12527,13 +12751,14 @@ declare namespace $ {
 		Body( ): $mol_scroll
 		Main( ): $bog_builderui_div
 		Help( ): $raggu_web_front_help
+		dataset_engines( ): readonly(any)[]
+		chat_engine( next?: string ): string
+		chat_query_plan( next?: string ): string
 		close_settings( next?: any ): any
 		Settings( ): $raggu_web_front_settings
 		Summary_popup( ): $mol_view
 		open_dataset( next?: any ): any
 		ask_chat( next?: any ): any
-		chat_engine( ): string
-		chat_query_plan( ): boolean
 		screen( next?: string ): string
 		dataset_id( next?: string ): string
 		help_open( next?: boolean ): boolean
@@ -12589,18 +12814,33 @@ declare namespace $.$$ {
         open_dataset(id: string): null;
         ask_chat(): null;
         /**
-         * Переключалка «Граф при поиске» ложится прямо на поле `engine` запроса
-         * к агенту, отдельная ручка на бэке не нужна: `naive` ищет только по
-         * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
-         * (`SUPPORTED_ENGINES` в schemas/datasets.py).
+         * Режимы, которые обслуживает выбранный корпус.
+         *
+         * Спрашиваем у бэка, а не перечисляем сами: хранилища у корпусов разные,
+         * и режим без своего хранилища не заработает здесь никогда. Раньше набор
+         * был захардкожен, и интерфейс предлагал то, что заведомо не отвечало.
+         *
+         * Отказ — не повод ломать чат: без списка остаётся mix, а бэк всё равно
+         * подставит доступный и назовёт его в трейсе.
+         */
+        dataset_engines(): readonly string[];
+        /**
+         * Режим поиска для запроса к агенту.
+         *
+         * Берём у панели уже разрешённое значение: выбранный режим, если корпус
+         * его обслуживает, иначе первый доступный. Разрешение живёт в одном
+         * месте — иначе интерфейс показывал бы одно, а отправлял другое.
          *
          * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
          * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
          * плюс декомпозиция включена» нельзя было бы выразить.
          */
-        chat_engine(): "mix" | "naive";
-        /** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */
-        chat_query_plan(): boolean;
+        chat_engine(next?: string): string;
+        /**
+         * Вторая переключалка панели — декомпозиция вопроса — тоже принадлежит
+         * треду: она меняет и цену, и ответ, а значит относится к разговору.
+         */
+        chat_query_plan(next?: string): string;
         screen_title(): string;
         dataset_title(): string;
         arg_value(key: string, next: string | undefined, fallback: string): string;

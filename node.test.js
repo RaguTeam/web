@@ -12427,40 +12427,51 @@ var $;
 			]);
 			return obj;
 		}
-		use_graph_label_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_use_graph_label_text"));
+		engine_label_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_label_text"));
 		}
-		Use_graph_label(){
+		Engine_label(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.sub) = () => ([(this.use_graph_label_text())]);
+			(obj.sub) = () => ([(this.engine_label_text())]);
 			return obj;
 		}
-		use_graph_hint_text(){
-			return (this.$.$mol_locale.text("$raggu_web_front_settings_use_graph_hint_text"));
+		engine_hint_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_hint_text"));
 		}
-		Use_graph_help(){
+		Engine_help(){
 			const obj = new this.$.$bog_builderui_div();
-			(obj.attr) = () => ({"title": (this.use_graph_hint_text())});
+			(obj.attr) = () => ({"title": (this.engine_hint_text())});
 			(obj.sub) = () => (["?"]);
 			return obj;
 		}
-		use_graph(next){
+		engine_value(next){
 			if(next !== undefined) return next;
-			return "on";
+			return "mix";
 		}
-		Use_graph(){
+		engine_dictionary(){
+			return {};
+		}
+		Engine(){
 			const obj = new this.$.$bog_builderui_select();
-			(obj.value) = (next) => ((this.use_graph(next)));
-			(obj.dictionary) = () => ({"on": (this.$.$mol_locale.text("$raggu_web_front_settings_Use_graph_dictionary_on")), "off": (this.$.$mol_locale.text("$raggu_web_front_settings_Use_graph_dictionary_off"))});
+			(obj.value) = (next) => ((this.engine_value(next)));
+			(obj.dictionary) = () => ((this.engine_dictionary()));
 			return obj;
 		}
-		Use_graph_row(){
+		Engine_row(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
-				(this.Use_graph_label()), 
-				(this.Use_graph_help()), 
-				(this.Use_graph())
+				(this.Engine_label()), 
+				(this.Engine_help()), 
+				(this.Engine())
 			]);
+			return obj;
+		}
+		engine_missing_text(){
+			return "";
+		}
+		Engine_missing(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ([(this.engine_missing_text())]);
 			return obj;
 		}
 		query_plan_label_text(){
@@ -12505,7 +12516,11 @@ var $;
 			(obj.title) = () => ("Retrieval");
 			(obj.opts) = () => ((this.$.$mol_locale.text("$raggu_web_front_settings_Group_retrieval_opts")));
 			(obj.reindex) = () => (false);
-			(obj.controls) = () => ([(this.Use_graph_row()), (this.Query_plan_row())]);
+			(obj.controls) = () => ([
+				(this.Engine_row()), 
+				(this.Engine_missing()), 
+				(this.Query_plan_row())
+			]);
 			return obj;
 		}
 		Body(){
@@ -12522,6 +12537,28 @@ var $;
 			if(next !== undefined) return next;
 			return false;
 		}
+		available_engines(){
+			return ["string"];
+		}
+		engine(next){
+			if(next !== undefined) return next;
+			return "mix";
+		}
+		engine_mix_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_mix_text"));
+		}
+		engine_local_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_local_text"));
+		}
+		engine_naive_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_naive_text"));
+		}
+		engine_global_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_global_text"));
+		}
+		engine_missing_prefix_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_settings_engine_missing_prefix_text"));
+		}
 		attr(){
 			return {...(super.attr()), "raggu_web_front_settings_showed": (this.showed())};
 		}
@@ -12537,11 +12574,12 @@ var $;
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Spacer"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Close_btn"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Header"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Use_graph_label"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Use_graph_help"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "use_graph"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Use_graph"));
-	($mol_mem(($.$raggu_web_front_settings.prototype), "Use_graph_row"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "Engine_label"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "Engine_help"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "engine_value"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "Engine"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "Engine_row"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "Engine_missing"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Query_plan_label"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Query_plan_help"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "query_plan"));
@@ -12551,6 +12589,7 @@ var $;
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "Panel"));
 	($mol_mem(($.$raggu_web_front_settings.prototype), "showed"));
+	($mol_mem(($.$raggu_web_front_settings.prototype), "engine"));
 
 
 ;
@@ -12579,23 +12618,64 @@ var $;
             }
             // ---- runtime-переключалки поиска ----
             //
-            // Уезжают на бэк полями запроса к агенту, а не отдельной ручкой настроек:
-            // они относятся к конкретному вопросу, и хранить их на сервере значило бы
-            // разводить состояние между вкладками. Читает их app: chat_engine() и
-            // chat_query_plan().
-            /** Граф при поиске: 'on' → MixSearchEngine (чанки + граф), 'off' → NaiveSearchEngine (только чанки). */
-            use_graph(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.use_graph', next ?? null) ?? 'on';
+            // Панель ничего не хранит: `engine` и `query_plan` — двусторонние
+            // свойства, и по ним app правит активный ТРЕД. Настройка, живущая рядом
+            // с корпусом, а не с перепиской, переписывала бы условия уже
+            // состоявшегося разговора, и сравнивать два режима стало бы не с чем.
+            /**
+             * Все режимы, какие вообще бывают, в порядке предпочтения.
+             *
+             * Список отдельно от подписей намеренно: какие режимы существуют и
+             * какой из них доступен — это факт, а подпись к нему — представление.
+             * Смешав их, любую проверку логики пришлось бы вести через локали.
+             */
+            engine_all() {
+                return ['mix', 'local', 'naive', 'global'];
             }
             /**
-             * QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG.
+             * Что предложить в выпадающем списке.
              *
-             * По умолчанию ВЫКЛЮЧЕН, пока бэк с `use_query_plan` не выкачен: у него
-             * extra="forbid", и старая версия отвечает 422 на весь запрос. Включённый
-             * по умолчанию тумблер сломал бы чат всем сразу после деплоя фронта.
+             * Только то, что этот корпус обслуживает. Недоступный режим в списке
+             * был бы кнопкой, на которую некому ответить.
              */
-            query_plan(next) {
-                return this.$.$mol_state_local.value('$raggu_web_front_settings.query_plan', next ?? null) ?? 'off';
+            engine_options() {
+                const available = new Set(this.available_engines());
+                return this.engine_all().filter(mode => available.has(mode));
+            }
+            /** Каких режимов этот корпус не обслуживает. */
+            engine_missing() {
+                const available = new Set(this.available_engines());
+                return this.engine_all().filter(mode => !available.has(mode));
+            }
+            engine_dictionary() {
+                const labels = this.engine_labels();
+                const dictionary = {};
+                for (const mode of this.engine_options())
+                    dictionary[mode] = labels[mode] ?? mode;
+                return dictionary;
+            }
+            engine_labels() {
+                return {
+                    mix: this.engine_mix_text(),
+                    local: this.engine_local_text(),
+                    naive: this.engine_naive_text(),
+                    global: this.engine_global_text(),
+                };
+            }
+            /** Значение селекта: выбранное, если корпус его обслуживает. */
+            engine_value(next) {
+                if (next !== undefined)
+                    return this.engine(next);
+                const options = this.engine_options();
+                const chosen = this.engine();
+                return options.includes(chosen) ? chosen : (options[0] ?? 'mix');
+            }
+            /** То же самое словами, а не молчанием. */
+            engine_missing_text() {
+                const missing = this.engine_missing();
+                if (!missing.length)
+                    return '';
+                return this.engine_missing_prefix_text() + ' ' + missing.join(', ');
             }
         }
         __decorate([
@@ -12603,10 +12683,10 @@ var $;
         ], $raggu_web_front_settings.prototype, "close", null);
         __decorate([
             $mol_mem
-        ], $raggu_web_front_settings.prototype, "use_graph", null);
+        ], $raggu_web_front_settings.prototype, "engine_dictionary", null);
         __decorate([
             $mol_mem
-        ], $raggu_web_front_settings.prototype, "query_plan", null);
+        ], $raggu_web_front_settings.prototype, "engine_value", null);
         $$.$raggu_web_front_settings = $raggu_web_front_settings;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -12713,7 +12793,7 @@ var $;
         },
         // Метка, вопросик-подсказка и переключалка — одной строкой.
         // $bog_builderui_div по умолчанию колонка, без этого «?» уезжает вниз.
-        Use_graph_row: {
+        Engine_row: {
             flex: { direction: 'row', wrap: 'wrap' },
             align: { items: 'center' },
             gap: '8px',
@@ -12723,14 +12803,14 @@ var $;
             align: { items: 'center' },
             gap: '8px',
         },
-        Use_graph_label: {
+        Engine_label: {
             font: { size: '12px', weight: 600 },
         },
         Query_plan_label: {
             font: { size: '12px', weight: 600 },
         },
         // Кружок с «?»: подсказка висит нативным title, всплывает по наведению.
-        Use_graph_help: {
+        Engine_help: {
             width: '16px',
             height: '16px',
             flex: { shrink: 0 },
@@ -12740,6 +12820,13 @@ var $;
             color: $bog_builderui_tokens.shade,
             font: { size: '10px', weight: 700 },
             cursor: 'help',
+        },
+        // Чего корпус не умеет — строкой под выбором, приглушённо: это не отказ,
+        // а свойство корпуса.
+        Engine_missing: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            margin: { top: '-2px' },
         },
         Query_plan_help: {
             width: '16px',
@@ -15687,15 +15774,19 @@ var $;
             hover_timer = null;
             HOVER_DWELL_MS = 200;
             hover_after(fire) {
-                clearTimeout(this.hover_timer);
-                this.hover_timer = setTimeout(fire, this.HOVER_DWELL_MS);
+                this.hover_cancel();
+                this.hover_timer = new this.$.$mol_after_timeout(this.HOVER_DWELL_MS, fire);
+            }
+            hover_cancel() {
+                this.hover_timer?.destructor();
+                this.hover_timer = null;
             }
             hover_enter(id) {
                 this.hover_after(() => this.hovered_id(id));
                 return null;
             }
             hover_leave() {
-                clearTimeout(this.hover_timer);
+                this.hover_cancel();
                 this.hovered_id('');
                 return null;
             }
@@ -15764,7 +15855,7 @@ var $;
                 return null;
             }
             edge_hover_leave() {
-                clearTimeout(this.hover_timer);
+                this.hover_cancel();
                 this.hovered_edge_id('');
                 return null;
             }
@@ -21015,6 +21106,14 @@ var $;
 
 ;
 	($.$raggu_web_front_chat) = class $raggu_web_front_chat extends ($.$bog_builderui_div) {
+		thread_rows(){
+			return [];
+		}
+		Threads(){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.sub) = () => ((this.thread_rows()));
+			return obj;
+		}
 		is_empty(){
 			return false;
 		}
@@ -21057,6 +21156,7 @@ var $;
 		Body_flow(){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.sub) = () => ([
+				(this.Threads()), 
 				(this.Empty()), 
 				(this.Messages()), 
 				(this.Status())
@@ -21113,6 +21213,14 @@ var $;
 			(obj.sub) = () => ([(this.Suggestions()), (this.Input_row())]);
 			return obj;
 		}
+		thread_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		thread_add(next){
+			if(next !== undefined) return next;
+			return null;
+		}
 		sug_click(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -21134,14 +21242,26 @@ var $;
 			(obj.sub) = () => ([(this.off_graph_text())]);
 			return obj;
 		}
-		engine(){
-			return "mix";
-		}
-		use_query_plan(){
-			return false;
+		Message_trace(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({
+				...(this.$.$bog_builderui_div.prototype.attr.call(obj)), 
+				"raggu_has_trace": (this.message_has_trace(id)), 
+				"title": (this.message_trace_hint(id))
+			});
+			(obj.sub) = () => ([(this.message_trace(id))]);
+			return obj;
 		}
 		dataset_id(){
 			return "";
+		}
+		thread_engine(next){
+			if(next !== undefined) return next;
+			return "mix";
+		}
+		thread_query_plan(next){
+			if(next !== undefined) return next;
+			return false;
 		}
 		input_hint_text(){
 			return (this.$.$mol_locale.text("$raggu_web_front_chat_input_hint_text"));
@@ -21200,8 +21320,42 @@ var $;
 		message_off_graph(id){
 			return false;
 		}
+		message_trace(id){
+			return "";
+		}
+		message_trace_hint(id){
+			return "";
+		}
+		message_has_trace(id){
+			return false;
+		}
+		thread_new_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_thread_new_text"));
+		}
+		thread_add_text(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chat_thread_add_text"));
+		}
+		thread_title(id){
+			return "";
+		}
+		thread_current(id){
+			return false;
+		}
 		sub(){
 			return [(this.Body()), (this.Footer())];
+		}
+		Thread(id){
+			const obj = new this.$.$bog_builderui_div();
+			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_current": (this.thread_current(id))});
+			(obj.sub) = () => ([(this.thread_title(id))]);
+			(obj.event) = () => ({"click": (next) => (this.thread_click(id, next))});
+			return obj;
+		}
+		Thread_add(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.thread_add(next)));
+			(obj.sub) = () => ([(this.thread_add_text())]);
+			return obj;
 		}
 		Sug(id){
 			const obj = new this.$.$bog_builderui_div();
@@ -21219,10 +21373,15 @@ var $;
 		Message(id){
 			const obj = new this.$.$bog_builderui_div();
 			(obj.attr) = () => ({...(this.$.$bog_builderui_div.prototype.attr.call(obj)), "raggu_role": (this.message_role(id))});
-			(obj.sub) = () => ([(this.Message_text(id)), (this.Message_badge(id))]);
+			(obj.sub) = () => ([
+				(this.Message_text(id)), 
+				(this.Message_badge(id)), 
+				(this.Message_trace(id))
+			]);
 			return obj;
 		}
 	};
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Threads"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Empty"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Messages"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Skel_line_one"));
@@ -21239,10 +21398,17 @@ var $;
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_send"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Input_row"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Footer"));
+	($mol_mem_key(($.$raggu_web_front_chat.prototype), "thread_click"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "thread_add"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "sug_click"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "clear_click"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_text"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_badge"));
+	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message_trace"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "thread_engine"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "thread_query_plan"));
+	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Thread"));
+	($mol_mem(($.$raggu_web_front_chat.prototype), "Thread_add"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Sug"));
 	($mol_mem(($.$raggu_web_front_chat.prototype), "Clear"));
 	($mol_mem_key(($.$raggu_web_front_chat.prototype), "Message"));
@@ -21842,13 +22008,101 @@ var $;
     var $$;
     (function ($$) {
         class $raggu_web_front_chat extends $.$raggu_web_front_chat {
-            // История привязана к dataset_id — у каждого корпуса своя ветка чата.
-            // Иначе фолбэк-плашка, полученная на одном датасете (напр. мок без бэка),
-            // висела бы на сообщениях другого, где бэк отвечает через граф.
+            // ---- треды ----
+            //
+            // Хранятся по корпусам и в local, а не в session: переписка, пропадающая
+            // при закрытии вкладки, сравнением двух режимов быть не может.
+            threads_key() {
+                return `$raggu_web_front_chat.threads@${this.dataset_id() || ''}`;
+            }
+            threads(next) {
+                const stored = this.$.$mol_state_local.value(this.threads_key(), next);
+                // Пустой корпус начинается с одного треда: пустой список тредов
+                // означал бы чат без места, куда писать.
+                return stored?.length ? stored : [this.blank_thread()];
+            }
+            blank_thread() {
+                return { id: 't1', engine: 'mix', query_plan: false, items: [] };
+            }
+            thread_id(next) {
+                const key = `$raggu_web_front_chat.thread@${this.dataset_id() || ''}`;
+                // Именно next, а не `next ?? null`: у $mol_state_local значение null
+                // означает «удалить ключ», и чтение стирало бы то, что читает.
+                const stored = this.$.$mol_state_local.value(key, next);
+                const threads = this.threads();
+                // Сохранённый идентификатор мог остаться от удалённого треда.
+                return threads.some(t => t.id === stored) ? stored : threads[0].id;
+            }
+            thread() {
+                const id = this.thread_id();
+                return this.threads().find(t => t.id === id) ?? this.threads()[0];
+            }
+            /**
+             * Записать изменение активного треда обратно в список.
+             *
+             * Без $mol_action и без $mol_mem у вызывающих: запись в мемоизированную
+             * ячейку из тела другой мемоизированной ячейки — это мутация состояния
+             * внутри фибера, и прочитанное следом значение оказывается прежним.
+             */
+            thread_patch(patch) {
+                const id = this.thread_id();
+                this.threads(this.threads().map(t => t.id === id ? { ...t, ...patch } : t));
+                return null;
+            }
+            thread_ids() {
+                return this.threads().map(t => t.id);
+            }
+            thread_rows() {
+                return [...this.threads().map((_, i) => this.Thread(i)), this.Thread_add()];
+            }
+            /**
+             * Подпись треда — первый вопрос, обрезанный. Не «Тред 2»: по номеру
+             * нельзя вспомнить, о чём он, а сравнивают треды именно по содержанию.
+             */
+            thread_title(index) {
+                const thread = this.threads()[index];
+                if (!thread)
+                    return '';
+                const first = thread.items.find(item => item.role === 'user')?.text;
+                const label = first ? first.slice(0, 24) : this.thread_new_text();
+                return `${label} · ${thread.engine}`;
+            }
+            thread_current(index) {
+                return this.threads()[index]?.id === this.thread_id();
+            }
+            thread_click(index) {
+                const id = this.threads()[index]?.id;
+                if (id)
+                    this.thread_id(id);
+                return null;
+            }
+            /** Новый тред наследует режим текущего: чаще всего продолжают в том же. */
+            thread_add() {
+                const threads = this.threads();
+                const id = `t${Date.now().toString(36)}`;
+                const current = this.thread();
+                this.threads([...threads, { id, engine: current.engine, query_plan: current.query_plan, items: [] }]);
+                this.thread_id(id);
+                return null;
+            }
+            /** Режим этого треда. Панель настроек правит именно его. */
+            thread_engine(next) {
+                if (next !== undefined)
+                    this.thread_patch({ engine: next });
+                return this.thread().engine;
+            }
+            thread_query_plan(next) {
+                if (next !== undefined)
+                    this.thread_patch({ query_plan: next });
+                return this.thread().query_plan;
+            }
+            /** Режим и план запроса берутся из треда, а не из props. */
+            engine() { return this.thread_engine(); }
+            use_query_plan() { return this.thread_query_plan(); }
             history(next) {
-                const key = `$raggu_web_front_chat.history@${this.dataset_id() || ''}`;
-                const stored = this.$.$mol_state_session.value(key, next);
-                return stored ?? [];
+                if (next !== undefined)
+                    this.thread_patch({ items: next });
+                return this.thread().items;
             }
             is_empty() { return this.history().length === 0; }
             prompt_text(next) {
@@ -21870,13 +22124,32 @@ var $;
             rows() {
                 return this.history().map((_, i) => this.Message(i));
             }
-            // Автоскролл вниз при появлении нового сообщения.
-            // auto() вызывается $mol_view.dom_tree после render — DOM уже актуален.
-            auto() {
+            // ---- автоскролл вниз при новом сообщении ----
+            //
+            // Через явные мем-каналы, а не записью в scrollTop из auto(). Прямая
+            // запись обходит реактивность: она работает лишь до тех пор, пока
+            // кто-то в теле метода случайно подписан на history(), и отваливается
+            // молча, стоит этой подписке измениться — что и произошло, когда
+            // история переехала в треды.
+            //
+            // Цепочка history → scroll_height → dom_tree видна в графе
+            // зависимостей, поэтому инвалидация детерминированна: к моменту, когда
+            // scroll_height читает scrollHeight, super.dom_tree() новое сообщение
+            // уже отрисовал.
+            scroll_height() {
                 void this.history();
+                return this.Body().dom_node().scrollHeight;
+            }
+            scroll_top(next) {
                 const el = this.Body().dom_node();
-                el.scrollTop = el.scrollHeight;
-                return [];
+                if (next !== undefined)
+                    el.scrollTop = next;
+                return el.scrollTop;
+            }
+            dom_tree(next) {
+                const node = super.dom_tree(next);
+                this.scroll_top(this.scroll_height());
+                return node;
             }
             message_text(index) {
                 return this.history()[index]?.text ?? '';
@@ -21886,6 +22159,50 @@ var $;
             }
             message_off_graph(index) {
                 return this.history()[index]?.off_graph ?? false;
+            }
+            message_has_trace(index) {
+                return Boolean(this.history()[index]?.trace);
+            }
+            /**
+             * Одна строка под ответом: чем искали, сколько нашли, сколько это стоило.
+             *
+             * Стоимость показывается, только когда цены заданы. Ноль в рублях рядом с
+             * реальным вопросом читался бы как «бесплатно», а означает «не оценено».
+             */
+            message_trace(index) {
+                const trace = this.history()[index]?.trace;
+                if (!trace)
+                    return '';
+                const parts = [
+                    trace.engine,
+                    `${trace.entities} сущн · ${trace.chunks} фрагм`,
+                    `${(trace.total_ms / 1000).toFixed(1)} с`,
+                ];
+                if (trace.tokens)
+                    parts.push(`${trace.tokens} ток`);
+                if (trace.priced)
+                    parts.push(`${trace.cost.toFixed(4)} ${trace.currency}`.trim());
+                if (trace.rerank_error)
+                    parts.push('без реранка');
+                return parts.join(' · ');
+            }
+            /** Подробности в подсказку: в строку они не влезают, а объясняют её. */
+            message_trace_hint(index) {
+                const trace = this.history()[index]?.trace;
+                if (!trace)
+                    return '';
+                const lines = [];
+                if (trace.requested && trace.requested !== trace.engine) {
+                    lines.push(`Запрошен режим ${trace.requested}, корпус его не обслуживает — отработал ${trace.engine}.`);
+                }
+                if (trace.rerank_error) {
+                    lines.push(`Реранкер отказал (${trace.rerank_error}); порядок источников исходный.`);
+                }
+                if (trace.tokens && !trace.priced) {
+                    lines.push('Цены токенов не заданы, поэтому стоимость не показана.');
+                }
+                lines.push('Токены посчитаны токенизатором, а не выставлены провайдером.');
+                return lines.join(' ');
             }
             /**
              * Enter отправляет, Shift+Enter переносит строку.
@@ -21953,14 +22270,6 @@ var $;
                 }
                 this.ask_llm(text);
             }
-            /**
-             * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
-             * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
-             * `mix` — бэк из неподдерживаемых движков всё равно падает в него.
-             */
-            engine() {
-                return super.engine() === 'naive' ? 'naive' : 'mix';
-            }
             // GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
             // графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
             ask_backend(text) {
@@ -21979,7 +22288,7 @@ var $;
                     engine: this.engine(),
                     top_k: 15,
                     rerank: true,
-                    include_trace: false,
+                    include_trace: true,
                     locale: $raggu_web_front_api_locale(),
                     ...(this.use_query_plan() ? { use_query_plan: true } : {}),
                 };
@@ -21987,8 +22296,31 @@ var $;
                     params: { dataset_id: this.dataset_id() },
                     body: body,
                 });
-                const reply = resp?.message?.content ?? '';
-                this.history([...this.history(), { role: 'assistant', text: reply }]);
+                const message = resp?.message;
+                const reply = message?.content ?? '';
+                this.history([
+                    ...this.history(),
+                    { role: 'assistant', text: reply, trace: this.compact_trace(message?.trace, this.engine()) },
+                ]);
+            }
+            /** Из трейса бэка — только показываемое. Формы ответа держимся мягко:
+             * старый бэк мог не знать про usage, и падать из-за этого ответ не должен. */
+            compact_trace(trace, requested) {
+                if (!trace)
+                    return undefined;
+                const usage = trace.usage;
+                return {
+                    engine: trace.engine ?? '',
+                    entities: trace.entities?.length ?? 0,
+                    chunks: trace.chunks?.length ?? 0,
+                    total_ms: trace.timings?.total_ms ?? 0,
+                    tokens: usage?.total_tokens ?? 0,
+                    cost: usage?.cost ?? 0,
+                    currency: usage?.currency ?? '',
+                    priced: Boolean(usage?.priced),
+                    rerank_error: trace.rerank_error ?? null,
+                    requested,
+                };
             }
             // Лёгкий контекст для фолбэка: сущности графа (лейбл + тип, топ по degree)
             // прямо с бэка. Полноценного RAG-ретривала тут нет, но модель хотя бы
@@ -22070,10 +22402,24 @@ var $;
                     return null;
                 }
             }
+            /**
+             * Какой набор встроенных подсказок подходит корпусу.
+             *
+             * Отдельно от самих строк: выбор набора — факт, проверяемый без локали,
+             * а чтение @-строк в свежем $ даёт фантомные «Not translated» уже после
+             * прогона тестов.
+             */
+            fallback_kind() {
+                switch (this.dataset_id()) {
+                    case 'law': return 'law';
+                    case 'wiki': return 'wiki';
+                }
+                return 'any';
+            }
             // Фолбэк без бэка: свои 3 вопроса на встроенные корпуса, общие — на всё
             // остальное. Строки объявлены в view.tree, значит переводятся локалью.
             fallback_suggestions() {
-                switch (this.dataset_id()) {
+                switch (this.fallback_kind()) {
                     case 'law': return [this.sug_law_one_text(), this.sug_law_two_text(), this.sug_law_three_text()];
                     case 'wiki': return [this.sug_wiki_one_text(), this.sug_wiki_two_text(), this.sug_wiki_three_text()];
                 }
@@ -22100,7 +22446,19 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $raggu_web_front_chat.prototype, "history", null);
+        ], $raggu_web_front_chat.prototype, "threads", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "thread_title", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "thread_current", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "thread_click", null);
+        __decorate([
+            $mol_action
+        ], $raggu_web_front_chat.prototype, "thread_add", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_chat.prototype, "llm", null);
@@ -22108,11 +22466,41 @@ var $;
             $mol_mem
         ], $raggu_web_front_chat.prototype, "rows", null);
         __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "scroll_height", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "scroll_top", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chat.prototype, "dom_tree", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "message_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "message_role", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "message_off_graph", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "message_has_trace", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "message_trace", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "message_trace_hint", null);
+        __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "prompt_submit", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_chat.prototype, "remote_suggestions", null);
+        __decorate([
+            $mol_mem_key
+        ], $raggu_web_front_chat.prototype, "sug_text", null);
         __decorate([
             $mol_action
         ], $raggu_web_front_chat.prototype, "sug_click", null);
@@ -22303,6 +22691,58 @@ var $;
             },
             '@': {
                 raggu_off_graph: {
+                    true: { display: 'flex' },
+                },
+            },
+        },
+        // Полоса тредов над перепиской. Один корпус — несколько разговоров, и у
+        // каждого свой режим: иначе сравнить mix и naive не на чем.
+        Threads: {
+            flex: { direction: 'row', wrap: 'wrap' },
+            align: { items: 'center' },
+            gap: '6px',
+            margin: { bottom: '10px' },
+        },
+        Thread: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            background: { color: $bog_builderui_tokens.card },
+            border: { width: '1px', style: 'solid', color: $bog_builderui_tokens.line, radius: '999px' },
+            padding: { top: '3px', bottom: '3px', left: '10px', right: '10px' },
+            cursor: 'pointer',
+            maxWidth: '220px',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            display: 'block',
+            '@': {
+                raggu_current: {
+                    true: {
+                        color: $bog_builderui_tokens.text,
+                        border: { color: $bog_builderui_tokens.current },
+                    },
+                },
+            },
+        },
+        Thread_add: {
+            font: { size: '11px' },
+            color: $bog_builderui_tokens.shade,
+            padding: { top: '3px', bottom: '3px', left: '8px', right: '8px' },
+        },
+        // Служебная строка под ответом: чем искали, сколько нашли, сколько
+        // стоило. Приглушена намеренно — это сноска к ответу, а не его часть.
+        Message_trace: {
+            display: 'none',
+            alignSelf: 'flex-start',
+            margin: { top: '6px' },
+            font: {
+                family: 'ui-monospace, monospace',
+                size: '10px',
+            },
+            color: $bog_builderui_tokens.shade,
+            cursor: 'default',
+            '@': {
+                raggu_has_trace: {
                     true: { display: 'flex' },
                 },
             },
@@ -23293,12 +23733,26 @@ var $;
 			(obj.showed) = (next) => ((this.help_open(next)));
 			return obj;
 		}
+		dataset_engines(){
+			return [];
+		}
+		chat_engine(next){
+			if(next !== undefined) return next;
+			return "mix";
+		}
+		chat_query_plan(next){
+			if(next !== undefined) return next;
+			return "off";
+		}
 		close_settings(next){
 			if(next !== undefined) return next;
 			return null;
 		}
 		Settings(){
 			const obj = new this.$.$raggu_web_front_settings();
+			(obj.available_engines) = () => ((this.dataset_engines()));
+			(obj.engine) = (next) => ((this.chat_engine(next)));
+			(obj.query_plan) = (next) => ((this.chat_query_plan(next)));
 			(obj.showed) = (next) => ((this.settings_open(next)));
 			(obj.close) = (next) => ((this.close_settings(next)));
 			return obj;
@@ -23314,12 +23768,6 @@ var $;
 		ask_chat(next){
 			if(next !== undefined) return next;
 			return null;
-		}
-		chat_engine(){
-			return "mix";
-		}
-		chat_query_plan(){
-			return false;
 		}
 		screen(next){
 			if(next !== undefined) return next;
@@ -23400,8 +23848,6 @@ var $;
 		Chat(){
 			const obj = new this.$.$raggu_web_front_chat();
 			(obj.dataset_id) = () => ((this.dataset_id()));
-			(obj.engine) = () => ((this.chat_engine()));
-			(obj.use_query_plan) = () => ((this.chat_query_plan()));
 			return obj;
 		}
 		Summary(){
@@ -23422,6 +23868,8 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Body"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Main"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Help"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "chat_engine"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "chat_query_plan"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "close_settings"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Settings"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Summary_popup"));
@@ -23564,21 +24012,57 @@ var $;
                 return null;
             }
             /**
-             * Переключалка «Граф при поиске» ложится прямо на поле `engine` запроса
-             * к агенту, отдельная ручка на бэке не нужна: `naive` ищет только по
-             * чанкам, `mix` — по чанкам и графу. Оба значения бэк поддерживает
-             * (`SUPPORTED_ENGINES` в schemas/datasets.py).
+             * Режимы, которые обслуживает выбранный корпус.
+             *
+             * Спрашиваем у бэка, а не перечисляем сами: хранилища у корпусов разные,
+             * и режим без своего хранилища не заработает здесь никогда. Раньше набор
+             * был захардкожен, и интерфейс предлагал то, что заведомо не отвечало.
+             *
+             * Отказ — не повод ломать чат: без списка остаётся mix, а бэк всё равно
+             * подставит доступный и назовёт его в трейсе.
+             */
+            dataset_engines() {
+                const id = this.dataset_id();
+                if (!id || this.$.$mol_state_arg.value('mock') === '1')
+                    return ['mix'];
+                try {
+                    const res = this.$.$raggu_web_front_api($raggu_web_front_api_ragu_get_dataset, { params: { dataset_id: id }, query: {} });
+                    const list = res?.available_engines;
+                    return list?.length ? list : ['mix'];
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    console.warn('[raggu app] capabilities fetch failed, offering mix only:', error);
+                    return ['mix'];
+                }
+            }
+            /**
+             * Режим поиска для запроса к агенту.
+             *
+             * Берём у панели уже разрешённое значение: выбранный режим, если корпус
+             * его обслуживает, иначе первый доступный. Разрешение живёт в одном
+             * месте — иначе интерфейс показывал бы одно, а отправлял другое.
              *
              * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
              * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
              * плюс декомпозиция включена» нельзя было бы выразить.
              */
-            chat_engine() {
-                return this.Settings().use_graph() === 'on' ? 'mix' : 'naive';
+            chat_engine(next) {
+                if (next !== undefined)
+                    return this.Chat().thread_engine(next);
+                const available = this.dataset_engines();
+                const chosen = this.Chat().thread_engine();
+                return available.includes(chosen) ? chosen : (available[0] ?? 'mix');
             }
-            /** Вторая переключалка панели: декомпозиция сложного вопроса на бэке. */
-            chat_query_plan() {
-                return this.Settings().query_plan() === 'on';
+            /**
+             * Вторая переключалка панели — декомпозиция вопроса — тоже принадлежит
+             * треду: она меняет и цену, и ответ, а значит относится к разговору.
+             */
+            chat_query_plan(next) {
+                if (next !== undefined)
+                    this.Chat().thread_query_plan(next === 'on');
+                return this.Chat().thread_query_plan() ? 'on' : 'off';
             }
             screen_title() {
                 switch (this.screen()) {
@@ -23632,6 +24116,15 @@ var $;
         __decorate([
             $mol_action
         ], $raggu_web_front_app.prototype, "ask_chat", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_app.prototype, "dataset_engines", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_app.prototype, "chat_engine", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_app.prototype, "chat_query_plan", null);
         __decorate([
             $mol_mem
         ], $raggu_web_front_app.prototype, "screen", null);
@@ -27920,6 +28413,157 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        /**
+         * Свой корпус на каждый тест.
+         *
+         * История лежит в сессии под ключом с dataset_id, и одно общее значение
+         * протекало бы между тестами: соседний тест увидел бы чужую переписку.
+         */
+        let seq = 0;
+        function chat($) {
+            // Идентификатор считается один раз на вид: он входит в ключ хранилища,
+            // и счётчик внутри геттера давал бы новый ключ на каждое обращение.
+            const id = `trace-test-${++seq}`;
+            return $raggu_web_front_chat.make({ $, dataset_id: () => id });
+        }
+        const full_trace = {
+            engine: 'mix',
+            entities: [{}, {}],
+            chunks: [{}, {}, {}],
+            timings: { total_ms: 4200 },
+            rerank_error: null,
+            usage: { total_tokens: 1340, cost: 0.25, currency: '₽', priced: true },
+        };
+        $mol_test({
+            'chat.compact_trace: keeps only what the line shows'($) {
+                // История живёт в sessionStorage; целиком трейс несёт тексты всех
+                // найденных фрагментов и раздул бы её на порядок.
+                const compact = chat($).compact_trace(full_trace, 'mix');
+                $mol_assert_equal(compact.entities, 2);
+                $mol_assert_equal(compact.chunks, 3);
+                $mol_assert_equal(compact.tokens, 1340);
+                $mol_assert_equal(compact.sources, undefined);
+            },
+            'chat.compact_trace: an answer without a trace stays without one'($) {
+                $mol_assert_equal(chat($).compact_trace(undefined, 'mix'), undefined);
+            },
+            'chat.compact_trace: survives a backend that knows no usage'($) {
+                const compact = chat($).compact_trace({ engine: 'naive' }, 'naive');
+                $mol_assert_equal(compact.tokens, 0);
+                $mol_assert_equal(compact.priced, false);
+            },
+            'chat.message_trace: reports engine, context size and time'($) {
+                const v = chat($);
+                v.history([{ role: 'assistant', text: 'ответ', trace: v.compact_trace(full_trace, 'mix') }]);
+                const line = v.message_trace(0);
+                $mol_assert_equal(/^mix /.test(line), true);
+                $mol_assert_equal(/2 сущн/.test(line), true);
+                $mol_assert_equal(/3 фрагм/.test(line), true);
+                $mol_assert_equal(/4\.2 с/.test(line), true);
+            },
+            'chat.message_trace: cost is shown only when prices are configured'($) {
+                // Ноль рядом с реальным вопросом читался бы как «бесплатно», а
+                // означает «не оценено».
+                const v = chat($);
+                const unpriced = { ...full_trace, usage: { total_tokens: 90, cost: 0, currency: '', priced: false } };
+                v.history([{ role: 'assistant', text: 'a', trace: v.compact_trace(unpriced, 'mix') }]);
+                $mol_assert_equal(/90 ток/.test(v.message_trace(0)), true);
+                $mol_assert_equal(/0\.0000/.test(v.message_trace(0)), false);
+            },
+            'chat.message_trace: a failed reranker is visible in the line'($) {
+                const v = chat($);
+                const failed = { ...full_trace, rerank_error: 'reranker timed out' };
+                v.history([{ role: 'assistant', text: 'a', trace: v.compact_trace(failed, 'mix') }]);
+                $mol_assert_equal(/без реранка/.test(v.message_trace(0)), true);
+                $mol_assert_equal(/timed out/.test(v.message_trace_hint(0)), true);
+            },
+            'chat.message_trace_hint: names a substituted mode'($) {
+                const v = chat($);
+                const substituted = { ...full_trace, engine: 'naive' };
+                v.history([{ role: 'assistant', text: 'a', trace: v.compact_trace(substituted, 'mix') }]);
+                $mol_assert_equal(/Запрошен режим mix/.test(v.message_trace_hint(0)), true);
+            },
+            'chat.message_has_trace: a user message has none'($) {
+                const v = chat($);
+                v.history([{ role: 'user', text: 'вопрос' }]);
+                $mol_assert_equal(v.message_has_trace(0), false);
+                $mol_assert_equal(v.message_trace(0), '');
+            },
+            // ---- треды ----
+            'chat.threads: a corpus starts with one thread to write into'($) {
+                const v = chat($);
+                $mol_assert_equal(v.threads().length, 1);
+                $mol_assert_equal(v.history().length, 0);
+            },
+            'chat.threads: two threads of one corpus keep separate modes'($) {
+                // Ровно то, ради чего треды и заводились: сравнить mix и naive на
+                // одном корпусе, не переписывая условия уже состоявшегося разговора.
+                const v = chat($);
+                v.thread_engine('mix');
+                $mol_assert_equal(v.threads()[0].engine, 'mix');
+                v.thread_add();
+                $mol_assert_equal(v.threads().length, 2);
+                $mol_assert_equal(v.thread_id(), v.threads()[1].id);
+                v.thread_engine('naive');
+                $mol_assert_equal(v.threads()[1].engine, 'naive');
+                $mol_assert_equal(v.engine(), 'naive');
+                v.thread_click(0);
+                $mol_assert_equal(v.engine(), 'mix');
+            },
+            'chat.threads: histories do not leak between threads'($) {
+                const v = chat($);
+                v.history([{ role: 'user', text: 'первый' }]);
+                v.thread_add();
+                $mol_assert_equal(v.history().length, 0);
+                v.thread_click(0);
+                $mol_assert_equal(v.history()[0].text, 'первый');
+            },
+            'chat.thread_add: a new thread continues in the same mode'($) {
+                const v = chat($);
+                v.thread_engine('local');
+                v.thread_add();
+                $mol_assert_equal(v.engine(), 'local');
+            },
+            'chat.thread_title: named by its first question, not by a number'($) {
+                // По номеру нельзя вспомнить, о чём тред, а сравнивают их именно по
+                // содержанию.
+                const v = chat($);
+                v.thread_engine('naive');
+                v.history([{ role: 'user', text: 'Кто написал язык C?' }]);
+                $mol_assert_equal(/Кто написал/.test(v.thread_title(0)), true);
+                $mol_assert_equal(/naive/.test(v.thread_title(0)), true);
+            },
+            'chat.threads: switching corpus shows that corpus threads'($) {
+                const one = $raggu_web_front_chat.make({ $, dataset_id: () => 'corpus-a' });
+                const two = $raggu_web_front_chat.make({ $, dataset_id: () => 'corpus-b' });
+                one.history([{ role: 'user', text: 'только в A' }]);
+                $mol_assert_equal(two.history().length, 0);
+                $mol_assert_equal(one.history().length, 1);
+            },
+            'chat.threads: survive a reload'($) {
+                // local, а не session: переписка, пропадающая с вкладкой, сравнением
+                // двух режимов быть не может.
+                const v = chat($);
+                const key = v.threads_key();
+                v.thread_engine('naive');
+                const stored = $.$mol_state_local.value(key);
+                $mol_assert_equal(stored[0].engine, 'naive');
+            },
+            'chat.thread_id: a stale id does not leave the chat without a thread'($) {
+                const v = chat($);
+                v.thread_id('удалённый');
+                $mol_assert_equal(v.thread_id(), v.threads()[0].id);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
 (function ($) {
     function parse(theme) {
         if (theme === 'true')
@@ -27976,6 +28620,56 @@ var $;
             $mol_assert_equal(day.is_light_now(), true);
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        // Проверки идут по спискам режимов, а не по их подписям: чтение
+        // @-локализованных строк в свежем $ каждого теста даёт фантомные
+        // «Not translated» уже после прогона. Подписи — предмет браузерного
+        // сценария, где локаль прогрета.
+        function panel($, available) {
+            return $raggu_web_front_settings.make({ $, available_engines: () => available });
+        }
+        $mol_test({
+            'settings.engine_options: offers only what the corpus serves'($) {
+                // Недоступный режим в списке был бы кнопкой, на которую некому
+                // ответить: без своего хранилища он здесь не заработает никогда.
+                $mol_assert_equal(panel($, ['mix', 'naive']).engine_options().join(','), 'mix,naive');
+            },
+            'settings.engine_options: keeps the preferred order, not the given one'($) {
+                $mol_assert_equal(panel($, ['naive', 'mix']).engine_options().join(','), 'mix,naive');
+            },
+            'settings.engine_value: falls back when the choice is not served'($) {
+                // Бэк подставит доступный режим и сам, но интерфейс не должен
+                // показывать одно, а отправлять другое.
+                const view = panel($, ['naive']);
+                view.engine('mix');
+                $mol_assert_equal(view.engine_value(), 'naive');
+            },
+            'settings.engine_value: keeps the choice when it is served'($) {
+                const view = panel($, ['mix', 'local', 'naive']);
+                view.engine('local');
+                $mol_assert_equal(view.engine_value(), 'local');
+            },
+            'settings.engine_missing: names what this corpus cannot do'($) {
+                $mol_assert_equal(panel($, ['mix', 'naive']).engine_missing().join(','), 'local,global');
+            },
+            'settings.engine_missing: empty when everything is served'($) {
+                const all = ['mix', 'local', 'naive', 'global'];
+                $mol_assert_equal(panel($, all).engine_missing().length, 0);
+            },
+            'settings.engine_value: a corpus with nothing still yields a mode'($) {
+                // Пустой список — сломанный корпус. Селект всё равно обязан иметь
+                // значение, иначе виджет остаётся без выбранного пункта.
+                $mol_assert_equal(panel($, []).engine_value(), 'mix');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -28144,18 +28838,15 @@ var $;
                 $mol_assert_equal(v.is_empty(), true);
                 $mol_assert_equal(v.rows().length, 0);
             },
-            'chat: fallback suggestions are per corpus, three of them'($) {
+            'chat: fallback suggestions are picked per corpus'($) {
                 $.$mol_state_arg.value('mock', '1');
                 // dataset_id — не сеттер, задаём его override'ом при создании
                 const chat = (id) => $raggu_web_front_chat.make({ $, dataset_id: () => id });
-                const generic = chat('').fallback_suggestions();
-                const law = chat('law').fallback_suggestions();
-                const wiki = chat('wiki').fallback_suggestions();
-                $mol_assert_equal(generic.length, 3);
-                $mol_assert_equal(law.length, 3);
-                $mol_assert_equal(wiki.length, 3);
-                $mol_assert_equal(law[0] === wiki[0], false);
-                $mol_assert_equal(law[0] === generic[0], false);
+                // Проверяем выбор набора, а не сами строки: чтение @-локализованных
+                // значений в свежем $ стреляет «Not translated» уже после прогона.
+                $mol_assert_equal(chat('').fallback_kind(), 'any');
+                $mol_assert_equal(chat('law').fallback_kind(), 'law');
+                $mol_assert_equal(chat('wiki').fallback_kind(), 'wiki');
             },
             'forcegraph: community filter dims outsiders, highlights internal edges only'($) {
                 $.$mol_state_arg.value('mock', '1');
