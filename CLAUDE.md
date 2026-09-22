@@ -33,7 +33,7 @@ npx mam raggu/web/front/app
 ```
 Output: `raggu/web/front/app/-/` (index.html + web.js + web.css + locales) — gitignored, and served directly by the FastAPI backend when present (see `back/src/ragu_web_api/main.py`).
 
-Run all frontend tests (283+ assertions, no browser/JSDOM):
+Run all frontend tests (340 assertions, no browser/JSDOM):
 ```bash
 node raggu/web/front/app/-/node.test.js
 ```
@@ -54,7 +54,7 @@ Run tests:
 ```bash
 uv run --project back pytest
 ```
-Expect `101 passed, 6 skipped`. Everything that runs by default is network-free: the gateway gets an `httpx.MockTransport`, and the scenarios get a `FakeGateway` from [back/tests/support.py](back/tests/support.py). The 6 skipped live in [back/tests/test_live_stand.py](back/tests/test_live_stand.py) and check a deployment rather than the code — run them from the stand's network with `RAGU_LIVE_TESTS=1`.
+Expect `134 passed, 6 skipped`. Everything that runs by default is network-free: the gateway gets an `httpx.MockTransport`, and the scenarios get a `FakeGateway` from [back/tests/support.py](back/tests/support.py). The 6 skipped live in [back/tests/test_live_stand.py](back/tests/test_live_stand.py) and check a deployment rather than the code — run them from the stand's network with `RAGU_LIVE_TESTS=1`.
 
 After changing any Pydantic schema or route, regenerate the contract **and** the frontend client — one script does both:
 ```bash
@@ -83,9 +83,9 @@ Layers, and what each may import:
 | Layer | Modules | Knows about |
 | --- | --- | --- |
 | HTTP | `routers/`, `schemas/`, `errors.py` | FastAPI, our contract |
-| Scenarios | `catalog.py`, `answer.py` | the gateway, presentation |
+| Scenarios | `catalog.py`, `answer.py`, `graph_view.py` | the gateway, presentation |
 | Access | `ragu_gateway.py` | `RaguClient`, HTTP, `RaguApiError` |
-| Presentation | `presentation/cards.py`, `trace.py`, `language.py` | nothing but data — pure functions |
+| Presentation | `presentation/` — `cards.py`, `trace.py`, `language.py`, `graph.py`, `layout.py` | nothing but data — pure functions |
 
 Nothing above `ragu_gateway.py` sees HTTP or `RaguApiError`: the gateway converts every service error into an `HTTPException` carrying our envelope (see the table in [errors.py](back/src/ragu_web_api/errors.py)). Two pairs of service codes look alike and mean different things — a named `CAPABILITY_UNAVAILABLE` kills a mode forever while an unnamed one is an empty result; `TOO_MANY_REQUESTS` is worth retrying while `BUDGET_EXCEEDED` never is.
 
@@ -93,7 +93,7 @@ Nothing above `ragu_gateway.py` sees HTTP or `RaguApiError`: the gateway convert
 
 `_ExtendedClient` in [ragu_gateway.py](back/src/ragu_web_api/ragu_gateway.py) is temporary: the service serves routes (`GET /entities/{id}`, `GET /chunks`, `POST /relations/select`, `sort`/`order`/`ids` on `/entities`) that `RaguClient` does not yet expose. It disappears when the client catches up.
 
-`IndexRepository` ([services/index_repository.py](back/src/ragu_web_api/services/index_repository.py)) is what is left of the old design: a GML parser feeding the Explorer canvas. It no longer imports anything from `ragu` and holds no LLM. It goes away once the canvas reads the graph from the service too.
+Nothing is parsed from disk any more and nothing is cached whole: the Explorer canvas pages entities out of the service and asks for the edges between them as one induced subgraph. The process holds exactly one piece of state — a catalogue snapshot with a minute of lifetime.
 
 There is still no database, no live indexing, no job queue and no GPU worker. `GET /api/v1/capabilities` is the contract the frontend reads before assuming the backend does any of that.
 
@@ -108,7 +108,11 @@ Every feature is a folder under `front/` named after the screen/component, conta
 
 Screens compose top-down from [front/app/app.view.tree](front/app/app.view.tree) / [app.view.ts](front/app/app.view.ts): `app` owns `screen` (gallery/explorer/chat/summary) and `dataset_id` as `@$mol_mem` state synced to the URL hash via `$mol_state_arg` (`arg_value` helper — non-default values only, to keep the URL clean). Theme/locale persist via `$mol_state_local` instead (not URL). `Gallery` owns the actual dataset list fetch; `app`'s `dataset_ids`/`sidebar_dataset_name`/`sidebar_dataset_meta` are thin proxies into `Gallery()` so the sidebar doesn't duplicate that fetch.
 
-Cross-screen actions live on `app` because they touch two screens' state at once — e.g. `ask_chat()` reads the Explorer's current selection (node or edge) and writes a prefilled prompt into Chat before switching screens. The `Settings` module's `use_graph` / `query_plan` toggles map directly onto the agent request's `engine` (`mix` vs `naive`) and `use_query_plan` fields — see `chat_engine()`/`chat_query_plan()` in `app.view.ts` — deliberately not merged into one enum, since "graph off + decomposition on" needs to be independently expressible.
+Cross-screen actions live on `app` because they touch two screens' state at once — e.g. `ask_chat()` reads the Explorer's current selection (node or edge) and writes a prefilled prompt into Chat before switching screens.
+
+Chat keeps **threads per corpus**, each holding its own history *and* its own search mode. `Settings` stores nothing: its `engine` / `query_plan` are two-way props that `app` routes onto the active thread (`chat_engine()` / `chat_query_plan()`), so a mode change edits the conversation it belongs to instead of rewriting the terms of one already held. The offered modes come from that corpus's `available_engines` — a mode the corpus does not serve is never in the list, and `engine_missing()` names the absent ones.
+
+Two $mol idioms this code depends on, both learned the hard way: auto-scroll goes through explicit `scroll_height` / `scroll_top` mem channels and a `dom_tree` override, never a direct `scrollTop` write (that only works while something incidentally subscribes to `history()`); and timers are `$mol_after_timeout`, never bare `setTimeout`, which outlives the `$` context and fires into a destroyed component.
 
 Design tokens: never hardcode neutral hex colors — use `$bog_builderui_tokens` (`back/card/text/shade/line/control/special`). Documented exceptions: the indigo accent (`#5b5bd6`/`#ece9fb`), status colors (green `#1f8a5b`, orange `#c2691a`), the Explorer's dark canvas, and entity-dot colors.
 
