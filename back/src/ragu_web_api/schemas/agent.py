@@ -80,6 +80,35 @@ class TraceTimings(APIModel):
     total_ms: int = Field(ge=0)
 
 
+class TraceStageUsage(APIModel):
+    # Stage names come from the service: the search mode, plus whatever the
+    # engines label their own LLM calls with.
+    stage: str = Field(examples=["mix"])
+    calls: int = Field(ge=0)
+    prompt_tokens: int = Field(ge=0)
+    completion_tokens: int = Field(ge=0)
+
+
+class TraceUsage(APIModel):
+    # Always true today: the service counts tokens with a tokenizer, because the
+    # LLM clients hand back the parsed answer rather than the raw response. Close
+    # enough to compare two questions, not close enough to bill anyone.
+    estimated: bool = True
+    calls: int = Field(ge=0)
+    prompt_tokens: int = Field(ge=0)
+    completion_tokens: int = Field(ge=0)
+    total_tokens: int = Field(ge=0)
+    # Totals are computed from `stages`, so the two always agree. Trusting the
+    # service's own totals instead would let a discrepancy show up as a UI that
+    # contradicts itself.
+    stages: list[TraceStageUsage] = Field(default_factory=list)
+    # In whatever unit TOKEN_PRICE_* are given in; `currency` only labels it.
+    # Zero when no prices are configured — that is "not priced", not "free".
+    cost: float = Field(ge=0.0)
+    currency: str = Field(default="", examples=["₽"])
+    priced: bool = Field(description="Whether token prices are configured at all")
+
+
 class TraceEnergy(APIModel):
     watt_hours: float = Field(ge=0.0)
     estimated: bool = True
@@ -93,12 +122,15 @@ class GraphHighlight(APIModel):
 
 
 class AnswerTrace(APIModel):
-    # The engine that actually ran, not the one requested. "keyword" means the
-    # RAGU vector path was unavailable and local keyword retrieval was used.
+    # The engine that actually ran, not the one requested: the service may serve
+    # a different mode than the UI offered, and the trace has to say so.
     engine: TraceEngine
     top_k: int = Field(ge=1)
-    # Whether reranking actually happened (no reranker is configured, so: False).
+    # Whether reranking actually reordered the sources, not whether it was asked
+    # for. False with `rerank_error` set means the reranker was there and failed:
+    # the answer is the un-reranked one, which is a quality note, not an outage.
     rerank: bool
+    rerank_error: str | None = None
     # None when planning was not requested.
     query_plan: TraceQueryPlan | None = None
     entities: list[TraceEntity] = Field(default_factory=list)
@@ -106,6 +138,8 @@ class AnswerTrace(APIModel):
     chunks: list[TraceChunk] = Field(default_factory=list)
     communities: list[TraceCommunity] = Field(default_factory=list)
     timings: TraceTimings
+    # None when the service reported no usage for this request.
+    usage: TraceUsage | None = None
     energy: TraceEnergy
     highlight: GraphHighlight
 

@@ -19,27 +19,70 @@ namespace $.$$ {
 
 		// ---- runtime-переключалки поиска ----
 		//
-		// Уезжают на бэк полями запроса к агенту, а не отдельной ручкой настроек:
-		// они относятся к конкретному вопросу, и хранить их на сервере значило бы
-		// разводить состояние между вкладками. Читает их app: chat_engine() и
-		// chat_query_plan().
+		// Панель ничего не хранит: `engine` и `query_plan` — двусторонние
+		// свойства, и по ним app правит активный ТРЕД. Настройка, живущая рядом
+		// с корпусом, а не с перепиской, переписывала бы условия уже
+		// состоявшегося разговора, и сравнивать два режима стало бы не с чем.
 
-		/** Граф при поиске: 'on' → MixSearchEngine (чанки + граф), 'off' → NaiveSearchEngine (только чанки). */
-		@$mol_mem
-		use_graph( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.use_graph', next ?? null ) ?? 'on'
+		/**
+		 * Все режимы, какие вообще бывают, в порядке предпочтения.
+		 *
+		 * Список отдельно от подписей намеренно: какие режимы существуют и
+		 * какой из них доступен — это факт, а подпись к нему — представление.
+		 * Смешав их, любую проверку логики пришлось бы вести через локали.
+		 */
+		engine_all(): readonly string[] {
+			return [ 'mix', 'local', 'naive', 'global' ]
 		}
 
 		/**
-		 * QueryPlanEngine: декомпозиция сложного вопроса на подвопросы через DAG.
+		 * Что предложить в выпадающем списке.
 		 *
-		 * По умолчанию ВЫКЛЮЧЕН, пока бэк с `use_query_plan` не выкачен: у него
-		 * extra="forbid", и старая версия отвечает 422 на весь запрос. Включённый
-		 * по умолчанию тумблер сломал бы чат всем сразу после деплоя фронта.
+		 * Только то, что этот корпус обслуживает. Недоступный режим в списке
+		 * был бы кнопкой, на которую некому ответить.
 		 */
+		engine_options(): readonly string[] {
+			const available = new Set( this.available_engines() )
+			return this.engine_all().filter( mode => available.has( mode ) )
+		}
+
+		/** Каких режимов этот корпус не обслуживает. */
+		engine_missing(): readonly string[] {
+			const available = new Set( this.available_engines() )
+			return this.engine_all().filter( mode => !available.has( mode ) )
+		}
+
 		@$mol_mem
-		query_plan( next?: string ): string {
-			return this.$.$mol_state_local.value( '$raggu_web_front_settings.query_plan', next ?? null ) ?? 'off'
+		engine_dictionary(): Record<string, string> {
+			const labels = this.engine_labels()
+			const dictionary: Record<string, string> = {}
+			for( const mode of this.engine_options() ) dictionary[ mode ] = labels[ mode ] ?? mode
+			return dictionary
+		}
+
+		engine_labels(): Record<string, string> {
+			return {
+				mix: this.engine_mix_text(),
+				local: this.engine_local_text(),
+				naive: this.engine_naive_text(),
+				global: this.engine_global_text(),
+			}
+		}
+
+		/** Значение селекта: выбранное, если корпус его обслуживает. */
+		@$mol_mem
+		engine_value( next?: string ): string {
+			if( next !== undefined ) return this.engine( next )
+			const options = this.engine_options()
+			const chosen = this.engine()
+			return options.includes( chosen ) ? chosen : ( options[ 0 ] ?? 'mix' )
+		}
+
+		/** То же самое словами, а не молчанием. */
+		engine_missing_text() {
+			const missing = this.engine_missing()
+			if( !missing.length ) return ''
+			return this.engine_missing_prefix_text() + ' ' + missing.join( ', ' )
 		}
 
 	}

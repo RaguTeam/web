@@ -26,6 +26,13 @@ COPY app.py ./
 # and is fast. Requires internet at build time (models are public on HF).
 RUN python -c "import os; from sentence_transformers import SentenceTransformer; [SentenceTransformer(m, device='cpu', trust_remote_code=True) for m in os.environ['EMBEDDER_MODELS'].split(',')]"
 
+# Реранкер добавляет к образу около гигабайта. Собрать без него —
+# --build-arg RERANKER_MODELS="" ; сервис тогда отвечает 503 на /v1/score, а
+# RAGU оставляет исходный порядок и пишет причину в engines.rerank_error.
+ARG RERANKER_MODELS="BAAI/bge-reranker-base"
+ENV RERANKER_MODELS=${RERANKER_MODELS}
+RUN python -c "import os; from sentence_transformers import CrossEncoder; [CrossEncoder(m, device='cpu', trust_remote_code=True) for m in os.environ.get('RERANKER_MODELS','').split(',') if m.strip()]"
+
 EXPOSE 8001
 HEALTHCHECK --interval=30s --timeout=5s --start-period=180s --retries=5 \
   CMD curl -fsS http://localhost:8001/health || exit 1

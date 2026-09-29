@@ -2,23 +2,163 @@ namespace $.$$ {
 
 	export type Raggu_chat_role = 'user' | 'assistant'
 
+	/**
+	 * Сжатый трейс: только то, что показывается под ответом.
+	 *
+	 * Целиком ответ бэка сюда не кладётся намеренно — история живёт в
+	 * sessionStorage, а полный трейс несёт тексты всех найденных фрагментов и
+	 * раздул бы её на порядок.
+	 */
+	export type Raggu_chat_trace = {
+		engine: string
+		entities: number
+		chunks: number
+		total_ms: number
+		tokens: number
+		cost: number
+		currency: string
+		priced: boolean
+		/** Реранкер был и отказал: ответ собран в исходном порядке. */
+		rerank_error?: string | null
+		/** Режим, который просили, если сервис отработал другим. */
+		requested?: string
+	}
+
+	/**
+	 * Тред — это переписка ВМЕСТЕ с настройками, которыми её вели.
+	 *
+	 * Режим хранится в треде, а не рядом с корпусом: сравнить mix и naive на
+	 * одном корпусе можно только так — иначе переключение режима переписывало бы
+	 * условия уже состоявшегося разговора, и сравнивать стало бы не с чем.
+	 */
+	export type Raggu_chat_thread = {
+		id: string
+		engine: string
+		query_plan: boolean
+		items: Raggu_chat_item[]
+	}
+
 	export type Raggu_chat_item = {
 		role: Raggu_chat_role
 		text: string
 		/** Отвечено фолбэком (прямой LLM без графа), а не GraphRAG-бэком. */
 		off_graph?: boolean
+		trace?: Raggu_chat_trace
 	}
 
 	export class $raggu_web_front_chat extends $.$raggu_web_front_chat {
 
-		// История привязана к dataset_id — у каждого корпуса своя ветка чата.
-		// Иначе фолбэк-плашка, полученная на одном датасете (напр. мок без бэка),
-		// висела бы на сообщениях другого, где бэк отвечает через граф.
+		// ---- треды ----
+		//
+		// Хранятся по корпусам и в local, а не в session: переписка, пропадающая
+		// при закрытии вкладки, сравнением двух режимов быть не может.
+
+		threads_key() {
+			return `$raggu_web_front_chat.threads@${ this.dataset_id() || '' }`
+		}
+
 		@ $mol_mem
+		threads( next?: Raggu_chat_thread[] ): Raggu_chat_thread[] {
+			const stored = this.$.$mol_state_local.value( this.threads_key(), next as any ) as Raggu_chat_thread[] | null
+			// Пустой корпус начинается с одного треда: пустой список тредов
+			// означал бы чат без места, куда писать.
+			return stored?.length ? stored : [ this.blank_thread() ]
+		}
+
+		blank_thread(): Raggu_chat_thread {
+			return { id: 't1', engine: 'mix', query_plan: false, items: [] }
+		}
+
+		thread_id( next?: string ): string {
+			const key = `$raggu_web_front_chat.thread@${ this.dataset_id() || '' }`
+			// Именно next, а не `next ?? null`: у $mol_state_local значение null
+			// означает «удалить ключ», и чтение стирало бы то, что читает.
+			const stored = this.$.$mol_state_local.value( key, next ) as string | null
+			const threads = this.threads()
+			// Сохранённый идентификатор мог остаться от удалённого треда.
+			return threads.some( t => t.id === stored ) ? stored! : threads[ 0 ].id
+		}
+
+		thread(): Raggu_chat_thread {
+			const id = this.thread_id()
+			return this.threads().find( t => t.id === id ) ?? this.threads()[ 0 ]
+		}
+
+		/**
+		 * Записать изменение активного треда обратно в список.
+		 *
+		 * Без $mol_action и без $mol_mem у вызывающих: запись в мемоизированную
+		 * ячейку из тела другой мемоизированной ячейки — это мутация состояния
+		 * внутри фибера, и прочитанное следом значение оказывается прежним.
+		 */
+		thread_patch( patch: Partial< Raggu_chat_thread > ) {
+			const id = this.thread_id()
+			this.threads( this.threads().map( t => t.id === id ? { ... t, ... patch } : t ) )
+			return null
+		}
+
+		thread_ids() {
+			return this.threads().map( t => t.id )
+		}
+
+		thread_rows() {
+			return [ ... this.threads().map( ( _, i ) => this.Thread( i ) ), this.Thread_add() ]
+		}
+
+		/**
+		 * Подпись треда — первый вопрос, обрезанный. Не «Тред 2»: по номеру
+		 * нельзя вспомнить, о чём он, а сравнивают треды именно по содержанию.
+		 */
+		@ $mol_mem_key
+		thread_title( index: number ) {
+			const thread = this.threads()[ index ]
+			if( !thread ) return ''
+			const first = thread.items.find( item => item.role === 'user' )?.text
+			const label = first ? first.slice( 0, 24 ) : this.thread_new_text()
+			return `${ label } · ${ thread.engine }`
+		}
+
+		@ $mol_mem_key
+		thread_current( index: number ) {
+			return this.threads()[ index ]?.id === this.thread_id()
+		}
+
+		@ $mol_action
+		thread_click( index: number ) {
+			const id = this.threads()[ index ]?.id
+			if( id ) this.thread_id( id )
+			return null
+		}
+
+		/** Новый тред наследует режим текущего: чаще всего продолжают в том же. */
+		@ $mol_action
+		thread_add() {
+			const threads = this.threads()
+			const id = `t${ Date.now().toString( 36 ) }`
+			const current = this.thread()
+			this.threads( [ ... threads, { id, engine: current.engine, query_plan: current.query_plan, items: [] } ] )
+			this.thread_id( id )
+			return null
+		}
+
+		/** Режим этого треда. Панель настроек правит именно его. */
+		override thread_engine( next?: string ): string {
+			if( next !== undefined ) this.thread_patch( { engine: next } )
+			return this.thread().engine
+		}
+
+		override thread_query_plan( next?: boolean ): boolean {
+			if( next !== undefined ) this.thread_patch( { query_plan: next } )
+			return this.thread().query_plan
+		}
+
+		/** Режим и план запроса берутся из треда, а не из props. */
+		engine() { return this.thread_engine() }
+		use_query_plan() { return this.thread_query_plan() }
+
 		history( next?: Raggu_chat_item[] ): Raggu_chat_item[] {
-			const key = `$raggu_web_front_chat.history@${ this.dataset_id() || '' }`
-			const stored = this.$.$mol_state_session.value( key, next as any ) as Raggu_chat_item[] | null
-			return stored ?? []
+			if( next !== undefined ) this.thread_patch( { items: next } )
+			return this.thread().items
 		}
 
 		is_empty() { return this.history().length === 0 }
@@ -47,25 +187,97 @@ namespace $.$$ {
 			return this.history().map( ( _, i ) => this.Message( i ) )
 		}
 
-		// Автоскролл вниз при появлении нового сообщения.
-		// auto() вызывается $mol_view.dom_tree после render — DOM уже актуален.
-		override auto() {
+		// ---- автоскролл вниз при новом сообщении ----
+		//
+		// Через явные мем-каналы, а не записью в scrollTop из auto(). Прямая
+		// запись обходит реактивность: она работает лишь до тех пор, пока
+		// кто-то в теле метода случайно подписан на history(), и отваливается
+		// молча, стоит этой подписке измениться — что и произошло, когда
+		// история переехала в треды.
+		//
+		// Цепочка history → scroll_height → dom_tree видна в графе
+		// зависимостей, поэтому инвалидация детерминированна: к моменту, когда
+		// scroll_height читает scrollHeight, super.dom_tree() новое сообщение
+		// уже отрисовал.
+
+		@ $mol_mem
+		scroll_height(): number {
 			void this.history()
-			const el = this.Body().dom_node() as HTMLElement
-			el.scrollTop = el.scrollHeight
-			return [] as any
+			return ( this.Body().dom_node() as HTMLElement ).scrollHeight
 		}
 
+		@ $mol_mem
+		scroll_top( next?: number ): number {
+			const el = this.Body().dom_node() as HTMLElement
+			if( next !== undefined ) el.scrollTop = next
+			return el.scrollTop
+		}
+
+		@ $mol_mem
+		override dom_tree( next?: Element ): Element {
+			const node = super.dom_tree( next )
+			this.scroll_top( this.scroll_height() )
+			return node
+		}
+
+		@ $mol_mem_key
 		message_text( index: number ) {
 			return this.history()[ index ]?.text ?? ''
 		}
 
+		@ $mol_mem_key
 		message_role( index: number ) {
 			return this.history()[ index ]?.role ?? 'user'
 		}
 
+		@ $mol_mem_key
 		message_off_graph( index: number ) {
 			return this.history()[ index ]?.off_graph ?? false
+		}
+
+		@ $mol_mem_key
+		message_has_trace( index: number ) {
+			return Boolean( this.history()[ index ]?.trace )
+		}
+
+		/**
+		 * Одна строка под ответом: чем искали, сколько нашли, сколько это стоило.
+		 *
+		 * Стоимость показывается, только когда цены заданы. Ноль в рублях рядом с
+		 * реальным вопросом читался бы как «бесплатно», а означает «не оценено».
+		 */
+		@ $mol_mem_key
+		message_trace( index: number ) {
+			const trace = this.history()[ index ]?.trace
+			if( !trace ) return ''
+			const parts = [
+				trace.engine,
+				`${ trace.entities } сущн · ${ trace.chunks } фрагм`,
+				`${ ( trace.total_ms / 1000 ).toFixed( 1 ) } с`,
+			]
+			if( trace.tokens ) parts.push( `${ trace.tokens } ток` )
+			if( trace.priced ) parts.push( `${ trace.cost.toFixed( 4 ) } ${ trace.currency }`.trim() )
+			if( trace.rerank_error ) parts.push( 'без реранка' )
+			return parts.join( ' · ' )
+		}
+
+		/** Подробности в подсказку: в строку они не влезают, а объясняют её. */
+		@ $mol_mem_key
+		message_trace_hint( index: number ) {
+			const trace = this.history()[ index ]?.trace
+			if( !trace ) return ''
+			const lines: string[] = []
+			if( trace.requested && trace.requested !== trace.engine ) {
+				lines.push( `Запрошен режим ${ trace.requested }, корпус его не обслуживает — отработал ${ trace.engine }.` )
+			}
+			if( trace.rerank_error ) {
+				lines.push( `Реранкер отказал (${ trace.rerank_error }); порядок источников исходный.` )
+			}
+			if( trace.tokens && !trace.priced ) {
+				lines.push( 'Цены токенов не заданы, поэтому стоимость не показана.' )
+			}
+			lines.push( 'Токены посчитаны токенизатором, а не выставлены провайдером.' )
+			return lines.join( ' ' )
 		}
 
 		/**
@@ -133,15 +345,6 @@ namespace $.$$ {
 			this.ask_llm( text )
 		}
 
-		/**
-		 * Свойство из view.tree — просто string, а тело запроса ждёт литерал.
-		 * Сужаем здесь и заодно страхуемся: всё, что не `naive`, уходит как
-		 * `mix` — бэк из неподдерживаемых движков всё равно падает в него.
-		 */
-		override engine(): 'mix' | 'naive' {
-			return super.engine() === 'naive' ? 'naive' : 'mix'
-		}
-
 		// GraphRAG-агент бэка: возвращает готовый ответ с подмешанным контекстом
 		// графа. Промис fetch пробрасывается через wire, реальная ошибка — наверх.
 		ask_backend( text: string ) {
@@ -160,7 +363,7 @@ namespace $.$$ {
 				engine: this.engine(),
 				top_k: 15,
 				rerank: true,
-				include_trace: false,
+				include_trace: true,
 				locale: $raggu_web_front_api_locale(),
 				...( this.use_query_plan() ? { use_query_plan: true } : {} ),
 			}
@@ -171,8 +374,31 @@ namespace $.$$ {
 					body: body as typeof $raggu_web_front_api_ragu_create_agent_message.body,
 				},
 			)
-			const reply = ( resp as any )?.message?.content ?? ''
-			this.history( [ ... this.history(), { role: 'assistant', text: reply } ] )
+			const message = ( resp as any )?.message
+			const reply = message?.content ?? ''
+			this.history( [
+				... this.history(),
+				{ role: 'assistant', text: reply, trace: this.compact_trace( message?.trace, this.engine() ) },
+			] )
+		}
+
+		/** Из трейса бэка — только показываемое. Формы ответа держимся мягко:
+		 * старый бэк мог не знать про usage, и падать из-за этого ответ не должен. */
+		compact_trace( trace: any, requested: string ): Raggu_chat_trace | undefined {
+			if( !trace ) return undefined
+			const usage = trace.usage
+			return {
+				engine: trace.engine ?? '',
+				entities: trace.entities?.length ?? 0,
+				chunks: trace.chunks?.length ?? 0,
+				total_ms: trace.timings?.total_ms ?? 0,
+				tokens: usage?.total_tokens ?? 0,
+				cost: usage?.cost ?? 0,
+				currency: usage?.currency ?? '',
+				priced: Boolean( usage?.priced ),
+				rerank_error: trace.rerank_error ?? null,
+				requested,
+			}
 		}
 
 		// Лёгкий контекст для фолбэка: сущности графа (лейбл + тип, топ по degree)
@@ -254,10 +480,25 @@ namespace $.$$ {
 			}
 		}
 
+		/**
+		 * Какой набор встроенных подсказок подходит корпусу.
+		 *
+		 * Отдельно от самих строк: выбор набора — факт, проверяемый без локали,
+		 * а чтение @-строк в свежем $ даёт фантомные «Not translated» уже после
+		 * прогона тестов.
+		 */
+		fallback_kind(): 'law' | 'wiki' | 'any' {
+			switch( this.dataset_id() ) {
+				case 'law': return 'law'
+				case 'wiki': return 'wiki'
+			}
+			return 'any'
+		}
+
 		// Фолбэк без бэка: свои 3 вопроса на встроенные корпуса, общие — на всё
 		// остальное. Строки объявлены в view.tree, значит переводятся локалью.
 		fallback_suggestions(): readonly string[] {
-			switch( this.dataset_id() ) {
+			switch( this.fallback_kind() ) {
 				case 'law': return [ this.sug_law_one_text(), this.sug_law_two_text(), this.sug_law_three_text() ]
 				case 'wiki': return [ this.sug_wiki_one_text(), this.sug_wiki_two_text(), this.sug_wiki_three_text() ]
 			}
@@ -273,6 +514,7 @@ namespace $.$$ {
 			return [ ... this.suggestions().map( ( _, i ) => this.Sug( i ) ), this.Clear() ]
 		}
 
+		@ $mol_mem_key
 		sug_text( index: number ) {
 			return this.suggestions()[ index ] ?? ''
 		}

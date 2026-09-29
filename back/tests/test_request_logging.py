@@ -21,7 +21,7 @@ from ragu_web_api.logging_setup import (
 )
 from ragu_web_api.middleware import REQUEST_ID_HEADER, RequestContextMiddleware
 
-DOMAIN_LOGGER = logging.getLogger(f"{PACKAGE_LOGGER}.services.fake")
+DOMAIN_LOGGER = logging.getLogger(f"{PACKAGE_LOGGER}.fake")
 
 
 @pytest.fixture

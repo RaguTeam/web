@@ -1,65 +1,71 @@
 # RAGU Web API
 
-FastAPI gateway for the RAGU web demo. It discovers existing RAGU index folders,
-serves graph data from `knowledge_graph.gml` / `kv_chunks.json`, and answers
-questions over the selected graph using an OpenAI-compatible LLM when configured.
+Бэкенд демо: тонкий слой между фронтом и `ragu-api` — HTTP-сервисом RAGU поверх
+готовых графов.
 
-The expected index layout is:
+Сам он не ищет, не генерирует и не держит модель. Ни одного файла индекса он не
+открывает: графы видит только сервис. На этой стороне принимаются ровно два
+решения, и оба про собеседника, а не про граф — **на каком языке отвечать** и
+**каким режимом искать, если запрошенный этот корпус не обслуживает**.
 
 ```text
-indexes/
-  dataset-a/
-    knowledge_graph.gml
-    kv_chunks.json
-    ...
-  dataset-b/
-    knowledge_graph.gml
-    kv_chunks.json
-    ...
+фронт ──► back ──► ragu-api ──► графы на диске
+                      └──────► эмбеддер, LLM, реранкер
 ```
 
-If `RAGU_INDEXES_DIR` points directly to a single index folder, that folder is
-served as one dataset. Without `RAGU_INDEXES_DIR`, the backend looks for the
-local `RAGU/indexes` folder next to `raggu/web`.
+## Слои
 
-## Run
+| Слой | Модули | Что знает |
+| --- | --- | --- |
+| HTTP | `routers/`, `schemas/`, `errors.py` | FastAPI, наш контракт |
+| Сценарии | `catalog.py`, `answer.py`, `graph_view.py` | шлюз и презентацию |
+| Доступ | `ragu_gateway.py` | `RaguClient`, HTTP, `RaguApiError` |
+| Презентация | `presentation/*` | ничего, кроме данных — чистые функции |
+
+Выше `ragu_gateway.py` никто не знает ни про HTTP, ни про `RaguApiError`: шлюз
+переводит любую ошибку сервиса в `HTTPException` с нашим конвертом.
+
+`X-Request-ID` проходит насквозь — из браузера в `back`, оттуда в `ragu-api` и
+обратно, так что одна строка из devtools находит запрос в логах обоих сервисов.
+
+## Запуск
+
+Пакетный менеджер здесь `uv`, не `pip`: `[tool.uv.sources]` держит `graph-ragu`
+на ветке, а pip эту таблицу не читает и молча поставит другой пакет.
 
 ```bash
-cd raggu/web/back
-python -m pip install -e ".[dev]"
-uvicorn ragu_web_api.main:app --reload --port 8000
+uv run --project back uvicorn ragu_web_api.main:app --reload --port 8000
 ```
 
-Open the site at `http://localhost:8000/` when the MAM frontend build exists in
-`front/app/-/`. Swagger UI stays available at `http://localhost:8000/docs`.
+Нужен поднятый `ragu-api` и `RAGU_API_URL`/`RAGU_API_KEY` на него. Без сервиса
+галерея и чат отдают 502/503 — запасного пути нет намеренно.
 
-## Configuration
+Сайт открывается на `http://localhost:8000/`, если собран фронт в `front/app/-/`.
+Swagger — на `/docs`.
+
+## Настройки
+
+Полный список с пояснениями — в [.env.example](.env.example). Он сгруппирован по
+потребителю: модель и эмбеддер читает `ragu-api`, а не этот процесс.
+
+## Тесты
 
 ```bash
-export RAGU_INDEXES_DIR=/path/to/indexes
-
-export YANDEX_FOLDER_ID=...
-export YANDEX_API_KEY=...
-export YANDEX_LLM_MODEL=yandexgpt-5-pro
-export YANDEX_BASE_URL=https://ai.api.cloud.yandex.net/v1
-
-export LOCAL_EMBEDDER_URL=http://localhost:8001/v1
-export EMBEDDER_API_KEY=unused
-export EMBEDDER_MODEL_NAME=intfloat/multilingual-e5-large
+uv run --project back pytest
 ```
 
-The LLM variables are optional. If they are missing, `/agent/messages` still
-returns graph retrieval results with a clear fallback message instead of calling
-an external model.
+Всё, что запускается по умолчанию, сети не требует: шлюзу подставляется
+`httpx.MockTransport`, сценариям — `FakeGateway` из [tests/support.py](tests/support.py).
+Сквозные проверки развёртывания лежат в [tests/test_live_stand.py](tests/test_live_stand.py)
+и запускаются отдельно, из сети стенда:
 
-Search uses RAGU `MixSearchEngine` over the selected prebuilt index when
-`EMBEDDER_MODEL_NAME` and an OpenAI-compatible embedding endpoint are configured.
-The endpoint can be provided through `LOCAL_EMBEDDER_URL` or `EMBEDDER_BASE_URL`;
-without it the API falls back to the lightweight local keyword retrieval.
+```bash
+RAGU_LIVE_TESTS=1 uv run --project back pytest tests/test_live_stand.py
+```
 
 ## API
 
-All application endpoints are under `/api/v1`.
+Всё под `/api/v1`.
 
 - `GET /health`
 - `GET /capabilities`
@@ -72,24 +78,21 @@ All application endpoints are under `/api/v1`.
 - `POST /datasets/{dataset_id}/agent/messages`
 - `GET /datasets/{dataset_id}/agent/suggestions`
 
-Upload, job queue, live indexing, and GPU worker flows are not implemented.
-Frontend code should use `/api/v1/capabilities` to hide or disable those UI
-actions.
+Загрузка документов, очередь задач, индексация на лету и GPU-воркеры не
+реализованы. Фронт обязан читать `/api/v1/capabilities` и гасить такие действия,
+а не предполагать их наличие.
 
-## Tests
+## OpenAPI
 
-```bash
-uv run --project raggu/web/back pytest raggu/web/back/tests
-```
-
-## OpenAPI spec
-
-`openapi.json` next to this README is the source-of-truth spec — dumped from
-FastAPI and committed for the frontend codegen. Regenerate after schema changes:
+`openapi.json` рядом с этим файлом — источник истины по контракту, из него
+генерируется типизированный клиент фронта `front/api/ragu.openapi.ts`. Оба
+перегенерируются одной командой:
 
 ```bash
-python -c 'from ragu_web_api.main import create_app; import json; print(json.dumps(create_app().openapi(), indent=2))' > openapi.json
+bash back/scripts/regen-openapi.sh
 ```
 
-The frontend's typed client `web/front/api/ragu.openapi.ts` is generated from
-this file. Regen the client with `openapi-typescript` after the spec updates.
+Руками не править ни тот, ни другой. Спецификация хранится с LF, а `.gitattributes`
+ставит `* -text`, так что ничего не нормализуется: дамп через редирект оболочки
+на Windows даёт CRLF и превращает весь файл в диф. Скрипт пишет его из Python с
+явным `newline="\n"` именно поэтому.

@@ -102,7 +102,7 @@ namespace $ {
 
 		// Метка, вопросик-подсказка и переключалка — одной строкой.
 		// $bog_builderui_div по умолчанию колонка, без этого «?» уезжает вниз.
-		Use_graph_row: {
+		Engine_row: {
 			flex: { direction: 'row', wrap: 'wrap' },
 			align: { items: 'center' },
 			gap: '8px',
@@ -112,14 +112,14 @@ namespace $ {
 			align: { items: 'center' },
 			gap: '8px',
 		},
-		Use_graph_label: {
+		Engine_label: {
 			font: { size: '12px', weight: 600 },
 		},
 		Query_plan_label: {
 			font: { size: '12px', weight: 600 },
 		},
 		// Кружок с «?»: подсказка висит нативным title, всплывает по наведению.
-		Use_graph_help: {
+		Engine_help: {
 			width: '16px',
 			height: '16px',
 			flex: { shrink: 0 },
@@ -129,6 +129,13 @@ namespace $ {
 			color: $bog_builderui_tokens.shade,
 			font: { size: '10px', weight: 700 },
 			cursor: 'help',
+		},
+		// Чего корпус не умеет — строкой под выбором, приглушённо: это не отказ,
+		// а свойство корпуса.
+		Engine_missing: {
+			font: { size: '11px' },
+			color: $bog_builderui_tokens.shade,
+			margin: { top: '-2px' },
 		},
 		Query_plan_help: {
 			width: '16px',

@@ -77,8 +77,9 @@ namespace $.$$ {
 		total_steps_text() { return String( this.total_steps() ) }
 
 		/**
-		 * Mock pipeline: validates size limit, then advances step 0→6 via setTimeout chain.
-		 * Returns immediately; UI re-renders on each step setter call.
+		 * Mock pipeline: validates size limit, then advances step 0→6 via a
+		 * chain of wire-aware timeouts. Returns immediately; UI re-renders on
+		 * each step setter call.
 		 */
 		start( mock_file_size_mb: number ) {
 			this.error( '' )
@@ -90,15 +91,19 @@ namespace $.$$ {
 			this.tick( 1 )
 		}
 
+		// $mol_after_timeout, а не голый setTimeout: тот ставится в очередь
+		// браузера, о которой wire не знает, и срабатывает уже в уничтоженном
+		// контексте — в тестах это фантомные варнинги локалей, а в проде
+		// обращение к компоненту, которого больше нет.
 		tick( next_step: number ) {
-			setTimeout( () => {
+			new this.$.$mol_after_timeout( 600, () => {
 				this.step( next_step )
 				if ( next_step >= this.total_steps() ) {
-					setTimeout( () => this.complete( null ), 200 )
+					new this.$.$mol_after_timeout( 200, () => this.complete( null ) )
 					return
 				}
 				this.tick( next_step + 1 )
-			}, 600 )
+			} )
 		}
 
 		@$mol_action

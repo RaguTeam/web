@@ -28,18 +28,42 @@ QUESTIONS = Counter(
 ENGINE_USED = Counter(
     "ragu_agent_engine_used_total",
     (
-        "Движок, который РЕАЛЬНО отработал. Значение keyword означает, что "
-        "векторный поиск был недоступен или упал и ответ собран запасным "
-        "ранкером — это деградация, а не режим работы."
+        "Движок, который РЕАЛЬНО отработал. Расхождение с запрошенным означает, "
+        "что корпус не обслуживает выбранный режим и был подставлен доступный."
     ),
     ["dataset", "engine_used"],
 )
 
+DEGRADED = Counter(
+    "ragu_agent_degraded_total",
+    (
+        "Ответы, собранные не всеми движками ансамбля. MixSearchEngine переживает "
+        "падение ребёнка молча: запрос про граф и чанки может быть отвечен по "
+        "одним чанкам, и снаружи это выглядит просто как слабый ответ."
+    ),
+    ["dataset"],
+)
+
 RETRIEVAL_SECONDS = Histogram(
     "ragu_agent_retrieval_seconds",
-    "Время поиска контекста, включая декомпозицию вопроса.",
-    ["dataset"],
+    (
+        "Время поиска контекста, включая декомпозицию вопроса и реранк. Метка "
+        "reranked разделяет ретривал с переупорядочиванием и без: сервис не "
+        "выделяет реранк в отдельную стадию, и разница между этими рядами — "
+        "единственный способ увидеть, сколько он стоит."
+    ),
+    ["dataset", "reranked"],
     buckets=_STAGE_BUCKETS,
+)
+
+RERANK_OUTCOME = Counter(
+    "ragu_agent_rerank_total",
+    (
+        "Чем кончился реранк: applied — порядок переставлен, skipped — не "
+        "просили или реранкер не настроен, failed — реранкер отказал, и ответ "
+        "собран в исходном порядке."
+    ),
+    ["dataset", "outcome"],
 )
 
 GENERATION_SECONDS = Histogram(
@@ -65,6 +89,24 @@ EMPTY_RETRIEVALS = Counter(
     ["dataset"],
 )
 
+TOKENS = Counter(
+    "ragu_agent_tokens_total",
+    (
+        "Токены, посчитанные сервисом токенизатором, а не выставленные "
+        "провайдером: годятся, чтобы сравнить два вопроса, не годятся для счёта."
+    ),
+    ["dataset", "kind"],
+)
+
+COST = Counter(
+    "ragu_agent_cost_total",
+    (
+        "Стоимость в единицах TOKEN_PRICE_*. Ноль означает, что цены не заданы, "
+        "а не что вопросы бесплатные."
+    ),
+    ["dataset"],
+)
+
 DATASET_REQUESTS = Counter(
     "ragu_dataset_requests_total",
     "Обращения к корпусу по видам: карточка, граф, соседи, сообщества, агент.",
@@ -84,7 +126,9 @@ ANSWERS = Counter(
 # Виды обращений, которые предсоздаются на старте. Держим списками, чтобы
 # предсоздание и реальные вызовы не разъехались.
 _DATASET_KINDS = ("detail", "graph", "communities", "agent")
-_ENGINES_USED = ("mix", "naive", "local", "keyword")
+_ENGINES_USED = ("mix", "naive", "local", "global")
+_RERANK_OUTCOMES = ("applied", "skipped", "failed")
+_TOKEN_KINDS = ("prompt", "completion")
 
 
 def init_dataset(dataset: str) -> None:
@@ -95,15 +139,21 @@ def init_dataset(dataset: str) -> None:
     сводной таблице такой корпус выглядел пустой строкой, и отличить «никто не
     заходил» от «метрика сломалась» было нельзя.
 
-    Отдельно важно для ENGINE_USED: доля keyword считается делением одного ряда
-    на другой, и без нулевого знаменателя получается не ноль, а пустая ячейка.
+    Отдельно важно для ENGINE_USED и DEGRADED: доли считаются делением одного
+    ряда на другой, и без нулевого знаменателя выходит не ноль, а пустая ячейка.
     """
     ANSWERS.labels(dataset=dataset).inc(0)
     EMPTY_RETRIEVALS.labels(dataset=dataset).inc(0)
+    DEGRADED.labels(dataset=dataset).inc(0)
     for kind in _DATASET_KINDS:
         DATASET_REQUESTS.labels(dataset=dataset, kind=kind).inc(0)
     for engine in _ENGINES_USED:
         ENGINE_USED.labels(dataset=dataset, engine_used=engine).inc(0)
+    for outcome in _RERANK_OUTCOMES:
+        RERANK_OUTCOME.labels(dataset=dataset, outcome=outcome).inc(0)
+    for kind in _TOKEN_KINDS:
+        TOKENS.labels(dataset=dataset, kind=kind).inc(0)
+    COST.labels(dataset=dataset).inc(0)
 
 
 def observe_answer(
@@ -113,9 +163,14 @@ def observe_answer(
     engine_used: str,
     language: str,
     query_plan: bool,
+    degraded: bool,
+    rerank: str,
     retrieval_ms: int,
     generation_ms: int,
     chunks: int,
+    prompt_tokens: int = 0,
+    completion_tokens: int = 0,
+    cost: float = 0.0,
 ) -> None:
     """Записать один ответ агента.
 
@@ -130,9 +185,17 @@ def observe_answer(
     ).inc()
     ANSWERS.labels(dataset=dataset).inc()
     ENGINE_USED.labels(dataset=dataset, engine_used=engine_used).inc()
-    RETRIEVAL_SECONDS.labels(dataset=dataset).observe(retrieval_ms / 1000)
+    RERANK_OUTCOME.labels(dataset=dataset, outcome=rerank).inc()
+    RETRIEVAL_SECONDS.labels(
+        dataset=dataset, reranked=str(rerank == "applied").lower()
+    ).observe(retrieval_ms / 1000)
     GENERATION_SECONDS.labels(dataset=dataset).observe(generation_ms / 1000)
     CONTEXT_CHUNKS.labels(dataset=dataset).observe(chunks)
+    TOKENS.labels(dataset=dataset, kind="prompt").inc(prompt_tokens)
+    TOKENS.labels(dataset=dataset, kind="completion").inc(completion_tokens)
+    COST.labels(dataset=dataset).inc(cost)
+    if degraded:
+        DEGRADED.labels(dataset=dataset).inc()
     if chunks == 0:
         EMPTY_RETRIEVALS.labels(dataset=dataset).inc()
 

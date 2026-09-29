@@ -13,8 +13,11 @@ SearchEngine = Literal["local", "global", "naive", "mix", "query_plan"]
 # not advertised. Anything else falls back to "mix".
 SUPPORTED_ENGINES: tuple[str, ...] = ("local", "naive", "mix")
 
-# What actually produced a trace: a RAGU engine, or the local keyword fallback.
-TraceEngine = Literal["local", "naive", "mix", "keyword"]
+# Режим, который реально отработал. Все четыре — режимы сервиса: запасного
+# ранкера на стороне бэкенда больше нет, и значения "keyword" тоже. Расхождение
+# с запрошенным режимом теперь означает подмену на доступный, а не деградацию до
+# поиска по словам.
+TraceEngine = Literal["local", "global", "naive", "mix"]
 
 DatasetLanguage = Literal["ru", "en", "mixed"]
 

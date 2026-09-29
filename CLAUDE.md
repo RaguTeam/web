@@ -33,7 +33,7 @@ npx mam raggu/web/front/app
 ```
 Output: `raggu/web/front/app/-/` (index.html + web.js + web.css + locales) — gitignored, and served directly by the FastAPI backend when present (see `back/src/ragu_web_api/main.py`).
 
-Run all frontend tests (283+ assertions, no browser/JSDOM):
+Run all frontend tests (340 assertions, no browser/JSDOM):
 ```bash
 node raggu/web/front/app/-/node.test.js
 ```
@@ -41,22 +41,20 @@ Expect `All tests passed`. Tests live in `<module>.test.ts` files (e.g. [front/a
 
 ### Backend (`back/`)
 
+`uv` is the package manager here — do not use `pip`. `[tool.uv.sources]` pins `graph-ragu` to a git branch, and pip ignores that table entirely, so a pip install silently gets a different package.
+
 ```bash
-cd back
-python -m pip install -e ".[dev]"
-uvicorn ragu_web_api.main:app --reload --port 8000
+uv run --project back uvicorn ragu_web_api.main:app --reload --port 8000
 ```
 Swagger UI: `http://localhost:8000/docs`. Serves the built frontend at `/` if `front/app/-/index.html` exists, else redirects to `/docs`.
 
+Needs `RAGU_API_KEY` set (matching the `ragu-api` service) and `RAGU_API_URL` pointing at it; without a reachable service the gallery and chat return 502/503 by design — there is no local fallback.
+
 Run tests:
 ```bash
-cd back
-pytest                      # all tests
-pytest tests/test_api.py    # one file
-pytest tests/test_api.py::test_openapi_has_expected_tags_and_no_live_indexing_paths  # one test
-pytest -k query_plan         # by keyword
+uv run --project back pytest
 ```
-(`uv run --project back pytest` also works if using `uv`.) Note: `tests/test_api.py` needs a real prebuilt RAGU index discoverable via `RAGU_INDEXES_DIR` (or the default `../RAGU/indexes` / `./indexes` lookup) — it exercises the live discovery/graph/agent endpoints. `tests/test_query_plan.py` stubs the LLM and repository internals directly, so it runs in a bare checkout with no index on disk.
+Expect `134 passed, 6 skipped`. Everything that runs by default is network-free: the gateway gets an `httpx.MockTransport`, and the scenarios get a `FakeGateway` from [back/tests/support.py](back/tests/support.py). The 6 skipped live in [back/tests/test_live_stand.py](back/tests/test_live_stand.py) and check a deployment rather than the code — run them from the stand's network with `RAGU_LIVE_TESTS=1`.
 
 After changing any Pydantic schema or route, regenerate the contract **and** the frontend client — one script does both:
 ```bash
@@ -68,23 +66,36 @@ It dumps `back/openapi.json` straight from `create_app()` (no running server), t
 
 ### Docker
 
-`docker-compose.yml` wires three services: `embedder` (local embedding server) → `back` (FastAPI, reads `./indexes` read-only) → `caddy` (TLS reverse proxy). `docker-compose.yml`'s `environment:` block for `back` intentionally overrides stale embedder vars that might be sitting in `.env`.
+`docker-compose.yml` wires: `embedder` (local embedding server) → `ragu-api` (RAGU's own service over `./indexes`) → `back` (this BFF) → `caddy` (TLS reverse proxy), plus `prometheus` and `grafana`.
+
+`RAGU_API_KEY` must be in `.env` or nothing starts — compose fails on the `${RAGU_API_KEY:?}` guard. That is deliberate: a service with no key answers anyone who can reach it, and every request costs LLM calls. `back`'s `RAGU_API_TIMEOUT` is strictly below `ragu-api`'s `RAGU_API_REQUEST_TIMEOUT`; larger and the server gives up first, producing a 504 instead of an answer.
+
+The `environment:` block for `back` intentionally overrides stale embedder vars that might be sitting in `.env`.
 
 ## Architecture
 
-### Backend: index-driven, not database-driven
+### Backend: a BFF in front of `ragu-api`, not a search engine
 
-There is no database. `IndexRepository` ([back/src/ragu_web_api/services/index_repository.py](back/src/ragu_web_api/services/index_repository.py)) is the entire data layer — a singleton (see [services/dependencies.py](back/src/ragu_web_api/services/dependencies.py)) that at startup scans `RAGU_INDEXES_DIR` for subfolders containing `knowledge_graph.gml` + `kv_chunks.json`, and lazily parses each into an in-memory `LoadedIndex` on first access (nodes/edges/communities/chunks + adjacency maps), cached forever in `self._loaded`.
+The backend does not search, does not generate and does not hold a model. All of that belongs to `ragu-api` — RAGU's own HTTP service, running as a separate container over the same prebuilt graph folders. This half decides two things, and both are about the visitor rather than the graph: **what language to answer in** and **which mode to search with when the corpus does not serve the one that was asked for**.
 
-Retrieval has two independent tiers, chosen per-index at request time:
-- **RAGU vector search** (`RaguSearchAdapter`) — used only when the index folder also has `vdb_entity.json` + `vdb_chunk.json` *and* an embedder is configured for that index (`EMBEDDER_MODEL_MAP` allows per-index model overrides, since indexes may have been built with different embedding models). Builds a real `ragu.KnowledgeGraph` + `LocalSearchEngine`/`NaiveSearchEngine`/`MixSearchEngine`, cached per `(dataset_id, engine_name)`.
-- **Local keyword fallback** (`IndexRepository._retrieve`) — a plain token-overlap ranker, used when RAGU search isn't configured/available or raises. Every RAGU call path degrades to this rather than failing the request; the trace's reported `engine` always reflects what actually ran ("keyword" if it fell back), never what was requested.
+Layers, and what each may import:
 
-Generation is a separate concern from retrieval: `OpenAICompatibleLLM` wraps any OpenAI-compatible chat endpoint (including YandexGPT via a `gpt://folder/model` URI — see `_llm_config_from_env`). If no LLM is configured or the call fails, `answer()` falls back to `_fallback_answer`, which surfaces the raw retrieved entities/chunks instead of silently returning nothing.
+| Layer | Modules | Knows about |
+| --- | --- | --- |
+| HTTP | `routers/`, `schemas/`, `errors.py` | FastAPI, our contract |
+| Scenarios | `catalog.py`, `answer.py`, `graph_view.py` | the gateway, presentation |
+| Access | `ragu_gateway.py` | `RaguClient`, HTTP, `RaguApiError` |
+| Presentation | `presentation/` — `cards.py`, `trace.py`, `language.py`, `graph.py`, `layout.py` | nothing but data — pure functions |
 
-Query planning (`use_query_plan` on `AgentRequest`) decomposes a question into sub-questions via this backend's own LLM (never RAGU's own `QueryPlanEngine`, which is unreachable here — the RAGU engines are wired to a stub LLM, `_RaguSearchOnlyLLM`, that always raises on generation). Each sub-question gets its own full retrieval pass; results merge by best-score-per-item (not summed) in `_merge_retrievals`, capped at `_QUERY_PLAN_MAX = 4` sub-questions since each one multiplies retrieval latency.
+Nothing above `ragu_gateway.py` sees HTTP or `RaguApiError`: the gateway converts every service error into an `HTTPException` carrying our envelope (see the table in [errors.py](back/src/ragu_web_api/errors.py)). Two pairs of service codes look alike and mean different things — a named `CAPABILITY_UNAVAILABLE` kills a mode forever while an unnamed one is an empty result; `TOO_MANY_REQUESTS` is worth retrying while `BUDGET_EXCEEDED` never is.
 
-Everything under `/api/v1` is mock-free and driven by real prebuilt indexes; live indexing, job queues/Redis/RQ/Celery, and GPU workers are intentionally unimplemented. `GET /api/v1/capabilities` is the contract the frontend reads to hide/disable UI for those absent features — check it before wiring up any new "backend does X" UI assumption. (`mock_repository.py` / `fixtures/mock_data.py` exist for local frontend-only mock flows, separate from this real path.)
+`X-Request-ID` travels in, through, and out: `RequestContextMiddleware` binds it to a `ContextVar`, `_ExtendedClient._request` puts it on every outbound call, and `ragu-api` adopts it — so one string copied out of devtools finds the request in both services' logs.
+
+`_ExtendedClient` in [ragu_gateway.py](back/src/ragu_web_api/ragu_gateway.py) is temporary: the service serves routes (`GET /entities/{id}`, `GET /chunks`, `POST /relations/select`, `sort`/`order`/`ids` on `/entities`) that `RaguClient` does not yet expose. It disappears when the client catches up.
+
+Nothing is parsed from disk any more and nothing is cached whole: the Explorer canvas pages entities out of the service and asks for the edges between them as one induced subgraph. The process holds exactly one piece of state — a catalogue snapshot with a minute of lifetime.
+
+There is still no database, no live indexing, no job queue and no GPU worker. `GET /api/v1/capabilities` is the contract the frontend reads before assuming the backend does any of that.
 
 ### Frontend: $mol/MAM module convention
 
@@ -97,7 +108,11 @@ Every feature is a folder under `front/` named after the screen/component, conta
 
 Screens compose top-down from [front/app/app.view.tree](front/app/app.view.tree) / [app.view.ts](front/app/app.view.ts): `app` owns `screen` (gallery/explorer/chat/summary) and `dataset_id` as `@$mol_mem` state synced to the URL hash via `$mol_state_arg` (`arg_value` helper — non-default values only, to keep the URL clean). Theme/locale persist via `$mol_state_local` instead (not URL). `Gallery` owns the actual dataset list fetch; `app`'s `dataset_ids`/`sidebar_dataset_name`/`sidebar_dataset_meta` are thin proxies into `Gallery()` so the sidebar doesn't duplicate that fetch.
 
-Cross-screen actions live on `app` because they touch two screens' state at once — e.g. `ask_chat()` reads the Explorer's current selection (node or edge) and writes a prefilled prompt into Chat before switching screens. The `Settings` module's `use_graph` / `query_plan` toggles map directly onto the agent request's `engine` (`mix` vs `naive`) and `use_query_plan` fields — see `chat_engine()`/`chat_query_plan()` in `app.view.ts` — deliberately not merged into one enum, since "graph off + decomposition on" needs to be independently expressible.
+Cross-screen actions live on `app` because they touch two screens' state at once — e.g. `ask_chat()` reads the Explorer's current selection (node or edge) and writes a prefilled prompt into Chat before switching screens.
+
+Chat keeps **threads per corpus**, each holding its own history *and* its own search mode. `Settings` stores nothing: its `engine` / `query_plan` are two-way props that `app` routes onto the active thread (`chat_engine()` / `chat_query_plan()`), so a mode change edits the conversation it belongs to instead of rewriting the terms of one already held. The offered modes come from that corpus's `available_engines` — a mode the corpus does not serve is never in the list, and `engine_missing()` names the absent ones.
+
+Two $mol idioms this code depends on, both learned the hard way: auto-scroll goes through explicit `scroll_height` / `scroll_top` mem channels and a `dom_tree` override, never a direct `scrollTop` write (that only works while something incidentally subscribes to `history()`); and timers are `$mol_after_timeout`, never bare `setTimeout`, which outlives the `$` context and fires into a destroyed component.
 
 Design tokens: never hardcode neutral hex colors — use `$bog_builderui_tokens` (`back/card/text/shade/line/control/special`). Documented exceptions: the indigo accent (`#5b5bd6`/`#ece9fb`), status colors (green `#1f8a5b`, orange `#c2691a`), the Explorer's dark canvas, and entity-dot colors.
 

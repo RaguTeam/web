@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -10,16 +11,26 @@ from prometheus_fastapi_instrumentator import Instrumentator, metrics
 from ragu_web_api import __version__
 from ragu_web_api.logging_setup import configure_logging
 
-# Must run before the routers import: that import builds the IndexRepository
-# singleton, which logs its startup diagnostics on the way up. Configure the
-# handler after it and those lines are already gone.
+# Must run before the routers import: that import builds the process singletons,
+# which log their startup diagnostics on the way up. Configure the handler after
+# it and those lines are already gone.
 configure_logging()
 
-from ragu_web_api.middleware import (  # noqa: E402
-    REQUEST_ID_HEADER,
-    RequestContextMiddleware,
-)
+from ragu_web_api.logging_setup import REQUEST_ID_HEADER  # noqa: E402
+from ragu_web_api.middleware import RequestContextMiddleware  # noqa: E402
 from ragu_web_api.routers import api_router  # noqa: E402
+from ragu_web_api.dependencies import gateway  # noqa: E402
+
+
+@asynccontextmanager
+async def _lifespan(app: FastAPI):
+    """Отпустить пул соединений к ragu-api при остановке.
+
+    Без этого uvicorn на SIGTERM оставляет открытые сокеты, и сервис досчитывает
+    до своего таймаута вместо того, чтобы закрыться сразу.
+    """
+    yield
+    await gateway.aclose()
 
 
 # Use the endpoint function name as the OpenAPI operationId so codegen produces
@@ -65,6 +76,7 @@ def create_app() -> FastAPI:
         ),
         openapi_tags=OPENAPI_TAGS,
         generate_unique_id_function=_short_operation_id,
+        lifespan=_lifespan,
     )
 
     app.add_middleware(

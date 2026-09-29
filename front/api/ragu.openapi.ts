@@ -232,11 +232,13 @@ namespace $.$raggu_web_front_api_ragu {
 	             * Engine
 	             * @enum {string}
 	             */
-	            engine: "local" | "naive" | "mix" | "keyword";
+	            engine: "local" | "global" | "naive" | "mix";
 	            /** Top K */
 	            top_k: number;
 	            /** Rerank */
 	            rerank: boolean;
+	            /** Rerank Error */
+	            rerank_error?: string | null;
 	            query_plan?: components["schemas"]["TraceQueryPlan"] | null;
 	            /** Entities */
 	            entities?: components["schemas"]["TraceEntity"][];
@@ -247,6 +249,7 @@ namespace $.$raggu_web_front_api_ragu {
 	            /** Communities */
 	            communities?: components["schemas"]["TraceCommunity"][];
 	            timings: components["schemas"]["TraceTimings"];
+	            usage?: components["schemas"]["TraceUsage"] | null;
 	            energy: components["schemas"]["TraceEnergy"];
 	            highlight: components["schemas"]["GraphHighlight"];
 	        };
@@ -791,6 +794,20 @@ namespace $.$raggu_web_front_api_ragu {
 	            /** Strength */
 	            strength: number;
 	        };
+	        /** TraceStageUsage */
+	        TraceStageUsage: {
+	            /**
+	             * Stage
+	             * @example mix
+	             */
+	            stage: string;
+	            /** Calls */
+	            calls: number;
+	            /** Prompt Tokens */
+	            prompt_tokens: number;
+	            /** Completion Tokens */
+	            completion_tokens: number;
+	        };
 	        /** TraceTimings */
 	        TraceTimings: {
 	            /** Retrieval Ms */
@@ -799,6 +816,37 @@ namespace $.$raggu_web_front_api_ragu {
 	            generation_ms: number;
 	            /** Total Ms */
 	            total_ms: number;
+	        };
+	        /** TraceUsage */
+	        TraceUsage: {
+	            /**
+	             * Estimated
+	             * @default true
+	             */
+	            estimated: boolean;
+	            /** Calls */
+	            calls: number;
+	            /** Prompt Tokens */
+	            prompt_tokens: number;
+	            /** Completion Tokens */
+	            completion_tokens: number;
+	            /** Total Tokens */
+	            total_tokens: number;
+	            /** Stages */
+	            stages?: components["schemas"]["TraceStageUsage"][];
+	            /** Cost */
+	            cost: number;
+	            /**
+	             * Currency
+	             * @default
+	             * @example ₽
+	             */
+	            currency: string;
+	            /**
+	             * Priced
+	             * @description Whether token prices are configured at all
+	             */
+	            priced: boolean;
 	        };
 	        /** ValidationError */
 	        ValidationError: {
