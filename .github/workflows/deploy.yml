@@ -45,11 +45,27 @@ jobs:
               working-directory: raggu/web/front/app/-
               env:
                   RAGU_API: ${{ vars.RAGU_API }}
+              # Без sed: значение из веб-формы легко приходит с переводом строки или
+              # пробелом, и sed падал на нём с невнятным кодом 123.
               run: |
-                  grep -rl --include='*.js' 'https://ragu-back.duckdns.org' . \
-                      | xargs -r sed -i "s#https://ragu-back.duckdns.org#${RAGU_API%/}#g"
-                  ! grep -rq --include='web.js' 'https://ragu-back.duckdns.org' .
-                  grep -rq --include='web.js' "${RAGU_API%/}" .
+                  python3 - <<'PY'
+                  import os, pathlib, re, sys
+                  old = "https://ragu-back.duckdns.org"
+                  new = os.environ["RAGU_API"].strip().rstrip("/")
+                  if not re.fullmatch(r"https?://[A-Za-z0-9.-]+(:[0-9]+)?", new):
+                      sys.exit(f"RAGU_API должна быть вида https://host[:port], а пришло {os.environ['RAGU_API']!r}")
+                  changed = []
+                  for path in pathlib.Path(".").rglob("*"):
+                      if path.is_file() and not path.is_symlink() and path.suffix in (".js", ".mjs"):
+                          text = path.read_text(encoding="utf-8")
+                          if old in text:
+                              path.write_text(text.replace(old, new), encoding="utf-8")
+                              changed.append(str(path))
+                  web = pathlib.Path("web.js").read_text(encoding="utf-8")
+                  if old in web or new not in web:
+                      sys.exit("web.js не переключился на RAGU_API")
+                  print(f"{old} -> {new} в {len(changed)} файлах: {', '.join(sorted(changed))}")
+                  PY
 
             - name: Redirect root to site
               if: vars.ROOT_REDIRECT == 'site' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
@@ -78,7 +94,8 @@ jobs:
               run: |
                   # Пустая VITE_RAGU_API дала бы относительный адрес API, поэтому
                   # задаём её только вместе с переменной.
-                  if [ -n "$RAGU_API" ]; then export VITE_RAGU_API="$RAGU_API"; fi
+                  RAGU_API="$(printf '%s' "$RAGU_API" | tr -d '[:space:]')"
+                  if [ -n "$RAGU_API" ]; then export VITE_RAGU_API="${RAGU_API%/}"; fi
                   pnpm install --frozen-lockfile
                   pnpm --filter @ugar/ragu-site build
 
