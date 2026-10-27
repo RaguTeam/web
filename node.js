@@ -13774,7 +13774,7 @@ var $;
      * No path suffix here: operation `route`s already carry `/api/v1/...`
      * from FastAPI's OpenAPI dump.
      */
-    $.$raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org';
+    $.$raggu_web_front_api_endpoint_default = 'https://ragu-itmo.duckdns.org:8443';
     /**
      * Effective endpoint: the `?api=<url>` app argument overrides the default,
      * so a freshly deployed backend can be pointed at WITHOUT a rebuild —
