@@ -116,9 +116,18 @@
 	pack trip git \https://github.com/b-on-g/trip.git
 	pack probe git \https://github.com/b-on-g/probe.git
 	pack gamengine git \https://github.com/b-on-g/gamengine.git
+	pack doodle git \https://github.com/b-on-g/doodle.git
+	pack flow git \https://github.com/b-on-g/flow.git
 	pack selection git \https://github.com/b-on-g/selection.git
 	pack max git \https://github.com/b-on-g/max.git
 	pack rash git \https://github.com/b-on-g/rash.git
+	pack hub git \https://github.com/b-on-g/hub.git
+	pack atelier git \https://github.com/b-on-g/atelier.git
+	pack gtk git \https://github.com/b-on-g/gtk.git
+	pack birthdaycase git \https://github.com/b-on-g/birthday-case.git
+	pack merchquarium git \https://github.com/b-on-g/merchquarium.git
+	pack fragile git \https://github.com/b-on-g/fragile.git
+	pack gipergram git \https://github.com/b-on-g/gipergram.git
 \/raggu/web/front/app
 	deploy \/mol/offline/install
 	deploy \/raggu/web/front/assets
