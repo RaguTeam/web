@@ -34,11 +34,51 @@ jobs:
                   cache: pnpm
                   cache-dependency-path: raggu/web/front/ragu-site/pnpm-lock.yaml
 
+            # Переключатели в Settings → Variables. Пустые — всё как раньше:
+            #   RAGU_API      — адрес бэкенда для обоих фронтов (по умолчанию
+            #                   https://ragu-back.duckdns.org, зашитый в код);
+            #   ROOT_REDIRECT — `site`: /web/ уводит на /web/site/, старое
+            #                   приложение остаётся по /web/old.html.
+            # Откат — очистить переменную и перезапустить workflow.
+            - name: Point old app at RAGU_API
+              if: vars.RAGU_API != '' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+              working-directory: raggu/web/front/app/-
+              env:
+                  RAGU_API: ${{ vars.RAGU_API }}
+              run: |
+                  grep -rl --include='*.js' 'https://ragu-back.duckdns.org' . \
+                      | xargs -r sed -i "s#https://ragu-back.duckdns.org#${RAGU_API%/}#g"
+                  ! grep -rq --include='web.js' 'https://ragu-back.duckdns.org' .
+                  grep -rq --include='web.js' "${RAGU_API%/}" .
+
+            - name: Redirect root to site
+              if: vars.ROOT_REDIRECT == 'site' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+              working-directory: raggu/web/front/app/-
+              run: |
+                  mv index.html old.html
+                  cat > index.html <<'HTML'
+                  <!doctype html>
+                  <html lang="ru">
+                  <head>
+                  <meta charset="utf-8">
+                  <title>RAGU</title>
+                  <meta http-equiv="refresh" content="0; url=site/">
+                  <script>location.replace('site/')</script>
+                  </head>
+                  <body><a href="site/">RAGU</a></body>
+                  </html>
+                  HTML
+
             - name: Build site
               working-directory: raggu/web/front/ragu-site
               env:
                   RAGU_BASE: /web/site/
+                  # Только на main: превью и PR собираются со старым адресом.
+                  RAGU_API: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && vars.RAGU_API || '' }}
               run: |
+                  # Пустая VITE_RAGU_API дала бы относительный адрес API, поэтому
+                  # задаём её только вместе с переменной.
+                  if [ -n "$RAGU_API" ]; then export VITE_RAGU_API="$RAGU_API"; fi
                   pnpm install --frozen-lockfile
                   pnpm --filter @ugar/ragu-site build
 
