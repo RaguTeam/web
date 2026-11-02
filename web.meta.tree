@@ -128,6 +128,8 @@
 	pack merchquarium git \https://github.com/b-on-g/merchquarium.git
 	pack fragile git \https://github.com/b-on-g/fragile.git
 	pack gipergram git \https://github.com/b-on-g/gipergram.git
+	pack pair git \https://github.com/b-on-g/pair.git
+	pack rsdemo git \https://github.com/b-on-g/rsdemo.git
 \/raggu/web/front/app
 	deploy \/mol/offline/install
 	deploy \/raggu/web/front/assets
