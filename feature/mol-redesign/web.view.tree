@@ -350,6 +350,9 @@ $raggu_web_front_icon_caret $raggu_web_front_icon
 	view_box \0 0 12 12
 	path \M2 4.5 L6 8.5 L10 4.5
 
+$raggu_web_front_icon_mol $raggu_web_front_icon
+	path \M12.6 5.4a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M3 5.4a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M7.8 1.8a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M7.8 9a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M12.6 12.6a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M7.8 16.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M3 12.6a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M0.6 9a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M15 9a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M5.16 6.12L8.04 8.28M5.16 4.68L8.04 2.52M9.96 2.52L12.84 4.68M9 3L9 7.8M9.96 9.72L12.84 11.88M9 10.2L9 15M12.84 13.32L9.96 15.48M8.04 15.48L5.16 13.32
+
 $raggu_web_front_chrome_switcher $raggu_web_front_pop
 	corpus \
 	hint <= pick_label @ \Switch corpus
@@ -960,6 +963,11 @@ $raggu_web_front_home $mol_view
 										<= Footer_web $raggu_web_front_link
 											uri \https://github.com/RaguTeam/web
 											sub / <= footer_this
+										<= Footer_mol $raggu_web_front_link
+											uri \https://b-on-g.github.io/smalljs/
+											sub /
+												<= Footer_mol_icon $raggu_web_front_icon_mol
+												<= footer_mol @ \Built with $mol
 										<= Footer_rights $raggu_web_front_label
 											text <= rights @ \MIT licensed
 	Badge* $mol_view

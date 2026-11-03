@@ -95,6 +95,7 @@
 	"$raggu_web_front_home_error_title": "Что-то пошло не так",
 	"$raggu_web_front_home_eyebrow": "открытый graphrag",
 	"$raggu_web_front_home_footer_blurb": "Демо-интерфейс поверх готовых индексов RAGU. Индексация, очереди задач и GPU-воркеры на этом стенде отключены.",
+	"$raggu_web_front_home_footer_mol": "Сделано на $mol",
 	"$raggu_web_front_home_footer_project": "Проект",
 	"$raggu_web_front_home_footer_this": "Этот интерфейс",
 	"$raggu_web_front_home_how_label": "Как это работает",

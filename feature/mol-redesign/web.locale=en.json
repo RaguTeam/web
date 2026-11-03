@@ -95,6 +95,7 @@
 	"$raggu_web_front_home_error_title": "Something went wrong",
 	"$raggu_web_front_home_eyebrow": "open source graphrag",
 	"$raggu_web_front_home_footer_blurb": "A demo interface over prebuilt RAGU indexes. Indexing, job queues and GPU workers stay off this deployment.",
+	"$raggu_web_front_home_footer_mol": "Built with $mol",
 	"$raggu_web_front_home_footer_project": "Project",
 	"$raggu_web_front_home_footer_this": "This interface",
 	"$raggu_web_front_home_how_label": "How it works",

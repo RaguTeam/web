@@ -5029,6 +5029,10 @@ declare namespace $ {
 		path( ): string
 	}
 	
+	export class $raggu_web_front_icon_mol extends $raggu_web_front_icon {
+		path( ): string
+	}
+	
 }
 
 //# sourceMappingURL=icon.view.tree.d.ts.map
@@ -7026,20 +7030,20 @@ declare namespace $ {
 		,
 		ReturnType< $raggu_web_front_link['sub'] >
 	>
-	type $raggu_web_front_label__text_raggu_web_front_home_69 = $mol_type_enforce<
+	type $raggu_web_front_link__uri_raggu_web_front_home_69 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_front_link['uri'] >
+	>
+	type $raggu_web_front_link__sub_raggu_web_front_home_70 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_front_link['sub'] >
+	>
+	type $raggu_web_front_label__text_raggu_web_front_home_71 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['rights'] >
 		,
 		ReturnType< $raggu_web_front_label['text'] >
-	>
-	type $mol_view__dom_name_raggu_web_front_home_70 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_view['dom_name'] >
-	>
-	type $mol_view__sub_raggu_web_front_home_71 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
 	>
 	type $mol_view__dom_name_raggu_web_front_home_72 = $mol_type_enforce<
 		string
@@ -7051,120 +7055,120 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub_raggu_web_front_home_74 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
-	>
-	type $mol_view__dom_name_raggu_web_front_home_75 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_home_74 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
+	>
+	type $mol_view__sub_raggu_web_front_home_75 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
 	>
 	type $mol_view__sub_raggu_web_front_home_76 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $raggu_web_front_label__dom_name_raggu_web_front_home_77 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_home_77 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_view['dom_name'] >
+	>
+	type $mol_view__sub_raggu_web_front_home_78 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $raggu_web_front_label__dom_name_raggu_web_front_home_79 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_label['dom_name'] >
 	>
-	type $raggu_web_front_label__text_raggu_web_front_home_78 = $mol_type_enforce<
+	type $raggu_web_front_label__text_raggu_web_front_home_80 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['badge_label'] >
 		,
 		ReturnType< $raggu_web_front_label['text'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_home_79 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_home_81 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub_raggu_web_front_home_80 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_home_82 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub_raggu_web_front_home_81 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_home_83 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['step_rail'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_home_82 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_home_84 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub_raggu_web_front_home_83 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_home_85 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $raggu_web_front_text__text_raggu_web_front_home_84 = $mol_type_enforce<
+	type $raggu_web_front_text__text_raggu_web_front_home_86 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['step_detail'] >
 		,
 		ReturnType< $raggu_web_front_text['text'] >
 	>
-	type $raggu_web_front_label__text_raggu_web_front_home_85 = $mol_type_enforce<
+	type $raggu_web_front_label__text_raggu_web_front_home_87 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['step_output'] >
 		,
 		ReturnType< $raggu_web_front_label['text'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_home_86 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_home_88 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $raggu_web_front_text__text_raggu_web_front_home_87 = $mol_type_enforce<
+	type $raggu_web_front_text__text_raggu_web_front_home_89 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['error_title'] >
 		,
 		ReturnType< $raggu_web_front_text['text'] >
 	>
-	type $raggu_web_front_text__text_raggu_web_front_home_88 = $mol_type_enforce<
+	type $raggu_web_front_text__text_raggu_web_front_home_90 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['error_hint'] >
 		,
 		ReturnType< $raggu_web_front_text['text'] >
 	>
-	type $mol_button__click_raggu_web_front_home_89 = $mol_type_enforce<
+	type $mol_button__click_raggu_web_front_home_91 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['retry'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_button__sub_raggu_web_front_home_90 = $mol_type_enforce<
+	type $mol_button__sub_raggu_web_front_home_92 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button['sub'] >
 	>
-	type $mol_view__sub_raggu_web_front_home_91 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_home_93 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $raggu_web_front_reveal__dom_name_raggu_web_front_home_92 = $mol_type_enforce<
+	type $raggu_web_front_reveal__dom_name_raggu_web_front_home_94 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_reveal['dom_name'] >
 	>
-	type $raggu_web_front_reveal__delay_raggu_web_front_home_93 = $mol_type_enforce<
+	type $raggu_web_front_reveal__delay_raggu_web_front_home_95 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['step_delay'] >
 		,
 		ReturnType< $raggu_web_front_reveal['delay'] >
 	>
-	type $raggu_web_front_reveal__sub_raggu_web_front_home_94 = $mol_type_enforce<
+	type $raggu_web_front_reveal__sub_raggu_web_front_home_96 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $raggu_web_front_reveal['sub'] >
-	>
-	type $mol_view__dom_name_raggu_web_front_home_95 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_view['dom_name'] >
-	>
-	type $mol_view__sub_raggu_web_front_home_96 = $mol_type_enforce<
-		readonly(any)[]
-		,
-		ReturnType< $mol_view['sub'] >
 	>
 	type $mol_view__dom_name_raggu_web_front_home_97 = $mol_type_enforce<
 		string
@@ -7181,29 +7185,39 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $raggu_web_front_home_card__dataset_raggu_web_front_home_100 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_home_100 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__dom_name_raggu_web_front_home_101 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_view['dom_name'] >
+	>
+	type $raggu_web_front_home_card__dataset_raggu_web_front_home_102 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['card_dataset'] >
 		,
 		ReturnType< $raggu_web_front_home_card['dataset'] >
 	>
-	type $raggu_web_front_home_card__featured_raggu_web_front_home_101 = $mol_type_enforce<
+	type $raggu_web_front_home_card__featured_raggu_web_front_home_103 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['card_featured'] >
 		,
 		ReturnType< $raggu_web_front_home_card['featured'] >
 	>
-	type $raggu_web_front_home_card__delay_raggu_web_front_home_102 = $mol_type_enforce<
+	type $raggu_web_front_home_card__delay_raggu_web_front_home_104 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_home['card_delay'] >
 		,
 		ReturnType< $raggu_web_front_home_card['delay'] >
 	>
-	type $raggu_web_front_skeleton__attr_raggu_web_front_home_103 = $mol_type_enforce<
+	type $raggu_web_front_skeleton__attr_raggu_web_front_home_105 = $mol_type_enforce<
 		({ 
 			'raggu_web_front_home_card_skeleton_featured': ReturnType< $raggu_web_front_home['card_skeleton_featured'] >,
 		})  & ReturnType< $raggu_web_front_skeleton['attr'] >
 		,
 		ReturnType< $raggu_web_front_skeleton['attr'] >
 	>
-	type $mol_view__sub_raggu_web_front_home_104 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_home_106 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
@@ -7276,6 +7290,9 @@ declare namespace $ {
 		footer_this( ): string
 		Footer_this_label( ): $raggu_web_front_label
 		Footer_web( ): $raggu_web_front_link
+		Footer_mol_icon( ): $raggu_web_front_icon_mol
+		footer_mol( ): string
+		Footer_mol( ): $raggu_web_front_link
 		rights( ): string
 		Footer_rights( ): $raggu_web_front_label
 		Footer_this_list( ): $mol_view
