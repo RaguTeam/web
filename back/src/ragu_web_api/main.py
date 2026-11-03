@@ -1,3 +1,4 @@
+import asyncio
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -19,17 +20,22 @@ configure_logging()
 from ragu_web_api.logging_setup import REQUEST_ID_HEADER  # noqa: E402
 from ragu_web_api.middleware import RequestContextMiddleware  # noqa: E402
 from ragu_web_api.routers import api_router  # noqa: E402
-from ragu_web_api.dependencies import gateway  # noqa: E402
+from ragu_web_api.dependencies import gateway, graph_view  # noqa: E402
 
 
 @asynccontextmanager
 async def _lifespan(app: FastAPI):
-    """Отпустить пул соединений к ragu-api при остановке.
+    """Прогреть сообщества в фоне и отпустить пул соединений к ragu-api при остановке.
 
-    Без этого uvicorn на SIGTERM оставляет открытые сокеты, и сервис досчитывает
-    до своего таймаута вместо того, чтобы закрыться сразу.
+    Прогрев не держит старт: бэкенд отвечает сразу, а корпус, до которого
+    очередь не дошла, догрузит свои сообщества при первом открытии.
+
+    Без закрытия пула uvicorn на SIGTERM оставляет открытые сокеты, и сервис
+    досчитывает до своего таймаута вместо того, чтобы закрыться сразу.
     """
+    preload = asyncio.create_task(graph_view.preload())
     yield
+    preload.cancel()
     await gateway.aclose()
 
 
