@@ -9,10 +9,12 @@
 
 from __future__ import annotations
 
+import json
 import logging
+from collections.abc import AsyncIterator
 from typing import Any
 
-from ragu.api.client import RaguApiError, RaguClient
+from ragu.api.client import RaguApiError, RaguClient, _envelope
 from ragu.api.models import (
     ChunkPage,
     CommunityPage,
@@ -57,6 +59,29 @@ class _ExtendedClient(RaguClient):
         headers = dict(kwargs.pop("headers", None) or {})
         headers.setdefault(REQUEST_ID_HEADER, request_id_var.get())
         return await super()._request(method, path, headers=headers, **kwargs)
+
+    async def stream(
+        self, mode: str, query: str, *, graph: str | None = None, **body: Any
+    ) -> AsyncIterator[tuple[str, dict[str, Any]]]:
+        """Тот же поток, что у клиента, плюс сквозной идентификатор.
+
+        `RaguClient.stream` открывает соединение сам, мимо `_request`, и
+        заголовок из него до сервиса не доезжал бы.
+        """
+        path = f"{self._prefix(graph)}/search/{mode}/stream"
+        headers = {REQUEST_ID_HEADER: request_id_var.get()}
+        async with self._client.stream(
+            "POST", path, json={"query": query, **body}, headers=headers
+        ) as response:
+            if response.status_code >= 400:
+                await response.aread()
+                raise RaguApiError(response.status_code, _envelope(response))
+            event = "message"
+            async for line in response.aiter_lines():
+                if line.startswith("event: "):
+                    event = line[len("event: ") :]
+                elif line.startswith("data: "):
+                    yield event, json.loads(line[len("data: ") :])
 
     async def entities_page(
         self,
@@ -218,6 +243,27 @@ class RaguGateway:
         return await self._call(
             self._client.search(mode, query, graph=dataset, **body)  # type: ignore[arg-type]
         )
+
+    async def stream(
+        self, dataset: str, mode: str, query: str, **body: Any
+    ) -> AsyncIterator[tuple[str, dict[str, Any]]]:
+        """Ответ по кускам: `meta`, затем `delta`, затем `done` или `error`.
+
+        Отказ до начала потока приходит как `HTTPException`, как у `search`.
+        Отказ посреди потока статусом уже не передать, поэтому он приходит
+        событием `error` — но с нашим конвертом, а не с кодом сервиса.
+        """
+        try:
+            async for event, data in self._client.stream(
+                mode, query, graph=dataset, **body  # type: ignore[arg-type]
+            ):
+                if event == "error":
+                    failure = RaguApiError(502, {"error": data})
+                    yield "error", as_http_exception(failure).detail
+                    return
+                yield event, data
+        except RaguApiError as error:
+            raise as_http_exception(error) from error
 
     async def retrieve(
         self, dataset: str, mode: str, query: str, **body: Any

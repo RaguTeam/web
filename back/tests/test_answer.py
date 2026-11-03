@@ -387,3 +387,65 @@ async def test_suggestions_follow_the_corpus_entity_types() -> None:
     gateway = FakeGateway([info("medical")], types={"medical": ["DiseaseOrDisorder"]})
     result = await _answerer(gateway).suggestions("medical", locale="ru")
     assert "DiseaseOrDisorder" in result.suggestions[0]
+
+
+# ---------- поток ----------
+
+
+async def _collect(gateway: FakeGateway, request: AgentRequest) -> list[tuple[str, dict]]:
+    return [item async for item in _answerer(gateway).stream("medical", request)]
+
+
+@asyncio_test
+async def test_stream_ends_with_the_same_message_as_a_plain_answer() -> None:
+    """Фронт заменяет собранный из кусков текст финальным сообщением, и трейс
+    в нём должен быть тем же, что у обычного ответа."""
+    sources = [
+        SourceItem(
+            id="ent-1",
+            type="entity",
+            content="…",
+            score=0.8,
+            meta=EntityMeta(name="Dennis Ritchie", type="PERSON"),
+        )
+    ]
+    gateway = FakeGateway(
+        [info("medical")], answer=search_response(answer="Язык C", sources=sources)
+    )
+    events = await _collect(gateway, _request())
+
+    assert [event for event, _ in events] == ["delta", "delta", "message"]
+    assert "".join(data["text"] for event, data in events if event == "delta") == "Язык C"
+    message = events[-1][1]["message"]
+    assert message["content"] == "Язык C"
+    assert [entity["label"] for entity in message["trace"]["entities"]] == ["Dennis Ritchie"]
+
+
+@asyncio_test
+async def test_stream_asks_the_service_with_the_same_body_as_a_plain_answer() -> None:
+    gateway = FakeGateway([info("medical")])
+    await _answerer(gateway).answer("medical", _request("Что такое грипп?", top_k=5))
+    await _collect(gateway, _request("Что такое грипп?", top_k=5))
+    assert gateway.searches[0] == gateway.searches[1]
+
+
+@asyncio_test
+async def test_failure_mid_stream_ends_it_without_a_message() -> None:
+    gateway = FakeGateway([info("medical")])
+    engines = search_response().engines.model_dump()
+    gateway.stream_events = [
+        ("meta", {"query": "q", "mode": "mix", "sources": [], "engines": engines}),
+        ("delta", {"text": "Нача"}),
+        ("error", {"code": "upstream_error", "message": "boom"}),
+    ]
+    events = await _collect(gateway, _request())
+    assert [event for event, _ in events] == ["delta", "error"]
+
+
+@asyncio_test
+async def test_stream_cut_short_is_an_error_not_an_answer() -> None:
+    """Без `done` ответ мог оборваться на полуслове — выдавать его за целый нельзя."""
+    gateway = FakeGateway([info("medical")])
+    gateway.stream_events = [("delta", {"text": "Нача"})]
+    events = await _collect(gateway, _request())
+    assert [event for event, _ in events] == ["delta", "error"]

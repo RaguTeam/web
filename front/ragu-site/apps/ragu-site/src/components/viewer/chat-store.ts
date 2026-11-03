@@ -12,6 +12,8 @@ export type ChatState = {
     datasetId: string | null;
     entries: ChatEntry[];
     pending: boolean;
+    /** The answer received so far, while it is still being generated. */
+    partial: string | null;
     error: string | null;
     /** A question handed over from elsewhere in the UI, waiting for the panel to send it. */
     queued: string | null;
@@ -22,6 +24,7 @@ const EMPTY: ChatState = {
     datasetId: null,
     entries: [],
     pending: false,
+    partial: null,
     error: null,
     queued: null,
     startedAt: null,

@@ -373,6 +373,22 @@
     animation: ragu-shimmer 1.9s linear infinite;
 }
 
+/* The end of an answer that is still being written. */
+@keyframes ragu-caret {
+    50% { opacity: 0; }
+}
+
+.stream-caret {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    margin-left: 0.15em;
+    vertical-align: -0.12em;
+    border-radius: 2px;
+    background: var(--accent);
+    animation: ragu-caret 1s steps(1) infinite;
+}
+
 /* ------------------------------------------------------------------ *
  * Popup entrances.
  *
