@@ -20,7 +20,8 @@ implemented to that contract rather than to the OpenAI reranking API.
 Rerankers are cross-encoders: they read the query and one candidate together,
 which is what makes them better than vector similarity and also what makes them
 cost one forward pass per candidate. On CPU that is the slowest thing in this
-container, hence a base-size model and a hard ceiling on candidates per call.
+container, hence a base-size model, a cap on input length and a hard ceiling on
+candidates per call.
 
 Set ``RERANKER_MODELS`` empty to build the image without a reranker: the route
 then answers 503 and RAGU keeps the un-reranked order.
@@ -43,9 +44,15 @@ DEFAULT_MODELS = "BAAI/bge-large-en-v1.5,Alibaba-NLP/gte-multilingual-base"
 DEFAULT_RERANKERS = "BAAI/bge-reranker-base"
 
 # Потолок кандидатов на один вызов. Кросс-энкодер считает по одному проходу на
-# кандидата: сотня пар на CPU — это уже десятки секунд, и лучше отказать внятно,
-# чем занять контейнер целиком.
-MAX_CANDIDATES = int(os.getenv("RERANKER_MAX_CANDIDATES", "64"))
+# кандидата, но цена прохода зависит от длины: 64 связи по паре строк около
+# 4 с на 4 vCPU, 64 фрагмента по 2 тыс. символов 30-40 с. Связей у одного
+# вопроса бывает до сотни, и при потолке 64 их реранк отваливался с 413.
+MAX_CANDIDATES = int(os.getenv("RERANKER_MAX_CANDIDATES", "128"))
+
+# Сколько токенов пары (вопрос + кандидат) читает реранкер, остальное обрезается.
+# Замер на вопросах medical: 384 вместо 512 на четверть быстрее, а топ-5 после
+# реранка совпадает на 80-94 %; при 256 порядок фрагментов портится заметно.
+MAX_LENGTH = int(os.getenv("RERANKER_MAX_LENGTH", "384"))
 
 # Cosine-similarity vector DBs (RAGU uses nano-vectordb) expect L2-normalized
 # vectors; both models above are trained for cosine. Normalizing is also
@@ -79,7 +86,7 @@ def _configured_rerankers() -> list[str]:
 def _load_reranker(name: str) -> Any:
     from sentence_transformers import CrossEncoder
 
-    return CrossEncoder(name, device=DEVICE, trust_remote_code=True)
+    return CrossEncoder(name, device=DEVICE, max_length=MAX_LENGTH, trust_remote_code=True)
 
 
 async def _get_reranker(name: str) -> Any:
