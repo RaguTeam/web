@@ -1,3 +1,5 @@
 $raggu_web_front_mark $mol_image
 	uri <= data_uri \
 	title \RAGU
+
+$raggu_web_front_mark_icon $mol_view
