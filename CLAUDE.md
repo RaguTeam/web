@@ -24,7 +24,7 @@ cd raggu/web/front/app && npm start         # builds with bog/build2 into front/
 node raggu/web/front/app/-/node.test.js     # from the MAM root, expect "All tests passed"
 ```
 
-Open `raggu/web/front/app/-/index.html`. Arguments in the hash: `#!mock=1` answers every request from recorded gateway responses in `front/mock/fixtures` (no backend at all), `#!api=<url>` points the site at another gateway (default `https://ragu-back.duckdns.org`). Build with `MAM_PULL_DISABLED=1` locally, otherwise the builder runs `git pull` over the tree.
+Open `raggu/web/front/app/-/test.html`. Arguments in the hash: `#!mock=1` answers every request from recorded gateway responses in `front/mock/fixtures` (no backend at all), `#!api=<url>` points the site at another gateway (default `https://ragu-back.duckdns.org`). Build with `MAM_PULL_DISABLED=1` locally, otherwise the builder runs `git pull` over the tree.
 
 Modules: `base` (tokens, preflight, keyframes), `chrome` (top islands), `home` (landing), `corpus` (controls, detail card, chat), `scene` (three.js engine and shaders), `graph` (types, model, Barnes–Hut layout in a worker), `viewer` (state of the open corpus, chat streaming), `data` (fetches), `mock`, `lib` (formatting, settings, citations, SSE, rich text). English lives in `*.view.tree` as `@` strings, Russian in `*.locale=ru.json` next to each module.
 
