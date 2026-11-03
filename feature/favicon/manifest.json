@@ -1,0 +1,10 @@
+{
+	"name": "raggu_web_front_app",
+	"short_name": "raggu_web_front_app",
+	"description": "",
+	"id": "raggu_web_front_app",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
