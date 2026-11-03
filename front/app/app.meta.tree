@@ -1,2 +1,3 @@
 deploy \/mol/offline/install
 deploy \/raggu/web/front/assets
+deploy \/raggu/web/front/mock/fixtures

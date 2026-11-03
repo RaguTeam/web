@@ -6,7 +6,13 @@ namespace $ {
 			return $raggu_web_front_api_endpoint().replace( /\/$/, '' ) + '/api/v1'
 		}
 
+		static request( path: string, init?: RequestInit ) {
+			if( $raggu_web_front_mock.enabled() ) return $raggu_web_front_mock.response( path, init )
+			return fetch( this.api() + path, init )
+		}
+
 		static fetch< Result >( path: string, init?: RequestInit ) {
+			if( $raggu_web_front_mock.enabled() ) return $mol_wire_sync( $raggu_web_front_mock ).json( path ) as Result
 			return this.$.$mol_fetch.json( this.api() + path, {
 				credentials: 'omit',
 				... init,

@@ -384,9 +384,8 @@ namespace $ {
 			const seed = $raggu_web_front_data_ready( ()=> this.response() )
 			if( !corpus || !seed ) throw new Error( 'nothing to extend' )
 
-			const api = $raggu_web_front_data.api()
 			const get = async< Result >( path: string ) => {
-				const response = await fetch( api + path, { headers: { accept: 'application/json' } } )
+				const response = await $raggu_web_front_data.request( path, { headers: { accept: 'application/json' } } )
 				if( !response.ok ) throw new Error( response.statusText )
 				return await response.json() as Result
 			}
@@ -458,10 +457,10 @@ namespace $ {
 		on_delta: ( text: string )=> void,
 	): Promise< $raggu_web_front_graph_answer > {
 
-		const base = `${ $raggu_web_front_data.api() }/datasets/${ encodeURIComponent( corpus ) }/agent/messages`
+		const base = `/datasets/${ encodeURIComponent( corpus ) }/agent/messages`
 
 		const plain = async () => {
-			const response = await fetch( base, {
+			const response = await $raggu_web_front_data.request( base, {
 				method: 'POST',
 				headers: { accept: 'application/json', 'content-type': 'application/json' },
 				body: JSON.stringify( body ),
@@ -471,7 +470,7 @@ namespace $ {
 			return await response.json() as $raggu_web_front_graph_answer
 		}
 
-		const response = await fetch( base + '/stream', {
+		const response = await $raggu_web_front_data.request( base + '/stream', {
 			method: 'POST',
 			headers: { accept: 'text/event-stream', 'content-type': 'application/json' },
 			body: JSON.stringify( body ),
