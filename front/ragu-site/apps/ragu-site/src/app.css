@@ -657,3 +657,69 @@
 .is-stale {
     animation: ragu-stale 1.4s ease-in-out infinite;
 }
+
+/* Tables and formulas in entity descriptions (RichText.tsx). */
+.rich-text > * + * {
+    margin-top: 0.6em;
+}
+
+.rich-text table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.92em;
+    line-height: 1.45;
+    scrollbar-width: thin;
+    scrollbar-color: var(--edge-strong) transparent;
+}
+
+.rich-text caption {
+    padding-bottom: 0.4em;
+    text-align: left;
+    color: var(--text-3);
+}
+
+.rich-text th,
+.rich-text td {
+    padding: 0.35em 0.7em;
+    border: 1px solid var(--edge);
+    text-align: left;
+    vertical-align: top;
+}
+
+.rich-text th {
+    background: var(--surface-sunk);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.rich-text ul,
+.rich-text ol {
+    padding-left: 1.25em;
+}
+
+.rich-text ul { list-style: disc; }
+.rich-text ol { list-style: decimal; }
+
+.rich-text code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.rich-math {
+    color: var(--text);
+}
+
+.rich-math:not(:has(.katex)) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.rich-math-display {
+    display: block;
+    overflow-x: auto;
+    margin: 0.5em 0;
+    text-align: center;
+}

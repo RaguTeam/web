@@ -22,9 +22,8 @@ pnpm --filter @ugar/ragu-site build    # check + vite build
 
 | Path | What it is |
 |------|------------|
-| `/` | Hero, the four indexing passes, the three corpora, the stack |
+| `/` | Hero, the four indexing passes, the three corpora |
 | `/c/$datasetId` | The explorer: entity cloud, filters, entity card, chat |
-| `/stack/$entryId` | `ragu`, `ragu-lm`, `nerel`, `interface` |
 
 Routing uses **hash history** — the site ships as a static bundle and a static
 host has no rewrite rule to hand `/c/medical` back to `index.html`. Set
@@ -120,9 +119,9 @@ src/
   api/        wire types, fetch client, React Query options
   graph/      layout solver + worker, model, shaders, scene, stores
   components/ chrome (top islands), viewer (controls, card, chat), home, ui
-  content/    stack and pipeline copy, en + ru
+  content/    pipeline copy, en + ru
   lib/        stores, i18n, theme, settings, formatting
-  routes/     root shell, home, dataset, stack, 404
+  routes/     root shell, home, dataset, 404
 ```
 
 ## Design system
