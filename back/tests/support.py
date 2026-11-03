@@ -64,7 +64,7 @@ def settings(**overrides) -> Settings:
         "subgraph_ttl": 300.0,
         "questions_per_minute": 10,
         "questions_per_day": 100,
-        "questions_total_per_day": 300,
+        "questions_total_per_day": 1000,
     }
     payload.update(overrides)
     return Settings(**payload)

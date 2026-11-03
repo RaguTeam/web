@@ -98,5 +98,5 @@ def load_settings() -> Settings:
         subgraph_ttl=_env_float("SUBGRAPH_TTL", 300.0),
         questions_per_minute=_env_int("QUESTIONS_PER_MINUTE", 10),
         questions_per_day=_env_int("QUESTIONS_PER_DAY", 100),
-        questions_total_per_day=_env_int("QUESTIONS_TOTAL_PER_DAY", 300),
+        questions_total_per_day=_env_int("QUESTIONS_TOTAL_PER_DAY", 1000),
     )
