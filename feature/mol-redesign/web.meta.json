@@ -1140,7 +1140,6 @@
 			"raggu/web/front/app/-view.tree/app.view.tree.js": -3,
 			"raggu/web/front/graph": -9007199254740991,
 			"raggu/web/front/lib": -9007199254740991,
-			"raggu/web/front/api": -9007199254740991,
 			"raggu/web/front/mock": -9007199254740991,
 			"raggu/web/front/data": -9007199254740991,
 			"raggu/web/front/viewer": -9007199254740991,
@@ -1188,7 +1187,7 @@
 		"mol/state/arg": {
 			"raggu/web/front/base/base.view.ts": -3,
 			"raggu/web/front/viewer/viewer.ts": -3,
-			"raggu/web/front/api/api.ts": -2,
+			"raggu/web/front/data/data.ts": -3,
 			"raggu/web/front/mock/mock.ts": -3
 		},
 		"mol/action": {
@@ -1296,7 +1295,6 @@
 			"raggu/web/front/app/-view.tree/app.view.tree.js": -3,
 			"raggu/web/front/lib/format.ts": -2,
 			"raggu/web/front/lib/-view.tree/names.view.tree.js": -3,
-			"raggu/web/front/api/api.ts": -2,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -3,
 			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
@@ -1441,7 +1439,6 @@
 		"mol/fetch": {
 			"mol/file/webdav/webdav.ts": -3,
 			"mol/file/file.web.ts": -5,
-			"raggu/web/front/api/api.ts": -3,
 			"raggu/web/front/data/data.ts": -3
 		},
 		"mol/rest/code": {
@@ -1508,7 +1505,8 @@
 			"raggu/web/front/corpus/-view.tree/corpus.view.tree.js": -3,
 			"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.js": -3,
 			"raggu/web/front/corpus/detail/-view.tree/detail.view.tree.js": -3,
-			"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.js": -3
+			"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.js": -3,
+			"raggu/web/front/corpus/chat/chat.view.ts": -3
 		},
 		"raggu/web/front/graph": {
 			"raggu/web/front/viewer/viewer.ts": -1,
@@ -1573,15 +1571,6 @@
 			"raggu/web/front/corpus/detail/detail.view.ts": -3,
 			"raggu/web/front/corpus/chat/chat.view.ts": -3,
 			"raggu/web/front/corpus/corpus.view.ts": -3
-		},
-		"raggu/web/front/api": {
-			"raggu/web/front/data/data.ts": -3
-		},
-		"raggu/web/front/api/api.ts": {
-			"raggu/web/front/api": 0
-		},
-		"raggu/web/front/api/ragu.openapi.ts": {
-			"raggu/web/front/api": 0
 		},
 		"raggu/web/front/mock": {
 			"raggu/web/front/data/data.ts": -3
@@ -3486,7 +3475,7 @@
 		},
 		"raggu/web/front/data/data.ts": {
 			"mol/object": -1,
-			"raggu/web/front/api": -3,
+			"mol/state/arg": -3,
 			"raggu/web/front/mock": -3,
 			"mol/wire/sync": -3,
 			"mol/fetch": -3,
@@ -3495,17 +3484,6 @@
 			"raggu/web/front/lib": -3,
 			"mol/promise/like": -3
 		},
-		"raggu/web/front/api/api.ts": {
-			"mol/state/arg": -2,
-			"mol/locale": -2,
-			"mol/fetch": -3
-		},
-		"raggu/web/front/api": {
-			"raggu/web/front/api/api.ts": 0,
-			"raggu/web/front/api/ragu.openapi.ts": 0,
-			"raggu/web/front": -9007199254740991
-		},
-		"raggu/web/front/api/ragu.openapi.ts": {},
 		"raggu/web/front/mock/mock.ts": {
 			"raggu/web/front/graph": -1,
 			"mol/object": -1,
@@ -4366,6 +4344,7 @@
 			"raggu/web/front/lib": -2,
 			"mol/mem": -2,
 			"mol/state/time": -3,
+			"raggu/web/front/viewer": -3,
 			"raggu/web/front/data": -3,
 			"mol/after/frame": -3
 		},
@@ -4924,12 +4903,6 @@
 		"raggu/web/front/lib/-view.tree/names.view.tree.d.ts",
 		"raggu/web/front/lib/-view.tree/names.view.tree.d.ts.map",
 		"raggu/web/front/lib/names.locale=ru.json",
-		"raggu/web/front/api/api.ts",
-		"raggu/web/front/api/api.ts.js",
-		"raggu/web/front/api/api.ts.js.map",
-		"raggu/web/front/api/ragu.openapi.ts",
-		"raggu/web/front/api/ragu.openapi.ts.js",
-		"raggu/web/front/api/ragu.openapi.ts.js.map",
 		"raggu/web/front/mock/mock.ts",
 		"raggu/web/front/mock/mock.ts.js",
 		"raggu/web/front/mock/mock.ts.js.map",
@@ -5599,9 +5572,9 @@
 		"mol/view/view/view.web.ts.js": 0,
 		"mol/view/view/view.web.ts.js.map": 0,
 		"raggu/web/LICENSE": 1065,
-		"raggu/web/CLAUDE.md": 10517,
+		"raggu/web/CLAUDE.md": 8735,
 		"raggu/web/Caddyfile": 1413,
-		"raggu/web/README.md": 9076,
+		"raggu/web/README.md": 3246,
 		"raggu/web/docker-compose.yml": 9234,
 		"raggu/LICENSE": 1065,
 		"raggu/README.md": 55,
@@ -5661,10 +5634,10 @@
 		"mol/button/-css/button.view.css.ts.js": 0,
 		"mol/button/-css/button.view.css.ts.js.map": 0,
 		"mol/button/button.view.css": 502,
-		"raggu/web/front/base/-css/base.view.css.ts": 9430,
+		"raggu/web/front/base/-css/base.view.css.ts": 9457,
 		"raggu/web/front/base/-css/base.view.css.ts.js": 0,
 		"raggu/web/front/base/-css/base.view.css.ts.js.map": 0,
-		"raggu/web/front/base/base.view.css": 8757,
+		"raggu/web/front/base/base.view.css": 8782,
 		"mol/storage/storage.ts": 805,
 		"mol/storage/storage.ts.js": 0,
 		"mol/storage/storage.ts.js.map": 0,
@@ -5770,7 +5743,7 @@
 		"raggu/web/front/lib/format.ts": 2405,
 		"raggu/web/front/lib/format.ts.js": 0,
 		"raggu/web/front/lib/format.ts.js.map": 0,
-		"raggu/web/front/lib/settings.ts": 2026,
+		"raggu/web/front/lib/settings.ts": 3208,
 		"raggu/web/front/lib/settings.ts.js": 0,
 		"raggu/web/front/lib/settings.ts.js.map": 0,
 		"raggu/web/front/lib/-view.tree/names.view.tree.js": 14143,
@@ -5780,19 +5753,13 @@
 		"raggu/web/front/lib/-view.tree/names.view.tree.d.ts": 4065,
 		"raggu/web/front/lib/-view.tree/names.view.tree.d.ts.map": 2432,
 		"raggu/web/front/lib/names.locale=ru.json": 9156,
-		"raggu/web/front/api/api.ts": 4849,
-		"raggu/web/front/api/api.ts.js": 0,
-		"raggu/web/front/api/api.ts.js.map": 0,
-		"raggu/web/front/api/ragu.openapi.ts": 44108,
-		"raggu/web/front/api/ragu.openapi.ts.js": 0,
-		"raggu/web/front/api/ragu.openapi.ts.js.map": 0,
 		"raggu/web/front/mock/mock.ts": 5649,
 		"raggu/web/front/mock/mock.ts.js": 0,
 		"raggu/web/front/mock/mock.ts.js.map": 0,
-		"raggu/web/front/data/data.ts": 3248,
+		"raggu/web/front/data/data.ts": 3334,
 		"raggu/web/front/data/data.ts.js": 0,
 		"raggu/web/front/data/data.ts.js.map": 0,
-		"raggu/web/front/viewer/viewer.ts": 13934,
+		"raggu/web/front/viewer/viewer.ts": 14494,
 		"raggu/web/front/viewer/viewer.ts.js": 0,
 		"raggu/web/front/viewer/viewer.ts.js.map": 0,
 		"raggu/web/front/app/node_modules/three/package.json": 3818,
@@ -6088,20 +6055,20 @@
 		"raggu/web/front/corpus/detail/-css/detail.view.css.ts.js.map": 0,
 		"raggu/web/front/corpus/detail/detail.view.css": 6775,
 		"raggu/web/front/corpus/detail/detail.locale=ru.json": 977,
-		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.js": 25494,
-		"raggu/web/front/corpus/chat/chat.view.tree": 6316,
-		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.locale=en.json": 2105,
-		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.js.map": 22125,
-		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.d.ts": 26516,
-		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.d.ts.map": 9569,
-		"raggu/web/front/corpus/chat/chat.view.ts": 9822,
+		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.js": 25913,
+		"raggu/web/front/corpus/chat/chat.view.tree": 6616,
+		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.locale=en.json": 2482,
+		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.js.map": 22712,
+		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.d.ts": 26701,
+		"raggu/web/front/corpus/chat/-view.tree/chat.view.tree.d.ts.map": 9653,
+		"raggu/web/front/corpus/chat/chat.view.ts": 10210,
 		"raggu/web/front/corpus/chat/chat.view.ts.js": 0,
 		"raggu/web/front/corpus/chat/chat.view.ts.js.map": 0,
-		"raggu/web/front/corpus/chat/-css/chat.view.css.ts": 13835,
+		"raggu/web/front/corpus/chat/-css/chat.view.css.ts": 14124,
 		"raggu/web/front/corpus/chat/-css/chat.view.css.ts.js": 0,
 		"raggu/web/front/corpus/chat/-css/chat.view.css.ts.js.map": 0,
-		"raggu/web/front/corpus/chat/chat.view.css": 12850,
-		"raggu/web/front/corpus/chat/chat.locale=ru.json": 2535,
+		"raggu/web/front/corpus/chat/chat.view.css": 13128,
+		"raggu/web/front/corpus/chat/chat.locale=ru.json": 3065,
 		"raggu/web/front/corpus/-view.tree/corpus.view.tree.js": 4453,
 		"raggu/web/front/corpus/corpus.view.tree": 1252,
 		"raggu/web/front/corpus/-view.tree/corpus.view.tree.locale=en.json": 310,
@@ -6636,12 +6603,6 @@
 		"raggu/web/front/lib/-view.tree/names.view.tree.d.ts",
 		"raggu/web/front/lib/-view.tree/names.view.tree.d.ts.map",
 		"raggu/web/front/lib/names.locale=ru.json",
-		"raggu/web/front/api/api.ts",
-		"raggu/web/front/api/api.ts.js",
-		"raggu/web/front/api/api.ts.js.map",
-		"raggu/web/front/api/ragu.openapi.ts",
-		"raggu/web/front/api/ragu.openapi.ts.js",
-		"raggu/web/front/api/ragu.openapi.ts.js.map",
 		"raggu/web/front/mock/mock.ts",
 		"raggu/web/front/mock/mock.ts.js",
 		"raggu/web/front/mock/mock.ts.js.map",
@@ -7349,9 +7310,6 @@
 		"raggu/web/front/lib/names.view.tree",
 		"raggu/web/front/lib/names.locale=ru.json",
 		"raggu/web/front/lib",
-		"raggu/web/front/api/api.ts",
-		"raggu/web/front/api/ragu.openapi.ts",
-		"raggu/web/front/api",
 		"raggu/web/front/mock/mock.ts",
 		"raggu/web/front/mock",
 		"raggu/web/front/data/data.ts",
@@ -7574,15 +7532,15 @@
 	],
 	"sloc": {
 		"html": 56,
-		"ts": 10414,
-		"js": 9597,
-		"map": 156,
-		"md": 2545,
+		"ts": 8927,
+		"js": 9460,
+		"map": 154,
+		"md": 2469,
 		"CNAME": 1,
 		"LICENSE": 164,
-		"tree": 1913,
-		"json": 508,
-		"css": 3732,
+		"tree": 1916,
+		"json": 511,
+		"css": 3740,
 		"tsx": 400,
 		"Caddyfile": 25,
 		"yml": 171
@@ -9013,7 +8971,7 @@
 		"raggu/web/front/data/data.ts": {
 			"raggu/web/front/data": -1,
 			"mol/object": -1,
-			"raggu/web/front/api": -3,
+			"mol/state/arg": -3,
 			"raggu/web/front/mock": -3,
 			"mol/wire/sync": -3,
 			"mol/fetch": -3,
@@ -9021,20 +8979,6 @@
 			"raggu/web/front/graph": -3,
 			"raggu/web/front/lib": -3,
 			"mol/promise/like": -3
-		},
-		"raggu/web/front/api": {
-			"raggu/web/front/api/api.ts": 0,
-			"raggu/web/front/api/ragu.openapi.ts": 0,
-			"raggu/web/front": -9007199254740991
-		},
-		"raggu/web/front/api/api.ts": {
-			"raggu/web/front/api": -1,
-			"mol/state/arg": -2,
-			"mol/locale": -2,
-			"mol/fetch": -3
-		},
-		"raggu/web/front/api/ragu.openapi.ts": {
-			"raggu/web/front/api": 0
 		},
 		"raggu/web/front/mock": {
 			"raggu/web/front/mock/mock.ts": 0,
@@ -9988,6 +9932,7 @@
 			"raggu/web/front/lib": -2,
 			"mol/mem": -2,
 			"mol/state/time": -3,
+			"raggu/web/front/viewer": -3,
 			"raggu/web/front/data": -3,
 			"mol/after/frame": -3
 		},

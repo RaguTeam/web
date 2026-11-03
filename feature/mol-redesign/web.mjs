@@ -3894,7 +3894,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("raggu/web/front/base/base.view.css", ":root {\n\tcolor-scheme: light;\n\n\t--bg: #eef0f3;\n\t--bg-deep: #e3e7ec;\n\t--surface: #ffffff;\n\t--surface-2: #f7f8fa;\n\t--surface-sunk: #e9ecf1;\n\n\t--text: #131a24;\n\t--text-2: #4a5666;\n\t--text-3: #737f90;\n\n\t--edge: #dbe0e8;\n\t--edge-strong: #c3cbd7;\n\t--edge-glass: rgb(255 255 255 / 0.75);\n\n\t--accent: #d64b2e;\n\t--accent-hover: #bf3f24;\n\t--accent-ink: #ffffff;\n\t--accent-wash: rgb(214 75 46 / 0.09);\n\t--accent-line: rgb(214 75 46 / 0.32);\n\n\t--glass-tint: rgb(255 255 255 / 0.66);\n\t--glass-tint-strong: rgb(255 255 255 / 0.85);\n\t--glass-hi: rgb(255 255 255 / 0.9);\n\t--glass-lo: rgb(16 26 40 / 0.05);\n\t--shadow-cast: rgb(28 42 64 / 0.16);\n\t--shadow-near: rgb(28 42 64 / 0.08);\n\n\t--elev-thumb: 0 1px 2px rgb(16 26 40 / 0.28), 0 2px 6px -2px rgb(16 26 40 / 0.22);\n\t--elev-pop: 0 18px 40px -24px rgb(28 42 64 / 0.4), 0 2px 6px -3px rgb(28 42 64 / 0.2);\n\t--accent-glow:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.62),\n\t    inset 0 -1px 0 0 rgb(214 75 46 / 0.16),\n\t    0 5px 16px -10px rgb(214 75 46 / 0.5);\n\t--accent-glow-hover:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.75),\n\t    inset 0 -1px 0 0 rgb(214 75 46 / 0.2),\n\t    0 8px 22px -12px rgb(214 75 46 / 0.7);\n\t--accent-pane: linear-gradient(180deg, rgb(214 75 46 / 0.15), rgb(214 75 46 / 0.055));\n\t--accent-pane-hover: linear-gradient(180deg, rgb(214 75 46 / 0.23), rgb(214 75 46 / 0.1));\n\n\t--grain-opacity: 0.035;\n\t--aurora-a: rgb(214 75 46 / 0.16);\n\t--aurora-b: rgb(51 70 92 / 0.16);\n\t--aurora-c: rgb(120 160 200 / 0.16);\n}\n:root {\n\tinterpolate-size: allow-keywords;\n}\n\n[data-theme='dark'] {\n\tcolor-scheme: dark;\n\n\t--bg: #080d15;\n\t--bg-deep: #04070c;\n\t--surface: #101825;\n\t--surface-2: #16202e;\n\t--surface-sunk: #0b111b;\n\n\t--text: #e9ecf1;\n\t--text-2: #a4b0c0;\n\t--text-3: #74818f;\n\n\t--edge: #1e2937;\n\t--edge-strong: #33445a;\n\t--edge-glass: rgb(255 255 255 / 0.09);\n\n\t--accent: #ff6e4e;\n\t--accent-hover: #ff8368;\n\t--accent-ink: #1a0c07;\n\t--accent-wash: rgb(255 110 78 / 0.12);\n\t--accent-line: rgb(255 110 78 / 0.36);\n\n\t--glass-tint: rgb(20 30 45 / 0.6);\n\t--glass-tint-strong: rgb(20 30 45 / 0.82);\n\t--glass-hi: rgb(255 255 255 / 0.08);\n\t--glass-lo: rgb(0 0 0 / 0.22);\n\t--shadow-cast: rgb(0 0 0 / 0.55);\n\t--shadow-near: rgb(0 0 0 / 0.35);\n\n\t--elev-thumb: 0 1px 2px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.5);\n\t--elev-pop: 0 24px 48px -28px rgb(0 0 0 / 0.75), 0 2px 8px -4px rgb(0 0 0 / 0.6);\n\t/*\n\t * On a dark surface a pane that fades to nothing reads as a hole, not as\n\t * glass. So the tint bottoms out around a third of the way down and comes\n\t * back up towards the bottom edge, where a warm inner line stands in for\n\t * light caught along the rim — and a hairline ring gives the pane an edge\n\t * of its own instead of dissolving into the island behind it.\n\t */\n\t--accent-glow:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.18),\n\t    inset 0 0 0 1px rgb(255 137 108 / 0.16),\n\t    inset 0 -1px 0 0 rgb(255 176 152 / 0.12),\n\t    0 6px 20px -10px rgb(255 110 78 / 0.45);\n\t--accent-glow-hover:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.26),\n\t    inset 0 0 0 1px rgb(255 137 108 / 0.24),\n\t    inset 0 -1px 0 0 rgb(255 176 152 / 0.18),\n\t    0 9px 26px -12px rgb(255 110 78 / 0.65);\n\t--accent-pane: linear-gradient(\n\t    180deg,\n\t    rgb(255 141 114 / 0.26),\n\t    rgb(255 110 78 / 0.115) 58%,\n\t    rgb(255 124 95 / 0.175)\n\t);\n\t--accent-pane-hover: linear-gradient(\n\t    180deg,\n\t    rgb(255 152 128 / 0.36),\n\t    rgb(255 110 78 / 0.17) 58%,\n\t    rgb(255 124 95 / 0.25)\n\t);\n\n\t--grain-opacity: 0.05;\n\t--aurora-a: rgb(255 110 78 / 0.18);\n\t--aurora-b: rgb(58 96 148 / 0.22);\n\t--aurora-c: rgb(30 52 84 / 0.32);\n}\n\n:root {\n\t--font-display: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;\n\t--font-sans: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;\n\t--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'Cascadia Code', monospace;\n\t--radius-island: 22px;\n\t--radius-inset: 16px;\n\t--radius-panel: 18px;\n\t--radius-control: 11px;\n\t--radius-chip: 7px;\n\t--island-h: 60px;\n\t--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);\n\t--text-display: clamp(2.6rem, 1.1rem + 5.2vw, 5.25rem);\n\t--text-title: clamp(1.9rem, 1.1rem + 2.4vw, 3rem);\n\t--text-section: clamp(1.45rem, 1rem + 1.4vw, 2rem);\n\tinterpolate-size: allow-keywords;\n}\n\nhtml {\n\tscroll-behavior: smooth;\n\t-webkit-text-size-adjust: 100%;\n\theight: auto;\n\tmin-height: 100%;\n}\n\nbody[mol_view_root] {\n\theight: auto;\n\tmin-height: 100%;\n\tmargin: 0;\n\tbackground: var(--bg);\n\tcolor: var(--text);\n\tfont-family: var(--font-sans);\n\tfont-size: 16px;\n\tline-height: 1.5;\n\tfont-synthesis-weight: none;\n\t-webkit-font-smoothing: antialiased;\n\toverflow-x: clip;\n}\n\n[mol_view] {\n\ttransition-property: none;\n\ttransition-duration: 0s;\n\tcontain: none;\n\tscrollbar-width: auto;\n\tscrollbar-color: auto;\n\tunicode-bidi: normal;\n}\n\n:where([raggu_web_front_base]),\n:where([raggu_web_front_base] *),\n:where([raggu_web_front_base]) ::before,\n:where([raggu_web_front_base]) ::after {\n\tbox-sizing: border-box;\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0 solid;\n\tmin-width: 0;\n}\n\n:where([raggu_web_front_base] :is(h1, h2, h3, h4)) {\n\tfont-size: inherit;\n\tfont-weight: inherit;\n\ttext-wrap: balance;\n}\n\n:where([raggu_web_front_base] p) {\n\ttext-wrap: pretty;\n}\n\n:where([raggu_web_front_base] a) {\n\tcolor: inherit;\n\ttext-decoration: inherit;\n}\n\n:where([raggu_web_front_base] :is(ol, ul)) {\n\tlist-style: none;\n}\n\n:where([raggu_web_front_base] :is(button, input, textarea, [mol_button])) {\n\tfont: inherit;\n\tletter-spacing: inherit;\n\tcolor: inherit;\n\tborder-radius: 0;\n\tbackground-color: transparent;\n}\n\n:where([raggu_web_front_base] :is(button, [role='button'], [mol_button], a)) {\n\tcursor: pointer;\n}\n\n[raggu_web_front_base] [mol_button][disabled] {\n\tcursor: not-allowed;\n}\n\n[raggu_web_front_base] ::placeholder {\n\topacity: 1;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_base] ::selection {\n\tbackground: var(--accent);\n\tcolor: var(--accent-ink);\n}\n\n[raggu_web_front_base] :focus-visible {\n\toutline: 2px solid var(--accent);\n\toutline-offset: 2px;\n\tborder-radius: 5px;\n}\n\n:where([raggu_web_front_base] [mol_view]) {\n\tword-break: normal;\n}\n\n@keyframes ragu-drift {\n\t0%   { transform: translate3d(0, 0, 0) scale(1); }\n\t33%  { transform: translate3d(3%, -4%, 0) scale(1.07); }\n\t66%  { transform: translate3d(-3%, 3%, 0) scale(0.96); }\n\t100% { transform: translate3d(0, 0, 0) scale(1); }\n}\n\n@keyframes ragu-shimmer {\n\tfrom { background-position: -160% 0; }\n\tto   { background-position: 260% 0; }\n}\n\n@keyframes ragu-rise {\n\tfrom { opacity: 0; transform: translateY(18px); }\n\tto   { opacity: 1; transform: none; }\n}\n\n@keyframes ragu-rise-far {\n\tfrom { opacity: 0; transform: translateY(26px); }\n\tto   { opacity: 1; transform: none; }\n}\n\n@keyframes ragu-fade {\n\tfrom { opacity: 0; }\n\tto   { opacity: 1; }\n}\n\n@keyframes ragu-caret {\n\t50% { opacity: 0; }\n}\n\n@keyframes ragu-stale {\n\t0%, 100% { opacity: 0.4; }\n\t50% { opacity: 0.85; }\n}\n\n@keyframes ragu-ping {\n\t75%, 100% { transform: scale(2); opacity: 0; }\n}\n\n@keyframes ragu-tumble {\n\tfrom { transform: rotateX(-22deg) rotateY(0deg); }\n\tto   { transform: rotateX(-22deg) rotateY(360deg); }\n}\n\n[raggu_web_front_base] .shimmer,\n[raggu_web_front_skeleton] {\n\tbackground-color: color-mix(in oklab, var(--edge) 60%, transparent);\n\tbackground-image: linear-gradient(\n\t\t100deg,\n\t\ttransparent 20%,\n\t\tcolor-mix(in oklab, var(--text-3) 28%, transparent) 45%,\n\t\ttransparent 70%\n\t);\n\tbackground-size: 220% 100%;\n\tanimation: ragu-shimmer 1.9s linear infinite;\n\tborder-radius: var(--radius-chip);\n\toverflow: hidden;\n}\n\n[raggu_web_front_label] {\n\tfont-family: var(--font-mono);\n\tfont-size: 0.6875rem;\n\tline-height: 1;\n\tletter-spacing: 0.1em;\n\ttext-transform: uppercase;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_reveal] {\n\topacity: 0;\n\ttransform: translateY(22px);\n\ttransition:\n\t\topacity 700ms var(--ease-out-quint),\n\t\ttransform 700ms var(--ease-out-quint);\n\ttransition-delay: var(--reveal-delay, 0ms);\n}\n\n[raggu_web_front_reveal][raggu_web_front_reveal_shown] {\n\topacity: 1;\n\ttransform: none;\n}\n\n[raggu_web_front_base] .is-stale {\n\tanimation: ragu-stale 1.4s ease-in-out infinite;\n}\n\n.accent-pane {\n\tposition: absolute;\n\tinset: 0;\n\tz-index: -1;\n\tborder-radius: inherit;\n\tbackground: var(--accent-pane);\n\tbox-shadow: var(--accent-glow);\n\ttransition:\n\t\topacity 240ms var(--ease-out-quint),\n\t\ttransform 320ms var(--ease-out-quint),\n\t\tbackground 200ms var(--ease-out-quint),\n\t\tbox-shadow 200ms var(--ease-out-quint);\n}\n\n*:hover > .accent-pane {\n\tbackground: var(--accent-pane-hover);\n\tbox-shadow: var(--accent-glow-hover);\n}\n\n@media (prefers-reduced-motion: reduce) {\n\thtml {\n\t\tscroll-behavior: auto;\n\t}\n\t*, *::before, *::after {\n\t\tanimation-duration: 0.001ms !important;\n\t\tanimation-iteration-count: 1 !important;\n\t\ttransition-duration: 0.001ms !important;\n\t}\n}\n\n:where([raggu_web_front_base]) [mol_button] {\n\tcursor: pointer;\n\tborder-radius: 0;\n}\n");
+    $mol_style_attach("raggu/web/front/base/base.view.css", ":root {\n\tcolor-scheme: light;\n\n\t--bg: #eef0f3;\n\t--bg-deep: #e3e7ec;\n\t--surface: #ffffff;\n\t--surface-2: #f7f8fa;\n\t--surface-sunk: #e9ecf1;\n\n\t--text: #131a24;\n\t--text-2: #4a5666;\n\t--text-3: #737f90;\n\n\t--edge: #dbe0e8;\n\t--edge-strong: #c3cbd7;\n\t--edge-glass: rgb(255 255 255 / 0.75);\n\n\t--accent: #d64b2e;\n\t--accent-hover: #bf3f24;\n\t--accent-ink: #ffffff;\n\t--accent-wash: rgb(214 75 46 / 0.09);\n\t--accent-line: rgb(214 75 46 / 0.32);\n\n\t--glass-tint: rgb(255 255 255 / 0.66);\n\t--glass-tint-strong: rgb(255 255 255 / 0.85);\n\t--glass-hi: rgb(255 255 255 / 0.9);\n\t--glass-lo: rgb(16 26 40 / 0.05);\n\t--shadow-cast: rgb(28 42 64 / 0.16);\n\t--shadow-near: rgb(28 42 64 / 0.08);\n\n\t--elev-thumb: 0 1px 2px rgb(16 26 40 / 0.28), 0 2px 6px -2px rgb(16 26 40 / 0.22);\n\t--elev-pop: 0 18px 40px -24px rgb(28 42 64 / 0.4), 0 2px 6px -3px rgb(28 42 64 / 0.2);\n\t--accent-glow:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.62),\n\t    inset 0 -1px 0 0 rgb(214 75 46 / 0.16),\n\t    0 5px 16px -10px rgb(214 75 46 / 0.5);\n\t--accent-glow-hover:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.75),\n\t    inset 0 -1px 0 0 rgb(214 75 46 / 0.2),\n\t    0 8px 22px -12px rgb(214 75 46 / 0.7);\n\t--accent-pane: linear-gradient(180deg, rgb(214 75 46 / 0.15), rgb(214 75 46 / 0.055));\n\t--accent-pane-hover: linear-gradient(180deg, rgb(214 75 46 / 0.23), rgb(214 75 46 / 0.1));\n\n\t--grain-opacity: 0.035;\n\t--aurora-a: rgb(214 75 46 / 0.16);\n\t--aurora-b: rgb(51 70 92 / 0.16);\n\t--aurora-c: rgb(120 160 200 / 0.16);\n}\n:root {\n\tinterpolate-size: allow-keywords;\n}\n\n[data-theme='dark'] {\n\tcolor-scheme: dark;\n\n\t--bg: #080d15;\n\t--bg-deep: #04070c;\n\t--surface: #101825;\n\t--surface-2: #16202e;\n\t--surface-sunk: #0b111b;\n\n\t--text: #e9ecf1;\n\t--text-2: #a4b0c0;\n\t--text-3: #74818f;\n\n\t--edge: #1e2937;\n\t--edge-strong: #33445a;\n\t--edge-glass: rgb(255 255 255 / 0.09);\n\n\t--accent: #ff6e4e;\n\t--accent-hover: #ff8368;\n\t--accent-ink: #1a0c07;\n\t--accent-wash: rgb(255 110 78 / 0.12);\n\t--accent-line: rgb(255 110 78 / 0.36);\n\n\t--glass-tint: rgb(20 30 45 / 0.6);\n\t--glass-tint-strong: rgb(20 30 45 / 0.82);\n\t--glass-hi: rgb(255 255 255 / 0.08);\n\t--glass-lo: rgb(0 0 0 / 0.22);\n\t--shadow-cast: rgb(0 0 0 / 0.55);\n\t--shadow-near: rgb(0 0 0 / 0.35);\n\n\t--elev-thumb: 0 1px 2px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.5);\n\t--elev-pop: 0 24px 48px -28px rgb(0 0 0 / 0.75), 0 2px 8px -4px rgb(0 0 0 / 0.6);\n\t/*\n\t * On a dark surface a pane that fades to nothing reads as a hole, not as\n\t * glass. So the tint bottoms out around a third of the way down and comes\n\t * back up towards the bottom edge, where a warm inner line stands in for\n\t * light caught along the rim — and a hairline ring gives the pane an edge\n\t * of its own instead of dissolving into the island behind it.\n\t */\n\t--accent-glow:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.18),\n\t    inset 0 0 0 1px rgb(255 137 108 / 0.16),\n\t    inset 0 -1px 0 0 rgb(255 176 152 / 0.12),\n\t    0 6px 20px -10px rgb(255 110 78 / 0.45);\n\t--accent-glow-hover:\n\t    inset 0 1px 0 0 rgb(255 255 255 / 0.26),\n\t    inset 0 0 0 1px rgb(255 137 108 / 0.24),\n\t    inset 0 -1px 0 0 rgb(255 176 152 / 0.18),\n\t    0 9px 26px -12px rgb(255 110 78 / 0.65);\n\t--accent-pane: linear-gradient(\n\t    180deg,\n\t    rgb(255 141 114 / 0.26),\n\t    rgb(255 110 78 / 0.115) 58%,\n\t    rgb(255 124 95 / 0.175)\n\t);\n\t--accent-pane-hover: linear-gradient(\n\t    180deg,\n\t    rgb(255 152 128 / 0.36),\n\t    rgb(255 110 78 / 0.17) 58%,\n\t    rgb(255 124 95 / 0.25)\n\t);\n\n\t--grain-opacity: 0.05;\n\t--aurora-a: rgb(255 110 78 / 0.18);\n\t--aurora-b: rgb(58 96 148 / 0.22);\n\t--aurora-c: rgb(30 52 84 / 0.32);\n}\n\n:root {\n\t--font-display: 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;\n\t--font-sans: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;\n\t--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, 'Cascadia Code', monospace;\n\t--radius-island: 22px;\n\t--radius-inset: 16px;\n\t--radius-panel: 18px;\n\t--radius-control: 11px;\n\t--radius-chip: 7px;\n\t--island-h: 60px;\n\t--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);\n\t--text-display: clamp(2.6rem, 1.1rem + 5.2vw, 5.25rem);\n\t--text-title: clamp(1.9rem, 1.1rem + 2.4vw, 3rem);\n\t--text-section: clamp(1.45rem, 1rem + 1.4vw, 2rem);\n\tinterpolate-size: allow-keywords;\n}\n\nhtml {\n\tscroll-behavior: smooth;\n\t-webkit-text-size-adjust: 100%;\n\theight: auto;\n\tmin-height: 100%;\n}\n\nbody[mol_view_root] {\n\theight: auto;\n\tmin-height: 100%;\n\tmargin: 0;\n\tbackground: var(--bg);\n\tcolor: var(--text);\n\tfont-family: var(--font-sans);\n\tfont-size: 16px;\n\tline-height: 1.5;\n\tfont-synthesis-weight: none;\n\t-webkit-font-smoothing: antialiased;\n\toverflow-x: clip;\n}\n\n[mol_view] {\n\ttransition-property: none;\n\ttransition-duration: 0s;\n\tcontain: none;\n\tscrollbar-width: auto;\n\tscrollbar-color: auto;\n\tunicode-bidi: normal;\n}\n\n:where([raggu_web_front_base]),\n:where([raggu_web_front_base] *),\n:where([raggu_web_front_base]) ::before,\n:where([raggu_web_front_base]) ::after {\n\tbox-sizing: border-box;\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0 solid;\n\tmin-width: 0;\n}\n\n:where([raggu_web_front_base] :is(h1, h2, h3, h4)) {\n\tfont-size: inherit;\n\tfont-weight: inherit;\n\ttext-wrap: balance;\n}\n\n:where([raggu_web_front_base] p) {\n\ttext-wrap: pretty;\n}\n\n:where([raggu_web_front_base] a) {\n\tcolor: inherit;\n\ttext-decoration: inherit;\n}\n\n:where([raggu_web_front_base] :is(ol, ul)) {\n\tlist-style: none;\n}\n\n:where([raggu_web_front_base] :is(button, input, textarea, [mol_button])) {\n\tfont: inherit;\n\tletter-spacing: inherit;\n\tcolor: inherit;\n\tborder-radius: 0;\n\tbackground-color: transparent;\n}\n\n:where([raggu_web_front_base] :is(button, [role='button'], [mol_button], a)) {\n\tcursor: pointer;\n}\n\n[raggu_web_front_base] [mol_button][disabled] {\n\tcursor: not-allowed;\n}\n\n[raggu_web_front_base] ::placeholder {\n\topacity: 1;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_base] ::selection {\n\tbackground: var(--accent);\n\tcolor: var(--accent-ink);\n}\n\n[raggu_web_front_base] :focus-visible {\n\toutline: 2px solid var(--accent);\n\toutline-offset: 2px;\n\tborder-radius: 5px;\n}\n\n:where([raggu_web_front_base] [mol_view]) {\n\tword-break: normal;\n}\n\n@keyframes ragu-drift {\n\t0%   { transform: translate3d(0, 0, 0) scale(1); }\n\t33%  { transform: translate3d(3%, -4%, 0) scale(1.07); }\n\t66%  { transform: translate3d(-3%, 3%, 0) scale(0.96); }\n\t100% { transform: translate3d(0, 0, 0) scale(1); }\n}\n\n@keyframes ragu-shimmer {\n\tfrom { background-position: -16rem 0; }\n\tto   { background-position: 56rem 0; }\n}\n\n@keyframes ragu-rise {\n\tfrom { opacity: 0; transform: translateY(18px); }\n\tto   { opacity: 1; transform: none; }\n}\n\n@keyframes ragu-rise-far {\n\tfrom { opacity: 0; transform: translateY(26px); }\n\tto   { opacity: 1; transform: none; }\n}\n\n@keyframes ragu-fade {\n\tfrom { opacity: 0; }\n\tto   { opacity: 1; }\n}\n\n@keyframes ragu-caret {\n\t50% { opacity: 0; }\n}\n\n@keyframes ragu-stale {\n\t0%, 100% { opacity: 0.4; }\n\t50% { opacity: 0.85; }\n}\n\n@keyframes ragu-ping {\n\t75%, 100% { transform: scale(2); opacity: 0; }\n}\n\n@keyframes ragu-tumble {\n\tfrom { transform: rotateX(-22deg) rotateY(0deg); }\n\tto   { transform: rotateX(-22deg) rotateY(360deg); }\n}\n\n[raggu_web_front_base] .shimmer,\n[raggu_web_front_skeleton] {\n\tbackground-color: color-mix(in oklab, var(--edge) 60%, transparent);\n\tbackground-image: linear-gradient(\n\t\t90deg,\n\t\ttransparent,\n\t\tcolor-mix(in oklab, var(--text-3) 28%, transparent) 50%,\n\t\ttransparent\n\t);\n\tbackground-size: 16rem 100%;\n\tbackground-repeat: no-repeat;\n\tanimation: ragu-shimmer 2.2s linear infinite;\n\tborder-radius: var(--radius-chip);\n\toverflow: hidden;\n}\n\n[raggu_web_front_label] {\n\tfont-family: var(--font-mono);\n\tfont-size: 0.6875rem;\n\tline-height: 1;\n\tletter-spacing: 0.1em;\n\ttext-transform: uppercase;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_reveal] {\n\topacity: 0;\n\ttransform: translateY(22px);\n\ttransition:\n\t\topacity 700ms var(--ease-out-quint),\n\t\ttransform 700ms var(--ease-out-quint);\n\ttransition-delay: var(--reveal-delay, 0ms);\n}\n\n[raggu_web_front_reveal][raggu_web_front_reveal_shown] {\n\topacity: 1;\n\ttransform: none;\n}\n\n[raggu_web_front_base] .is-stale {\n\tanimation: ragu-stale 1.4s ease-in-out infinite;\n}\n\n.accent-pane {\n\tposition: absolute;\n\tinset: 0;\n\tz-index: -1;\n\tborder-radius: inherit;\n\tbackground: var(--accent-pane);\n\tbox-shadow: var(--accent-glow);\n\ttransition:\n\t\topacity 240ms var(--ease-out-quint),\n\t\ttransform 320ms var(--ease-out-quint),\n\t\tbackground 200ms var(--ease-out-quint),\n\t\tbox-shadow 200ms var(--ease-out-quint);\n}\n\n*:hover > .accent-pane {\n\tbackground: var(--accent-pane-hover);\n\tbox-shadow: var(--accent-glow-hover);\n}\n\n@media (prefers-reduced-motion: reduce) {\n\thtml {\n\t\tscroll-behavior: auto;\n\t}\n\t*, *::before, *::after {\n\t\tanimation-duration: 0.001ms !important;\n\t\tanimation-iteration-count: 1 !important;\n\t\ttransition-duration: 0.001ms !important;\n\t}\n}\n\n:where([raggu_web_front_base]) [mol_button] {\n\tcursor: pointer;\n\tborder-radius: 0;\n}\n");
 })($ || ($ = {}));
 //raggu/web/front/base/-css/base.view.css.ts
 ;
@@ -6162,9 +6162,34 @@ var $;
         };
     }
     $.$raggu_web_front_lib_settings_revive = $raggu_web_front_lib_settings_revive;
+    $.$raggu_web_front_lib_settings_key = 'ragu.settings.v2';
+    $.$raggu_web_front_lib_settings_key_legacy = 'ragu.settings';
+    /**
+     * Everyone who touched any setting while rerank was on by default still carries `rerank: true`
+     * and waits 20-30 s per answer. Their other choices move to the new key, rerank goes back to the default once.
+     */
+    function $raggu_web_front_lib_settings_migrate(storage) {
+        try {
+            const legacy = storage.getItem($.$raggu_web_front_lib_settings_key_legacy);
+            if (legacy === null)
+                return;
+            const parsed = JSON.parse(legacy);
+            if (storage.getItem($.$raggu_web_front_lib_settings_key) === null && typeof parsed === 'object' && parsed !== null) {
+                storage.setItem($.$raggu_web_front_lib_settings_key, JSON.stringify({ ...parsed, rerank: $.$raggu_web_front_lib_settings_default.rerank }));
+            }
+            storage.removeItem($.$raggu_web_front_lib_settings_key_legacy);
+        }
+        catch { }
+    }
+    $.$raggu_web_front_lib_settings_migrate = $raggu_web_front_lib_settings_migrate;
     class $raggu_web_front_lib_settings extends $mol_object {
+        static migrated() {
+            $raggu_web_front_lib_settings_migrate(this.$.$mol_state_local.native());
+            return true;
+        }
         static value(next) {
-            const stored = this.$.$mol_state_local.value('ragu.settings', next);
+            this.migrated();
+            const stored = this.$.$mol_state_local.value($.$raggu_web_front_lib_settings_key, next);
             return $raggu_web_front_lib_settings_revive(stored);
         }
         static patch(patch) {
@@ -6174,6 +6199,9 @@ var $;
             this.value($.$raggu_web_front_lib_settings_default);
         }
     }
+    __decorate([
+        $mol_mem
+    ], $raggu_web_front_lib_settings, "migrated", null);
     __decorate([
         $mol_mem
     ], $raggu_web_front_lib_settings, "value", null);
@@ -6557,195 +6585,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    /** Build final URL: substitute `{placeholders}` in route, append querystring. */
-    function $raggu_web_front_api_url(endpoint, route, params, query) {
-        let path = route;
-        if (params) {
-            for (const key in params) {
-                path = path.replace(`{${key}}`, encodeURIComponent(String(params[key])));
-            }
-        }
-        const qs = [];
-        if (query) {
-            for (const key in query) {
-                const val = query[key];
-                if (val === undefined || val === null)
-                    continue;
-                if (Array.isArray(val)) {
-                    for (const item of val)
-                        qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
-                }
-                else {
-                    qs.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(val))}`);
-                }
-            }
-        }
-        const suffix = qs.length ? `?${qs.join('&')}` : '';
-        return `${endpoint}${path}${suffix}`;
-    }
-    /**
-     * Backend base URL — the ONE line to change when the backend is deployed.
-     * No path suffix here: operation `route`s already carry `/api/v1/...`
-     * from FastAPI's OpenAPI dump.
-     */
-    $.$raggu_web_front_api_endpoint_default = 'https://ragu-back.duckdns.org';
-    /**
-     * Effective endpoint: the `?api=<url>` app argument overrides the default,
-     * so a freshly deployed backend can be pointed at WITHOUT a rebuild —
-     * e.g. `...test.html#!api=https%3A%2F%2Fback.example.com`.
-     * Reactive: reads propagate via $mol_state_arg, so changing the arg refetches.
-     */
-    function $raggu_web_front_api_endpoint() {
-        return $mol_state_arg.value('api') || $.$raggu_web_front_api_endpoint_default;
-    }
-    $.$raggu_web_front_api_endpoint = $raggu_web_front_api_endpoint;
-    /**
-     * Локаль для бэкенда: RAGU принимает только `ru` | `en`, а $mol_locale.lang()
-     * отдаёт что угодно из navigator.language. Всё, что не русское, считаем
-     * английским — тексты view.tree по умолчанию тоже английские.
-     * Реактивно: смена языка в сайдбаре перефетчивает карточки и подсказки.
-     */
-    function $raggu_web_front_api_locale() {
-        return $mol_locale.lang() === 'ru' ? 'ru' : 'en';
-    }
-    $.$raggu_web_front_api_locale = $raggu_web_front_api_locale;
-    /**
-     * Детали ребра — симметрично get_node. На бэке ручки ПОКА НЕТ, дескриптор
-     * написан руками под согласованный контракт. Когда бэк добавит её в
-     * openapi.json, генератор создаст одноимённую константу в ragu.openapi.ts —
-     * тогда эту удалить (билд сам напомнит конфликтом имён). Фронт до тех пор
-     * фолбэчится на данные из get_graph.
-     */
-    $.$raggu_web_front_api_ragu_get_edge = {
-        method: 'get',
-        route: '/api/v1/datasets/{dataset_id}/graph/edges/{edge_id}',
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    /**
-     * Typed REST client factory for OpenAPI-generated operation descriptors.
-     *
-     * Returns a callable that takes an operation constant plus options and
-     * synchronously (via wire) returns the parsed JSON body. Any network
-     * error propagates as an exception so `$mol_view` shows an error plate.
-     */
-    $.$raggu_web_front_api = (() => {
-        const init = {
-            credentials: 'omit',
-            cache: 'no-cache',
-        };
-        return function call(op, opts = {}) {
-            const url = $raggu_web_front_api_url($raggu_web_front_api_endpoint(), op.route, opts.params, opts.query);
-            const req = { ...init, method: op.method };
-            if (opts.body !== undefined) {
-                req.headers = { ...(init.headers ?? {}), 'content-type': 'application/json' };
-                req.body = JSON.stringify(opts.body);
-            }
-            return $mol_fetch.json(url, req);
-        };
-    })();
-})($ || ($ = {}));
-//raggu/web/front/api/api.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $.$raggu_web_front_api_ragu_health = {
-        method: "GET",
-        route: "/api/v1/health",
-        params: undefined,
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_capabilities = {
-        method: "GET",
-        route: "/api/v1/capabilities",
-        params: undefined,
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_list_datasets = {
-        method: "GET",
-        route: "/api/v1/datasets",
-        params: undefined,
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_dataset = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_graph = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_node = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}",
-        params: {},
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_node_neighbors = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph/nodes/{node_id}/neighbors",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_communities = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/graph/communities",
-        params: {},
-        query: undefined,
-        body: undefined,
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_create_agent_message = {
-        method: "POST",
-        route: "/api/v1/datasets/{dataset_id}/agent/messages",
-        params: {},
-        query: undefined,
-        body: {},
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_stream_agent_message = {
-        method: "POST",
-        route: "/api/v1/datasets/{dataset_id}/agent/messages/stream",
-        params: {},
-        query: undefined,
-        body: {},
-        out: {},
-    };
-    $.$raggu_web_front_api_ragu_get_agent_suggestions = {
-        method: "GET",
-        route: "/api/v1/datasets/{dataset_id}/agent/suggestions",
-        params: {},
-        query: {},
-        body: undefined,
-        out: {},
-    };
-})($ || ($ = {}));
-//raggu/web/front/api/ragu.openapi.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $raggu_web_front_mock extends $mol_object {
         static enabled() {
             return Boolean($mol_state_arg.value('mock'));
@@ -6873,8 +6712,11 @@ var $;
 var $;
 (function ($) {
     class $raggu_web_front_data extends $mol_object {
+        static endpoint() {
+            return $mol_state_arg.value('api') || 'https://ragu-back.duckdns.org';
+        }
         static api() {
-            return $raggu_web_front_api_endpoint().replace(/\/$/, '') + '/api/v1';
+            return this.endpoint().replace(/\/$/, '') + '/api/v1';
         }
         static request(path, init) {
             if ($raggu_web_front_mock.enabled())
@@ -7196,9 +7038,6 @@ var $;
             this.chat_open(true);
             this.send(text);
         }
-        failed_text() {
-            return 'The request failed.';
-        }
         send(text) {
             const corpus = this.corpus();
             const trimmed = text.trim();
@@ -7261,7 +7100,7 @@ var $;
                 this.pending(corpus, false);
                 this.partial(corpus, null);
                 this.started(corpus, null);
-                this.failure(corpus, this.failed_text());
+                this.failure(corpus, $raggu_web_front_viewer_failure(error));
             });
         }
         /** Pulls the rest of the corpus community by community: the gateway has no paging and caps a request at 5000. */
@@ -7392,6 +7231,20 @@ var $;
         $mol_mem_key
     ], $raggu_web_front_viewer.prototype, "started", null);
     $.$raggu_web_front_viewer = $raggu_web_front_viewer;
+    $.$raggu_web_front_viewer_limits = ['rate_limited', 'client_daily_limit_reached', 'daily_limit_reached'];
+    /** A question limit is not an outage: its gateway code survives, anything else is just `failed`. */
+    function $raggu_web_front_viewer_failure(error) {
+        if (!(error instanceof Error))
+            return 'failed';
+        try {
+            const code = JSON.parse(error.message).detail?.code;
+            return typeof code === 'string' && $.$raggu_web_front_viewer_limits.includes(code) ? code : 'failed';
+        }
+        catch {
+            return 'failed';
+        }
+    }
+    $.$raggu_web_front_viewer_failure = $raggu_web_front_viewer_failure;
     async function $raggu_web_front_viewer_ask(corpus, body, signal, on_delta) {
         const base = `/datasets/${encodeURIComponent(corpus)}/agent/messages`;
         const plain = async () => {
@@ -41382,6 +41235,9 @@ var $;
 			(obj.text) = () => ((this.failure_hint()));
 			return obj;
 		}
+		failure_content(){
+			return [(this.Failure_title()), (this.Failure_hint())];
+		}
 		starter_send(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -41679,7 +41535,7 @@ var $;
 		Failure(){
 			const obj = new this.$.$mol_view();
 			(obj.dom_name) = () => ("li");
-			(obj.sub) = () => ([(this.Failure_title()), (this.Failure_hint())]);
+			(obj.sub) = () => ((this.failure_content()));
 			return obj;
 		}
 		Starter(id){
@@ -41816,6 +41672,15 @@ var $;
 		}
 		failed_label(){
 			return (this.$.$mol_locale.text("$raggu_web_front_corpus_chat_failed_label"));
+		}
+		rate_limited_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_corpus_chat_rate_limited_label"));
+		}
+		client_daily_limit_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_corpus_chat_client_daily_limit_label"));
+		}
+		daily_limit_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_corpus_chat_daily_limit_label"));
 		}
 	};
 	($mol_mem(($.$raggu_web_front_corpus_chat.prototype), "Glass"));
@@ -42128,7 +41993,16 @@ var $;
                 return this.elapsed_label().replace('{n}', String(seconds));
             }
             failure_text() {
-                return this.failed_label();
+                switch (this.failure()) {
+                    case 'rate_limited': return this.rate_limited_label();
+                    case 'client_daily_limit_reached': return this.client_daily_limit_label();
+                    case 'daily_limit_reached': return this.daily_limit_label();
+                    default: return this.failed_label();
+                }
+            }
+            failure_content() {
+                const limit = $raggu_web_front_viewer_limits.includes(this.failure() ?? '');
+                return limit ? [this.Failure_title()] : [this.Failure_title(), this.Failure_hint()];
             }
             suggestions() {
                 const corpus = this.corpus();
@@ -42171,7 +42045,6 @@ var $;
             send(text) {
                 if (!text.trim() || this.pending())
                     return;
-                this.viewer().failed_text = () => this.failed_label();
                 this.draft('');
                 this.viewer().send(text);
             }
@@ -42225,7 +42098,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("raggu/web/front/corpus/chat/chat.view.css", "@keyframes ragu-chat-in {\n\tfrom { opacity: 0; transform: translateX(40px); }\n\tto { opacity: 1; transform: none; }\n}\n\n[raggu_web_front_corpus_chat] {\n\tpointer-events: auto;\n\tposition: relative;\n\tisolation: isolate;\n\tdisplay: flex;\n\tmin-height: 0;\n\tflex-direction: column;\n\tborder-radius: var(--radius-island);\n\tpadding: 0.375rem;\n\tanimation: ragu-chat-in 520ms cubic-bezier(0.25, 1.05, 0.4, 1) both;\n}\n\n[raggu_web_front_corpus_chat_head] {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\tgap: 0.75rem;\n\tpadding: 0.5rem 0.75rem 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_head_tools] {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: 0.125rem;\n}\n\n[raggu_web_front_corpus_chat_engine] {\n\tmargin-right: 0.25rem;\n}\n\n[raggu_web_front_corpus_chat_sweep],\n[raggu_web_front_corpus_chat_hide] {\n\tdisplay: inline-flex;\n\twidth: 2rem;\n\theight: 2rem;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-3);\n\ttransition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);\n}\n\n[raggu_web_front_corpus_chat_sweep]:hover,\n[raggu_web_front_corpus_chat_hide]:hover {\n\tbackground: color-mix(in oklab, var(--text) 7%, transparent);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_sweep_icon],\n[raggu_web_front_corpus_chat_hide_icon] {\n\twidth: 1rem;\n\theight: 1rem;\n}\n\n[raggu_web_front_corpus_chat_scroll] {\n\tdisplay: block;\n\tflex: 1;\n\tmin-height: 0;\n\toverflow-y: auto;\n\tpadding: 0 0.75rem 0.5rem;\n\tscrollbar-width: thin;\n\tscrollbar-color: var(--edge-strong) transparent;\n}\n\n[raggu_web_front_corpus_chat_empty] {\n\tdisplay: flex;\n\theight: 100%;\n\tflex-direction: column;\n\tjustify-content: flex-end;\n\tpadding-bottom: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_empty_title] {\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_empty_hint] {\n\tmargin-top: 0.375rem;\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_thread] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 1.25rem;\n\tpadding: 0.5rem 0;\n}\n\n[raggu_web_front_corpus_chat_user] {\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n[raggu_web_front_corpus_chat_user_text] {\n\tmax-width: 85%;\n\tborder-radius: var(--radius-inset);\n\tborder-bottom-right-radius: 6px;\n\tbackground: var(--accent);\n\tpadding: 0.625rem 1rem;\n\tfont-size: 0.9375rem;\n\tline-height: 1.625;\n\tcolor: var(--accent-ink);\n}\n\n[raggu_web_front_corpus_chat_agent],\n[raggu_web_front_corpus_chat_streaming] {\n\tdisplay: block;\n}\n\n[raggu_web_front_corpus_chat_agent_label],\n[raggu_web_front_corpus_chat_streaming_label] {\n\tmargin-bottom: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_answer],\n[raggu_web_front_corpus_chat_streaming_answer] {\n\tdisplay: block;\n\tfont-size: 0.9375rem;\n\tline-height: 1.75;\n\twhite-space: pre-wrap;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_strong] {\n\tfont-weight: 600;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_caret] {\n\tdisplay: inline-block;\n\twidth: 0.5em;\n\theight: 1em;\n\tmargin-left: 0.15em;\n\tvertical-align: -0.12em;\n\tborder-radius: 2px;\n\tbackground: var(--accent);\n\tanimation: ragu-caret 1s steps(1) infinite;\n}\n\n[raggu_web_front_corpus_chat] .ref {\n\tposition: relative;\n\tdisplay: inline;\n\tborder: 0;\n\tmargin: 0 -0.1em;\n\tpadding: 0.08em 0.3em;\n\tborder-radius: 5px;\n\tbackground: var(--accent-wash);\n\tcolor: var(--accent);\n\tfont: inherit;\n\ttext-decoration: none;\n\tcursor: pointer;\n\ttransition: background-color 180ms var(--ease-out-quint), color 180ms;\n}\n\n[raggu_web_front_corpus_chat] .ref:hover,\n[raggu_web_front_corpus_chat] .ref:focus-visible {\n\tbackground: color-mix(in oklab, var(--accent) 22%, transparent);\n}\n\n[raggu_web_front_corpus_chat] .ref--muted {\n\tbackground: color-mix(in oklab, var(--text-3) 14%, transparent);\n\tcolor: var(--text-2);\n\tcursor: default;\n}\n\n[raggu_web_front_corpus_chat] .ref--muted:hover {\n\tbackground: color-mix(in oklab, var(--text-3) 20%, transparent);\n}\n\n[raggu_web_front_corpus_chat] .ref::after {\n\tcontent: attr(data-ref);\n\tposition: absolute;\n\tbottom: calc(100% + 7px);\n\tleft: 50%;\n\ttransform: translateX(-50%) translateY(3px);\n\tz-index: 5;\n\topacity: 0;\n\tpointer-events: none;\n\twhite-space: nowrap;\n\tfont-family: var(--font-mono);\n\tfont-size: 10px;\n\tletter-spacing: 0.02em;\n\tcolor: var(--text-2);\n\tbackground: var(--surface-2);\n\tborder: 1px solid var(--edge);\n\tborder-radius: 6px;\n\tpadding: 3px 6px;\n\tbox-shadow: var(--elev-pop);\n\ttransition: opacity 160ms var(--ease-out-quint), transform 160ms var(--ease-out-quint);\n}\n\n[raggu_web_front_corpus_chat] .ref:hover::after,\n[raggu_web_front_corpus_chat] .ref:focus-visible::after {\n\topacity: 1;\n\ttransform: translateX(-50%) translateY(0);\n}\n\n[raggu_web_front_corpus_chat_pending_box] {\n\tdisplay: block;\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tbackground: color-mix(in oklab, var(--surface) 40%, transparent);\n\tpadding: 1rem;\n}\n\n[raggu_web_front_corpus_chat_pending_head] {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: 0.625rem;\n}\n\n[raggu_web_front_corpus_chat_ping] {\n\tposition: relative;\n\tdisplay: flex;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_ping_wave] {\n\tposition: absolute;\n\tdisplay: inline-flex;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n\tborder-radius: 9999px;\n\tbackground: var(--accent);\n\topacity: 0.6;\n\tanimation: ragu-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;\n}\n\n[raggu_web_front_corpus_chat_ping_dot] {\n\tposition: relative;\n\tdisplay: inline-flex;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n\tborder-radius: 9999px;\n\tbackground: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_thinking] {\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_elapsed] {\n\tmargin-left: auto;\n\tfont-variant-numeric: tabular-nums;\n}\n\n[raggu_web_front_corpus_chat_thinking_hint] {\n\tmargin-top: 0.5rem;\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_bars] {\n\tmargin-top: 0.75rem;\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_bar1],\n[raggu_web_front_corpus_chat_bar2],\n[raggu_web_front_corpus_chat_bar3] {\n\theight: 0.5rem;\n\tborder-radius: 9999px;\n\tbackground-color: color-mix(in oklab, var(--edge) 50%, transparent);\n}\n\n[raggu_web_front_corpus_chat_bar2] { width: 82%; }\n[raggu_web_front_corpus_chat_bar3] { width: 64%; }\n\n[raggu_web_front_corpus_chat_failure] {\n\tdisplay: block;\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--accent-line);\n\tbackground: var(--accent-wash);\n\tpadding: 0.75rem 1rem;\n}\n\n[raggu_web_front_corpus_chat_failure_title] {\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_failure_hint] {\n\tmargin-top: 0.25rem;\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_starters] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tgap: 0.375rem;\n\tpadding: 0 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_starters]:not(:empty) {\n\tpadding-bottom: 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_starter_button] {\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tpadding: 0.5rem 0.75rem;\n\ttext-align: left;\n\tfont-size: 0.75rem;\n\tline-height: 1.375;\n\tcolor: var(--text-2);\n\ttransition: border-color 200ms ease, background-color 200ms ease, color 200ms ease;\n}\n\n[raggu_web_front_corpus_chat_starter_button]:hover {\n\tborder-color: var(--accent-line);\n\tbackground: var(--accent-wash);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_form] {\n\tdisplay: flex;\n\talign-items: flex-end;\n\tgap: 0.5rem;\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tbackground: color-mix(in oklab, var(--surface) 50%, transparent);\n\tpadding: 0.375rem;\n}\n\n[raggu_web_front_corpus_chat_input] {\n\tmax-height: 8rem;\n\tmin-height: 2.5rem;\n\tflex: 1;\n\tresize: none;\n\tbackground: transparent;\n\tpadding: 0.5rem 0.625rem;\n\tfont-size: 0.9375rem;\n\tline-height: 1.625;\n\tcolor: var(--text);\n\toutline: none;\n\tscrollbar-width: thin;\n\tscrollbar-color: var(--edge-strong) transparent;\n}\n\n[raggu_web_front_corpus_chat_input]:focus-visible {\n\toutline: none;\n}\n\n[raggu_web_front_corpus_chat_action] {\n\tdisplay: flex;\n}\n\n[raggu_web_front_corpus_chat_send],\n[raggu_web_front_corpus_chat_stop] {\n\tdisplay: flex;\n\twidth: 2.5rem;\n\theight: 2.5rem;\n\tflex-shrink: 0;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: 11px;\n\ttransition: all 200ms ease;\n}\n\n[raggu_web_front_corpus_chat_send] {\n\tbackground: var(--accent);\n\tcolor: var(--accent-ink);\n}\n\n[raggu_web_front_corpus_chat_send]:hover {\n\tbackground: var(--accent-hover);\n}\n\n[raggu_web_front_corpus_chat_send]:active {\n\ttransform: translateY(1px);\n}\n\n[raggu_web_front_corpus_chat_send][disabled] {\n\tpointer-events: none;\n\topacity: 0.4;\n}\n\n[raggu_web_front_corpus_chat_stop] {\n\tborder: 1px solid var(--edge-strong);\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_stop]:hover {\n\tborder-color: var(--accent-line);\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_sources] {\n\tmargin: 1rem -0.25rem 0 -0.5rem;\n}\n\n[raggu_web_front_corpus_chat_sources] [raggu_web_front_disclosure_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 1rem;\n}\n\n[raggu_web_front_corpus_chat_source_group] {\n\tdisplay: block;\n}\n\n[raggu_web_front_corpus_chat_source_group_label],\n[raggu_web_front_corpus_chat_meta_row_label],\n[raggu_web_front_corpus_chat_meta_energy_label],\n[raggu_web_front_corpus_chat_meta_plan_label] {\n\tfont-size: 9.5px;\n}\n\n[raggu_web_front_corpus_chat_source_group_list] {\n\tmargin-top: 0.5rem;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tgap: 0.375rem;\n}\n\n[raggu_web_front_corpus_chat_source_entity] {\n\tborder-radius: var(--radius-chip);\n\tborder: 1px solid color-mix(in oklab, var(--accent-line) 40%, transparent);\n\tpadding: 0.25rem 0.5rem;\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--accent);\n\ttransition: background-color 200ms ease;\n}\n\n[raggu_web_front_corpus_chat_source_entity]:hover {\n\tbackground: var(--accent-wash);\n}\n\n[raggu_web_front_corpus_chat_source_relation] {\n\tborder-radius: var(--radius-chip);\n\tborder: 1px solid var(--edge);\n\tpadding: 0.25rem 0.5rem;\n\tfont-family: var(--font-mono);\n\tfont-size: 0.68rem;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_source_group_list]:has([raggu_web_front_corpus_chat_source_chunk]) {\n\tflex-direction: column;\n\tflex-wrap: nowrap;\n\tgap: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_source_chunk] {\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tbackground: color-mix(in oklab, var(--surface) 35%, transparent);\n\tpadding: 0.625rem 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_source_chunk_text] {\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_no_sources] {\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_meta] > [raggu_web_front_pop_trigger] {\n\tdisplay: inline-flex;\n\twidth: 1.75rem;\n\theight: 1.75rem;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-3);\n\ttransition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);\n}\n\n[raggu_web_front_corpus_chat_meta] > [raggu_web_front_pop_trigger]:hover {\n\tbackground: color-mix(in oklab, var(--text) 7%, transparent);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_meta] > [raggu_web_front_pop_trigger][raggu_web_front_pop_open=\"true\"] {\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_meta_icon] {\n\twidth: 1rem;\n\theight: 1rem;\n}\n\n[raggu_web_front_corpus_chat_meta_body] {\n\tdisplay: block;\n\tpadding: 0.625rem 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_meta_rows] {\n\tmargin-top: 0.75rem;\n\tdisplay: grid;\n\tgrid-template-columns: repeat(2, minmax(0, 1fr));\n\tcolumn-gap: 1rem;\n\trow-gap: 0.625rem;\n}\n\n[raggu_web_front_corpus_chat_meta_row] {\n\tdisplay: block;\n}\n\n[raggu_web_front_corpus_chat_meta_row_value] {\n\tmargin-top: 0.25rem;\n\tfont-family: var(--font-mono);\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_meta_energy] {\n\tmargin-top: 0.75rem;\n\tdisplay: flex;\n\talign-items: baseline;\n\tjustify-content: space-between;\n\tgap: 0.75rem;\n\tborder-top: 1px solid var(--edge);\n\tpadding-top: 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_meta_energy_value] {\n\tfont-family: var(--font-mono);\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_meta_plan] {\n\tmargin-top: 0.75rem;\n\tdisplay: block;\n\tborder-top: 1px solid var(--edge);\n\tpadding-top: 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_meta_plan_list] {\n\tmargin-top: 0.5rem;\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 0.375rem;\n}\n\n[raggu_web_front_corpus_chat_plan_item] {\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_plan_index] {\n\tfont-family: var(--font-mono);\n\tcolor: var(--accent);\n}\n");
+    $mol_style_attach("raggu/web/front/corpus/chat/chat.view.css", "@keyframes ragu-chat-in {\n\tfrom { opacity: 0; transform: translateX(40px); }\n\tto { opacity: 1; transform: none; }\n}\n\n[raggu_web_front_corpus_chat] {\n\tpointer-events: auto;\n\tposition: relative;\n\tisolation: isolate;\n\tdisplay: flex;\n\tmin-height: 0;\n\tflex-direction: column;\n\tborder-radius: var(--radius-island);\n\tpadding: 0.375rem;\n\tanimation: ragu-chat-in 520ms cubic-bezier(0.25, 1.05, 0.4, 1) both;\n}\n\n[raggu_web_front_corpus_chat_head] {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: space-between;\n\tgap: 0.75rem;\n\tpadding: 0.5rem 0.75rem 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_head_tools] {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: 0.125rem;\n}\n\n[raggu_web_front_corpus_chat_engine] {\n\tmargin-right: 0.25rem;\n}\n\n[raggu_web_front_corpus_chat_sweep],\n[raggu_web_front_corpus_chat_hide] {\n\tdisplay: inline-flex;\n\twidth: 2rem;\n\theight: 2rem;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-3);\n\ttransition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);\n}\n\n[raggu_web_front_corpus_chat_sweep]:hover,\n[raggu_web_front_corpus_chat_hide]:hover {\n\tbackground: color-mix(in oklab, var(--text) 7%, transparent);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_sweep_icon],\n[raggu_web_front_corpus_chat_hide_icon] {\n\twidth: 1rem;\n\theight: 1rem;\n}\n\n[raggu_web_front_corpus_chat_scroll] {\n\tdisplay: block;\n\tflex: 1;\n\tmin-height: 0;\n\toverflow-y: auto;\n\tpadding: 0 0.75rem 0.5rem;\n\tscrollbar-width: thin;\n\tscrollbar-color: var(--edge-strong) transparent;\n}\n\n[raggu_web_front_corpus_chat_empty] {\n\tdisplay: flex;\n\theight: 100%;\n\tflex-direction: column;\n\tjustify-content: flex-end;\n\tpadding-bottom: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_empty_title] {\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_empty_hint] {\n\tmargin-top: 0.375rem;\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_thread] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 1.25rem;\n\tpadding: 0.5rem 0;\n}\n\n[raggu_web_front_corpus_chat_user] {\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n[raggu_web_front_corpus_chat_user_text] {\n\tmax-width: 85%;\n\tborder-radius: var(--radius-inset);\n\tborder-bottom-right-radius: 6px;\n\tbackground: var(--accent);\n\tpadding: 0.625rem 1rem;\n\tfont-size: 0.9375rem;\n\tline-height: 1.625;\n\tcolor: var(--accent-ink);\n}\n\n[raggu_web_front_corpus_chat_agent],\n[raggu_web_front_corpus_chat_streaming] {\n\tdisplay: block;\n}\n\n@keyframes raggu_web_front_corpus_chat_rise {\n\tfrom { opacity: 0; transform: translate3d(0, 6px, 0); }\n}\n\n[raggu_web_front_corpus_chat_pending],\n[raggu_web_front_corpus_chat_streaming] {\n\tanimation: raggu_web_front_corpus_chat_rise 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;\n}\n\n[raggu_web_front_corpus_chat_agent_label],\n[raggu_web_front_corpus_chat_streaming_label] {\n\tmargin-bottom: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_answer],\n[raggu_web_front_corpus_chat_streaming_answer] {\n\tdisplay: block;\n\tfont-size: 0.9375rem;\n\tline-height: 1.75;\n\twhite-space: pre-wrap;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_strong] {\n\tfont-weight: 600;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_caret] {\n\tdisplay: inline-block;\n\twidth: 0.5em;\n\theight: 1em;\n\tmargin-left: 0.15em;\n\tvertical-align: -0.12em;\n\tborder-radius: 2px;\n\tbackground: var(--accent);\n\tanimation: ragu-caret 1s steps(1) infinite;\n}\n\n[raggu_web_front_corpus_chat] .ref {\n\tposition: relative;\n\tdisplay: inline;\n\tborder: 0;\n\tmargin: 0 -0.1em;\n\tpadding: 0.08em 0.3em;\n\tborder-radius: 5px;\n\tbackground: var(--accent-wash);\n\tcolor: var(--accent);\n\tfont: inherit;\n\ttext-decoration: none;\n\tcursor: pointer;\n\ttransition: background-color 180ms var(--ease-out-quint), color 180ms;\n}\n\n[raggu_web_front_corpus_chat] .ref:hover,\n[raggu_web_front_corpus_chat] .ref:focus-visible {\n\tbackground: color-mix(in oklab, var(--accent) 22%, transparent);\n}\n\n[raggu_web_front_corpus_chat] .ref--muted {\n\tbackground: color-mix(in oklab, var(--text-3) 14%, transparent);\n\tcolor: var(--text-2);\n\tcursor: default;\n}\n\n[raggu_web_front_corpus_chat] .ref--muted:hover {\n\tbackground: color-mix(in oklab, var(--text-3) 20%, transparent);\n}\n\n[raggu_web_front_corpus_chat] .ref::after {\n\tcontent: attr(data-ref);\n\tposition: absolute;\n\tbottom: calc(100% + 7px);\n\tleft: 50%;\n\ttransform: translateX(-50%) translateY(3px);\n\tz-index: 5;\n\topacity: 0;\n\tpointer-events: none;\n\twhite-space: nowrap;\n\tfont-family: var(--font-mono);\n\tfont-size: 10px;\n\tletter-spacing: 0.02em;\n\tcolor: var(--text-2);\n\tbackground: var(--surface-2);\n\tborder: 1px solid var(--edge);\n\tborder-radius: 6px;\n\tpadding: 3px 6px;\n\tbox-shadow: var(--elev-pop);\n\ttransition: opacity 160ms var(--ease-out-quint), transform 160ms var(--ease-out-quint);\n}\n\n[raggu_web_front_corpus_chat] .ref:hover::after,\n[raggu_web_front_corpus_chat] .ref:focus-visible::after {\n\topacity: 1;\n\ttransform: translateX(-50%) translateY(0);\n}\n\n[raggu_web_front_corpus_chat_pending_box] {\n\tdisplay: block;\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tbackground: color-mix(in oklab, var(--surface) 40%, transparent);\n\tpadding: 1rem;\n}\n\n[raggu_web_front_corpus_chat_pending_head] {\n\tdisplay: flex;\n\talign-items: center;\n\tgap: 0.625rem;\n}\n\n[raggu_web_front_corpus_chat_ping] {\n\tposition: relative;\n\tdisplay: flex;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_ping_wave] {\n\tposition: absolute;\n\tdisplay: inline-flex;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n\tborder-radius: 9999px;\n\tbackground: var(--accent);\n\topacity: 0.6;\n\tanimation: ragu-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;\n}\n\n[raggu_web_front_corpus_chat_ping_dot] {\n\tposition: relative;\n\tdisplay: inline-flex;\n\twidth: 0.5rem;\n\theight: 0.5rem;\n\tborder-radius: 9999px;\n\tbackground: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_thinking] {\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_elapsed] {\n\tmargin-left: auto;\n\tfont-variant-numeric: tabular-nums;\n}\n\n[raggu_web_front_corpus_chat_thinking_hint] {\n\tmargin-top: 0.5rem;\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_bars] {\n\tmargin-top: 0.75rem;\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_bar1],\n[raggu_web_front_corpus_chat_bar2],\n[raggu_web_front_corpus_chat_bar3] {\n\theight: 0.5rem;\n\tborder-radius: 9999px;\n\tbackground-color: color-mix(in oklab, var(--edge) 50%, transparent);\n}\n\n[raggu_web_front_corpus_chat_bar2] { width: 82%; }\n[raggu_web_front_corpus_chat_bar3] { width: 64%; }\n\n[raggu_web_front_corpus_chat_failure] {\n\tdisplay: block;\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--accent-line);\n\tbackground: var(--accent-wash);\n\tpadding: 0.75rem 1rem;\n}\n\n[raggu_web_front_corpus_chat_failure_title] {\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_failure_hint] {\n\tmargin-top: 0.25rem;\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_starters] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tgap: 0.375rem;\n\tpadding: 0 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_starters]:not(:empty) {\n\tpadding-bottom: 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_starter_button] {\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tpadding: 0.5rem 0.75rem;\n\ttext-align: left;\n\tfont-size: 0.75rem;\n\tline-height: 1.375;\n\tcolor: var(--text-2);\n\ttransition: border-color 200ms ease, background-color 200ms ease, color 200ms ease;\n}\n\n[raggu_web_front_corpus_chat_starter_button]:hover {\n\tborder-color: var(--accent-line);\n\tbackground: var(--accent-wash);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_form] {\n\tdisplay: flex;\n\talign-items: flex-end;\n\tgap: 0.5rem;\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tbackground: color-mix(in oklab, var(--surface) 50%, transparent);\n\tpadding: 0.375rem;\n}\n\n[raggu_web_front_corpus_chat_input] {\n\tmax-height: 8rem;\n\tmin-height: 2.5rem;\n\tflex: 1;\n\tresize: none;\n\tbackground: transparent;\n\tpadding: 0.5rem 0.625rem;\n\tfont-size: 0.9375rem;\n\tline-height: 1.625;\n\tcolor: var(--text);\n\toutline: none;\n\tscrollbar-width: thin;\n\tscrollbar-color: var(--edge-strong) transparent;\n}\n\n[raggu_web_front_corpus_chat_input]:focus-visible {\n\toutline: none;\n}\n\n[raggu_web_front_corpus_chat_action] {\n\tdisplay: flex;\n}\n\n[raggu_web_front_corpus_chat_send],\n[raggu_web_front_corpus_chat_stop] {\n\tdisplay: flex;\n\twidth: 2.5rem;\n\theight: 2.5rem;\n\tflex-shrink: 0;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: 11px;\n\ttransition: all 200ms ease;\n}\n\n[raggu_web_front_corpus_chat_send] {\n\tbackground: var(--accent);\n\tcolor: var(--accent-ink);\n}\n\n[raggu_web_front_corpus_chat_send]:hover {\n\tbackground: var(--accent-hover);\n}\n\n[raggu_web_front_corpus_chat_send]:active {\n\ttransform: translateY(1px);\n}\n\n[raggu_web_front_corpus_chat_send][disabled] {\n\tpointer-events: none;\n\topacity: 0.4;\n}\n\n[raggu_web_front_corpus_chat_stop] {\n\tborder: 1px solid var(--edge-strong);\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_stop]:hover {\n\tborder-color: var(--accent-line);\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_sources] {\n\tmargin: 1rem -0.25rem 0 -0.5rem;\n}\n\n[raggu_web_front_corpus_chat_sources] [raggu_web_front_disclosure_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 1rem;\n}\n\n[raggu_web_front_corpus_chat_source_group] {\n\tdisplay: block;\n}\n\n[raggu_web_front_corpus_chat_source_group_label],\n[raggu_web_front_corpus_chat_meta_row_label],\n[raggu_web_front_corpus_chat_meta_energy_label],\n[raggu_web_front_corpus_chat_meta_plan_label] {\n\tfont-size: 9.5px;\n}\n\n[raggu_web_front_corpus_chat_source_group_list] {\n\tmargin-top: 0.5rem;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tgap: 0.375rem;\n}\n\n[raggu_web_front_corpus_chat_source_entity] {\n\tborder-radius: var(--radius-chip);\n\tborder: 1px solid color-mix(in oklab, var(--accent-line) 40%, transparent);\n\tpadding: 0.25rem 0.5rem;\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--accent);\n\ttransition: background-color 200ms ease;\n}\n\n[raggu_web_front_corpus_chat_source_entity]:hover {\n\tbackground: var(--accent-wash);\n}\n\n[raggu_web_front_corpus_chat_source_relation] {\n\tborder-radius: var(--radius-chip);\n\tborder: 1px solid var(--edge);\n\tpadding: 0.25rem 0.5rem;\n\tfont-family: var(--font-mono);\n\tfont-size: 0.68rem;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_source_group_list]:has([raggu_web_front_corpus_chat_source_chunk]) {\n\tflex-direction: column;\n\tflex-wrap: nowrap;\n\tgap: 0.5rem;\n}\n\n[raggu_web_front_corpus_chat_source_chunk] {\n\tborder-radius: var(--radius-inset);\n\tborder: 1px solid var(--edge);\n\tbackground: color-mix(in oklab, var(--surface) 35%, transparent);\n\tpadding: 0.625rem 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_source_chunk_text] {\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_no_sources] {\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_corpus_chat_meta] > [raggu_web_front_pop_trigger] {\n\tdisplay: inline-flex;\n\twidth: 1.75rem;\n\theight: 1.75rem;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-3);\n\ttransition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);\n}\n\n[raggu_web_front_corpus_chat_meta] > [raggu_web_front_pop_trigger]:hover {\n\tbackground: color-mix(in oklab, var(--text) 7%, transparent);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_corpus_chat_meta] > [raggu_web_front_pop_trigger][raggu_web_front_pop_open=\"true\"] {\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_meta_icon] {\n\twidth: 1rem;\n\theight: 1rem;\n}\n\n[raggu_web_front_corpus_chat_meta_body] {\n\tdisplay: block;\n\tpadding: 0.625rem 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_meta_rows] {\n\tmargin-top: 0.75rem;\n\tdisplay: grid;\n\tgrid-template-columns: repeat(2, minmax(0, 1fr));\n\tcolumn-gap: 1rem;\n\trow-gap: 0.625rem;\n}\n\n[raggu_web_front_corpus_chat_meta_row] {\n\tdisplay: block;\n}\n\n[raggu_web_front_corpus_chat_meta_row_value] {\n\tmargin-top: 0.25rem;\n\tfont-family: var(--font-mono);\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_meta_energy] {\n\tmargin-top: 0.75rem;\n\tdisplay: flex;\n\talign-items: baseline;\n\tjustify-content: space-between;\n\tgap: 0.75rem;\n\tborder-top: 1px solid var(--edge);\n\tpadding-top: 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_meta_energy_value] {\n\tfont-family: var(--font-mono);\n\tfont-size: 0.75rem;\n\tline-height: 1rem;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_corpus_chat_meta_plan] {\n\tmargin-top: 0.75rem;\n\tdisplay: block;\n\tborder-top: 1px solid var(--edge);\n\tpadding-top: 0.75rem;\n}\n\n[raggu_web_front_corpus_chat_meta_plan_list] {\n\tmargin-top: 0.5rem;\n\tdisplay: flex;\n\tflex-direction: column;\n\tgap: 0.375rem;\n}\n\n[raggu_web_front_corpus_chat_plan_item] {\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_corpus_chat_plan_index] {\n\tfont-family: var(--font-mono);\n\tcolor: var(--accent);\n}\n");
 })($ || ($ = {}));
 //raggu/web/front/corpus/chat/-css/chat.view.css.ts
 ;

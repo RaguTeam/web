@@ -1,139 +1,62 @@
-# RAGU — Live Demo
+# RAGU: демо
 
-GraphRAG-движок с UI: интерактивный граф знаний, чат с трейсом ответа, бенчмарки качества + энергии. Подача на трек EMNLP 2026.
+Демо GraphRAG-движка [RAGU](https://github.com/RaguTeam/RAGU): трёхмерное облако
+графа знаний и чат с трейсом ответа поверх заранее построенных корпусов.
+
+Сайт: [raguteam.github.io/web](https://raguteam.github.io/web/), без бэкенда на
+записанных ответах: [raguteam.github.io/web/#!mock=1](https://raguteam.github.io/web/#!mock=1).
+Бэкенд: `ragu-back.duckdns.org` (ВМ в Яндекс.Облаке).
 
 [Концепция и стек](./docs/01_Концепция_функциональность_стек.md) · [Роадмап](./docs/02_Роадмап.md)
 
-## Что внутри
+## Из чего состоит
 
-5 экранов, переключаются через сайдбар. Все строки локализованы (RU/EN), палитра переключается light/dark через `$bog_theme_switch`. State экрана/датасета/пресета — в URL hash, язык и тема — в `localStorage`.
+```text
+front ──► back (BFF) ──► ragu-api ──► графы на диске
+  GitHub Pages  FastAPI       RAGU     эмбеддер, LLM, реранкер
+```
 
-| Экран | Модуль | Статус |
-|---|---|---|
-| **Датасеты** (gallery) | `gallery/` + `gallery/card/` + `gallery/upload/` | ✅ карточки, выбор, mock-флоу индексации по 6 шагам |
-| **Граф знаний** (explorer) | `explorer/` | ⚠️ заглушка Sigma.js, карточка сущности, фильтры — без real-data |
-| **Чат с агентом** | `chat/` | ✅ ввод + отправка, история в session, mock-ответ + trace |
-| **Дашборд** | `dashboard/` + `dashboard/metric/` + `dashboard/stage/` + `dashboard/log/` + `dashboard/dist/` | ✅ статистика, бенчмарки, формула энергии TDP×время×PUE, expandable логи |
-| **Настройки движка** (slide-over) | `settings/` + `settings/group/` | ✅ 3 пресета (⚡/🎯/🎬) + 14 реальных контролов по 6 шагам пайплайна |
-
-Плюс **экспорт** (`export/`) — выгрузка артефактов: GraphML/GEXF/JSON/PNG для графа, MD/JSON для чата, CSV/JSON для дашборда.
-
-## Стек
-
-- **$mol/MAM** (TypeScript) — реактивный UI-фреймворк, [mol.hyoo.ru](https://mol.hyoo.ru)
-- **builderui** (`bog/builderui/`) — design system: tokens (`back/card/text/shade/line/control`), темы (light/dark × stone/slate/zinc/gray × sky/violet/rose/emerald/amber)
-- **i18n** через `$mol_locale` + `<module>.locale=ru.json` рядом с компонентом
-- **URL state** через `$mol_state_arg` (screen/preset/dataset_id)
-- **Theme/locale persist** через `$mol_state_local`
-- Тесты — `$mol_test`, скрипт-style без браузера (Playwright-flow через прямой вызов action-методов)
+| Папка | Что там |
+|---|---|
+| [`front`](./front) | сайт на [$mol](https://b-on-g.github.io/smalljs/): лендинг, облако на three.js, чат; модули MAM, вход `front/app` |
+| [`back`](./back) | FastAPI-шлюз между сайтом и `ragu-api`: язык ответа, выбор режима, лимит вопросов |
+| [`embedder`](./embedder) | локальный сервер эмбеддингов и реранкера |
+| `docker-compose.yml`, `Caddyfile`, [`observability`](./observability) | стенд: embedder, ragu-api, back, Caddy, Prometheus, Grafana |
+| [`docs`](./docs) | концепция, роадмап, настройка моделей |
 
 ## Запуск
 
-Это MAM-пакет, не самостоятельный npm-проект. Подключается к [MAM-репо](https://github.com/hyoo-ru/mam) как подпапка `raggu/web`.
-
-### Локально через MAM dev-server
+Сайт собирается внутри [MAM](https://github.com/hyoo-ru/mam), репозиторий лежит в нём как `raggu/web`:
 
 ```bash
-# в корне MAM-репо
-git clone https://github.com/hyoo-ru/mam.git
-cd mam
+git clone https://github.com/hyoo-ru/mam.git && cd mam
 git clone https://github.com/RaguTeam/web.git raggu/web
 npm install
-npx mam start
+cd raggu/web/front/app && npm start    # сборка через bog/build2
+node ../../../../raggu/web/front/app/-/node.test.js
 ```
 
-Открыть: **http://localhost:9080/raggu/web/front/app/-/test.html**
+Страница: `raggu/web/front/app/-/index.html`. Аргументы в адресе: `#!mock=1` — записанные
+ответы шлюза из `front/mock/fixtures`, `#!api=<url>` — другой шлюз.
 
-Dev-сервер на лету пересобирает при изменении любого `.view.tree` / `.view.ts` / `.view.css.ts` / `.locale=*.json`.
-
-### Сборка standalone
+Бэкенд (нужен поднятый `ragu-api`, подробности в [back/README.md](./back/README.md)):
 
 ```bash
-npx mam raggu/web/front/app
+uv run --project back uvicorn ragu_web_api.main:app --reload --port 8000
+uv run --project back pytest
 ```
 
-Артефакт: `raggu/web/front/app/-/` — статичная сборка для деплоя (index.html + web.js + web.css + локали).
+Стенд целиком: `docker compose up -d`, переменные в `.env` (образец в
+[back/.env.example](./back/.env.example)). Без `RAGU_API_KEY` ничего не запустится,
+это сделано намеренно.
 
-### Тесты
+## Публикация
 
-```bash
-node raggu/web/front/app/-/node.test.js
-```
-
-Должно вывести `All tests passed`. Текущий счёт — **283** (структурные snapshot'ы, e2e-flow через view-API, URL state, CSS rule intent, новые фичи).
-
-### Backend API
-
-`back/` — отдельный FastAPI gateway с Pydantic v2-схемами и Swagger/OpenAPI-контрактом для Gallery, Explorer и Agent. Сейчас это mock-first API на детерминированных данных: live-индексация, Redis/RQ/Celery, GPU worker и Yandex Cloud-флоу намеренно не реализуются.
-
-```bash
-cd web/back
-python -m pip install -e ".[dev]"
-uvicorn ragu_web_api.main:app --reload --port 8000
-```
-
-Swagger UI: **http://localhost:8000/docs**. Все API-ручки находятся под `/api/v1`; upload/job/live-indexing endpoints отсутствуют, их доступность отражается через `GET /api/v1/capabilities`.
-
-## CI / Deploy
-
-[`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml):
-
-- **`main`** → продакшен на `gh-pages` (`hyoo-ru/gh-deploy`)
-- **`feature/*`** → preview-папка `feature/<branch>` на gh-pages
-- **`pull_request`** → сборка без деплоя (проверяет что не сломалось)
-- **delete `feature/*`** → cleanup preview-папки
-
-Сборку гоняет `hyoo-ru/mam_build@master2` с `modules: app`.
-
-## Структура
-
-```
-raggu/web/                        # umbrella repo (RaguTeam/web)
-├── front/                        # all UI code (mol/MAM)
-│   ├── app/                     #   root mol-module, маршрутизация экранов
-│   │   ├── app.view.tree        #     композиция UI
-│   │   ├── app.view.ts          #     методы screen/preset/dataset_id + URL state
-│   │   ├── app.view.css.ts      #     стили (через $bog_builderui_tokens)
-│   │   ├── app.meta.tree        #     deploy-список зависимостей builderui
-│   │   ├── app.locale=ru.json   #     общие RU-переводы (датасеты, screen titles)
-│   │   ├── app.locale=en.json   #     общие EN-source (overrides auto-gen)
-│   │   ├── app.test.ts          #     283 теста
-│   │   ├── index.html           #     <head> + SEO + mol_view_root
-│   │   └── -/                   #     build output (gitignored)
-│   ├── sidebar/                 #   навигация + лого + лангтоглл + theme_switch
-│   │   ├── nav/                 #     sub-component для nav-item
-│   │   └── lang/                #     sub-component для EN/RU pill
-│   ├── topbar/                  #   title + 3 пресета + Settings + Export buttons
-│   │   └── preset/              #     sub-component для preset-pill
-│   ├── gallery/
-│   │   ├── card/                #     карточка датасета
-│   │   │   └── preview/         #       фон-pattern preview-area
-│   │   └── upload/              #     mock-флоу индексации по 6 шагам
-│   ├── explorer/                #   canvas + Filters + Legend + Aside (entity card)
-│   ├── chat/                    #   история сообщений + Prompt + Suggestions
-│   ├── dashboard/
-│   │   ├── metric/              #     строка качества (имя+полоса+значение)
-│   │   ├── stage/               #     строка тайминга
-│   │   ├── log/                 #     expandable строка лога с trace
-│   │   └── dist/                #     placeholder для distribution chart
-│   ├── settings/
-│   │   └── group/               #     шаг пайплайна (step + title + opts + controls)
-│   └── export/                  #   $mol_pop с меню форматов per-screen
-├── back/                         # FastAPI API Gateway + Pydantic schemas + mock fixtures
-├── docs/                         # концепция + роадмап (shared)
-├── .github/workflows/deploy.yml  # gh-pages CI (front)
-├── README.md                     # этот файл
-├── .gitignore
-└── .gitattributes
-```
-
-## Конвенции
-
-- **Никаких hex-цветов для нейтралов** — только `$bog_builderui_tokens.back/card/text/shade/line/control/special`. Исключения: акцент-индиго `#5b5bd6`/`#ece9fb`, статус-цвета (`#1f8a5b` зелёный, `#c2691a` оранжевый), dark canvas, entity-dots в Explorer.
-- **Все user-facing строки** локализуются: `@`-prefix в view.tree (источник = English) → mam генерит `web.locale=en.json` → рядом руками `<module>.locale=ru.json`.
-- **Стили — `.view.css.ts`** через `$mol_style_define`. Если нужны attribute selectors на чужих компонентах (`$mol_button_minor[bog_theme_switch_active]`) — sub-key внутри $mol_style_define родителя.
-- **Тесты — `app.test.ts`** через `Component.make({ $ })` + ассерты на view-API. Без JSDOM-layout: за-counter snapshot'ы (dom_tree skeleton, CSS rule string match).
+[`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) собирает `front/app` через
+[b-on-g/mam_build2](https://github.com/b-on-g/mam_build2) на каждый пуш и PR. Из `main` сайт
+публикуется в корень `gh-pages`, ветки `feature/*` — в `feature/<ветка>/`.
+Бэкенд выкатывается на ВМ через Docker Compose.
 
 ## Контакты
 
-[issues](https://github.com/RaguTeam/web/issues) · подача на EMNLP 2026 (deadline 10 июля)
+[issues](https://github.com/RaguTeam/web/issues)

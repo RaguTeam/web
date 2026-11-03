@@ -2809,6 +2809,30 @@ var $;
             $mol_assert_equal(value.useGraph, true);
             $mol_assert_equal(value.rerank, false);
         },
+        'legacy settings move to the new key with rerank reset once'() {
+            const storage = (entries) => {
+                const map = new Map(Object.entries(entries));
+                return {
+                    map,
+                    getItem: (key) => map.get(key) ?? null,
+                    setItem: (key, value) => void map.set(key, value),
+                    removeItem: (key) => void map.delete(key),
+                };
+            };
+            const saved = { useGraph: false, queryPlan: true, topK: 12, rerank: true, graphLimit: 1500 };
+            const moved = storage({ 'ragu.settings': JSON.stringify(saved) });
+            $raggu_web_front_lib_settings_migrate(moved);
+            $mol_assert_equal(JSON.parse(moved.map.get('ragu.settings.v2')), { ...saved, rerank: false });
+            $mol_assert_equal(moved.map.has('ragu.settings'), false);
+            const current = JSON.stringify({ rerank: true });
+            const kept = storage({ 'ragu.settings': JSON.stringify({ rerank: true }), 'ragu.settings.v2': current });
+            $raggu_web_front_lib_settings_migrate(kept);
+            $mol_assert_equal(kept.map.get('ragu.settings.v2'), current);
+            $mol_assert_equal(kept.map.has('ragu.settings'), false);
+            const broken = storage({ 'ragu.settings': '{not json' });
+            $raggu_web_front_lib_settings_migrate(broken);
+            $mol_assert_equal(broken.map.has('ragu.settings.v2'), false);
+        },
         'citation folds into the phrase that named it'() {
             const segments = $raggu_web_front_lib_cite_parse('Aspirin (Entity: ent-abc123def) lowers fever.', id => id === 'ent-abc123def' ? 'Aspirin' : undefined);
             $mol_assert_equal(segments, [
@@ -2846,6 +2870,20 @@ var $;
     });
 })($ || ($ = {}));
 //raggu/web/front/lib/lib.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'question limits keep their code, anything else is failed'() {
+            const limit = new Error(JSON.stringify({ detail: { code: 'daily_limit_reached', message: 'x' } }));
+            $mol_assert_equal($raggu_web_front_viewer_failure(limit), 'daily_limit_reached');
+            $mol_assert_equal($raggu_web_front_viewer_failure(new Error(JSON.stringify({ detail: { code: 'boom' } }))), 'failed');
+            $mol_assert_equal($raggu_web_front_viewer_failure(new Error('Bad Gateway')), 'failed');
+        },
+    });
+})($ || ($ = {}));
+//raggu/web/front/viewer/viewer.test.ts
 ;
 var $node = $node || {}
 var $npm = $npm || {}
