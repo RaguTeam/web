@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="light" mol_view_root>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>RAGU</title>
+		<meta name="description" content="RAGU turns raw documents into a typed knowledge graph and answers questions over it with sources attached. Explore three prebuilt corpora in 3D." />
+		<meta name="color-scheme" content="light dark" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="RAGU — a knowledge graph you can question" />
+		<meta property="og:description" content="Typed entities, typed relations, community summaries. Explore three prebuilt corpora in 3D and ask the graph." />
+		<meta property="og:image" content="https://raguteam.github.io/web/raggu/web/front/assets/ragu.jpg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+		<script>
+			( function() {
+				try {
+					var stored = JSON.parse( localStorage.getItem( 'ragu.theme' ) || '"system"' )
+					var dark = stored === 'dark' || ( stored !== 'light' && matchMedia( '(prefers-color-scheme: dark)' ).matches )
+					document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+				} catch( error ) {}
+			} )()
+		</script>
+		<script defer src="https://cloud.umami.is/script.js" data-website-id="ed5de530-84ef-44be-9c78-555667ab8340"></script>
+	</head>
+	<body mol_view_root>
+		<div mol_view_root="$raggu_web_front_app">
+			<script src="web.js" charset="utf-8"></script>
+		</div>
+	
+				<script src="/bog/build2/server/client/client.js" charset="utf-8"></script>
+				<script src="web.test.js" charset="utf-8"></script>
+				<script>
+					addEventListener( 'load', ()=> setTimeout( ()=> {
+						const audit = document.createElement( 'script' )
+						audit.src = 'web.audit.js'
+						document.head.appendChild( audit )
+					}, 500 ) )
+				</script>
+				</body>
+</html>
