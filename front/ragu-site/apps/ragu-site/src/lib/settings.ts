@@ -32,8 +32,38 @@ export const GRAPH_LIMIT_STEPS = [600, 1500, 3000, 5000] as const;
 export const TOP_K_MIN = 1;
 export const TOP_K_MAX = 50;
 
+const SETTINGS_KEY = 'ragu.settings.v2';
+const LEGACY_SETTINGS_KEY = 'ragu.settings';
+
+/**
+ * The store saves the whole object, so everyone who touched any setting while
+ * rerank was on by default still carries `rerank: true` and waits 20-30 s per
+ * answer. Their other choices move to the new key; rerank goes back to the
+ * default, once, and from then on stays as they set it.
+ */
+export function migrateLegacySettings(storage: Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>): void {
+    try {
+        const legacy = storage.getItem(LEGACY_SETTINGS_KEY);
+        if (legacy === null) {
+            return;
+        }
+        const parsed: unknown = JSON.parse(legacy);
+        if (storage.getItem(SETTINGS_KEY) === null && typeof parsed === 'object' && parsed !== null) {
+            storage.setItem(SETTINGS_KEY, JSON.stringify({...parsed, rerank: DEFAULT_SETTINGS.rerank}));
+        }
+        storage.removeItem(LEGACY_SETTINGS_KEY);
+    }
+    catch {
+        /* Unreadable or unavailable storage: the defaults apply anyway. */
+    }
+}
+
+if (typeof localStorage !== 'undefined') {
+    migrateLegacySettings(localStorage);
+}
+
 export const settingsStore = createStore<RetrievalSettings>(DEFAULT_SETTINGS, {
-    key: 'ragu.settings',
+    key: SETTINGS_KEY,
     revive: (raw) => {
         if (typeof raw !== 'object' || raw === null) {
             return null;
