@@ -107,6 +107,9 @@ function LangMenu() {
 export function ControlIsland() {
     const t = useT();
     const [settingsOpen, setSettingsOpen] = useState(false);
+    // Kept mounted once loaded, so closing plays its exit instead of vanishing.
+    // Hovering the button is enough to start fetching the chunk.
+    const [settingsMounted, setSettingsMounted] = useState(false);
 
     return (
         <>
@@ -118,7 +121,12 @@ export function ControlIsland() {
                 <button
                     type="button"
                     aria-label={t.chrome.settings}
-                    onClick={() => setSettingsOpen(true)}
+                    onPointerEnter={() => setSettingsMounted(true)}
+                    onFocus={() => setSettingsMounted(true)}
+                    onClick={() => {
+                        setSettingsMounted(true);
+                        setSettingsOpen(true);
+                    }}
                     className={cn(
                         'flex size-10 items-center justify-center self-center rounded-inset text-text-2',
                         'transition-colors duration-200 hover:bg-accent-wash hover:text-text',
@@ -127,7 +135,7 @@ export function ControlIsland() {
                     <IconSliders/>
                 </button>
             </div>
-            {settingsOpen ? (
+            {settingsMounted ? (
                 <Suspense fallback={null}>
                     <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen}/>
                 </Suspense>

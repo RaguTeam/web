@@ -1,4 +1,4 @@
-import {useEffect, useLayoutEffect, useMemo, useRef} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {AnimatePresence, motion} from 'motion/react';
 import {queries} from '../api/queries.ts';
@@ -212,6 +212,20 @@ export function DatasetView({datasetId}: {datasetId: string}) {
     const warm = solving && shown !== null;
     const stageRef = useStageRect(graphOpen);
 
+    // While the side panel is only its one-line prompt it is laid over the
+    // stage's corner instead of taking a column. Going back to that waits for
+    // the card's exit (onCardGone), or the fading card would hang over the cloud.
+    const [hintOnly, setHintOnly] = useState(selection.selectedNode === null);
+    useEffect(() => {
+        if (selection.selectedNode !== null) {
+            setHintOnly(false);
+        }
+        else if (chatOpen) {
+            // The side panel is not mounted behind the chat: no exit to wait for.
+            setHintOnly(true);
+        }
+    }, [selection.selectedNode, chatOpen]);
+
     // Fixed, so this page has no scrollbar of its own, and its panels would sit a
     // scrollbar's width right of the same chrome on a page that does have one.
     return (
@@ -220,7 +234,7 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                 at every width where its islands wrap onto a second row. */}
             <div className="shrink-0" style={{height: 'calc(var(--chrome-h, 76px) + 1.75rem)'}} aria-hidden="true"/>
 
-            <div className="mx-auto flex min-h-0 w-full max-w-[1680px] flex-1 flex-col gap-4 px-3 pb-4 sm:px-5 lg:flex-row">
+            <div className="relative mx-auto flex min-h-0 w-full max-w-[1680px] flex-1 flex-col gap-4 px-3 pb-4 sm:px-5 lg:flex-row">
                 {graphOpen ? (
                     <div
                         // On a narrow screen the two panels cannot share the width, so the
@@ -231,7 +245,14 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                         // contents into a stack. The cloud's own framing carries the move.
                         className={cn('min-h-0 flex-1 flex-col', chatOpen ? 'hidden lg:flex' : 'flex')}
                     >
-                        <GraphControls model={shown?.model ?? null} className="w-full max-w-[44rem] self-start"/>
+                        <GraphControls
+                            model={shown?.model ?? null}
+                            className={cn(
+                                'w-full max-w-[44rem] self-start',
+                                // Leaves room for the prompt laid over the corner.
+                                hintOnly && !chatOpen && 'lg:max-w-[min(44rem,calc(100%-25rem))]',
+                            )}
+                        />
 
                         <div ref={stageRef} className="relative flex min-h-0 flex-1 items-center justify-center">
                             <AnimatePresence mode="wait">
@@ -316,9 +337,14 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                             nodeId={selection.selectedNode}
                             hint
                             waiting={cold}
+                            onCardGone={() => setHintOnly(true)}
                             className={cn(
                                 'w-full lg:w-full lg:max-w-[24rem]',
-                                selection.selectedNode && 'min-h-0 max-h-[52vh] lg:max-h-none',
+                                // Laid over the corner rather than taking a column, so the
+                                // cloud and its loader centre on the window, not left of it.
+                                hintOnly
+                                    ? 'lg:absolute lg:top-0 lg:right-5'
+                                    : 'min-h-0 max-h-[52vh] lg:max-h-none',
                             )}
                         />
                     )}
