@@ -63,8 +63,15 @@
 	min-height: 0;
 	overflow-y: auto;
 	padding: 0 0.75rem 0.5rem;
-	scrollbar-width: thin;
-	scrollbar-color: var(--edge-strong) transparent;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+
+	[raggu_web_front_corpus_chat_scroll] {
+		scrollbar-width: thin;
+		scrollbar-color: var(--edge-strong) transparent;
+	}
+
 }
 
 [raggu_web_front_corpus_chat_empty] {
@@ -140,7 +147,9 @@
 	color: var(--text);
 }
 
+/* $mol_view is display: flex, which would break every bold phrase onto its own line. */
 [raggu_web_front_corpus_chat_strong] {
+	display: inline;
 	font-weight: 600;
 	color: var(--text);
 }
@@ -363,8 +372,15 @@
 	line-height: 1.625;
 	color: var(--text);
 	outline: none;
-	scrollbar-width: thin;
-	scrollbar-color: var(--edge-strong) transparent;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+
+	[raggu_web_front_corpus_chat_input] {
+		scrollbar-width: thin;
+		scrollbar-color: var(--edge-strong) transparent;
+	}
+
 }
 
 [raggu_web_front_corpus_chat_input]:focus-visible {
@@ -413,6 +429,15 @@
 [raggu_web_front_corpus_chat_stop]:hover {
 	border-color: var(--accent-line);
 	color: var(--accent);
+}
+
+/*
+ * Block, not the flex row $mol_view would make of it: a row item that may
+ * not shrink takes the width of its longest line, and the closed sources
+ * pushed the thread sideways by a thousand pixels.
+ */
+[raggu_web_front_corpus_chat_agent_sources] {
+	display: block;
 }
 
 [raggu_web_front_corpus_chat_sources] {
@@ -473,6 +498,7 @@
 }
 
 [raggu_web_front_corpus_chat_source_chunk] {
+	display: block;
 	border-radius: var(--radius-inset);
 	border: 1px solid var(--edge);
 	background: color-mix(in oklab, var(--surface) 35%, transparent);
