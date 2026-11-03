@@ -252,7 +252,17 @@ namespace $.$$ {
 		}
 
 		failure_text() {
-			return this.failed_label()
+			switch( this.failure() ) {
+				case 'rate_limited': return this.rate_limited_label()
+				case 'client_daily_limit_reached': return this.client_daily_limit_label()
+				case 'daily_limit_reached': return this.daily_limit_label()
+				default: return this.failed_label()
+			}
+		}
+
+		failure_content() {
+			const limit = $raggu_web_front_viewer_limits.includes( this.failure() ?? '' )
+			return limit ? [ this.Failure_title() ] : [ this.Failure_title(), this.Failure_hint() ]
 		}
 
 		suggestions() {
@@ -304,7 +314,6 @@ namespace $.$$ {
 
 		send( text: string ) {
 			if( !text.trim() || this.pending() ) return
-			this.viewer().failed_text = ()=> this.failed_label()
 			this.draft( '' )
 			this.viewer().send( text )
 		}

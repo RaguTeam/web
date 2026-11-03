@@ -302,10 +302,6 @@ namespace $ {
 			this.send( text )
 		}
 
-		failed_text() {
-			return 'The request failed.'
-		}
-
 		send( text: string ) {
 
 			const corpus = this.corpus()
@@ -371,7 +367,7 @@ namespace $ {
 					this.pending( corpus, false )
 					this.partial( corpus, null )
 					this.started( corpus, null )
-					this.failure( corpus, this.failed_text() )
+					this.failure( corpus, $raggu_web_front_viewer_failure( error ) )
 				},
 			)
 
@@ -446,6 +442,22 @@ namespace $ {
 			} )
 
 			return { complete, clipped }
+		}
+
+	}
+
+	export const $raggu_web_front_viewer_limits = [ 'rate_limited', 'client_daily_limit_reached', 'daily_limit_reached' ]
+
+	/** A question limit is not an outage: its gateway code survives, anything else is just `failed`. */
+	export function $raggu_web_front_viewer_failure( error: unknown ) {
+
+		if( !( error instanceof Error ) ) return 'failed'
+
+		try {
+			const code = ( JSON.parse( error.message ) as { detail?: { code?: unknown } } ).detail?.code
+			return typeof code === 'string' && $raggu_web_front_viewer_limits.includes( code ) ? code : 'failed'
+		} catch {
+			return 'failed'
 		}
 
 	}

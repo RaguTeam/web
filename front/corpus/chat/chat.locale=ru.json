@@ -10,6 +10,9 @@
 	"$raggu_web_front_corpus_chat_engine_label": "движок",
 	"$raggu_web_front_corpus_chat_entities_label": "сущности",
 	"$raggu_web_front_corpus_chat_failed_label": "Запрос не прошёл.",
+	"$raggu_web_front_corpus_chat_rate_limited_label": "Слишком много вопросов за минуту. Подождите немного и спросите снова.",
+	"$raggu_web_front_corpus_chat_client_daily_limit_label": "На сегодня вы задали максимум вопросов. Возвращайтесь завтра.",
+	"$raggu_web_front_corpus_chat_daily_limit_label": "Демо исчерпало вопросы на сегодня. Возвращайтесь завтра.",
 	"$raggu_web_front_corpus_chat_failure_hint": "API не ответил. Возможно, он просыпается — попробуйте через минуту.",
 	"$raggu_web_front_corpus_chat_generation_label": "генерация",
 	"$raggu_web_front_corpus_chat_hide_label": "Скрыть чат",
@@ -27,7 +30,7 @@
 	"$raggu_web_front_corpus_chat_sources_label": "Источники",
 	"$raggu_web_front_corpus_chat_stop_label": "Остановить",
 	"$raggu_web_front_corpus_chat_sweep_label": "Очистить переписку",
-	"$raggu_web_front_corpus_chat_thinking_hint": "Инференс здесь идёт на CPU, поэтому это займёт время.",
+	"$raggu_web_front_corpus_chat_thinking_hint": "Сначала ищем по корпусу, затем модель начнёт писать ответ.",
 	"$raggu_web_front_corpus_chat_thinking_label": "Ищем и составляем ответ",
 	"$raggu_web_front_corpus_chat_top_k_label": "top k",
 	"$raggu_web_front_corpus_chat_total_label": "всего"

@@ -130,7 +130,7 @@ $raggu_web_front_corpus_chat $mol_view
 								dom_name \span
 								text <= elapsed \
 					<= Thinking_hint $raggu_web_front_text
-						text <= thinking_hint @ \Inference runs on CPU here, so this takes a moment.
+						text <= thinking_hint @ \First the corpus is searched, then the model starts writing.
 					<= Bars $mol_view
 						sub /
 							<= Bar1 $raggu_web_front_skeleton
@@ -138,7 +138,7 @@ $raggu_web_front_corpus_chat $mol_view
 							<= Bar3 $raggu_web_front_skeleton
 	Failure $mol_view
 		dom_name \li
-		sub /
+		sub <= failure_content /
 			<= Failure_title $raggu_web_front_text
 				text <= failure_text \
 			<= Failure_hint $raggu_web_front_text
@@ -249,3 +249,6 @@ $raggu_web_front_corpus_chat $mol_view
 	off_label @ \Off
 	elapsed_label @ \{n}s elapsed
 	failed_label @ \The request failed.
+	rate_limited_label @ \Too many questions in a minute. Wait a little and ask again.
+	client_daily_limit_label @ \You have asked as many questions as allowed today. Come back tomorrow.
+	daily_limit_label @ \The demo has used up its questions for today. Come back tomorrow.

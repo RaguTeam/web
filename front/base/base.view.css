@@ -239,8 +239,8 @@ body[mol_view_root] {
 }
 
 @keyframes ragu-shimmer {
-	from { background-position: -160% 0; }
-	to   { background-position: 260% 0; }
+	from { background-position: -16rem 0; }
+	to   { background-position: 56rem 0; }
 }
 
 @keyframes ragu-rise {
@@ -280,13 +280,14 @@ body[mol_view_root] {
 [raggu_web_front_skeleton] {
 	background-color: color-mix(in oklab, var(--edge) 60%, transparent);
 	background-image: linear-gradient(
-		100deg,
-		transparent 20%,
-		color-mix(in oklab, var(--text-3) 28%, transparent) 45%,
-		transparent 70%
+		90deg,
+		transparent,
+		color-mix(in oklab, var(--text-3) 28%, transparent) 50%,
+		transparent
 	);
-	background-size: 220% 100%;
-	animation: ragu-shimmer 1.9s linear infinite;
+	background-size: 16rem 100%;
+	background-repeat: no-repeat;
+	animation: ragu-shimmer 2.2s linear infinite;
 	border-radius: var(--radius-chip);
 	overflow: hidden;
 }

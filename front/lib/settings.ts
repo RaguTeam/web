@@ -43,11 +43,41 @@ namespace $ {
 
 	}
 
+	export const $raggu_web_front_lib_settings_key = 'ragu.settings.v2'
+	export const $raggu_web_front_lib_settings_key_legacy = 'ragu.settings'
+
+	/**
+	 * Everyone who touched any setting while rerank was on by default still carries `rerank: true`
+	 * and waits 20-30 s per answer. Their other choices move to the new key, rerank goes back to the default once.
+	 */
+	export function $raggu_web_front_lib_settings_migrate( storage: Pick< Storage, 'getItem' | 'setItem' | 'removeItem' > ) {
+		try {
+
+			const legacy = storage.getItem( $raggu_web_front_lib_settings_key_legacy )
+			if( legacy === null ) return
+
+			const parsed = JSON.parse( legacy ) as unknown
+			if( storage.getItem( $raggu_web_front_lib_settings_key ) === null && typeof parsed === 'object' && parsed !== null ) {
+				storage.setItem( $raggu_web_front_lib_settings_key, JSON.stringify( { ... parsed, rerank: $raggu_web_front_lib_settings_default.rerank } ) )
+			}
+
+			storage.removeItem( $raggu_web_front_lib_settings_key_legacy )
+
+		} catch {}
+	}
+
 	export class $raggu_web_front_lib_settings extends $mol_object {
 
 		@ $mol_mem
+		static migrated() {
+			$raggu_web_front_lib_settings_migrate( this.$.$mol_state_local.native() )
+			return true
+		}
+
+		@ $mol_mem
 		static value( next?: $raggu_web_front_lib_settings_value ) {
-			const stored = this.$.$mol_state_local.value( 'ragu.settings', next ) as unknown
+			this.migrated()
+			const stored = this.$.$mol_state_local.value( $raggu_web_front_lib_settings_key, next ) as unknown
 			return $raggu_web_front_lib_settings_revive( stored )
 		}
 
