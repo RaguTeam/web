@@ -61,6 +61,32 @@ $mol_button $mol_view
 	Speck $mol_speck
 		value <= error \
 
+$mol_image $mol_view
+	dom_name \img
+	attr *any
+		^
+		src <= uri \
+		title <= hint
+		alt <= title \
+		loading <= loading \lazy
+		decoding <= decoding \async
+		crossOrigin <= cors null
+		width <= natural_width 0
+		height <= natural_height 0
+	event *any
+		load? <=> load? null
+	minimal_width 16
+	minimal_height 16
+
+$raggu_web_front_mark $mol_image
+	uri <= data_uri \
+	title \RAGU
+
+$raggu_web_front_mark_icon $mol_view
+
+$bog_favicon $mol_plugin
+	Icon $mol_view
+
 $raggu_web_front_lib_names $mol_object
 	entity_AGE @ \Age
 	entity_ANATOMICAL_STRUCTURE @ \Anatomical structure
@@ -202,27 +228,6 @@ $raggu_web_front_glass $mol_view
 		^
 		aria-hidden \true
 		raggu_web_front_glass_solid <= solid false
-
-$mol_image $mol_view
-	dom_name \img
-	attr *any
-		^
-		src <= uri \
-		title <= hint
-		alt <= title \
-		loading <= loading \lazy
-		decoding <= decoding \async
-		crossOrigin <= cors null
-		width <= natural_width 0
-		height <= natural_height 0
-	event *any
-		load? <=> load? null
-	minimal_width 16
-	minimal_height 16
-
-$raggu_web_front_mark $mol_image
-	uri <= data_uri \
-	title \RAGU
 
 $raggu_web_front_pop $mol_view
 	showed? false
@@ -1771,6 +1776,9 @@ $raggu_web_front_home_chip $raggu_web_front_label
 $raggu_web_front_app $raggu_web_front_base
 	title \RAGU
 	Viewer $raggu_web_front_viewer
+	plugins /
+		<= Favicon $bog_favicon
+			Icon <= Favicon_icon $raggu_web_front_mark_icon
 	attr *
 		^
 		raggu_web_front_app_corpus <= corpus_page false

@@ -4675,6 +4675,239 @@ var $;
 })($ || ($ = {}));
 //raggu/web/front/base/-css/base.view.css.ts
 ;
+	($.$mol_image) = class $mol_image extends ($.$mol_view) {
+		uri(){
+			return "";
+		}
+		title(){
+			return "";
+		}
+		loading(){
+			return "lazy";
+		}
+		decoding(){
+			return "async";
+		}
+		cors(){
+			return null;
+		}
+		natural_width(){
+			return 0;
+		}
+		natural_height(){
+			return 0;
+		}
+		load(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "img";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"src": (this.uri()), 
+				"title": (this.hint()), 
+				"alt": (this.title()), 
+				"loading": (this.loading()), 
+				"decoding": (this.decoding()), 
+				"crossOrigin": (this.cors()), 
+				"width": (this.natural_width()), 
+				"height": (this.natural_height())
+			};
+		}
+		event(){
+			return {"load": (next) => (this.load(next))};
+		}
+		minimal_width(){
+			return 16;
+		}
+		minimal_height(){
+			return 16;
+		}
+	};
+	($mol_mem(($.$mol_image.prototype), "load"));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_image extends $.$mol_image {
+            natural_width(next) {
+                const dom = this.dom_node();
+                if (dom.naturalWidth)
+                    return dom.naturalWidth;
+                const found = this.uri().match(/\bwidth=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            natural_height(next) {
+                const dom = this.dom_node();
+                if (dom.naturalHeight)
+                    return dom.naturalHeight;
+                const found = this.uri().match(/\bheight=(\d+)/);
+                return found ? Number(found[1]) : null;
+            }
+            load() {
+                this.natural_width(null);
+                this.natural_height(null);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_width", null);
+        __decorate([
+            $mol_mem
+        ], $mol_image.prototype, "natural_height", null);
+        $$.$mol_image = $mol_image;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/image/image.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
+})($ || ($ = {}));
+//mol/image/-css/image.view.css.ts
+;
+	($.$raggu_web_front_mark) = class $raggu_web_front_mark extends ($.$mol_image) {
+		data_uri(){
+			return "";
+		}
+		uri(){
+			return (this.data_uri());
+		}
+		title(){
+			return "RAGU";
+		}
+	};
+	($.$raggu_web_front_mark_icon) = class $raggu_web_front_mark_icon extends ($.$mol_view) {};
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<defs>
+<path id="r" fill-rule="evenodd" d="M12 8 H40 C50 8 56 14 56 22 C56 29 52 34 45.5 36 L58 56 H44 L33.5 38 H24 V56 H12 Z M24 18 V28 H39 C42.6 28 45 26 45 23 C45 20 42.6 18 39 18 Z"/>
+<clipPath id="c"><use href="#r"/></clipPath>
+<pattern id="d" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1.6" cy="1.6" r="1.15" fill="#0a111c"/></pattern>
+</defs>
+<rect width="64" height="64" rx="14" fill="#0a111c"/>
+<g clip-path="url(#c)">
+<rect x="8" y="6" width="52" height="17" fill="#e4573d"/>
+<rect x="8" y="23" width="52" height="15" fill="#33465c"/>
+<rect x="8" y="38" width="52" height="20" fill="#e4573d"/>
+<g stroke="#0a111c" stroke-width="1.7" fill="#0a111c">
+<path d="M14 18 L26 12 L38 17 L50 11" fill="none"/>
+<circle cx="14" cy="18" r="2.4"/><circle cx="26" cy="12" r="2.4"/><circle cx="38" cy="17" r="2.4"/><circle cx="50" cy="11" r="2.4"/>
+</g>
+<g stroke="#dde3ea" stroke-width="0.9" fill="none">
+<path d="M9 31 L19 26 L29 31 L39 26 L49 31 L59 26"/>
+<path d="M9 31 L19 36 L29 31 L39 36 L49 31 L59 36"/>
+<path d="M19 26 V36 M39 26 V36"/>
+</g>
+<rect x="8" y="39" width="52" height="19" fill="url(#d)"/>
+</g>
+</svg>`;
+        class $raggu_web_front_mark extends $.$raggu_web_front_mark {
+            data_uri() {
+                return 'data:image/svg+xml,' + encodeURIComponent(svg);
+            }
+        }
+        $$.$raggu_web_front_mark = $raggu_web_front_mark;
+        class $raggu_web_front_mark_icon extends $.$raggu_web_front_mark_icon {
+            dom_tree() {
+                const parser = new this.$.$mol_dom_context.DOMParser;
+                return parser.parseFromString(svg, 'image/svg+xml').documentElement;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_mark_icon.prototype, "dom_tree", null);
+        $$.$raggu_web_front_mark_icon = $raggu_web_front_mark_icon;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//raggu/web/front/mark/mark.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("raggu/web/front/mark/mark.view.css", "[raggu_web_front_mark] {\n\tdisplay: block;\n\tflex: none;\n\twidth: 30px;\n\theight: 30px;\n\tborder-radius: 9px;\n}\n");
+})($ || ($ = {}));
+//raggu/web/front/mark/-css/mark.view.css.ts
+;
+	($.$bog_favicon) = class $bog_favicon extends ($.$mol_plugin) {
+		Icon(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_favicon.prototype), "Icon"));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        /** Плагин, который ставит favicon из переданного $mol_icon_* и подобных */
+        class $bog_favicon extends $.$bog_favicon {
+            // сюда передаем Icon <= icon $mol_icon_waze
+            Icon(next) {
+                if (next !== undefined)
+                    return next;
+                throw new Error('[bog_favicon] Icon is required: use `Icon <= icon $mol_icon_*` in view.tree');
+            }
+            favicon_data() {
+                const icon = this.Icon();
+                const node = icon.dom_tree();
+                if (!node.getAttribute('xmlns')) {
+                    node.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                }
+                const svg = node.outerHTML;
+                return 'data:image/svg+xml,' + encodeURIComponent(svg);
+            }
+            apply_favicon() {
+                const doc = $mol_dom_context.document;
+                if (!doc)
+                    return;
+                const href = this.favicon_data();
+                let link = doc.querySelector('link[rel="icon"]');
+                if (!link) {
+                    link = doc.createElement('link');
+                    link.rel = 'icon';
+                    doc.head.appendChild(link);
+                }
+                link.type = 'image/svg+xml';
+                if (link.href !== href)
+                    link.href = href;
+            }
+            auto() {
+                this.favicon_data();
+                this.apply_favicon();
+                return null;
+            }
+            sub() {
+                return [];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_favicon.prototype, "Icon", null);
+        __decorate([
+            $mol_mem
+        ], $bog_favicon.prototype, "favicon_data", null);
+        $$.$bog_favicon = $bog_favicon;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//bog/favicon/favicon.view.ts
+;
 "use strict";
 var $;
 (function ($) {
@@ -9150,162 +9383,6 @@ var $;
     $mol_style_attach("raggu/web/front/glass/glass.view.css", "[raggu_web_front_glass] {\n\tposition: absolute;\n\tinset: 0;\n\tz-index: -1;\n\tdisplay: block;\n\tborder-radius: inherit;\n\tbackground: var(--glass-tint);\n\tbackdrop-filter: blur(22px) saturate(150%);\n\t-webkit-backdrop-filter: blur(22px) saturate(150%);\n\tborder: 1px solid var(--edge-glass);\n\tbox-shadow:\n\t\tinset 0 1px 0 0 var(--glass-hi),\n\t\tinset 0 -1px 0 0 var(--glass-lo),\n\t\t0 1px 2px -1px var(--shadow-near),\n\t\t0 28px 56px -32px var(--shadow-cast);\n\ttransition:\n\t\ttransform 420ms var(--ease-out-quint),\n\t\topacity 260ms var(--ease-out-quint),\n\t\tborder-color 500ms var(--ease-out-quint);\n\tpointer-events: none;\n}\n\n[raggu_web_front_glass][raggu_web_front_glass_solid] {\n\tbackground: var(--glass-tint-strong);\n\tbackdrop-filter: blur(30px) saturate(160%);\n\t-webkit-backdrop-filter: blur(30px) saturate(160%);\n\tbox-shadow:\n\t\tinset 0 1px 0 0 var(--glass-hi),\n\t\tinset 0 -1px 0 0 var(--glass-lo),\n\t\t0 2px 4px -2px var(--shadow-near),\n\t\t0 40px 80px -40px var(--shadow-cast);\n}\n");
 })($ || ($ = {}));
 //raggu/web/front/glass/-css/glass.view.css.ts
-;
-	($.$mol_image) = class $mol_image extends ($.$mol_view) {
-		uri(){
-			return "";
-		}
-		title(){
-			return "";
-		}
-		loading(){
-			return "lazy";
-		}
-		decoding(){
-			return "async";
-		}
-		cors(){
-			return null;
-		}
-		natural_width(){
-			return 0;
-		}
-		natural_height(){
-			return 0;
-		}
-		load(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "img";
-		}
-		attr(){
-			return {
-				...(super.attr()), 
-				"src": (this.uri()), 
-				"title": (this.hint()), 
-				"alt": (this.title()), 
-				"loading": (this.loading()), 
-				"decoding": (this.decoding()), 
-				"crossOrigin": (this.cors()), 
-				"width": (this.natural_width()), 
-				"height": (this.natural_height())
-			};
-		}
-		event(){
-			return {"load": (next) => (this.load(next))};
-		}
-		minimal_width(){
-			return 16;
-		}
-		minimal_height(){
-			return 16;
-		}
-	};
-	($mol_mem(($.$mol_image.prototype), "load"));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_image extends $.$mol_image {
-            natural_width(next) {
-                const dom = this.dom_node();
-                if (dom.naturalWidth)
-                    return dom.naturalWidth;
-                const found = this.uri().match(/\bwidth=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            natural_height(next) {
-                const dom = this.dom_node();
-                if (dom.naturalHeight)
-                    return dom.naturalHeight;
-                const found = this.uri().match(/\bheight=(\d+)/);
-                return found ? Number(found[1]) : null;
-            }
-            load() {
-                this.natural_width(null);
-                this.natural_height(null);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_width", null);
-        __decorate([
-            $mol_mem
-        ], $mol_image.prototype, "natural_height", null);
-        $$.$mol_image = $mol_image;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//mol/image/image.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/image/image.view.css", "[mol_image] {\n\tborder-radius: var(--mol_gap_round);\n\toverflow: hidden;\n\tflex: 0 1 auto;\n\tmax-width: 100%;\n\tobject-fit: cover;\n\theight: fit-content;\n}\n");
-})($ || ($ = {}));
-//mol/image/-css/image.view.css.ts
-;
-	($.$raggu_web_front_mark) = class $raggu_web_front_mark extends ($.$mol_image) {
-		data_uri(){
-			return "";
-		}
-		uri(){
-			return (this.data_uri());
-		}
-		title(){
-			return "RAGU";
-		}
-	};
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-<defs>
-<path id="r" fill-rule="evenodd" d="M12 8 H40 C50 8 56 14 56 22 C56 29 52 34 45.5 36 L58 56 H44 L33.5 38 H24 V56 H12 Z M24 18 V28 H39 C42.6 28 45 26 45 23 C45 20 42.6 18 39 18 Z"/>
-<clipPath id="c"><use href="#r"/></clipPath>
-<pattern id="d" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1.6" cy="1.6" r="1.15" fill="#0a111c"/></pattern>
-</defs>
-<rect width="64" height="64" rx="14" fill="#0a111c"/>
-<g clip-path="url(#c)">
-<rect x="8" y="6" width="52" height="17" fill="#e4573d"/>
-<rect x="8" y="23" width="52" height="15" fill="#33465c"/>
-<rect x="8" y="38" width="52" height="20" fill="#e4573d"/>
-<g stroke="#0a111c" stroke-width="1.7" fill="#0a111c">
-<path d="M14 18 L26 12 L38 17 L50 11" fill="none"/>
-<circle cx="14" cy="18" r="2.4"/><circle cx="26" cy="12" r="2.4"/><circle cx="38" cy="17" r="2.4"/><circle cx="50" cy="11" r="2.4"/>
-</g>
-<g stroke="#dde3ea" stroke-width="0.9" fill="none">
-<path d="M9 31 L19 26 L29 31 L39 26 L49 31 L59 26"/>
-<path d="M9 31 L19 36 L29 31 L39 36 L49 31 L59 36"/>
-<path d="M19 26 V36 M39 26 V36"/>
-</g>
-<rect x="8" y="39" width="52" height="19" fill="url(#d)"/>
-</g>
-</svg>`;
-        class $raggu_web_front_mark extends $.$raggu_web_front_mark {
-            data_uri() {
-                return 'data:image/svg+xml,' + encodeURIComponent(svg);
-            }
-        }
-        $$.$raggu_web_front_mark = $raggu_web_front_mark;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//raggu/web/front/mark/mark.view.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("raggu/web/front/mark/mark.view.css", "[raggu_web_front_mark] {\n\tdisplay: block;\n\tflex: none;\n\twidth: 30px;\n\theight: 30px;\n\tborder-radius: 9px;\n}\n");
-})($ || ($ = {}));
-//raggu/web/front/mark/-css/mark.view.css.ts
 ;
 	($.$raggu_web_front_pop) = class $raggu_web_front_pop extends ($.$mol_view) {
 		hint(){
@@ -15983,6 +16060,15 @@ var $;
 //raggu/web/front/home/card/-css/card.view.css.ts
 ;
 	($.$raggu_web_front_app) = class $raggu_web_front_app extends ($.$raggu_web_front_base) {
+		Favicon_icon(){
+			const obj = new this.$.$raggu_web_front_mark_icon();
+			return obj;
+		}
+		Favicon(){
+			const obj = new this.$.$bog_favicon();
+			(obj.Icon) = () => ((this.Favicon_icon()));
+			return obj;
+		}
 		corpus_page(){
 			return false;
 		}
@@ -16097,6 +16183,9 @@ var $;
 			const obj = new this.$.$raggu_web_front_viewer();
 			return obj;
 		}
+		plugins(){
+			return [(this.Favicon())];
+		}
 		attr(){
 			return {...(super.attr()), "raggu_web_front_app_corpus": (this.corpus_page())};
 		}
@@ -16120,6 +16209,8 @@ var $;
 			return obj;
 		}
 	};
+	($mol_mem(($.$raggu_web_front_app.prototype), "Favicon_icon"));
+	($mol_mem(($.$raggu_web_front_app.prototype), "Favicon"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Skip"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Backdrop_base"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Aurora_a"));

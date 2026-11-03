@@ -2135,6 +2135,84 @@ declare namespace $ {
 }
 
 declare namespace $ {
+
+	export class $mol_image extends $mol_view {
+		uri( ): string
+		title( ): string
+		loading( ): string
+		decoding( ): string
+		cors( ): any
+		natural_width( ): number
+		natural_height( ): number
+		load( next?: any ): any
+		dom_name( ): string
+		attr( ): Record<string, any> & ReturnType< $mol_view['attr'] >
+		event( ): Record<string, any>
+		minimal_width( ): number
+		minimal_height( ): number
+	}
+	
+}
+
+//# sourceMappingURL=image.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_image extends $.$mol_image {
+        natural_width(next?: null): number;
+        natural_height(next?: null): number;
+        load(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $raggu_web_front_mark extends $mol_image {
+		data_uri( ): string
+		uri( ): ReturnType< $raggu_web_front_mark['data_uri'] >
+		title( ): string
+	}
+	
+	export class $raggu_web_front_mark_icon extends $mol_view {
+	}
+	
+}
+
+//# sourceMappingURL=mark.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_mark extends $.$raggu_web_front_mark {
+        data_uri(): string;
+    }
+    class $raggu_web_front_mark_icon extends $.$raggu_web_front_mark_icon {
+        dom_tree(): HTMLElement;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $bog_favicon extends $mol_plugin {
+		Icon( ): $mol_view
+	}
+	
+}
+
+//# sourceMappingURL=favicon.view.tree.d.ts.map
+declare namespace $.$$ {
+    /** Плагин, который ставит favicon из переданного $mol_icon_* и подобных */
+    class $bog_favicon extends $.$bog_favicon {
+        Icon(next?: $mol_view): $mol_view;
+        favicon_data(): string;
+        apply_favicon(): void;
+        auto(): any;
+        sub(): readonly [];
+    }
+}
+
+declare namespace $ {
     class $mol_storage extends $mol_object2 {
         /** Is storage a long term. */
         static persisted(next?: boolean): boolean;
@@ -3191,58 +3269,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=glass.view.tree.d.ts.map
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $mol_image extends $mol_view {
-		uri( ): string
-		title( ): string
-		loading( ): string
-		decoding( ): string
-		cors( ): any
-		natural_width( ): number
-		natural_height( ): number
-		load( next?: any ): any
-		dom_name( ): string
-		attr( ): Record<string, any> & ReturnType< $mol_view['attr'] >
-		event( ): Record<string, any>
-		minimal_width( ): number
-		minimal_height( ): number
-	}
-	
-}
-
-//# sourceMappingURL=image.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_image extends $.$mol_image {
-        natural_width(next?: null): number;
-        natural_height(next?: null): number;
-        load(): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
-	export class $raggu_web_front_mark extends $mol_image {
-		data_uri( ): string
-		uri( ): ReturnType< $raggu_web_front_mark['data_uri'] >
-		title( ): string
-	}
-	
-}
-
-//# sourceMappingURL=mark.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $raggu_web_front_mark extends $.$raggu_web_front_mark {
-        data_uri(): string;
-    }
-}
-
 declare namespace $ {
 }
 
@@ -8362,22 +8388,27 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $raggu_web_front_link__uri_raggu_web_front_app_1 = $mol_type_enforce<
+	type $bog_favicon__Icon_raggu_web_front_app_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_app['Favicon_icon'] >
+		,
+		ReturnType< $bog_favicon['Icon'] >
+	>
+	type $raggu_web_front_link__uri_raggu_web_front_app_2 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $raggu_web_front_link['uri'] >
 	>
-	type $raggu_web_front_link__sub_raggu_web_front_app_2 = $mol_type_enforce<
+	type $raggu_web_front_link__sub_raggu_web_front_app_3 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $raggu_web_front_link['sub'] >
 	>
-	type $mol_view__sub_raggu_web_front_app_3 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_app_4 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__attr_raggu_web_front_app_4 = $mol_type_enforce<
+	type $mol_view__attr_raggu_web_front_app_5 = $mol_type_enforce<
 		({ 
 			'aria-hidden': string,
 			'raggu_web_front_app_backdrop_quiet': ReturnType< $raggu_web_front_app['quiet'] >,
@@ -8385,69 +8416,71 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__sub_raggu_web_front_app_5 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_app_6 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $raggu_web_front_scene__viewer_raggu_web_front_app_6 = $mol_type_enforce<
+	type $raggu_web_front_scene__viewer_raggu_web_front_app_7 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['Viewer'] >
 		,
 		ReturnType< $raggu_web_front_scene['viewer'] >
 	>
-	type $raggu_web_front_scene__lights_raggu_web_front_app_7 = $mol_type_enforce<
+	type $raggu_web_front_scene__lights_raggu_web_front_app_8 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['theme_resolved'] >
 		,
 		ReturnType< $raggu_web_front_scene['lights'] >
 	>
-	type $raggu_web_front_chrome__viewer_raggu_web_front_app_8 = $mol_type_enforce<
+	type $raggu_web_front_chrome__viewer_raggu_web_front_app_9 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['Viewer'] >
 		,
 		ReturnType< $raggu_web_front_chrome['viewer'] >
 	>
-	type $raggu_web_front_chrome__theme_choice_raggu_web_front_app_9 = $mol_type_enforce<
+	type $raggu_web_front_chrome__theme_choice_raggu_web_front_app_10 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['theme_choice'] >
 		,
 		ReturnType< $raggu_web_front_chrome['theme_choice'] >
 	>
-	type $raggu_web_front_chrome__theme_resolved_raggu_web_front_app_10 = $mol_type_enforce<
+	type $raggu_web_front_chrome__theme_resolved_raggu_web_front_app_11 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['theme_resolved'] >
 		,
 		ReturnType< $raggu_web_front_chrome['theme_resolved'] >
 	>
-	type $raggu_web_front_chrome__open_settings_raggu_web_front_app_11 = $mol_type_enforce<
+	type $raggu_web_front_chrome__open_settings_raggu_web_front_app_12 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['open_settings'] >
 		,
 		ReturnType< $raggu_web_front_chrome['open_settings'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_app_12 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_app_13 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__attr_raggu_web_front_app_13 = $mol_type_enforce<
+	type $mol_view__attr_raggu_web_front_app_14 = $mol_type_enforce<
 		({ 
 			'id': string,
 		})  & ReturnType< $mol_view['attr'] >
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__sub_raggu_web_front_app_14 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_app_15 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['main'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $raggu_web_front_settings__showed_raggu_web_front_app_15 = $mol_type_enforce<
+	type $raggu_web_front_settings__showed_raggu_web_front_app_16 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['settings_open'] >
 		,
 		ReturnType< $raggu_web_front_settings['showed'] >
 	>
-	type $raggu_web_front_corpus__viewer_raggu_web_front_app_16 = $mol_type_enforce<
+	type $raggu_web_front_corpus__viewer_raggu_web_front_app_17 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_app['Viewer'] >
 		,
 		ReturnType< $raggu_web_front_corpus['viewer'] >
 	>
 	export class $raggu_web_front_app extends $raggu_web_front_base {
+		Favicon_icon( ): $raggu_web_front_mark_icon
+		Favicon( ): $bog_favicon
 		corpus_page( ): boolean
 		skip_label( ): string
 		Skip( ): $raggu_web_front_link
@@ -8471,6 +8504,7 @@ declare namespace $ {
 		Settings( ): $raggu_web_front_settings
 		title( ): string
 		Viewer( ): $raggu_web_front_viewer
+		plugins( ): readonly(any)[]
 		attr( ): ({ 
 			'raggu_web_front_app_corpus': ReturnType< $raggu_web_front_app['corpus_page'] >,
 		})  & ReturnType< $raggu_web_front_base['attr'] >
