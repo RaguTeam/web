@@ -1506,7 +1506,7 @@ declare namespace $ {
      * Theme css variables
      * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
      */
-    const $mol_theme: Record<"image" | "line" | "text" | "field" | "hover" | "focus" | "hue" | "back" | "card" | "current" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
+    const $mol_theme: Record<"image" | "line" | "text" | "hover" | "field" | "focus" | "hue" | "back" | "card" | "current" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
 }
 
 declare namespace $ {
@@ -5162,6 +5162,315 @@ declare namespace $ {
 
 declare namespace $ {
 
+	type $mol_button__hint_raggu_web_front_chrome_tools_1 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['recentre_label'] >
+		,
+		ReturnType< $mol_button['hint'] >
+	>
+	type $mol_button__attr_raggu_web_front_chrome_tools_2 = $mol_type_enforce<
+		({ 
+			'aria-label': ReturnType< $raggu_web_front_chrome_tools['recentre_label'] >,
+		})  & ReturnType< $mol_button['attr'] >
+		,
+		ReturnType< $mol_button['attr'] >
+	>
+	type $mol_button__click_raggu_web_front_chrome_tools_3 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['recentre'] >
+		,
+		ReturnType< $mol_button['click'] >
+	>
+	type $mol_button__sub_raggu_web_front_chrome_tools_4 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button['sub'] >
+	>
+	type $mol_view__dom_name_raggu_web_front_chrome_tools_5 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_view['dom_name'] >
+	>
+	type $mol_view__attr_raggu_web_front_chrome_tools_6 = $mol_type_enforce<
+		({ 
+			'class': ReturnType< $raggu_web_front_chrome_tools['stale_class'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		,
+		ReturnType< $mol_view['attr'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_7 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__dom_name_raggu_web_front_chrome_tools_8 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_view['dom_name'] >
+	>
+	type $mol_view__dom_name_raggu_web_front_chrome_tools_9 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_view['dom_name'] >
+	>
+	type $mol_view__attr_raggu_web_front_chrome_tools_10 = $mol_type_enforce<
+		({ 
+			'class': ReturnType< $raggu_web_front_chrome_tools['stale_class'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		,
+		ReturnType< $mol_view['attr'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_11 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $raggu_web_front_label__text_raggu_web_front_chrome_tools_12 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['stats_label'] >
+		,
+		ReturnType< $raggu_web_front_label['text'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_13 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $raggu_web_front_label__text_raggu_web_front_chrome_tools_14 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['shown_label'] >
+		,
+		ReturnType< $raggu_web_front_label['text'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_15 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_16 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $raggu_web_front_label__text_raggu_web_front_chrome_tools_17 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['total_label'] >
+		,
+		ReturnType< $raggu_web_front_label['text'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_18 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__attr_raggu_web_front_chrome_tools_19 = $mol_type_enforce<
+		({ 
+			'class': ReturnType< $raggu_web_front_chrome_tools['stale_class'] >,
+		})  & ReturnType< $mol_view['attr'] >
+		,
+		ReturnType< $mol_view['attr'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_20 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__style_raggu_web_front_chrome_tools_21 = $mol_type_enforce<
+		({ 
+			'width': ReturnType< $raggu_web_front_chrome_tools['bar_width'] >,
+		}) 
+		,
+		ReturnType< $mol_view['style'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_22 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $raggu_web_front_text__text_raggu_web_front_chrome_tools_23 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['legend_label'] >
+		,
+		ReturnType< $raggu_web_front_text['text'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_24 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['action'] >
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $mol_view__sub_raggu_web_front_chrome_tools_25 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_view['sub'] >
+	>
+	type $raggu_web_front_pop__align_raggu_web_front_chrome_tools_26 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_front_pop['align'] >
+	>
+	type $raggu_web_front_pop__hint_raggu_web_front_chrome_tools_27 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['stats_label'] >
+		,
+		ReturnType< $raggu_web_front_pop['hint'] >
+	>
+	type $raggu_web_front_pop__bubble_width_raggu_web_front_chrome_tools_28 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $raggu_web_front_pop['bubble_width'] >
+	>
+	type $raggu_web_front_pop__trigger_content_raggu_web_front_chrome_tools_29 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_front_pop['trigger_content'] >
+	>
+	type $raggu_web_front_pop__bubble_content_raggu_web_front_chrome_tools_30 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $raggu_web_front_pop['bubble_content'] >
+	>
+	type $mol_button__enabled_raggu_web_front_chrome_tools_31 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['more_enabled'] >
+		,
+		ReturnType< $mol_button['enabled'] >
+	>
+	type $mol_button__click_raggu_web_front_chrome_tools_32 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['more'] >
+		,
+		ReturnType< $mol_button['click'] >
+	>
+	type $mol_button__sub_raggu_web_front_chrome_tools_33 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button['sub'] >
+	>
+	type $mol_button__enabled_raggu_web_front_chrome_tools_34 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['rest_enabled'] >
+		,
+		ReturnType< $mol_button['enabled'] >
+	>
+	type $mol_button__click_raggu_web_front_chrome_tools_35 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['rest'] >
+		,
+		ReturnType< $mol_button['click'] >
+	>
+	type $mol_button__sub_raggu_web_front_chrome_tools_36 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_button['sub'] >
+	>
+	type $raggu_web_front_text__text_raggu_web_front_chrome_tools_37 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['paging_label'] >
+		,
+		ReturnType< $raggu_web_front_text['text'] >
+	>
+	type $raggu_web_front_text__text_raggu_web_front_chrome_tools_38 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['rest_failed_label'] >
+		,
+		ReturnType< $raggu_web_front_text['text'] >
+	>
+	type $raggu_web_front_text__text_raggu_web_front_chrome_tools_39 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['clipped_text'] >
+		,
+		ReturnType< $raggu_web_front_text['text'] >
+	>
+	type $raggu_web_front_text__text_raggu_web_front_chrome_tools_40 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_chrome_tools['at_max_label'] >
+		,
+		ReturnType< $raggu_web_front_text['text'] >
+	>
+	export class $raggu_web_front_chrome_tools extends $mol_view {
+		recentre_label( ): string
+		recentre( next?: any ): any
+		Recentre_icon( ): $raggu_web_front_icon_recentre
+		Recentre( ): $mol_button
+		stats_label( ): string
+		stale_class( ): string
+		shown_badge( ): string
+		Shown_badge( ): $mol_view
+		Ramp( ): $mol_view
+		total_badge( ): string
+		Total_badge( ): $mol_view
+		Stats_label( ): $raggu_web_front_label
+		shown_full( ): string
+		Shown_full( ): $mol_view
+		shown_label( ): string
+		Shown_caption( ): $raggu_web_front_label
+		Shown_block( ): $mol_view
+		total_full( ): string
+		Total_full( ): $mol_view
+		total_label( ): string
+		Total_caption( ): $raggu_web_front_label
+		Total_block( ): $mol_view
+		Numbers( ): $mol_view
+		bar_width( ): string
+		Bar_fill( ): $mol_view
+		Bar( ): $mol_view
+		legend_label( ): string
+		Legend( ): $raggu_web_front_text
+		action( ): readonly(any)[]
+		Action( ): $mol_view
+		Stats_body( ): $mol_view
+		Stats( ): $raggu_web_front_pop
+		more_enabled( ): boolean
+		more( next?: any ): any
+		More_icon( ): $raggu_web_front_icon_plus
+		more_text( ): string
+		rest_enabled( ): boolean
+		rest( next?: any ): any
+		Rest_icon( ): $raggu_web_front_icon_plus
+		rest_text( ): string
+		paging_label( ): string
+		rest_failed_label( ): string
+		clipped_text( ): string
+		at_max_label( ): string
+		viewer( ): $raggu_web_front_viewer
+		sub( ): readonly(any)[]
+		More( ): $mol_button
+		Rest( ): $mol_button
+		Paging_note( ): $raggu_web_front_text
+		Rest_failed( ): $raggu_web_front_text
+		Clipped_note( ): $raggu_web_front_text
+		At_max( ): $raggu_web_front_text
+		loading_label( ): string
+		load_more_label( ): string
+		load_rest_label( ): string
+		loading_rest_label( ): string
+		clipped_label( ): string
+	}
+	
+}
+
+//# sourceMappingURL=tools.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_chrome_tools extends $.$raggu_web_front_chrome_tools {
+        recentre(): void;
+        meta(): $raggu_web_front_graph_meta | null;
+        shown(): number;
+        total(): number;
+        stale(): boolean;
+        stale_class(): "" | "is-stale";
+        shown_badge(): string;
+        total_badge(): string;
+        shown_full(): string;
+        total_full(): string;
+        bar_width(): string;
+        limit(): number;
+        next_step(): 600 | 1500 | 3000 | 5000 | null;
+        beyond_cap(): boolean;
+        whole_pending(next?: boolean): boolean;
+        whole_progress(next?: number): number;
+        whole_failed(next?: boolean): boolean;
+        whole_clipped(next?: number): number;
+        action(): ($.$mol_button | $raggu_web_front_text)[];
+        more_enabled(): boolean;
+        more_text(): string;
+        more(): void;
+        rest_enabled(): boolean;
+        rest_text(): string;
+        clipped_text(): string;
+        rest(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
 	type $mol_view__dom_name_raggu_web_front_chrome_toggle_1 = $mol_type_enforce<
 		string
 		,
@@ -5497,7 +5806,7 @@ declare namespace $.$$ {
         scroll_watch(): {
             destructor: () => void;
         };
-        right(): any[];
+        right(): ($mol_view | $.$raggu_web_front_chrome_tools)[];
         centre_kind(): "corpus" | "home";
         home_active(): string;
         home_inert(): string;

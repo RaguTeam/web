@@ -36722,6 +36722,428 @@ var $;
 })($ || ($ = {}));
 //raggu/web/front/chrome/switcher/-css/switcher.view.css.ts
 ;
+	($.$raggu_web_front_chrome_tools) = class $raggu_web_front_chrome_tools extends ($.$mol_view) {
+		recentre_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_recentre_label"));
+		}
+		recentre(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Recentre_icon(){
+			const obj = new this.$.$raggu_web_front_icon_recentre();
+			return obj;
+		}
+		Recentre(){
+			const obj = new this.$.$mol_button();
+			(obj.hint) = () => ((this.recentre_label()));
+			(obj.attr) = () => ({...(this.$.$mol_button.prototype.attr.call(obj)), "aria-label": (this.recentre_label())});
+			(obj.click) = (next) => ((this.recentre(next)));
+			(obj.sub) = () => ([(this.Recentre_icon())]);
+			return obj;
+		}
+		stats_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_stats_label"));
+		}
+		stale_class(){
+			return "";
+		}
+		shown_badge(){
+			return "—";
+		}
+		Shown_badge(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("span");
+			(obj.attr) = () => ({...(this.$.$mol_view.prototype.attr.call(obj)), "class": (this.stale_class())});
+			(obj.sub) = () => ([(this.shown_badge())]);
+			return obj;
+		}
+		Ramp(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("span");
+			return obj;
+		}
+		total_badge(){
+			return "—";
+		}
+		Total_badge(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ("span");
+			(obj.attr) = () => ({...(this.$.$mol_view.prototype.attr.call(obj)), "class": (this.stale_class())});
+			(obj.sub) = () => ([(this.total_badge())]);
+			return obj;
+		}
+		Stats_label(){
+			const obj = new this.$.$raggu_web_front_label();
+			(obj.text) = () => ((this.stats_label()));
+			return obj;
+		}
+		shown_full(){
+			return "";
+		}
+		Shown_full(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.shown_full())]);
+			return obj;
+		}
+		shown_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_shown_label"));
+		}
+		Shown_caption(){
+			const obj = new this.$.$raggu_web_front_label();
+			(obj.text) = () => ((this.shown_label()));
+			return obj;
+		}
+		Shown_block(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Shown_full()), (this.Shown_caption())]);
+			return obj;
+		}
+		total_full(){
+			return "";
+		}
+		Total_full(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.total_full())]);
+			return obj;
+		}
+		total_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_total_label"));
+		}
+		Total_caption(){
+			const obj = new this.$.$raggu_web_front_label();
+			(obj.text) = () => ((this.total_label()));
+			return obj;
+		}
+		Total_block(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Total_full()), (this.Total_caption())]);
+			return obj;
+		}
+		Numbers(){
+			const obj = new this.$.$mol_view();
+			(obj.attr) = () => ({...(this.$.$mol_view.prototype.attr.call(obj)), "class": (this.stale_class())});
+			(obj.sub) = () => ([(this.Shown_block()), (this.Total_block())]);
+			return obj;
+		}
+		bar_width(){
+			return "0%";
+		}
+		Bar_fill(){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({"width": (this.bar_width())});
+			return obj;
+		}
+		Bar(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Bar_fill())]);
+			return obj;
+		}
+		legend_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_legend_label"));
+		}
+		Legend(){
+			const obj = new this.$.$raggu_web_front_text();
+			(obj.text) = () => ((this.legend_label()));
+			return obj;
+		}
+		action(){
+			return [];
+		}
+		Action(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.action()));
+			return obj;
+		}
+		Stats_body(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Stats_label()), 
+				(this.Numbers()), 
+				(this.Bar()), 
+				(this.Legend()), 
+				(this.Action())
+			]);
+			return obj;
+		}
+		Stats(){
+			const obj = new this.$.$raggu_web_front_pop();
+			(obj.align) = () => ("end");
+			(obj.hint) = () => ((this.stats_label()));
+			(obj.bubble_width) = () => ("19rem");
+			(obj.trigger_content) = () => ([
+				(this.Shown_badge()), 
+				(this.Ramp()), 
+				(this.Total_badge())
+			]);
+			(obj.bubble_content) = () => ([(this.Stats_body())]);
+			return obj;
+		}
+		more_enabled(){
+			return true;
+		}
+		more(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		More_icon(){
+			const obj = new this.$.$raggu_web_front_icon_plus();
+			return obj;
+		}
+		more_text(){
+			return "";
+		}
+		rest_enabled(){
+			return true;
+		}
+		rest(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Rest_icon(){
+			const obj = new this.$.$raggu_web_front_icon_plus();
+			return obj;
+		}
+		rest_text(){
+			return "";
+		}
+		paging_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_paging_label"));
+		}
+		rest_failed_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_rest_failed_label"));
+		}
+		clipped_text(){
+			return "";
+		}
+		at_max_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_at_max_label"));
+		}
+		viewer(){
+			const obj = new this.$.$raggu_web_front_viewer();
+			return obj;
+		}
+		sub(){
+			return [(this.Recentre()), (this.Stats())];
+		}
+		More(){
+			const obj = new this.$.$mol_button();
+			(obj.enabled) = () => ((this.more_enabled()));
+			(obj.click) = (next) => ((this.more(next)));
+			(obj.sub) = () => ([(this.More_icon()), (this.more_text())]);
+			return obj;
+		}
+		Rest(){
+			const obj = new this.$.$mol_button();
+			(obj.enabled) = () => ((this.rest_enabled()));
+			(obj.click) = (next) => ((this.rest(next)));
+			(obj.sub) = () => ([(this.Rest_icon()), (this.rest_text())]);
+			return obj;
+		}
+		Paging_note(){
+			const obj = new this.$.$raggu_web_front_text();
+			(obj.text) = () => ((this.paging_label()));
+			return obj;
+		}
+		Rest_failed(){
+			const obj = new this.$.$raggu_web_front_text();
+			(obj.text) = () => ((this.rest_failed_label()));
+			return obj;
+		}
+		Clipped_note(){
+			const obj = new this.$.$raggu_web_front_text();
+			(obj.text) = () => ((this.clipped_text()));
+			return obj;
+		}
+		At_max(){
+			const obj = new this.$.$raggu_web_front_text();
+			(obj.text) = () => ((this.at_max_label()));
+			return obj;
+		}
+		loading_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_loading_label"));
+		}
+		load_more_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_load_more_label"));
+		}
+		load_rest_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_load_rest_label"));
+		}
+		loading_rest_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_loading_rest_label"));
+		}
+		clipped_label(){
+			return (this.$.$mol_locale.text("$raggu_web_front_chrome_tools_clipped_label"));
+		}
+	};
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "recentre"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Recentre_icon"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Recentre"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Shown_badge"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Ramp"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Total_badge"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Stats_label"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Shown_full"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Shown_caption"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Shown_block"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Total_full"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Total_caption"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Total_block"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Numbers"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Bar_fill"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Bar"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Legend"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Action"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Stats_body"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Stats"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "more"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "More_icon"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "rest"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Rest_icon"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "viewer"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "More"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Rest"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Paging_note"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Rest_failed"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "Clipped_note"));
+	($mol_mem(($.$raggu_web_front_chrome_tools.prototype), "At_max"));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $raggu_web_front_chrome_tools extends $.$raggu_web_front_chrome_tools {
+            recentre() {
+                this.viewer().recentre();
+            }
+            meta() {
+                return this.viewer().shown_now()?.model.meta ?? null;
+            }
+            shown() {
+                return this.meta()?.returned_nodes ?? 0;
+            }
+            total() {
+                return this.meta()?.total_nodes ?? 0;
+            }
+            stale() {
+                return this.viewer().solving() || this.whole_pending();
+            }
+            stale_class() {
+                return this.stale() ? 'is-stale' : '';
+            }
+            shown_badge() {
+                return this.shown() ? $raggu_web_front_lib_badge(this.shown()) : '—';
+            }
+            total_badge() {
+                return this.total() ? $raggu_web_front_lib_badge(this.total()) : '—';
+            }
+            shown_full() {
+                return $raggu_web_front_lib_full(this.shown());
+            }
+            total_full() {
+                return $raggu_web_front_lib_full(this.total());
+            }
+            bar_width() {
+                const total = this.total();
+                return `${total ? Math.max(3, Math.round((this.shown() / total) * 100)) : 0}%`;
+            }
+            limit() {
+                return $raggu_web_front_lib_settings.value().graphLimit;
+            }
+            next_step() {
+                return $raggu_web_front_lib_graph_limit_steps.find(step => step > this.limit()) ?? null;
+            }
+            beyond_cap() {
+                return this.total() > this.shown() && !this.next_step();
+            }
+            whole_pending(next) {
+                return next ?? false;
+            }
+            whole_progress(next) {
+                return next ?? 0;
+            }
+            whole_failed(next) {
+                return next ?? false;
+            }
+            whole_clipped(next) {
+                return next ?? 0;
+            }
+            action() {
+                if (this.next_step())
+                    return [this.More()];
+                if (this.beyond_cap()) {
+                    return [
+                        this.Rest(),
+                        this.Paging_note(),
+                        ...this.whole_failed() ? [this.Rest_failed()] : [],
+                        ...this.whole_clipped() > 0 ? [this.Clipped_note()] : [],
+                    ];
+                }
+                return [this.At_max()];
+            }
+            more_enabled() {
+                return !this.stale();
+            }
+            more_text() {
+                if (this.stale())
+                    return this.loading_label();
+                return this.load_more_label().replace('{n}', $raggu_web_front_lib_compact(this.next_step() - this.limit()));
+            }
+            more() {
+                const step = this.next_step();
+                if (step)
+                    $raggu_web_front_lib_settings.patch({ graphLimit: step });
+            }
+            rest_enabled() {
+                return !this.stale();
+            }
+            rest_text() {
+                if (this.whole_pending())
+                    return this.loading_rest_label().replace('{n}', String(Math.round(this.whole_progress() * 100)));
+                return this.load_rest_label();
+            }
+            clipped_text() {
+                return this.clipped_label().replace('{n}', String(this.whole_clipped()));
+            }
+            rest() {
+                this.whole_pending(true);
+                this.whole_failed(false);
+                this.whole_progress(0);
+                this.viewer().load_whole(ratio => this.whole_progress(ratio)).then(result => {
+                    this.whole_clipped(result.clipped.length);
+                    this.whole_pending(false);
+                }, () => {
+                    this.whole_failed(true);
+                    this.whole_pending(false);
+                });
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chrome_tools.prototype, "whole_pending", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chrome_tools.prototype, "whole_progress", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chrome_tools.prototype, "whole_failed", null);
+        __decorate([
+            $mol_mem
+        ], $raggu_web_front_chrome_tools.prototype, "whole_clipped", null);
+        $$.$raggu_web_front_chrome_tools = $raggu_web_front_chrome_tools;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//raggu/web/front/chrome/tools/tools.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("raggu/web/front/chrome/tools/tools.view.css", "[raggu_web_front_chrome_tools] {\n\tpointer-events: auto;\n\tdisplay: flex;\n\tmin-height: var(--island-h);\n\talign-items: stretch;\n\tgap: 0.25rem;\n\tpadding: 0.25rem;\n}\n\n[raggu_web_front_chrome_tools_recentre],\n[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger] {\n\tdisplay: inline-flex;\n\talign-items: center;\n\tjustify-content: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-3);\n\ttransition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);\n}\n\n[raggu_web_front_chrome_tools_recentre]:hover,\n[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger]:hover,\n[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger][raggu_web_front_pop_open=\"true\"] {\n\tbackground: color-mix(in oklab, var(--text) 7%, transparent);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_chrome_tools_recentre] {\n\twidth: 2.5rem;\n}\n\n[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger] {\n\twidth: 3rem;\n\tflex-direction: column;\n\tgap: 5px;\n\tpadding: 0 0.25rem;\n}\n\n[raggu_web_front_chrome_tools_shown_badge] {\n\tfont-family: var(--font-mono);\n\tfont-size: 11px;\n\tline-height: 1;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_chrome_tools_ramp] {\n\tdisplay: block;\n\theight: 3px;\n\twidth: 2rem;\n\tborder-radius: 9999px;\n\tbackground: linear-gradient(to right, color-mix(in oklab, var(--text-3) 45%, transparent), var(--accent));\n}\n\n[raggu_web_front_chrome_tools_total_badge] {\n\tfont-family: var(--font-mono);\n\tfont-size: 9px;\n\tline-height: 1;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_chrome_tools_stats_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tpadding: 0.625rem 0.75rem;\n}\n\n[raggu_web_front_chrome_tools_numbers] {\n\tmargin-top: 1rem;\n\tdisplay: flex;\n\talign-items: flex-end;\n\tjustify-content: space-between;\n\tgap: 1rem;\n}\n\n[raggu_web_front_chrome_tools_shown_block],\n[raggu_web_front_chrome_tools_total_block] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[raggu_web_front_chrome_tools_total_block] {\n\talign-items: flex-end;\n\ttext-align: right;\n}\n\n[raggu_web_front_chrome_tools_shown_full] {\n\tfont-family: var(--font-mono);\n\tfont-size: 1.5rem;\n\tline-height: 1;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_chrome_tools_total_full] {\n\tfont-family: var(--font-mono);\n\tfont-size: 1.125rem;\n\tline-height: 1;\n\tfont-variant-numeric: tabular-nums;\n\tcolor: var(--text-2);\n}\n\n[raggu_web_front_chrome_tools_shown_caption],\n[raggu_web_front_chrome_tools_total_caption] {\n\tmargin-top: 0.5rem;\n}\n\n[raggu_web_front_chrome_tools_bar] {\n\tmargin-top: 1rem;\n\theight: 0.25rem;\n\twidth: 100%;\n\toverflow: hidden;\n\tborder-radius: 9999px;\n\tbackground: color-mix(in oklab, var(--text-3) 18%, transparent);\n}\n\n[raggu_web_front_chrome_tools_bar_fill] {\n\theight: 100%;\n\tborder-radius: 9999px;\n\tbackground: linear-gradient(to right, color-mix(in oklab, var(--text-3) 45%, transparent), var(--accent));\n\ttransition: width 500ms var(--ease-out-quint);\n}\n\n[raggu_web_front_chrome_tools_legend] {\n\tmargin-top: 0.75rem;\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_chrome_tools_action] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[raggu_web_front_chrome_tools_more],\n[raggu_web_front_chrome_tools_rest] {\n\tmargin-top: 1rem;\n\tdisplay: flex;\n\twidth: 100%;\n\talign-items: center;\n\tjustify-content: center;\n\tgap: 0.5rem;\n\tborder-radius: var(--radius-inset);\n\tpadding: 0.625rem 0.75rem;\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 600;\n\tcolor: var(--accent);\n\tborder: 1px solid color-mix(in oklab, var(--accent-line) 50%, transparent);\n\ttransition: background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_tools_more]:hover,\n[raggu_web_front_chrome_tools_rest]:hover {\n\tbackground: var(--accent-wash);\n}\n\n[raggu_web_front_chrome_tools_more][disabled],\n[raggu_web_front_chrome_tools_rest][disabled] {\n\tpointer-events: none;\n\topacity: 0.45;\n}\n\n[raggu_web_front_chrome_tools_more_icon],\n[raggu_web_front_chrome_tools_rest_icon] {\n\twidth: 1rem;\n\theight: 1rem;\n}\n\n[raggu_web_front_chrome_tools_paging_note],\n[raggu_web_front_chrome_tools_clipped_note] {\n\tmargin-top: 0.75rem;\n\tfont-size: 11px;\n\tline-height: 1.625;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_chrome_tools_rest_failed] {\n\tmargin-top: 0.5rem;\n\tfont-size: 11px;\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_chrome_tools_at_max] {\n\tmargin-top: 1rem;\n\tfont-size: 0.75rem;\n\tline-height: 1.625;\n\tcolor: var(--text-2);\n}\n");
+})($ || ($ = {}));
+//raggu/web/front/chrome/tools/-css/tools.view.css.ts
+;
 	($.$raggu_web_front_chrome_toggle) = class $raggu_web_front_chrome_toggle extends ($.$mol_button) {
 		Pane(){
 			const obj = new this.$.$mol_view();

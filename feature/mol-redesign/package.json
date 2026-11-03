@@ -175,6 +175,7 @@
     "$mol_svg_root",
     "$mol_svg",
     "$mol_svg_path",
+    "$raggu_web_front_chrome_tools",
     "$raggu_web_front_chrome_toggle",
     "$raggu_web_front_chrome_menu",
     "$raggu_web_front_settings",

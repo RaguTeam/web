@@ -394,6 +394,93 @@ $raggu_web_front_chrome_switcher $raggu_web_front_pop
 				text <= row_count* \
 	Row_skeleton* $raggu_web_front_skeleton
 
+$raggu_web_front_chrome_tools $mol_view
+	viewer $raggu_web_front_viewer
+	sub /
+		<= Recentre $mol_button
+			hint <= recentre_label @ \Recentre the cloud
+			attr *
+				^
+				aria-label <= recentre_label
+			click? <=> recentre? null
+			sub /
+				<= Recentre_icon $raggu_web_front_icon_recentre
+		<= Stats $raggu_web_front_pop
+			align \end
+			hint <= stats_label @ \Cloud size
+			bubble_width \19rem
+			trigger_content /
+				<= Shown_badge $mol_view
+					dom_name \span
+					attr *
+						^
+						class <= stale_class \
+					sub / <= shown_badge \—
+				<= Ramp $mol_view
+					dom_name \span
+				<= Total_badge $mol_view
+					dom_name \span
+					attr *
+						^
+						class <= stale_class
+					sub / <= total_badge \—
+			bubble_content /
+				<= Stats_body $mol_view
+					sub /
+						<= Stats_label $raggu_web_front_label
+							text <= stats_label
+						<= Numbers $mol_view
+							attr *
+								^
+								class <= stale_class
+							sub /
+								<= Shown_block $mol_view
+									sub /
+										<= Shown_full $mol_view
+											sub / <= shown_full \
+										<= Shown_caption $raggu_web_front_label
+											text <= shown_label @ \in the cloud
+								<= Total_block $mol_view
+									sub /
+										<= Total_full $mol_view
+											sub / <= total_full \
+										<= Total_caption $raggu_web_front_label
+											text <= total_label @ \in the corpus
+						<= Bar $mol_view
+							sub /
+								<= Bar_fill $mol_view
+									style *
+										width <= bar_width \0%
+						<= Legend $raggu_web_front_text
+							text <= legend_label @ \Brightness follows how connected an entity is.
+						<= Action $mol_view
+							sub <= action /
+	More $mol_button
+		enabled <= more_enabled true
+		click? <=> more? null
+		sub /
+			<= More_icon $raggu_web_front_icon_plus
+			<= more_text \
+	Rest $mol_button
+		enabled <= rest_enabled true
+		click? <=> rest? null
+		sub /
+			<= Rest_icon $raggu_web_front_icon_plus
+			<= rest_text \
+	Paging_note $raggu_web_front_text
+		text <= paging_label @ \The gateway has no paging and caps a request at 5000, so the rest is fetched community by community and stitched together here.
+	Rest_failed $raggu_web_front_text
+		text <= rest_failed_label @ \Could not load the rest.
+	Clipped_note $raggu_web_front_text
+		text <= clipped_text \
+	At_max $raggu_web_front_text
+		text <= at_max_label @ \This is everything the gateway will return in one request.
+	loading_label @ \Loading
+	load_more_label @ \Load {n} more
+	load_rest_label @ \Load the rest of the corpus
+	loading_rest_label @ \Loading… {n}%
+	clipped_label @ \{n} communities are larger than one request, so those came back clipped.
+
 $raggu_web_front_chrome_toggle $mol_button
 	active false
 	label \

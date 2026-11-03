@@ -31,6 +31,8 @@
 			"mol/svg/path/path.view.tree": 0,
 			"raggu/web/front/icon/-css/icon.view.tree": 0,
 			"raggu/web/front/chrome/switcher/-css/switcher.view.tree": 0,
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/chrome/tools/-css/tools.view.tree": 0,
 			"raggu/web/front/chrome/toggle/toggle.view.tree": 0,
 			"raggu/web/front/chrome/toggle/-css/toggle.view.tree": 0,
 			"raggu/web/front/chrome/menu/menu.view.tree": 0,
@@ -221,6 +223,8 @@
 			"raggu/web/front/icon/-css/icon.view.css.ts": 0,
 			"raggu/web/front/chrome/switcher/switcher.view.css": 0,
 			"raggu/web/front/chrome/switcher/-css/switcher.view.css.ts": 0,
+			"raggu/web/front/chrome/tools/tools.view.css": 0,
+			"raggu/web/front/chrome/tools/-css/tools.view.css.ts": 0,
 			"raggu/web/front/chrome/toggle/toggle.view.css": 0,
 			"raggu/web/front/chrome/toggle/-css/toggle.view.css.ts": 0,
 			"raggu/web/front/chrome/chrome.view.css": 0,
@@ -322,6 +326,7 @@
 			"raggu/web/front/pop/-view.tree/pop.view.tree.js": -1,
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -3,
 			"mol/svg/-view.tree/svg.view.tree.js": -1,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -1,
 			"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js": -3,
 			"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": -3,
 			"raggu/web/front/settings/-view.tree/settings.view.tree.js": -1,
@@ -423,6 +428,7 @@
 			"raggu/web/front/app/-view.tree/app.view.tree.js": -3,
 			"raggu/web/front/scene/scene.view.ts": -3,
 			"raggu/web/front/pop/-view.tree/pop.view.tree.js": -3,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
 			"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js": -4,
 			"raggu/web/front/settings/-view.tree/settings.view.tree.js": -3,
@@ -642,6 +648,8 @@
 			"mol/state/time/time.ts": -2,
 			"raggu/web/front/icon/-view.tree/icon.view.tree.js": -1,
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -1,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -1,
+			"raggu/web/front/chrome/tools/tools.view.ts": -2,
 			"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js": -1,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -1,
 			"raggu/web/front/chrome/chrome.view.ts": -2,
@@ -1141,6 +1149,7 @@
 			"raggu/web/front/pop": -9007199254740991,
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -3,
 			"raggu/web/front/icon": -9007199254740991,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
 			"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": -3,
 			"raggu/web/front/chrome": -9007199254740991,
 			"raggu/web/front/settings/-view.tree/settings.view.tree.js": -3,
@@ -1204,6 +1213,7 @@
 		"mol/button": {
 			"raggu/web/front/base/base.view.css": 0,
 			"raggu/web/front/pop/-view.tree/pop.view.tree.js": -3,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
 			"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js": -1,
 			"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": -1,
@@ -1286,6 +1296,7 @@
 			"raggu/web/front/api/api.ts": -2,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -3,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
 			"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": -3,
 			"raggu/web/front/chrome/menu/menu.view.ts": -3,
 			"raggu/web/front/settings/-view.tree/settings.view.tree.js": -3,
@@ -1487,6 +1498,7 @@
 		"raggu/web/front/viewer": {
 			"raggu/web/front/scene/engine.ts": -2,
 			"raggu/web/front/scene/-view.tree/scene.view.tree.js": -3,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
 			"raggu/web/front/app/-view.tree/app.view.tree.js": -3,
 			"raggu/web/front/corpus/-view.tree/corpus.view.tree.js": -3,
@@ -1514,6 +1526,7 @@
 			"raggu/web/front/viewer/viewer.ts": -2,
 			"raggu/web/front/data/data.ts": -3,
 			"raggu/web/front/chrome/switcher/switcher.view.ts": -3,
+			"raggu/web/front/chrome/tools/tools.view.ts": -3,
 			"raggu/web/front/chrome/menu/menu.view.ts": -2,
 			"raggu/web/front/settings/settings.view.ts": -3,
 			"raggu/web/front/home/card/card.view.ts": -3,
@@ -1720,6 +1733,8 @@
 		"raggu/web/front/pop": {
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -1,
 			"raggu/web/front/chrome/switcher/switcher.view.css": 0,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
+			"raggu/web/front/chrome/tools/tools.view.css": 0,
 			"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": -1,
 			"raggu/web/front/chrome/menu/menu.view.css": 0,
 			"raggu/web/front/chrome/chrome.view.css": 0,
@@ -1749,6 +1764,7 @@
 		},
 		"raggu/web/front/icon": {
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -3,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": -3,
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
 			"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js": -3,
 			"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": -3,
@@ -1862,6 +1878,32 @@
 		},
 		"raggu/web/front/chrome/switcher/switcher.locale=ru.json": {
 			"raggu/web/front/chrome/switcher": 0
+		},
+		"raggu/web/front/chrome/tools": {
+			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3
+		},
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": {
+			"raggu/web/front/chrome/tools/tools.view.tree": 1
+		},
+		"raggu/web/front/chrome/tools/tools.view.tree": {
+			"raggu/web/front/chrome/tools/tools.view.ts": 0,
+			"raggu/web/front/chrome/tools/tools.view.css": 0,
+			"raggu/web/front/chrome/tools": 0
+		},
+		"raggu/web/front/chrome/tools/tools.view.ts": {
+			"raggu/web/front/chrome/tools": 0
+		},
+		"raggu/web/front/chrome/tools/-css/tools.view.tree": {
+			"raggu/web/front/chrome/tools/-css/tools.view.css.ts": 0
+		},
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts": {
+			"raggu/web/front/chrome/tools/tools.view.css": 1
+		},
+		"raggu/web/front/chrome/tools/tools.view.css": {
+			"raggu/web/front/chrome/tools": 0
+		},
+		"raggu/web/front/chrome/tools/tools.locale=ru.json": {
+			"raggu/web/front/chrome/tools": 0
 		},
 		"raggu/web/front/chrome/toggle": {
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3
@@ -3526,6 +3568,7 @@
 			"raggu/web/front/mark": -3,
 			"raggu/web/front": -3,
 			"raggu/web/front/chrome/switcher": -3,
+			"raggu/web/front/chrome/tools": -3,
 			"raggu/web/front/icon": -3,
 			"mol/button": -3,
 			"mol/view": -3,
@@ -3775,6 +3818,45 @@
 		},
 		"raggu/web/front/chrome/switcher/-css/switcher.view.css.ts": {
 			"raggu/web/front/chrome/switcher/-css/switcher.view.tree": 0,
+			"mol/style/attach": 0
+		},
+		"raggu/web/front/chrome/tools/tools.view.tree": {
+			"mol/type/enforce": 0,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": 1
+		},
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": {
+			"mol/view/view": -1,
+			"mol/locale": -3,
+			"raggu/web/front/icon": -3,
+			"mol/button": -3,
+			"mol/view": -3,
+			"raggu/web/front": -3,
+			"raggu/web/front/pop": -3,
+			"raggu/web/front/viewer": -3,
+			"mol/mem": -1
+		},
+		"raggu/web/front/chrome/tools/tools.view.ts": {
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/lib": -3,
+			"mol/mem": -2
+		},
+		"raggu/web/front/chrome/tools": {
+			"raggu/web/front/chrome/tools/tools.view.ts": 0,
+			"raggu/web/front/chrome/tools/tools.view.css": 0,
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/chrome/tools/tools.locale=ru.json": 0
+		},
+		"raggu/web/front/chrome/tools/tools.view.css": {
+			"mol/style/attach": 0,
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/pop": 0,
+			"raggu/web/front/chrome/tools/-css/tools.view.css.ts": 1
+		},
+		"raggu/web/front/chrome/tools/-css/tools.view.tree": {
+			"mol/type/enforce": 0
+		},
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts": {
+			"raggu/web/front/chrome/tools/-css/tools.view.tree": 0,
 			"mol/style/attach": 0
 		},
 		"raggu/web/front/chrome/toggle/toggle.view.css": {
@@ -4968,6 +5050,20 @@
 		"raggu/web/front/chrome/switcher/-css/switcher.view.css.ts.js.map",
 		"raggu/web/front/chrome/switcher/switcher.view.css",
 		"raggu/web/front/chrome/switcher/switcher.locale=ru.json",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js",
+		"raggu/web/front/chrome/tools/tools.view.tree",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.locale=en.json",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js.map",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.d.ts",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.d.ts.map",
+		"raggu/web/front/chrome/tools/tools.view.ts",
+		"raggu/web/front/chrome/tools/tools.view.ts.js",
+		"raggu/web/front/chrome/tools/tools.view.ts.js.map",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts.js",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts.js.map",
+		"raggu/web/front/chrome/tools/tools.view.css",
+		"raggu/web/front/chrome/tools/tools.locale=ru.json",
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js",
 		"raggu/web/front/chrome/toggle/toggle.view.tree",
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.locale=en.json",
@@ -5807,6 +5903,20 @@
 		"raggu/web/front/chrome/switcher/-css/switcher.view.css.ts.js.map": 0,
 		"raggu/web/front/chrome/switcher/switcher.view.css": 2802,
 		"raggu/web/front/chrome/switcher/switcher.locale=ru.json": 217,
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": 9012,
+		"raggu/web/front/chrome/tools/tools.view.tree": 2624,
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.locale=en.json": 1125,
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js.map": 8586,
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.d.ts": 8696,
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.d.ts.map": 3319,
+		"raggu/web/front/chrome/tools/tools.view.ts": 2932,
+		"raggu/web/front/chrome/tools/tools.view.ts.js": 0,
+		"raggu/web/front/chrome/tools/tools.view.ts.js.map": 0,
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts": 4833,
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts.js": 0,
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts.js.map": 0,
+		"raggu/web/front/chrome/tools/tools.view.css": 4451,
+		"raggu/web/front/chrome/tools/tools.locale=ru.json": 1454,
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js": 838,
 		"raggu/web/front/chrome/toggle/toggle.view.tree": 258,
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.locale=en.json": 2,
@@ -6646,6 +6756,20 @@
 		"raggu/web/front/chrome/switcher/-css/switcher.view.css.ts.js.map",
 		"raggu/web/front/chrome/switcher/switcher.view.css",
 		"raggu/web/front/chrome/switcher/switcher.locale=ru.json",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js",
+		"raggu/web/front/chrome/tools/tools.view.tree",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.locale=en.json",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js.map",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.d.ts",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.d.ts.map",
+		"raggu/web/front/chrome/tools/tools.view.ts",
+		"raggu/web/front/chrome/tools/tools.view.ts.js",
+		"raggu/web/front/chrome/tools/tools.view.ts.js.map",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts.js",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts.js.map",
+		"raggu/web/front/chrome/tools/tools.view.css",
+		"raggu/web/front/chrome/tools/tools.locale=ru.json",
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js",
 		"raggu/web/front/chrome/toggle/toggle.view.tree",
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.locale=en.json",
@@ -7280,6 +7404,14 @@
 		"raggu/web/front/chrome/switcher/switcher.view.css",
 		"raggu/web/front/chrome/switcher/switcher.locale=ru.json",
 		"raggu/web/front/chrome/switcher",
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js",
+		"raggu/web/front/chrome/tools/tools.view.tree",
+		"raggu/web/front/chrome/tools/tools.view.ts",
+		"raggu/web/front/chrome/tools/-css/tools.view.tree",
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts",
+		"raggu/web/front/chrome/tools/tools.view.css",
+		"raggu/web/front/chrome/tools/tools.locale=ru.json",
+		"raggu/web/front/chrome/tools",
 		"raggu/web/front/chrome/toggle/-view.tree/toggle.view.tree.js",
 		"raggu/web/front/chrome/toggle/toggle.view.tree",
 		"raggu/web/front/chrome/toggle/-css/toggle.view.tree",
@@ -7409,15 +7541,15 @@
 	],
 	"sloc": {
 		"html": 56,
-		"ts": 10188,
-		"js": 9339,
-		"map": 154,
+		"ts": 10299,
+		"js": 9466,
+		"map": 155,
 		"md": 2545,
 		"CNAME": 1,
 		"LICENSE": 164,
-		"tree": 1819,
-		"json": 492,
-		"css": 3557,
+		"tree": 1905,
+		"json": 507,
+		"css": 3722,
 		"tsx": 400,
 		"Caddyfile": 25,
 		"yml": 171
@@ -8958,6 +9090,7 @@
 			"raggu/web/front/mark": -3,
 			"raggu/web/front": -3,
 			"raggu/web/front/chrome/switcher": -3,
+			"raggu/web/front/chrome/tools": -3,
 			"raggu/web/front/icon": -3,
 			"mol/button": -3,
 			"mol/view": -3,
@@ -9235,6 +9368,50 @@
 			"mol/type/enforce": 0
 		},
 		"raggu/web/front/chrome/switcher/switcher.locale=ru.json": {},
+		"raggu/web/front/chrome/tools": {
+			"raggu/web/front/chrome/tools/tools.view.ts": 0,
+			"raggu/web/front/chrome/tools/tools.view.css": 0,
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/chrome/tools/tools.locale=ru.json": 0,
+			"raggu/web/front/chrome": -9007199254740991
+		},
+		"raggu/web/front/chrome/tools/tools.view.ts": {
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/chrome/tools": -1,
+			"raggu/web/front/lib": -3,
+			"mol/mem": -2
+		},
+		"raggu/web/front/chrome/tools/tools.view.tree": {
+			"mol/type/enforce": 0,
+			"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": 1
+		},
+		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": {
+			"raggu/web/front/chrome/tools": -1,
+			"mol/view/view": -1,
+			"mol/locale": -3,
+			"raggu/web/front/icon": -3,
+			"mol/button": -3,
+			"mol/view": -3,
+			"raggu/web/front": -3,
+			"raggu/web/front/pop": -3,
+			"raggu/web/front/viewer": -3,
+			"mol/mem": -1
+		},
+		"raggu/web/front/chrome/tools/tools.view.css": {
+			"mol/style/attach": 0,
+			"raggu/web/front/chrome/tools/tools.view.tree": 0,
+			"raggu/web/front/chrome/tools": 0,
+			"raggu/web/front/pop": 0,
+			"raggu/web/front/chrome/tools/-css/tools.view.css.ts": 1
+		},
+		"raggu/web/front/chrome/tools/-css/tools.view.css.ts": {
+			"raggu/web/front/chrome/tools/-css/tools.view.tree": 0,
+			"mol/style/attach": 0
+		},
+		"raggu/web/front/chrome/tools/-css/tools.view.tree": {
+			"mol/type/enforce": 0
+		},
+		"raggu/web/front/chrome/tools/tools.locale=ru.json": {},
 		"raggu/web/front/chrome/toggle": {
 			"raggu/web/front/chrome/toggle/toggle.view.css": 0,
 			"raggu/web/front/chrome/toggle/toggle.view.tree": 0,
