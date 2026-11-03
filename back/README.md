@@ -47,7 +47,7 @@ uv run --project back uvicorn ragu_web_api.main:app --reload --port 8000
 галерея и чат отдают 502/503 — запасного пути нет намеренно.
 
 Страниц бэкенд не отдаёт: `/` ведёт на Swagger (`/docs`). Сайт лежит в
-`front/ragu-site` и публикуется на GitHub Pages.
+`front` (модули $mol, вход `front/app`) и публикуется на GitHub Pages.
 
 ## Настройки
 
@@ -99,7 +99,7 @@ bash back/scripts/regen-openapi.sh
 ```
 
 Руками его не править. Сайт держит свои типы в
-`front/ragu-site/apps/ragu-site/src/api/types.ts`, их правят вручную. Спецификация хранится с LF, а `.gitattributes`
+`front/graph/types.ts`, их правят вручную. Спецификация хранится с LF, а `.gitattributes`
 ставит `* -text`, так что ничего не нормализуется: дамп через редирект оболочки
 на Windows даёт CRLF и превращает весь файл в диф. Скрипт пишет его из Python с
 явным `newline="\n"` именно поэтому.

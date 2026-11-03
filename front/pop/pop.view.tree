@@ -1,0 +1,34 @@
+$raggu_web_front_pop $mol_view
+	showed? false
+	close? null
+	align \start
+	offset 10
+	bubble_width \auto
+	attr *
+		^
+		raggu_web_front_pop_showed <= showed?
+	sub /
+		<= Trigger $mol_button
+			hint <= hint \
+			attr *
+				^
+				aria-label <= hint
+				aria-expanded <= showed?
+				raggu_web_front_pop_open <= showed?
+			click? <=> toggle? null
+			sub <= trigger_content /$mol_view_content
+		<= Bubble $mol_view
+			attr *
+				^
+				popover \manual
+			style *
+				^
+				width <= bubble_width
+			event *
+				^
+				keydown? <=> bubble_keydown? null
+			sub /
+				<= Glass $raggu_web_front_glass
+					solid true
+				<= Content $mol_view
+					sub <= bubble_content /$mol_view_content

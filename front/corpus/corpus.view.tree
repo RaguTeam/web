@@ -1,0 +1,42 @@
+$raggu_web_front_corpus $mol_view
+	viewer $raggu_web_front_viewer
+	attr *
+		^
+		raggu_web_front_corpus_chatting <= chat_open false
+		raggu_web_front_corpus_graphing <= graph_open true
+		raggu_web_front_corpus_hint_only <= hint_only true
+	sub /
+		<= Spacer $mol_view
+		<= Row $mol_view
+			sub <= row /
+	Graph $mol_view
+		sub <= graph_column /
+	Controls $raggu_web_front_corpus_controls
+		viewer <= viewer
+	Stage $mol_view
+		sub <= stage_content /
+	Failed $mol_view
+		sub /
+			<= Failed_glass $raggu_web_front_glass
+			<= Failed_title $raggu_web_front_text
+				text <= failed_title @ \The graph could not be loaded.
+			<= Failed_hint $raggu_web_front_text
+				text <= failed_hint @ \The API did not answer. It may be waking up — try again in a moment.
+			<= Failed_retry $mol_button
+				click? <=> retry? null
+				sub / <= retry_label @ \Try again
+	Cold $raggu_web_front_corpus_loader
+		label <= loading_label @ \Laying out the graph
+		percent <= percent \
+	Warm $raggu_web_front_corpus_loader
+		quiet true
+		label <= loading_label
+	Compact $raggu_web_front_corpus_detail
+		viewer <= viewer
+		dense true
+	Detail $raggu_web_front_corpus_detail
+		viewer <= viewer
+		hint true
+		waiting <= cold false
+	Chat $raggu_web_front_corpus_chat
+		viewer <= viewer

@@ -1,0 +1,11 @@
+{
+	"$raggu_web_front_corpus_detail_ask_label": "Спросить про эту сущность",
+	"$raggu_web_front_corpus_detail_ask_template": "Расскажи про сущность «{label}» из графа знаний.",
+	"$raggu_web_front_corpus_detail_close_label": "Закрыть",
+	"$raggu_web_front_corpus_detail_entity_label": "Сущность",
+	"$raggu_web_front_corpus_detail_failed_text": "API не ответил. Возможно, он просыпается — попробуйте через минуту.",
+	"$raggu_web_front_corpus_detail_hint_text": "Выберите точку в облаке",
+	"$raggu_web_front_corpus_detail_hint_title": "У каждой сущности есть описание, связи и фрагменты, из которых её достали.",
+	"$raggu_web_front_corpus_detail_provenance_label": "Фрагменты-источники",
+	"$raggu_web_front_corpus_detail_relations_label": "Связи ({n})"
+}

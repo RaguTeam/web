@@ -1,0 +1,16 @@
+$raggu_web_front_home_constellation $mol_svg_root
+	seed \
+	nodes 0
+	edges 0
+	view_box \0 0 100 100
+	aspect \xMidYMid slice
+	attr *
+		^
+		aria-hidden \true
+	sub /
+		<= Links $mol_svg_path
+			geometry <= links \
+		<= Points $mol_svg_path
+			geometry <= points \
+		<= Hubs $mol_svg_path
+			geometry <= hubs \

@@ -1,0 +1,124 @@
+$raggu_web_front_lib_names $mol_object
+	entity_AGE @ \Age
+	entity_ANATOMICAL_STRUCTURE @ \Anatomical structure
+	entity_ANATOMICAL_SYSTEM @ \Anatomical system
+	entity_ANATOMY @ \Anatomy
+	entity_ATTRIBUTE @ \Attribute
+	entity_AWARD @ \Award
+	entity_BEHAVIOR @ \Behavior
+	entity_BIOLOGICAL_ENTITY @ \Biological entity
+	entity_BIOLOGICAL_PROCESS @ \Biological process
+	entity_BIOMATERIAL @ \Biomaterial
+	entity_CELL @ \Cell
+	entity_CELL_TYPE @ \Cell type
+	entity_CITY @ \City
+	entity_CLASSIFICATION_SYSTEM @ \Classification system
+	entity_CONCEPT @ \Concept
+	entity_CONDITION @ \Condition
+	entity_COUNTRY @ \Country
+	entity_CRIME @ \Crime
+	entity_DATE @ \Date
+	entity_DESCRIPTION @ \Description
+	entity_DISEASE @ \Disease
+	entity_DISEASE_OR_DISORDER @ \Disease or disorder
+	entity_DISTRICT @ \District
+	entity_DOCUMENT @ \Document
+	entity_DRUG_OR_CHEMICAL @ \Drug or chemical
+	entity_EVENT @ \Event
+	entity_FACILITY @ \Facility
+	entity_FAMILY @ \Family
+	entity_GENE @ \Gene
+	entity_GENE_MUTATION @ \Gene mutation
+	entity_GENE_OR_PROTEIN @ \Gene or protein
+	entity_GENETIC_TEST @ \Genetic test
+	entity_GROUP @ \Group
+	entity_HORMONE @ \Hormone
+	entity_IDEOLOGY @ \Ideology
+	entity_LANGUAGE @ \Language
+	entity_LAW @ \Law
+	entity_LOCATION @ \Location
+	entity_MEASUREMENT @ \Measurement
+	entity_MEASUREMENT_OR_OUTCOME @ \Measurement or outcome
+	entity_MEDICAL_CONDITION @ \Medical condition
+	entity_MONEY @ \Money
+	entity_NATIONALITY @ \Nationality
+	entity_NUMBER @ \Number
+	entity_ORDINAL @ \Ordinal
+	entity_ORGAN @ \Organ
+	entity_ORGANIZATION @ \Organization
+	entity_PATHOLOGICAL_ENTITY @ \Pathological entity
+	entity_PENALTY @ \Penalty
+	entity_PERCENT @ \Percent
+	entity_PERSON @ \Person
+	entity_PROCEDURE @ \Procedure
+	entity_PROCEDURE_OR_INTERVENTION @ \Procedure or intervention
+	entity_PROCESS @ \Process
+	entity_PRODUCT @ \Product
+	entity_PROFESSION @ \Profession
+	entity_PROTEIN @ \Protein
+	entity_PROTOCOL @ \Protocol
+	entity_RELIGION @ \Religion
+	entity_SOFTWARE @ \Software
+	entity_STATE_OR_PROV @ \State or prov
+	entity_SUBTYPE @ \Subtype
+	entity_SURGERY @ \Surgery
+	entity_SYMPTOM_OR_FINDING @ \Symptom or finding
+	entity_SYSTEM @ \System
+	entity_TEST @ \Test
+	entity_TIME @ \Time
+	entity_TREATMENT @ \Treatment
+	entity_WEBSITE @ \Website
+	entity_WORK_OF_ART @ \Work of art
+	relation_AFFECTED_BY @ \Affected by
+	relation_AFFECTS @ \Affects
+	relation_AGENT @ \Agent
+	relation_ALTERNATIVE_TO @ \Alternative to
+	relation_APPLICABLE_TO @ \Applicable to
+	relation_BASED_ON @ \Based on
+	relation_BIOMARKER @ \Biomarker
+	relation_CAUSE_OF @ \Cause of
+	relation_CELL_TYPE_PRESENT_IN_DISEASE @ \Cell type present in disease
+	relation_COMBINED_WITH @ \Combined with
+	relation_CONTAINS @ \Contains
+	relation_COVERED_BY @ \Covered by
+	relation_DIAGNOSED_WITH @ \Diagnosed with
+	relation_DOCUMENT_SOURCE @ \Document source
+	relation_EXAMPLE_OF @ \Example of
+	relation_EXPRESSED_IN @ \Expressed in
+	relation_GENE_ASSOCIATION @ \Gene association
+	relation_HAS_CAUSE @ \Has cause
+	relation_HAS_EFFECT @ \Has effect
+	relation_INCIDENCE_INCREASES @ \Incidence increases
+	relation_INSTANCE_OF @ \Instance of
+	relation_INVOLVES @ \Involves
+	relation_INVOLVES_REMOVAL @ \Involves removal
+	relation_INVOLVES_TEST @ \Involves test
+	relation_LOCATED_IN @ \Located in
+	relation_LOCATION @ \Location
+	relation_LOCATION_OF_DISEASE @ \Location of disease
+	relation_MANAGEMENT_STRATEGY @ \Management strategy
+	relation_PART_OF @ \Part of
+	relation_PARTICIPANT_IN @ \Participant in
+	relation_PRECEDES @ \Precedes
+	relation_PRODUCES @ \Produces
+	relation_PRODUCT @ \Product
+	relation_RELATED_TO @ \Related to
+	relation_REMOVES @ \Removes
+	relation_REPORTED_TO @ \Reported to
+	relation_RISK_FACTOR @ \Risk factor
+	relation_RISK_FACTOR_FOR @ \Risk factor for
+	relation_SIDE_EFFECT @ \Side effect
+	relation_SPREAD_TO @ \Spread to
+	relation_STARTS_IN @ \Starts in
+	relation_SUBCLASS_OF @ \Subclass of
+	relation_SUPERCLASS_OF @ \Superclass of
+	relation_SYNONYM @ \Synonym
+	relation_TARGET_OF @ \Target of
+	relation_TARGETS @ \Targets
+	relation_TREATMENT @ \Treatment
+	relation_TREATMENT_FOR @ \Treatment for
+	relation_TREATS @ \Treats
+	relation_TYPE_OF @ \Type of
+	relation_USED_FOR @ \Used for
+	relation_USED_IN @ \Used in
+	relation_USES @ \Uses

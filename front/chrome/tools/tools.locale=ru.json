@@ -1,0 +1,15 @@
+{
+	"$raggu_web_front_chrome_tools_at_max_label": "Это всё, что шлюз отдаёт за один запрос.",
+	"$raggu_web_front_chrome_tools_clipped_label": "{n} сообществ больше одного запроса, они пришли срезом.",
+	"$raggu_web_front_chrome_tools_legend_label": "Яркость показывает, насколько сущность связана с остальными.",
+	"$raggu_web_front_chrome_tools_load_more_label": "Загрузить ещё {n}",
+	"$raggu_web_front_chrome_tools_load_rest_label": "Догрузить остальной корпус",
+	"$raggu_web_front_chrome_tools_loading_label": "Загрузка",
+	"$raggu_web_front_chrome_tools_loading_rest_label": "Загружаем… {n}%",
+	"$raggu_web_front_chrome_tools_paging_label": "У шлюза нет пагинации, а один запрос ограничен 5000 — поэтому остальное догружается по сообществам и сшивается здесь.",
+	"$raggu_web_front_chrome_tools_recentre_label": "Вернуть облако в центр",
+	"$raggu_web_front_chrome_tools_rest_failed_label": "Не удалось догрузить остальное.",
+	"$raggu_web_front_chrome_tools_shown_label": "в облаке",
+	"$raggu_web_front_chrome_tools_stats_label": "Размер облака",
+	"$raggu_web_front_chrome_tools_total_label": "в корпусе"
+}

@@ -1,4 +1,4 @@
-name: ragu-site
+name: $raggu_web_front_app
 
 permissions: write-all
 
@@ -6,80 +6,56 @@ on:
     workflow_dispatch:
     push:
     pull_request:
+    delete:
 
 concurrency:
     group: deploy-${{ github.ref }}
     cancel-in-progress: true
 
 
-# Публикуется только новый сайт (front/ragu-site) в /web/site/. Корень /web/
-# уводит на него. Старое приложение на $mol снято с публикации 04.11.2026, его
-# код лежит в ветке archive/old-app.
 jobs:
     build:
+        if: github.event_name != 'delete'
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: b-on-g/mam_build2@master
+              with:
+                  package: "raggu/web"
+                  modules: 'front/app'
+
+            - name: Deploy main
+              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+              uses: hyoo-ru/gh-deploy@v4.4.1
+              with:
+                  folder: "raggu/web/front/app/-"
+                  clean-exclude: |
+                      feature
+
+            - name: Deploy feature branch
+              if: startsWith(github.ref, 'refs/heads/feature/')
+              uses: hyoo-ru/gh-deploy@v4.4.1
+              with:
+                  folder: "raggu/web/front/app/-"
+                  target-folder: ${{ github.ref_name }}
+
+    cleanup:
+        if: github.event_name == 'delete' && startsWith(github.event.ref, 'feature/')
         runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
               with:
-                  version: 11.20.0
+                  ref: gh-pages
 
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 26
-                  cache: pnpm
-                  cache-dependency-path: front/ragu-site/pnpm-lock.yaml
-
-            # Переменная в Settings → Variables: RAGU_API — адрес бэкенда, по
-            # умолчанию https://ragu-back.duckdns.org, зашитый в код.
-            - name: Build site
-              working-directory: front/ragu-site
-              env:
-                  RAGU_BASE: /web/site/
-                  # Только на main: превью и PR собираются со старым адресом.
-                  RAGU_API: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && vars.RAGU_API || '' }}
+            - name: Remove feature folder
               run: |
-                  # Пустая VITE_RAGU_API дала бы относительный адрес API, поэтому
-                  # задаём её только вместе с переменной.
-                  RAGU_API="$(printf '%s' "$RAGU_API" | tr -d '[:space:]')"
-                  if [ -n "$RAGU_API" ]; then export VITE_RAGU_API="${RAGU_API%/}"; fi
-                  pnpm install --frozen-lockfile
-                  pnpm --filter @ugar/ragu-site build
-
-            # Корень gh-pages собирается заново из одной страницы-редиректа.
-            # Деплой чистит всё, чего нет в папке, кроме site/, и так с
-            # gh-pages уходят файлы старого приложения.
-            - name: Root redirect
-              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-              run: |
-                  mkdir -p pages-root
-                  touch pages-root/.nojekyll
-                  cat > pages-root/index.html <<'HTML'
-                  <!doctype html>
-                  <html lang="ru">
-                  <head>
-                  <meta charset="utf-8">
-                  <title>RAGU</title>
-                  <meta http-equiv="refresh" content="0; url=site/">
-                  <script>location.replace('site/')</script>
-                  </head>
-                  <body><a href="site/">RAGU</a></body>
-                  </html>
-                  HTML
-
-            - name: Deploy root
-              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-              uses: hyoo-ru/gh-deploy@v4.4.1
-              with:
-                  folder: pages-root
-                  clean-exclude: |
-                      site
-
-            - name: Deploy site
-              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-              uses: hyoo-ru/gh-deploy@v4.4.1
-              with:
-                  folder: "front/ragu-site/apps/ragu-site/dist"
-                  target-folder: site
+                  BRANCH_NAME="${{ github.event.ref }}"
+                  FOLDER="feature/${BRANCH_NAME#feature/}"
+                  if [ -d "$FOLDER" ]; then
+                    git config user.name "github-actions[bot]"
+                    git config user.email "github-actions[bot]@users.noreply.github.com"
+                    git rm -rf "$FOLDER"
+                    git commit -m "Clean up preview for deleted branch: $BRANCH_NAME"
+                    git push
+                  fi

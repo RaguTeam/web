@@ -6,27 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 RAGU — GraphRAG demo: a 3D knowledge-graph explorer and a chat with answer traces over prebuilt corpora. Two independently-deployed halves in one repo:
 
-- **`front/ragu-site/`** — the site: React + Vite in a pnpm workspace (`apps/ragu-site`), published to GitHub Pages at `/web/site/`. HTTP only, no domain logic.
+- **`front/`** — the site on `$mol`/MAM: landing, a three.js cloud, chat with streaming. Not a standalone npm project: it is checked out inside a [MAM monorepo](https://github.com/hyoo-ru/mam) as `raggu/web`, entry module `front/app`. Published to GitHub Pages at `/web/`. HTTP only, no domain logic.
 - **`back/`** — a standalone FastAPI gateway (`ragu-web-api`), a BFF in front of RAGU's own `ragu-api` service. Deployed with Docker Compose on the stand.
 
-They talk over `/api/v1`. The contract is `back/openapi.json`; the site keeps its own narrow, hand-written types in `src/api/types.ts`.
-
-The old `$mol`/MAM app that used to live in `front/` was taken out of `main` and off GitHub Pages on 2026-11-04. Its code is in the `archive/old-app` branch; do not bring changes back into it.
+They talk over `/api/v1`. The contract is `back/openapi.json`; the site keeps its own narrow, hand-written types in `front/graph/types.ts`.
 
 ## Commands
 
-### Site (`front/ragu-site/`)
+### Site (`front/`)
 
 ```bash
-cd front/ragu-site
-pnpm install
-pnpm --filter @ugar/ragu-site dev      # http://localhost:5173
-pnpm --filter @ugar/ragu-site check    # tsc, app + tests
-pnpm --filter @ugar/ragu-site test     # tsx --test, expect 45 passing
-pnpm --filter @ugar/ragu-site build    # check + vite build
+# one-time, from the MAM repo root
+git clone https://github.com/hyoo-ru/mam.git && cd mam
+git clone https://github.com/RaguTeam/web.git raggu/web
+npm install
+cd raggu/web/front/app && npm start         # builds with bog/build2 into front/app/-/
+node raggu/web/front/app/-/node.test.js     # from the MAM root, expect "All tests passed"
 ```
 
-The dev server is pinned to **5173**: the gateway's CORS allowlist names that origin. `VITE_RAGU_API` points the site at another gateway (default `https://ragu-back.duckdns.org`); `RAGU_BASE` sets the sub-path for the build. Tests are pure `node:test` over modules (layout, framing, SSE parser, rich text, settings migration), no DOM. See [front/ragu-site/README.md](front/ragu-site/README.md) for how the cloud, layout and chat are built.
+Open `raggu/web/front/app/-/test.html`. Arguments in the hash: `#!mock=1` answers every request from recorded gateway responses in `front/mock/fixtures` (no backend at all), `#!api=<url>` points the site at another gateway (default `https://ragu-back.duckdns.org`). Build with `MAM_PULL_DISABLED=1` locally, otherwise the builder runs `git pull` over the tree.
+
+Modules: `base` (tokens, preflight, keyframes), `chrome` (top islands), `home` (landing), `corpus` (controls, detail card, chat), `scene` (three.js engine and shaders), `graph` (types, model, Barnes–Hut layout in a worker), `viewer` (state of the open corpus, chat streaming), `data` (fetches), `mock`, `lib` (formatting, settings, citations, SSE, rich text). English lives in `*.view.tree` as `@` strings, Russian in `*.locale=ru.json` next to each module.
 
 ### Backend (`back/`)
 
@@ -49,7 +49,7 @@ After changing any Pydantic schema or route, regenerate the contract:
 ```bash
 bash back/scripts/regen-openapi.sh
 ```
-It dumps `back/openapi.json` straight from `create_app()` (no running server). It skips with exit 0 when Python or `ragu_web_api` is unavailable, so a git hook can call it safely. Override the interpreter with `PYTHON=…` if autodetection picks the wrong one. If the change is visible to the site, update `front/ragu-site/apps/ragu-site/src/api/types.ts` by hand.
+It dumps `back/openapi.json` straight from `create_app()` (no running server). It skips with exit 0 when Python or `ragu_web_api` is unavailable, so a git hook can call it safely. Override the interpreter with `PYTHON=…` if autodetection picks the wrong one. If the change is visible to the site, update `front/graph/types.ts` by hand.
 
 `back/openapi.json` is generated — never hand-edit it. Note the spec is stored with **LF** endings and `.gitattributes` sets `* -text`, so nothing normalizes them: dumping it through a shell redirect on Windows produces CRLF and turns the whole 2000-line file into a diff. The script writes it from Python with an explicit `newline="
 "` for that reason — do the same if regenerating by hand.
@@ -94,4 +94,4 @@ There is still no database, no live indexing, no job queue and no GPU worker. `G
 
 ### CI/Deploy
 
-[.github/workflows/deploy.yml](.github/workflows/deploy.yml) builds `front/ragu-site` on every push and PR. On `main` it publishes the site to `gh-pages` under `site/` and replaces the root with a single redirect page to `site/`; the root deploy cleans everything else, which is how the old app's files left `gh-pages`. Repository variable `RAGU_API` overrides the gateway address for the `main` build. The backend has no CI/deploy wiring here — it's deployed via the Docker Compose stack (`Caddyfile` + `docker-compose.yml`).
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml) builds `front/app` with [b-on-g/mam_build2](https://github.com/b-on-g/mam_build2) (MAM checkout + `bog/build2`) on every push and PR. On `main` the bundle goes to the root of `gh-pages`; `feature/*` branches are published to `feature/<branch>/` and removed when the branch is deleted. Another gateway is picked at runtime with `#!api=<url>`, not at build time. The backend has no CI/deploy wiring here — it's deployed via the Docker Compose stack (`Caddyfile` + `docker-compose.yml`).

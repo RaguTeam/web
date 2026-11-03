@@ -1,0 +1,9 @@
+$raggu_web_front_rich $mol_view
+	text \
+	attr *
+		^
+		raggu_web_front_rich_html <= has_html false
+		raggu_web_front_rich_plain <= plain true
+	field *
+		^
+		innerHTML <= html \

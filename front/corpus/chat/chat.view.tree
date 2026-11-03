@@ -1,0 +1,254 @@
+$raggu_web_front_corpus_chat $mol_view
+	dom_name \section
+	viewer $raggu_web_front_viewer
+	attr *
+		^
+		aria-label <= chat_label @ \Chat
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Head $mol_view
+			dom_name \header
+			sub /
+				<= Head_label $raggu_web_front_label
+					text <= chat_label
+				<= Head_tools $mol_view
+					sub <= head_tools /
+		<= Scroll $mol_view
+			sub <= scroll_content /
+		<= Starters $mol_view
+			dom_name \ul
+			sub <= starters /
+		<= Form $mol_view
+			dom_name \form
+			event *
+				submit? <=> submit? null
+			sub /
+				<= Input $mol_view
+					dom_name \textarea
+					attr *
+						^
+						rows 1
+						placeholder <= placeholder @ \Ask anything about this corpus
+						aria-label <= placeholder
+					field *
+						^
+						value <= draft? \
+					event *
+						input? <=> draft_input? null
+						keydown? <=> draft_key? null
+				<= Action $mol_view
+					sub <= action /
+	Engine $raggu_web_front_label
+		dom_name \span
+		text <= engine \mix
+	Sweep $mol_button
+		hint <= sweep_label @ \Clear the thread
+		attr *
+			^
+			aria-label <= sweep_label
+		click? <=> sweep? null
+		sub /
+			<= Sweep_icon $raggu_web_front_icon_sweep
+	Hide $mol_button
+		hint <= hide_label @ \Hide the chat
+		attr *
+			^
+			aria-label <= hide_label
+		click? <=> hide? null
+		sub /
+			<= Hide_icon $raggu_web_front_icon_close
+	Empty $mol_view
+		sub /
+			<= Empty_title $raggu_web_front_text
+				text <= empty_title @ \No messages yet.
+			<= Empty_hint $raggu_web_front_text
+				text <= empty_hint @ \Start with one of these, or write your own.
+	Thread $mol_view
+		dom_name \ol
+		sub <= thread /
+	User* $mol_view
+		dom_name \li
+		sub /
+			<= User_text* $raggu_web_front_text
+				text <= entry_text* \
+	Agent* $mol_view
+		dom_name \li
+		sub /
+			<= Agent_label* $raggu_web_front_label
+				text <= agent_label @ \RAGU
+			<= Answer* $mol_view
+				sub <= answer* /
+			<= Agent_sources* $mol_view
+				sub <= agent_sources* /
+	Streaming $mol_view
+		dom_name \li
+		sub /
+			<= Streaming_label $raggu_web_front_label
+				text <= agent_label
+			<= Streaming_answer $mol_view
+				sub <= streaming_answer /
+	Caret $mol_view
+		dom_name \span
+		attr *
+			^
+			aria-hidden \true
+	Strong* $mol_view
+		dom_name \strong
+		sub / <= strong_text* \
+	Ref* $mol_button
+		hint <= citation_label @ \Show in the graph
+		attr *
+			^
+			class \ref
+			data-ref <= ref_id* \
+		click? <=> ref_pick*? null
+		sub / <= ref_text* \
+	Ref_muted* $mol_view
+		dom_name \span
+		attr *
+			^
+			class \ref ref--muted
+			data-ref <= ref_id*
+		sub / <= ref_text*
+	Pending $mol_view
+		dom_name \li
+		sub /
+			<= Pending_box $mol_view
+				sub /
+					<= Pending_head $mol_view
+						sub /
+							<= Ping $mol_view
+								dom_name \span
+								sub /
+									<= Ping_wave $mol_view
+										dom_name \span
+									<= Ping_dot $mol_view
+										dom_name \span
+							<= Thinking $raggu_web_front_text
+								text <= thinking_label @ \Retrieving and composing
+							<= Elapsed $raggu_web_front_label
+								dom_name \span
+								text <= elapsed \
+					<= Thinking_hint $raggu_web_front_text
+						text <= thinking_hint @ \First the corpus is searched, then the model starts writing.
+					<= Bars $mol_view
+						sub /
+							<= Bar1 $raggu_web_front_skeleton
+							<= Bar2 $raggu_web_front_skeleton
+							<= Bar3 $raggu_web_front_skeleton
+	Failure $mol_view
+		dom_name \li
+		sub <= failure_content /
+			<= Failure_title $raggu_web_front_text
+				text <= failure_text \
+			<= Failure_hint $raggu_web_front_text
+				text <= failure_hint @ \The API did not answer. It may be waking up — try again in a moment.
+	Starter* $mol_view
+		dom_name \li
+		sub /
+			<= Starter_button* $mol_button
+				click? <=> starter_send*? null
+				sub / <= starter_text* \
+	Send $mol_button
+		hint <= send_label @ \Send
+		attr *
+			^
+			type \submit
+			aria-label <= send_label
+		enabled <= send_enabled false
+		click? <=> send_click? null
+		sub /
+			<= Send_icon $raggu_web_front_icon_send
+	Stop $mol_button
+		hint <= stop_label @ \Stop
+		attr *
+			^
+			aria-label <= stop_label
+		click? <=> stop? null
+		sub /
+			<= Stop_icon $raggu_web_front_icon_stop
+	Sources* $raggu_web_front_disclosure
+		label <= sources_label @ \Sources
+		hint <= sources_hint @ \What the answer read
+		count_text <= sources_count* \
+		actions /
+			<= Meta* $raggu_web_front_pop
+				hint <= meta_label @ \How this answer was produced
+				bubble_width \17rem
+				trigger_content /
+					<= Meta_icon* $raggu_web_front_icon_info
+				bubble_content /
+					<= Meta_body* $mol_view
+						sub <= meta_body* /
+		body <= sources_body* /
+	Meta_title* $raggu_web_front_label
+		text <= meta_label
+	Meta_rows* $mol_view
+		dom_name \dl
+		sub <= meta_rows* /
+	Meta_row* $mol_view
+		sub /
+			<= Meta_row_label* $raggu_web_front_label
+				dom_name \dt
+				text <= meta_row_label* \
+			<= Meta_row_value* $mol_view
+				dom_name \dd
+				sub / <= meta_row_value* \
+	Meta_energy* $mol_view
+		sub /
+			<= Meta_energy_label* $raggu_web_front_label
+				dom_name \span
+				text <= energy_label @ \energy
+			<= Meta_energy_value* $mol_view
+				dom_name \span
+				sub / <= meta_energy* \
+	Meta_plan* $mol_view
+		sub /
+			<= Meta_plan_label* $raggu_web_front_label
+				text <= plan_label @ \sub-questions
+			<= Meta_plan_list* $mol_view
+				dom_name \ol
+				sub <= meta_plan* /
+	Plan_item* $mol_view
+		dom_name \li
+		sub /
+			<= Plan_index* $mol_view
+				dom_name \span
+				sub / <= plan_index* \
+			<= plan_text* \
+	Source_group* $mol_view
+		sub /
+			<= Source_group_label* $raggu_web_front_label
+				text <= source_group_label* \
+			<= Source_group_list* $mol_view
+				dom_name \ul
+				sub <= source_group_items* /
+	Source_entity* $mol_button
+		click? <=> source_entity_pick*? null
+		sub / <= source_entity_text* \
+	Source_relation* $mol_view
+		dom_name \li
+		sub / <= source_relation_text* \
+	Source_chunk* $mol_view
+		dom_name \li
+		sub /
+			<= Source_chunk_text* $raggu_web_front_text
+				text <= source_chunk_text* \
+	No_sources* $raggu_web_front_text
+		text <= no_sources_label @ \The answer came back without a trace.
+	entities_label @ \entities
+	relations_label @ \relations
+	chunks_label @ \chunks
+	engine_label @ \engine
+	top_k_label @ \top k
+	rerank_label @ \rerank
+	retrieval_label @ \retrieval
+	generation_label @ \generation
+	total_label @ \total
+	on_label @ \On
+	off_label @ \Off
+	elapsed_label @ \{n}s elapsed
+	failed_label @ \The request failed.
+	rate_limited_label @ \Too many questions in a minute. Wait a little and ask again.
+	client_daily_limit_label @ \You have asked as many questions as allowed today. Come back tomorrow.
+	daily_limit_label @ \The demo has used up its questions for today. Come back tomorrow.

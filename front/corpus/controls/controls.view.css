@@ -1,0 +1,267 @@
+[raggu_web_front_corpus_controls] {
+	pointer-events: auto;
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--radius-island);
+	padding: 0.375rem;
+}
+
+[raggu_web_front_corpus_controls_filtering] > [raggu_web_front_glass] {
+	border-color: color-mix(in oklab, var(--accent-line) 70%, transparent);
+}
+
+[raggu_web_front_corpus_controls_bar] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+[raggu_web_front_corpus_controls_search] {
+	position: relative;
+	display: flex;
+	min-width: 13rem;
+	flex: 1;
+	align-items: center;
+}
+
+[raggu_web_front_corpus_controls_search_icon] {
+	pointer-events: none;
+	position: absolute;
+	left: 0.75rem;
+	color: var(--text-3);
+}
+
+[raggu_web_front_corpus_controls_search_input] {
+	width: 100%;
+	border-radius: var(--radius-inset);
+	border: 1px solid var(--edge);
+	background: color-mix(in oklab, var(--surface) 40%, transparent);
+	padding: 0.625rem 2.5rem 0.625rem 2.25rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: var(--text);
+	outline: none;
+	transition: border-color 200ms ease, background-color 200ms ease;
+}
+
+[raggu_web_front_corpus_controls_search_input]:focus {
+	border-color: var(--accent-line);
+	background: color-mix(in oklab, var(--surface) 70%, transparent);
+}
+
+[raggu_web_front_corpus_controls_search_input]:focus-visible {
+	outline: none;
+}
+
+[raggu_web_front_corpus_controls_search_clear] {
+	position: absolute;
+	right: 0.375rem;
+	display: inline-flex;
+	width: 1.75rem;
+	height: 1.75rem;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--radius-inset);
+	color: var(--text-3);
+	transition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);
+}
+
+[raggu_web_front_corpus_controls_search_clear]:hover {
+	background: color-mix(in oklab, var(--text) 7%, transparent);
+	color: var(--text);
+}
+
+[raggu_web_front_corpus_controls_search_clear_icon] {
+	width: 1rem;
+	height: 1rem;
+}
+
+[raggu_web_front_corpus_controls_filter_trigger] {
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	border-radius: var(--radius-inset);
+	padding: 0.625rem 0.75rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 500;
+	color: var(--text-2);
+	transition: color 200ms ease;
+}
+
+[raggu_web_front_corpus_controls_filter_trigger]:hover {
+	color: var(--text);
+}
+
+[raggu_web_front_corpus_controls_filter_active] [raggu_web_front_corpus_controls_filter_trigger] {
+	color: var(--accent);
+}
+
+[raggu_web_front_corpus_controls_filter_pane].filter-edge {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: inherit;
+	border: 1px solid var(--edge);
+	transition: border-color 200ms ease;
+}
+
+[raggu_web_front_corpus_controls_filter_count] {
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	line-height: 1rem;
+	font-variant-numeric: tabular-nums;
+}
+
+[raggu_web_front_corpus_controls_filter_count]:empty {
+	display: none;
+}
+
+[raggu_web_front_corpus_controls_filter_chevron] {
+	width: 0.875rem;
+	height: 0.875rem;
+	opacity: 0.6;
+}
+
+[raggu_web_front_corpus_controls_filter_bubble] {
+	border-radius: var(--radius-island);
+}
+
+[raggu_web_front_corpus_controls_filter_heading] {
+	padding: 0.5rem 0.75rem 0.25rem;
+}
+
+[raggu_web_front_corpus_controls_filter_list] {
+	display: flex;
+	flex-direction: column;
+	max-height: min(24rem, 50dvh);
+	overflow-y: auto;
+	padding: 0.25rem;
+	scrollbar-width: thin;
+	scrollbar-color: var(--edge-strong) transparent;
+}
+
+[raggu_web_front_corpus_controls_filter_clear] {
+	margin-top: 0.25rem;
+	width: 100%;
+	justify-content: center;
+	border-radius: var(--radius-inset);
+	padding: 0.5rem 0.625rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 500;
+	color: var(--text-3);
+	transition: background-color 200ms ease, color 200ms ease;
+}
+
+[raggu_web_front_corpus_controls_filter_clear]:hover {
+	background: var(--accent-wash);
+	color: var(--accent);
+}
+
+[raggu_web_front_corpus_controls_facet] {
+	display: grid;
+	width: 100%;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 0.625rem;
+	border-radius: var(--radius-inset);
+	padding: 0.5rem 0.625rem;
+	text-align: left;
+	transition: background-color 150ms ease;
+}
+
+[raggu_web_front_corpus_controls_facet]:hover {
+	background: color-mix(in oklab, var(--text) 6%, transparent);
+}
+
+[raggu_web_front_corpus_controls_facet][aria-pressed="true"] {
+	background: var(--accent-wash);
+}
+
+[raggu_web_front_corpus_controls_facet_box] {
+	display: block;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 3px;
+	background: var(--edge-strong);
+	transition: background-color 150ms ease;
+}
+
+[raggu_web_front_corpus_controls_facet][aria-pressed="true"] [raggu_web_front_corpus_controls_facet_box] {
+	background: var(--accent);
+}
+
+[raggu_web_front_corpus_controls_facet_name] {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: var(--text-2);
+}
+
+[raggu_web_front_corpus_controls_facet][aria-pressed="true"] [raggu_web_front_corpus_controls_facet_name] {
+	font-weight: 500;
+	color: var(--accent);
+}
+
+[raggu_web_front_corpus_controls_facet_count] {
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	line-height: 1rem;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-3);
+}
+
+[raggu_web_front_corpus_controls_summary] {
+	display: grid;
+	grid-template-rows: 0fr;
+	opacity: 0;
+	overflow: hidden;
+	padding: 0 0.5rem;
+	transition:
+		grid-template-rows 280ms var(--ease-out-quint),
+		opacity 280ms var(--ease-out-quint);
+}
+
+[raggu_web_front_corpus_controls_filtering] > [raggu_web_front_corpus_controls_summary] {
+	grid-template-rows: 1fr;
+	opacity: 1;
+}
+
+[raggu_web_front_corpus_controls_summary_line] {
+	display: flex;
+	min-height: 0;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 0.5rem;
+	padding-top: 0.625rem;
+	font-family: var(--font-mono);
+	font-size: 0.6875rem;
+	line-height: 1;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--text-3);
+}
+
+[raggu_web_front_corpus_controls_matches] {
+	color: var(--accent);
+}
+
+[raggu_web_front_corpus_controls_clear_all] {
+	text-decoration: underline;
+	text-decoration-color: var(--edge-strong);
+	text-underline-offset: 4px;
+	transition: color 200ms ease;
+	text-transform: inherit;
+}
+
+[raggu_web_front_corpus_controls_clear_all]:hover {
+	color: var(--accent);
+}

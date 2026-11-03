@@ -1,0 +1,108 @@
+$raggu_web_front_corpus_detail $mol_view
+	dom_name \aside
+	viewer $raggu_web_front_viewer
+	dense false
+	hint false
+	waiting false
+	attr *
+		^
+		aria-label <= entity_label @ \Entity
+		raggu_web_front_corpus_detail_open <= open false
+		raggu_web_front_corpus_detail_dense <= dense
+		raggu_web_front_corpus_detail_waiting <= waiting
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Content $mol_view
+			sub <= content /
+	Hint $mol_view
+		hint <= hint_title @ \Every entity carries its description, its relations and the chunks it came from.
+		sub /
+			<= Hint_badge $mol_view
+				dom_name \span
+				sub /
+					<= Hint_glyph $mol_svg_root
+						view_box \0 0 18 18
+						sub /
+							<= Hint_dot $mol_svg_circle
+								pos /
+									4.6
+									3.1
+								radius 3
+							<= Hint_cursor $mol_svg_path
+								geometry \M4.6 3.1 13.7 8.4 9.6 9.6 8.1 13.6 4.6 3.1Z
+			<= Hint_text $mol_view
+				dom_name \span
+				sub / <= hint_text @ \Pick a point in the cloud
+	Body $mol_view
+		sub /
+			<= Head $mol_view
+				dom_name \header
+				sub /
+					<= Head_text $mol_view
+						sub /
+							<= Kind $raggu_web_front_label
+								text <= entity_label
+							<= Title $mol_view
+								dom_name \h2
+								sub <= title_content /
+							<= Chips $mol_view
+								sub <= chips /
+					<= Close $mol_button
+						hint <= close_label @ \Close
+						attr *
+							^
+							aria-label <= close_label
+						click? <=> close? null
+						sub /
+							<= Close_icon $raggu_web_front_icon_close
+			<= Scroll $mol_view
+				sub <= scroll_content /
+			<= Ask $mol_button
+				click? <=> ask? null
+				sub /
+					<= Ask_icon $raggu_web_front_icon_chat
+					<= ask_label @ \Ask about this entity
+	Title_skeleton $raggu_web_front_skeleton
+	Type_chip $raggu_web_front_home_chip
+		text <= type_name \
+	Lines $mol_view
+		sub /
+			<= Line1 $raggu_web_front_skeleton
+			<= Line2 $raggu_web_front_skeleton
+			<= Line3 $raggu_web_front_skeleton
+	Failed $raggu_web_front_text
+		text <= failed_text @ \The API did not answer. It may be waking up — try again in a moment.
+	Description $raggu_web_front_rich
+		text <= description \
+	Relations $mol_view
+		dom_name \section
+		sub /
+			<= Relations_label $raggu_web_front_label
+				text <= relations_title \
+			<= Relations_list $mol_view
+				dom_name \ul
+				sub <= relation_rows /
+	Relation* $mol_button
+		click? <=> relation_pick*? null
+		attr *
+			^
+			raggu_web_front_corpus_detail_relation_out <= relation_out* false
+		sub /
+			<= Relation_type* $mol_view
+				dom_name \span
+				sub / <= relation_type* \
+			<= Relation_other* $mol_view
+				dom_name \span
+				sub / <= relation_other* \
+	Chunks $raggu_web_front_disclosure
+		label <= provenance_label @ \Source chunks
+		count_text <= chunks_count \
+		body <= chunk_rows /
+	Chunk* $mol_view
+		sub /
+			<= Chunk_id* $raggu_web_front_label
+				text <= chunk_id* \
+			<= Chunk_text* $raggu_web_front_text
+				text <= chunk_text* \
+	relations_label @ \Relations ({n})
+	ask_template @ \Tell me about the entity “{label}” from the knowledge graph.

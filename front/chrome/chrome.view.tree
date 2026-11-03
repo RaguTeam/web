@@ -1,0 +1,93 @@
+$raggu_web_front_chrome $mol_view
+	dom_name \header
+	viewer $raggu_web_front_viewer
+	theme_choice? \system
+	theme_resolved \light
+	attr *
+		^
+		raggu_web_front_chrome_scrolled <= scrolled false
+		raggu_web_front_chrome_corpus <= corpus_page false
+	sub /
+		<= Row $mol_view
+			sub /
+				<= Brand $mol_view
+					sub /
+						<= Brand_glass $raggu_web_front_glass
+						<= Home_link $raggu_web_front_link
+							arg *
+								corpus null
+							hint <= home_label @ \Home
+							sub /
+								<= Mark $raggu_web_front_mark
+								<= Wordmark $mol_view
+									dom_name \span
+									sub /
+										<= Word $mol_view
+											dom_name \span
+											sub / \RAGU
+										<= Word_sub $mol_view
+											dom_name \span
+											sub / \graph rag
+						<= Switcher_box $mol_view
+							sub /
+								<= Switcher_rule $mol_view
+									dom_name \span
+								<= Switcher $raggu_web_front_chrome_switcher
+									corpus <= corpus \
+				<= Right $mol_view
+					sub <= right /
+						<= Tools $raggu_web_front_chrome_tools
+							viewer <= viewer
+						<= Controls $mol_view
+							sub /
+								<= Controls_glass $raggu_web_front_glass
+								<= Theme_menu $raggu_web_front_chrome_theme
+									choice? <=> theme_choice?
+									resolved <= theme_resolved
+								<= Lang_menu $raggu_web_front_chrome_lang
+								<= Controls_rule $mol_view
+									dom_name \span
+								<= Settings_open $mol_button
+									hint <= settings_label @ \Retrieval settings
+									attr *
+										^
+										aria-label <= settings_label
+									click? <=> open_settings? null
+									sub /
+										<= Settings_icon $raggu_web_front_icon_sliders
+				<= Centre_box $mol_view
+					sub /
+						<= Centre $mol_view
+							attr *
+								^
+								raggu_web_front_chrome_centre_kind <= centre_kind \home
+							sub /
+								<= Centre_glass $raggu_web_front_glass
+								<= Pane_home $mol_view
+									attr *
+										^
+										data-active <= home_active \
+										inert <= home_inert \
+									sub /
+										<= Link_pipeline $mol_button
+											click? <=> to_pipeline? null
+											sub / <= pipeline_label @ \How it works
+										<= Link_corpora $mol_button
+											click? <=> to_corpora? null
+											sub / <= corpora_label @ \Corpora
+								<= Pane_corpus $mol_view
+									attr *
+										^
+										data-active <= corpus_active \
+										inert <= corpus_inert \
+									sub /
+										<= Toggle_graph $raggu_web_front_chrome_toggle
+											active <= graph_active false
+											click? <=> toggle_graph? null
+											Icon <= Graph_icon $raggu_web_front_icon_graph
+											label <= graph_label @ \Relations
+										<= Toggle_chat $raggu_web_front_chrome_toggle
+											active <= chat_active false
+											click? <=> toggle_chat? null
+											Icon <= Chat_icon $raggu_web_front_icon_chat
+											label <= chat_label @ \Chat

@@ -1,0 +1,11 @@
+{
+	"$raggu_web_front_corpus_controls_clear_all_label": "Сбросить все фильтры",
+	"$raggu_web_front_corpus_controls_clear_label": "Сбросить",
+	"$raggu_web_front_corpus_controls_communities_label": "Сообщества",
+	"$raggu_web_front_corpus_controls_filter_clear_label": "Сбросить",
+	"$raggu_web_front_corpus_controls_matches_label": "{n} совпадений",
+	"$raggu_web_front_corpus_controls_no_matches_hint": "Попробуйте запрос короче или снимите фильтр по типу.",
+	"$raggu_web_front_corpus_controls_no_matches_label": "Ничего не нашлось",
+	"$raggu_web_front_corpus_controls_search_label": "Найти сущность",
+	"$raggu_web_front_corpus_controls_types_label": "Типы сущностей"
+}

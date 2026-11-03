@@ -1,0 +1,70 @@
+$raggu_web_front_home_card $raggu_web_front_reveal
+	dom_name \article
+	dataset null
+	featured false
+	attr *
+		^
+		raggu_web_front_home_card_featured <= featured
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Link $raggu_web_front_link
+			arg *
+				corpus <= id \
+			hint <= link_label \
+			sub /
+				<= Preview $mol_view
+					sub /
+						<= Constellation $raggu_web_front_home_constellation
+							seed <= id
+							nodes <= nodes 0
+							edges <= edges 0
+						<= Shade $mol_view
+						<= Domain $raggu_web_front_home_chip
+							text <= domain \
+				<= Body $mol_view
+					sub /
+						<= Title $mol_view
+							dom_name \h3
+							sub / <= title \
+						<= Description $raggu_web_front_text
+							text <= description \
+						<= Stats $mol_view
+							dom_name \dl
+							sub /
+								<= Stat_nodes $raggu_web_front_home_card_stat
+									value <= nodes_text \
+									label <= entities_label @ \entities
+								<= Stat_edges $raggu_web_front_home_card_stat
+									value <= edges_text \
+									label <= relations_label @ \relations
+								<= Stat_communities $raggu_web_front_home_card_stat
+									value <= communities_text \
+									label <= communities_label @ \communities
+								<= Stat_chunks $raggu_web_front_home_card_stat
+									value <= chunks_text \
+									label <= chunks_label @ \chunks
+						<= Types $mol_view
+							dom_name \ul
+							sub <= types /
+						<= Open $mol_view
+							dom_name \span
+							sub /
+								<= open_label @ \Open graph
+								<= Open_arrow $raggu_web_front_icon_arrow
+	Type* $raggu_web_front_home_chip
+		text <= type_name* \
+	open_graph_label @ \Open graph
+
+$raggu_web_front_home_card_stat $mol_view
+	value \
+	label \
+	sub /
+		<= Value $mol_view
+			dom_name \dd
+			sub / <= value
+		<= Label $raggu_web_front_label
+			dom_name \dt
+			text <= label
+
+$raggu_web_front_home_chip $raggu_web_front_label
+	dom_name \span

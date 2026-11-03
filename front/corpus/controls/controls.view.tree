@@ -1,0 +1,114 @@
+$raggu_web_front_corpus_controls $mol_view
+	viewer $raggu_web_front_viewer
+	attr *
+		^
+		raggu_web_front_corpus_controls_filtering <= filtering false
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Bar $mol_view
+			sub <= bar /
+		<= Summary $mol_view
+			sub /
+				<= Summary_line $mol_view
+					dom_name \span
+					sub <= summary /
+	Search $mol_view
+		sub <= search_box /
+	Search_icon $raggu_web_front_icon_search
+	Search_input $mol_view
+		dom_name \input
+		attr *
+			^
+			placeholder <= search_label @ \Find an entity
+			aria-label <= search_label
+		field *
+			^
+			value <= search? \
+		event *
+			input? <=> search_input? null
+	Search_clear $mol_button
+		hint <= clear_label @ \Clear
+		attr *
+			^
+			aria-label <= clear_label
+		click? <=> search_clear? null
+		sub /
+			<= Search_clear_icon $raggu_web_front_icon_close
+	Types $raggu_web_front_corpus_controls_filter
+		label <= types_label @ \Entity types
+		count <= types_count 0
+		items <= type_items /
+		clear? <=> types_clear? null
+	Communities $raggu_web_front_corpus_controls_filter
+		label <= communities_label @ \Communities
+		count <= communities_count 0
+		items <= community_items /
+		clear? <=> communities_clear? null
+	Type_item* $raggu_web_front_corpus_controls_facet
+		active <= type_active* false
+		name <= type_name* \
+		count <= type_count* 0
+		click? <=> type_toggle*? null
+	Community_item* $raggu_web_front_corpus_controls_facet
+		active <= community_active* false
+		name <= community_name* \
+		count <= community_count* 0
+		click? <=> community_toggle*? null
+	Matches $mol_view
+		dom_name \span
+		sub / <= matches_text \
+	No_matches $mol_view
+		dom_name \span
+		sub / <= no_matches_text \
+	Clear_all $mol_button
+		click? <=> clear_all? null
+		sub / <= clear_all_label @ \Clear all filters
+	matches_label @ \{n} matches
+	no_matches_label @ \Nothing matched
+	no_matches_hint @ \Try a shorter query, or clear the type filter.
+
+$raggu_web_front_corpus_controls_filter $raggu_web_front_pop
+	label \
+	count 0
+	items /
+	bubble_width \min(22rem, calc(100vw - 2rem))
+	attr *
+		^
+		raggu_web_front_corpus_controls_filter_active <= active false
+	trigger_content /
+		<= Pane $mol_view
+			dom_name \span
+			attr *
+				^
+				class <= pane_class \
+				aria-hidden \true
+		<= label
+		<= Count $mol_view
+			dom_name \span
+			sub / <= count_text \
+		<= Chevron $raggu_web_front_icon_chevron
+	bubble_content /
+		<= Heading $raggu_web_front_label
+			text <= label
+		<= List $mol_view
+			sub <= items
+		<= Clear $mol_button
+			click? <=> clear? null
+			sub / <= clear_label @ \Clear
+
+$raggu_web_front_corpus_controls_facet $mol_button
+	active false
+	name \
+	count 0
+	attr *
+		^
+		aria-pressed <= active
+	sub /
+		<= Box $mol_view
+			dom_name \span
+		<= Name $mol_view
+			dom_name \span
+			sub / <= name
+		<= Count $mol_view
+			dom_name \span
+			sub / <= count

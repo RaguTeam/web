@@ -1,0 +1,23 @@
+{
+	"$raggu_web_front_settings_api_cap": "Шлюз отдаёт максимум 5000 сущностей за запрос, поэтому корпус больше — это всегда срез.",
+	"$raggu_web_front_settings_close_label": "Закрыть",
+	"$raggu_web_front_settings_group_hint": "граф в ответе · декомпозиция сложных вопросов",
+	"$raggu_web_front_settings_group_label": "Ретривал",
+	"$raggu_web_front_settings_limit_hint": "Рендер держит и больше тысячи точек; узкое место — сеть.",
+	"$raggu_web_front_settings_limit_label": "Сущностей в облаке",
+	"$raggu_web_front_settings_off_label": "Выключен",
+	"$raggu_web_front_settings_on_label": "Включён",
+	"$raggu_web_front_settings_query_plan_hint": "Разложить сложный вопрос на DAG простых подвопросов до поиска.",
+	"$raggu_web_front_settings_query_plan_label": "Планирование запроса",
+	"$raggu_web_front_settings_rerank_hint": "Пересчитать релевантность найденных фрагментов перед передачей модели. Заметно дольше.",
+	"$raggu_web_front_settings_rerank_label": "Переранжировать",
+	"$raggu_web_front_settings_reset_label": "Вернуть по умолчанию",
+	"$raggu_web_front_settings_subtitle_label": "как агент ищет ответ",
+	"$raggu_web_front_settings_title_label": "Настройки поиска",
+	"$raggu_web_front_settings_top_k_hint": "Сколько кандидатов дойдёт до модели. Больше контекста — медленнее ответ.",
+	"$raggu_web_front_settings_top_k_label": "Сколько фрагментов достаём",
+	"$raggu_web_front_settings_top_k_less_label": "Меньше фрагментов",
+	"$raggu_web_front_settings_top_k_more_label": "Больше фрагментов",
+	"$raggu_web_front_settings_use_graph_hint": "Выключен: поиск только по чанкам (NaiveSearchEngine). Включён: чанки плюс локальные окрестности графа (MixSearchEngine).",
+	"$raggu_web_front_settings_use_graph_label": "Граф при поиске"
+}

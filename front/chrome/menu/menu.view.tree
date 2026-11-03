@@ -1,0 +1,68 @@
+$raggu_web_front_chrome_menu $raggu_web_front_pop
+	align \end
+	bubble_width \11rem
+	trigger_content /
+		<= Trigger_icon $raggu_web_front_icon
+	bubble_content /
+		<= Heading $raggu_web_front_label
+			text <= heading \
+		<= Items $mol_view
+			sub <= items /
+
+$raggu_web_front_chrome_menu_item $mol_button
+	checked false
+	attr *
+		^
+		role \menuitemradio
+		aria-checked <= checked
+	sub /
+		<= Lead $mol_view
+			dom_name \span
+			sub <= lead /$mol_view_content
+		<= Name $mol_view
+			dom_name \span
+			sub / <= name \
+		<= Dot $mol_view
+			dom_name \span
+
+$raggu_web_front_chrome_theme $raggu_web_front_chrome_menu
+	choice? \system
+	resolved \light
+	hint <= theme_label @ \Appearance
+	heading <= theme_label
+	Trigger_icon <= Current_icon $raggu_web_front_icon
+	items /
+		<= Light $raggu_web_front_chrome_menu_item
+			checked <= light_checked false
+			click? <=> pick_light? null
+			lead / <= Light_icon $raggu_web_front_icon_sun
+			name <= light_label @ \Light
+		<= Dark $raggu_web_front_chrome_menu_item
+			checked <= dark_checked false
+			click? <=> pick_dark? null
+			lead / <= Dark_icon $raggu_web_front_icon_moon
+			name <= dark_label @ \Dark
+		<= System $raggu_web_front_chrome_menu_item
+			checked <= system_checked false
+			click? <=> pick_system? null
+			lead / <= System_icon $raggu_web_front_icon_display
+			name <= system_label @ \Match system
+	Sun_icon $raggu_web_front_icon_sun
+	Moon_icon $raggu_web_front_icon_moon
+	Display_icon $raggu_web_front_icon_display
+
+$raggu_web_front_chrome_lang $raggu_web_front_chrome_menu
+	hint <= lang_label @ \Language
+	heading <= lang_label
+	Trigger_icon <= Globe_icon $raggu_web_front_icon_globe
+	items /
+		<= En $raggu_web_front_chrome_menu_item
+			checked <= en_checked false
+			click? <=> pick_en? null
+			lead / \EN
+			name \English
+		<= Ru $raggu_web_front_chrome_menu_item
+			checked <= ru_checked false
+			click? <=> pick_ru? null
+			lead / \RU
+			name \Русский

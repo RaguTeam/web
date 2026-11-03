@@ -1,0 +1,190 @@
+[raggu_web_front_chrome_tools] {
+	pointer-events: auto;
+	display: flex;
+	min-height: var(--island-h);
+	align-items: stretch;
+	gap: 0.25rem;
+	padding: 0.25rem;
+}
+
+[raggu_web_front_chrome_tools_recentre],
+[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--radius-inset);
+	color: var(--text-3);
+	transition: background-color 200ms var(--ease-out-quint), color 200ms var(--ease-out-quint);
+}
+
+[raggu_web_front_chrome_tools_recentre]:hover,
+[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger]:hover,
+[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger][raggu_web_front_pop_open="true"] {
+	background: color-mix(in oklab, var(--text) 7%, transparent);
+	color: var(--text);
+}
+
+[raggu_web_front_chrome_tools_recentre] {
+	width: 2.5rem;
+}
+
+[raggu_web_front_chrome_tools_stats] > [raggu_web_front_pop_trigger] {
+	width: 3rem;
+	flex-direction: column;
+	gap: 5px;
+	padding: 0 0.25rem;
+}
+
+[raggu_web_front_chrome_tools_shown_badge] {
+	font-family: var(--font-mono);
+	font-size: 11px;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+	color: var(--text);
+}
+
+[raggu_web_front_chrome_tools_ramp] {
+	display: block;
+	height: 3px;
+	width: 2rem;
+	border-radius: 9999px;
+	background: linear-gradient(to right, color-mix(in oklab, var(--text-3) 45%, transparent), var(--accent));
+}
+
+[raggu_web_front_chrome_tools_total_badge] {
+	font-family: var(--font-mono);
+	font-size: 9px;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-3);
+}
+
+[raggu_web_front_chrome_tools_stats_body] {
+	display: flex;
+	flex-direction: column;
+	padding: 0.625rem 0.75rem;
+}
+
+[raggu_web_front_chrome_tools_numbers] {
+	margin-top: 1rem;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+[raggu_web_front_chrome_tools_shown_block],
+[raggu_web_front_chrome_tools_total_block] {
+	display: flex;
+	flex-direction: column;
+}
+
+[raggu_web_front_chrome_tools_total_block] {
+	align-items: flex-end;
+	text-align: right;
+}
+
+[raggu_web_front_chrome_tools_shown_full] {
+	font-family: var(--font-mono);
+	font-size: 1.5rem;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+	color: var(--accent);
+}
+
+[raggu_web_front_chrome_tools_total_full] {
+	font-family: var(--font-mono);
+	font-size: 1.125rem;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-2);
+}
+
+[raggu_web_front_chrome_tools_shown_caption],
+[raggu_web_front_chrome_tools_total_caption] {
+	margin-top: 0.5rem;
+}
+
+[raggu_web_front_chrome_tools_bar] {
+	margin-top: 1rem;
+	height: 0.25rem;
+	width: 100%;
+	overflow: hidden;
+	border-radius: 9999px;
+	background: color-mix(in oklab, var(--text-3) 18%, transparent);
+}
+
+[raggu_web_front_chrome_tools_bar_fill] {
+	height: 100%;
+	border-radius: 9999px;
+	background: linear-gradient(to right, color-mix(in oklab, var(--text-3) 45%, transparent), var(--accent));
+	transition: width 500ms var(--ease-out-quint);
+}
+
+[raggu_web_front_chrome_tools_legend] {
+	margin-top: 0.75rem;
+	font-size: 0.75rem;
+	line-height: 1.625;
+	color: var(--text-3);
+}
+
+[raggu_web_front_chrome_tools_action] {
+	display: flex;
+	flex-direction: column;
+}
+
+[raggu_web_front_chrome_tools_more],
+[raggu_web_front_chrome_tools_rest] {
+	margin-top: 1rem;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border-radius: var(--radius-inset);
+	padding: 0.625rem 0.75rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 600;
+	color: var(--accent);
+	border: 1px solid color-mix(in oklab, var(--accent-line) 50%, transparent);
+	transition: background-color 200ms ease;
+}
+
+[raggu_web_front_chrome_tools_more]:hover,
+[raggu_web_front_chrome_tools_rest]:hover {
+	background: var(--accent-wash);
+}
+
+[raggu_web_front_chrome_tools_more][disabled],
+[raggu_web_front_chrome_tools_rest][disabled] {
+	pointer-events: none;
+	opacity: 0.45;
+}
+
+[raggu_web_front_chrome_tools_more_icon],
+[raggu_web_front_chrome_tools_rest_icon] {
+	width: 1rem;
+	height: 1rem;
+}
+
+[raggu_web_front_chrome_tools_paging_note],
+[raggu_web_front_chrome_tools_clipped_note] {
+	margin-top: 0.75rem;
+	font-size: 11px;
+	line-height: 1.625;
+	color: var(--text-3);
+}
+
+[raggu_web_front_chrome_tools_rest_failed] {
+	margin-top: 0.5rem;
+	font-size: 11px;
+	color: var(--accent);
+}
+
+[raggu_web_front_chrome_tools_at_max] {
+	margin-top: 1rem;
+	font-size: 0.75rem;
+	line-height: 1.625;
+	color: var(--text-2);
+}

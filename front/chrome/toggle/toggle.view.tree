@@ -1,0 +1,16 @@
+$raggu_web_front_chrome_toggle $mol_button
+	active false
+	label \
+	Icon $raggu_web_front_icon
+	attr *
+		^
+		aria-pressed <= active
+	sub /
+		<= Pane $mol_view
+			dom_name \span
+			attr *
+				^
+				class \accent-pane
+				aria-hidden \true
+		<= Icon
+		<= label

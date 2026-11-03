@@ -1,0 +1,43 @@
+$raggu_web_front_app $raggu_web_front_base
+	title \RAGU
+	Viewer $raggu_web_front_viewer
+	attr *
+		^
+		raggu_web_front_app_corpus <= corpus_page false
+	sub /
+		<= Skip $raggu_web_front_link
+			uri \#main
+			sub / <= skip_label @ \Skip to content
+		<= Backdrop $mol_view
+			attr *
+				^
+				aria-hidden \true
+				raggu_web_front_app_backdrop_quiet <= quiet false
+			sub /
+				<= Backdrop_base $mol_view
+				<= Aurora $mol_view
+					sub /
+						<= Aurora_a $mol_view
+						<= Aurora_b $mol_view
+						<= Aurora_c $mol_view
+				<= Vignette $mol_view
+				<= Grain $mol_view
+		<= Scene $raggu_web_front_scene
+			viewer <= Viewer
+			lights <= theme_resolved \light
+		<= Chrome $raggu_web_front_chrome
+			viewer <= Viewer
+			theme_choice? <=> theme_choice? \system
+			theme_resolved <= theme_resolved
+			open_settings? <=> open_settings? null
+		<= Main $mol_view
+			dom_name \main
+			attr *
+				^
+				id \main
+			sub <= main /
+		<= Settings $raggu_web_front_settings
+			showed? <=> settings_open? false
+	Home $raggu_web_front_home
+	Corpus $raggu_web_front_corpus
+		viewer <= Viewer

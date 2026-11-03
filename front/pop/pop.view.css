@@ -1,0 +1,50 @@
+[raggu_web_front_pop] {
+	display: flex;
+	align-items: stretch;
+}
+
+[raggu_web_front_pop_bubble] {
+	position: fixed;
+	inset: auto;
+	margin: 0;
+	padding: 6px;
+	border: 0;
+	background: transparent;
+	color: var(--text);
+	overflow: visible;
+	isolation: isolate;
+	display: none;
+	flex-direction: column;
+	border-radius: var(--radius-island);
+	opacity: 0;
+	transition:
+		opacity 200ms var(--ease-out-quint),
+		display 200ms allow-discrete,
+		overlay 200ms allow-discrete;
+}
+
+[raggu_web_front_pop_bubble]:popover-open {
+	display: flex;
+	opacity: 1;
+}
+
+@starting-style {
+	[raggu_web_front_pop_bubble]:popover-open {
+		opacity: 0;
+	}
+	[raggu_web_front_pop_bubble]:popover-open > [raggu_web_front_glass] {
+		transform: scale(0.955);
+		opacity: 0;
+	}
+}
+
+[raggu_web_front_pop_bubble]:not(:popover-open) > [raggu_web_front_glass] {
+	transform: scale(0.955);
+	opacity: 0;
+}
+
+[raggu_web_front_pop_content] {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
