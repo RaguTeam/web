@@ -12,6 +12,7 @@ from support import (
     FakeGateway,
     asyncio_test,
     community,
+    detail,
     entity,
     info,
     relation,
@@ -19,6 +20,7 @@ from support import (
 )
 
 from ragu_web_api.catalog import Catalog
+from ragu_web_api import graph_view as graph_view_module
 from ragu_web_api.graph_view import GraphView
 from ragu_web_api.presentation import graph as present
 from ragu_web_api.presentation import layout
@@ -185,16 +187,50 @@ async def test_communities_are_fetched_once_for_many_requests() -> None:
 
 
 @asyncio_test
-async def test_communities_are_fetched_again_once_stale() -> None:
+async def test_communities_are_fetched_again_after_reindexing() -> None:
+    """Сообщества живут без срока, пока у корпуса те же размеры; новые
+    счётчики в каталоге значат переиндексацию."""
     gateway = FakeGateway(
         [info("medical")],
         entities=[entity("e0", communities=["1"])],
         communities=[community("com-a", cluster_id=1)],
     )
-    view = await _warm(gateway, community_ttl=0.0)
+    view = await _warm(gateway, catalog_ttl=0.0)
     await view.graph("medical")
+    await view.graph("medical")
+    assert gateway.calls["communities"] == 1
+
+    gateway._details["medical"] = detail("medical", communities=39)
     await view.graph("medical")
     assert gateway.calls["communities"] == 2
+
+
+@asyncio_test
+async def test_preload_fetches_communities_before_anyone_asks() -> None:
+    gateway = FakeGateway(
+        [info("medical"), info("dennis-ritchie")],
+        entities=[entity("e0", communities=["1"])],
+        communities=[community("com-a", cluster_id=1)],
+    )
+    view = _view(gateway)
+    await view.preload()
+    assert gateway.calls["communities"] == 2
+
+    result = await view.graph("medical")
+    assert [item.id for item in result.communities] == ["1"]
+    assert gateway.calls["communities"] == 2
+
+
+@asyncio_test
+async def test_preload_waits_for_the_catalog_and_gives_up_quietly(monkeypatch) -> None:
+    monkeypatch.setattr(graph_view_module, "_PRELOAD_ATTEMPTS", 2)
+    monkeypatch.setattr(graph_view_module, "_PRELOAD_RETRY_S", 0.0)
+    gateway = FakeGateway([info("medical")], communities=[community("com-a")])
+    gateway.fail_on_graphs = True
+    view = _view(gateway)
+    await view.preload()
+    assert gateway.calls["graphs"] == 2
+    assert "communities" not in gateway.calls
 
 
 @asyncio_test
