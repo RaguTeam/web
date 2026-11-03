@@ -12,7 +12,6 @@ import {ControlIsland} from './ControlIsland.tsx';
 import {DatasetSwitcher} from './DatasetSwitcher.tsx';
 import {StageTools} from './StageTools.tsx';
 import {IconChat, IconGraph} from '../ui/icons.tsx';
-import {pageTitleStore} from '../../lib/chrome-store.ts';
 
 const SPRING = {type: 'spring', stiffness: 320, damping: 34, mass: 0.7} as const;
 
@@ -98,7 +97,6 @@ function BrandIsland({datasetId}: {datasetId: string | null}) {
 const HOME_LINKS = [
     {hash: 'pipeline', key: 'overview' as const},
     {hash: 'corpora', key: 'datasets' as const},
-    {hash: 'stack', key: 'technology' as const},
 ];
 
 function HomeLinks() {
@@ -115,22 +113,6 @@ function HomeLinks() {
                 </a>
             ))}
         </nav>
-    );
-}
-
-function StackTitle() {
-    const t = useT();
-    const title = pageTitleStore.use();
-    return (
-        <div className="flex items-center gap-3 px-3 whitespace-nowrap">
-            <Link to="/" className="label-xs flex items-center transition-colors duration-200 hover:text-accent">
-                ← {t.nav.home}
-            </Link>
-            <span className="my-2 w-px bg-edge" aria-hidden="true"/>
-            <span className="flex items-center text-sm font-semibold text-text">
-                {title ?? t.nav.technology}
-            </span>
-        </div>
     );
 }
 
@@ -220,7 +202,7 @@ function DatasetToggles({datasetId}: {datasetId: string | null}) {
     );
 }
 
-type CentreKind = 'home' | 'dataset' | 'stack';
+type CentreKind = 'home' | 'dataset';
 
 /**
  * One pane of the centre island. Every pane is mounted on every route and the
@@ -241,8 +223,8 @@ function CentrePane({active, children}: {active: boolean; children: React.ReactN
     );
 }
 
-function CentreIsland({datasetId, isStackPage}: {datasetId: string | null; isStackPage: boolean}) {
-    const kind: CentreKind = datasetId ? 'dataset' : isStackPage ? 'stack' : 'home';
+function CentreIsland({datasetId}: {datasetId: string | null}) {
+    const kind: CentreKind = datasetId ? 'dataset' : 'home';
 
     return (
         <div
@@ -258,9 +240,6 @@ function CentreIsland({datasetId, isStackPage}: {datasetId: string | null; isSta
             <CentrePane active={kind === 'home'}>
                 <HomeLinks/>
             </CentrePane>
-            <CentrePane active={kind === 'stack'}>
-                <StackTitle/>
-            </CentrePane>
             <CentrePane active={kind === 'dataset'}>
                 <DatasetToggles datasetId={datasetId}/>
             </CentrePane>
@@ -275,7 +254,6 @@ export function TopChrome() {
     useChromeHeight(headerRef);
 
     const datasetMatch = /^\/c\/([^/]+)/.exec(pathname);
-    const isStackPage = pathname.startsWith('/stack');
     const datasetId = datasetMatch ? decodeURIComponent(datasetMatch[1]) : null;
 
     return (
@@ -311,7 +289,7 @@ export function TopChrome() {
                         'lg:absolute lg:top-0 lg:left-1/2 lg:order-none lg:mt-0 lg:w-auto lg:-translate-x-1/2',
                     )}
                 >
-                    <CentreIsland datasetId={datasetId} isStackPage={isStackPage}/>
+                    <CentreIsland datasetId={datasetId}/>
                 </div>
             </div>
         </header>

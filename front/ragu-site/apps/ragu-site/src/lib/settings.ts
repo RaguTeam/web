@@ -15,7 +15,9 @@ export const DEFAULT_SETTINGS: RetrievalSettings = {
     useGraph: true,
     queryPlan: false,
     topK: 8,
-    rerank: true,
+    // Off by default: the reranker only reorders the passages the model reads
+    // anyway, and on the demo's CPU that costs 15 to 25 s per answer.
+    rerank: false,
     graphLimit: 600,
 };
 
@@ -25,6 +27,10 @@ export const DEFAULT_SETTINGS: RetrievalSettings = {
  */
 export const GRAPH_LIMIT_MAX = 5000;
 export const GRAPH_LIMIT_STEPS = [600, 1500, 3000, 5000] as const;
+
+/** Bounds accepted by the backend (schemas/agent.py). */
+export const TOP_K_MIN = 1;
+export const TOP_K_MAX = 50;
 
 export const settingsStore = createStore<RetrievalSettings>(DEFAULT_SETTINGS, {
     key: 'ragu.settings',
@@ -36,7 +42,10 @@ export const settingsStore = createStore<RetrievalSettings>(DEFAULT_SETTINGS, {
         return {
             useGraph: typeof value.useGraph === 'boolean' ? value.useGraph : DEFAULT_SETTINGS.useGraph,
             queryPlan: typeof value.queryPlan === 'boolean' ? value.queryPlan : DEFAULT_SETTINGS.queryPlan,
-            topK: typeof value.topK === 'number' ? clamp(Math.round(value.topK), 1, 50) : DEFAULT_SETTINGS.topK,
+            topK:
+                typeof value.topK === 'number'
+                    ? clamp(Math.round(value.topK), TOP_K_MIN, TOP_K_MAX)
+                    : DEFAULT_SETTINGS.topK,
             rerank: typeof value.rerank === 'boolean' ? value.rerank : DEFAULT_SETTINGS.rerank,
             graphLimit:
                 typeof value.graphLimit === 'number'

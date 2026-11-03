@@ -11,7 +11,15 @@ import {useLang, useT} from '../../lib/i18n.ts';
 import {relationTypeName} from '../../lib/type-names.ts';
 import {useSettings} from '../../lib/settings.ts';
 import {patchScene, patchSelection, sceneStore} from '../../graph/viewer-store.ts';
-import {chatStore, nextId, parseCitations, patchChat, resetChat, type RefKind} from './chat-store.ts';
+import {
+    chatStore,
+    nextId,
+    parseCitations,
+    patchChat,
+    resetChat,
+    type ChatEntry,
+    type RefKind,
+} from './chat-store.ts';
 import {IconClose, IconInfo, IconSend, IconSources, IconStop, IconSweep} from '../ui/icons.tsx';
 import {IslandSurface} from '../ui/primitives.tsx';
 import {Disclosure} from '../ui/Disclosure.tsx';
@@ -163,7 +171,7 @@ function Sources({trace}: {trace: AnswerTrace}) {
 /* ------------------------------------------------------------------ *
  * The answer itself
  * ------------------------------------------------------------------ */
-function Answer({content}: {content: string}) {
+function Answer({content, streaming}: {content: string; streaming?: boolean}) {
     const t = useT();
     const lang = useLang();
     const model = sceneStore.use().model;
@@ -214,8 +222,15 @@ function Answer({content}: {content: string}) {
                     </span>
                 ),
             )}
+            {streaming ? <span className="stream-caret" aria-hidden="true"/> : null}
         </div>
     );
+}
+
+/** What has been received of the answer, kept when it ends early. */
+function keepPartial(): ChatEntry[] {
+    const {entries, partial} = chatStore.get();
+    return partial ? [...entries, {id: nextId('assistant'), role: 'assistant', content: partial, trace: null}] : entries;
 }
 
 function Pending({startedAt}: {startedAt: number | null}) {
@@ -280,12 +295,33 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
                 include_trace: true,
                 locale: lang,
             };
-            return api.ask(datasetId, body, controller.signal);
+            // Pieces are folded into one store update per frame: a re-render
+            // per piece would re-parse the whole answer dozens of times a second.
+            let received = '';
+            let frame = 0;
+            const onDelta = (text: string) => {
+                received += text;
+                if (!frame) {
+                    frame = requestAnimationFrame(() => {
+                        frame = 0;
+                        if (abortRef.current === controller) {
+                            patchChat({partial: received});
+                        }
+                    });
+                }
+            };
+            try {
+                return await api.askStream(datasetId, body, {signal: controller.signal, onDelta});
+            }
+            finally {
+                cancelAnimationFrame(frame);
+            }
         },
         onSuccess: (response) => {
             const message = response.message;
             patchChat({
                 pending: false,
+                partial: null,
                 startedAt: null,
                 error: null,
                 entries: [
@@ -299,7 +335,11 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
         },
         onError: (error: unknown) => {
             const aborted = error instanceof DOMException && error.name === 'AbortError';
-            patchChat({pending: false, startedAt: null, error: aborted ? null : t.chat.failed});
+            if (aborted) {
+                // Whoever aborted has already settled the thread.
+                return;
+            }
+            patchChat({entries: keepPartial(), pending: false, partial: null, startedAt: null, error: t.chat.failed});
         },
     });
 
@@ -333,9 +373,29 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
         scrollRef.current?.scrollTo({top: scrollRef.current.scrollHeight, behavior: 'smooth'});
     }, [chat.entries.length, chat.pending]);
 
+    // While the answer grows, follow it only if the reader is already at the
+    // bottom; someone who scrolled up to reread is left where they are.
+    useEffect(() => {
+        const element = scrollRef.current;
+        if (element && chat.partial && element.scrollHeight - element.scrollTop - element.clientHeight < 96) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }, [chat.partial]);
+
+    // A thread cleared or left mid-answer must not receive the rest of it.
+    useEffect(() => () => abortRef.current?.abort(), [datasetId]);
+
     const stop = () => {
+        const entries = keepPartial();
         abortRef.current?.abort();
-        patchChat({pending: false, startedAt: null});
+        abortRef.current = null;
+        patchChat({entries, pending: false, partial: null, startedAt: null});
+    };
+
+    const clear = () => {
+        abortRef.current?.abort();
+        abortRef.current = null;
+        resetChat(datasetId);
     };
 
     const starters = suggestions?.suggestions ?? [];
@@ -359,7 +419,7 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
                     {chat.entries.length > 0 ? (
                         <button
                             type="button"
-                            onClick={() => resetChat(datasetId)}
+                            onClick={clear}
                             aria-label={t.chat.clearThread}
                             title={t.chat.clearThread}
                             className="stage-tool size-8"
@@ -403,7 +463,12 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
                                 </li>
                             ),
                         )}
-                        {chat.pending ? (
+                        {chat.pending && chat.partial ? (
+                            <li>
+                                <p className="label-xs mb-2">{t.chat.agent}</p>
+                                <Answer content={chat.partial} streaming/>
+                            </li>
+                        ) : chat.pending ? (
                             <li>
                                 <Pending startedAt={chat.startedAt}/>
                             </li>

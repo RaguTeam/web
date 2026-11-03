@@ -1,5 +1,8 @@
 {$DOMAIN} {
-	encode zstd gzip
+	# Поток ответа чата не сжимаем: кускам по нескольку байт сжатие ничего не
+	# даёт, а буфер кодировщика может их задержать.
+	@compressible not path */stream
+	encode @compressible zstd gzip
 
 	# /metrics отдаёт внутренности приложения и предназначен только для
 	# Prometheus, который ходит к back:8000 внутри docker-сети. Снаружи его

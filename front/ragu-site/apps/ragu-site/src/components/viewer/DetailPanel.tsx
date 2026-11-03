@@ -1,3 +1,4 @@
+import {useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {AnimatePresence, motion} from 'motion/react';
 import {queries} from '../../api/queries.ts';
@@ -10,6 +11,7 @@ import {entityTypeName, relationTypeName} from '../../lib/type-names.ts';
 import {Chip, Skeleton} from '../ui/primitives.tsx';
 import {IconChat, IconClose, IconSources} from '../ui/icons.tsx';
 import {Disclosure} from '../ui/Disclosure.tsx';
+import {RichText} from '../ui/RichText.tsx';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -115,9 +117,6 @@ function EntityBody({
                     {node ? (
                         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
                             <Chip tone="accent">{entityTypeName(node.entity_type, lang)}</Chip>
-                            <Chip>
-                                <span className="tnum">{node.degree}</span> {t.viewer.degree}
-                            </Chip>
                         </div>
                     ) : null}
                 </div>
@@ -141,9 +140,10 @@ function EntityBody({
                 ) : isError && !local ? (
                     <p className="text-sm text-text-2">{t.common.errorHint}</p>
                 ) : (
-                    <p className={cn('leading-[1.65] text-text-2', dense ? 'text-[0.85rem]' : 'text-sm')}>
-                        {node?.description}
-                    </p>
+                    <RichText
+                        text={node?.description ?? ''}
+                        className={cn('leading-[1.65] text-text-2', dense ? 'text-[0.85rem]' : 'text-sm')}
+                    />
                 )}
 
                 {relations.length > 0 ? (
@@ -233,6 +233,8 @@ export function DetailPanel({
     hint,
     /** Nothing is clickable yet, so the prompt should not ask for a click. */
     waiting,
+    /** The card has finished leaving and the panel is back to its prompt. */
+    onCardGone,
 }: {
     datasetId: string;
     model: GraphModel | null;
@@ -241,9 +243,19 @@ export function DetailPanel({
     compact?: boolean;
     hint?: boolean;
     waiting?: boolean;
+    onCardGone?: () => void;
 }) {
     const t = useT();
     const open = nodeId !== null;
+    // The pane keeps a card's shape until the card has faded out. Shrinking to
+    // the prompt the moment the selection clears made it hug the leaving card,
+    // which stretched it the card's full length for the length of the exit.
+    const [card, setCard] = useState(open);
+    if (open && !card) {
+        setCard(true);
+    }
+    const openRef = useRef(open);
+    openRef.current = open;
 
     return (
         <motion.aside
@@ -254,7 +266,7 @@ export function DetailPanel({
             className={cn(
                 'pointer-events-auto relative isolate flex min-h-0 flex-col rounded-island p-1.5',
                 // A hint hugs its one line; a card takes the height it is given.
-                !open && 'self-start',
+                !card && 'self-start',
                 className,
             )}
             aria-label={t.viewer.entityCard}
@@ -268,7 +280,17 @@ export function DetailPanel({
                 animate={{opacity: open ? 1 : 0.3}}
                 transition={{duration: 0.36, ease: EASE}}
             />
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence
+                mode="wait"
+                initial={false}
+                onExitComplete={() => {
+                    // Also fires between two entities; only an empty pane counts.
+                    if (!openRef.current) {
+                        setCard(false);
+                        onCardGone?.();
+                    }
+                }}
+            >
                 {open ? (
                     <EntityBody key={nodeId} datasetId={datasetId} model={model} nodeId={nodeId} dense={dense}/>
                 ) : hint ? (

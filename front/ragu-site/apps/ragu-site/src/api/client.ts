@@ -10,6 +10,7 @@ import type {
     NodeDetailResponse,
     SuggestionsResponse,
 } from './types.ts';
+import {sseParser} from './sse.ts';
 
 const BASE = (import.meta.env.VITE_RAGU_API as string | undefined)?.replace(/\/$/, '') ?? 'https://ragu-back.duckdns.org';
 
@@ -63,6 +64,88 @@ async function request<T>(input: string, init?: RequestInit): Promise<T> {
     return (await response.json()) as T;
 }
 
+/**
+ * The same answer as `api.ask`, handed out in pieces as it is generated. A
+ * backend without the streaming route answers 404 or 405, and then the
+ * question goes the old way — the site and the backend are deployed apart.
+ */
+async function askStream(
+    id: string,
+    body: AgentRequest,
+    {signal, onDelta}: {signal?: AbortSignal; onDelta: (text: string) => void},
+): Promise<AgentResponse> {
+    const path = url(`/datasets/${encodeURIComponent(id)}/agent/messages/stream`);
+    let response: Response;
+    try {
+        response = await fetch(path, {
+            method: 'POST',
+            headers: {accept: 'text/event-stream', 'content-type': 'application/json'},
+            body: JSON.stringify(body),
+            signal,
+        });
+    }
+    catch (cause) {
+        if (cause instanceof DOMException && cause.name === 'AbortError') {
+            throw cause;
+        }
+        throw new ApiError(0, 'network unreachable');
+    }
+
+    if (response.status === 404 || response.status === 405) {
+        const text = await response.text().catch(() => '');
+        // A missing corpus is a 404 too, but it names itself; a missing route does not.
+        if (!text.includes('dataset_not_found')) {
+            return api.ask(id, body, signal);
+        }
+        throw new ApiError(response.status, text.slice(0, 240));
+    }
+    if (!response.ok || !response.body) {
+        const text = await response.text().catch(() => '');
+        throw new ApiError(response.status, text.slice(0, 240) || response.statusText);
+    }
+
+    // Set from inside the parser callback, which narrowing cannot see.
+    let result = null as AgentResponse | null;
+    let failure = null as ApiError | null;
+    const parser = sseParser(({event, data}) => {
+        if (event === 'delta') {
+            onDelta((JSON.parse(data) as {text: string}).text);
+        }
+        else if (event === 'message') {
+            result = JSON.parse(data) as AgentResponse;
+        }
+        else if (event === 'error') {
+            failure = new ApiError(502, (JSON.parse(data) as {message?: string}).message ?? 'stream failed');
+        }
+    });
+
+    const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+    try {
+        for (;;) {
+            const {done, value} = await reader.read();
+            if (done) {
+                break;
+            }
+            parser.push(value);
+        }
+    }
+    catch (cause) {
+        if (cause instanceof DOMException && cause.name === 'AbortError') {
+            throw cause;
+        }
+        throw new ApiError(0, 'stream broke');
+    }
+    parser.end();
+
+    if (failure) {
+        throw failure;
+    }
+    if (!result) {
+        throw new ApiError(0, 'stream ended early');
+    }
+    return result;
+}
+
 export type GraphQuery = {
     limit?: number;
     search?: string;
@@ -106,6 +189,8 @@ export const api = {
             body: JSON.stringify(body),
             signal,
         }),
+
+    askStream,
 };
 
 export {BASE as API_BASE};

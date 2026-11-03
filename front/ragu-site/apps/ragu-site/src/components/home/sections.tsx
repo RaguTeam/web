@@ -7,7 +7,6 @@ import {compact} from '../../lib/format.ts';
 import {useLang, useT} from '../../lib/i18n.ts';
 import {cn} from '../../lib/cn.ts';
 import {pipeline} from '../../content/pipeline.ts';
-import {stack} from '../../content/stack.ts';
 import {Chip, Eyebrow, IslandSurface, Lede, SectionTitle, Skeleton} from '../ui/primitives.tsx';
 import {IconArrow} from '../ui/icons.tsx';
 import {Constellation} from './Constellation.tsx';
@@ -224,67 +223,6 @@ export function Corpora() {
 }
 
 /* ------------------------------------------------------------------ *
- * Stack — a broken 7/5 grid, not a row of equal tiles.
- * ------------------------------------------------------------------ */
-export function StackSection() {
-    const t = useT();
-    const lang = useLang();
-    const entries = stack(lang);
-
-    return (
-        <section id="stack" className="mx-auto w-full max-w-[1680px] scroll-mt-28 px-5 py-24 sm:px-8">
-            <SectionHead eyebrow="stack" title={t.home.overviewTitle} lede={t.home.overviewLede}/>
-
-            <div className="mt-12 grid grid-cols-12 gap-5">
-                {entries.map((entry, index) => (
-                    <motion.article
-                        key={entry.id}
-                        {...REVEAL}
-                        transition={{...REVEAL.transition, delay: index * 0.06}}
-                        className={cn(
-                            'group relative isolate rounded-island p-1.5',
-                            index % 4 === 0 || index % 4 === 3
-                                ? 'col-span-12 lg:col-span-7'
-                                : 'col-span-12 lg:col-span-5',
-                        )}
-                    >
-                        <IslandSurface/>
-                        <Link
-                            to="/stack/$entryId"
-                            params={{entryId: entry.id}}
-                            className="flex h-full flex-col px-4 py-5 outline-none"
-                        >
-                            <Eyebrow className="text-accent">{entry.badge}</Eyebrow>
-                            <h3 className="mt-3 font-display text-2xl leading-none font-medium tracking-[-0.02em] text-text">
-                                {entry.name}
-                            </h3>
-
-                            <p className="prose-measure mt-4 text-sm leading-relaxed text-text-2">{entry.tagline}</p>
-
-                            {/* Their own row, wrapping: a Russian caption like
-                                "размеченных сущностей" will not share a line with a title. */}
-                            <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-4">
-                                {entry.figure.map((figure) => (
-                                    <li key={figure.caption}>
-                                        <p className="font-mono text-lg leading-none tnum text-text">{figure.value}</p>
-                                        <p className="label-xs mt-1.5">{figure.caption}</p>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <span className="mt-auto flex items-center gap-2 pt-6 text-sm font-semibold text-accent">
-                                {t.home.more}
-                                <IconArrow className="transition-transform duration-300 group-hover:translate-x-1"/>
-                            </span>
-                        </Link>
-                    </motion.article>
-                ))}
-            </div>
-        </section>
-    );
-}
-
-/* ------------------------------------------------------------------ *
  * Footer
  * ------------------------------------------------------------------ */
 export function Footer() {
@@ -322,11 +260,6 @@ export function Footer() {
                 <nav aria-label={t.home.footerThis}>
                     <p className="label-xs">{t.home.footerThis}</p>
                     <ul className="mt-4 flex flex-col gap-2.5 text-sm">
-                        <li>
-                            <Link to="/stack/$entryId" params={{entryId: 'interface'}} className="text-text-2 transition-colors duration-200 hover:text-accent">
-                                {t.nav.technology}
-                            </Link>
-                        </li>
                         <li>
                             <a className="text-text-2 transition-colors duration-200 hover:text-accent" href="https://github.com/RaguTeam/web">
                                 {t.home.footerThis}

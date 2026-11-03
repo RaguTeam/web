@@ -16,7 +16,13 @@ function signature(model: GraphModel, radius: number): string {
 export type LayoutState = {positions: Float32Array | null; progress: number};
 
 export function useLayout(model: GraphModel | null, radius = 3.2): LayoutState {
-    const [state, setState] = useState<LayoutState>({positions: null, progress: 0});
+    // Positions are tied to the model they were solved for: on the render where
+    // the model changes, the old positions must not be paired with the new one.
+    const [state, setState] = useState<LayoutState & {model: GraphModel | null}>({
+        model: null,
+        positions: null,
+        progress: 0,
+    });
     const workerRef = useRef<Worker | null>(null);
 
     useEffect(() => {
@@ -28,18 +34,18 @@ export function useLayout(model: GraphModel | null, radius = 3.2): LayoutState {
 
     useEffect(() => {
         if (!model) {
-            setState({positions: null, progress: 0});
+            setState({model: null, positions: null, progress: 0});
             return;
         }
 
         const key = signature(model, radius);
         const cached = solved.get(key);
         if (cached) {
-            setState({positions: cached, progress: 1});
+            setState({model, positions: cached, progress: 1});
             return;
         }
 
-        setState({positions: null, progress: 0});
+        setState({model, positions: null, progress: 0});
 
         const worker = new LayoutWorker();
         workerRef.current?.terminate();
@@ -59,7 +65,7 @@ export function useLayout(model: GraphModel | null, radius = 3.2): LayoutState {
             }
             const positions = event.data.positions;
             solved.set(key, positions);
-            setState({positions, progress: 1});
+            setState({model, positions, progress: 1});
             worker.terminate();
             if (workerRef.current === worker) {
                 workerRef.current = null;
@@ -98,5 +104,5 @@ export function useLayout(model: GraphModel | null, radius = 3.2): LayoutState {
         };
     }, [model, radius]);
 
-    return state;
+    return state.model === model ? {positions: state.positions, progress: state.progress} : {positions: null, progress: 0};
 }

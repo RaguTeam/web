@@ -14,10 +14,12 @@ from __future__ import annotations
 import logging
 import time
 import uuid
+from collections.abc import AsyncIterator
 from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import HTTPException
+from ragu.api.models import EngineReport, SearchResponse, SourceItem
 
 from ragu_web_api.catalog import Catalog
 from ragu_web_api.config import Settings
@@ -29,8 +31,10 @@ from ragu_web_api.ragu_gateway import RaguGateway
 from ragu_web_api.schemas.agent import (
     AgentRequest,
     AgentResponse,
+    AnswerTrace,
     AssistantMessage,
     SuggestionsResponse,
+    TraceTimings,
 )
 from ragu_web_api.schemas.common import Locale
 from ragu_web_api.schemas.datasets import SearchEngine
@@ -52,6 +56,19 @@ def _rerank_outcome(engines: Any) -> str:
     if engines.reranked:
         return "applied"
     return "failed" if engines.rerank_error else "skipped"
+
+
+def _reply(
+    request: AgentRequest, content: str, answer_trace: AnswerTrace
+) -> AgentResponse:
+    return AgentResponse(
+        message=AssistantMessage(
+            id=f"msg-{uuid.uuid4().hex[:12]}",
+            content=content,
+            created_at=datetime.now(timezone.utc),
+            trace=answer_trace if request.include_trace else None,
+        )
+    )
 
 
 class Answerer:
@@ -89,14 +106,80 @@ class Answerer:
             query_plan_requested=request.use_query_plan,
         )
         self._record(dataset_id, request, answer_trace, answer_language, response)
+        return _reply(request, response.answer, answer_trace)
 
-        return AgentResponse(
-            message=AssistantMessage(
-                id=f"msg-{uuid.uuid4().hex[:12]}",
-                content=response.answer,
-                created_at=datetime.now(timezone.utc),
-                trace=answer_trace if request.include_trace else None,
-            )
+    async def stream(
+        self, dataset_id: str, request: AgentRequest
+    ) -> AsyncIterator[tuple[str, dict[str, Any]]]:
+        """Тот же ответ по кускам: `delta` с текстом, в конце `message`.
+
+        `message` несёт ровно то, что вернул бы `answer`, — фронт заменяет им
+        собранный из кусков текст и получает трейс. Отказ посреди потока
+        приходит событием `error`, и `message` после него не будет.
+        """
+        observe_dataset_request(dataset_id, "agent")
+        corpus = await self._catalog.corpus(dataset_id)
+        mode = self._mode(corpus, request.engine)
+        answer_language = language.answer_language(request)
+
+        started = time.perf_counter()
+        meta: dict[str, Any] = {}
+        retrieved_at = started
+        parts: list[str] = []
+        engines: dict[str, Any] | None = None
+        async for event, data in self._gateway.stream(
+            dataset_id,
+            mode,
+            request.message,
+            **self._body(
+                mode, request=request, answer_language=answer_language, corpus=corpus
+            ),
+        ):
+            if event == "meta":
+                meta = data
+                retrieved_at = time.perf_counter()
+            elif event == "delta":
+                parts.append(data["text"])
+                yield "delta", {"text": data["text"]}
+            elif event == "done":
+                engines = data["engines"]
+            elif event == "error":
+                yield "error", data
+                return
+        finished = time.perf_counter()
+        if engines is None:
+            yield "error", {
+                "code": "upstream_error",
+                "message": "The answer stream ended before it was complete.",
+            }
+            return
+
+        report = EngineReport.model_validate(engines)
+        response = SearchResponse(
+            query=meta.get("query", request.message),
+            mode=meta.get("mode", mode),
+            used_query_plan=report.query_plan,
+            answer="".join(parts),
+            sources=[SourceItem.model_validate(item) for item in meta.get("sources", [])],
+            engines=report,
+        )
+        answer_trace = trace.build(
+            response,
+            settings=self._settings,
+            top_k=request.top_k,
+            total_ms=int((finished - started) * 1000),
+            query_plan_requested=request.use_query_plan,
+        )
+        # Поток не несёт расхода по стадиям, поэтому стадии меряем сами: до
+        # первого куска — поиск, дальше — генерация. Сеть попадает в обе.
+        answer_trace.timings = TraceTimings(
+            retrieval_ms=int((retrieved_at - started) * 1000),
+            generation_ms=int((finished - retrieved_at) * 1000),
+            total_ms=answer_trace.timings.total_ms,
+        )
+        self._record(dataset_id, request, answer_trace, answer_language, response)
+        yield "message", _reply(request, response.answer, answer_trace).model_dump(
+            mode="json"
         )
 
     async def suggestions(

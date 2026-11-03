@@ -8,6 +8,10 @@ services:
     environment:
       # Модели, которые поднимаются сразу; поле `model` в запросе выбирает нужную.
       EMBEDDER_MODELS: "BAAI/bge-large-en-v1.5,Alibaba-NLP/gte-multilingual-base"
+    volumes:
+      # Код сервера берётся из репозитория, а не из образа: образ весит 8 ГБ
+      # из-за моделей, и пересобирать его ради правки app.py незачем.
+      - ./embedder/app.py:/app/app.py:ro
     expose:
       - "8001"                            # только внутрь сети docker
 
@@ -29,10 +33,17 @@ services:
       RAGU_API_PORT: "8020"
       # Каждый корпус — своя папка. Первый в списке становится графом по
       # умолчанию для плоских путей /v1/search/*.
+      #
+      # dennis_ritchie построен эмбеддером на 1536 измерений, которого на стенде
+      # нет, и вопросы к нему падали на несовпадении размерности. В
+      # dennis_ritchie_gte те же сущности, связи и текст, а векторы пересчитаны
+      # через gte-multilingual-base по рецепту индексатора RAGU (Entity.to_text,
+      # Relation.to_text, Chunk.content). Папка лежит только на стенде, рядом с
+      # исходной, которая не тронута.
       RAGU_API_GRAPHS: >-
         [{"id":"medical","storage_folder":"/data/indexes/medical","language":"russian","embedder_dim":768},
          {"id":"ragu-bio","storage_folder":"/data/indexes/ragu_bio","language":"russian","embedder_dim":768},
-         {"id":"dennis-ritchie","storage_folder":"/data/indexes/dennis_ritchie","language":"english","embedder_dim":1536}]
+         {"id":"dennis-ritchie","storage_folder":"/data/indexes/dennis_ritchie_gte","language":"english","embedder_dim":768}]
       # Пусто — сервис отвечает всем, кто до него дотянется, а каждый запрос
       # стоит вызовов LLM. Наружу он не выставлен, но ключ всё равно задаём.
       RAGU_API_API_KEYS: ${RAGU_API_KEY:?задайте RAGU_API_KEY в .env}

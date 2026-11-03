@@ -181,6 +181,8 @@ class FakeGateway:
         self.selections: list[dict[str, Any]] = []
         self.entity_queries: list[dict[str, Any]] = []
         self.fail_on_graphs = False
+        # Заготовка для потока: пары (событие, данные) или исключение на месте.
+        self.stream_events: list[Any] | None = None
 
     def _count(self, name: str) -> None:
         self.calls[name] = self.calls.get(name, 0) + 1
@@ -268,6 +270,28 @@ class FakeGateway:
         self._count("search")
         self.searches.append({"dataset": dataset, "mode": mode, "query": query, **body})
         return self._answer
+
+    async def stream(self, dataset: str, mode: str, query: str, **body):
+        """Тот же ответ, что у `search`, кусками по словам — или `stream_events`."""
+        self._count("stream")
+        self.searches.append({"dataset": dataset, "mode": mode, "query": query, **body})
+        if self.stream_events is not None:
+            for item in self.stream_events:
+                if isinstance(item, Exception):
+                    raise item
+                yield item
+            return
+        answer = self._answer
+        engines = answer.engines.model_dump()
+        yield "meta", {
+            "query": answer.query,
+            "mode": answer.mode,
+            "sources": [source.model_dump() for source in answer.sources],
+            "engines": engines,
+        }
+        for index, word in enumerate(answer.answer.split(" ")):
+            yield "delta", {"text": word if index == 0 else f" {word}"}
+        yield "done", {"engines": engines}
 
     @property
     def last_search(self) -> dict[str, Any]:

@@ -592,6 +592,68 @@
         }
       }
     },
+    "/api/v1/datasets/{dataset_id}/agent/messages/stream": {
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "summary": "Ask a question and receive the answer as it is generated",
+        "operationId": "stream_agent_message",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server-Sent Events: `delta` with `{text}` for each piece of the answer, then `message` with the same body as `POST /messages`. A failure after the stream has started arrives as `error` with `{code, message}`, and no `message` follows it.",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dataset not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/datasets/{dataset_id}/agent/suggestions": {
       "get": {
         "tags": [

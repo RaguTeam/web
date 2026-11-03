@@ -116,3 +116,63 @@ async def test_readiness_never_raises() -> None:
     здесь — это «не готов», а не сбой."""
     wire = Wire({"error": {"code": "SERVICE_NOT_READY", "message": ""}}, 503)
     assert await _gateway(wire).ready() is False
+
+
+# ---------- поток ----------
+
+
+def _sse(*events: tuple[str, str]) -> bytes:
+    return "".join(f"event: {name}\ndata: {data}\n\n" for name, data in events).encode()
+
+
+class StreamWire(Wire):
+    """Отвечает потоком SSE вместо JSON."""
+
+    def transport(self) -> httpx.MockTransport:
+        def handle(request: httpx.Request) -> httpx.Response:
+            self.seen = request
+            return httpx.Response(
+                self.status,
+                content=self.payload,
+                headers={"content-type": "text/event-stream"},
+            )
+
+        return httpx.MockTransport(handle)
+
+
+@asyncio_test
+async def test_stream_carries_the_request_id_too() -> None:
+    """Клиент открывает поток сам, мимо `_request`, — заголовок ставится отдельно."""
+    wire = StreamWire(_sse(("delta", '{"text": "a"}'), ("done", '{"engines": {}}')))
+    token = request_id_var.set("abc123")
+    try:
+        events = [item async for item in _gateway(wire).stream("medical", "mix", "q")]
+    finally:
+        request_id_var.reset(token)
+    assert events == [("delta", {"text": "a"}), ("done", {"engines": {}})]
+    assert wire.seen.headers[REQUEST_ID_HEADER] == "abc123"
+    assert wire.seen.headers["authorization"] == "Bearer secret"
+    assert wire.seen.url.path == "/v1/graphs/medical/search/mix/stream"
+
+
+@asyncio_test
+async def test_refusal_before_the_stream_is_our_envelope() -> None:
+    wire = Wire({"error": {"code": "GRAPH_NOT_FOUND", "message": "no such graph"}}, 404)
+    with pytest.raises(HTTPException) as caught:
+        [item async for item in _gateway(wire).stream("missing", "mix", "q")]
+    assert caught.value.status_code == 404
+    assert caught.value.detail["code"] == "dataset_not_found"
+
+
+@asyncio_test
+async def test_failure_inside_the_stream_is_our_envelope() -> None:
+    wire = StreamWire(
+        _sse(
+            ("delta", '{"text": "a"}'),
+            ("error", '{"code": "INTERNAL_ERROR", "message": "engine failed"}'),
+            ("delta", '{"text": "b"}'),
+        )
+    )
+    events = [item async for item in _gateway(wire).stream("medical", "mix", "q")]
+    assert events[-1] == ("error", {"code": "upstream_error", "message": "engine failed"})
+    assert len(events) == 2
