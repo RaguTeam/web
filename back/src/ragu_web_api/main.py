@@ -1,11 +1,10 @@
+import asyncio
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.routing import APIRoute
-from fastapi.responses import FileResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from prometheus_fastapi_instrumentator import Instrumentator, metrics
 
 from ragu_web_api import __version__
@@ -19,17 +18,22 @@ configure_logging()
 from ragu_web_api.logging_setup import REQUEST_ID_HEADER  # noqa: E402
 from ragu_web_api.middleware import RequestContextMiddleware  # noqa: E402
 from ragu_web_api.routers import api_router  # noqa: E402
-from ragu_web_api.dependencies import gateway  # noqa: E402
+from ragu_web_api.dependencies import gateway, graph_view  # noqa: E402
 
 
 @asynccontextmanager
 async def _lifespan(app: FastAPI):
-    """Отпустить пул соединений к ragu-api при остановке.
+    """Прогреть сообщества в фоне и отпустить пул соединений к ragu-api при остановке.
 
-    Без этого uvicorn на SIGTERM оставляет открытые сокеты, и сервис досчитывает
-    до своего таймаута вместо того, чтобы закрыться сразу.
+    Прогрев не держит старт: бэкенд отвечает сразу, а корпус, до которого
+    очередь не дошла, догрузит свои сообщества при первом открытии.
+
+    Без закрытия пула uvicorn на SIGTERM оставляет открытые сокеты, и сервис
+    досчитывает до своего таймаута вместо того, чтобы закрыться сразу.
     """
+    preload = asyncio.create_task(graph_view.preload())
     yield
+    preload.cancel()
     await gateway.aclose()
 
 
@@ -58,10 +62,6 @@ OPENAPI_TAGS = [
         "description": "Question answering over a selected graph with structured traces.",
     },
 ]
-
-
-FRONTEND_DIST = Path(__file__).resolve().parents[3] / "front" / "app" / "-"
-FRONTEND_INDEX = FRONTEND_DIST / "index.html"
 
 
 def create_app() -> FastAPI:
@@ -101,10 +101,9 @@ def create_app() -> FastAPI:
     # can log, including preflight handling.
     app.add_middleware(RequestContextMiddleware)
 
+    # Сайт живёт на GitHub Pages (front/ragu-site), бэкенд отдаёт только API.
     @app.get("/", include_in_schema=False)
     async def root():
-        if FRONTEND_INDEX.exists():
-            return FileResponse(FRONTEND_INDEX)
         return RedirectResponse(url="/docs")
 
     app.include_router(api_router, prefix="/api/v1")
@@ -113,8 +112,7 @@ def create_app() -> FastAPI:
     # status codes, grouped by route template rather than by concrete path — so
     # every dataset does not become its own time series.
     #
-    # Must be instrumented before the catch-all StaticFiles mount below, which
-    # would otherwise swallow the route. Not exposed publicly: Caddy answers 404
+    # Not exposed publicly: Caddy answers 404
     # for /metrics, and Prometheus scrapes back:8000 inside the docker network.
     instrumentator = Instrumentator(
         should_group_status_codes=False,
@@ -130,9 +128,6 @@ def create_app() -> FastAPI:
     )
     instrumentator.add(metrics.requests())
     instrumentator.instrument(app).expose(app, include_in_schema=False)
-
-    if FRONTEND_INDEX.exists():
-        app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
     return app
 
 

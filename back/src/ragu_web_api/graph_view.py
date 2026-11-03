@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import time
 from typing import Any
 
 from ragu.api.models import EntityItem, RelationItem
@@ -22,6 +23,7 @@ from ragu_web_api.config import Settings
 from ragu_web_api.metrics import observe_dataset_request
 from ragu_web_api.presentation import graph as present
 from ragu_web_api.ragu_gateway import RaguGateway
+from ragu_web_api.schemas.datasets import DatasetStats
 from ragu_web_api.schemas.graph import (
     CommunitySummary,
     EntityType,
@@ -37,8 +39,14 @@ from ragu_web_api.schemas.graph import (
 
 LOGGER = logging.getLogger(__name__)
 
-# Потолок выборки сообществ: их единицы-десятки на корпус, страницы не нужны.
+# Потолок выборки сообществ и он же максимум страницы у сервиса. На medical их
+# 480 на двух уровнях; если станет больше, это будет видно в логе.
 _COMMUNITY_LIMIT = 500
+
+# Предзагрузка ждёт каталог до 5 минут: столько ragu-api поднимает графы после
+# перезапуска всего стенда.
+_PRELOAD_ATTEMPTS = 20
+_PRELOAD_RETRY_S = 15.0
 
 # Сколько вершин сервис принимает в одну выборку связей (MAX_SELECT_IDS). Это
 # не наш потолок выдачи — он снят, — а граница одного запроса: разбить набор на
@@ -55,6 +63,56 @@ class GraphView:
         self._gateway = gateway
         self._catalog = catalog
         self._page = settings.graph_page_size
+        # Сообщества корпуса и размеры, при которых они получены.
+        self._communities: dict[str, tuple[DatasetStats, list[CommunitySummary]]] = {}
+        self._community_locks: dict[str, asyncio.Lock] = {}
+
+    async def preload(self) -> None:
+        """Забрать сообщества всех корпусов до первого посетителя.
+
+        Выборка блокирует ragu-api на время сборки (medical 19 с), и лучше
+        пусть это случится при старте бэкенда, чем на чьём-то вопросе в чате.
+        ragu-api при совместном перезапуске поднимается дольше нас, поэтому
+        каталог запрашивается с повторами. Корпус, который не удалось
+        прогрузить, догрузится при первом открытии, как раньше.
+        """
+        for attempt in range(_PRELOAD_ATTEMPTS):
+            try:
+                cards = await self._catalog.cards()
+                break
+            except Exception:
+                LOGGER.info(
+                    "Catalog is not ready for preloading yet (attempt %d).",
+                    attempt + 1,
+                    extra={"event": "preload_waiting"},
+                )
+                await asyncio.sleep(_PRELOAD_RETRY_S)
+        else:
+            LOGGER.warning(
+                "Communities were not preloaded: the catalog stayed unavailable.",
+                extra={"event": "preload_failed"},
+            )
+            return
+
+        for card in cards:
+            started = time.monotonic()
+            try:
+                top = await self._top_communities(card.id)
+            except Exception:
+                LOGGER.warning(
+                    "Communities of corpus '%s' were not preloaded.",
+                    card.id,
+                    exc_info=True,
+                    extra={"event": "preload_failed", "dataset": card.id},
+                )
+                continue
+            LOGGER.info(
+                "Preloaded %d communities of corpus '%s' in %.1f s.",
+                len(top),
+                card.id,
+                time.monotonic() - started,
+                extra={"event": "preload_done", "dataset": card.id},
+            )
 
     # --- канвас -----------------------------------------------------------
 
@@ -169,10 +227,9 @@ class GraphView:
     async def communities(self, dataset_id: str) -> GraphCommunitiesResponse:
         observe_dataset_request(dataset_id, "communities")
         await self._catalog.corpus(dataset_id)
-        page = await self._gateway.communities(dataset_id, limit=_COMMUNITY_LIMIT)
         return GraphCommunitiesResponse(
             dataset_id=dataset_id,
-            communities=[present.community(item) for item in page.communities],
+            communities=await self._top_communities(dataset_id),
         )
 
     # --- выборки ----------------------------------------------------------
@@ -279,12 +336,47 @@ class GraphView:
         wanted = {node.community_id for node in nodes if node.community_id}
         if not wanted:
             return []
-        page = await self._gateway.communities(dataset_id, limit=_COMMUNITY_LIMIT)
         return [
-            present.community(item)
-            for item in page.communities
+            item
+            for item in await self._top_communities(dataset_id)
             if item.id in wanted
         ]
+
+    async def _top_communities(self, dataset_id: str) -> list[CommunitySummary]:
+        """Сообщества уровня 0 — те, чьи номера стоят у вершин первыми.
+
+        Сервис собирает в памяти все сообщества корпуса и только потом режет
+        страницу, на medical это 19 с, и на это время он не отвечает никому.
+        Поэтому список берётся один раз (см. `preload`) и живёт, пока у корпуса
+        те же размеры: сообщества меняются только с переиндексацией, а она
+        меняет и счётчики, которые каталог перечитывает раз в минуту.
+        Одновременные запросы ждут одну выборку, а не запускают каждый свою.
+        """
+        stats = (await self._catalog.corpus(dataset_id)).stats
+        cached = self._communities.get(dataset_id)
+        if cached and cached[0] == stats:
+            return cached[1]
+        lock = self._community_locks.setdefault(dataset_id, asyncio.Lock())
+        async with lock:
+            cached = self._communities.get(dataset_id)
+            if cached and cached[0] == stats:
+                return cached[1]
+            page = await self._gateway.communities(dataset_id, limit=_COMMUNITY_LIMIT)
+            if page.page.total > len(page.communities):
+                LOGGER.warning(
+                    "Corpus '%s' has %d communities, only %d were fetched.",
+                    dataset_id,
+                    page.page.total,
+                    len(page.communities),
+                    extra={"event": "communities_truncated", "dataset": dataset_id},
+                )
+            top = [
+                present.community(item)
+                for item in page.communities
+                if item.level == 0
+            ]
+            self._communities[dataset_id] = (stats, top)
+            return top
 
     async def _chunks(self, dataset_id: str, ids: list[str]) -> list[ProvenanceChunk]:
         """Фрагменты, из которых извлекли сущность.

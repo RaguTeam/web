@@ -5,11 +5,14 @@
 брать ровно показанное, и это видно только по журналу обращений.
 """
 
+import asyncio
+
 import pytest
 from support import (
     FakeGateway,
     asyncio_test,
     community,
+    detail,
     entity,
     info,
     relation,
@@ -17,6 +20,7 @@ from support import (
 )
 
 from ragu_web_api.catalog import Catalog
+from ragu_web_api import graph_view as graph_view_module
 from ragu_web_api.graph_view import GraphView
 from ragu_web_api.presentation import graph as present
 from ragu_web_api.presentation import layout
@@ -151,13 +155,82 @@ async def test_merged_result_is_resorted_by_degree() -> None:
 
 @asyncio_test
 async def test_only_communities_touching_the_shown_nodes_come_back() -> None:
+    """У вершины номера кластеров по уровням, а не `com-…` сообществ; номер 1
+    есть на обоих уровнях, и вершине принадлежит тот, что на уровне 0."""
     gateway = FakeGateway(
         [info("medical")],
-        entities=[entity("e0", communities=["c1"])],
-        communities=[community("c1"), community("c2", cluster_id=2)],
+        entities=[entity("e0", communities=["1", "7"])],
+        communities=[
+            community("com-a", cluster_id=1),
+            community("com-b", cluster_id=2),
+            community("com-c", cluster_id=1, level=1, title="верхний"),
+        ],
     )
     result = await _view(gateway).graph("medical", limit=5)
-    assert [item.id for item in result.communities] == ["c1"]
+    assert [(item.id, item.level) for item in result.communities] == [("1", 0)]
+    assert result.nodes[0].community_id == "1"
+
+
+@asyncio_test
+async def test_communities_are_fetched_once_for_many_requests() -> None:
+    """Сервис отдаёт сообщества только целиком и подолгу; два открытия графа,
+    в том числе одновременных, не должны просить их дважды."""
+    gateway = FakeGateway(
+        [info("medical")],
+        entities=[entity("e0", communities=["1"])],
+        communities=[community("com-a", cluster_id=1)],
+    )
+    view = await _warm(gateway)
+    await asyncio.gather(view.graph("medical"), view.graph("medical"))
+    await view.communities("medical")
+    assert gateway.calls["communities"] == 1
+
+
+@asyncio_test
+async def test_communities_are_fetched_again_after_reindexing() -> None:
+    """Сообщества живут без срока, пока у корпуса те же размеры; новые
+    счётчики в каталоге значат переиндексацию."""
+    gateway = FakeGateway(
+        [info("medical")],
+        entities=[entity("e0", communities=["1"])],
+        communities=[community("com-a", cluster_id=1)],
+    )
+    view = await _warm(gateway, catalog_ttl=0.0)
+    await view.graph("medical")
+    await view.graph("medical")
+    assert gateway.calls["communities"] == 1
+
+    gateway._details["medical"] = detail("medical", communities=39)
+    await view.graph("medical")
+    assert gateway.calls["communities"] == 2
+
+
+@asyncio_test
+async def test_preload_fetches_communities_before_anyone_asks() -> None:
+    gateway = FakeGateway(
+        [info("medical"), info("dennis-ritchie")],
+        entities=[entity("e0", communities=["1"])],
+        communities=[community("com-a", cluster_id=1)],
+    )
+    view = _view(gateway)
+    await view.preload()
+    assert gateway.calls["communities"] == 2
+
+    result = await view.graph("medical")
+    assert [item.id for item in result.communities] == ["1"]
+    assert gateway.calls["communities"] == 2
+
+
+@asyncio_test
+async def test_preload_waits_for_the_catalog_and_gives_up_quietly(monkeypatch) -> None:
+    monkeypatch.setattr(graph_view_module, "_PRELOAD_ATTEMPTS", 2)
+    monkeypatch.setattr(graph_view_module, "_PRELOAD_RETRY_S", 0.0)
+    gateway = FakeGateway([info("medical")], communities=[community("com-a")])
+    gateway.fail_on_graphs = True
+    view = _view(gateway)
+    await view.preload()
+    assert gateway.calls["graphs"] == 2
+    assert "communities" not in gateway.calls
 
 
 @asyncio_test

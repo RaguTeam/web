@@ -54,13 +54,31 @@ jobs:
                   print(f"{old} -> {new} в {len(changed)} файлах: {', '.join(sorted(changed))}")
                   PY
 
+            # Ссылки на прежний React-сайт в /web/site/ уводим в корень.
+            - name: Redirect old site address
+              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+              run: |
+                  mkdir -p raggu/web/front/app/-/site
+                  cat > raggu/web/front/app/-/site/index.html <<'HTML'
+                  <!doctype html>
+                  <html lang="ru">
+                  <head>
+                  <meta charset="utf-8">
+                  <title>RAGU</title>
+                  <meta http-equiv="refresh" content="0; url=../">
+                  <script>location.replace('../')</script>
+                  </head>
+                  <body><a href="../">RAGU</a></body>
+                  </html>
+                  HTML
+
             - name: Deploy main
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
                   folder: "raggu/web/front/app/-"
                   clean-exclude: |
-                      site
+                      feature
 
             - name: Deploy feature branch
               if: startsWith(github.ref, 'refs/heads/feature/')

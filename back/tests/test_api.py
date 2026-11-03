@@ -10,18 +10,15 @@ from support import FakeGateway, info, search_response, settings
 from ragu_web_api.answer import Answerer
 from ragu_web_api.catalog import Catalog
 from ragu_web_api.dependencies import get_answerer
-from ragu_web_api.main import FRONTEND_INDEX, app
+from ragu_web_api.main import app
 
 client = TestClient(app)
 
-def test_root_serves_frontend_or_redirects_to_docs() -> None:
+def test_root_redirects_to_docs() -> None:
+    """Сайт живёт на GitHub Pages, бэкенд отдаёт только API."""
     response = client.get("/", follow_redirects=False)
-    if FRONTEND_INDEX.exists():
-        assert response.status_code == 200
-        assert "RAGU" in response.text
-    else:
-        assert response.status_code in {307, 308}
-        assert response.headers["location"] == "/docs"
+    assert response.status_code in {307, 308}
+    assert response.headers["location"] == "/docs"
 
 
 def test_openapi_has_expected_tags_and_no_live_indexing_paths() -> None:

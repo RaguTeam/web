@@ -2,8 +2,12 @@ namespace $ {
 
 	export class $raggu_web_front_data extends $mol_object {
 
+		static endpoint() {
+			return $mol_state_arg.value( 'api' ) || 'https://ragu-back.duckdns.org'
+		}
+
 		static api() {
-			return $raggu_web_front_api_endpoint().replace( /\/$/, '' ) + '/api/v1'
+			return this.endpoint().replace( /\/$/, '' ) + '/api/v1'
 		}
 
 		static request( path: string, init?: RequestInit ) {

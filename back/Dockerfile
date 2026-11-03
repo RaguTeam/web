@@ -31,10 +31,13 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # --frozen: ставить ровно то, что в локе. Разошёлся lock с pyproject — сборка
 # падает, а не ставит тихо другую версию контракта.
 # --no-editable: в рантайм уезжает только .venv, без /app/src.
+# --reinstall-package: uv кэширует собранный wheel проекта по pyproject.toml, а
+# не по src, и при той же версии подставляет старый код. 03.11.2026 так на стенд
+# уехал образ без свежих правок.
 COPY README.md ./
 COPY src ./src
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev --no-editable
+    uv sync --frozen --no-dev --no-editable --reinstall-package ragu-web-api
 
 
 FROM python:3.11-slim
