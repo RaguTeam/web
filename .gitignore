@@ -7,7 +7,7 @@ __pycache__
 .idea
 .DS_Store
 indexes/
-tools/
+/tools/
 .env
 # RAGU's Settings.init_storage_folder() creates this next to the CWD whenever a
 # KnowledgeGraph is built without storage_folder pointed at an index.
