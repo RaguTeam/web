@@ -235,13 +235,22 @@
 	opacity: 1;
 }
 
+/*
+ * A 0fr row squeezes the content but never the padding, so the gap above the
+ * line belongs to the open state only: kept on the closed line it left 10px
+ * under the search bar.
+ */
+[raggu_web_front_corpus_controls_filtering] > [raggu_web_front_corpus_controls_summary] > [raggu_web_front_corpus_controls_summary_line] {
+	padding-top: 0.625rem;
+}
+
 [raggu_web_front_corpus_controls_summary_line] {
 	display: flex;
 	min-height: 0;
 	flex-wrap: wrap;
 	align-items: center;
 	column-gap: 0.5rem;
-	padding-top: 0.625rem;
+	transition: padding-top 280ms var(--ease-out-quint);
 	font-family: var(--font-mono);
 	font-size: 0.6875rem;
 	line-height: 1;
