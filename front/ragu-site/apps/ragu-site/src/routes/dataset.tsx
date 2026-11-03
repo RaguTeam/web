@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {AnimatePresence, motion} from 'motion/react';
 import {queries} from '../api/queries.ts';
@@ -71,13 +71,63 @@ function useStageRect(active: boolean) {
 }
 
 /**
+ * Moves the element to its new place smoothly when the stage is resized (the
+ * chat or the compact card opening), the same way the cloud's framing eases.
+ */
+function useGlide(element: React.RefObject<HTMLElement | null>, stage: React.RefObject<HTMLElement | null>) {
+    useLayoutEffect(() => {
+        const node = element.current;
+        const box = stage.current;
+        if (!node || !box || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+        let first = true;
+        const observer = new ResizeObserver(() => {
+            if (first) {
+                first = false;
+                return;
+            }
+            const from = node.getBoundingClientRect();
+            node.style.transition = 'none';
+            node.style.transform = '';
+            const to = node.getBoundingClientRect();
+            const dx = from.left - to.left;
+            const dy = from.top - to.top;
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
+                return;
+            }
+            node.style.transform = `translate(${dx}px, ${dy}px)`;
+            node.getBoundingClientRect();
+            node.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+            node.style.transform = '';
+        });
+        observer.observe(box);
+        return () => observer.disconnect();
+    }, [element, stage]);
+}
+
+/**
  * Waiting for a layout is not something to act on, so it is not dressed as
  * something to act on: no island, no bar to aim at. A small solid tumbles over
  * the empty stage and says what is happening.
  */
-function CloudLoader({label, percent, quiet}: {label: string; percent?: number; quiet?: boolean}) {
+function CloudLoader({
+    label,
+    percent,
+    quiet,
+    stage,
+}: {
+    label: string;
+    percent?: number;
+    quiet?: boolean;
+    stage: React.RefObject<HTMLElement | null>;
+}) {
+    const ref = useRef<HTMLDivElement>(null);
+    useGlide(ref, stage);
+
     return (
         <div
+            ref={ref}
             className={cn(
                 'pointer-events-none flex items-center justify-center gap-3.5 text-text-3',
                 quiet ? 'flex-row' : 'flex-col gap-4',
@@ -162,6 +212,20 @@ export function DatasetView({datasetId}: {datasetId: string}) {
     const warm = solving && shown !== null;
     const stageRef = useStageRect(graphOpen);
 
+    // While the side panel is only its one-line prompt it is laid over the
+    // stage's corner instead of taking a column. Going back to that waits for
+    // the card's exit (onCardGone), or the fading card would hang over the cloud.
+    const [hintOnly, setHintOnly] = useState(selection.selectedNode === null);
+    useEffect(() => {
+        if (selection.selectedNode !== null) {
+            setHintOnly(false);
+        }
+        else if (chatOpen) {
+            // The side panel is not mounted behind the chat: no exit to wait for.
+            setHintOnly(true);
+        }
+    }, [selection.selectedNode, chatOpen]);
+
     // Fixed, so this page has no scrollbar of its own, and its panels would sit a
     // scrollbar's width right of the same chrome on a page that does have one.
     return (
@@ -170,7 +234,7 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                 at every width where its islands wrap onto a second row. */}
             <div className="shrink-0" style={{height: 'calc(var(--chrome-h, 76px) + 1.75rem)'}} aria-hidden="true"/>
 
-            <div className="mx-auto flex min-h-0 w-full max-w-[1680px] flex-1 flex-col gap-4 px-3 pb-4 sm:px-5 lg:flex-row">
+            <div className="relative mx-auto flex min-h-0 w-full max-w-[1680px] flex-1 flex-col gap-4 px-3 pb-4 sm:px-5 lg:flex-row">
                 {graphOpen ? (
                     <div
                         // On a narrow screen the two panels cannot share the width, so the
@@ -181,7 +245,14 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                         // contents into a stack. The cloud's own framing carries the move.
                         className={cn('min-h-0 flex-1 flex-col', chatOpen ? 'hidden lg:flex' : 'flex')}
                     >
-                        <GraphControls model={shown?.model ?? null} className="w-full max-w-[44rem] self-start"/>
+                        <GraphControls
+                            model={shown?.model ?? null}
+                            className={cn(
+                                'w-full max-w-[44rem] self-start',
+                                // Leaves room for the prompt laid over the corner.
+                                hintOnly && !chatOpen && 'lg:max-w-[min(44rem,calc(100%-25rem))]',
+                            )}
+                        />
 
                         <div ref={stageRef} className="relative flex min-h-0 flex-1 items-center justify-center">
                             <AnimatePresence mode="wait">
@@ -209,6 +280,7 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                                         transition={{duration: 0.4}}
                                     >
                                         <CloudLoader
+                                            stage={stageRef}
                                             label={t.viewer.loadingGraph}
                                             percent={
                                                 graphQuery.isPending ? undefined : Math.round(progress * 100)
@@ -229,7 +301,7 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                                         transition={{duration: 0.4}}
                                         className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2"
                                     >
-                                        <CloudLoader quiet label={t.viewer.loadingGraph}/>
+                                        <CloudLoader quiet stage={stageRef} label={t.viewer.loadingGraph}/>
                                     </motion.div>
                                 ) : null}
                             </AnimatePresence>
@@ -265,9 +337,14 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                             nodeId={selection.selectedNode}
                             hint
                             waiting={cold}
+                            onCardGone={() => setHintOnly(true)}
                             className={cn(
                                 'w-full lg:w-full lg:max-w-[24rem]',
-                                selection.selectedNode && 'min-h-0 max-h-[52vh] lg:max-h-none',
+                                // Laid over the corner rather than taking a column, so the
+                                // cloud and its loader centre on the window, not left of it.
+                                hintOnly
+                                    ? 'lg:absolute lg:top-0 lg:right-5'
+                                    : 'min-h-0 max-h-[52vh] lg:max-h-none',
                             )}
                         />
                     )}

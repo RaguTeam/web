@@ -1,3 +1,4 @@
+import {useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {AnimatePresence, motion} from 'motion/react';
 import {queries} from '../../api/queries.ts';
@@ -232,6 +233,8 @@ export function DetailPanel({
     hint,
     /** Nothing is clickable yet, so the prompt should not ask for a click. */
     waiting,
+    /** The card has finished leaving and the panel is back to its prompt. */
+    onCardGone,
 }: {
     datasetId: string;
     model: GraphModel | null;
@@ -240,9 +243,19 @@ export function DetailPanel({
     compact?: boolean;
     hint?: boolean;
     waiting?: boolean;
+    onCardGone?: () => void;
 }) {
     const t = useT();
     const open = nodeId !== null;
+    // The pane keeps a card's shape until the card has faded out. Shrinking to
+    // the prompt the moment the selection clears made it hug the leaving card,
+    // which stretched it the card's full length for the length of the exit.
+    const [card, setCard] = useState(open);
+    if (open && !card) {
+        setCard(true);
+    }
+    const openRef = useRef(open);
+    openRef.current = open;
 
     return (
         <motion.aside
@@ -253,7 +266,7 @@ export function DetailPanel({
             className={cn(
                 'pointer-events-auto relative isolate flex min-h-0 flex-col rounded-island p-1.5',
                 // A hint hugs its one line; a card takes the height it is given.
-                !open && 'self-start',
+                !card && 'self-start',
                 className,
             )}
             aria-label={t.viewer.entityCard}
@@ -267,7 +280,17 @@ export function DetailPanel({
                 animate={{opacity: open ? 1 : 0.3}}
                 transition={{duration: 0.36, ease: EASE}}
             />
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence
+                mode="wait"
+                initial={false}
+                onExitComplete={() => {
+                    // Also fires between two entities; only an empty pane counts.
+                    if (!openRef.current) {
+                        setCard(false);
+                        onCardGone?.();
+                    }
+                }}
+            >
                 {open ? (
                     <EntityBody key={nodeId} datasetId={datasetId} model={model} nodeId={nodeId} dense={dense}/>
                 ) : hint ? (

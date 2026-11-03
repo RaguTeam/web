@@ -131,9 +131,13 @@ function TopKField({value, label, less, more}: {value: number; label: string; le
 export function SettingsDialog({open, onOpenChange}: {open: boolean; onOpenChange: (next: boolean) => void}) {
     const t = useT();
     const settings = useSettings();
+    // The dialog is mounted on the first click, already asked to be open, and
+    // Base UI only animates a change of `open`. One commit closed, then open.
+    const [shown, setShown] = useState(false);
+    useEffect(() => setShown(open), [open]);
 
     return (
-        <Dialog.Root open={open} onOpenChange={onOpenChange}>
+        <Dialog.Root open={shown} onOpenChange={onOpenChange}>
             <Dialog.Portal>
                 <Dialog.Backdrop
                     className={cn(
