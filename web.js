@@ -13117,6 +13117,14 @@ var $;
         body: {},
         out: {},
     };
+    $.$raggu_web_front_api_ragu_stream_agent_message = {
+        method: "POST",
+        route: "/api/v1/datasets/{dataset_id}/agent/messages/stream",
+        params: {},
+        query: undefined,
+        body: {},
+        out: {},
+    };
     $.$raggu_web_front_api_ragu_get_agent_suggestions = {
         method: "GET",
         route: "/api/v1/datasets/{dataset_id}/agent/suggestions",

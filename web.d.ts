@@ -5741,6 +5741,23 @@ declare namespace $.$raggu_web_front_api_ragu {
             patch?: never;
             trace?: never;
         };
+        "/api/v1/datasets/{dataset_id}/agent/messages/stream": {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            /** Ask a question and receive the answer as it is generated */
+            post: operations["stream_agent_message"];
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
         "/api/v1/datasets/{dataset_id}/agent/suggestions": {
             parameters: {
                 query?: never;
@@ -6794,6 +6811,50 @@ declare namespace $.$raggu_web_front_api_ragu {
                 };
             };
         };
+        stream_agent_message: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    dataset_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["AgentRequest"];
+                };
+            };
+            responses: {
+                /** @description Server-Sent Events: `delta` with `{text}` for each piece of the answer, then `message` with the same body as `POST /messages`. A failure after the stream has started arrives as `error` with `{code, message}`, and no `message` follows it. */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/event-stream": string;
+                    };
+                };
+                /** @description Dataset not found. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Validation Error */
+                422: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HTTPValidationError"];
+                    };
+                };
+            };
+        };
         get_agent_suggestions: {
             parameters: {
                 query?: {
@@ -6947,6 +7008,22 @@ declare namespace $ {
             };
         } ? B : unknown);
         out: NonNullable<$raggu_web_front_api_ragu.operations["create_agent_message"]["responses"][200] extends {
+            content: {
+                "application/json": infer R;
+            };
+        } ? R : unknown>;
+    };
+    const $raggu_web_front_api_ragu_stream_agent_message: {
+        method: string;
+        route: string;
+        params: $raggu_web_front_api_ragu.operations["stream_agent_message"]["parameters"]["path"];
+        query: undefined;
+        body: ($raggu_web_front_api_ragu.operations["stream_agent_message"]["requestBody"] extends {
+            content: {
+                "application/json": infer B;
+            };
+        } ? B : unknown);
+        out: NonNullable<$raggu_web_front_api_ragu.operations["stream_agent_message"]["responses"][200] extends {
             content: {
                 "application/json": infer R;
             };
