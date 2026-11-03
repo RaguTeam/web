@@ -1,0 +1,1 @@
+console.info( '%c ▫ $bog_build2 ▫ Audit passed', 'color:forestgreen; font-weight:bolder' )

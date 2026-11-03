@@ -1,0 +1,1813 @@
+$raggu_web_front_base $mol_view
+
+$raggu_web_front_text $mol_view
+	dom_name \p
+	sub /$mol_view_content
+		<= text \
+
+$raggu_web_front_label $raggu_web_front_text
+
+$raggu_web_front_skeleton $mol_view
+	attr *
+		^
+		aria-hidden \true
+
+$raggu_web_front_reveal $mol_view
+	delay 0
+	style *
+		^
+		--reveal-delay <= delay_css \0ms
+	attr *
+		^
+		raggu_web_front_reveal_shown <= shown? false
+
+$raggu_web_front_link $mol_view
+	dom_name \a
+	uri \
+	arg *
+	hint \
+	attr *
+		^
+		href <= href \
+		title <= hint
+	event *
+		^
+		click? <=> click? null
+	sub /$mol_view_content
+
+$mol_speck $mol_view
+	theme \$mol_theme_accent
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click? null
+	event_click? null
+	status? /
+	event *
+		^
+		click? <=> activate? <=> event_activate? null
+		dblclick? <=> clicks? null
+		keydown? <=> key_press? <=> event_key_press? null
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$raggu_web_front_lib_names $mol_object
+	entity_AGE @ \Age
+	entity_ANATOMICAL_STRUCTURE @ \Anatomical structure
+	entity_ANATOMICAL_SYSTEM @ \Anatomical system
+	entity_ANATOMY @ \Anatomy
+	entity_ATTRIBUTE @ \Attribute
+	entity_AWARD @ \Award
+	entity_BEHAVIOR @ \Behavior
+	entity_BIOLOGICAL_ENTITY @ \Biological entity
+	entity_BIOLOGICAL_PROCESS @ \Biological process
+	entity_BIOMATERIAL @ \Biomaterial
+	entity_CELL @ \Cell
+	entity_CELL_TYPE @ \Cell type
+	entity_CITY @ \City
+	entity_CLASSIFICATION_SYSTEM @ \Classification system
+	entity_CONCEPT @ \Concept
+	entity_CONDITION @ \Condition
+	entity_COUNTRY @ \Country
+	entity_CRIME @ \Crime
+	entity_DATE @ \Date
+	entity_DESCRIPTION @ \Description
+	entity_DISEASE @ \Disease
+	entity_DISEASE_OR_DISORDER @ \Disease or disorder
+	entity_DISTRICT @ \District
+	entity_DOCUMENT @ \Document
+	entity_DRUG_OR_CHEMICAL @ \Drug or chemical
+	entity_EVENT @ \Event
+	entity_FACILITY @ \Facility
+	entity_FAMILY @ \Family
+	entity_GENE @ \Gene
+	entity_GENE_MUTATION @ \Gene mutation
+	entity_GENE_OR_PROTEIN @ \Gene or protein
+	entity_GENETIC_TEST @ \Genetic test
+	entity_GROUP @ \Group
+	entity_HORMONE @ \Hormone
+	entity_IDEOLOGY @ \Ideology
+	entity_LANGUAGE @ \Language
+	entity_LAW @ \Law
+	entity_LOCATION @ \Location
+	entity_MEASUREMENT @ \Measurement
+	entity_MEASUREMENT_OR_OUTCOME @ \Measurement or outcome
+	entity_MEDICAL_CONDITION @ \Medical condition
+	entity_MONEY @ \Money
+	entity_NATIONALITY @ \Nationality
+	entity_NUMBER @ \Number
+	entity_ORDINAL @ \Ordinal
+	entity_ORGAN @ \Organ
+	entity_ORGANIZATION @ \Organization
+	entity_PATHOLOGICAL_ENTITY @ \Pathological entity
+	entity_PENALTY @ \Penalty
+	entity_PERCENT @ \Percent
+	entity_PERSON @ \Person
+	entity_PROCEDURE @ \Procedure
+	entity_PROCEDURE_OR_INTERVENTION @ \Procedure or intervention
+	entity_PROCESS @ \Process
+	entity_PRODUCT @ \Product
+	entity_PROFESSION @ \Profession
+	entity_PROTEIN @ \Protein
+	entity_PROTOCOL @ \Protocol
+	entity_RELIGION @ \Religion
+	entity_SOFTWARE @ \Software
+	entity_STATE_OR_PROV @ \State or prov
+	entity_SUBTYPE @ \Subtype
+	entity_SURGERY @ \Surgery
+	entity_SYMPTOM_OR_FINDING @ \Symptom or finding
+	entity_SYSTEM @ \System
+	entity_TEST @ \Test
+	entity_TIME @ \Time
+	entity_TREATMENT @ \Treatment
+	entity_WEBSITE @ \Website
+	entity_WORK_OF_ART @ \Work of art
+	relation_AFFECTED_BY @ \Affected by
+	relation_AFFECTS @ \Affects
+	relation_AGENT @ \Agent
+	relation_ALTERNATIVE_TO @ \Alternative to
+	relation_APPLICABLE_TO @ \Applicable to
+	relation_BASED_ON @ \Based on
+	relation_BIOMARKER @ \Biomarker
+	relation_CAUSE_OF @ \Cause of
+	relation_CELL_TYPE_PRESENT_IN_DISEASE @ \Cell type present in disease
+	relation_COMBINED_WITH @ \Combined with
+	relation_CONTAINS @ \Contains
+	relation_COVERED_BY @ \Covered by
+	relation_DIAGNOSED_WITH @ \Diagnosed with
+	relation_DOCUMENT_SOURCE @ \Document source
+	relation_EXAMPLE_OF @ \Example of
+	relation_EXPRESSED_IN @ \Expressed in
+	relation_GENE_ASSOCIATION @ \Gene association
+	relation_HAS_CAUSE @ \Has cause
+	relation_HAS_EFFECT @ \Has effect
+	relation_INCIDENCE_INCREASES @ \Incidence increases
+	relation_INSTANCE_OF @ \Instance of
+	relation_INVOLVES @ \Involves
+	relation_INVOLVES_REMOVAL @ \Involves removal
+	relation_INVOLVES_TEST @ \Involves test
+	relation_LOCATED_IN @ \Located in
+	relation_LOCATION @ \Location
+	relation_LOCATION_OF_DISEASE @ \Location of disease
+	relation_MANAGEMENT_STRATEGY @ \Management strategy
+	relation_PART_OF @ \Part of
+	relation_PARTICIPANT_IN @ \Participant in
+	relation_PRECEDES @ \Precedes
+	relation_PRODUCES @ \Produces
+	relation_PRODUCT @ \Product
+	relation_RELATED_TO @ \Related to
+	relation_REMOVES @ \Removes
+	relation_REPORTED_TO @ \Reported to
+	relation_RISK_FACTOR @ \Risk factor
+	relation_RISK_FACTOR_FOR @ \Risk factor for
+	relation_SIDE_EFFECT @ \Side effect
+	relation_SPREAD_TO @ \Spread to
+	relation_STARTS_IN @ \Starts in
+	relation_SUBCLASS_OF @ \Subclass of
+	relation_SUPERCLASS_OF @ \Superclass of
+	relation_SYNONYM @ \Synonym
+	relation_TARGET_OF @ \Target of
+	relation_TARGETS @ \Targets
+	relation_TREATMENT @ \Treatment
+	relation_TREATMENT_FOR @ \Treatment for
+	relation_TREATS @ \Treats
+	relation_TYPE_OF @ \Type of
+	relation_USED_FOR @ \Used for
+	relation_USED_IN @ \Used in
+	relation_USES @ \Uses
+
+$raggu_web_front_scene $mol_view
+	viewer $raggu_web_front_viewer
+	lights \light
+	attr *
+		^
+		raggu_web_front_scene_interactive <= interactive false
+		raggu_web_front_scene_mounted <= mounted false
+	sub /
+		<= Layer $raggu_web_front_scene_layer
+
+$raggu_web_front_glass $mol_view
+	dom_name \span
+	attr *
+		^
+		aria-hidden \true
+		raggu_web_front_glass_solid <= solid false
+
+$mol_image $mol_view
+	dom_name \img
+	attr *any
+		^
+		src <= uri \
+		title <= hint
+		alt <= title \
+		loading <= loading \lazy
+		decoding <= decoding \async
+		crossOrigin <= cors null
+		width <= natural_width 0
+		height <= natural_height 0
+	event *any
+		load? <=> load? null
+	minimal_width 16
+	minimal_height 16
+
+$raggu_web_front_mark $mol_image
+	uri <= data_uri \
+	title \RAGU
+
+$raggu_web_front_pop $mol_view
+	showed? false
+	close? null
+	align \start
+	offset 10
+	bubble_width \auto
+	attr *
+		^
+		raggu_web_front_pop_showed <= showed?
+	sub /
+		<= Trigger $mol_button
+			hint <= hint \
+			attr *
+				^
+				aria-label <= hint
+				aria-expanded <= showed?
+				raggu_web_front_pop_open <= showed?
+			click? <=> toggle? null
+			sub <= trigger_content /$mol_view_content
+		<= Bubble $mol_view
+			attr *
+				^
+				popover \manual
+			style *
+				^
+				width <= bubble_width
+			event *
+				^
+				keydown? <=> bubble_keydown? null
+			sub /
+				<= Glass $raggu_web_front_glass
+					solid true
+				<= Content $mol_view
+					sub <= bubble_content /$mol_view_content
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$raggu_web_front_icon $mol_svg_root
+	view_box \0 0 18 18
+	attr *
+		^
+		aria-hidden \true
+	sub /
+		<= Stroke $mol_svg_path
+			geometry <= path \
+		<= Fill $mol_svg_path
+			geometry <= fill \
+
+$raggu_web_front_icon_graph $raggu_web_front_icon
+	path \M2.1 5a1.9 1.9 0 1 0 3.8 0a1.9 1.9 0 1 0 -3.8 0M12.4 4.5a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0M7.4 13a2.1 2.1 0 1 0 4.2 0a2.1 2.1 0 1 0 -4.2 0M5.6 6.4 L8.2 11.2 M5.7 4.6 L12.3 4.5 M11.3 12 L13.2 6.1
+
+$raggu_web_front_icon_chat $raggu_web_front_icon
+	path \M2.6 8.2c0-2.9 2.7-4.9 6.4-4.9s6.4 2 6.4 4.9-2.7 4.9-6.4 4.9c-.8 0-1.6-.1-2.3-.3L3.4 14.6l.7-2.6c-.9-.9-1.5-2.1-1.5-3.8ZM6.4 8.1h5.2
+
+$raggu_web_front_icon_search $raggu_web_front_icon
+	path \M3.4 8a4.6 4.6 0 1 0 9.2 0a4.6 4.6 0 1 0 -9.2 0M11.5 11.6 L15.2 15.3
+
+$raggu_web_front_icon_close $raggu_web_front_icon
+	path \M4.6 4.6 L13.4 13.4 M13.4 4.6 L4.6 13.4
+
+$raggu_web_front_icon_sliders $raggu_web_front_icon
+	path \M2.6 5.4h5.1M11 5.4h4.4M2.6 12.6h3.1M9 12.6h6.4M7.7 5.4a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0M5.7 12.6a1.7 1.7 0 1 0 3.4 0a1.7 1.7 0 1 0 -3.4 0
+
+$raggu_web_front_icon_sun $raggu_web_front_icon
+	path \M5.9 9a3.1 3.1 0 1 0 6.2 0a3.1 3.1 0 1 0 -6.2 0M9 1.9v1.6M9 14.5v1.6M1.9 9h1.6M14.5 9h1.6M3.9 3.9l1.2 1.2M12.9 12.9l1.2 1.2M14.1 3.9l-1.2 1.2M5.1 12.9l-1.2 1.2
+
+$raggu_web_front_icon_moon $raggu_web_front_icon
+	path \M14.4 10.6A5.9 5.9 0 0 1 7.1 3.4a6.2 6.2 0 1 0 7.3 7.2Z
+
+$raggu_web_front_icon_display $raggu_web_front_icon
+	path \M4 3.4h10a1.6 1.6 0 0 1 1.6 1.6v5.4a1.6 1.6 0 0 1 -1.6 1.6h-10a1.6 1.6 0 0 1 -1.6 -1.6v-5.4a1.6 1.6 0 0 1 1.6 -1.6zM6.6 15.1h4.8M9 12v3.1
+
+$raggu_web_front_icon_globe $raggu_web_front_icon
+	path \M2.6 9a6.4 6.4 0 1 0 12.8 0a6.4 6.4 0 1 0 -12.8 0M2.7 9h12.6M9 2.6c1.8 2 2.7 4.1 2.7 6.4S10.8 13.4 9 15.4C7.2 13.4 6.3 11.3 6.3 9S7.2 4.6 9 2.6Z
+
+$raggu_web_front_icon_chevron $raggu_web_front_icon
+	path \M5.4 7 L9 10.6 L12.6 7
+
+$raggu_web_front_icon_arrow $raggu_web_front_icon
+	path \M4.4 9h9.2M9.6 5.2 13.6 9l-4 3.8
+
+$raggu_web_front_icon_send $raggu_web_front_icon
+	path \M3.2 9 15 4.2 10.6 15.2 8.6 10.4 3.2 9Z
+
+$raggu_web_front_icon_stop $raggu_web_front_icon
+	fill \M6.4 5h5.2a1.4 1.4 0 0 1 1.4 1.4v5.2a1.4 1.4 0 0 1 -1.4 1.4h-5.2a1.4 1.4 0 0 1 -1.4 -1.4v-5.2a1.4 1.4 0 0 1 1.4 -1.4z
+
+$raggu_web_front_icon_info $raggu_web_front_icon
+	path \M2.6 9a6.4 6.4 0 1 0 12.8 0a6.4 6.4 0 1 0 -12.8 0M9 8.2v4.1
+	fill \M8.15 5.7a.85 .85 0 1 0 1.7 0a.85 .85 0 1 0 -1.7 0
+
+$raggu_web_front_icon_sources $raggu_web_front_icon
+	path \M3.2 4.6a1.6 1.6 0 0 1 1.6-1.6H8l1.4 1.7h4a1.4 1.4 0 0 1 1.4 1.4v1.1M2.9 7.4h12.7l-1.3 6a1.4 1.4 0 0 1-1.4 1.1H4.7a1.4 1.4 0 0 1-1.4-1.2Z
+
+$raggu_web_front_icon_sweep $raggu_web_front_icon
+	path \M11.6 2.8 8.2 6.2M6.4 5.1 12.9 11.6 10.8 13.7 4.3 7.2ZM3.1 14.9h4.4
+
+$raggu_web_front_icon_plus $raggu_web_front_icon
+	path \M9 4.2v9.6M4.2 9h9.6
+
+$raggu_web_front_icon_recentre $raggu_web_front_icon
+	path \M3 6.2V4.3a1.3 1.3 0 0 1 1.3-1.3H6.2M11.8 3h1.9A1.3 1.3 0 0 1 15 4.3v1.9M15 11.8v1.9a1.3 1.3 0 0 1-1.3 1.3h-1.9M6.2 15H4.3A1.3 1.3 0 0 1 3 13.7v-1.9M7 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0
+
+$raggu_web_front_icon_caret $raggu_web_front_icon
+	view_box \0 0 12 12
+	path \M2 4.5 L6 8.5 L10 4.5
+
+$raggu_web_front_icon_mol $raggu_web_front_icon
+	path \M12.6 5.4a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M3 5.4a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M7.8 1.8a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M7.8 9a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M12.6 12.6a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M7.8 16.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M3 12.6a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M0.6 9a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M15 9a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0M5.16 6.12L8.04 8.28M5.16 4.68L8.04 2.52M9.96 2.52L12.84 4.68M9 3L9 7.8M9.96 9.72L12.84 11.88M9 10.2L9 15M12.84 13.32L9.96 15.48M8.04 15.48L5.16 13.32
+
+$raggu_web_front_chrome_switcher $raggu_web_front_pop
+	corpus \
+	hint <= pick_label @ \Switch corpus
+	bubble_width \min(30rem, calc(100vw - 2rem))
+	trigger_content /
+		<= Current $mol_view
+			dom_name \span
+			sub /
+				<= Current_label $raggu_web_front_label
+					dom_name \span
+					text <= corpus_label @ \Corpus
+				<= Current_title $mol_view
+					dom_name \span
+					sub / <= current_title \
+		<= Caret $raggu_web_front_icon_caret
+	bubble_content /
+		<= Heading $mol_view
+			sub /
+				<= Heading_label $raggu_web_front_label
+					text <= corpora_label @ \Corpora
+		<= List $mol_view
+			sub <= rows /
+	Row* $raggu_web_front_link
+		arg *
+			corpus <= row_id* \
+		click? <=> row_click*? null
+		attr *
+			^
+			raggu_web_front_chrome_switcher_row_current <= row_current* false
+		sub /
+			<= Row_text* $mol_view
+				dom_name \span
+				sub /
+					<= Row_title* $mol_view
+						dom_name \span
+						sub / <= row_title* \
+					<= Row_domain* $mol_view
+						dom_name \span
+						sub / <= row_domain* \
+			<= Row_count* $raggu_web_front_label
+				dom_name \span
+				text <= row_count* \
+	Row_skeleton* $raggu_web_front_skeleton
+
+$raggu_web_front_chrome_tools $mol_view
+	viewer $raggu_web_front_viewer
+	sub /
+		<= Recentre $mol_button
+			hint <= recentre_label @ \Recentre the cloud
+			attr *
+				^
+				aria-label <= recentre_label
+			click? <=> recentre? null
+			sub /
+				<= Recentre_icon $raggu_web_front_icon_recentre
+		<= Stats $raggu_web_front_pop
+			align \end
+			hint <= stats_label @ \Cloud size
+			bubble_width \19rem
+			trigger_content /
+				<= Shown_badge $mol_view
+					dom_name \span
+					attr *
+						^
+						class <= stale_class \
+					sub / <= shown_badge \—
+				<= Ramp $mol_view
+					dom_name \span
+				<= Total_badge $mol_view
+					dom_name \span
+					attr *
+						^
+						class <= stale_class
+					sub / <= total_badge \—
+			bubble_content /
+				<= Stats_body $mol_view
+					sub /
+						<= Stats_label $raggu_web_front_label
+							text <= stats_label
+						<= Numbers $mol_view
+							attr *
+								^
+								class <= stale_class
+							sub /
+								<= Shown_block $mol_view
+									sub /
+										<= Shown_full $mol_view
+											sub / <= shown_full \
+										<= Shown_caption $raggu_web_front_label
+											text <= shown_label @ \in the cloud
+								<= Total_block $mol_view
+									sub /
+										<= Total_full $mol_view
+											sub / <= total_full \
+										<= Total_caption $raggu_web_front_label
+											text <= total_label @ \in the corpus
+						<= Bar $mol_view
+							sub /
+								<= Bar_fill $mol_view
+									style *
+										width <= bar_width \0%
+						<= Legend $raggu_web_front_text
+							text <= legend_label @ \Brightness follows how connected an entity is.
+						<= Action $mol_view
+							sub <= action /
+	More $mol_button
+		enabled <= more_enabled true
+		click? <=> more? null
+		sub /
+			<= More_icon $raggu_web_front_icon_plus
+			<= more_text \
+	Rest $mol_button
+		enabled <= rest_enabled true
+		click? <=> rest? null
+		sub /
+			<= Rest_icon $raggu_web_front_icon_plus
+			<= rest_text \
+	Paging_note $raggu_web_front_text
+		text <= paging_label @ \The gateway has no paging and caps a request at 5000, so the rest is fetched community by community and stitched together here.
+	Rest_failed $raggu_web_front_text
+		text <= rest_failed_label @ \Could not load the rest.
+	Clipped_note $raggu_web_front_text
+		text <= clipped_text \
+	At_max $raggu_web_front_text
+		text <= at_max_label @ \This is everything the gateway will return in one request.
+	loading_label @ \Loading
+	load_more_label @ \Load {n} more
+	load_rest_label @ \Load the rest of the corpus
+	loading_rest_label @ \Loading… {n}%
+	clipped_label @ \{n} communities are larger than one request, so those came back clipped.
+
+$raggu_web_front_chrome_toggle $mol_button
+	active false
+	label \
+	Icon $raggu_web_front_icon
+	attr *
+		^
+		aria-pressed <= active
+	sub /
+		<= Pane $mol_view
+			dom_name \span
+			attr *
+				^
+				class \accent-pane
+				aria-hidden \true
+		<= Icon
+		<= label
+
+$raggu_web_front_chrome $mol_view
+	dom_name \header
+	viewer $raggu_web_front_viewer
+	theme_choice? \system
+	theme_resolved \light
+	attr *
+		^
+		raggu_web_front_chrome_scrolled <= scrolled false
+		raggu_web_front_chrome_corpus <= corpus_page false
+	sub /
+		<= Row $mol_view
+			sub /
+				<= Brand $mol_view
+					sub /
+						<= Brand_glass $raggu_web_front_glass
+						<= Home_link $raggu_web_front_link
+							arg *
+								corpus null
+							hint <= home_label @ \Home
+							sub /
+								<= Mark $raggu_web_front_mark
+								<= Wordmark $mol_view
+									dom_name \span
+									sub /
+										<= Word $mol_view
+											dom_name \span
+											sub / \RAGU
+										<= Word_sub $mol_view
+											dom_name \span
+											sub / \graph rag
+						<= Switcher_box $mol_view
+							sub /
+								<= Switcher_rule $mol_view
+									dom_name \span
+								<= Switcher $raggu_web_front_chrome_switcher
+									corpus <= corpus \
+				<= Right $mol_view
+					sub <= right /
+						<= Tools $raggu_web_front_chrome_tools
+							viewer <= viewer
+						<= Controls $mol_view
+							sub /
+								<= Controls_glass $raggu_web_front_glass
+								<= Theme_menu $raggu_web_front_chrome_theme
+									choice? <=> theme_choice?
+									resolved <= theme_resolved
+								<= Lang_menu $raggu_web_front_chrome_lang
+								<= Controls_rule $mol_view
+									dom_name \span
+								<= Settings_open $mol_button
+									hint <= settings_label @ \Retrieval settings
+									attr *
+										^
+										aria-label <= settings_label
+									click? <=> open_settings? null
+									sub /
+										<= Settings_icon $raggu_web_front_icon_sliders
+				<= Centre_box $mol_view
+					sub /
+						<= Centre $mol_view
+							attr *
+								^
+								raggu_web_front_chrome_centre_kind <= centre_kind \home
+							sub /
+								<= Centre_glass $raggu_web_front_glass
+								<= Pane_home $mol_view
+									attr *
+										^
+										data-active <= home_active \
+										inert <= home_inert \
+									sub /
+										<= Link_pipeline $mol_button
+											click? <=> to_pipeline? null
+											sub / <= pipeline_label @ \How it works
+										<= Link_corpora $mol_button
+											click? <=> to_corpora? null
+											sub / <= corpora_label @ \Corpora
+								<= Pane_corpus $mol_view
+									attr *
+										^
+										data-active <= corpus_active \
+										inert <= corpus_inert \
+									sub /
+										<= Toggle_graph $raggu_web_front_chrome_toggle
+											active <= graph_active false
+											click? <=> toggle_graph? null
+											Icon <= Graph_icon $raggu_web_front_icon_graph
+											label <= graph_label @ \Relations
+										<= Toggle_chat $raggu_web_front_chrome_toggle
+											active <= chat_active false
+											click? <=> toggle_chat? null
+											Icon <= Chat_icon $raggu_web_front_icon_chat
+											label <= chat_label @ \Chat
+
+$raggu_web_front_chrome_menu $raggu_web_front_pop
+	align \end
+	bubble_width \11rem
+	trigger_content /
+		<= Trigger_icon $raggu_web_front_icon
+	bubble_content /
+		<= Heading $raggu_web_front_label
+			text <= heading \
+		<= Items $mol_view
+			sub <= items /
+
+$raggu_web_front_chrome_menu_item $mol_button
+	checked false
+	attr *
+		^
+		role \menuitemradio
+		aria-checked <= checked
+	sub /
+		<= Lead $mol_view
+			dom_name \span
+			sub <= lead /$mol_view_content
+		<= Name $mol_view
+			dom_name \span
+			sub / <= name \
+		<= Dot $mol_view
+			dom_name \span
+
+$raggu_web_front_chrome_theme $raggu_web_front_chrome_menu
+	choice? \system
+	resolved \light
+	hint <= theme_label @ \Appearance
+	heading <= theme_label
+	Trigger_icon <= Current_icon $raggu_web_front_icon
+	items /
+		<= Light $raggu_web_front_chrome_menu_item
+			checked <= light_checked false
+			click? <=> pick_light? null
+			lead / <= Light_icon $raggu_web_front_icon_sun
+			name <= light_label @ \Light
+		<= Dark $raggu_web_front_chrome_menu_item
+			checked <= dark_checked false
+			click? <=> pick_dark? null
+			lead / <= Dark_icon $raggu_web_front_icon_moon
+			name <= dark_label @ \Dark
+		<= System $raggu_web_front_chrome_menu_item
+			checked <= system_checked false
+			click? <=> pick_system? null
+			lead / <= System_icon $raggu_web_front_icon_display
+			name <= system_label @ \Match system
+	Sun_icon $raggu_web_front_icon_sun
+	Moon_icon $raggu_web_front_icon_moon
+	Display_icon $raggu_web_front_icon_display
+
+$raggu_web_front_chrome_lang $raggu_web_front_chrome_menu
+	hint <= lang_label @ \Language
+	heading <= lang_label
+	Trigger_icon <= Globe_icon $raggu_web_front_icon_globe
+	items /
+		<= En $raggu_web_front_chrome_menu_item
+			checked <= en_checked false
+			click? <=> pick_en? null
+			lead / \EN
+			name \English
+		<= Ru $raggu_web_front_chrome_menu_item
+			checked <= ru_checked false
+			click? <=> pick_ru? null
+			lead / \RU
+			name \Русский
+
+$raggu_web_front_settings $mol_view
+	showed? false
+	attr *
+		^
+		raggu_web_front_settings_showed <= showed?
+	event *
+		^
+		keydown? <=> keydown? null
+	sub /
+		<= Backdrop $mol_view
+			event *
+				click? <=> close? null
+		<= Popup $mol_view
+			attr *
+				^
+				role \dialog
+				aria-modal \true
+			sub /
+				<= Glass $raggu_web_front_glass
+					solid true
+				<= Body $mol_view
+					sub /
+						<= Head $mol_view
+							sub /
+								<= Head_text $mol_view
+									sub /
+										<= Title $mol_view
+											dom_name \h2
+											sub / <= title_label @ \Retrieval settings
+										<= Subtitle $raggu_web_front_label
+											text <= subtitle_label @ \how the agent looks for an answer
+								<= Close_icon $mol_button
+									hint <= close_label @ \Close
+									attr *
+										^
+										aria-label <= close_label
+									click? <=> close?
+									sub /
+										<= Close_glyph $raggu_web_front_icon_close
+						<= Group $mol_view
+							sub /
+								<= Group_label $raggu_web_front_label
+									text <= group_label @ \Retrieval
+								<= Group_hint $raggu_web_front_text
+									text <= group_hint @ \graph in the answer · decomposition of complex questions
+						<= Rows $mol_view
+							sub /
+								<= Use_graph $raggu_web_front_settings_toggle
+									label <= use_graph_label @ \Graph in search
+									hint <= use_graph_hint @ \Off: chunk-vector search only (NaiveSearchEngine). On: chunks plus local graph neighbourhoods (MixSearchEngine).
+									checked? <=> use_graph? false
+									on_label <= on_label @ \On
+									off_label <= off_label @ \Off
+								<= Query_plan $raggu_web_front_settings_toggle
+									label <= query_plan_label @ \Query planning
+									hint <= query_plan_hint @ \Break a complex question into a DAG of simpler sub-questions before retrieving.
+									checked? <=> query_plan? false
+									on_label <= on_label
+									off_label <= off_label
+								<= Rerank $raggu_web_front_settings_toggle
+									label <= rerank_label @ \Rerank candidates
+									hint <= rerank_hint @ \Re-score retrieved passages before they are handed to the model. Noticeably slower.
+									checked? <=> rerank? false
+									on_label <= on_label
+									off_label <= off_label
+								<= Top_k $mol_view
+									sub /
+										<= Top_k_text $mol_view
+											sub /
+												<= Top_k_label $raggu_web_front_text
+													text <= top_k_label @ \Passages retrieved
+												<= Top_k_hint $raggu_web_front_text
+													text <= top_k_hint @ \How many candidates reach the model. More context, slower answer.
+										<= Top_k_field $mol_view
+											sub /
+												<= Top_k_less $mol_button
+													hint <= top_k_less_label @ \Fewer passages
+													attr *
+														^
+														aria-label <= top_k_less_label
+													enabled <= top_k_less_enabled true
+													click? <=> top_k_less? null
+													sub / \−
+												<= Top_k_input $mol_view
+													dom_name \input
+													attr *
+														^
+														aria-label <= top_k_label
+														inputmode \numeric
+													field *
+														^
+														value <= top_k_draft? \8
+													event *
+														input? <=> top_k_input? null
+														change? <=> top_k_commit? null
+														blur? <=> top_k_commit?
+														keydown? <=> top_k_key? null
+												<= Top_k_more $mol_button
+													hint <= top_k_more_label @ \More passages
+													attr *
+														^
+														aria-label <= top_k_more_label
+													enabled <= top_k_more_enabled true
+													click? <=> top_k_more? null
+													sub / \+
+								<= Limit $mol_view
+									sub /
+										<= Limit_head $mol_view
+											sub /
+												<= Limit_label $raggu_web_front_text
+													text <= limit_label @ \Entities in the cloud
+												<= Limit_value $mol_view
+													dom_name \span
+													sub / <= limit_value \600
+										<= Limit_hint $raggu_web_front_text
+											text <= limit_hint @ \The renderer stays smooth well past a thousand points; the network is the limit.
+										<= Steps $mol_view
+											sub <= steps /
+										<= Limit_note $raggu_web_front_text
+											text <= api_cap @ \The gateway hands over at most 5000 entities per request, so a larger corpus is always a slice.
+						<= Divider $mol_view
+						<= Foot $mol_view
+							sub /
+								<= Reset $mol_button
+									click? <=> reset? null
+									sub / <= reset_label @ \Restore defaults
+								<= Done $mol_button
+									click? <=> close?
+									sub / <= close_label
+	Step* $mol_button
+		attr *
+			^
+			raggu_web_front_settings_step_active <= step_active* false
+		click? <=> step_pick*? null
+		sub /
+			<= Step_pane* $mol_view
+				dom_name \span
+				attr *
+					^
+					class <= step_pane_class* \
+					aria-hidden \true
+			<= step_text* \
+
+$raggu_web_front_settings_toggle $mol_view
+	label \
+	hint \
+	checked? false
+	on_label \On
+	off_label \Off
+	sub /
+		<= Text $mol_view
+			sub /
+				<= Label $raggu_web_front_text
+					text <= label
+				<= Hint $raggu_web_front_text
+					text <= hint
+		<= Control $mol_view
+			sub /
+				<= State $raggu_web_front_label
+					dom_name \span
+					text <= state_text \
+				<= Switch $mol_button
+					attr *
+						^
+						role \switch
+						aria-checked <= checked?
+						aria-label <= label
+					click? <=> flip? null
+					sub /
+						<= Thumb $mol_view
+							dom_name \span
+
+$raggu_web_front_home $mol_view
+	sub /
+		<= Hero $mol_view
+			dom_name \section
+			sub /
+				<= Hero_main $mol_view
+					sub /
+						<= Eyebrow $raggu_web_front_label
+							text <= eyebrow @ \open source graphrag
+						<= Title $mol_view
+							dom_name \h1
+							sub /
+								<= title_text @ \Every document becomes a graph.
+								<= Title_accent $mol_view
+									dom_name \span
+									sub / <= title_accent @ \Every answer cites it.
+						<= Lede $raggu_web_front_text
+							text <= lede @ \RAGU reads raw text, pulls out typed entities and the relations between them, clusters the result into communities, and answers questions over that structure — on your own hardware, with the source chunk attached to every claim.
+						<= Actions $mol_view
+							sub /
+								<= Cta $raggu_web_front_link
+									arg *
+										corpus \medical
+									sub /
+										<= cta_label @ \Open the Medical graph
+										<= Cta_arrow $raggu_web_front_icon_arrow
+								<= How $mol_button
+									click? <=> to_pipeline? null
+									sub / <= how_label @ \How it works
+				<= Metrics $mol_view
+					dom_name \aside
+					sub /
+						<= Metrics_glass $raggu_web_front_glass
+						<= Metrics_body $mol_view
+							sub /
+								<= Metrics_head $mol_view
+									sub /
+										<= Metrics_title $raggu_web_front_label
+											text <= metrics_title @ \Indexed for this demo
+										<= Metrics_count $raggu_web_front_label
+											dom_name \span
+											text <= corpora_count \3 corpora
+								<= Metric_list $mol_view
+									dom_name \dl
+									sub /
+										<= Metric_nodes $raggu_web_front_home_metric
+											label <= metric_nodes @ \entities
+											value <= total_nodes \
+											pending <= pending false
+										<= Metric_edges $raggu_web_front_home_metric
+											label <= metric_edges @ \relations
+											value <= total_edges \
+											pending <= pending
+										<= Metric_communities $raggu_web_front_home_metric
+											label <= metric_communities @ \communities
+											value <= total_communities \
+											pending <= pending
+										<= Metric_chunks $raggu_web_front_home_metric
+											label <= metric_chunks @ \text chunks
+											value <= total_chunks \
+											pending <= pending
+								<= Badges $mol_view
+									sub <= badges /
+		<= Pipeline $mol_view
+			dom_name \section
+			attr *
+				^
+				id \pipeline
+			sub /
+				<= Pipeline_head $raggu_web_front_home_head
+					eyebrow \pipeline
+					title <= pipeline_title @ \How a corpus becomes answerable
+					lede <= pipeline_lede @ \Four passes. Each one is inspectable, and the last one is what the chat panel talks to.
+				<= Steps $mol_view
+					dom_name \ol
+					sub <= steps /
+		<= Corpora $mol_view
+			dom_name \section
+			attr *
+				^
+				id \corpora
+			sub /
+				<= Corpora_head $raggu_web_front_home_head
+					eyebrow \corpora
+					title <= corpora_title @ \Three corpora, already indexed
+					lede <= corpora_lede @ \Pick one to open its graph and put questions to it.
+				<= Corpora_body $mol_view
+					sub <= corpora /
+		<= Footer $mol_view
+			dom_name \footer
+			sub /
+				<= Footer_grid $mol_view
+					sub /
+						<= Footer_about $mol_view
+							sub /
+								<= Footer_name $raggu_web_front_text
+									text \RAGU
+								<= Footer_blurb $raggu_web_front_text
+									text <= footer_blurb @ \A demo interface over prebuilt RAGU indexes. Indexing, job queues and GPU workers stay off this deployment.
+						<= Footer_project $mol_view
+							dom_name \nav
+							sub /
+								<= Footer_project_label $raggu_web_front_label
+									text <= footer_project @ \Project
+								<= Footer_project_list $mol_view
+									dom_name \ul
+									sub /
+										<= Footer_github $raggu_web_front_link
+											uri \https://github.com/RaguTeam/RAGU
+											sub / \GitHub
+										<= Footer_arxiv $raggu_web_front_link
+											uri \https://arxiv.org/abs/2607.11683
+											sub / \arXiv 2607.11683
+										<= Footer_pypi $raggu_web_front_link
+											uri \https://pypi.org/project/graph-ragu/
+											sub / \graph_ragu on PyPI
+						<= Footer_this $mol_view
+							dom_name \nav
+							sub /
+								<= Footer_this_label $raggu_web_front_label
+									text <= footer_this @ \This interface
+								<= Footer_this_list $mol_view
+									dom_name \ul
+									sub /
+										<= Footer_web $raggu_web_front_link
+											uri \https://github.com/RaguTeam/web
+											sub / <= footer_this
+										<= Footer_mol $raggu_web_front_link
+											uri \https://b-on-g.github.io/smalljs/
+											sub /
+												<= Footer_mol_icon $raggu_web_front_icon_mol
+												<= footer_mol @ \Built with $mol
+										<= Footer_rights $raggu_web_front_label
+											text <= rights @ \MIT licensed
+	Badge* $mol_view
+		sub /
+			<= Badge_label* $raggu_web_front_label
+				dom_name \span
+				text <= badge_label* \
+			<= Badge_value* $mol_view
+				dom_name \span
+				sub / <= badge_value* \
+	Step* $raggu_web_front_reveal
+		dom_name \li
+		delay <= step_delay* 0
+		sub /
+			<= Step_rail* $mol_view
+				sub <= step_rail* /
+			<= Step_name* $mol_view
+				dom_name \h3
+				sub / <= step_name* \
+			<= Step_detail* $raggu_web_front_text
+				text <= step_detail* \
+			<= Step_output* $raggu_web_front_label
+				text <= step_output* \
+	Step_dot* $mol_view
+		dom_name \span
+		sub /
+			<= Step_dot_core* $mol_view
+				dom_name \span
+	Step_ordinal* $mol_view
+		dom_name \span
+		sub / <= step_ordinal* \
+	Step_line* $mol_view
+		dom_name \span
+	Step_arrow* $raggu_web_front_icon_arrow
+	Card* $raggu_web_front_home_card
+		dataset <= card_dataset* null
+		featured <= card_featured* false
+		delay <= card_delay* 0
+	Card_skeleton* $raggu_web_front_skeleton
+		attr *
+			^
+			raggu_web_front_home_card_skeleton_featured <= card_skeleton_featured* false
+	Error $mol_view
+		sub /
+			<= Error_glass $raggu_web_front_glass
+			<= Error_title $raggu_web_front_text
+				text <= error_title @ \Something went wrong
+			<= Error_hint $raggu_web_front_text
+				text <= error_hint @ \The API did not answer. It may be waking up — try again in a moment.
+			<= Retry $mol_button
+				click? <=> retry? null
+				sub / <= retry_label @ \Try again
+	corpora_word @ \corpora
+	Pipeline_text $raggu_web_front_home_pipeline
+
+$raggu_web_front_home_metric $mol_view
+	label \
+	value \
+	pending false
+	sub /
+		<= Label $raggu_web_front_label
+			dom_name \dt
+			text <= label
+		<= Value $mol_view
+			dom_name \dd
+			sub <= value_content /
+	Skeleton $raggu_web_front_skeleton
+
+$raggu_web_front_home_head $raggu_web_front_reveal
+	eyebrow \
+	title \
+	lede \
+	sub /
+		<= Eyebrow $raggu_web_front_label
+			text <= eyebrow
+		<= Title $mol_view
+			dom_name \h2
+			sub / <= title
+		<= Lede $raggu_web_front_text
+			text <= lede
+
+$raggu_web_front_home_pipeline $mol_object
+	step_1_name @ \Chunk
+	step_1_detail @ \Documents are split on sentence boundaries, not on a fixed character count, so an entity never straddles the cut.
+	step_1_output @ \text chunks
+	step_2_name @ \Extract
+	step_2_detail @ \A model reads every chunk and returns typed entities and typed relations, each with a description and a confidence score.
+	step_2_output @ \entities · relations
+	step_3_name @ \Cluster
+	step_3_detail @ \Leiden community detection groups the graph into themes, then each theme is summarised in its own right.
+	step_3_output @ \communities · summaries
+	step_4_name @ \Answer
+	step_4_detail @ \A question walks the neighbourhood, reads the community summaries, or both — and the chunk behind each claim comes back with it.
+	step_4_output @ \answer · citations
+
+$raggu_web_front_corpus_controls $mol_view
+	viewer $raggu_web_front_viewer
+	attr *
+		^
+		raggu_web_front_corpus_controls_filtering <= filtering false
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Bar $mol_view
+			sub <= bar /
+		<= Summary $mol_view
+			sub /
+				<= Summary_line $mol_view
+					dom_name \span
+					sub <= summary /
+	Search $mol_view
+		sub <= search_box /
+	Search_icon $raggu_web_front_icon_search
+	Search_input $mol_view
+		dom_name \input
+		attr *
+			^
+			placeholder <= search_label @ \Find an entity
+			aria-label <= search_label
+		field *
+			^
+			value <= search? \
+		event *
+			input? <=> search_input? null
+	Search_clear $mol_button
+		hint <= clear_label @ \Clear
+		attr *
+			^
+			aria-label <= clear_label
+		click? <=> search_clear? null
+		sub /
+			<= Search_clear_icon $raggu_web_front_icon_close
+	Types $raggu_web_front_corpus_controls_filter
+		label <= types_label @ \Entity types
+		count <= types_count 0
+		items <= type_items /
+		clear? <=> types_clear? null
+	Communities $raggu_web_front_corpus_controls_filter
+		label <= communities_label @ \Communities
+		count <= communities_count 0
+		items <= community_items /
+		clear? <=> communities_clear? null
+	Type_item* $raggu_web_front_corpus_controls_facet
+		active <= type_active* false
+		name <= type_name* \
+		count <= type_count* 0
+		click? <=> type_toggle*? null
+	Community_item* $raggu_web_front_corpus_controls_facet
+		active <= community_active* false
+		name <= community_name* \
+		count <= community_count* 0
+		click? <=> community_toggle*? null
+	Matches $mol_view
+		dom_name \span
+		sub / <= matches_text \
+	No_matches $mol_view
+		dom_name \span
+		sub / <= no_matches_text \
+	Clear_all $mol_button
+		click? <=> clear_all? null
+		sub / <= clear_all_label @ \Clear all filters
+	matches_label @ \{n} matches
+	no_matches_label @ \Nothing matched
+	no_matches_hint @ \Try a shorter query, or clear the type filter.
+
+$raggu_web_front_corpus_controls_filter $raggu_web_front_pop
+	label \
+	count 0
+	items /
+	bubble_width \min(22rem, calc(100vw - 2rem))
+	attr *
+		^
+		raggu_web_front_corpus_controls_filter_active <= active false
+	trigger_content /
+		<= Pane $mol_view
+			dom_name \span
+			attr *
+				^
+				class <= pane_class \
+				aria-hidden \true
+		<= label
+		<= Count $mol_view
+			dom_name \span
+			sub / <= count_text \
+		<= Chevron $raggu_web_front_icon_chevron
+	bubble_content /
+		<= Heading $raggu_web_front_label
+			text <= label
+		<= List $mol_view
+			sub <= items
+		<= Clear $mol_button
+			click? <=> clear? null
+			sub / <= clear_label @ \Clear
+
+$raggu_web_front_corpus_controls_facet $mol_button
+	active false
+	name \
+	count 0
+	attr *
+		^
+		aria-pressed <= active
+	sub /
+		<= Box $mol_view
+			dom_name \span
+		<= Name $mol_view
+			dom_name \span
+			sub / <= name
+		<= Count $mol_view
+			dom_name \span
+			sub / <= count
+
+$raggu_web_front_corpus_loader $mol_view
+	label \
+	percent \
+	quiet false
+	attr *
+		^
+		raggu_web_front_corpus_loader_quiet <= quiet
+	sub /
+		<= Solid $mol_view
+			dom_name \span
+			attr *
+				^
+				aria-hidden \true
+			sub /
+				<= Face1 $mol_view
+					dom_name \i
+				<= Face2 $mol_view
+					dom_name \i
+				<= Face3 $mol_view
+					dom_name \i
+				<= Face4 $mol_view
+					dom_name \i
+				<= Face5 $mol_view
+					dom_name \i
+				<= Face6 $mol_view
+					dom_name \i
+		<= Caption $mol_view
+			dom_name \span
+			attr *
+				^
+				role \status
+				aria-live \polite
+			sub /
+				<= Label $raggu_web_front_label
+					dom_name \span
+					text <= label
+				<= Percent $raggu_web_front_label
+					dom_name \span
+					text <= percent
+
+$mol_svg_circle $mol_svg
+	dom_name \circle
+	pos /
+	attr *
+		^
+		r <= radius \.5%
+		cx <= pos_x \
+		cy <= pos_y \
+
+$raggu_web_front_rich $mol_view
+	text \
+	attr *
+		^
+		raggu_web_front_rich_html <= has_html false
+		raggu_web_front_rich_plain <= plain true
+	field *
+		^
+		innerHTML <= html \
+
+$raggu_web_front_disclosure $mol_view
+	label \
+	count_text \
+	hint \
+	open? false
+	Icon $raggu_web_front_icon_sources
+	attr *
+		^
+		raggu_web_front_disclosure_open <= open?
+	sub /
+		<= Plate $mol_view
+			dom_name \span
+			attr *
+				^
+				aria-hidden \true
+		<= Head $mol_view
+			sub /
+				<= Toggle $mol_button
+					hint <= hint
+					attr *
+						^
+						aria-expanded <= open?
+					click? <=> toggle? null
+					sub /
+						<= Icon
+						<= label
+						<= Count $mol_view
+							dom_name \span
+							sub / <= count_text
+				<= Actions $mol_view
+					sub <= actions /
+		<= Fold $mol_view
+			sub /
+				<= Body $mol_view
+					sub <= body /
+
+$raggu_web_front_corpus_detail $mol_view
+	dom_name \aside
+	viewer $raggu_web_front_viewer
+	dense false
+	hint false
+	waiting false
+	attr *
+		^
+		aria-label <= entity_label @ \Entity
+		raggu_web_front_corpus_detail_open <= open false
+		raggu_web_front_corpus_detail_dense <= dense
+		raggu_web_front_corpus_detail_waiting <= waiting
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Content $mol_view
+			sub <= content /
+	Hint $mol_view
+		hint <= hint_title @ \Every entity carries its description, its relations and the chunks it came from.
+		sub /
+			<= Hint_badge $mol_view
+				dom_name \span
+				sub /
+					<= Hint_glyph $mol_svg_root
+						view_box \0 0 18 18
+						sub /
+							<= Hint_dot $mol_svg_circle
+								pos /
+									4.6
+									3.1
+								radius 3
+							<= Hint_cursor $mol_svg_path
+								geometry \M4.6 3.1 13.7 8.4 9.6 9.6 8.1 13.6 4.6 3.1Z
+			<= Hint_text $mol_view
+				dom_name \span
+				sub / <= hint_text @ \Pick a point in the cloud
+	Body $mol_view
+		sub /
+			<= Head $mol_view
+				dom_name \header
+				sub /
+					<= Head_text $mol_view
+						sub /
+							<= Kind $raggu_web_front_label
+								text <= entity_label
+							<= Title $mol_view
+								dom_name \h2
+								sub <= title_content /
+							<= Chips $mol_view
+								sub <= chips /
+					<= Close $mol_button
+						hint <= close_label @ \Close
+						attr *
+							^
+							aria-label <= close_label
+						click? <=> close? null
+						sub /
+							<= Close_icon $raggu_web_front_icon_close
+			<= Scroll $mol_view
+				sub <= scroll_content /
+			<= Ask $mol_button
+				click? <=> ask? null
+				sub /
+					<= Ask_icon $raggu_web_front_icon_chat
+					<= ask_label @ \Ask about this entity
+	Title_skeleton $raggu_web_front_skeleton
+	Type_chip $raggu_web_front_home_chip
+		text <= type_name \
+	Lines $mol_view
+		sub /
+			<= Line1 $raggu_web_front_skeleton
+			<= Line2 $raggu_web_front_skeleton
+			<= Line3 $raggu_web_front_skeleton
+	Failed $raggu_web_front_text
+		text <= failed_text @ \The API did not answer. It may be waking up — try again in a moment.
+	Description $raggu_web_front_rich
+		text <= description \
+	Relations $mol_view
+		dom_name \section
+		sub /
+			<= Relations_label $raggu_web_front_label
+				text <= relations_title \
+			<= Relations_list $mol_view
+				dom_name \ul
+				sub <= relation_rows /
+	Relation* $mol_button
+		click? <=> relation_pick*? null
+		attr *
+			^
+			raggu_web_front_corpus_detail_relation_out <= relation_out* false
+		sub /
+			<= Relation_type* $mol_view
+				dom_name \span
+				sub / <= relation_type* \
+			<= Relation_other* $mol_view
+				dom_name \span
+				sub / <= relation_other* \
+	Chunks $raggu_web_front_disclosure
+		label <= provenance_label @ \Source chunks
+		count_text <= chunks_count \
+		body <= chunk_rows /
+	Chunk* $mol_view
+		sub /
+			<= Chunk_id* $raggu_web_front_label
+				text <= chunk_id* \
+			<= Chunk_text* $raggu_web_front_text
+				text <= chunk_text* \
+	relations_label @ \Relations ({n})
+	ask_template @ \Tell me about the entity “{label}” from the knowledge graph.
+
+$raggu_web_front_corpus_chat $mol_view
+	dom_name \section
+	viewer $raggu_web_front_viewer
+	attr *
+		^
+		aria-label <= chat_label @ \Chat
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Head $mol_view
+			dom_name \header
+			sub /
+				<= Head_label $raggu_web_front_label
+					text <= chat_label
+				<= Head_tools $mol_view
+					sub <= head_tools /
+		<= Scroll $mol_view
+			sub <= scroll_content /
+		<= Starters $mol_view
+			dom_name \ul
+			sub <= starters /
+		<= Form $mol_view
+			dom_name \form
+			event *
+				submit? <=> submit? null
+			sub /
+				<= Input $mol_view
+					dom_name \textarea
+					attr *
+						^
+						rows 1
+						placeholder <= placeholder @ \Ask anything about this corpus
+						aria-label <= placeholder
+					field *
+						^
+						value <= draft? \
+					event *
+						input? <=> draft_input? null
+						keydown? <=> draft_key? null
+				<= Action $mol_view
+					sub <= action /
+	Engine $raggu_web_front_label
+		dom_name \span
+		text <= engine \mix
+	Sweep $mol_button
+		hint <= sweep_label @ \Clear the thread
+		attr *
+			^
+			aria-label <= sweep_label
+		click? <=> sweep? null
+		sub /
+			<= Sweep_icon $raggu_web_front_icon_sweep
+	Hide $mol_button
+		hint <= hide_label @ \Hide the chat
+		attr *
+			^
+			aria-label <= hide_label
+		click? <=> hide? null
+		sub /
+			<= Hide_icon $raggu_web_front_icon_close
+	Empty $mol_view
+		sub /
+			<= Empty_title $raggu_web_front_text
+				text <= empty_title @ \No messages yet.
+			<= Empty_hint $raggu_web_front_text
+				text <= empty_hint @ \Start with one of these, or write your own.
+	Thread $mol_view
+		dom_name \ol
+		sub <= thread /
+	User* $mol_view
+		dom_name \li
+		sub /
+			<= User_text* $raggu_web_front_text
+				text <= entry_text* \
+	Agent* $mol_view
+		dom_name \li
+		sub /
+			<= Agent_label* $raggu_web_front_label
+				text <= agent_label @ \RAGU
+			<= Answer* $mol_view
+				sub <= answer* /
+			<= Agent_sources* $mol_view
+				sub <= agent_sources* /
+	Streaming $mol_view
+		dom_name \li
+		sub /
+			<= Streaming_label $raggu_web_front_label
+				text <= agent_label
+			<= Streaming_answer $mol_view
+				sub <= streaming_answer /
+	Caret $mol_view
+		dom_name \span
+		attr *
+			^
+			aria-hidden \true
+	Strong* $mol_view
+		dom_name \strong
+		sub / <= strong_text* \
+	Ref* $mol_button
+		hint <= citation_label @ \Show in the graph
+		attr *
+			^
+			class \ref
+			data-ref <= ref_id* \
+		click? <=> ref_pick*? null
+		sub / <= ref_text* \
+	Ref_muted* $mol_view
+		dom_name \span
+		attr *
+			^
+			class \ref ref--muted
+			data-ref <= ref_id*
+		sub / <= ref_text*
+	Pending $mol_view
+		dom_name \li
+		sub /
+			<= Pending_box $mol_view
+				sub /
+					<= Pending_head $mol_view
+						sub /
+							<= Ping $mol_view
+								dom_name \span
+								sub /
+									<= Ping_wave $mol_view
+										dom_name \span
+									<= Ping_dot $mol_view
+										dom_name \span
+							<= Thinking $raggu_web_front_text
+								text <= thinking_label @ \Retrieving and composing
+							<= Elapsed $raggu_web_front_label
+								dom_name \span
+								text <= elapsed \
+					<= Thinking_hint $raggu_web_front_text
+						text <= thinking_hint @ \First the corpus is searched, then the model starts writing.
+					<= Bars $mol_view
+						sub /
+							<= Bar1 $raggu_web_front_skeleton
+							<= Bar2 $raggu_web_front_skeleton
+							<= Bar3 $raggu_web_front_skeleton
+	Failure $mol_view
+		dom_name \li
+		sub <= failure_content /
+			<= Failure_title $raggu_web_front_text
+				text <= failure_text \
+			<= Failure_hint $raggu_web_front_text
+				text <= failure_hint @ \The API did not answer. It may be waking up — try again in a moment.
+	Starter* $mol_view
+		dom_name \li
+		sub /
+			<= Starter_button* $mol_button
+				click? <=> starter_send*? null
+				sub / <= starter_text* \
+	Send $mol_button
+		hint <= send_label @ \Send
+		attr *
+			^
+			type \submit
+			aria-label <= send_label
+		enabled <= send_enabled false
+		click? <=> send_click? null
+		sub /
+			<= Send_icon $raggu_web_front_icon_send
+	Stop $mol_button
+		hint <= stop_label @ \Stop
+		attr *
+			^
+			aria-label <= stop_label
+		click? <=> stop? null
+		sub /
+			<= Stop_icon $raggu_web_front_icon_stop
+	Sources* $raggu_web_front_disclosure
+		label <= sources_label @ \Sources
+		hint <= sources_hint @ \What the answer read
+		count_text <= sources_count* \
+		actions /
+			<= Meta* $raggu_web_front_pop
+				hint <= meta_label @ \How this answer was produced
+				bubble_width \17rem
+				trigger_content /
+					<= Meta_icon* $raggu_web_front_icon_info
+				bubble_content /
+					<= Meta_body* $mol_view
+						sub <= meta_body* /
+		body <= sources_body* /
+	Meta_title* $raggu_web_front_label
+		text <= meta_label
+	Meta_rows* $mol_view
+		dom_name \dl
+		sub <= meta_rows* /
+	Meta_row* $mol_view
+		sub /
+			<= Meta_row_label* $raggu_web_front_label
+				dom_name \dt
+				text <= meta_row_label* \
+			<= Meta_row_value* $mol_view
+				dom_name \dd
+				sub / <= meta_row_value* \
+	Meta_energy* $mol_view
+		sub /
+			<= Meta_energy_label* $raggu_web_front_label
+				dom_name \span
+				text <= energy_label @ \energy
+			<= Meta_energy_value* $mol_view
+				dom_name \span
+				sub / <= meta_energy* \
+	Meta_plan* $mol_view
+		sub /
+			<= Meta_plan_label* $raggu_web_front_label
+				text <= plan_label @ \sub-questions
+			<= Meta_plan_list* $mol_view
+				dom_name \ol
+				sub <= meta_plan* /
+	Plan_item* $mol_view
+		dom_name \li
+		sub /
+			<= Plan_index* $mol_view
+				dom_name \span
+				sub / <= plan_index* \
+			<= plan_text* \
+	Source_group* $mol_view
+		sub /
+			<= Source_group_label* $raggu_web_front_label
+				text <= source_group_label* \
+			<= Source_group_list* $mol_view
+				dom_name \ul
+				sub <= source_group_items* /
+	Source_entity* $mol_button
+		click? <=> source_entity_pick*? null
+		sub / <= source_entity_text* \
+	Source_relation* $mol_view
+		dom_name \li
+		sub / <= source_relation_text* \
+	Source_chunk* $mol_view
+		dom_name \li
+		sub /
+			<= Source_chunk_text* $raggu_web_front_text
+				text <= source_chunk_text* \
+	No_sources* $raggu_web_front_text
+		text <= no_sources_label @ \The answer came back without a trace.
+	entities_label @ \entities
+	relations_label @ \relations
+	chunks_label @ \chunks
+	engine_label @ \engine
+	top_k_label @ \top k
+	rerank_label @ \rerank
+	retrieval_label @ \retrieval
+	generation_label @ \generation
+	total_label @ \total
+	on_label @ \On
+	off_label @ \Off
+	elapsed_label @ \{n}s elapsed
+	failed_label @ \The request failed.
+	rate_limited_label @ \Too many questions in a minute. Wait a little and ask again.
+	client_daily_limit_label @ \You have asked as many questions as allowed today. Come back tomorrow.
+	daily_limit_label @ \The demo has used up its questions for today. Come back tomorrow.
+
+$raggu_web_front_corpus $mol_view
+	viewer $raggu_web_front_viewer
+	attr *
+		^
+		raggu_web_front_corpus_chatting <= chat_open false
+		raggu_web_front_corpus_graphing <= graph_open true
+		raggu_web_front_corpus_hint_only <= hint_only true
+	sub /
+		<= Spacer $mol_view
+		<= Row $mol_view
+			sub <= row /
+	Graph $mol_view
+		sub <= graph_column /
+	Controls $raggu_web_front_corpus_controls
+		viewer <= viewer
+	Stage $mol_view
+		sub <= stage_content /
+	Failed $mol_view
+		sub /
+			<= Failed_glass $raggu_web_front_glass
+			<= Failed_title $raggu_web_front_text
+				text <= failed_title @ \The graph could not be loaded.
+			<= Failed_hint $raggu_web_front_text
+				text <= failed_hint @ \The API did not answer. It may be waking up — try again in a moment.
+			<= Failed_retry $mol_button
+				click? <=> retry? null
+				sub / <= retry_label @ \Try again
+	Cold $raggu_web_front_corpus_loader
+		label <= loading_label @ \Laying out the graph
+		percent <= percent \
+	Warm $raggu_web_front_corpus_loader
+		quiet true
+		label <= loading_label
+	Compact $raggu_web_front_corpus_detail
+		viewer <= viewer
+		dense true
+	Detail $raggu_web_front_corpus_detail
+		viewer <= viewer
+		hint true
+		waiting <= cold false
+	Chat $raggu_web_front_corpus_chat
+		viewer <= viewer
+
+$raggu_web_front_home_constellation $mol_svg_root
+	seed \
+	nodes 0
+	edges 0
+	view_box \0 0 100 100
+	aspect \xMidYMid slice
+	attr *
+		^
+		aria-hidden \true
+	sub /
+		<= Links $mol_svg_path
+			geometry <= links \
+		<= Points $mol_svg_path
+			geometry <= points \
+		<= Hubs $mol_svg_path
+			geometry <= hubs \
+
+$raggu_web_front_home_card $raggu_web_front_reveal
+	dom_name \article
+	dataset null
+	featured false
+	attr *
+		^
+		raggu_web_front_home_card_featured <= featured
+	sub /
+		<= Glass $raggu_web_front_glass
+		<= Link $raggu_web_front_link
+			arg *
+				corpus <= id \
+			hint <= link_label \
+			sub /
+				<= Preview $mol_view
+					sub /
+						<= Constellation $raggu_web_front_home_constellation
+							seed <= id
+							nodes <= nodes 0
+							edges <= edges 0
+						<= Shade $mol_view
+						<= Domain $raggu_web_front_home_chip
+							text <= domain \
+				<= Body $mol_view
+					sub /
+						<= Title $mol_view
+							dom_name \h3
+							sub / <= title \
+						<= Description $raggu_web_front_text
+							text <= description \
+						<= Stats $mol_view
+							dom_name \dl
+							sub /
+								<= Stat_nodes $raggu_web_front_home_card_stat
+									value <= nodes_text \
+									label <= entities_label @ \entities
+								<= Stat_edges $raggu_web_front_home_card_stat
+									value <= edges_text \
+									label <= relations_label @ \relations
+								<= Stat_communities $raggu_web_front_home_card_stat
+									value <= communities_text \
+									label <= communities_label @ \communities
+								<= Stat_chunks $raggu_web_front_home_card_stat
+									value <= chunks_text \
+									label <= chunks_label @ \chunks
+						<= Types $mol_view
+							dom_name \ul
+							sub <= types /
+						<= Open $mol_view
+							dom_name \span
+							sub /
+								<= open_label @ \Open graph
+								<= Open_arrow $raggu_web_front_icon_arrow
+	Type* $raggu_web_front_home_chip
+		text <= type_name* \
+	open_graph_label @ \Open graph
+
+$raggu_web_front_home_card_stat $mol_view
+	value \
+	label \
+	sub /
+		<= Value $mol_view
+			dom_name \dd
+			sub / <= value
+		<= Label $raggu_web_front_label
+			dom_name \dt
+			text <= label
+
+$raggu_web_front_home_chip $raggu_web_front_label
+	dom_name \span
+
+$raggu_web_front_app $raggu_web_front_base
+	title \RAGU
+	Viewer $raggu_web_front_viewer
+	attr *
+		^
+		raggu_web_front_app_corpus <= corpus_page false
+	sub /
+		<= Skip $raggu_web_front_link
+			uri \#main
+			sub / <= skip_label @ \Skip to content
+		<= Backdrop $mol_view
+			attr *
+				^
+				aria-hidden \true
+				raggu_web_front_app_backdrop_quiet <= quiet false
+			sub /
+				<= Backdrop_base $mol_view
+				<= Aurora $mol_view
+					sub /
+						<= Aurora_a $mol_view
+						<= Aurora_b $mol_view
+						<= Aurora_c $mol_view
+				<= Vignette $mol_view
+				<= Grain $mol_view
+		<= Scene $raggu_web_front_scene
+			viewer <= Viewer
+			lights <= theme_resolved \light
+		<= Chrome $raggu_web_front_chrome
+			viewer <= Viewer
+			theme_choice? <=> theme_choice? \system
+			theme_resolved <= theme_resolved
+			open_settings? <=> open_settings? null
+		<= Main $mol_view
+			dom_name \main
+			attr *
+				^
+				id \main
+			sub <= main /
+		<= Settings $raggu_web_front_settings
+			showed? <=> settings_open? false
+	Home $raggu_web_front_home
+	Corpus $raggu_web_front_corpus
+		viewer <= Viewer
