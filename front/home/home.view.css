@@ -430,6 +430,18 @@
 	color: var(--accent);
 }
 
+[raggu_web_front_home_footer_mol] {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+[raggu_web_front_home_footer_mol_icon] {
+	width: 16px;
+	height: 16px;
+	stroke-width: 1.2;
+}
+
 [raggu_web_front_home_footer_rights] {
 	padding-top: 0.25rem;
 }

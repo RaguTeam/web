@@ -125,6 +125,11 @@ $raggu_web_front_home $mol_view
 										<= Footer_web $raggu_web_front_link
 											uri \https://github.com/RaguTeam/web
 											sub / <= footer_this
+										<= Footer_mol $raggu_web_front_link
+											uri \https://b-on-g.github.io/smalljs/
+											sub /
+												<= Footer_mol_icon $raggu_web_front_icon_mol
+												<= footer_mol @ \Built with $mol
 										<= Footer_rights $raggu_web_front_label
 											text <= rights @ \MIT licensed
 	Badge* $mol_view
