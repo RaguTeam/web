@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import time
 from typing import Any
 
 from ragu.api.models import EntityItem, RelationItem
@@ -37,7 +38,8 @@ from ragu_web_api.schemas.graph import (
 
 LOGGER = logging.getLogger(__name__)
 
-# Потолок выборки сообществ: их единицы-десятки на корпус, страницы не нужны.
+# Потолок выборки сообществ и он же максимум страницы у сервиса. На medical их
+# 480 на двух уровнях; если станет больше, это будет видно в логе.
 _COMMUNITY_LIMIT = 500
 
 # Сколько вершин сервис принимает в одну выборку связей (MAX_SELECT_IDS). Это
@@ -55,6 +57,9 @@ class GraphView:
         self._gateway = gateway
         self._catalog = catalog
         self._page = settings.graph_page_size
+        self._community_ttl = settings.community_ttl
+        self._communities: dict[str, tuple[float, list[CommunitySummary]]] = {}
+        self._community_locks: dict[str, asyncio.Lock] = {}
 
     # --- канвас -----------------------------------------------------------
 
@@ -169,10 +174,9 @@ class GraphView:
     async def communities(self, dataset_id: str) -> GraphCommunitiesResponse:
         observe_dataset_request(dataset_id, "communities")
         await self._catalog.corpus(dataset_id)
-        page = await self._gateway.communities(dataset_id, limit=_COMMUNITY_LIMIT)
         return GraphCommunitiesResponse(
             dataset_id=dataset_id,
-            communities=[present.community(item) for item in page.communities],
+            communities=await self._top_communities(dataset_id),
         )
 
     # --- выборки ----------------------------------------------------------
@@ -279,12 +283,44 @@ class GraphView:
         wanted = {node.community_id for node in nodes if node.community_id}
         if not wanted:
             return []
-        page = await self._gateway.communities(dataset_id, limit=_COMMUNITY_LIMIT)
         return [
-            present.community(item)
-            for item in page.communities
+            item
+            for item in await self._top_communities(dataset_id)
             if item.id in wanted
         ]
+
+    async def _top_communities(self, dataset_id: str) -> list[CommunitySummary]:
+        """Сообщества уровня 0 — те, чьи номера стоят у вершин первыми.
+
+        Сервис собирает в памяти все сообщества корпуса и только потом режет
+        страницу, на medical это 19 с, и на это время он не отвечает никому.
+        Поэтому список берётся один раз на `community_ttl`, а одновременные
+        запросы ждут одну выборку, а не запускают каждый свою.
+        """
+        cached = self._communities.get(dataset_id)
+        if cached and time.monotonic() - cached[0] < self._community_ttl:
+            return cached[1]
+        lock = self._community_locks.setdefault(dataset_id, asyncio.Lock())
+        async with lock:
+            cached = self._communities.get(dataset_id)
+            if cached and time.monotonic() - cached[0] < self._community_ttl:
+                return cached[1]
+            page = await self._gateway.communities(dataset_id, limit=_COMMUNITY_LIMIT)
+            if page.page.total > len(page.communities):
+                LOGGER.warning(
+                    "Corpus '%s' has %d communities, only %d were fetched.",
+                    dataset_id,
+                    page.page.total,
+                    len(page.communities),
+                    extra={"event": "communities_truncated", "dataset": dataset_id},
+                )
+            top = [
+                present.community(item)
+                for item in page.communities
+                if item.level == 0
+            ]
+            self._communities[dataset_id] = (time.monotonic(), top)
+            return top
 
     async def _chunks(self, dataset_id: str, ids: list[str]) -> list[ProvenanceChunk]:
         """Фрагменты, из которых извлекли сущность.

@@ -62,6 +62,7 @@ def settings(**overrides) -> Settings:
         "catalog_ttl": 60.0,
         "dataset_ttl": 300.0,
         "subgraph_ttl": 300.0,
+        "community_ttl": 3600.0,
     }
     payload.update(overrides)
     return Settings(**payload)
