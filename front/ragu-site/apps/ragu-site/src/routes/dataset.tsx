@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {AnimatePresence, motion} from 'motion/react';
 import {queries} from '../api/queries.ts';
@@ -71,13 +71,63 @@ function useStageRect(active: boolean) {
 }
 
 /**
+ * Moves the element to its new place smoothly when the stage is resized (the
+ * chat or the compact card opening), the same way the cloud's framing eases.
+ */
+function useGlide(element: React.RefObject<HTMLElement | null>, stage: React.RefObject<HTMLElement | null>) {
+    useLayoutEffect(() => {
+        const node = element.current;
+        const box = stage.current;
+        if (!node || !box || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+        let first = true;
+        const observer = new ResizeObserver(() => {
+            if (first) {
+                first = false;
+                return;
+            }
+            const from = node.getBoundingClientRect();
+            node.style.transition = 'none';
+            node.style.transform = '';
+            const to = node.getBoundingClientRect();
+            const dx = from.left - to.left;
+            const dy = from.top - to.top;
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
+                return;
+            }
+            node.style.transform = `translate(${dx}px, ${dy}px)`;
+            node.getBoundingClientRect();
+            node.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+            node.style.transform = '';
+        });
+        observer.observe(box);
+        return () => observer.disconnect();
+    }, [element, stage]);
+}
+
+/**
  * Waiting for a layout is not something to act on, so it is not dressed as
  * something to act on: no island, no bar to aim at. A small solid tumbles over
  * the empty stage and says what is happening.
  */
-function CloudLoader({label, percent, quiet}: {label: string; percent?: number; quiet?: boolean}) {
+function CloudLoader({
+    label,
+    percent,
+    quiet,
+    stage,
+}: {
+    label: string;
+    percent?: number;
+    quiet?: boolean;
+    stage: React.RefObject<HTMLElement | null>;
+}) {
+    const ref = useRef<HTMLDivElement>(null);
+    useGlide(ref, stage);
+
     return (
         <div
+            ref={ref}
             className={cn(
                 'pointer-events-none flex items-center justify-center gap-3.5 text-text-3',
                 quiet ? 'flex-row' : 'flex-col gap-4',
@@ -209,6 +259,7 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                                         transition={{duration: 0.4}}
                                     >
                                         <CloudLoader
+                                            stage={stageRef}
                                             label={t.viewer.loadingGraph}
                                             percent={
                                                 graphQuery.isPending ? undefined : Math.round(progress * 100)
@@ -229,7 +280,7 @@ export function DatasetView({datasetId}: {datasetId: string}) {
                                         transition={{duration: 0.4}}
                                         className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2"
                                     >
-                                        <CloudLoader quiet label={t.viewer.loadingGraph}/>
+                                        <CloudLoader quiet stage={stageRef} label={t.viewer.loadingGraph}/>
                                     </motion.div>
                                 ) : null}
                             </AnimatePresence>

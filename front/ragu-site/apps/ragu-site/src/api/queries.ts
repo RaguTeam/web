@@ -27,8 +27,10 @@ export const queries = {
             staleTime: Infinity,
             gcTime: 6 * HOUR,
             // Asking for more entities must not blank the cloud and its counters
-            // on the way; the old slice stays until the bigger one lands.
-            placeholderData: keepPreviousData,
+            // on the way; the old slice stays until the bigger one lands. Only
+            // within one corpus: another corpus's graph is not a placeholder.
+            placeholderData: (previous, previousQuery) =>
+                previousQuery?.queryKey[1] === id ? keepPreviousData(previous) : undefined,
         }),
 
     node: (id: string, nodeId: string) =>
