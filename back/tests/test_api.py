@@ -5,7 +5,11 @@
 """
 
 from fastapi.testclient import TestClient
+from support import FakeGateway, info, search_response, settings
 
+from ragu_web_api.answer import Answerer
+from ragu_web_api.catalog import Catalog
+from ragu_web_api.dependencies import get_answerer
 from ragu_web_api.main import FRONTEND_INDEX, app
 
 client = TestClient(app)
@@ -46,3 +50,27 @@ def test_capabilities_disable_upload_queue_and_gpu() -> None:
     assert payload["agent_chat"] is True
     for key in ("upload_document", "upload_index", "live_indexing", "job_queue", "gpu_worker"):
         assert payload[key] is False
+
+
+def test_streamed_answer_is_server_sent_events() -> None:
+    gateway = FakeGateway([info("medical")], answer=search_response(answer="Язык C"))
+    config = settings()
+    app.dependency_overrides[get_answerer] = lambda: Answerer(
+        gateway, Catalog(gateway, config), config
+    )
+    try:
+        response = client.post(
+            "/api/v1/datasets/medical/agent/messages/stream", json={"message": "вопрос"}
+        )
+        missing = client.post(
+            "/api/v1/datasets/nope/agent/messages/stream", json={"message": "вопрос"}
+        )
+    finally:
+        app.dependency_overrides.clear()
+
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/event-stream")
+    assert response.text.startswith('event: delta\ndata: {"text": "Язык"}\n\n')
+    assert "event: message\n" in response.text
+    # Неизвестный корпус отвергается статусом, пока поток ещё не начался.
+    assert missing.status_code == 404
