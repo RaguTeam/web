@@ -3,7 +3,7 @@
 		"jsdom": "^29.1.1"
 	},
 	"scripts": {
-		"start": "cd ../../../.. && npx mam mol/build2/start && node mol/build2/start/-/node.js raggu/web/front/app"
+		"start": "cd ../../../.. && npx mam bog/build2/start && node bog/build2/start/-/node.js raggu/web/front/app"
 	},
 	"dependencies": {
 		"three": "^0.187.0"

@@ -19,7 +19,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: hyoo-ru/mam_build@master2
+            - uses: b-on-g/mam_build2@master
               with:
                   package: "raggu/web"
                   modules: 'front/app'
