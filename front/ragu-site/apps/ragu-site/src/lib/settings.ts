@@ -15,7 +15,9 @@ export const DEFAULT_SETTINGS: RetrievalSettings = {
     useGraph: true,
     queryPlan: false,
     topK: 8,
-    rerank: true,
+    // Off by default: the reranker only reorders the passages the model reads
+    // anyway, and on the demo's CPU that costs 15 to 25 s per answer.
+    rerank: false,
     graphLimit: 600,
 };
 
