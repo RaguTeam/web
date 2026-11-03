@@ -12,7 +12,6 @@ import {NotFound} from './routes/not-found.tsx';
 // The explorer pulls in the chat, the filter popovers and the graph model; the
 // landing page should not pay for any of it.
 const DatasetView = lazy(() => import('./routes/dataset.tsx').then((module) => ({default: module.DatasetView})));
-const StackEntryView = lazy(() => import('./routes/stack.tsx').then((module) => ({default: module.StackEntryView})));
 
 const rootRoute = createRootRoute({
     component: RootLayout,
@@ -38,20 +37,7 @@ const datasetRoute = createRoute({
     },
 });
 
-const stackRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: '/stack/$entryId',
-    component: function StackRoute() {
-        const {entryId} = stackRoute.useParams();
-        return (
-            <Suspense fallback={null}>
-                <StackEntryView entryId={entryId}/>
-            </Suspense>
-        );
-    },
-});
-
-const routeTree = rootRoute.addChildren([homeRoute, datasetRoute, stackRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, datasetRoute]);
 
 /**
  * Hash history: this ships as a static bundle, and a static host has no

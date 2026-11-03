@@ -26,6 +26,10 @@ export const DEFAULT_SETTINGS: RetrievalSettings = {
 export const GRAPH_LIMIT_MAX = 5000;
 export const GRAPH_LIMIT_STEPS = [600, 1500, 3000, 5000] as const;
 
+/** The gateway validates `top_k` as 1..50; anything outside is a 422. */
+export const TOP_K_MIN = 1;
+export const TOP_K_MAX = 50;
+
 export const settingsStore = createStore<RetrievalSettings>(DEFAULT_SETTINGS, {
     key: 'ragu.settings',
     revive: (raw) => {
@@ -36,7 +40,10 @@ export const settingsStore = createStore<RetrievalSettings>(DEFAULT_SETTINGS, {
         return {
             useGraph: typeof value.useGraph === 'boolean' ? value.useGraph : DEFAULT_SETTINGS.useGraph,
             queryPlan: typeof value.queryPlan === 'boolean' ? value.queryPlan : DEFAULT_SETTINGS.queryPlan,
-            topK: typeof value.topK === 'number' ? clamp(Math.round(value.topK), 1, 50) : DEFAULT_SETTINGS.topK,
+            topK:
+                typeof value.topK === 'number'
+                    ? clamp(Math.round(value.topK), TOP_K_MIN, TOP_K_MAX)
+                    : DEFAULT_SETTINGS.topK,
             rerank: typeof value.rerank === 'boolean' ? value.rerank : DEFAULT_SETTINGS.rerank,
             graphLimit:
                 typeof value.graphLimit === 'number'
