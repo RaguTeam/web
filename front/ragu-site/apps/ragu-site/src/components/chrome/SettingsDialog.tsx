@@ -1,11 +1,15 @@
+import {useEffect, useState} from 'react';
 import {Dialog} from '@base-ui/react/dialog';
 import {Switch} from '@base-ui/react/switch';
-import {Slider} from '@base-ui/react/slider';
+import {NumberField} from '@base-ui/react/number-field';
 import {cn} from '../../lib/cn.ts';
+import {clamp} from '../../lib/format.ts';
 import {useT} from '../../lib/i18n.ts';
 import {
     DEFAULT_SETTINGS,
     GRAPH_LIMIT_STEPS,
+    TOP_K_MAX,
+    TOP_K_MIN,
     patchSettings,
     settingsStore,
     useSettings,
@@ -68,6 +72,59 @@ function Toggle({
                 </Switch.Root>
             </div>
         </div>
+    );
+}
+
+const STEPPER = cn(
+    'flex w-9 items-center justify-center text-text-3 transition-colors duration-200',
+    'hover:bg-accent-wash hover:text-text disabled:pointer-events-none disabled:opacity-35',
+);
+
+/** Saved on commit only, so typing "12" never stores 1; empty input reverts. */
+function TopKField({value, label, less, more}: {value: number; label: string; less: string; more: string}) {
+    const [draft, setDraft] = useState<number | null>(value);
+
+    // Reset to defaults.
+    useEffect(() => setDraft(value), [value]);
+
+    const commit = (next: number | null) => {
+        if (next === null || !Number.isFinite(next)) {
+            setDraft(value);
+            return;
+        }
+        const committed = clamp(Math.round(next), TOP_K_MIN, TOP_K_MAX);
+        setDraft(committed);
+        patchSettings({topK: committed});
+    };
+
+    return (
+        <NumberField.Root
+            value={draft}
+            min={TOP_K_MIN}
+            max={TOP_K_MAX}
+            step={1}
+            format={{maximumFractionDigits: 0, useGrouping: false}}
+            onValueChange={setDraft}
+            onValueCommitted={commit}
+        >
+            <NumberField.Group
+                className={cn(
+                    'flex h-9 overflow-hidden rounded-inset border border-edge-strong bg-surface-sunk',
+                    'transition-colors duration-200 focus-within:border-accent',
+                )}
+            >
+                <NumberField.Decrement aria-label={less} className={STEPPER}>
+                    −
+                </NumberField.Decrement>
+                <NumberField.Input
+                    aria-label={label}
+                    className="w-14 border-x border-edge bg-transparent text-center font-mono text-sm tnum text-text outline-none"
+                />
+                <NumberField.Increment aria-label={more} className={STEPPER}>
+                    +
+                </NumberField.Increment>
+            </NumberField.Group>
+        </NumberField.Root>
     );
 }
 
@@ -140,37 +197,19 @@ export function SettingsDialog({open, onOpenChange}: {open: boolean; onOpenChang
                                 offLabel={t.settings.off}
                             />
 
-                            <div className="py-4">
-                                <div className="flex items-baseline justify-between gap-4">
+                            <div className="grid grid-cols-[1fr_auto] items-start gap-x-6 gap-y-2 py-4">
+                                <div className="min-w-0">
                                     <p className="text-sm font-semibold text-text">{t.settings.topK}</p>
-                                    <span className="font-mono text-sm tnum text-accent">{settings.topK}</span>
+                                    <p className="mt-1 max-w-[46ch] text-xs leading-relaxed text-text-3">
+                                        {t.settings.topKHint}
+                                    </p>
                                 </div>
-                                <p className="mt-1 max-w-[46ch] text-xs leading-relaxed text-text-3">
-                                    {t.settings.topKHint}
-                                </p>
-                                <Slider.Root
+                                <TopKField
                                     value={settings.topK}
-                                    min={1}
-                                    max={24}
-                                    step={1}
-                                    onValueChange={(value) =>
-                                        patchSettings({topK: Array.isArray(value) ? value[0] : value})
-                                    }
-                                    className="mt-4 w-full"
-                                >
-                                    <Slider.Control className="flex h-6 w-full touch-none items-center">
-                                        <Slider.Track className="relative h-1.5 w-full rounded-full bg-[color-mix(in_oklab,var(--text-3)_22%,transparent)]">
-                                            <Slider.Indicator className="rounded-full bg-accent"/>
-                                            <Slider.Thumb
-                                                className={cn(
-                                                    'size-[18px] rounded-full border-2 border-accent bg-surface shadow-thumb outline-none',
-                                                    'transition-transform duration-150 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110',
-                                                    'focus-visible:ring-2 focus-visible:ring-accent-line',
-                                                )}
-                                            />
-                                        </Slider.Track>
-                                    </Slider.Control>
-                                </Slider.Root>
+                                    label={t.settings.topK}
+                                    less={t.settings.topKLess}
+                                    more={t.settings.topKMore}
+                                />
                             </div>
 
                             <div className="py-4">

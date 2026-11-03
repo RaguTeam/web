@@ -17,6 +17,8 @@
         "@tanstack/react-query"    : "catalog:",
         "@tanstack/react-router"   : "catalog:",
         "clsx"                     : "catalog:",
+        "dompurify"                : "catalog:",
+        "katex"                    : "catalog:",
         "motion"                   : "catalog:",
         "react"                    : "catalog:",
         "react-dom"                : "catalog:",

@@ -10,6 +10,7 @@ import {entityTypeName, relationTypeName} from '../../lib/type-names.ts';
 import {Chip, Skeleton} from '../ui/primitives.tsx';
 import {IconChat, IconClose, IconSources} from '../ui/icons.tsx';
 import {Disclosure} from '../ui/Disclosure.tsx';
+import {RichText} from '../ui/RichText.tsx';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -115,9 +116,6 @@ function EntityBody({
                     {node ? (
                         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
                             <Chip tone="accent">{entityTypeName(node.entity_type, lang)}</Chip>
-                            <Chip>
-                                <span className="tnum">{node.degree}</span> {t.viewer.degree}
-                            </Chip>
                         </div>
                     ) : null}
                 </div>
@@ -141,9 +139,10 @@ function EntityBody({
                 ) : isError && !local ? (
                     <p className="text-sm text-text-2">{t.common.errorHint}</p>
                 ) : (
-                    <p className={cn('leading-[1.65] text-text-2', dense ? 'text-[0.85rem]' : 'text-sm')}>
-                        {node?.description}
-                    </p>
+                    <RichText
+                        text={node?.description ?? ''}
+                        className={cn('leading-[1.65] text-text-2', dense ? 'text-[0.85rem]' : 'text-sm')}
+                    />
                 )}
 
                 {relations.length > 0 ? (
