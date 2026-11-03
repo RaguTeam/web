@@ -68,6 +68,10 @@ class Settings:
     catalog_ttl: float
     dataset_ttl: float
     subgraph_ttl: float
+    # Сообщества корпуса. Сервис отдаёт их только целиком (на medical это 19 с
+    # и всё это время не отвечает на другие запросы), а меняются они лишь с
+    # переиндексацией — поэтому живут долго.
+    community_ttl: float
 
     @property
     def has_api_key(self) -> bool:
@@ -88,4 +92,5 @@ def load_settings() -> Settings:
         catalog_ttl=_env_float("CATALOG_TTL", 60.0),
         dataset_ttl=_env_float("DATASET_TTL", 300.0),
         subgraph_ttl=_env_float("SUBGRAPH_TTL", 300.0),
+        community_ttl=_env_float("COMMUNITY_TTL", 3600.0),
     )

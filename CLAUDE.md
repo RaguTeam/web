@@ -54,7 +54,7 @@ Run tests:
 ```bash
 uv run --project back pytest
 ```
-Expect `142 passed, 6 skipped`. Everything that runs by default is network-free: the gateway gets an `httpx.MockTransport`, and the scenarios get a `FakeGateway` from [back/tests/support.py](back/tests/support.py). The 6 skipped live in [back/tests/test_live_stand.py](back/tests/test_live_stand.py) and check a deployment rather than the code — run them from the stand's network with `RAGU_LIVE_TESTS=1`.
+Expect `144 passed, 6 skipped`. Everything that runs by default is network-free: the gateway gets an `httpx.MockTransport`, and the scenarios get a `FakeGateway` from [back/tests/support.py](back/tests/support.py). The 6 skipped live in [back/tests/test_live_stand.py](back/tests/test_live_stand.py) and check a deployment rather than the code — run them from the stand's network with `RAGU_LIVE_TESTS=1`.
 
 After changing any Pydantic schema or route, regenerate the contract **and** the frontend client — one script does both:
 ```bash

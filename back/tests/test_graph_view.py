@@ -5,6 +5,8 @@
 брать ровно показанное, и это видно только по журналу обращений.
 """
 
+import asyncio
+
 import pytest
 from support import (
     FakeGateway,
@@ -151,13 +153,48 @@ async def test_merged_result_is_resorted_by_degree() -> None:
 
 @asyncio_test
 async def test_only_communities_touching_the_shown_nodes_come_back() -> None:
+    """У вершины номера кластеров по уровням, а не `com-…` сообществ; номер 1
+    есть на обоих уровнях, и вершине принадлежит тот, что на уровне 0."""
     gateway = FakeGateway(
         [info("medical")],
-        entities=[entity("e0", communities=["c1"])],
-        communities=[community("c1"), community("c2", cluster_id=2)],
+        entities=[entity("e0", communities=["1", "7"])],
+        communities=[
+            community("com-a", cluster_id=1),
+            community("com-b", cluster_id=2),
+            community("com-c", cluster_id=1, level=1, title="верхний"),
+        ],
     )
     result = await _view(gateway).graph("medical", limit=5)
-    assert [item.id for item in result.communities] == ["c1"]
+    assert [(item.id, item.level) for item in result.communities] == [("1", 0)]
+    assert result.nodes[0].community_id == "1"
+
+
+@asyncio_test
+async def test_communities_are_fetched_once_for_many_requests() -> None:
+    """Сервис отдаёт сообщества только целиком и подолгу; два открытия графа,
+    в том числе одновременных, не должны просить их дважды."""
+    gateway = FakeGateway(
+        [info("medical")],
+        entities=[entity("e0", communities=["1"])],
+        communities=[community("com-a", cluster_id=1)],
+    )
+    view = await _warm(gateway)
+    await asyncio.gather(view.graph("medical"), view.graph("medical"))
+    await view.communities("medical")
+    assert gateway.calls["communities"] == 1
+
+
+@asyncio_test
+async def test_communities_are_fetched_again_once_stale() -> None:
+    gateway = FakeGateway(
+        [info("medical")],
+        entities=[entity("e0", communities=["1"])],
+        communities=[community("com-a", cluster_id=1)],
+    )
+    view = await _warm(gateway, community_ttl=0.0)
+    await view.graph("medical")
+    await view.graph("medical")
+    assert gateway.calls["communities"] == 2
 
 
 @asyncio_test

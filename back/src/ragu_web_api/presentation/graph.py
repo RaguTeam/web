@@ -77,8 +77,15 @@ def node_relation(relation: RelationItem, node_id: str) -> NodeRelation:
 
 
 def community(item: CommunityItem) -> CommunitySummary:
+    """Сообщество под номером кластера, а не под своим `com-…`.
+
+    У вершины записаны номера кластеров по уровням (`communities[0]` — уровень
+    0), и по тем же номерам сервис фильтрует сущности. Под `com-…` сообщество
+    не нашлось бы ни у одной вершины. Номер уникален только внутри уровня,
+    поэтому отдавать наружу можно один уровень — тот, что у вершин первым.
+    """
     return CommunitySummary(
-        id=item.id,
+        id=str(item.cluster_id),
         title=item.title or f"Community {item.cluster_id}",
         summary=item.summary or "",
         level=max(0, item.level),
