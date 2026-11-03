@@ -15,6 +15,8 @@ export type ChatState = {
     /** The answer received so far, while it is still being generated. */
     partial: string | null;
     error: string | null;
+    /** What to do about the error; null when the error says it all. */
+    errorHint: string | null;
     /** A question handed over from elsewhere in the UI, waiting for the panel to send it. */
     queued: string | null;
     startedAt: number | null;
@@ -26,6 +28,7 @@ const EMPTY: ChatState = {
     pending: false,
     partial: null,
     error: null,
+    errorHint: null,
     queued: null,
     startedAt: null,
 };

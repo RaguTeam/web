@@ -1,4 +1,4 @@
-name: $raggu_web_front_app
+name: ragu-site
 
 permissions: write-all
 
@@ -6,23 +6,21 @@ on:
     workflow_dispatch:
     push:
     pull_request:
-    delete:
 
 concurrency:
     group: deploy-${{ github.ref }}
     cancel-in-progress: true
 
 
+# Публикуется только новый сайт (front/ragu-site) в /web/site/. Корень /web/
+# уводит на него. Старое приложение на $mol снято с публикации 04.11.2026, его
+# код лежит в ветке archive/old-app.
 jobs:
     build:
-        if: github.event_name != 'delete'
         runs-on: ubuntu-latest
 
         steps:
-            - uses: hyoo-ru/mam_build@master2
-              with:
-                  package: "raggu/web"
-                  modules: 'front/app'
+            - uses: actions/checkout@v4
 
             - uses: pnpm/action-setup@v4
               with:
@@ -32,61 +30,12 @@ jobs:
               with:
                   node-version: 26
                   cache: pnpm
-                  cache-dependency-path: raggu/web/front/ragu-site/pnpm-lock.yaml
+                  cache-dependency-path: front/ragu-site/pnpm-lock.yaml
 
-            # Переключатели в Settings → Variables. Пустые — всё как раньше:
-            #   RAGU_API      — адрес бэкенда для обоих фронтов (по умолчанию
-            #                   https://ragu-back.duckdns.org, зашитый в код);
-            #   ROOT_REDIRECT — `site`: /web/ уводит на /web/site/, старое
-            #                   приложение остаётся по /web/old.html.
-            # Откат — очистить переменную и перезапустить workflow.
-            - name: Point old app at RAGU_API
-              if: vars.RAGU_API != '' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-              working-directory: raggu/web/front/app/-
-              env:
-                  RAGU_API: ${{ vars.RAGU_API }}
-              # Без sed: значение из веб-формы легко приходит с переводом строки или
-              # пробелом, и sed падал на нём с невнятным кодом 123.
-              run: |
-                  python3 - <<'PY'
-                  import os, pathlib, re, sys
-                  old = "https://ragu-back.duckdns.org"
-                  new = os.environ["RAGU_API"].strip().rstrip("/")
-                  if not re.fullmatch(r"https?://[A-Za-z0-9.-]+(:[0-9]+)?", new):
-                      sys.exit(f"RAGU_API должна быть вида https://host[:port], а пришло {os.environ['RAGU_API']!r}")
-                  changed = []
-                  for path in pathlib.Path(".").rglob("*"):
-                      if path.is_file() and not path.is_symlink() and path.suffix in (".js", ".mjs"):
-                          text = path.read_text(encoding="utf-8")
-                          if old in text:
-                              path.write_text(text.replace(old, new), encoding="utf-8")
-                              changed.append(str(path))
-                  web = pathlib.Path("web.js").read_text(encoding="utf-8")
-                  if old in web or new not in web:
-                      sys.exit("web.js не переключился на RAGU_API")
-                  print(f"{old} -> {new} в {len(changed)} файлах: {', '.join(sorted(changed))}")
-                  PY
-
-            - name: Redirect root to site
-              if: vars.ROOT_REDIRECT == 'site' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-              working-directory: raggu/web/front/app/-
-              run: |
-                  mv index.html old.html
-                  cat > index.html <<'HTML'
-                  <!doctype html>
-                  <html lang="ru">
-                  <head>
-                  <meta charset="utf-8">
-                  <title>RAGU</title>
-                  <meta http-equiv="refresh" content="0; url=site/">
-                  <script>location.replace('site/')</script>
-                  </head>
-                  <body><a href="site/">RAGU</a></body>
-                  </html>
-                  HTML
-
+            # Переменная в Settings → Variables: RAGU_API — адрес бэкенда, по
+            # умолчанию https://ragu-back.duckdns.org, зашитый в код.
             - name: Build site
-              working-directory: raggu/web/front/ragu-site
+              working-directory: front/ragu-site
               env:
                   RAGU_BASE: /web/site/
                   # Только на main: превью и PR собираются со старым адресом.
@@ -99,11 +48,32 @@ jobs:
                   pnpm install --frozen-lockfile
                   pnpm --filter @ugar/ragu-site build
 
-            - name: Deploy main
+            # Корень gh-pages собирается заново из одной страницы-редиректа.
+            # Деплой чистит всё, чего нет в папке, кроме site/, и так с
+            # gh-pages уходят файлы старого приложения.
+            - name: Root redirect
+              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+              run: |
+                  mkdir -p pages-root
+                  touch pages-root/.nojekyll
+                  cat > pages-root/index.html <<'HTML'
+                  <!doctype html>
+                  <html lang="ru">
+                  <head>
+                  <meta charset="utf-8">
+                  <title>RAGU</title>
+                  <meta http-equiv="refresh" content="0; url=site/">
+                  <script>location.replace('site/')</script>
+                  </head>
+                  <body><a href="site/">RAGU</a></body>
+                  </html>
+                  HTML
+
+            - name: Deploy root
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
-                  folder: "raggu/web/front/app/-"
+                  folder: pages-root
                   clean-exclude: |
                       site
 
@@ -111,33 +81,5 @@ jobs:
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1
               with:
-                  folder: "raggu/web/front/ragu-site/apps/ragu-site/dist"
+                  folder: "front/ragu-site/apps/ragu-site/dist"
                   target-folder: site
-
-            - name: Deploy feature branch
-              if: startsWith(github.ref, 'refs/heads/feature/')
-              uses: hyoo-ru/gh-deploy@v4.4.1
-              with:
-                  folder: "raggu/web/front/app/-"
-                  target-folder: ${{ github.ref_name }}
-
-    cleanup:
-        if: github.event_name == 'delete' && startsWith(github.event.ref, 'feature/')
-        runs-on: ubuntu-latest
-
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  ref: gh-pages
-
-            - name: Remove feature folder
-              run: |
-                  BRANCH_NAME="${{ github.event.ref }}"
-                  FOLDER="feature/${BRANCH_NAME#feature/}"
-                  if [ -d "$FOLDER" ]; then
-                    git config user.name "github-actions[bot]"
-                    git config user.email "github-actions[bot]@users.noreply.github.com"
-                    git rm -rf "$FOLDER"
-                    git commit -m "Clean up preview for deleted branch: $BRANCH_NAME"
-                    git push
-                  fi

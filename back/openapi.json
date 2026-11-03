@@ -579,6 +579,16 @@
               }
             }
           },
+          "429": {
+            "description": "Question limit reached: `rate_limited` (per minute), `client_daily_limit_reached` or `daily_limit_reached` (per day). `Retry-After` says when to ask again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -633,6 +643,16 @@
           },
           "404": {
             "description": "Dataset not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Question limit reached: `rate_limited` (per minute), `client_daily_limit_reached` or `daily_limit_reached` (per day). `Retry-After` says when to ask again.",
             "content": {
               "application/json": {
                 "schema": {

@@ -69,6 +69,14 @@ class Settings:
     dataset_ttl: float
     subgraph_ttl: float
 
+    # Сколько вопросов в чат принимаем. Каждый вопрос стоит денег в AI Studio, а
+    # бэкенд открыт всему интернету: без лимита скрипт за час списал бы тысячи
+    # рублей. Первые два считаются по адресу посетителя, третий на всех; сутки
+    # по Москве. Ноль снимает лимит.
+    questions_per_minute: int
+    questions_per_day: int
+    questions_total_per_day: int
+
     @property
     def has_api_key(self) -> bool:
         return bool(self.ragu_api_key)
@@ -88,4 +96,7 @@ def load_settings() -> Settings:
         catalog_ttl=_env_float("CATALOG_TTL", 60.0),
         dataset_ttl=_env_float("DATASET_TTL", 300.0),
         subgraph_ttl=_env_float("SUBGRAPH_TTL", 300.0),
+        questions_per_minute=_env_int("QUESTIONS_PER_MINUTE", 10),
+        questions_per_day=_env_int("QUESTIONS_PER_DAY", 100),
+        questions_total_per_day=_env_int("QUESTIONS_TOTAL_PER_DAY", 1000),
     )

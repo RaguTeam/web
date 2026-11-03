@@ -81,9 +81,34 @@ async def test_short_followup_keeps_the_conversation_language() -> None:
 
 @asyncio_test
 async def test_requested_mode_is_used_when_the_corpus_serves_it() -> None:
-    gateway = FakeGateway([info("medical")])
+    gateway = FakeGateway([info("medical")], details={"medical": detail("medical", modes=modes("local", "naive"))})
     await _answerer(gateway).answer("medical", _request(engine="naive"))
     assert gateway.last_search["mode"] == "naive"
+
+
+@asyncio_test
+async def test_single_mode_goes_through_mix_so_off_topic_questions_are_declined() -> None:
+    """Подсказка naive и local разрешает модели отвечать от себя: на вопрос про
+    стихи naive написал стихотворение. У mix такого разрешения нет, а ансамбль
+    из одного режима ищет так же, как сам режим."""
+    gateway = FakeGateway([info("medical")])
+    reply = await _answerer(gateway).answer("medical", _request(engine="naive", top_k=6))
+    sent = gateway.last_search
+    assert sent["mode"] == "mix"
+    assert sent["engines"] == ["naive"]
+    assert sent["naive_params"] == {"top_k": 6}
+    assert "local_params" not in sent
+    assert reply.message.trace.engine == "naive"
+
+
+@asyncio_test
+async def test_streamed_single_mode_also_goes_through_mix() -> None:
+    gateway = FakeGateway([info("medical")])
+    events = [event async for event in _answerer(gateway).stream("medical", _request(engine="local"))]
+    assert gateway.last_search["mode"] == "mix"
+    assert gateway.last_search["engines"] == ["local"]
+    assert events[-1][0] == "message"
+    assert events[-1][1]["message"]["trace"]["engine"] == "local"
 
 
 @asyncio_test

@@ -2,7 +2,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {Popover} from '@base-ui/react/popover';
 import {motion} from 'motion/react';
-import {api} from '../../api/client.ts';
+import {api, errorCode} from '../../api/client.ts';
 import {queries} from '../../api/queries.ts';
 import type {AgentRequest, AnswerTrace} from '../../api/types.ts';
 import {cn} from '../../lib/cn.ts';
@@ -339,7 +339,20 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
                 // Whoever aborted has already settled the thread.
                 return;
             }
-            patchChat({entries: keepPartial(), pending: false, partial: null, startedAt: null, error: t.chat.failed});
+            // A question limit is not an outage: say so, and when to come back.
+            const limit = {
+                rate_limited: t.chat.rateLimited,
+                client_daily_limit_reached: t.chat.clientDailyLimit,
+                daily_limit_reached: t.chat.dailyLimit,
+            }[errorCode(error) ?? ''];
+            patchChat({
+                entries: keepPartial(),
+                pending: false,
+                partial: null,
+                startedAt: null,
+                error: limit ?? t.chat.failed,
+                errorHint: limit ? null : t.common.errorHint,
+            });
         },
     });
 
@@ -477,7 +490,7 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
                         {chat.error ? (
                             <li className="rounded-inset border border-accent-line bg-accent-wash px-4 py-3">
                                 <p className="text-sm font-medium text-accent">{chat.error}</p>
-                                <p className="mt-1 text-xs text-text-2">{t.common.errorHint}</p>
+                                {chat.errorHint ? <p className="mt-1 text-xs text-text-2">{chat.errorHint}</p> : null}
                             </li>
                         ) : null}
                     </ol>

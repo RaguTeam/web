@@ -2,11 +2,12 @@ import json
 import logging
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import StreamingResponse
 
 from ragu_web_api.answer import Answerer
-from ragu_web_api.dependencies import get_answerer
+from ragu_web_api.dependencies import get_answerer, get_limiter
+from ragu_web_api.limits import QuestionLimiter, client_address
 from ragu_web_api.schemas.agent import AgentRequest, AgentResponse, SuggestionsResponse
 from ragu_web_api.schemas.common import ErrorResponse, Locale
 
@@ -18,11 +19,31 @@ router = APIRouter(
     responses={404: {"model": ErrorResponse, "description": "Dataset not found."}},
 )
 
+_LIMITED = {
+    429: {
+        "model": ErrorResponse,
+        "description": (
+            "Question limit reached: `rate_limited` (per minute), "
+            "`client_daily_limit_reached` or `daily_limit_reached` (per day). "
+            "`Retry-After` says when to ask again."
+        ),
+    }
+}
+
+
+def admit_question(
+    request: Request, limiter: Annotated[QuestionLimiter, Depends(get_limiter)]
+) -> None:
+    """Считается до вызова модели: отказ не должен стоить ни копейки."""
+    limiter.admit(client_address(request))
+
 
 @router.post(
     "/messages",
     response_model=AgentResponse,
     summary="Ask a question over a dataset graph",
+    dependencies=[Depends(admit_question)],
+    responses=_LIMITED,
 )
 async def create_agent_message(
     dataset_id: str,
@@ -49,8 +70,10 @@ def _sse(event: str, data: dict[str, Any]) -> str:
                 "`{code, message}`, and no `message` follows it."
             ),
             "content": {"text/event-stream": {"schema": {"type": "string"}}},
-        }
+        },
+        **_LIMITED,
     },
+    dependencies=[Depends(admit_question)],
 )
 async def stream_agent_message(
     dataset_id: str,
