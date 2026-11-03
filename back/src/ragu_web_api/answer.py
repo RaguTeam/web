@@ -85,15 +85,20 @@ class Answerer:
         observe_dataset_request(dataset_id, "agent")
         corpus = await self._catalog.corpus(dataset_id)
         mode = self._mode(corpus, request.engine)
+        service_mode = self._service_mode(mode, corpus)
         answer_language = language.answer_language(request)
 
         started = time.perf_counter()
         response = await self._gateway.search(
             dataset_id,
-            mode,
+            service_mode,
             request.message,
             **self._body(
-                mode, request=request, answer_language=answer_language, corpus=corpus
+                service_mode,
+                request=request,
+                answer_language=answer_language,
+                corpus=corpus,
+                leaf=mode if service_mode != mode else None,
             ),
         )
         total_ms = int((time.perf_counter() - started) * 1000)
@@ -105,6 +110,9 @@ class Answerer:
             total_ms=total_ms,
             query_plan_requested=request.use_query_plan,
         )
+        if service_mode != mode:
+            # Трейс называет режим, который выбрал посетитель: mix здесь обёртка.
+            answer_trace.engine = mode
         self._record(dataset_id, request, answer_trace, answer_language, response)
         return _reply(request, response.answer, answer_trace)
 
@@ -120,6 +128,7 @@ class Answerer:
         observe_dataset_request(dataset_id, "agent")
         corpus = await self._catalog.corpus(dataset_id)
         mode = self._mode(corpus, request.engine)
+        service_mode = self._service_mode(mode, corpus)
         answer_language = language.answer_language(request)
 
         started = time.perf_counter()
@@ -129,10 +138,14 @@ class Answerer:
         engines: dict[str, Any] | None = None
         async for event, data in self._gateway.stream(
             dataset_id,
-            mode,
+            service_mode,
             request.message,
             **self._body(
-                mode, request=request, answer_language=answer_language, corpus=corpus
+                service_mode,
+                request=request,
+                answer_language=answer_language,
+                corpus=corpus,
+                leaf=mode if service_mode != mode else None,
             ),
         ):
             if event == "meta":
@@ -177,6 +190,8 @@ class Answerer:
             generation_ms=int((finished - retrieved_at) * 1000),
             total_ms=answer_trace.timings.total_ms,
         )
+        if service_mode != mode:
+            answer_trace.engine = mode
         self._record(dataset_id, request, answer_trace, answer_language, response)
         yield "message", _reply(request, response.answer, answer_trace).model_dump(
             mode="json"
@@ -231,6 +246,21 @@ class Answerer:
         )
         return fallback
 
+    @staticmethod
+    def _service_mode(mode: str, corpus: Corpus) -> str:
+        """Режим, которым спрашиваем сервис.
+
+        Подсказка RAGU для local и naive разрешает модели «общеизвестные
+        факты», и на вопрос не по корпусу она отвечает от себя: 03.11.2026
+        naive на medical написал стихотворение про осень. Подсказка mix велит
+        не добавлять неподтверждённого контекстом, а ансамбль из одного режима
+        ищет так же, как сам режим. Поэтому local и naive идут через mix, если
+        корпус его обслуживает.
+        """
+        if mode in _MIX_CHILDREN and "mix" in corpus.engines:
+            return "mix"
+        return mode
+
     def _body(
         self,
         mode: str,
@@ -238,6 +268,7 @@ class Answerer:
         request: AgentRequest,
         answer_language: Locale,
         corpus: Corpus,
+        leaf: str | None = None,
     ) -> dict[str, Any]:
         """Тело запроса к сервису.
 
@@ -257,6 +288,12 @@ class Answerer:
         params = {"top_k": request.top_k}
         if mode != "mix":
             body["params"] = params
+            return body
+
+        if leaf is not None:
+            # Один режим в обёртке mix, см. `_service_mode`.
+            body["engines"] = [leaf]
+            body[f"{leaf}_params"] = params
             return body
 
         body["local_params"] = params

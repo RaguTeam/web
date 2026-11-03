@@ -62,6 +62,9 @@ def settings(**overrides) -> Settings:
         "catalog_ttl": 60.0,
         "dataset_ttl": 300.0,
         "subgraph_ttl": 300.0,
+        "questions_per_minute": 10,
+        "questions_per_day": 100,
+        "questions_total_per_day": 300,
     }
     payload.update(overrides)
     return Settings(**payload)

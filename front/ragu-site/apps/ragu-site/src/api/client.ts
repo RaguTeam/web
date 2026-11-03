@@ -24,6 +24,20 @@ export class ApiError extends Error {
     }
 }
 
+/** The gateway's own error code (`detail.code`), when the body carries one. */
+export function errorCode(error: unknown): string | null {
+    if (!(error instanceof ApiError)) {
+        return null;
+    }
+    try {
+        const code = (JSON.parse(error.message) as {detail?: {code?: unknown}}).detail?.code;
+        return typeof code === 'string' ? code : null;
+    }
+    catch {
+        return null;
+    }
+}
+
 type Query = Record<string, string | number | boolean | string[] | undefined | null>;
 
 function url(path: string, query?: Query): string {
