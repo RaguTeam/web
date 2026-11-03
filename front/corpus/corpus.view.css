@@ -125,6 +125,12 @@
 }
 
 [raggu_web_front_corpus_chat] {
+	/*
+	 * $mol_view sets flex-shrink: 0. Below 1024px the row is a column, and a
+	 * chat that may not shrink grows to the length of the thread: the list never
+	 * scrolls and the input ends up below the screen.
+	 */
+	flex-shrink: 1;
 	min-height: 0;
 	width: 100%;
 }
