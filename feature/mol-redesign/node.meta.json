@@ -360,6 +360,7 @@
 			"raggu/web/front/lib/-view.tree/names.view.tree.js": -1,
 			"raggu/web/front/data/data.ts": -1,
 			"mol/fetch/fetch.ts": -1,
+			"raggu/web/front/mock/mock.ts": -1,
 			"raggu/web/front/home/-view.tree/home.view.tree.js": -1
 		},
 		"mol/object2": {
@@ -534,6 +535,7 @@
 			"mol/run/run.node.ts": -3,
 			"mol/lock/lock.ts": -2,
 			"mol/fetch/fetch.ts": -3,
+			"raggu/web/front/data/data.ts": -3,
 			"raggu/web/front/viewer/viewer.ts": -3,
 			"mol/import/import.ts": -3
 		},
@@ -1276,6 +1278,7 @@
 			"raggu/web/front/graph": -9007199254740991,
 			"raggu/web/front/lib": -9007199254740991,
 			"raggu/web/front/api": -9007199254740991,
+			"raggu/web/front/mock": -9007199254740991,
 			"raggu/web/front/data": -9007199254740991,
 			"raggu/web/front/viewer": -9007199254740991,
 			"raggu/web/front/scene": -9007199254740991,
@@ -1322,7 +1325,8 @@
 		"mol/state/arg": {
 			"raggu/web/front/base/base.view.ts": -3,
 			"raggu/web/front/viewer/viewer.ts": -3,
-			"raggu/web/front/api/api.ts": -2
+			"raggu/web/front/api/api.ts": -2,
+			"raggu/web/front/mock/mock.ts": -3
 		},
 		"mol/action": {
 			"mol/state/arg/arg.node.ts": -2,
@@ -1587,6 +1591,7 @@
 		},
 		"raggu/web/front/graph": {
 			"raggu/web/front/viewer/viewer.ts": -1,
+			"raggu/web/front/mock/mock.ts": -1,
 			"raggu/web/front/data/data.ts": -3,
 			"raggu/web/front/scene/engine.ts": -2,
 			"raggu/web/front/home/constellation/constellation.view.ts": -3,
@@ -1693,6 +1698,12 @@
 		},
 		"raggu/web/front/api/ragu.openapi.ts": {
 			"raggu/web/front/api": 0
+		},
+		"raggu/web/front/mock": {
+			"raggu/web/front/data/data.ts": -3
+		},
+		"raggu/web/front/mock/mock.ts": {
+			"raggu/web/front/mock": 0
 		},
 		"raggu/web/front/data/data.ts": {
 			"raggu/web/front/data": 0
@@ -3640,6 +3651,8 @@
 		"raggu/web/front/data/data.ts": {
 			"mol/object": -1,
 			"raggu/web/front/api": -3,
+			"raggu/web/front/mock": -3,
+			"mol/wire/sync": -3,
 			"mol/fetch": -3,
 			"mol/mem": -2,
 			"raggu/web/front/graph": -3,
@@ -3702,6 +3715,15 @@
 			"raggu/web/front": -9007199254740991
 		},
 		"raggu/web/front/api/ragu.openapi.ts": {},
+		"raggu/web/front/mock/mock.ts": {
+			"raggu/web/front/graph": -1,
+			"mol/object": -1,
+			"mol/state/arg": -3
+		},
+		"raggu/web/front/mock": {
+			"raggu/web/front/mock/mock.ts": 0,
+			"raggu/web/front": -9007199254740991
+		},
 		"raggu/web/front/data": {
 			"raggu/web/front/data/data.ts": 0,
 			"raggu/web/front": -9007199254740991
@@ -5146,6 +5168,9 @@
 		"raggu/web/front/api/ragu.openapi.ts",
 		"raggu/web/front/api/ragu.openapi.ts.js",
 		"raggu/web/front/api/ragu.openapi.ts.js.map",
+		"raggu/web/front/mock/mock.ts",
+		"raggu/web/front/mock/mock.ts.js",
+		"raggu/web/front/mock/mock.ts.js.map",
 		"raggu/web/front/data/data.ts",
 		"raggu/web/front/data/data.ts.js",
 		"raggu/web/front/data/data.ts.js.map",
@@ -6032,10 +6057,13 @@
 		"raggu/web/front/api/ragu.openapi.ts": 44108,
 		"raggu/web/front/api/ragu.openapi.ts.js": 0,
 		"raggu/web/front/api/ragu.openapi.ts.js.map": 0,
-		"raggu/web/front/data/data.ts": 2941,
+		"raggu/web/front/mock/mock.ts": 5649,
+		"raggu/web/front/mock/mock.ts.js": 0,
+		"raggu/web/front/mock/mock.ts.js.map": 0,
+		"raggu/web/front/data/data.ts": 3248,
 		"raggu/web/front/data/data.ts.js": 0,
 		"raggu/web/front/data/data.ts.js.map": 0,
-		"raggu/web/front/viewer/viewer.ts": 13943,
+		"raggu/web/front/viewer/viewer.ts": 13934,
 		"raggu/web/front/viewer/viewer.ts.js": 0,
 		"raggu/web/front/viewer/viewer.ts.js.map": 0,
 		"raggu/web/front/app/node_modules/three/package.json": 3818,
@@ -6401,7 +6429,7 @@
 		"raggu/web/front/app/-css/app.view.css.ts.js.map": 0,
 		"raggu/web/front/app/app.view.css": 2985,
 		"raggu/web/front/app/package.json": 224,
-		"raggu/web/front/app/app.meta.tree": 61,
+		"raggu/web/front/app/app.meta.tree": 100,
 		"raggu/web/front/app/app.locale=ru.json": 83
 	},
 	"files": [
@@ -6918,6 +6946,9 @@
 		"raggu/web/front/api/ragu.openapi.ts",
 		"raggu/web/front/api/ragu.openapi.ts.js",
 		"raggu/web/front/api/ragu.openapi.ts.js.map",
+		"raggu/web/front/mock/mock.ts",
+		"raggu/web/front/mock/mock.ts.js",
+		"raggu/web/front/mock/mock.ts.js.map",
 		"raggu/web/front/data/data.ts",
 		"raggu/web/front/data/data.ts.js",
 		"raggu/web/front/data/data.ts.js.map",
@@ -7651,6 +7682,8 @@
 		"raggu/web/front/api/api.ts",
 		"raggu/web/front/api/ragu.openapi.ts",
 		"raggu/web/front/api",
+		"raggu/web/front/mock/mock.ts",
+		"raggu/web/front/mock",
 		"raggu/web/front/data/data.ts",
 		"raggu/web/front/data",
 		"raggu/web/front/viewer/viewer.ts",
@@ -7868,13 +7901,13 @@
 	],
 	"sloc": {
 		"html": 56,
-		"ts": 10960,
-		"js": 10091,
-		"map": 165,
+		"ts": 11075,
+		"js": 10222,
+		"map": 166,
 		"md": 2572,
 		"CNAME": 1,
 		"LICENSE": 164,
-		"tree": 1905,
+		"tree": 1906,
 		"json": 633,
 		"css": 3722,
 		"tsx": 400,
@@ -9379,6 +9412,8 @@
 			"raggu/web/front/data": -1,
 			"mol/object": -1,
 			"raggu/web/front/api": -3,
+			"raggu/web/front/mock": -3,
+			"mol/wire/sync": -3,
 			"mol/fetch": -3,
 			"mol/mem": -2,
 			"raggu/web/front/graph": -3,
@@ -9450,6 +9485,16 @@
 		},
 		"raggu/web/front/api/ragu.openapi.ts": {
 			"raggu/web/front/api": 0
+		},
+		"raggu/web/front/mock": {
+			"raggu/web/front/mock/mock.ts": 0,
+			"raggu/web/front": -9007199254740991
+		},
+		"raggu/web/front/mock/mock.ts": {
+			"raggu/web/front/mock": -1,
+			"raggu/web/front/graph": -1,
+			"mol/object": -1,
+			"mol/state/arg": -3
 		},
 		"raggu/web/front/app/node_modules/three/package.json": {},
 		"bog/build2/npm": {

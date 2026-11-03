@@ -6746,11 +6746,144 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $raggu_web_front_mock extends $mol_object {
+        static enabled() {
+            return Boolean($mol_state_arg.value('mock'));
+        }
+        static root() {
+            return 'raggu/web/front/mock/fixtures/';
+        }
+        static files = new Map();
+        static file(name) {
+            let found = this.files.get(name);
+            if (found)
+                return found;
+            found = fetch(this.root() + name + '.json').then(response => {
+                if (!response.ok)
+                    throw new Error(`mock ${name}: ${response.status}`);
+                return response.json();
+            });
+            found.catch(() => this.files.delete(name));
+            this.files.set(name, found);
+            return found;
+        }
+        static async json(path) {
+            return await (await this.response(path)).json();
+        }
+        static async response(path, init) {
+            const url = new URL(path, 'http://mock');
+            const parts = url.pathname.split('/').filter(Boolean).map(decodeURIComponent);
+            const query = url.searchParams;
+            if (parts.length === 1)
+                return this.reply(await this.file(`datasets.${this.lang(query.get('locale'))}`));
+            const [, corpus, section, kind, node] = parts;
+            if (section === 'graph' && !kind)
+                return this.reply(await this.graph(corpus, query));
+            if (section === 'graph' && kind === 'communities')
+                return this.reply(await this.file(`${corpus}.communities`));
+            if (section === 'graph' && kind === 'nodes')
+                return this.reply(await this.node(corpus, node));
+            if (section === 'agent' && kind === 'suggestions')
+                return this.reply(await this.file(`${corpus}.suggestions.${this.lang(query.get('locale'))}`));
+            if (section === 'agent' && kind === 'messages') {
+                const body = JSON.parse(String(init?.body ?? '{}'));
+                const answer = await this.file(`${corpus}.answer.${this.lang(body.locale)}`);
+                if (node === 'stream')
+                    return this.stream(answer, init?.signal ?? undefined);
+                return this.reply({ message: this.fresh(answer) });
+            }
+            return new Response('mock: unknown route', { status: 404 });
+        }
+        static lang(raw) {
+            return raw === 'ru' ? 'ru' : 'en';
+        }
+        static reply(data) {
+            return new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } });
+        }
+        static fresh(answer) {
+            return { ...answer.message, id: `mock-${Date.now()}`, created_at: new Date().toISOString() };
+        }
+        static async graph(corpus, query) {
+            const full = await this.file(`${corpus}.graph`);
+            const wanted = new Set(query.getAll('community_ids'));
+            const limit = Number(query.get('limit')) || full.nodes.length;
+            const nodes = full.nodes
+                .filter(item => wanted.size === 0 || wanted.has(String(item.community_id)))
+                .slice(0, limit);
+            const ids = new Set(nodes.map(item => item.id));
+            const edges = full.edges.filter(item => ids.has(item.source) && ids.has(item.target));
+            return {
+                nodes,
+                edges,
+                communities: query.get('include_communities') === 'false' ? [] : full.communities,
+                meta: { ...full.meta, returned_nodes: nodes.length, returned_edges: edges.length, limit },
+            };
+        }
+        static async node(corpus, id) {
+            const recorded = await this.file(`${corpus}.nodes`);
+            if (recorded[id])
+                return recorded[id];
+            const graph = await this.file(`${corpus}.graph`);
+            const node = graph.nodes.find(item => item.id === id);
+            if (!node)
+                throw new Error(`mock: no node ${id}`);
+            const labels = new Map(graph.nodes.map(item => [item.id, item.label]));
+            const relation = (edge, direction) => {
+                const other = direction === 'incoming' ? edge.source : edge.target;
+                return { ...edge, direction, other_node_id: other, other_node_label: labels.get(other) ?? other };
+            };
+            return {
+                node,
+                incoming_relations: graph.edges.filter(edge => edge.target === id).map(edge => relation(edge, 'incoming')),
+                outgoing_relations: graph.edges.filter(edge => edge.source === id).map(edge => relation(edge, 'outgoing')),
+                provenance_chunks: [],
+            };
+        }
+        static stream(answer, signal) {
+            const encoder = new TextEncoder;
+            const pieces = answer.message.content.match(/\S+\s*/g) ?? [];
+            const event = (name, data) => encoder.encode(`event: ${name}\ndata: ${JSON.stringify(data)}\n\n`);
+            let timer = 0;
+            let index = 0;
+            const body = new ReadableStream({
+                start: controller => {
+                    const tick = () => {
+                        if (signal?.aborted)
+                            return controller.error(new DOMException('aborted', 'AbortError'));
+                        if (index >= pieces.length) {
+                            controller.enqueue(event('message', { message: this.fresh(answer) }));
+                            return controller.close();
+                        }
+                        controller.enqueue(event('delta', { text: pieces.slice(index, index + 3).join('') }));
+                        index += 3;
+                        timer = setTimeout(tick, 40);
+                    };
+                    timer = setTimeout(tick, 600);
+                },
+                cancel: () => clearTimeout(timer),
+            });
+            return new Response(body, { headers: { 'content-type': 'text/event-stream' } });
+        }
+    }
+    $.$raggu_web_front_mock = $raggu_web_front_mock;
+})($ || ($ = {}));
+//raggu/web/front/mock/mock.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $raggu_web_front_data extends $mol_object {
         static api() {
             return $raggu_web_front_api_endpoint().replace(/\/$/, '') + '/api/v1';
         }
+        static request(path, init) {
+            if ($raggu_web_front_mock.enabled())
+                return $raggu_web_front_mock.response(path, init);
+            return fetch(this.api() + path, init);
+        }
         static fetch(path, init) {
+            if ($raggu_web_front_mock.enabled())
+                return $mol_wire_sync($raggu_web_front_mock).json(path);
             return this.$.$mol_fetch.json(this.api() + path, {
                 credentials: 'omit',
                 ...init,
@@ -7137,9 +7270,8 @@ var $;
             const seed = $raggu_web_front_data_ready(() => this.response());
             if (!corpus || !seed)
                 throw new Error('nothing to extend');
-            const api = $raggu_web_front_data.api();
             const get = async (path) => {
-                const response = await fetch(api + path, { headers: { accept: 'application/json' } });
+                const response = await $raggu_web_front_data.request(path, { headers: { accept: 'application/json' } });
                 if (!response.ok)
                     throw new Error(response.statusText);
                 return await response.json();
@@ -7261,9 +7393,9 @@ var $;
     ], $raggu_web_front_viewer.prototype, "started", null);
     $.$raggu_web_front_viewer = $raggu_web_front_viewer;
     async function $raggu_web_front_viewer_ask(corpus, body, signal, on_delta) {
-        const base = `${$raggu_web_front_data.api()}/datasets/${encodeURIComponent(corpus)}/agent/messages`;
+        const base = `/datasets/${encodeURIComponent(corpus)}/agent/messages`;
         const plain = async () => {
-            const response = await fetch(base, {
+            const response = await $raggu_web_front_data.request(base, {
                 method: 'POST',
                 headers: { accept: 'application/json', 'content-type': 'application/json' },
                 body: JSON.stringify(body),
@@ -7273,7 +7405,7 @@ var $;
                 throw new Error((await response.text().catch(() => '')).slice(0, 240) || response.statusText);
             return await response.json();
         };
-        const response = await fetch(base + '/stream', {
+        const response = await $raggu_web_front_data.request(base + '/stream', {
             method: 'POST',
             headers: { accept: 'text/event-stream', 'content-type': 'application/json' },
             body: JSON.stringify(body),
