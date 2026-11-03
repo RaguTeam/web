@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
-# Regenerates the API contract for the frontend.
-#   1. Dumps openapi.json from the running FastAPI app (no server needed —
-#      reflects create_app() directly).
-#   2. Runs regen-openapi-client.mjs to rebuild ragu.openapi.ts.
+# Regenerates the API contract: dumps openapi.json from create_app() directly,
+# no server needed. The site (front/ragu-site) keeps its own hand-written types
+# in src/api/types.ts; the generated client belonged to the archived $mol app.
 #
 # Exits 0 on success, 0 on skip (missing deps), non-zero only on genuine
 # regen failure. Callers (e.g. git hook) can decide whether to enforce.
 set -eu
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACK="$( cd "$HERE/.." && pwd )"
-REPO="$( cd "$BACK/../../.." && pwd )"
 
 PYTHON="${PYTHON:-}"
 if [ -z "$PYTHON" ]; then
@@ -39,6 +37,3 @@ from ragu_web_api.main import create_app
 spec = json.dumps(create_app().openapi(), indent=2) + "\n"
 pathlib.Path(os.environ["OPENAPI_PATH"]).write_text(spec, encoding="utf-8", newline="\n")
 '
-
-cd "$REPO"
-node "$HERE/regen-openapi-client.mjs"
