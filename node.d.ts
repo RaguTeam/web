@@ -1,4 +1,1842 @@
 declare namespace $ {
+    /**
+     * Fails if `Actual` type is not subtype of `Expected`.
+     */
+    type $mol_type_enforce<Actual extends Expected, Expected> = Actual;
+}
+
+declare namespace $ {
+    function $mol_promise_like(val: any): val is Promise<any>;
+}
+
+declare let _$_: {
+    new (): {};
+} & typeof globalThis;
+declare class $ extends _$_ {
+}
+declare namespace $ {
+    export type $ = typeof $$;
+    export class $$ extends $ {
+        static $: $;
+    }
+    namespace $$ {
+        type $$ = $;
+    }
+    export {};
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    /** Logger event data */
+    type $mol_log3_event<Fields> = {
+        [key in string]: unknown;
+    } & {
+        /** Time of event creation */
+        time?: string;
+        /** Place of event creation */
+        place: unknown;
+        /** Short description of event */
+        message: string;
+    } & Fields;
+    /** Logger function */
+    type $mol_log3_logger<Fields, Res = void> = (this: $, event: $mol_log3_event<Fields>) => Res;
+    /** Log begin of some task */
+    let $mol_log3_come: $mol_log3_logger<{}>;
+    /** Log end of some task */
+    let $mol_log3_done: $mol_log3_logger<{}>;
+    /** Log error */
+    let $mol_log3_fail: $mol_log3_logger<{}>;
+    /** Log warning message */
+    let $mol_log3_warn: $mol_log3_logger<{
+        hint: string;
+    }>;
+    /** Log some generic event */
+    let $mol_log3_rise: $mol_log3_logger<{}>;
+    /** Log begin of log group, returns func to close group */
+    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
+    /** Log begin of collapsed group only when some logged inside, returns func to close group */
+    function $mol_log3_area_lazy(this: $, event: $mol_log3_event<{}>): () => void;
+    let $mol_log3_stack: (() => void)[];
+}
+
+declare namespace $ {
+    /** Module for working with terminal. Text coloring when output in terminal */
+    class $mol_term_color {
+        static reset: (str: string) => string;
+        static bold: (str: string) => string;
+        static italic: (str: string) => string;
+        static underline: (str: string) => string;
+        static inverse: (str: string) => string;
+        static hidden: (str: string) => string;
+        static strike: (str: string) => string;
+        static gray: (str: string) => string;
+        static red: (str: string) => string;
+        static green: (str: string) => string;
+        static yellow: (str: string) => string;
+        static blue: (str: string) => string;
+        static magenta: (str: string) => string;
+        static cyan: (str: string) => string;
+        static Gray: (str: string) => string;
+        static Red: (str: string) => string;
+        static Green: (str: string) => string;
+        static Yellow: (str: string) => string;
+        static Blue: (str: string) => string;
+        static Magenta: (str: string) => string;
+        static Cyan: (str: string) => string;
+        static ansi(open: number, close: number): (str: string) => string;
+    }
+}
+
+declare namespace $ {
+    function $mol_log3_node_make(level: keyof Console, output: 'stdout' | 'stderr', type: string, color: (str: string) => string): (this: $, event: $mol_log3_event<{}>) => () => void;
+}
+
+declare namespace $ {
+    const $mol_ambient_ref: unique symbol;
+    /** @deprecated use $ instead */
+    type $mol_ambient_context = $;
+    function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
+}
+
+declare namespace $ {
+    const $mol_owning_map: WeakMap<any, any>;
+    function $mol_owning_allow<Having>(having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_get<Having, Owner extends object>(having: Having, Owner?: {
+        new (): Owner;
+    }): Owner | null;
+    function $mol_owning_check<Owner, Having>(owner: Owner, having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_catch<Owner, Having>(owner: Owner, having: Having): boolean;
+}
+
+declare namespace $ {
+    const $mol_key_handle: unique symbol;
+    const $mol_key_store: WeakMap<object, string>;
+}
+
+declare namespace $ {
+    class $mol_object2 {
+        static $: $;
+        [Symbol.toStringTag]: string;
+        [$mol_ambient_ref]: $;
+        get $(): $;
+        set $(next: $);
+        static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
+        static [Symbol.toPrimitive](): any;
+        static toString(): any;
+        static toJSON(): any;
+        static [$mol_key_handle](): any;
+        destructor(): void;
+        static destructor(): void;
+        [Symbol.dispose](): void;
+        toString(): string;
+    }
+}
+
+declare namespace $ {
+    /** Position in any resource. */
+    class $mol_span extends $mol_object2 {
+        readonly uri: string;
+        readonly source: string;
+        readonly row: number;
+        readonly col: number;
+        readonly length: number;
+        constructor(uri: string, source: string, row: number, col: number, length: number);
+        /** Span for begin of unknown resource */
+        static unknown: $mol_span;
+        /** Makes new span for begin of resource. */
+        static begin(uri: string, source?: string): $mol_span;
+        /** Makes new span for end of resource. */
+        static end(uri: string, source: string): $mol_span;
+        /** Makes new span for entire resource. */
+        static entire(uri: string, source: string): $mol_span;
+        toString(): string;
+        toJSON(): {
+            uri: string;
+            row: number;
+            col: number;
+            length: number;
+        };
+        /** Makes new error for this span. */
+        error(message: string, Class?: ErrorConstructor): Error;
+        /** Makes new span for same uri. */
+        span(row: number, col: number, length: number): $mol_span;
+        /** Makes new span after end of this. */
+        after(length?: number): $mol_span;
+        /** Makes new span between begin and end. */
+        slice(begin: number, end?: number): $mol_span;
+    }
+}
+
+declare namespace $ {
+    let $mol_compare_deep_cache: WeakMap<any, WeakMap<any, boolean>>;
+    /**
+     * Deeply compares two values. Returns true if equal.
+     * Define `Symbol.toPrimitive` to customize.
+     */
+    function $mol_compare_deep<Value>(left: Value, right: Value): boolean;
+}
+
+declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
+    function $node_internal_check(name: string): boolean;
+}
+
+declare namespace $ {
+    function $node_autoinstall(this: typeof $, name: string): void;
+}
+
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
+declare namespace $ {
+    function $mol_func_name(this: $, func: Function): string;
+    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
+}
+
+declare namespace $ {
+    class $mol_error_mix<Cause extends {} = {}> extends AggregateError {
+        readonly cause: Cause;
+        name: string;
+        constructor(message: string, cause?: Cause, ...errors: readonly Error[]);
+        static [Symbol.toPrimitive](): string;
+        static toString(): string;
+        static make(...params: ConstructorParameters<typeof $mol_error_mix>): $mol_error_mix<{}>;
+    }
+}
+
+declare namespace $ {
+    namespace $$ { }
+    const $mol_object_field: unique symbol;
+    class $mol_object extends $mol_object2 {
+        static make<This extends typeof $mol_object>(this: This, config: Partial<InstanceType<This>>): InstanceType<This>;
+    }
+}
+
+declare namespace $ {
+    function $mol_env(): Record<string, string | undefined>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    /** Generates unique identifier. */
+    function $mol_guid(length?: number, exists?: (id: string) => boolean): string;
+}
+
+declare namespace $ {
+    /** Special status statuses. */
+    enum $mol_wire_cursor {
+        /** Update required. */
+        stale = -1,
+        /** Some of (transitive) pub update required. */
+        doubt = -2,
+        /** Actual state but may be dropped. */
+        fresh = -3,
+        /** State will never be changed. */
+        final = -4
+    }
+}
+
+declare namespace $ {
+    /**
+     * Collects subscribers in compact array. 28B
+     */
+    class $mol_wire_pub extends Object {
+        constructor(id?: string);
+        [Symbol.toStringTag]: string;
+        data: unknown[];
+        static get [Symbol.species](): ArrayConstructor;
+        /**
+         * Index of first subscriber.
+         */
+        protected sub_from: number;
+        /**
+         * All current subscribers.
+         */
+        get sub_list(): readonly $mol_wire_sub[];
+        /**
+         * Has any subscribers or not.
+         */
+        get sub_empty(): boolean;
+        /**
+         * Subscribe subscriber to this publisher events and return position of subscriber that required to unsubscribe.
+         */
+        sub_on(sub: $mol_wire_pub, pub_pos: number): number;
+        /**
+         * Unsubscribe subscriber from this publisher events by subscriber position provided by `on(pub)`.
+         */
+        sub_off(sub_pos: number): void;
+        /**
+         * Called when last sub was unsubscribed.
+         **/
+        reap(): void;
+        /**
+         * Autowire this publisher with current subscriber.
+         **/
+        promote(): void;
+        /**
+         * Enforce actualization. Should not throw errors.
+         */
+        fresh(): void;
+        /**
+         * Allow to put data to caches in the subtree.
+         */
+        complete(): void;
+        get incompleted(): boolean;
+        /**
+         * Notify subscribers about self changes.
+         */
+        emit(quant?: $mol_wire_cursor): void;
+        /**
+         * Moves peer from one position to another. Doesn't clear data at old position!
+         */
+        peer_move(from_pos: number, to_pos: number): void;
+        /**
+         * Updates self position in the peer.
+         */
+        peer_repos(peer_pos: number, self_pos: number): void;
+    }
+}
+
+declare namespace $ {
+    /** Generic subscriber interface */
+    interface $mol_wire_sub extends $mol_wire_pub {
+        temp: boolean;
+        pub_list: $mol_wire_pub[];
+        /**
+         * Begin auto wire to publishers.
+         * Returns previous auto subscriber that must me transfer to the `end`.
+         */
+        track_on(): $mol_wire_sub | null;
+        /**
+         * Returns next auto wired publisher. It can be easely repormoted.
+         * Or promotes next publisher to auto wire its togeter.
+         * Must be used only between `track_on` and `track_off`.
+         */
+        track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
+        pub_off(pub_pos: number): void;
+        /**
+         * Unsubscribes from unpromoted publishers.
+         */
+        track_cut(sub: $mol_wire_pub | null): void;
+        /**
+         * Ends auto wire to publishers.
+         */
+        track_off(sub: $mol_wire_pub | null): void;
+        /**
+         * Receive notification about publisher changes.
+         */
+        absorb(quant: $mol_wire_cursor, pos: number): void;
+        /**
+         * Unsubscribes from all publishers.
+         */
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    let $mol_wire_auto_sub: $mol_wire_sub | null;
+    /**
+     * When fulfilled, all publishers are promoted to this subscriber on access to its.
+     */
+    function $mol_wire_auto(next?: $mol_wire_sub | null): $mol_wire_sub | null;
+    /**
+     * Affection queue. Used to prevent accidental stack overflow on emit.
+     */
+    const $mol_wire_affected: ($mol_wire_sub | number)[];
+}
+
+declare namespace $ {
+    /**
+     * Convert asynchronous (promise-based) API to synchronous by wrapping function and method calls in a fiber.
+     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+     */
+    export function $mol_wire_sync<Host extends object>(obj: Host): ObjectOrFunctionResultAwaited<Host>;
+    type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res ? (...args: Args) => Awaited<Res> : Some;
+    type ConstructorResultAwaited<Some> = Some extends new (...args: infer Args) => infer Res ? new (...args: Args) => Res : {};
+    type MethodsResultAwaited<Host extends Object> = {
+        [K in keyof Host]: FunctionResultAwaited<Host[K]>;
+    };
+    type ObjectOrFunctionResultAwaited<Some> = (Some extends (...args: any) => unknown ? FunctionResultAwaited<Some> : {}) & (Some extends Object ? MethodsResultAwaited<Some> & ConstructorResultAwaited<Some> : Some);
+    export {};
+}
+
+declare namespace $ {
+    /** Returns error type, that don't match to normal value. */
+    type $mol_type_error<Message, Info = {}> = Message & {
+        $mol_type_error: Info;
+    };
+}
+
+declare namespace $ {
+    /**
+     * Asserts for equality of `Actual` and `Expected` types.
+     */
+    type $mol_type_assert<Actual extends $mol_type_equals<Actual, Expected> extends true ? unknown : $mol_type_equals<Actual, any> extends true ? never : $mol_type_error<'Assert failed', {
+        actual: Actual;
+        expected: Expected;
+    }>, Expected extends $mol_type_equals<Actual, Expected> extends true ? unknown : $mol_type_equals<Expected, any> extends true ? never : $mol_type_error<'Assert failed', {
+        actual: Actual;
+        expected: Expected;
+    }>> = Actual;
+    /**
+     * Asserts for `Actual` type is `never`.
+     * @deprecated Use `$mol_type_assert< A, B >`
+     *
+     * 	$mol_type_assert_never< $mol_type_equals< 1 , 2 > >
+     */
+    type $mol_type_assert_never<Actual extends never> = Actual;
+}
+
+declare namespace $ {
+    function $mol_dev_format_register(config: {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => false;
+    } | {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => boolean;
+        body: (val: any, config: any) => any;
+    }): void;
+    const $mol_dev_format_head: unique symbol;
+    const $mol_dev_format_body: unique symbol;
+    function $mol_dev_format_native(obj: any): any[];
+    function $mol_dev_format_auto(obj: any): any[];
+    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
+    let $mol_dev_format_span: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_accent: (...args: any[]) => any[];
+    let $mol_dev_format_strong: (...args: any[]) => any[];
+    let $mol_dev_format_string: (...args: any[]) => any[];
+    let $mol_dev_format_shade: (...args: any[]) => any[];
+    let $mol_dev_format_indent: (...args: any[]) => any[];
+}
+
+declare namespace $ {
+    /**
+     * Publisher that can auto collect other publishers. 32B
+     *
+     * 	P1 P2 P3 P4 S1 S2 S3
+     * 	^           ^
+     * 	pubs_from   subs_from
+     */
+    class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
+        protected pub_from: number;
+        protected cursor: $mol_wire_cursor;
+        get temp(): boolean;
+        get pub_list(): $mol_wire_pub[];
+        track_on(): $mol_wire_sub | null;
+        promote(): void;
+        track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
+        track_off(sub: $mol_wire_sub | null): void;
+        pub_off(sub_pos: number): void;
+        destructor(): void;
+        track_cut(): void;
+        complete(): void;
+        complete_pubs(): void;
+        absorb(quant?: $mol_wire_cursor, pos?: number): void;
+        [$mol_dev_format_head](): any[];
+        /**
+         * Is subscribed to any publisher or not.
+         */
+        get pub_empty(): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_after_tick extends $mol_object2 {
+        task: () => void;
+        static promise: Promise<void> | null;
+        cancelled: boolean;
+        constructor(task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Suspendable task with support both sync/async api.
+     *
+     * 	A1 A2 A3 A4 P1 P2 P3 P4 S1 S2 S3
+     * 	^           ^           ^
+     * 	args_from   pubs_from   subs_from
+     **/
+    abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
+        readonly task: (this: Host, ...args: Args) => Result;
+        readonly host?: Host | undefined;
+        static warm: boolean;
+        static planning: Set<$mol_wire_fiber<any, any, any>>;
+        static reaping: Set<$mol_wire_fiber<any, any, any>>;
+        static plan_task: $mol_after_tick | null;
+        static plan(): void;
+        static sync(): void;
+        cache: Result | Error | Promise<Result | Error>;
+        get args(): Args;
+        result(): Result | undefined;
+        get incompleted(): boolean;
+        field(): string;
+        constructor(id: string, task: (this: Host, ...args: Args) => Result, host?: Host | undefined, args?: Args);
+        plan(): this;
+        reap(): void;
+        toString(): string;
+        toJSON(): string;
+        [$mol_dev_format_head](): any[];
+        [$mol_dev_format_body](): null;
+        get $(): any;
+        emit(quant?: $mol_wire_cursor): void;
+        fresh(): this | undefined;
+        refresh(): void;
+        abstract put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
+        /**
+         * Synchronous execution. Throws Promise when waits async task (SuspenseAPI provider).
+         * Should be called inside SuspenseAPI consumer (ie fiber).
+         */
+        sync(): Awaited<Result>;
+        /**
+         * Asynchronous execution.
+         * It's SuspenseAPI consumer. So SuspenseAPI providers can be called inside.
+         */
+        async_raw(): Promise<Result>;
+        async(): Promise<Result> & {
+            destructor(): void;
+        };
+        step(): Promise<null>;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    /** One-shot fiber */
+    class $mol_wire_task<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
+        static getter<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result): (host: Host, args: Args) => $mol_wire_task<Host, Args, Result>;
+        get temp(): boolean;
+        complete(): void;
+        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Decorates method to fiber to ensure it is executed only once inside other fiber.
+     */
+    function $mol_wire_method<Host extends object, Args extends readonly any[]>(host: Host, field: PropertyKey, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
+        value: (this: Host, ...args: Args) => any;
+        enumerable?: boolean;
+        configurable?: boolean;
+        writable?: boolean;
+        get?: (() => (...args: Args) => any) | undefined;
+        set?: ((value: (...args: Args) => any) => void) | undefined;
+    };
+}
+
+declare namespace $ {
+    /** Convert a pseudo-synchronous (Suspense API) API to an explicit asynchronous one (for integrating with external systems). */
+    export function $mol_wire_async<Host extends object>(obj: Host): ObjectOrFunctionResultPromisify<Host>;
+    type FunctionResultPromisify<Some> = Some extends (...args: infer Args) => infer Res ? Res extends PromiseLike<unknown> ? Some : (...args: Args) => Promise<Res> : Some;
+    type MethodsResultPromisify<Host extends Object> = {
+        [K in keyof Host]: FunctionResultPromisify<Host[K]>;
+    };
+    type ObjectOrFunctionResultPromisify<Some> = (Some extends (...args: any) => unknown ? FunctionResultPromisify<Some> : {}) & (Some extends Object ? MethodsResultPromisify<Some> : Some);
+    export {};
+}
+
+declare namespace $ {
+    /**
+     * Return `unknown` when `A` and `B` are the same type. `never` otherwise.
+     *
+     * 	$mol_type_equals< unknown , any > & number // true
+     * 	$mol_type_equals< never , never > & number // false
+     */
+    type $mol_type_equals<A, B> = (<X>() => X extends A ? 1 : 2) extends (<X>() => X extends B ? 1 : 2) ? true : false;
+}
+
+declare namespace $ {
+    class $mol_promise<Result = void> extends Promise<Result> {
+        done: (value: Result | PromiseLike<Result>) => void;
+        fail: (reason?: any) => void;
+        constructor(executor?: (done: (value: Result | PromiseLike<Result>) => void, fail: (reason?: any) => void) => void);
+    }
+}
+
+declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    function $mol_wait_timeout_async(this: $, timeout: number): Promise<void>;
+    function $mol_wait_timeout(this: $, timeout: number): void;
+}
+
+declare namespace $ {
+    class $mol_after_work extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    function $mol_wait_rest_async(this: $): Promise<unknown>;
+    function $mol_wait_rest(this: $): unknown;
+}
+
+declare namespace $ {
+    type $mol_run_error_context = {
+        pid?: number;
+        stdout: Buffer | string;
+        stderr: Buffer | string;
+    };
+    class $mol_run_error extends $mol_error_mix<{
+        timeout_kill?: boolean;
+        pid?: number;
+        signal?: NodeJS.Signals | null;
+        status?: number | null;
+        command: string;
+        dir: string;
+    }> {
+    }
+    const $mol_run_spawn: (...args: Parameters<(typeof $node)["child_process"]["spawn"]>) => import("node:child_process").ChildProcess;
+    const $mol_run_spawn_sync: (...args: Parameters<(typeof $node)["child_process"]["spawnSync"]>) => import("node:child_process").SpawnSyncReturns<string | NonSharedBuffer>;
+    type $mol_run_options = {
+        command: readonly string[] | string;
+        dir: string;
+        timeout?: number;
+        env?: Record<string, string | undefined>;
+    };
+    class $mol_run extends $mol_object {
+        static async_enabled(): boolean;
+        static spawn(options: $mol_run_options): import("node:child_process").SpawnSyncReturns<string | NonSharedBuffer> | $mol_run_error_context;
+        static spawn_async({ dir, sync, timeout, command, env }: $mol_run_options & {
+            sync?: boolean;
+        }): import("node:child_process").SpawnSyncReturns<string | NonSharedBuffer> | (Promise<$mol_run_error_context> & {
+            destructor: () => void;
+        });
+        static error_message(res?: $mol_run_error_context): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_dom_render_children(el: Element | DocumentFragment, childNodes: NodeList | Array<Node | string | null>): void;
+}
+
+declare namespace $ {
+    var $mol_dom: typeof globalThis;
+}
+
+declare namespace $ {
+    /**
+     * Recursive `Partial`.
+     *
+     * 	let props : $mol_type_partial_deep< HTMLElement > = { style : { display : 'block' } }
+     */
+    type $mol_type_partial_deep<Val> = Val extends object ? Val extends Function ? Val : {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]> | undefined;
+    } : Val;
+}
+
+declare namespace $ {
+    let $mol_jsx_prefix: string;
+    let $mol_jsx_crumbs: string;
+    let $mol_jsx_booked: null | Set<string>;
+    let $mol_jsx_document: $mol_jsx.JSX.ElementClass['ownerDocument'];
+    const $mol_jsx_frag = "";
+    /**
+     * JSX adapter that makes DOM tree.
+     * Generates global unique ids for every DOM-element by components tree with ids.
+     * Ensures all local ids are unique.
+     * Can reuse an existing nodes by GUIDs when used inside [`mol_jsx_attach`](https://github.com/hyoo-ru/mam_mol/tree/master/jsx/attach).
+     */
+    function $mol_jsx<Props extends $mol_jsx.JSX.IntrinsicAttributes, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element), props: Props, ...childNodes: Children): Element | DocumentFragment;
+    namespace $mol_jsx.JSX {
+        interface Element extends HTMLElement {
+            class?: string;
+        }
+        interface ElementClass {
+            attributes: {};
+            ownerDocument: Pick<Document, 'getElementById' | 'createElementNS' | 'createDocumentFragment'>;
+            childNodes: Array<Node | string>;
+            valueOf(): Element;
+        }
+        type OrString<Dict> = {
+            [key in keyof Dict]: Dict[key] | string;
+        };
+        /** Props for html elements */
+        type IntrinsicElements = {
+            [key in keyof ElementTagNameMap]?: $.$mol_type_partial_deep<OrString<Element & IntrinsicAttributes & ElementTagNameMap[key]>>;
+        };
+        /** Additional undeclared props */
+        interface IntrinsicAttributes {
+            id?: string;
+            xmlns?: string;
+        }
+        interface ElementAttributesProperty {
+            attributes: {};
+        }
+        interface ElementChildrenAttribute {
+        }
+    }
+}
+
+declare namespace $ {
+    function $mol_dom_serialize(node: Node): string;
+}
+
+declare namespace $ {
+    /** Lazy computed lists with native Array interface. $mol_range2_array is mutable but all derived ranges are immutable. */
+    function $mol_range2<Item = number>(item?: Item[] | ((index: number) => Item), size?: () => number): Item[];
+    class $mol_range2_array<Item> extends Array<Item> {
+        concat(...tail: Item[][]): Item[];
+        filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
+        forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
+        map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
+        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result | undefined;
+        toReversed(): Item[];
+        slice(from?: number, to?: number): Item[];
+        some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+        every<Narrow extends Item, Context = null>(check: (value: Item, index: number, array: Item[]) => value is Narrow, context?: Context): this is Narrow[];
+        reverse(): never;
+        sort(): never;
+        indexOf(needle: Item): number;
+        [Symbol.toPrimitive](): string;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Argument must be Truthy
+     * @deprecated use $mol_assert_equal instead
+     */
+    function $mol_assert_ok(value: any): void;
+    /**
+     * Argument must be Falsy
+     * @deprecated use $mol_assert_equal instead
+     */
+    function $mol_assert_not(value: any): void;
+    /**
+     * Handler must throw an error.
+     * @example
+     * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } ) // Passes because throws error
+     * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , 'Parse error' ) // Passes because throws right message
+     * $mol_assert_fail( ()=>{ throw new Error( 'Parse error' ) } , Error ) // Passes because throws right class
+     * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+     */
+    function $mol_assert_fail(handler: () => any, ErrorRight: string | typeof Error | typeof Promise): any;
+    /** @deprecated Use $mol_assert_equal */
+    function $mol_assert_like<Value>(...args: [Value, Value, ...Value[]]): void;
+    /**
+     * All arguments must not be structural equal to each other.
+     * @example
+     * $mol_assert_unique( 1 , 2 , 3 ) // Passes
+     * $mol_assert_unique( 1 , 1 , 2 ) // Fails because 1 === 1
+     * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+     */
+    function $mol_assert_unique(...args: [any, any, ...any[]]): undefined;
+    /**
+     * All arguments must be structural equal each other.
+     * @example
+     * $mol_assert_like( [1] , [1] , [1] ) // Passes
+     * $mol_assert_like( [1] , [1] , [2] ) // Fails because 1 !== 2
+     * @see https://mol.hyoo.ru/#!section=docs/=9q9dv3_fgxjsf
+     */
+    function $mol_assert_equal<Value>(...args: [Value, Value, ...Value[]]): undefined;
+}
+
+declare namespace $ {
+    function $mol_fail_catch(error: unknown): boolean;
+}
+
+declare namespace $ {
+    function $mol_try<Result>(handler: () => Result): Result | Error;
+}
+
+declare namespace $ {
+    function $mol_fail_log(error: unknown): boolean;
+}
+
+declare namespace $ {
+    type $mol_type_writable<T> = {
+        -readonly [P in keyof T]: T[P];
+    };
+}
+
+declare namespace $ {
+    /**
+     * Proxy that delegates all to lazy returned target.
+     *
+     * 	$mol_delegate( Array.prototype , ()=> fetch_array() )
+     */
+    function $mol_delegate<Value extends object>(proto: Value, target: () => Value): Value;
+}
+
+declare namespace $ {
+    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
+}
+
+declare namespace $ {
+    /** Path by types in tree. */
+    type $mol_tree2_path = Array<string | number | null>;
+    /** Hask tool for processing node. */
+    type $mol_tree2_hack<Context> = (input: $mol_tree2, belt: $mol_tree2_belt<Context>, context: Context) => readonly $mol_tree2[];
+    /** Collection of hask tools for processing tree. */
+    type $mol_tree2_belt<Context> = Record<string, $mol_tree2_hack<Context>>;
+    /**
+     * Abstract Syntax Tree with human readable serialization.
+     * Avoid direct instantiation. Use static factories instead.
+     * @see https://github.com/nin-jin/tree.d
+     */
+    class $mol_tree2 extends Object {
+        /** Type of structural node, `value` should be empty */
+        readonly type: string;
+        /** Content of data node, `type` should be empty */
+        readonly value: string;
+        /** Child nodes */
+        readonly kids: readonly $mol_tree2[];
+        /** Position in most far source resource */
+        readonly span: $mol_span;
+        constructor(
+        /** Type of structural node, `value` should be empty */
+        type: string, 
+        /** Content of data node, `type` should be empty */
+        value: string, 
+        /** Child nodes */
+        kids: readonly $mol_tree2[], 
+        /** Position in most far source resource */
+        span: $mol_span);
+        /** Makes collection node. */
+        static list(kids: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        /** Makes new derived collection node. */
+        list(kids: readonly $mol_tree2[]): $mol_tree2;
+        /** Makes data node for any string. */
+        static data(value: string, kids?: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        /** Makes new derived data node. */
+        data(value: string, kids?: readonly $mol_tree2[]): $mol_tree2;
+        /** Makes struct node. */
+        static struct(type: string, kids?: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        /** Makes new derived structural node. */
+        struct(type: string, kids?: readonly $mol_tree2[]): $mol_tree2;
+        /** Makes new derived node with different kids id defined. */
+        clone(kids: readonly $mol_tree2[], span?: $mol_span): $mol_tree2;
+        /** Returns multiline text content. */
+        text(): string;
+        /** Parses tree format. */
+        /** @deprecated Use $mol_tree2_from_string */
+        static fromString(str: string, uri?: string): $mol_tree2;
+        /** Serializes to tree format. */
+        toString(): string;
+        /** Makes new tree with node overrided by path. */
+        insert(value: $mol_tree2 | null, ...path: $mol_tree2_path): $mol_tree2;
+        /** Makes new tree with node overrided by path. */
+        update(value: readonly $mol_tree2[], ...path: $mol_tree2_path): readonly $mol_tree2[];
+        /** Query nodes by path. */
+        select(...path: $mol_tree2_path): $mol_tree2;
+        /** Filter kids by path or value. */
+        filter(path: string[], value?: string): $mol_tree2;
+        hack_self<Context extends {
+            span?: $mol_span;
+            [key: string]: unknown;
+        } = {}>(belt: $mol_tree2_belt<Context>, context?: Context): readonly $mol_tree2[];
+        /** Transform tree through context with transformers */
+        hack<Context extends {
+            span?: $mol_span;
+            [key: string]: unknown;
+        } = {}>(belt: $mol_tree2_belt<Context>, context?: Context): $mol_tree2[];
+        /** Makes Error with node coordinates. */
+        error(message: string, Class?: ErrorConstructor): Error;
+    }
+    class $mol_tree2_empty extends $mol_tree2 {
+        constructor();
+    }
+}
+
+declare namespace $ {
+    function $mol_array_chunks<Item>(array: readonly Item[], rule: number | ((item: Item, index: number) => boolean)): Item[][];
+}
+
+declare namespace $ {
+    /** Syntax error with cordinates and source line snippet. */
+    class $mol_error_syntax extends SyntaxError {
+        reason: string;
+        line: string;
+        span: $mol_span;
+        constructor(reason: string, line: string, span: $mol_span);
+    }
+}
+
+declare namespace $ {
+    /** Parses tree format from string. */
+    function $mol_tree2_from_string(this: $, str: string, uri?: string): $mol_tree2;
+}
+
+declare namespace $ {
+    /** Serializes tree to string in tree format. */
+    function $mol_tree2_to_string(this: $, tree: $mol_tree2): string;
+}
+
+declare namespace $ {
+    function $mol_tree2_from_json(json: any, span?: $mol_span): $mol_tree2;
+}
+
+declare namespace $ {
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
+}
+
+declare namespace $ {
+    class $mol_decor<Value> {
+        readonly value: Value;
+        constructor(value: Value);
+        prefix(): string;
+        valueOf(): Value;
+        postfix(): string;
+        toString(): string;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
+    type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
+    type $mol_style_unit_time = 's' | 'ms';
+    type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
+    type $mol_style_unit_str<Quanity extends $mol_style_unit_any = $mol_style_unit_any> = `${number}${Quanity}`;
+    /**
+     * CSS Units
+     * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg
+     */
+    class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
+        readonly literal: Literal;
+        constructor(value: number, literal: Literal);
+        postfix(): Literal;
+        static per(value: number): `${number}%`;
+        static px(value: number): `${number}px`;
+        static mm(value: number): `${number}mm`;
+        static cm(value: number): `${number}cm`;
+        static Q(value: number): `${number}Q`;
+        static in(value: number): `${number}in`;
+        static pc(value: number): `${number}pc`;
+        static pt(value: number): `${number}pt`;
+        static cap(value: number): `${number}cap`;
+        static ch(value: number): `${number}ch`;
+        static em(value: number): `${number}em`;
+        static rem(value: number): `${number}rem`;
+        static ex(value: number): `${number}ex`;
+        static ic(value: number): `${number}ic`;
+        static lh(value: number): `${number}lh`;
+        static rlh(value: number): `${number}rlh`;
+        static vh(value: number): `${number}vh`;
+        static vw(value: number): `${number}vw`;
+        static vi(value: number): `${number}vi`;
+        static vb(value: number): `${number}vb`;
+        static vmin(value: number): `${number}vmin`;
+        static vmax(value: number): `${number}vmax`;
+        static deg(value: number): `${number}deg`;
+        static rad(value: number): `${number}rad`;
+        static grad(value: number): `${number}grad`;
+        static turn(value: number): `${number}turn`;
+        static s(value: number): `${number}s`;
+        static ms(value: number): `${number}ms`;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_func_name = 'calc' | 'hsla' | 'rgba' | 'var' | 'clamp' | 'scale' | 'cubic-bezier' | 'linear' | 'steps' | $mol_style_func_image | $mol_style_func_filter;
+    type $mol_style_func_image = 'url' | 'linear-gradient' | 'radial-gradient' | 'conic-gradient';
+    type $mol_style_func_filter = 'blur' | 'brightness' | 'contrast' | 'drop-shadow' | 'grayscale' | 'hue-rotate' | 'invert' | 'opacity' | 'sepia' | 'saturate';
+    /**
+     * CSS Functions
+     * @see https://mol.hyoo.ru/#!section=docs/=xwq9q5_f966fg
+     */
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(name: Name, value: Value);
+        prefix(): string;
+        postfix(): string;
+        static linear_gradient<Value>(value: Value): $mol_style_func<"linear-gradient", Value>;
+        static radial_gradient<Value>(value: Value): $mol_style_func<"radial-gradient", Value>;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static vary<Name extends string, Value extends string>(name: Name, defaultValue?: Value): $mol_style_func<"var", Name | (Name | Value)[]>;
+        static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
+        static hsla(hue: number | $mol_style_func<'var'>, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | `${number}%` | $mol_style_func<"var", unknown>)[]>;
+        static clamp(min: $mol_style_unit_str<any>, mid: $mol_style_unit_str<any>, max: $mol_style_unit_str<any>): $mol_style_func<"clamp", `${number}${any}`[]>;
+        static rgba(red: number | $mol_style_func<'var'>, green: number | $mol_style_func<'var'>, blue: number | $mol_style_func<'var'>, alpha: number | $mol_style_func<'var'>): $mol_style_func<"rgba", (number | $mol_style_func<"var", unknown>)[]>;
+        static scale(zoom: number): $mol_style_func<"scale", number[]>;
+        static linear(...breakpoints: Array<number | [number, number | $mol_style_unit_str<'%'>]>): $mol_style_func<"linear", string[]>;
+        static cubic_bezier(x1: number, y1: number, x2: number, y2: number): $mol_style_func<"cubic-bezier", number[]>;
+        static steps(value: number, step_position: 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both' | 'start' | 'end'): $mol_style_func<"steps", (number | "end" | "start" | "jump-start" | "jump-end" | "jump-none" | "jump-both")[]>;
+        static blur(value?: $mol_style_unit_str<$mol_style_unit_length>): $mol_style_func<"blur", string>;
+        static brightness(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"brightness", string | number>;
+        static contrast(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"contrast", string | number>;
+        static drop_shadow(color: $mol_style_properties_color, x_offset: $mol_style_unit_str<$mol_style_unit_length>, y_offset: $mol_style_unit_str<$mol_style_unit_length>, blur_radius?: $mol_style_unit_str<$mol_style_unit_length>): $mol_style_func<"drop-shadow", readonly [$mol_style_properties_color, `${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax`, `${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax`, `${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax`] | readonly [$mol_style_properties_color, `${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax`, `${number}%` | `${number}px` | `${number}mm` | `${number}cm` | `${number}Q` | `${number}in` | `${number}pc` | `${number}pt` | `${number}cap` | `${number}ch` | `${number}em` | `${number}rem` | `${number}ex` | `${number}ic` | `${number}lh` | `${number}rlh` | `${number}vh` | `${number}vw` | `${number}vi` | `${number}vb` | `${number}vmin` | `${number}vmax`]>;
+        static grayscale(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"grayscale", string | number>;
+        static hue_rotate(value?: 0 | $mol_style_unit_str<$mol_style_unit_angle>): $mol_style_func<"hue-rotate", string | 0>;
+        static invert(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"invert", string | number>;
+        static opacity(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"opacity", string | number>;
+        static sepia(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"sepia", string | number>;
+        static saturate(value?: number | $mol_style_unit_str<'%'>): $mol_style_func<"saturate", string | number>;
+    }
+}
+
+declare namespace $ {
+    /** Replaces properties of `Base` record by properties from `Over`. */
+    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
+}
+
+declare namespace $ {
+    export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
+    type Common = 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' | 'none' | $mol_style_func<'var'>;
+    type Portion = `${number}${'%'}` | number;
+    type Space = '' | ' ';
+    type Var = `var(--${string})`;
+    type Calc = `calc(${string})`;
+    type Angle = number | `${number}${'deg' | 'turn'}` | Var | Calc | 'none';
+    export type $mol_style_properties_color = 'aliceblue' | 'antiquewhite' | 'aqua' | 'aquamarine' | 'azure' | 'beige' | 'bisque' | 'black' | 'blanchedalmond' | 'blue' | 'blueviolet' | 'brown' | 'burlywood' | 'cadetblue' | 'chartreuse' | 'chocolate' | 'coral' | 'cornflowerblue' | 'cornsilk' | 'crimson' | 'cyan' | 'darkblue' | 'darkcyan' | 'darkgoldenrod' | 'darkgray' | 'darkgreen' | 'darkgrey' | 'darkkhaki' | 'darkmagenta' | 'darkolivegreen' | 'darkorange' | 'darkorchid' | 'darkred' | 'darksalmon' | 'darkseagreen' | 'darkslateblue' | 'darkslategrey' | 'darkturquoise' | 'darkviolet' | 'deeppink' | 'deepskyblue' | 'dimgray' | 'dimgrey' | 'dodgerblue' | 'firebrick' | 'floralwhite' | 'forestgreen' | 'fuchsia' | 'gainsboro' | 'ghostwhite' | 'gold' | 'goldenrod' | 'gray' | 'green' | 'greenyellow' | 'grey' | 'honeydew' | 'hotpink' | 'indianred' | 'indigo' | 'ivory' | 'khaki' | 'lavender' | 'lavenderblush' | 'lawngreen' | 'lemonchiffon' | 'lightblue' | 'lightcoral' | 'lightcyan' | 'lightgoldenrodyellow' | 'lightgray' | 'lightgreen' | 'lightgrey' | 'lightpink' | 'lightsalmon' | 'lightseagreen' | 'lightskyblue' | 'lightslategray' | 'lightslategrey' | 'lightsteelblue' | 'lightyellow' | 'lime' | 'limegreen' | 'linen' | 'magenta' | 'maroon' | 'mediumaquamarine' | 'mediumblue' | 'mediumorchid' | 'mediumpurple' | 'mediumseagreen' | 'mediumslateblue' | 'mediumspringgreen' | 'mediumturquoise' | 'mediumvioletred' | 'midnightblue' | 'mintcream' | 'mistyrose' | 'moccasin' | 'navajowhite' | 'navy' | 'oldlace' | 'olive' | 'olivedrab' | 'orange' | 'orangered' | 'orchid' | 'palegoldenrod' | 'palegreen' | 'paleturquoise' | 'palevioletred' | 'papayawhip' | 'peachpuff' | 'peru' | 'pink' | 'plum' | 'powderblue' | 'purple' | 'rebeccapurple' | 'red' | 'rosybrown' | 'royalblue' | 'saddlebrown' | 'salmon' | 'sandybrown' | 'seagreen' | 'seashell' | 'sienna' | 'silver' | 'skyblue' | 'slateblue' | 'slategray' | 'slategrey' | 'snow' | 'springgreen' | 'steelblue' | 'tan' | 'teal' | 'thistle' | 'tomato' | 'turquoise' | 'violet' | 'wheat' | 'white' | 'whitesmoke' | 'yellow' | 'yellowgreen' | 'transparent' | 'currentColor' | $mol_style_func<'hsla' | 'rgba' | 'var'> | `#${string}` | `hsl(${Space}${Angle} ${Portion} ${Portion}${'' | `${Space}/${Space}${Portion}`}${Space})`;
+    type Length = 0 | `${number}${$mol_style_unit_length}` | $mol_style_func<'calc' | 'var' | 'clamp'>;
+    type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
+    type Sides<Value> = {
+        top?: Value;
+        right?: Value;
+        bottom?: Value;
+        left?: Value;
+        blockStart?: Value;
+        blockEnd?: Value;
+        inlineStart?: Value;
+        inlineEnd?: Value;
+    };
+    type Directions<Value> = Value | readonly [Value, Value] | Sides<Value>;
+    type Edges<Value> = {
+        topLeft?: Value;
+        topRight?: Value;
+        bottomLeft?: Value;
+        bottomRight?: Value;
+    };
+    type Borders<Value> = Value | readonly [Value, Value] | (Sides<Value> & Edges<Value>);
+    type Single_animation_composition = 'replace' | 'add' | 'accumulate';
+    type Single_animation_direction = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+    type Single_animation_fill_mode = 'none' | 'forwards' | 'backwards' | 'both';
+    type Single_animation_iteration_count = 'infinite' | number;
+    type Single_animation_play_state = 'running' | 'paused';
+    type Easing_function = Linear_easing_function | Cubic_bezier_easing_function | Step_easing_function;
+    type Linear_easing_function = 'linear' | $mol_style_func<'linear'>;
+    type Cubic_bezier_easing_function = 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | $mol_style_func<'cubic-bezier'>;
+    type Step_easing_function = 'step-start' | 'step-end' | $mol_style_func<'steps'>;
+    type Compat_auto = 'searchfield' | 'textarea' | 'push-button' | 'slider-horizontal' | 'checkbox' | 'radio' | 'menulist' | 'listbox' | 'meter' | 'progress-bar' | 'button';
+    type Compat_special = 'textfield' | 'menulist-button';
+    type Mix_blend_mode = Blend_mode | 'plus-darker' | 'plus-lighter';
+    type Blend_mode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity';
+    type Box = 'border-box' | 'padding-box' | 'content-box';
+    type Baseline_position = 'baseline' | `${'first' | 'last'} baseline`;
+    type Content_distribution = 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
+    type Self_position = 'center' | 'start' | 'end' | 'self-start' | 'self-end' | 'flex-start' | 'flex-end';
+    type Content_position = 'center' | 'start' | 'end' | 'flex-start' | 'flex-end';
+    type Span_align = 'none' | 'start' | 'end' | 'center' | $mol_style_func<'var'>;
+    type Snap_axis = 'x' | 'y' | 'block' | 'inline' | 'both' | $mol_style_func<'var'>;
+    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    type Overflow_position = 'unsafe' | 'safe';
+    type ContainRule = 'size' | 'layout' | 'style' | 'paint' | $mol_style_func<'var'>;
+    type Repeat = 'repeat-x' | 'repeat-y' | 'repeat' | 'space' | 'round' | 'no-repeat' | $mol_style_func<'var'>;
+    type BG_size = Length | 'auto' | 'contain' | 'cover';
+    interface Overrides {
+        /**
+         * Sets the accent color for user-interface controls generated by some elements.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color
+         */
+        accentColor?: $mol_style_properties_color | Common;
+        align?: {
+            /**
+             * Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-content
+             */
+            content?: 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common;
+            /**
+             * Sets the align-self value on all direct children as a group.
+             * In Flexbox, it controls the alignment of items on the Cross Axis.
+             * In Grid Layout, it controls the alignment of items on the Block Axis within their grid area.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
+             */
+            items?: 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+            /**
+             * Overrides a grid or flex item's align-items value.
+             * In Grid, it aligns the item inside the grid area.
+             * In Flexbox, it aligns the item on the cross axis.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
+             */
+            self?: 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+        };
+        justify?: {
+            /**
+             * Distribution of space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
+             */
+            content?: 'normal' | Baseline_position | Content_distribution | Content_position | `${Overflow_position} ${Content_position}` | Common;
+            /**
+             * Sets the justify-self value on all direct children as a group.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-items
+             */
+            items?: 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+            /**
+             * Way a box is justified inside its alignment container along the appropriate axis.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/justify-self
+             */
+            self?: 'auto' | 'normal' | 'stretch' | Baseline_position | Self_position | `${Overflow_position} ${Self_position}` | Common;
+        };
+        /**
+         * resets all of an element's properties except unicode-bidi, direction, and CSS Custom Properties.
+         * It can set properties to their initial or inherited values, or to the values specified in another cascade layer or stylesheet origin.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/all
+         */
+        all?: Common;
+        animation?: {
+            /**
+             * Specifies the composite operation to use when multiple animations affect the same property simultaneously.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition
+             */
+            composition?: Single_animation_composition | Single_animation_composition[][] | Common;
+            /**
+             * Specifies the amount of time to wait from applying the animation to an element before beginning to perform the animation.
+             * The animation can start later, immediately from its beginning, or immediately and partway through the animation.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
+             */
+            delay?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
+            /**
+             * Sets whether an animation should play forward, backward, or alternate back and forth between playing the sequence forward and backward.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-direction
+             */
+            direction?: Single_animation_direction | Single_animation_direction[][] | Common;
+            /**
+             * Sets the length of time that an animation takes to complete one cycle.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-duration
+             */
+            duration?: $mol_style_unit_str<$mol_style_unit_time> | $mol_style_unit_str<$mol_style_unit_time>[][] | Common;
+            /**
+             * Sets how a CSS animation applies styles to its target before and after its execution.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode
+             */
+            fillMode?: Single_animation_fill_mode | Single_animation_fill_mode[][] | Common;
+            /**
+             * Sets the number of times an animation sequence should be played before stopping.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count
+             */
+            iterationCount?: Single_animation_iteration_count | Single_animation_iteration_count[][] | Common;
+            /**
+             * Specifies the names of one or more keyframes at-rules that describe the animation to apply to an element.
+             * Multiple keyframe at-rules are specified as a comma-separated list of names.
+             * If the specified name does not match any keyframe at-rule, no properties are animated.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-name
+             */
+            name?: 'none' | string & {} | ('none' | string & {})[][] | Common;
+            /**
+             * Sets whether an animation is running or paused.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-play-state
+             */
+            playState?: Single_animation_play_state | Single_animation_play_state[][] | Common;
+            /**
+             * Sets how an animation progresses through the duration of each cycle.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+             */
+            timingFunction?: Easing_function | Easing_function[][] | Common;
+        };
+        /**
+         * Used to control native appearance of UI controls, that are based on operating system's theme.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
+         */
+        appearance?: 'none' | 'auto' | Compat_auto | Compat_special | Common;
+        /**
+         * Sets a preferred aspect ratio for the box, which will be used in the calculation of auto sizes and some other layout functions.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio
+         */
+        aspectRatio?: 'auto' | number | `${number} / ${number}`;
+        /**
+         * lets you apply graphical effects such as blurring or color shifting to the area behind an element.
+         * Because it applies to everything behind the element, to see the effect you must make the element
+         * or its background at least partially transparent.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
+         */
+        backdropFilter: $mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'> | ($mol_style_func<$mol_style_func_filter> | $mol_style_func<'url'>)[][] | 'none' | Common;
+        /**
+         * Sets whether the back face of an element is visible when turned towards the user.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backface-visibility
+         */
+        backfaceVisibility: 'visible' | 'hidden' | Common;
+        /**
+         * How the browser distributes space between and around content items along the main-axis of a flex container, and the inline axis of a grid container.
+         * @see https://developer.mozilla.org/ru/docs/Web/CSS/justify-content
+         */
+        justifyContent?: 'start' | 'end' | 'flex-start' | 'flex-end' | 'left' | 'right' | 'space-between' | 'space-around' | 'space-evenly' | 'normal' | 'stretch' | 'center' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/gap */
+        gap?: Length | readonly [Length, Length] | Common;
+        /**
+         * All background style properties.
+         * @see https://developer.mozilla.org/ru/docs/Web/CSS/background
+         * */
+        background?: 'none' | {
+            /**
+             * Sets whether a background image's position is fixed within the viewport, or scrolls with its containing block.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment
+             */
+            attachment?: 'scroll' | 'fixed' | 'local' | ('scroll' | 'fixed' | 'local')[][] | Common;
+            /**
+             * Sets how an element's background images should blend with each other and with the element's background color.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode
+             */
+            blendMode?: Mix_blend_mode | Mix_blend_mode[][] | Common;
+            /**
+             * Sets whether an element's background extends underneath its border box, padding box, or content box.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip
+             */
+            clip?: Box | Box[][] | Common;
+            /**
+             * Background color.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/background-color
+             */
+            color?: $mol_style_properties_color | Common;
+            /**
+             * Background images.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/background-image
+             */
+            image?: readonly (readonly [$mol_style_func<$mol_style_func_image> | string & {}])[] | 'none' | Common;
+            /**
+             * How background images are repeated.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/background-repeat
+             */
+            repeat?: Repeat | [Repeat, Repeat] | Common;
+            /** @see https://developer.mozilla.org/ru/docs/Web/CSS/background-position */
+            position?: 'left' | 'right' | 'top' | 'bottom' | 'center' | Common;
+            /** @see https://developer.mozilla.org/ru/docs/Web/CSS/background-size */
+            size?: (BG_size | [BG_size] | [BG_size, BG_size])[];
+        };
+        /** @see https://developer.mozilla.org/ru/docs/Web/CSS/box-shadow */
+        box?: {
+            /**
+             * Shadow effects around an element's frame.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/box-shadow
+             */
+            shadow?: readonly ([
+                ...[inset: 'inset'] | [],
+                x: Length,
+                y: Length,
+                blur: Length,
+                spread: Length,
+                color: $mol_style_properties_color
+            ] | {
+                inset?: boolean;
+                x: Length;
+                y: Length;
+                blur: Length;
+                spread: Length;
+                color: $mol_style_properties_color;
+            })[] | 'none' | Common;
+        };
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/rx */
+        rx?: Length | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/ry */
+        ry?: Length | Common;
+        /** @see https://developer.mozilla.org/ru/docs/Web/CSS/font */
+        font?: {
+            /**
+             * Whether a font should be styled.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/font-style
+             */
+            style?: 'normal' | 'italic' | Common;
+            /**
+             * Weight (or boldness) of the font.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/font-weight
+             */
+            weight?: 'normal' | 'bold' | 'lighter' | 'bolder' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | Common;
+            /**
+             * Size of the font. Changing the font size also updates the sizes of the font size-relative length units.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/font-size
+             */
+            size?: 'xx-small' | 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'xx-large' | 'xxx-large' | 'smaller' | 'larger' | Length | Common;
+            /**
+             * Prioritized list of one or more font family names and/or generic family names.
+             * @see https://developer.mozilla.org/ru/docs/Web/CSS/font-family
+             */
+            family?: string & {} | 'serif' | 'sans-serif' | 'monospace' | 'cursive' | 'fantasy' | 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded' | 'emoji' | 'math' | 'fangsong' | Common;
+        };
+        /**
+         * Foreground color value of text and text decorations, and sets the `currentcolor` value.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color
+         */
+        color?: $mol_style_properties_color | Common;
+        /**
+         * Whether an element is treated as a block or inline element and the layout used for its children, such as flow layout, grid or flex.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/display
+         */
+        display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
+        /**
+         * What to do when an element's content is too big to fit in its block formatting context. It is a shorthand for `overflowX` and `overflowY`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
+         */
+        overflow?: Overflow | {
+            /**
+             * What shows when content overflows a block-level element's left and right edges.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-x
+             */
+            x?: Overflow | Common;
+            /**
+             * What shows when content overflows a block-level element's top and bottom edges.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y
+             */
+            y?: Overflow | Common;
+            /**
+             * A way to opt out of the browser's scroll anchoring behavior, which adjusts scroll position to minimize content shifts.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor
+             */
+            anchor?: 'auto' | 'none' | Common;
+        };
+        /**
+         * Indicate that an element and its contents are, as much as possible, independent of the rest of the document tree. This allows the browser to recalculate layout, style, paint, size, or any combination of them for a limited area of the DOM and not the entire page, leading to obvious performance benefits.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/contain
+         */
+        contain?: 'none' | 'strict' | 'content' | ContainRule | readonly ContainRule[] | Common;
+        /**
+         * How white space inside an element is handled.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+         */
+        whiteSpace?: 'normal' | 'nowrap' | 'break-spaces' | 'pre' | 'pre-wrap' | 'pre-line' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-overflow-scrolling */
+        webkitOverflowScrolling?: 'auto' | 'touch' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color */
+        scrollbar?: {
+            /**
+             * Color of thumb and track of scrollbars.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color
+             */
+            color?: readonly [$mol_style_properties_color, $mol_style_properties_color] | 'auto' | Common;
+            /**
+             * Maximum thickness of scrollbars.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width
+             */
+            width?: 'auto' | 'thin' | 'none' | Common;
+        };
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior */
+        scroll?: {
+            /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scroll-marker-group */
+            marker?: {
+                group?: 'before' | 'after' | Common;
+            };
+            /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align */
+            snap?: {
+                /**
+                 * How strictly snap points are enforced on the scroll container in case there is one.
+                 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type
+                 */
+                type: 'none' | Snap_axis | readonly [Snap_axis, 'mandatory' | 'proximity'] | Common;
+                /**
+                 * Whether the scroll container is allowed to "pass over" possible snap positions.
+                 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-stop
+                 */
+                stop: 'normal' | 'always' | Common;
+                /**
+                 * The box’s snap position as an alignment of its snap area (as the alignment subject) within its snap container’s snapport (as the alignment container). The two values specify the snapping alignment in the block axis and inline axis, respectively. If only one value is specified, the second value defaults to the same value.
+                 * @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align
+                 */
+                align: Span_align | readonly [Span_align, Span_align] | Common;
+            };
+            /**
+             * Offsets for the optimal viewing region of the scrollport: the region used as the target region for placing things in view of the user.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding
+             */
+            padding?: Directions<Length | 'auto'>;
+        };
+        /**
+         * Element's width. By default, it sets the width of the content area, but if `boxSizing` is set to `border-box`, it sets the width of the border area.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/width
+         */
+        width?: Size;
+        /**
+         * Minimum width of an element. It prevents the used value of the `width` property from becoming smaller than the value specified for `minWidth`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/min-width
+         */
+        minWidth?: Size;
+        /**
+         * Maximum width of an element. It prevents the used value of the `width` property from becoming larger than the value specified for `maxWidth`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/max-width
+         */
+        maxWidth?: Size;
+        /**
+         * Height of an element. By default, the property defines the height of the content area. If box-sizing is set to border-box, however, it instead determines the height of the border area.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/height
+         */
+        height?: Size;
+        /**
+         * Minimum height of an element. It prevents the used value of the `height` property from becoming smaller than the value specified for `minHeight`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/min-height
+         */
+        minHeight?: Size;
+        /**
+         * Maximum height of an element. It prevents the used value of the `height` property from becoming larger than the value specified for `maxHeight`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/max-height
+         */
+        maxHeight?: Size;
+        /**
+         * Margin area on all four sides of an element.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/margin
+         */
+        margin?: Directions<Length | 'auto'>;
+        /**
+         * Padding area on all four sides of an element.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/padding
+         */
+        padding?: Directions<Length | 'auto'>;
+        /**
+         * How an element is positioned in a document. The `top`, `right`, `bottom`, and `left` properties determine the final location of positioned elements.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/position
+         */
+        position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/top */
+        top?: Length | 'auto' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/right */
+        right?: Length | 'auto' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/bottom */
+        bottom?: Length | 'auto' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/left */
+        left?: Length | 'auto' | Common;
+        /** @see https://developer.mozilla.org/en-US/docs/Web/CSS/border */
+        border?: Borders<{
+            /**
+             * Rounds the corners of an element's outer border edge. You can set a single radius to make circular corners, or two radii to make elliptical corners.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
+             */
+            radius?: Length | [Length, Length];
+            /**
+             * Line style for all four sides of an element's border.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
+             */
+            style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
+            /**
+             * Color of element's border.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-color
+             */
+            color?: $mol_style_properties_color | Common;
+            /**
+             * Width of element's border.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/border-width
+             */
+            width?: Length | Common;
+        }>;
+        /**
+         * How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex
+         */
+        flex?: 'none' | 'auto' | {
+            /**
+             * Growing weight of the flex item. Negative values are considered invalid. Defaults to 1 when omitted.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow
+             */
+            grow?: number | Common;
+            /**
+             * Shrinking weight of the flex item. Negative values are considered invalid. Defaults to 1 when omitted.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink
+             */
+            shrink?: number | Common;
+            /**
+             * Preferred size of the flex item. A value of 0 must have a unit to avoid being interpreted as a flexibility. Defaults to 0 when omitted.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis
+             */
+            basis?: Size | Common;
+            /**
+             * How flex items are placed in the flex container defining the main axis and the direction (normal or reversed).
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis
+             */
+            direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | Common;
+            /**
+             * Whether flex items are forced onto one line or can wrap onto multiple lines. If wrapping is allowed, it sets the direction that lines are stacked.
+             * @see https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap
+             */
+            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
+        };
+        container?: {
+            name?: string;
+            type?: Container_type | readonly Container_type[];
+        };
+        /**
+         * Z-order of a positioned element and its descendants or flex items. Overlapping elements with a larger z-index cover those with a smaller one.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
+         */
+        zIndex: number | Common;
+        /**
+         * Degree to which content behind an element is hidden, and is the opposite of transparency.
+         * @see https://developer.mozilla.org/en-US/docs/Web/CSS/opacity
+         */
+        opacity: number | Common;
+    }
+    type Container_type = 'normal' | 'size' | 'inline-size' | 'scroll-state' | 'anchored';
+    export {};
+}
+
+declare namespace $ {
+    /** Create record of CSS variables. */
+    function $mol_style_prop<Keys extends string[]>(prefix: string, keys: Keys): Record<Keys[number], $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+    /**
+     * Theme css variables
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_textarea_demo
+     */
+    const $mol_theme: Record<"image" | "line" | "text" | "hover" | "field" | "focus" | "hue" | "back" | "card" | "current" | "special" | "control" | "shade" | "spirit" | "hue_spread", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    /**
+     * Gap in CSS
+     * @see https://page.hyoo.ru/#!=msdb74_bm7nsq
+     */
+    let $mol_gap: Record<"text" | "blur" | "page" | "block" | "space" | "round" | "emoji", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_promise_blocker<Result> extends $mol_promise<Result> {
+        static [Symbol.toStringTag]: string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_window extends $mol_object {
+        static size(): {
+            width: number;
+            height: number;
+        };
+    }
+}
+
+declare namespace $ {
+    /**
+     * Returns `Tuple` without first element.
+     *
+     * 	$mol_type_tail<[ 1 , 2 , 3 ]> // [ 2, 3 ]
+     */
+    type $mol_type_tail<Tuple extends readonly any[]> = ((...tail: Tuple) => any) extends ((head: any, ...tail: infer Tail) => any) ? Tail : never;
+}
+
+declare namespace $ {
+    /** Decorates solo object channel to [mol_wire_atom](../atom/atom.ts). */
+    export function $mol_wire_solo<Args extends any[]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): TypedPropertyDescriptor<(...args: First_optional<Args>) => any>;
+    type First_optional<Args extends any[]> = Args extends [] ? [] : [Args[0] | undefined, ...$mol_type_tail<Args>];
+    export {};
+}
+
+declare namespace $ {
+    /** Reactive memoizing multiplexed property decorator. */
+    function $mol_wire_plex<Args extends [any, ...any[]]>(host: object, field: string, descr?: TypedPropertyDescriptor<(...args: Args) => any>): {
+        value: (this: typeof host, ...args: Args) => any;
+        enumerable?: boolean;
+        configurable?: boolean;
+        writable?: boolean;
+        get?: (() => (...args: Args) => any) | undefined;
+        set?: ((value: (...args: Args) => any) => void) | undefined;
+    };
+}
+
+declare namespace $ {
+    /** Run code without state changes */
+    function $mol_wire_probe<Value>(task: () => Value, def?: Value): Value | undefined;
+}
+
+declare namespace $ {
+    /**
+     * Reactive memoizing solo property decorator from [mol_wire](../wire/README.md)
+     * @example
+     * '@' $mol_mem
+     * name(next?: string) {
+     * 	return next ?? 'default'
+     * }
+     * @see https://mol.hyoo.ru/#!section=docs/=qxmh6t_sinbmb
+     */
+    let $mol_mem: typeof $mol_wire_solo;
+    /**
+     * Reactive memoizing multiplexed property decorator [mol_wire](../wire/README.md)
+     * @example
+     * '@' $mol_mem_key
+     * name(id: number, next?: string) {
+     *  return next ?? 'default'
+     * }
+     * @see https://mol.hyoo.ru/#!section=docs/=qxmh6t_sinbmb
+     */
+    let $mol_mem_key: typeof $mol_wire_plex;
+}
+
+declare namespace $ {
+    function $mol_guard_defined<T>(value: T): value is NonNullable<T>;
+}
+
+declare namespace $ {
+    class $mol_view_selection extends $mol_object {
+        static focused(next?: Element[], notify?: 'notify'): Element[];
+    }
+}
+
+declare namespace $ {
+    class $mol_wrapper extends $mol_object2 {
+        static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
+        static run<Result>(task: () => Result): Result;
+        static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
+        static get class(): <Class extends new (...args: any[]) => any>(Class: Class) => Class;
+        static get method(): (obj: object, name: PropertyKey, descr?: TypedPropertyDescriptor<any>) => TypedPropertyDescriptor<any>;
+        static get field(): <Host extends object, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr?: TypedPropertyDescriptor<Result>) => TypedPropertyDescriptor<Result>;
+    }
+}
+
+declare namespace $ {
+    class $mol_memo extends $mol_wrapper {
+        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value) => Value | undefined;
+    }
+}
+
+declare namespace $ {
+    function $mol_dom_qname(name: string): string;
+}
+
+declare namespace $ {
+    /** Returns string key for any value. */
+    function $mol_key<Value>(value: Value): string;
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_after_timeout {
+        task: () => void;
+        constructor(task: () => void);
+    }
+}
+
+declare namespace $ {
+    /**
+     * Returns last element of `Tuple`.
+     *
+     * 	$mol_type_tail<[ 1 , 2 , 3 ]> // 3
+     */
+    type $mol_type_foot<Tuple extends readonly any[]> = Tuple['length'] extends 0 ? never : Tuple[$mol_type_tail<Tuple>['length']];
+}
+
+declare namespace $ {
+    /** Long-living fiber. */
+    class $mol_wire_atom<Host, Args extends readonly unknown[], Result> extends $mol_wire_fiber<Host, Args, Result> {
+        static solo<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result): $mol_wire_atom<Host, Args, Result>;
+        static plex<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, key: Args[0]): $mol_wire_atom<Host, Args, Result>;
+        static watching: Set<$mol_wire_atom<any, any, any>>;
+        static watcher: $mol_after_frame | null;
+        static watch(): void;
+        watch(): void;
+        /**
+         * Update atom value through another temp fiber.
+         */
+        resync(args: Args): Error | Result | Promise<Error | Result>;
+        once(): Awaited<Result>;
+        channel(): ((next?: $mol_type_foot<Args>) => Awaited<Result>) & {
+            atom: $mol_wire_atom<Host, Args, Result>;
+        };
+        destructor(): void;
+        put(next: Result | Error | Promise<Result | Error>): Error | Result | Promise<Error | Result>;
+    }
+}
+
+declare namespace $ {
+    /** Watch and logs reactive states. Logger automatically added to test bundle which is adding to `test.html`. */
+    class $mol_wire_log extends $mol_object2 {
+        static watch(task?: () => any): (() => any) | undefined;
+        static track(fiber: $mol_wire_fiber<any, any, any>): any;
+        static active(): void;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Real-time refresh current atom.
+     * Don't use if possible. May reduce performance.
+     */
+    function $mol_wire_watch(): void;
+}
+
+declare namespace $ {
+    /**
+     * Returns closure that returns constant value.
+     * @example
+     * const rnd = $mol_const( Math.random() )
+     */
+    function $mol_const<Value>(value: Value): {
+        (): Value;
+        '()': Value;
+    };
+}
+
+declare namespace $ {
+    function $mol_dom_render_attributes(el: Element, attrs: {
+        [key: string]: string | number | boolean | null;
+    }): void;
+}
+
+declare namespace $ {
+    function $mol_dom_render_events(el: Element, events: {
+        [key: string]: (event: Event) => any;
+    }, passive?: boolean): void;
+}
+
+declare namespace $ {
+    function $mol_error_message(this: $, error: unknown): string;
+}
+
+declare namespace $ {
+    function $mol_dom_render_styles(el: Element, styles: {
+        [key: string]: string | number;
+    }): void;
+}
+
+declare namespace $ {
+    function $mol_dom_render_fields(el: Element, fields: {
+        [key: string]: any;
+    }): void;
+}
+
+declare namespace $ {
+    /**
+     * Extracts keys from `Input` which values extends `Upper` and extendable by `Lower`.
+     *
+     * 	type MathConstants = $mol_type_keys_extract< Math , number > // "E" | "PI" ...
+     */
+    type $mol_type_keys_extract<Input, Upper, Lower = never> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? [
+            Lower
+        ] extends [Input[Field]] ? Field : never : never;
+    }[keyof Input];
+}
+
+declare namespace $ {
+    /**
+     * Picks keys from `Input` which values extends `Upper`.
+     *
+     * 	type MathConstants = $mol_type_pick< Math , number > // { E , PI , ... }
+     */
+    type $mol_type_pick<Input, Upper> = Pick<Input, $mol_type_keys_extract<Input, Upper>>;
+}
+
+/** @jsx $mol_jsx */
+declare namespace $ {
+    type $mol_view_content = $mol_view | Node | string | number | boolean | null;
+    function $mol_view_visible_width(): number;
+    function $mol_view_visible_height(): number;
+    function $mol_view_state_key(suffix: string): string;
+    /**
+     * The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions.
+     * @see https://mol.hyoo.ru/#!section=docs/=vv2nig_s5zr0f
+     */
+    class $mol_view extends $mol_object {
+        static Root<This extends typeof $mol_view>(this: This, id: number): InstanceType<This>;
+        static roots(): $mol_view[];
+        static auto(): void;
+        title(): string;
+        hint(): string;
+        focused(next?: boolean): boolean;
+        state_key(suffix?: string): string;
+        dom_name(): string;
+        dom_name_space(): string;
+        sub(): readonly $mol_view_content[];
+        sub_visible(): readonly $mol_view_content[];
+        minimal_width(): number;
+        maximal_width(): number;
+        minimal_height(): number;
+        static watchers: Set<$mol_view>;
+        view_rect(): {
+            width: number;
+            height: number;
+            left: number;
+            right: number;
+            top: number;
+            bottom: number;
+        } | null;
+        dom_id(): string;
+        dom_node_external(next?: Element): Element;
+        dom_node(next?: Element): Element;
+        dom_final(): Element | undefined;
+        dom_tree(next?: Element): Element;
+        dom_node_actual(): Element;
+        auto(): any;
+        render(): void;
+        static view_classes(): (typeof $mol_view)[];
+        static _view_names?: Map<string, string[]>;
+        static view_names(suffix: string): string[];
+        view_names_owned(): string[];
+        view_names(): Set<string>;
+        theme(next?: string | null): string | null | undefined;
+        attr_static(): {
+            [key: string]: string | number | boolean | null;
+        };
+        attr(): {};
+        style(): {
+            [key: string]: string | number;
+        };
+        field(): {
+            [key: string]: any;
+        };
+        event(): {
+            [key: string]: (event: Event) => void;
+        };
+        event_async(): {
+            [x: string]: (event: Event) => Promise<void>;
+        };
+        plugins(): readonly $mol_view[];
+        [$mol_dev_format_head](): any[];
+        /** Deep search view by predicate. */
+        view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
+        /** Renders path of views to DOM. */
+        force_render(path: Set<$mol_view>): void;
+        /** Renders view to DOM and scroll to it. */
+        ensure_visible(view: $mol_view, align?: ScrollLogicalPosition): void;
+        bring(): void;
+        destructor(): void;
+    }
+    type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
+}
+
+declare namespace $ {
+    /** Plugin is component without its own DOM element, but instead uses the owner DOM element */
+    class $mol_plugin extends $mol_view {
+        dom_node_external(next?: Element): Element;
+        render(): void;
+    }
+}
+
+declare namespace $ {
 
 	export class $raggu_web_front_base extends $mol_view {
 	}
@@ -51,6 +1889,56 @@ declare namespace $ {
 
 //# sourceMappingURL=base.view.tree.d.ts.map
 declare namespace $ {
+    /**
+     * Decorates method to fiber to ensure it is executed only once inside other fiber from [mol_wire](../wire/README.md)
+     * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
+     */
+    let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
+    /** State of arguments like `foo=bar xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix: string;
+        static prolog: string;
+        static separator: string;
+        static href(next?: string): string;
+        static href_normal(): string;
+        static dict(next?: {
+            [key: string]: string | null;
+        }): Readonly<{
+            [key: string]: string;
+        }>;
+        static value(key: string, next?: string | null): string | null;
+        static link(next: Record<string, string | null>): string;
+        static make_link(next: Record<string, string | null>): string;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
+        static commit(): void;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string | null;
+        sub(postfix: string): $mol_state_arg;
+        link(next: Record<string, string | null>): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $raggu_web_front_reveal extends $.$raggu_web_front_reveal {
+        delay_css(): string;
+        observer(): {
+            destructor: () => void;
+        } | null;
+        auto(): never;
+    }
+}
+declare namespace $.$$ {
+    class $raggu_web_front_link extends $.$raggu_web_front_link {
+        href(): string;
+    }
+}
+
+declare namespace $ {
 
 	export class $mol_speck extends $mol_view {
 		value( ): any
@@ -61,6 +1949,20 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=speck.view.tree.d.ts.map
+declare namespace $ {
+    /**
+     * Z-index values for layers
+     * https://page.hyoo.ru/#!=xthcpx_wqmiba
+     */
+    let $mol_layer: Record<"hover" | "focus" | "float" | "speck" | "popup", $mol_style_func<"var", unknown>>;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_speck__value_mol_button_1 = $mol_type_enforce<
@@ -102,6 +2004,137 @@ declare namespace $ {
 
 //# sourceMappingURL=button.view.tree.d.ts.map
 declare namespace $ {
+    /**
+    * Key names code for hotkey
+    * @see [mol_hotkey](../../hotkey/hotkey.view.ts)
+    */
+    enum $mol_keyboard_code {
+        backspace = 8,
+        tab = 9,
+        enter = 13,
+        shift = 16,
+        ctrl = 17,
+        alt = 18,
+        pause = 19,
+        capsLock = 20,
+        escape = 27,
+        space = 32,
+        pageUp = 33,
+        pageDown = 34,
+        end = 35,
+        home = 36,
+        left = 37,
+        up = 38,
+        right = 39,
+        down = 40,
+        insert = 45,
+        delete = 46,
+        key0 = 48,
+        key1 = 49,
+        key2 = 50,
+        key3 = 51,
+        key4 = 52,
+        key5 = 53,
+        key6 = 54,
+        key7 = 55,
+        key8 = 56,
+        key9 = 57,
+        A = 65,
+        B = 66,
+        C = 67,
+        D = 68,
+        E = 69,
+        F = 70,
+        G = 71,
+        H = 72,
+        I = 73,
+        J = 74,
+        K = 75,
+        L = 76,
+        M = 77,
+        N = 78,
+        O = 79,
+        P = 80,
+        Q = 81,
+        R = 82,
+        S = 83,
+        T = 84,
+        U = 85,
+        V = 86,
+        W = 87,
+        X = 88,
+        Y = 89,
+        Z = 90,
+        metaLeft = 91,
+        metaRight = 92,
+        select = 93,
+        numpad0 = 96,
+        numpad1 = 97,
+        numpad2 = 98,
+        numpad3 = 99,
+        numpad4 = 100,
+        numpad5 = 101,
+        numpad6 = 102,
+        numpad7 = 103,
+        numpad8 = 104,
+        numpad9 = 105,
+        multiply = 106,
+        add = 107,
+        subtract = 109,
+        decimal = 110,
+        divide = 111,
+        F1 = 112,
+        F2 = 113,
+        F3 = 114,
+        F4 = 115,
+        F5 = 116,
+        F6 = 117,
+        F7 = 118,
+        F8 = 119,
+        F9 = 120,
+        F10 = 121,
+        F11 = 122,
+        F12 = 123,
+        numLock = 144,
+        scrollLock = 145,
+        semicolon = 186,
+        equals = 187,
+        comma = 188,
+        dash = 189,
+        period = 190,
+        forwardSlash = 191,
+        graveAccent = 192,
+        bracketOpen = 219,
+        slashBack = 220,
+        slashBackLeft = 226,
+        bracketClose = 221,
+        quoteSingle = 222
+    }
+}
+
+declare namespace $.$$ {
+    /**
+     * Simple button.
+     * @see https://mol.hyoo.ru/#!section=demos/demo=mol_button_demo
+     */
+    class $mol_button extends $.$mol_button {
+        disabled(): boolean;
+        event_activate(next: Event): void;
+        event_key_press(event: KeyboardEvent): any;
+        tab_index(): number;
+        error(): string;
+        hint_safe(): string;
+        sub_visible(): ($mol_view_content | $mol_speck)[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
 
 	export class $mol_image extends $mol_view {
 		uri( ): string
@@ -122,6 +2155,17 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=image.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_image extends $.$mol_image {
+        natural_width(next?: null): number;
+        natural_height(next?: null): number;
+        load(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	export class $raggu_web_front_mark extends $mol_image {
@@ -136,6 +2180,18 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=mark.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_mark extends $.$raggu_web_front_mark {
+        data_uri(): string;
+    }
+    class $raggu_web_front_mark_icon extends $.$raggu_web_front_mark_icon {
+        dom_tree(): HTMLElement;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	export class $bog_favicon extends $mol_plugin {
@@ -145,6 +2201,567 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=favicon.view.tree.d.ts.map
+declare namespace $.$$ {
+    /** Плагин, который ставит favicon из переданного $mol_icon_* и подобных */
+    class $bog_favicon extends $.$bog_favicon {
+        Icon(next?: $mol_view): $mol_view;
+        favicon_data(): string;
+        apply_favicon(): void;
+        auto(): any;
+        sub(): readonly [];
+    }
+}
+
+declare namespace $ {
+    class $mol_storage extends $mol_object2 {
+        /** Is storage a long term. */
+        static persisted(next?: boolean): boolean;
+        /** Total storage quota in bytes. */
+        static total(): number;
+        /** Total storage usage in bytes. */
+        static used(): number;
+        /** Minimum available free space in bytes. */
+        static free(): number;
+        /** Fulfillness of storage. */
+        static portion(): number;
+        /**
+         * Fulfillness logarithmic level.
+         * `0` - empty
+         * `1` - half free
+         * `2` - quart free
+         * `Infinity` - fulfilled
+         */
+        static level(): number;
+    }
+}
+
+declare namespace $ {
+    /** State of time moment */
+    class $mol_state_time extends $mol_object {
+        static task(precision: number, reset?: null): $mol_after_timeout | $mol_after_frame;
+        static now(precision: number): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_storage_node extends $mol_storage {
+        static persisted(): boolean;
+        static stats(): import("node:fs").StatsFs;
+        static total(): number;
+        static used(): number;
+        static free(): number;
+        static portion(): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static changes(next?: StorageEvent): StorageEvent | undefined;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value | null;
+    }
+}
+
+declare namespace $ {
+    class $mol_lock extends $mol_object {
+        protected promise: null | Promise<void>;
+        wait(): Promise<() => void>;
+        grab(): () => void;
+    }
+}
+
+declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
+}
+
+declare namespace $ {
+    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    type $mol_charset_encoding = 'utf8' | 'utf-16le' | 'utf-16be' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+}
+
+declare namespace $ {
+    function $mol_charset_decode(buffer: AllowSharedBufferSource, encoding?: $mol_charset_encoding): string;
+}
+
+declare namespace $ {
+    /** Temporary buffer. Recursive usage isn't supported. */
+    function $mol_charset_buffer(size: number): Uint8Array<ArrayBuffer>;
+}
+
+declare namespace $ {
+    function $mol_charset_encode(str: string): Uint8Array<ArrayBuffer>;
+    function $mol_charset_encode_to(str: string, buf: Uint8Array<ArrayBuffer>, from?: number): number;
+    function $mol_charset_encode_size(str: string): number;
+}
+
+declare namespace $ {
+    type $mol_file_transaction_mode = 'create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append';
+    type $mol_file_transaction_buffer = ArrayBufferView;
+    class $mol_file_transaction extends $mol_object {
+        path(): string;
+        modes(): readonly $mol_file_transaction_mode[];
+        write(options: {
+            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
+            offset?: number | null;
+            length?: number | null;
+            position?: number | null;
+        }): number;
+        read(): Uint8Array<ArrayBuffer>;
+        truncate(size: number): void;
+        flush(): void;
+        close(): void;
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    /**
+     * Disable reaping of current subscriber
+     */
+    function $mol_wire_solid(): void;
+}
+
+declare namespace $ {
+    class $mol_file_transaction_node extends $mol_file_transaction {
+        protected descr(): number;
+        write({ buffer, offset, length, position }: {
+            buffer: ArrayBufferView | string | readonly ArrayBufferView[];
+            offset?: number | null;
+            length?: number | null;
+            position?: number | null;
+        }): number;
+        truncate(size: number): void;
+        read(): Uint8Array<ArrayBuffer>;
+        flush(): void;
+        close(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_base extends $mol_object {
+        static absolute<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
+        static relative<This extends typeof $mol_file_base>(this: This, path: string): InstanceType<This>;
+        static base: string;
+        path(): string;
+        parent(): this;
+        exists_cut(): boolean;
+        protected root(): boolean;
+        protected stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
+        protected static changed: Set<$mol_file_base>;
+        protected static frame: null | $mol_after_timeout;
+        protected static changed_add(type: 'change' | 'rename', path: string): void;
+        /**
+         * Должно быть больше, чем время между событиями от вотчера при записи внешним процессом.
+         * Иначе запуск ресетов паралельно с изменением может привести к неконсистентности.
+         */
+        static watch_debounce(): number;
+        static flush(): void;
+        protected static watching: boolean;
+        protected static lock: $mol_lock;
+        protected static watch_off(path: string): void;
+        static unwatched<Result>(side_effect: () => Result, affected_dir: string): Result;
+        reset(): void;
+        modified(): Date | null;
+        version(): string;
+        protected info(path: string): null | $mol_file_stat;
+        protected ensure(): void;
+        protected drop(): void;
+        protected copy(to: string): void;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(buffer: Uint8Array<ArrayBuffer>): void;
+        protected kids(): readonly this[];
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        writable(opts: {
+            start?: number;
+        }): WritableStream<Uint8Array<ArrayBuffer>>;
+        buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
+        stat_make(size: number): {
+            readonly type: "file";
+            readonly size: number;
+            readonly atime: Date;
+            readonly mtime: Date;
+            readonly ctime: Date;
+        };
+        clone(to: string): this | null;
+        watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): "" | $mol_file_type;
+        name(): string;
+        ext(): string;
+        text(next?: string, virt?: 'virt'): string;
+        text_int(next?: string, virt?: 'virt'): string;
+        sub(reset?: null): this[];
+        resolve(path: string): this;
+        relate(base?: $mol_file_base): string;
+        find(include?: RegExp, exclude?: RegExp): this[];
+        size(): number;
+        toJSON(): string;
+        open(...modes: readonly $mol_file_transaction_mode[]): $mol_file_transaction;
+    }
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file extends $mol_file_base {
+    }
+}
+
+declare namespace $ {
+    function $mol_file_node_buffer_normalize(buf: Buffer<ArrayBuffer>): Uint8Array<ArrayBuffer>;
+    class $mol_file_node extends $mol_file {
+        static relative<This extends typeof $mol_file>(this: This, path: string): InstanceType<This>;
+        watcher(reset?: null): {
+            destructor(): void;
+        };
+        protected info(path: string): $mol_file_stat | null;
+        protected ensure(): null | undefined;
+        protected copy(to: string): void;
+        protected drop(): void;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(buffer: Uint8Array<ArrayBuffer>): undefined;
+        protected kids(): this[];
+        resolve(path: string): this;
+        relate(base?: $mol_file): string;
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        writable(opts?: {
+            start?: number;
+        }): WritableStream<Uint8Array<ArrayBuffer>>;
+    }
+}
+
+declare namespace $ {
+    class $mol_state_local_node<Value> extends $mol_state_local<Value> {
+        static dir(): $mol_file;
+        static value<Value>(key: string, next?: Value | null): Value | null;
+    }
+}
+
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    /**
+     * Localisation in $mol framework
+     * @see https://mol.hyoo.ru/#!section=docs/=s5aqnb_odub8l
+     */
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static langs_rtl(): string[];
+        static direction(): "ltr" | "rtl";
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+        static warn(key: string): null;
+    }
+}
+
+declare namespace $ {
+    type $raggu_web_front_graph_count = {
+        name: string;
+        count: number;
+    };
+    type $raggu_web_front_graph_model = {
+        nodes: $raggu_web_front_graph_node[];
+        edges: $raggu_web_front_graph_edge[];
+        index_of: Map<string, number>;
+        edge_index_of: Map<string, number>;
+        adj_offset: Uint32Array;
+        adj_node: Uint32Array;
+        adj_edge: Uint32Array;
+        edge_source: Uint32Array;
+        edge_target: Uint32Array;
+        edge_strength: Float32Array;
+        x: Float32Array;
+        y: Float32Array;
+        degree: Float32Array;
+        community: Int32Array;
+        communities: $raggu_web_front_graph_community[];
+        max_degree: number;
+        types: $raggu_web_front_graph_count[];
+        meta: $raggu_web_front_graph_meta;
+    };
+    function $raggu_web_front_graph_build(response: $raggu_web_front_graph_response): $raggu_web_front_graph_model;
+    function $raggu_web_front_graph_hash01(value: number): number;
+}
+
+declare namespace $ {
+    type $raggu_web_front_graph_node = {
+        id: string;
+        label: string;
+        entity_type: string;
+        description: string;
+        degree: number;
+        community_id?: string | null;
+        x: number;
+        y: number;
+        source_chunk_ids?: string[];
+    };
+    type $raggu_web_front_graph_edge = {
+        id: string;
+        source: string;
+        target: string;
+        relation_type: string;
+        description: string;
+        strength: number;
+        source_chunk_ids?: string[];
+    };
+    type $raggu_web_front_graph_community = {
+        id: string;
+        title: string;
+        summary: string;
+        level: number;
+        size: number;
+        node_ids?: string[];
+    };
+    type $raggu_web_front_graph_meta = {
+        dataset_id: string;
+        total_nodes: number;
+        total_edges: number;
+        returned_nodes: number;
+        returned_edges: number;
+        limit: number;
+    };
+    type $raggu_web_front_graph_response = {
+        nodes: $raggu_web_front_graph_node[];
+        edges: $raggu_web_front_graph_edge[];
+        communities?: $raggu_web_front_graph_community[];
+        meta: $raggu_web_front_graph_meta;
+    };
+    type $raggu_web_front_graph_relation = $raggu_web_front_graph_edge & {
+        direction: 'incoming' | 'outgoing';
+        other_node_id: string;
+        other_node_label: string;
+    };
+    type $raggu_web_front_graph_chunk = {
+        id: string;
+        content: string;
+        doc_id: string;
+        chunk_order_idx: number;
+    };
+    type $raggu_web_front_graph_detail = {
+        node: $raggu_web_front_graph_node;
+        incoming_relations?: $raggu_web_front_graph_relation[];
+        outgoing_relations?: $raggu_web_front_graph_relation[];
+        provenance_chunks?: $raggu_web_front_graph_chunk[];
+    };
+    type $raggu_web_front_graph_dataset = {
+        id: string;
+        title: string;
+        domain: string;
+        description: string;
+        language: string;
+        tags?: string[];
+        stats: {
+            nodes: number;
+            edges: number;
+            communities: number;
+            chunks: number;
+            documents: number;
+        };
+        badges?: {
+            label: string;
+            value: string;
+        }[];
+        preview: {
+            node_count: number;
+            edge_count: number;
+            primary_entity_types?: string[];
+        };
+        suggested_questions?: string[];
+    };
+    type $raggu_web_front_graph_trace = {
+        engine: string;
+        top_k: number;
+        rerank: boolean;
+        query_plan?: {
+            used: boolean;
+            sub_questions?: string[];
+        } | null;
+        entities?: {
+            id: string;
+            label: string;
+            entity_type: string;
+            score: number;
+        }[];
+        relations?: {
+            id: string;
+            source: string;
+            target: string;
+            relation_type: string;
+            strength: number;
+        }[];
+        chunks?: {
+            id: string;
+            content: string;
+            doc_id: string;
+            score: number;
+        }[];
+        communities?: {
+            id: string;
+            title: string;
+            summary: string;
+            score: number;
+        }[];
+        timings: {
+            retrieval_ms: number;
+            generation_ms: number;
+            total_ms: number;
+        };
+        energy: {
+            watt_hours: number;
+            estimated?: boolean;
+        };
+        highlight: {
+            node_ids?: string[];
+            edge_ids?: string[];
+            community_ids?: string[];
+        };
+    };
+    type $raggu_web_front_graph_answer = {
+        message: {
+            id: string;
+            content: string;
+            created_at: string;
+            trace?: $raggu_web_front_graph_trace | null;
+        };
+    };
+}
+
+declare namespace $ {
+    type $raggu_web_front_graph_layout_input = {
+        x: Float32Array;
+        y: Float32Array;
+        degree: Float32Array;
+        community: Int32Array;
+        edge_source: Uint32Array;
+        edge_target: Uint32Array;
+        edge_strength: Float32Array;
+        iterations?: number;
+        radius?: number;
+    };
+    /** Self-contained: the worker gets this function's source text, so nothing outside it may be referenced. */
+    function $raggu_web_front_graph_layout_solve(input: $raggu_web_front_graph_layout_input, on_progress?: (ratio: number) => void): Float32Array<ArrayBuffer>;
+    /** Solves in a worker built from the solver's own source; cached for the session. */
+    function $raggu_web_front_graph_layout(model: $raggu_web_front_graph_model, on_progress: (ratio: number) => void, radius?: number): {
+        promise: Promise<Float32Array<ArrayBufferLike>>;
+        cancel: () => void;
+    };
+}
+
+declare namespace $ {
+    type $raggu_web_front_lib_sse_event = {
+        event: string;
+        data: string;
+    };
+    function $raggu_web_front_lib_sse(on_event: (event: $raggu_web_front_lib_sse_event) => void): {
+        push(piece: string): void;
+        end(): void;
+    };
+}
+
+declare namespace $ {
+    type $raggu_web_front_lib_cite_kind = 'entity' | 'relation' | 'chunk';
+    type $raggu_web_front_lib_cite_segment = {
+        kind: 'text';
+        value: string;
+    } | {
+        kind: 'strong';
+        value: string;
+    } | {
+        kind: 'ref';
+        id: string;
+        type: $raggu_web_front_lib_cite_kind;
+        text: string;
+        inline: boolean;
+    };
+    type $raggu_web_front_lib_cite_resolver = (id: string, type: $raggu_web_front_lib_cite_kind) => string | undefined;
+    function $raggu_web_front_lib_cite_parse(content: string, resolve?: $raggu_web_front_lib_cite_resolver): $raggu_web_front_lib_cite_segment[];
+}
+
+declare namespace $ {
+    const $raggu_web_front_lib_rich_tags: readonly ["table", "thead", "tbody", "tfoot", "tr", "th", "td", "caption", "colgroup", "col", "b", "strong", "i", "em", "u", "sub", "sup", "br", "p", "span", "ul", "ol", "li", "code"];
+    type $raggu_web_front_lib_rich_part = {
+        kind: 'text';
+        value: string;
+    } | {
+        kind: 'math';
+        value: string;
+        display: boolean;
+    };
+    function $raggu_web_front_lib_rich_html(text: string): boolean;
+    function $raggu_web_front_lib_rich_math(text: string): boolean;
+    function $raggu_web_front_lib_rich_markup(text: string): boolean;
+    function $raggu_web_front_lib_rich_split(text: string): $raggu_web_front_lib_rich_part[];
+}
+
+declare namespace $ {
+    function $raggu_web_front_lib_lang(): 'ru' | 'en';
+    function $raggu_web_front_lib_compact(n: number, locale?: "ru" | "en"): string;
+    function $raggu_web_front_lib_badge(n: number): string;
+    function $raggu_web_front_lib_full(n: number, locale?: "ru" | "en"): string;
+    function $raggu_web_front_lib_ms(value: number): string;
+    function $raggu_web_front_lib_watt_hours(value: number): string;
+    function $raggu_web_front_lib_humanize(raw: string): string;
+    function $raggu_web_front_lib_clamp(value: number, min: number, max: number): number;
+    function $raggu_web_front_lib_entity_name(raw: string): string;
+    function $raggu_web_front_lib_relation_name(raw: string): string;
+}
+
+declare namespace $ {
+    type $raggu_web_front_lib_settings_value = {
+        useGraph: boolean;
+        queryPlan: boolean;
+        topK: number;
+        rerank: boolean;
+        graphLimit: number;
+    };
+    const $raggu_web_front_lib_settings_default: $raggu_web_front_lib_settings_value;
+    const $raggu_web_front_lib_graph_limit_max = 5000;
+    const $raggu_web_front_lib_graph_limit_steps: readonly [600, 1500, 3000, 5000];
+    const $raggu_web_front_lib_top_k_min = 1;
+    const $raggu_web_front_lib_top_k_max = 50;
+    function $raggu_web_front_lib_settings_revive(raw: unknown): $raggu_web_front_lib_settings_value;
+    const $raggu_web_front_lib_settings_key = "ragu.settings.v2";
+    const $raggu_web_front_lib_settings_key_legacy = "ragu.settings";
+    /**
+     * Everyone who touched any setting while rerank was on by default still carries `rerank: true`
+     * and waits 20-30 s per answer. Their other choices move to the new key, rerank goes back to the default once.
+     */
+    function $raggu_web_front_lib_settings_migrate(storage: Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>): void;
+    class $raggu_web_front_lib_settings extends $mol_object {
+        static migrated(): boolean;
+        static value(next?: $raggu_web_front_lib_settings_value): $raggu_web_front_lib_settings_value;
+        static patch(patch: Partial<$raggu_web_front_lib_settings_value>): void;
+        static reset(): void;
+    }
+}
+
 declare namespace $ {
 
 	export class $raggu_web_front_lib_names extends $mol_object {
@@ -277,6 +2894,328 @@ declare namespace $ {
 
 //# sourceMappingURL=names.view.tree.d.ts.map
 declare namespace $ {
+    type $raggu_web_front_mock_answer = $raggu_web_front_graph_answer & {
+        question: string;
+    };
+    export class $raggu_web_front_mock extends $mol_object {
+        static enabled(): boolean;
+        static root(): string;
+        static files: Map<string, Promise<any>>;
+        static file<Result>(name: string): Promise<Result>;
+        static json<Result>(path: string): Promise<Result>;
+        static response(path: string, init?: RequestInit): Promise<Response>;
+        static lang(raw?: string | null): "ru" | "en";
+        static reply(data: unknown): Response;
+        static fresh(answer: $raggu_web_front_mock_answer): {
+            id: string;
+            created_at: string;
+            content: string;
+            trace?: $raggu_web_front_graph_trace | null;
+        };
+        static graph(corpus: string, query: URLSearchParams): Promise<{
+            nodes: $raggu_web_front_graph_node[];
+            edges: $raggu_web_front_graph_edge[];
+            communities: $raggu_web_front_graph_community[] | undefined;
+            meta: {
+                returned_nodes: number;
+                returned_edges: number;
+                limit: number;
+                dataset_id: string;
+                total_nodes: number;
+                total_edges: number;
+            };
+        }>;
+        static node(corpus: string, id: string): Promise<$raggu_web_front_graph_detail>;
+        static stream(answer: $raggu_web_front_mock_answer, signal?: AbortSignal): Response;
+    }
+    export {};
+}
+
+declare namespace $ {
+    enum $mol_rest_code {
+        'Continue' = 100,
+        'Switching protocols' = 101,
+        'Processing' = 102,
+        'OK' = 200,
+        'Created' = 201,
+        'Accepted' = 202,
+        'Non-Authoritative Information' = 203,
+        'No Content' = 204,
+        'Reset Content' = 205,
+        'Partial Content' = 206,
+        'Multi Status' = 207,
+        'Already Reported' = 208,
+        'IM Used' = 226,
+        'Multiple Choices' = 300,
+        'Moved Permanently' = 301,
+        'Found' = 302,
+        'See Other' = 303,
+        'Not Modified' = 304,
+        'Use Proxy' = 305,
+        'Temporary Redirect' = 307,
+        'Bad Request' = 400,
+        'Unauthorized' = 401,
+        'Payment Required' = 402,
+        'Forbidden' = 403,
+        'Not Found' = 404,
+        'Method Not Allowed' = 405,
+        'Not Acceptable' = 406,
+        'Proxy Authentication Required' = 407,
+        'Request Timeout' = 408,
+        'Conflict' = 409,
+        'Gone' = 410,
+        'Length Required' = 411,
+        'Precondition Failed' = 412,
+        'Request Entity Too Large' = 413,
+        'Request URI Too Long' = 414,
+        'Unsupported Media Type' = 415,
+        'Requested Range Not Satisfiable' = 416,
+        'Expectation Failed' = 417,
+        'Teapot' = 418,
+        'Unprocessable Entity' = 422,
+        'Locked' = 423,
+        'Failed Dependency' = 424,
+        'Upgrade Required' = 426,
+        'Precondition Required' = 428,
+        'Too Many Requests' = 429,
+        'Request Header Fields Too Large' = 431,
+        'Unavailable For Legal Reasons' = 451,
+        'Internal Server Error' = 500,
+        'Not Implemented' = 501,
+        'Bad Gateway' = 502,
+        'Service Unavailable' = 503,
+        'Gateway Timeout' = 504,
+        'HTTP Version Not Supported' = 505,
+        'Insufficient Storage' = 507,
+        'Loop Detected' = 508,
+        'Not Extended' = 510,
+        'Network Authentication Required' = 511,
+        'Network Read Timeout Error' = 598,
+        'Network Connect Timeout Error' = 599
+    }
+}
+
+declare namespace $ {
+    function $mol_error_fence<Data>(task: () => Data, fallback: (parent: Error) => Error | Data | PromiseLike<Data>, loading?: (parent: PromiseLike<Data>) => Error | Data | PromiseLike<Data>): Data;
+}
+
+declare namespace $ {
+    function $mol_error_enriched<V>(cause: {}, cb: () => V): V;
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object {
+        readonly native: Response;
+        readonly request: $mol_fetch_request;
+        status(): "success" | "unknown" | "failed" | "inform" | "redirect" | "wrong";
+        code(): number;
+        ok(): boolean;
+        message(): string;
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        text(): string;
+        json(): unknown;
+        blob(): Blob;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch_request extends $mol_object {
+        readonly native: Request;
+        response_async(): Promise<Response> & {
+            destructor: () => void;
+        };
+        response(): $mol_fetch_response;
+        success(): $mol_fetch_response;
+    }
+    class $mol_fetch extends $mol_object {
+        static request(input: RequestInfo, init?: RequestInit): $mol_fetch_request;
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static blob(input: RequestInfo, init?: RequestInit): Blob;
+        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    class $raggu_web_front_data extends $mol_object {
+        static endpoint(): string;
+        static api(): string;
+        static request(path: string, init?: RequestInit): Promise<Response>;
+        static fetch<Result>(path: string, init?: RequestInit): Result;
+        static version(next?: number): number;
+        static retry(): void;
+        static datasets(lang: 'ru' | 'en'): $raggu_web_front_graph_dataset[];
+        static datasets_now(): $raggu_web_front_graph_dataset[];
+        static graph(key: string): $raggu_web_front_graph_response;
+        static communities(id: string): $raggu_web_front_graph_community[];
+        static graph_part(key: string): $raggu_web_front_graph_response;
+        static node(key: string): $raggu_web_front_graph_detail;
+        static suggestions(key: string): string[];
+    }
+    /** Value or null while it is on the wire; real errors still surface. */
+    function $raggu_web_front_data_ready<Value>(task: () => Value): Value | null;
+    /** Value, null while pending, or the error itself, so the view can say what failed. */
+    function $raggu_web_front_data_state<Value>(task: () => Value): {
+        value: Value | null;
+        error: Error | null;
+        pending: boolean;
+    };
+}
+
+declare namespace $ {
+    type $raggu_web_front_viewer_entry = {
+        id: string;
+        role: 'user' | 'assistant';
+        content: string;
+        trace?: $raggu_web_front_graph_trace | null;
+    };
+    type $raggu_web_front_viewer_shown = {
+        corpus: string;
+        model: $raggu_web_front_graph_model;
+        positions: Float32Array;
+    };
+    class $raggu_web_front_viewer extends $mol_object {
+        corpus(next?: string): string;
+        mode(): "graph" | "ambient";
+        settings(): $raggu_web_front_lib_settings_value;
+        graph_visible(corpus: string, next?: boolean): boolean;
+        chat_visible(corpus: string, next?: boolean): boolean;
+        graph_open(next?: boolean): boolean;
+        chat_open(next?: boolean): boolean;
+        toggle_graph(): void;
+        toggle_chat(): void;
+        selected_in(corpus: string, next?: string | null): string | null;
+        selected(next?: string | null): string | null;
+        hover(next?: string | null): string | null;
+        search_in(corpus: string, next?: string): string;
+        search(next?: string): string;
+        types_in(corpus: string, next?: readonly string[]): readonly string[];
+        types(next?: readonly string[]): readonly string[];
+        communities_in(corpus: string, next?: readonly string[]): readonly string[];
+        communities(next?: readonly string[]): readonly string[];
+        highlight_in(corpus: string, next?: readonly string[]): readonly string[];
+        highlight(next?: readonly string[]): readonly string[];
+        toggle_type(name: string): void;
+        toggle_community(id: string): void;
+        filtering(): boolean;
+        clear_filters(): void;
+        stage(next?: $raggu_web_front_scene_rect | null): $raggu_web_front_scene_rect | null;
+        reset_token(next?: number): number;
+        recentre(): void;
+        whole(corpus: string, next?: $raggu_web_front_graph_response | null): $raggu_web_front_graph_response | null;
+        response(): $raggu_web_front_graph_response | null;
+        model(): $raggu_web_front_graph_model | null;
+        progress(next?: number): number;
+        layout_task: null | {
+            cancel: () => void;
+        };
+        positions(): Float32Array<ArrayBufferLike> | null;
+        solve(model: $raggu_web_front_graph_model): Promise<Float32Array<ArrayBufferLike>>;
+        solved: null | $raggu_web_front_viewer_shown;
+        shown(): $raggu_web_front_viewer_shown | null;
+        shown_now(): $raggu_web_front_viewer_shown | null;
+        graph_state(): {
+            value: $raggu_web_front_graph_response | null;
+            error: Error | null;
+            pending: boolean;
+        };
+        solving(): boolean;
+        cold(): boolean;
+        warm(): boolean;
+        entries(corpus: string, next?: readonly $raggu_web_front_viewer_entry[]): readonly $raggu_web_front_viewer_entry[];
+        pending(corpus: string, next?: boolean): boolean;
+        partial(corpus: string, next?: string | null): string | null;
+        failure(corpus: string, next?: string | null): string | null;
+        started(corpus: string, next?: number | null): number | null;
+        aborts: Map<string, AbortController>;
+        next_id(prefix: string): string;
+        keep_partial(corpus: string): readonly $raggu_web_front_viewer_entry[];
+        stop(corpus?: string): void;
+        clear_thread(corpus?: string): void;
+        ask(text: string): void;
+        send(text: string): void;
+        /** Pulls the rest of the corpus community by community: the gateway has no paging and caps a request at 5000. */
+        load_whole(on_progress: (ratio: number) => void): Promise<{
+            complete: boolean;
+            clipped: string[];
+        }>;
+    }
+    const $raggu_web_front_viewer_limits: string[];
+    /** A question limit is not an outage: its gateway code survives, anything else is just `failed`. */
+    function $raggu_web_front_viewer_failure(error: unknown): string;
+    function $raggu_web_front_viewer_ask(corpus: string, body: object, signal: AbortSignal, on_delta: (text: string) => void): Promise<$raggu_web_front_graph_answer>;
+}
+
+interface $npm {
+}
+
+declare var $npm: $npm;
+
+declare namespace $ {
+    type $raggu_web_front_scene_state = {
+        mode: 'ambient' | 'graph';
+        theme: 'light' | 'dark';
+        graph_visible: boolean;
+        shown: $raggu_web_front_viewer_shown | null;
+        selected: string | null;
+        hover: string | null;
+        search: string;
+        types: readonly string[];
+        communities: readonly string[];
+        highlight: readonly string[];
+        stage: $raggu_web_front_scene_rect | null;
+        reset_token: number;
+    };
+    type $raggu_web_front_scene_host = {
+        state(): $raggu_web_front_scene_state;
+        hover(next: string | null): void;
+        select(id: string | null): void;
+    };
+    function $raggu_web_front_scene_engine(layer: HTMLElement, host: $raggu_web_front_scene_host): {
+        destroy(): void;
+    };
+}
+
+declare namespace $ {
+    const $raggu_web_front_scene_point_vert = "\nattribute float aSize;\nattribute float aAlpha;\nattribute vec3 aColor;\nuniform float uScale;\nuniform float uOpacity;\nuniform float uNear;\nuniform float uFar;\nuniform vec3 uHaze;\nuniform float uHazeAmount;\nvarying vec3 vColor;\nvarying float vAlpha;\n\nvoid main() {\n    vec4 mv = modelViewMatrix * vec4(position, 1.0);\n    float depth = -mv.z;\n    float fade = smoothstep(uFar, uNear, depth);\n    vColor = mix(aColor, uHaze, uHazeAmount * (1.0 - fade));\n    vAlpha = aAlpha * uOpacity * mix(0.3, 1.0, fade);\n    gl_PointSize = aSize * (uScale / max(depth, 0.001));\n    gl_Position = projectionMatrix * mv;\n}\n";
+    const $raggu_web_front_scene_point_frag = "\nuniform float uSoft;\nvarying vec3 vColor;\nvarying float vAlpha;\n\nvoid main() {\n    vec2 uv = gl_PointCoord - 0.5;\n    float d = length(uv) * 2.0;\n    if (d > 1.0) discard;\n    float core = smoothstep(1.0, 0.18, d);\n    float glow = pow(1.0 - d, 2.4);\n    float a = mix(core, glow, uSoft) * vAlpha;\n    if (a < 0.004) discard;\n    gl_FragColor = vec4(vColor, a);\n    #include <tonemapping_fragment>\n    #include <colorspace_fragment>\n}\n";
+    const $raggu_web_front_scene_line_vert = "\nattribute float aAlpha;\nattribute vec3 aColor;\nuniform float uOpacity;\nuniform float uNear;\nuniform float uFar;\nuniform vec3 uHaze;\nuniform float uHazeAmount;\nvarying vec3 vColor;\nvarying float vAlpha;\n\nvoid main() {\n    vec4 mv = modelViewMatrix * vec4(position, 1.0);\n    float fade = smoothstep(uFar, uNear, -mv.z);\n    vColor = mix(aColor, uHaze, uHazeAmount * (1.0 - fade));\n    vAlpha = aAlpha * uOpacity * mix(0.2, 1.0, fade);\n    gl_Position = projectionMatrix * mv;\n}\n";
+    const $raggu_web_front_scene_line_frag = "\nvarying vec3 vColor;\nvarying float vAlpha;\n\nvoid main() {\n    if (vAlpha < 0.004) discard;\n    gl_FragColor = vec4(vColor, vAlpha);\n    #include <tonemapping_fragment>\n    #include <colorspace_fragment>\n}\n";
+    function $raggu_web_front_scene_point_scale(height: number, ratio: number, fov: number): number;
+    type $raggu_web_front_scene_rect = {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    function $raggu_web_front_scene_frame(stage: $raggu_web_front_scene_rect | null, viewport: {
+        width: number;
+        height: number;
+    }): {
+        full_width: number;
+        full_height: number;
+        offset_x: number;
+        offset_y: number;
+        width: number;
+        height: number;
+    } | null;
+    function $raggu_web_front_scene_degree_ramp(degree: number, max: number): number;
+}
+
+declare namespace $ {
 
 	export class $raggu_web_front_scene extends $mol_view {
 		interactive( ): boolean
@@ -294,6 +3233,28 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=scene.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_scene_layer extends $mol_view {
+        sub_visible(): readonly $mol_view_content[];
+    }
+    class $raggu_web_front_scene extends $.$raggu_web_front_scene {
+        state(): $raggu_web_front_scene_state;
+        interactive(): boolean;
+        mounted(next?: boolean): boolean;
+        engine(): {
+            destroy(): void;
+        } & {
+            destructor: () => void;
+        };
+        last_state: null | $raggu_web_front_scene_state;
+        state_empty(): $raggu_web_front_scene_state;
+        auto(): never;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	export class $raggu_web_front_glass extends $mol_view {
@@ -308,6 +3269,9 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=glass.view.tree.d.ts.map
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_button__hint_raggu_web_front_pop_1 = $mol_type_enforce<
@@ -394,6 +3358,22 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=pop.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_pop extends $.$raggu_web_front_pop {
+        toggle(): void;
+        close(): void;
+        bubble_keydown(event: KeyboardEvent): void;
+        place(): void;
+        watch(): {
+            destructor: () => void;
+        } | null;
+        auto(): never;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	export class $mol_svg extends $mol_view {
@@ -407,6 +3387,15 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=svg.view.tree.d.ts.map
+declare namespace $.$$ {
+    /** Base SVG component to display SVG images or icons. */
+    class $mol_svg extends $.$mol_svg {
+        computed_style(): Record<string, any>;
+        font_size(): number;
+        font_family(): any;
+    }
+}
+
 declare namespace $ {
 
 	export class $mol_svg_root extends $mol_svg {
@@ -422,6 +3411,9 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=root.view.tree.d.ts.map
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	export class $mol_svg_path extends $mol_svg {
@@ -544,6 +3536,9 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=icon.view.tree.d.ts.map
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $raggu_web_front_label__dom_name_raggu_web_front_chrome_switcher_1 = $mol_type_enforce<
@@ -690,6 +3685,24 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=switcher.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_chrome_switcher extends $.$raggu_web_front_chrome_switcher {
+        datasets(): $raggu_web_front_graph_dataset[] | null;
+        current_title(): string;
+        rows(): $raggu_web_front_skeleton[] | $.$raggu_web_front_link[];
+        row_item(id: string): $raggu_web_front_graph_dataset;
+        row_id(id: string): string;
+        row_title(id: string): string;
+        row_domain(id: string): string;
+        row_count(id: string): string;
+        row_current(id: string): boolean;
+        row_click(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_button__hint_raggu_web_front_chrome_tools_1 = $mol_type_enforce<
@@ -965,6 +3978,40 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=tools.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_chrome_tools extends $.$raggu_web_front_chrome_tools {
+        recentre(): void;
+        meta(): $raggu_web_front_graph_meta | null;
+        shown(): number;
+        total(): number;
+        stale(): boolean;
+        stale_class(): "" | "is-stale";
+        shown_badge(): string;
+        total_badge(): string;
+        shown_full(): string;
+        total_full(): string;
+        bar_width(): string;
+        limit(): number;
+        next_step(): 600 | 1500 | 3000 | 5000 | null;
+        beyond_cap(): boolean;
+        whole_pending(next?: boolean): boolean;
+        whole_progress(next?: number): number;
+        whole_failed(next?: boolean): boolean;
+        whole_clipped(next?: number): number;
+        action(): ($.$mol_button | $raggu_web_front_text)[];
+        more_enabled(): boolean;
+        more_text(): string;
+        more(): void;
+        rest_enabled(): boolean;
+        rest_text(): string;
+        clipped_text(): string;
+        rest(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__dom_name_raggu_web_front_chrome_toggle_1 = $mol_type_enforce<
@@ -994,6 +4041,9 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=toggle.view.tree.d.ts.map
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__dom_name_raggu_web_front_chrome_1 = $mol_type_enforce<
@@ -1291,6 +4341,34 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=chrome.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_chrome extends $.$raggu_web_front_chrome {
+        corpus(): string;
+        corpus_page(): boolean;
+        scrolled(next?: boolean): boolean;
+        scroll_watch(): {
+            destructor: () => void;
+        };
+        right(): ($mol_view | $.$raggu_web_front_chrome_tools)[];
+        centre_kind(): "corpus" | "home";
+        home_active(): string;
+        home_inert(): string;
+        corpus_active(): string;
+        corpus_inert(): string;
+        graph_active(): boolean;
+        chat_active(): boolean;
+        toggle_graph(): void;
+        toggle_chat(): void;
+        scroll_to(id: string): void;
+        to_pipeline(): void;
+        to_corpora(): void;
+        height_publish(): {
+            destructor: () => void;
+        };
+        auto(): never;
+    }
+}
+
 declare namespace $ {
 
 	type $raggu_web_front_label__text_raggu_web_front_chrome_menu_1 = $mol_type_enforce<
@@ -1501,6 +4579,32 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=menu.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_chrome_theme extends $.$raggu_web_front_chrome_theme {
+        Current_icon(): $raggu_web_front_icon_display | $raggu_web_front_icon_moon | $raggu_web_front_icon_sun;
+        light_checked(): boolean;
+        dark_checked(): boolean;
+        system_checked(): boolean;
+        pick(next: string): void;
+        pick_light(): void;
+        pick_dark(): void;
+        pick_system(): void;
+    }
+    class $raggu_web_front_chrome_lang extends $.$raggu_web_front_chrome_lang {
+        en_checked(): boolean;
+        ru_checked(): boolean;
+        pick(next: 'en' | 'ru'): void;
+        pick_en(): void;
+        pick_ru(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__event_raggu_web_front_settings_1 = $mol_type_enforce<
@@ -2044,6 +5148,40 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=settings.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_settings extends $.$raggu_web_front_settings {
+        settings(): $raggu_web_front_lib_settings_value;
+        use_graph(next?: boolean): boolean;
+        query_plan(next?: boolean): boolean;
+        rerank(next?: boolean): boolean;
+        top_k_draft(next?: string): string;
+        top_k_input(event: Event): void;
+        top_k_commit(): void;
+        top_k_key(event: KeyboardEvent): void;
+        top_k_step(delta: number): void;
+        top_k_less(): void;
+        top_k_more(): void;
+        top_k_less_enabled(): boolean;
+        top_k_more_enabled(): boolean;
+        limit_value(): string;
+        steps(): $.$mol_button[];
+        step_text(step: number): string;
+        step_active(step: number): boolean;
+        step_pane_class(step: number): "accent-pane" | "step-edge";
+        step_pick(step: number): void;
+        reset(): void;
+        close(): void;
+        keydown(event: KeyboardEvent): void;
+    }
+    class $raggu_web_front_settings_toggle extends $.$raggu_web_front_settings_toggle {
+        state_text(): string;
+        flip(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $raggu_web_front_label__text_raggu_web_front_home_1 = $mol_type_enforce<
@@ -2781,6 +5919,64 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=home.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_home extends $.$raggu_web_front_home {
+        datasets_state(): {
+            value: $raggu_web_front_graph_dataset[] | null;
+            error: Error | null;
+            pending: boolean;
+        };
+        datasets(): $raggu_web_front_graph_dataset[] | null;
+        pending(): boolean;
+        totals(): {
+            nodes: number;
+            edges: number;
+            communities: number;
+            chunks: number;
+        } | null;
+        total(key: 'nodes' | 'edges' | 'communities' | 'chunks'): string;
+        total_nodes(): string;
+        total_edges(): string;
+        total_communities(): string;
+        total_chunks(): string;
+        corpora_count(): string;
+        badge_list(): {
+            label: string;
+            value: string;
+        }[];
+        badges(): $mol_view[];
+        badge_label(index: number): string;
+        badge_value(index: number): string;
+        to_pipeline(): void;
+        pipeline(): {
+            ordinal: string;
+            name: string;
+            detail: string;
+            output: string;
+        }[];
+        steps(): $.$raggu_web_front_reveal[];
+        step_delay(index: number): number;
+        step_rail(index: number): ($mol_view | $raggu_web_front_icon_arrow)[];
+        step_ordinal(index: number): string;
+        step_name(index: number): string;
+        step_detail(index: number): string;
+        step_output(index: number): string;
+        sorted(): $raggu_web_front_graph_dataset[] | null;
+        corpora(): $mol_view[] | $.$raggu_web_front_home_card[];
+        card_dataset(index: number): never;
+        card_featured(index: number): index is 0;
+        card_delay(index: number): number;
+        card_skeleton_featured(index: number): index is 0;
+        retry(): void;
+    }
+    class $raggu_web_front_home_metric extends $.$raggu_web_front_home_metric {
+        value_content(): string[] | $raggu_web_front_skeleton[];
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__sub_raggu_web_front_corpus_controls_1 = $mol_type_enforce<
@@ -3130,6 +6326,47 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=controls.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_corpus_controls extends $.$raggu_web_front_corpus_controls {
+        model(): $raggu_web_front_graph_model | null;
+        search(next?: string): string;
+        search_input(event: Event): void;
+        search_clear(): void;
+        filtering(): boolean;
+        bar(): ($mol_view | $.$raggu_web_front_corpus_controls_filter)[];
+        search_box(): ($mol_view | $raggu_web_front_icon_search)[];
+        types_count(): number;
+        communities_count(): number;
+        type_items(): $raggu_web_front_corpus_controls_facet[];
+        type_active(name: string): boolean;
+        type_name(name: string): string;
+        type_count(name: string): number;
+        type_toggle(name: string): void;
+        types_clear(): void;
+        communities_sorted(): $raggu_web_front_graph_community[];
+        community_items(): $raggu_web_front_corpus_controls_facet[];
+        community_active(id: string): boolean;
+        community_name(id: string): string;
+        community_count(id: string): number;
+        community_toggle(id: string): void;
+        communities_clear(): void;
+        matches(): number;
+        matches_text(): string;
+        no_matches_text(): string;
+        summary(): $mol_view[];
+        clear_all(): void;
+    }
+    class $raggu_web_front_corpus_controls_filter extends $.$raggu_web_front_corpus_controls_filter {
+        active(): boolean;
+        pane_class(): "accent-pane" | "filter-edge";
+        count_text(): string;
+        bubble_content(): readonly any[];
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__dom_name_raggu_web_front_corpus_loader_1 = $mol_type_enforce<
@@ -3241,6 +6478,9 @@ declare namespace $ {
 
 //# sourceMappingURL=loader.view.tree.d.ts.map
 declare namespace $ {
+}
+
+declare namespace $ {
 
 	export class $mol_svg_circle extends $mol_svg {
 		radius( ): string
@@ -3258,6 +6498,13 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=circle.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_svg_circle extends $.$mol_svg_circle {
+        pos_x(): any;
+        pos_y(): any;
+    }
+}
+
 declare namespace $ {
 
 	export class $raggu_web_front_rich extends $mol_view {
@@ -3277,6 +6524,33 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=rich.view.tree.d.ts.map
+declare namespace $ {
+    /** Dynamic sources import. */
+    class $mol_import extends $mol_object2 {
+        static module(uri: string): any;
+        static module_async(uri: string): Promise<any>;
+        static script(uri: string): any;
+        static script_async(uri: string): Promise<any>;
+        static style(uri: string): any;
+        static style_async(uri: string): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $raggu_web_front_rich extends $.$raggu_web_front_rich {
+        plain(): boolean;
+        has_html(): boolean;
+        katex(): {
+            renderToString(tex: string, options: object): string;
+        } | null;
+        html(): string;
+    }
+    function $raggu_web_front_rich_clean(from: Node): Node[];
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__dom_name_raggu_web_front_disclosure_1 = $mol_type_enforce<
@@ -3368,6 +6642,15 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=disclosure.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_disclosure extends $.$raggu_web_front_disclosure {
+        toggle(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__sub_raggu_web_front_corpus_detail_1 = $mol_type_enforce<
@@ -3702,6 +6985,43 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=detail.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_corpus_detail extends $.$raggu_web_front_corpus_detail {
+        node_id(): string | null;
+        open(): boolean;
+        content(): $mol_view[];
+        detail_state(): {
+            value: $raggu_web_front_graph_detail | null;
+            error: Error | null;
+            pending: boolean;
+        };
+        local(): $raggu_web_front_graph_node | null;
+        node(): $raggu_web_front_graph_node | null;
+        title_content(): string[] | $raggu_web_front_skeleton[];
+        chips(): $raggu_web_front_home_chip[];
+        type_name(): string;
+        description(): string;
+        relations(): $raggu_web_front_graph_relation[];
+        chunks(): $raggu_web_front_graph_chunk[];
+        scroll_content(): ($mol_view | $.$raggu_web_front_disclosure)[];
+        relations_title(): string;
+        relation_rows(): $.$mol_button[];
+        relation_out(index: number): boolean;
+        relation_type(index: number): string;
+        relation_other(index: number): string;
+        relation_pick(index: number): void;
+        chunks_count(): string;
+        chunk_rows(): $mol_view[];
+        chunk_id(index: number): string;
+        chunk_text(index: number): string;
+        close(): void;
+        ask(): void;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $raggu_web_front_label__text_raggu_web_front_corpus_chat_1 = $mol_type_enforce<
@@ -4531,6 +7851,80 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=chat.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_corpus_chat extends $.$raggu_web_front_corpus_chat {
+        corpus(): string;
+        entries(): readonly $raggu_web_front_viewer_entry[];
+        pending(): boolean;
+        partial(): string | null;
+        failure(): string | null;
+        engine(): "mix" | "naive";
+        head_tools(): ($.$mol_button | $raggu_web_front_label)[];
+        sweep(): void;
+        hide(): void;
+        scroll_content(): $mol_view[];
+        thread(): $mol_view[];
+        entry(index: number): $raggu_web_front_viewer_entry;
+        entry_text(index: number): string;
+        segments(index: number): $raggu_web_front_lib_cite_segment[];
+        resolve(id: string, type: $raggu_web_front_lib_cite_kind): string | undefined;
+        render_segments(index: number): (string | $mol_view)[];
+        answer(index: number): (string | $mol_view)[];
+        streaming_answer(): (string | $mol_view)[];
+        segment(key: string): $raggu_web_front_lib_cite_segment;
+        strong_text(key: string): string;
+        ref_id(key: string): string;
+        ref_text(key: string): string;
+        ref_pick(key: string): void;
+        trace(index: number): $raggu_web_front_graph_trace | null;
+        agent_sources(index: number): $.$raggu_web_front_disclosure[];
+        sources_total(index: number): number;
+        sources_count(index: number): string;
+        sources_body(index: number): $mol_view[];
+        source_group_label(key: string): string;
+        source_group_items(key: string): $mol_view[];
+        pair(key: string): {
+            trace: $raggu_web_front_graph_trace;
+            i: number;
+        };
+        source_entity_text(key: string): string;
+        source_entity_pick(key: string): void;
+        source_relation_text(key: string): string;
+        source_chunk_text(key: string): string;
+        meta_list(index: number): string[][];
+        meta_body(index: number): $mol_view[];
+        meta_rows(index: number): $mol_view[];
+        meta_row_label(key: string): string;
+        meta_row_value(key: string): string;
+        meta_energy(index: number): string;
+        meta_plan(index: number): $mol_view[];
+        plan_index(key: string): string;
+        plan_text(key: string): string;
+        elapsed(): string;
+        failure_text(): string;
+        failure_content(): $raggu_web_front_text[];
+        suggestions(): string[];
+        starters(): $mol_view[];
+        starter_text(index: number): string;
+        starter_send(index: number): void;
+        draft(next?: string): string;
+        draft_input(event: Event): void;
+        draft_key(event: KeyboardEvent): void;
+        submit(event: Event): void;
+        send_click(event?: Event): void;
+        send_enabled(): boolean;
+        send(text: string): void;
+        stop(): void;
+        action(): $.$mol_button[];
+        follow(): null;
+        follow_stream(): null;
+        auto(): never;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_view__sub_raggu_web_front_corpus_1 = $mol_type_enforce<
@@ -4669,6 +8063,27 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=corpus.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_corpus extends $.$raggu_web_front_corpus {
+        chat_open(): boolean;
+        graph_open(): boolean;
+        hint_only(): boolean;
+        cold(): boolean;
+        row(): ($mol_view | $.$raggu_web_front_corpus_detail | $.$raggu_web_front_corpus_chat)[];
+        graph_column(): ($mol_view | $.$raggu_web_front_corpus_controls | $.$raggu_web_front_corpus_detail)[];
+        stage_content(): $mol_view[] | $raggu_web_front_corpus_loader[];
+        percent(): string;
+        retry(): void;
+        stage_watch(): {
+            destructor: () => void;
+        } | null;
+        auto(): never;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $mol_svg_path__geometry_raggu_web_front_home_constellation_1 = $mol_type_enforce<
@@ -4707,6 +8122,27 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=constellation.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_home_constellation extends $.$raggu_web_front_home_constellation {
+        shape(): {
+            points: {
+                x: number;
+                y: number;
+                r: number;
+                hub: boolean;
+            }[];
+            links: [number, number][];
+        };
+        links(): string;
+        circles(hub: boolean): string;
+        points(): string;
+        hubs(): string;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $raggu_web_front_home_constellation__seed_raggu_web_front_home_card_1 = $mol_type_enforce<
@@ -4928,6 +8364,28 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=card.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $raggu_web_front_home_card extends $.$raggu_web_front_home_card {
+        item(): $raggu_web_front_graph_dataset;
+        id(): string;
+        title(): string;
+        domain(): string;
+        description(): string;
+        link_label(): string;
+        nodes(): number;
+        edges(): number;
+        nodes_text(): string;
+        edges_text(): string;
+        communities_text(): string;
+        chunks_text(): string;
+        types(): $raggu_web_front_home_chip[];
+        type_name(type: string): string;
+    }
+}
+
+declare namespace $ {
+}
+
 declare namespace $ {
 
 	type $bog_favicon__Icon_raggu_web_front_app_1 = $mol_type_enforce<
@@ -5058,5 +8516,39 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=app.view.tree.d.ts.map
+declare namespace $ {
+    class $mol_media extends $mol_object2 {
+        static match(query: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    /** Просмотр экрана. `screen` и `dataset` — то, что реально определяет страницу. */
+    function $raggu_web_front_analytics_pageview(screen: string, dataset: string): void;
+    /** Именованное действие пользователя: выбор корпуса, отправка вопроса и т.п. */
+    function $raggu_web_front_analytics_event(event: string, data?: Record<string, string | number | boolean>): void;
+}
+
+declare namespace $.$$ {
+    class $raggu_web_front_app extends $.$raggu_web_front_app {
+        corpus_page(): boolean;
+        main(): $.$raggu_web_front_corpus[] | $.$raggu_web_front_home[];
+        quiet(): boolean;
+        theme_choice(next?: string): "dark" | "light" | "system";
+        theme_resolved(): "dark" | "light";
+        open_settings(): void;
+        document_sync(): null;
+        scrollbar_publish(): {
+            destructor: () => void;
+        };
+        pageview(): string;
+        scroll_reset(): null;
+        auto(): never;
+    }
+}
+
+declare namespace $ {
+}
+
 export = $;
 //# sourceMappingURL=node.d.ts.map
