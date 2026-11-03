@@ -1,52 +1,171 @@
-$raggu_web_front_settings $bog_builderui_div
+$raggu_web_front_settings $mol_view
 	showed? false
-	close? null
-	available_engines /\string
-	engine? \mix
-	query_plan? \off
-	engine_mix_text @ \mix - graph and chunks
-	engine_local_text @ \local - entities and relations
-	engine_naive_text @ \naive - chunks only
-	engine_global_text @ \global - community summaries
-	engine_missing_prefix_text @ \This corpus does not serve:
 	attr *
 		^
 		raggu_web_front_settings_showed <= showed?
+	event *
+		^
+		keydown? <=> keydown? null
 	sub /
-		<= Backdrop $bog_builderui_div
-			event * click? <=> close? null
-		<= Panel $bog_builderui_div sub /
-			<= Header $bog_builderui_div sub /
-				<= Header_text $bog_builderui_div sub /
-					<= Header_title $bog_builderui_div sub / <= header_title_text @ \Settings
-					<= Header_sub $bog_builderui_div sub / <= header_sub_text @ \how the agent searches
-				<= Spacer $bog_builderui_div
-				<= Close_btn $bog_builderui_div
-					event * click? <=> close? null
-					sub / \✕
-			<= Body $mol_scroll sub /
-				<= Group_retrieval $raggu_web_front_settings_group
-					step \Поиск
-					title \Retrieval
-					opts @ \graph in answering · decomposition of complex questions
-					reindex false
-					controls /
-						<= Engine_row $bog_builderui_div sub /
-							<= Engine_label $bog_builderui_div sub / <= engine_label_text @ \Search mode
-							<= Engine_help $bog_builderui_div
-								attr * title <= engine_hint_text @ \Which stores the search reads. Only the modes this corpus serves are offered.
-								sub / \?
-							<= Engine $bog_builderui_select
-								value? <=> engine_value? \mix
-								dictionary <= engine_dictionary *
-						<= Engine_missing $bog_builderui_div sub / <= engine_missing_text \
-						<= Query_plan_row $bog_builderui_div sub /
-							<= Query_plan_label $bog_builderui_div sub / <= query_plan_label_text @ \QueryPlanEngine in search
-							<= Query_plan_help $bog_builderui_div
-								attr * title <= query_plan_hint_text @ \Enable/disable decomposition of complex questions.
-								sub / \?
-							<= Query_plan $bog_builderui_select
-								value? <=> query_plan? \off
-								dictionary *
-									on @ \On
-									off @ \Off
+		<= Backdrop $mol_view
+			event *
+				click? <=> close? null
+		<= Popup $mol_view
+			attr *
+				^
+				role \dialog
+				aria-modal \true
+			sub /
+				<= Glass $raggu_web_front_glass
+					solid true
+				<= Body $mol_view
+					sub /
+						<= Head $mol_view
+							sub /
+								<= Head_text $mol_view
+									sub /
+										<= Title $mol_view
+											dom_name \h2
+											sub / <= title_label @ \Retrieval settings
+										<= Subtitle $raggu_web_front_label
+											text <= subtitle_label @ \how the agent looks for an answer
+								<= Close_icon $mol_button
+									hint <= close_label @ \Close
+									attr *
+										^
+										aria-label <= close_label
+									click? <=> close?
+									sub /
+										<= Close_glyph $raggu_web_front_icon_close
+						<= Group $mol_view
+							sub /
+								<= Group_label $raggu_web_front_label
+									text <= group_label @ \Retrieval
+								<= Group_hint $raggu_web_front_text
+									text <= group_hint @ \graph in the answer · decomposition of complex questions
+						<= Rows $mol_view
+							sub /
+								<= Use_graph $raggu_web_front_settings_toggle
+									label <= use_graph_label @ \Graph in search
+									hint <= use_graph_hint @ \Off: chunk-vector search only (NaiveSearchEngine). On: chunks plus local graph neighbourhoods (MixSearchEngine).
+									checked? <=> use_graph? false
+									on_label <= on_label @ \On
+									off_label <= off_label @ \Off
+								<= Query_plan $raggu_web_front_settings_toggle
+									label <= query_plan_label @ \Query planning
+									hint <= query_plan_hint @ \Break a complex question into a DAG of simpler sub-questions before retrieving.
+									checked? <=> query_plan? false
+									on_label <= on_label
+									off_label <= off_label
+								<= Rerank $raggu_web_front_settings_toggle
+									label <= rerank_label @ \Rerank candidates
+									hint <= rerank_hint @ \Re-score retrieved passages before they are handed to the model. Noticeably slower.
+									checked? <=> rerank? false
+									on_label <= on_label
+									off_label <= off_label
+								<= Top_k $mol_view
+									sub /
+										<= Top_k_text $mol_view
+											sub /
+												<= Top_k_label $raggu_web_front_text
+													text <= top_k_label @ \Passages retrieved
+												<= Top_k_hint $raggu_web_front_text
+													text <= top_k_hint @ \How many candidates reach the model. More context, slower answer.
+										<= Top_k_field $mol_view
+											sub /
+												<= Top_k_less $mol_button
+													hint <= top_k_less_label @ \Fewer passages
+													attr *
+														^
+														aria-label <= top_k_less_label
+													enabled <= top_k_less_enabled true
+													click? <=> top_k_less? null
+													sub / \−
+												<= Top_k_input $mol_view
+													dom_name \input
+													attr *
+														^
+														aria-label <= top_k_label
+														inputmode \numeric
+													field *
+														^
+														value <= top_k_draft? \8
+													event *
+														input? <=> top_k_input? null
+														change? <=> top_k_commit? null
+														blur? <=> top_k_commit?
+														keydown? <=> top_k_key? null
+												<= Top_k_more $mol_button
+													hint <= top_k_more_label @ \More passages
+													attr *
+														^
+														aria-label <= top_k_more_label
+													enabled <= top_k_more_enabled true
+													click? <=> top_k_more? null
+													sub / \+
+								<= Limit $mol_view
+									sub /
+										<= Limit_head $mol_view
+											sub /
+												<= Limit_label $raggu_web_front_text
+													text <= limit_label @ \Entities in the cloud
+												<= Limit_value $mol_view
+													dom_name \span
+													sub / <= limit_value \600
+										<= Limit_hint $raggu_web_front_text
+											text <= limit_hint @ \The renderer stays smooth well past a thousand points; the network is the limit.
+										<= Steps $mol_view
+											sub <= steps /
+										<= Limit_note $raggu_web_front_text
+											text <= api_cap @ \The gateway hands over at most 5000 entities per request, so a larger corpus is always a slice.
+						<= Divider $mol_view
+						<= Foot $mol_view
+							sub /
+								<= Reset $mol_button
+									click? <=> reset? null
+									sub / <= reset_label @ \Restore defaults
+								<= Done $mol_button
+									click? <=> close?
+									sub / <= close_label
+	Step* $mol_button
+		attr *
+			^
+			raggu_web_front_settings_step_active <= step_active* false
+		click? <=> step_pick*? null
+		sub /
+			<= Step_pane* $mol_view
+				dom_name \span
+				attr *
+					^
+					class <= step_pane_class* \
+					aria-hidden \true
+			<= step_text* \
+
+$raggu_web_front_settings_toggle $mol_view
+	label \
+	hint \
+	checked? false
+	on_label \On
+	off_label \Off
+	sub /
+		<= Text $mol_view
+			sub /
+				<= Label $raggu_web_front_text
+					text <= label
+				<= Hint $raggu_web_front_text
+					text <= hint
+		<= Control $mol_view
+			sub /
+				<= State $raggu_web_front_label
+					dom_name \span
+					text <= state_text \
+				<= Switch $mol_button
+					attr *
+						^
+						role \switch
+						aria-checked <= checked?
+						aria-label <= label
+					click? <=> flip? null
+					sub /
+						<= Thumb $mol_view
+							dom_name \span

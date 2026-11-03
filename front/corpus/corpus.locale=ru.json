@@ -1,0 +1,6 @@
+{
+	"$raggu_web_front_corpus_failed_hint": "API не ответил. Возможно, он просыпается — попробуйте через минуту.",
+	"$raggu_web_front_corpus_failed_title": "Граф не загрузился.",
+	"$raggu_web_front_corpus_loading_label": "Раскладываем граф",
+	"$raggu_web_front_corpus_retry_label": "Повторить"
+}

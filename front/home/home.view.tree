@@ -1,0 +1,221 @@
+$raggu_web_front_home $mol_view
+	sub /
+		<= Hero $mol_view
+			dom_name \section
+			sub /
+				<= Hero_main $mol_view
+					sub /
+						<= Eyebrow $raggu_web_front_label
+							text <= eyebrow @ \open source graphrag
+						<= Title $mol_view
+							dom_name \h1
+							sub /
+								<= title_text @ \Every document becomes a graph.
+								<= Title_accent $mol_view
+									dom_name \span
+									sub / <= title_accent @ \Every answer cites it.
+						<= Lede $raggu_web_front_text
+							text <= lede @ \RAGU reads raw text, pulls out typed entities and the relations between them, clusters the result into communities, and answers questions over that structure — on your own hardware, with the source chunk attached to every claim.
+						<= Actions $mol_view
+							sub /
+								<= Cta $raggu_web_front_link
+									arg *
+										corpus \medical
+									sub /
+										<= cta_label @ \Open the Medical graph
+										<= Cta_arrow $raggu_web_front_icon_arrow
+								<= How $mol_button
+									click? <=> to_pipeline? null
+									sub / <= how_label @ \How it works
+				<= Metrics $mol_view
+					dom_name \aside
+					sub /
+						<= Metrics_glass $raggu_web_front_glass
+						<= Metrics_body $mol_view
+							sub /
+								<= Metrics_head $mol_view
+									sub /
+										<= Metrics_title $raggu_web_front_label
+											text <= metrics_title @ \Indexed for this demo
+										<= Metrics_count $raggu_web_front_label
+											dom_name \span
+											text <= corpora_count \3 corpora
+								<= Metric_list $mol_view
+									dom_name \dl
+									sub /
+										<= Metric_nodes $raggu_web_front_home_metric
+											label <= metric_nodes @ \entities
+											value <= total_nodes \
+											pending <= pending false
+										<= Metric_edges $raggu_web_front_home_metric
+											label <= metric_edges @ \relations
+											value <= total_edges \
+											pending <= pending
+										<= Metric_communities $raggu_web_front_home_metric
+											label <= metric_communities @ \communities
+											value <= total_communities \
+											pending <= pending
+										<= Metric_chunks $raggu_web_front_home_metric
+											label <= metric_chunks @ \text chunks
+											value <= total_chunks \
+											pending <= pending
+								<= Badges $mol_view
+									sub <= badges /
+		<= Pipeline $mol_view
+			dom_name \section
+			attr *
+				^
+				id \pipeline
+			sub /
+				<= Pipeline_head $raggu_web_front_home_head
+					eyebrow \pipeline
+					title <= pipeline_title @ \How a corpus becomes answerable
+					lede <= pipeline_lede @ \Four passes. Each one is inspectable, and the last one is what the chat panel talks to.
+				<= Steps $mol_view
+					dom_name \ol
+					sub <= steps /
+		<= Corpora $mol_view
+			dom_name \section
+			attr *
+				^
+				id \corpora
+			sub /
+				<= Corpora_head $raggu_web_front_home_head
+					eyebrow \corpora
+					title <= corpora_title @ \Three corpora, already indexed
+					lede <= corpora_lede @ \Pick one to open its graph and put questions to it.
+				<= Corpora_body $mol_view
+					sub <= corpora /
+		<= Footer $mol_view
+			dom_name \footer
+			sub /
+				<= Footer_grid $mol_view
+					sub /
+						<= Footer_about $mol_view
+							sub /
+								<= Footer_name $raggu_web_front_text
+									text \RAGU
+								<= Footer_blurb $raggu_web_front_text
+									text <= footer_blurb @ \A demo interface over prebuilt RAGU indexes. Indexing, job queues and GPU workers stay off this deployment.
+						<= Footer_project $mol_view
+							dom_name \nav
+							sub /
+								<= Footer_project_label $raggu_web_front_label
+									text <= footer_project @ \Project
+								<= Footer_project_list $mol_view
+									dom_name \ul
+									sub /
+										<= Footer_github $raggu_web_front_link
+											uri \https://github.com/RaguTeam/RAGU
+											sub / \GitHub
+										<= Footer_arxiv $raggu_web_front_link
+											uri \https://arxiv.org/abs/2607.11683
+											sub / \arXiv 2607.11683
+										<= Footer_pypi $raggu_web_front_link
+											uri \https://pypi.org/project/graph-ragu/
+											sub / \graph_ragu on PyPI
+						<= Footer_this $mol_view
+							dom_name \nav
+							sub /
+								<= Footer_this_label $raggu_web_front_label
+									text <= footer_this @ \This interface
+								<= Footer_this_list $mol_view
+									dom_name \ul
+									sub /
+										<= Footer_web $raggu_web_front_link
+											uri \https://github.com/RaguTeam/web
+											sub / <= footer_this
+										<= Footer_rights $raggu_web_front_label
+											text <= rights @ \MIT licensed
+	Badge* $mol_view
+		sub /
+			<= Badge_label* $raggu_web_front_label
+				dom_name \span
+				text <= badge_label* \
+			<= Badge_value* $mol_view
+				dom_name \span
+				sub / <= badge_value* \
+	Step* $raggu_web_front_reveal
+		dom_name \li
+		delay <= step_delay* 0
+		sub /
+			<= Step_rail* $mol_view
+				sub <= step_rail* /
+			<= Step_name* $mol_view
+				dom_name \h3
+				sub / <= step_name* \
+			<= Step_detail* $raggu_web_front_text
+				text <= step_detail* \
+			<= Step_output* $raggu_web_front_label
+				text <= step_output* \
+	Step_dot* $mol_view
+		dom_name \span
+		sub /
+			<= Step_dot_core* $mol_view
+				dom_name \span
+	Step_ordinal* $mol_view
+		dom_name \span
+		sub / <= step_ordinal* \
+	Step_line* $mol_view
+		dom_name \span
+	Step_arrow* $raggu_web_front_icon_arrow
+	Card* $raggu_web_front_home_card
+		dataset <= card_dataset* null
+		featured <= card_featured* false
+		delay <= card_delay* 0
+	Card_skeleton* $raggu_web_front_skeleton
+		attr *
+			^
+			raggu_web_front_home_card_skeleton_featured <= card_skeleton_featured* false
+	Error $mol_view
+		sub /
+			<= Error_glass $raggu_web_front_glass
+			<= Error_title $raggu_web_front_text
+				text <= error_title @ \Something went wrong
+			<= Error_hint $raggu_web_front_text
+				text <= error_hint @ \The API did not answer. It may be waking up — try again in a moment.
+			<= Retry $mol_button
+				click? <=> retry? null
+				sub / <= retry_label @ \Try again
+	corpora_word @ \corpora
+	Pipeline_text $raggu_web_front_home_pipeline
+
+$raggu_web_front_home_metric $mol_view
+	label \
+	value \
+	pending false
+	sub /
+		<= Label $raggu_web_front_label
+			dom_name \dt
+			text <= label
+		<= Value $mol_view
+			dom_name \dd
+			sub <= value_content /
+	Skeleton $raggu_web_front_skeleton
+
+$raggu_web_front_home_head $raggu_web_front_reveal
+	eyebrow \
+	title \
+	lede \
+	sub /
+		<= Eyebrow $raggu_web_front_label
+			text <= eyebrow
+		<= Title $mol_view
+			dom_name \h2
+			sub / <= title
+		<= Lede $raggu_web_front_text
+			text <= lede
+
+$raggu_web_front_home_pipeline $mol_object
+	step_1_name @ \Chunk
+	step_1_detail @ \Documents are split on sentence boundaries, not on a fixed character count, so an entity never straddles the cut.
+	step_1_output @ \text chunks
+	step_2_name @ \Extract
+	step_2_detail @ \A model reads every chunk and returns typed entities and typed relations, each with a description and a confidence score.
+	step_2_output @ \entities · relations
+	step_3_name @ \Cluster
+	step_3_detail @ \Leiden community detection groups the graph into themes, then each theme is summarised in its own right.
+	step_3_output @ \communities · summaries
+	step_4_name @ \Answer
+	step_4_detail @ \A question walks the neighbourhood, reads the community summaries, or both — and the chunk behind each claim comes back with it.
+	step_4_output @ \answer · citations

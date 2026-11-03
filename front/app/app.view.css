@@ -1,24 +1,131 @@
-/* Буклетный UX на телефоне (как в $mol_book2): сайдбар и контент — снап-страницы
-   горизонтального скролла. Свайп вправо открывает меню, выбор раздела доскролливает
-   обратно к контенту (см. auto() в app.view.ts).
-   Селекторы задвоены/вложены, чтобы перебить базовые правила из app.view.css.ts. */
-@media (max-width: 720px) {
-    [raggu_web_front_app][raggu_web_front_app] {
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-    }
+[raggu_web_front_app] {
+	position: relative;
+	display: block;
+	min-height: 100%;
+	font-family: var(--font-sans);
+	font-size: 1rem;
+	line-height: 1.5;
+	color: var(--text);
+}
 
-    [raggu_web_front_app] > [raggu_web_front_app_sidebar] {
-        min-width: 84vw;
-        max-width: 84vw;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-    }
+[raggu_web_front_app_skip] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+	z-index: 50;
+}
 
-    [raggu_web_front_app] > [raggu_web_front_app_main] {
-        min-width: 100vw;
-        scroll-snap-align: end;
-        scroll-snap-stop: always;
-    }
+[raggu_web_front_app_skip]:focus {
+	position: fixed;
+	top: 1rem;
+	left: 1rem;
+	width: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	clip: auto;
+	border-radius: var(--radius-control);
+	background: var(--accent);
+	padding: 0.625rem 1rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--accent-ink);
+}
+
+[raggu_web_front_app_backdrop] {
+	pointer-events: none;
+	position: fixed;
+	inset: 0;
+	z-index: -10;
+	display: block;
+	overflow: hidden;
+}
+
+[raggu_web_front_app_backdrop_base] {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(175deg, var(--bg) 0%, var(--bg-deep) 100%);
+}
+
+[raggu_web_front_app_aurora] {
+	position: absolute;
+	inset: 0;
+	display: block;
+	opacity: 1;
+	transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[raggu_web_front_app_backdrop_quiet] [raggu_web_front_app_aurora] {
+	opacity: 0.4;
+}
+
+[raggu_web_front_app_aurora_a],
+[raggu_web_front_app_aurora_b],
+[raggu_web_front_app_aurora_c] {
+	position: absolute;
+	border-radius: 9999px;
+	filter: blur(90px);
+	animation: ragu-drift 26s ease-in-out infinite;
+}
+
+[raggu_web_front_app_aurora_a] {
+	top: -22vh;
+	right: -10vw;
+	width: 58vw;
+	height: 58vw;
+	background: radial-gradient(circle at 50% 50%, var(--aurora-a), transparent 68%);
+}
+
+[raggu_web_front_app_aurora_b] {
+	top: 38vh;
+	left: -16vw;
+	width: 54vw;
+	height: 54vw;
+	animation-delay: -9s;
+	background: radial-gradient(circle at 50% 50%, var(--aurora-b), transparent 66%);
+}
+
+[raggu_web_front_app_aurora_c] {
+	bottom: -28vh;
+	left: 32vw;
+	width: 62vw;
+	height: 62vw;
+	animation-delay: -17s;
+	background: radial-gradient(circle at 50% 50%, var(--aurora-c), transparent 70%);
+}
+
+[raggu_web_front_app_vignette] {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transition: opacity 700ms ease;
+	background: radial-gradient(120% 80% at 50% -10%, color-mix(in oklab, var(--bg) 78%, transparent) 0%, transparent 46%);
+}
+
+[raggu_web_front_app_backdrop_quiet] [raggu_web_front_app_vignette] {
+	opacity: 1;
+}
+
+[raggu_web_front_app_grain] {
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+	opacity: var(--grain-opacity);
+	mix-blend-mode: multiply;
+}
+
+[data-theme='dark'] [raggu_web_front_app_grain] {
+	mix-blend-mode: screen;
+}
+
+[raggu_web_front_app_main] {
+	position: relative;
+	z-index: 20;
+	display: block;
 }

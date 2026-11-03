@@ -1,0 +1,35 @@
+$raggu_web_front_disclosure $mol_view
+	label \
+	count_text \
+	hint \
+	open? false
+	Icon $raggu_web_front_icon_sources
+	attr *
+		^
+		raggu_web_front_disclosure_open <= open?
+	sub /
+		<= Plate $mol_view
+			dom_name \span
+			attr *
+				^
+				aria-hidden \true
+		<= Head $mol_view
+			sub /
+				<= Toggle $mol_button
+					hint <= hint
+					attr *
+						^
+						aria-expanded <= open?
+					click? <=> toggle? null
+					sub /
+						<= Icon
+						<= label
+						<= Count $mol_view
+							dom_name \span
+							sub / <= count_text
+				<= Actions $mol_view
+					sub <= actions /
+		<= Fold $mol_view
+			sub /
+				<= Body $mol_view
+					sub <= body /

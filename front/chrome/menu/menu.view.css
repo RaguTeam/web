@@ -1,0 +1,79 @@
+[raggu_web_front_chrome_menu_trigger] {
+	display: flex;
+	width: 2.5rem;
+	height: 2.5rem;
+	align-items: center;
+	justify-content: center;
+	align-self: center;
+	border-radius: var(--radius-inset);
+	color: var(--text-2);
+	transition: color 200ms ease, background-color 200ms ease;
+}
+
+[raggu_web_front_chrome_menu_trigger]:hover {
+	background: var(--accent-wash);
+	color: var(--text);
+}
+
+[raggu_web_front_chrome_menu_trigger][raggu_web_front_pop_open="true"] {
+	background: var(--accent-wash);
+	color: var(--accent);
+}
+
+[raggu_web_front_chrome_menu_bubble] {
+	border-radius: var(--radius-panel);
+}
+
+[raggu_web_front_chrome_menu_heading] {
+	padding: 0.375rem 0.625rem 0.5rem;
+}
+
+[raggu_web_front_chrome_menu_items] {
+	display: flex;
+	flex-direction: column;
+}
+
+[raggu_web_front_chrome_menu_item] {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	border-radius: var(--radius-control);
+	padding: 0.5rem 0.625rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: var(--text-2);
+	outline: none;
+	cursor: default;
+	transition: color 150ms ease, background-color 150ms ease;
+}
+
+[raggu_web_front_chrome_menu_item]:hover,
+[raggu_web_front_chrome_menu_item]:focus-visible {
+	background: var(--accent-wash);
+	color: var(--text);
+	outline: none;
+}
+
+[raggu_web_front_chrome_menu_item_lead] {
+	display: flex;
+	color: var(--text-3);
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+
+[raggu_web_front_chrome_menu_item_name] {
+	flex: 1;
+}
+
+[raggu_web_front_chrome_menu_item_dot] {
+	display: none;
+	width: 0.375rem;
+	height: 0.375rem;
+	border-radius: 9999px;
+	background: var(--accent);
+}
+
+[raggu_web_front_chrome_menu_item][aria-checked="true"] > [raggu_web_front_chrome_menu_item_dot] {
+	display: block;
+}

@@ -1,0 +1,21 @@
+[raggu_web_front_home_constellation] {
+	display: block;
+	overflow: hidden;
+}
+
+[raggu_web_front_home_constellation_links] {
+	fill: none;
+	stroke: var(--edge-strong);
+	stroke-width: 0.28;
+	opacity: 0.75;
+}
+
+[raggu_web_front_home_constellation_points] {
+	fill: var(--text-3);
+	opacity: 0.5;
+}
+
+[raggu_web_front_home_constellation_hubs] {
+	fill: var(--accent);
+	opacity: 0.95;
+}

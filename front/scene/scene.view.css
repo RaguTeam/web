@@ -1,0 +1,69 @@
+[raggu_web_front_scene] {
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	display: block;
+	opacity: 0;
+	pointer-events: none;
+	touch-action: auto;
+	transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[raggu_web_front_scene][raggu_web_front_scene_mounted] {
+	opacity: 1;
+}
+
+[raggu_web_front_scene][raggu_web_front_scene_interactive] {
+	pointer-events: auto;
+	touch-action: none;
+}
+
+[raggu_web_front_scene_layer] {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.ragu-label {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.4em;
+	white-space: nowrap;
+	font-family: var(--font-mono);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	color: var(--text-2);
+	text-shadow: 0 1px 2px var(--bg), 0 0 10px var(--bg);
+	will-change: transform, opacity;
+	transition: opacity 140ms linear;
+}
+
+.ragu-label--strong {
+	z-index: 2;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--text);
+	padding: 4px 9px;
+	border-radius: var(--radius-chip);
+	background: var(--glass-tint-strong);
+	border: 1px solid var(--edge-glass);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 8px 20px -12px var(--shadow-cast);
+	text-shadow: none;
+}
+
+.ragu-label__type {
+	font-style: normal;
+	font-size: 9.5px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}

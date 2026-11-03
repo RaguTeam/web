@@ -1,0 +1,9 @@
+$raggu_web_front_scene $mol_view
+	viewer $raggu_web_front_viewer
+	lights \light
+	attr *
+		^
+		raggu_web_front_scene_interactive <= interactive false
+		raggu_web_front_scene_mounted <= mounted false
+	sub /
+		<= Layer $raggu_web_front_scene_layer

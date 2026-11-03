@@ -1,0 +1,43 @@
+$raggu_web_front_chrome_switcher $raggu_web_front_pop
+	corpus \
+	hint <= pick_label @ \Switch corpus
+	bubble_width \min(30rem, calc(100vw - 2rem))
+	trigger_content /
+		<= Current $mol_view
+			dom_name \span
+			sub /
+				<= Current_label $raggu_web_front_label
+					dom_name \span
+					text <= corpus_label @ \Corpus
+				<= Current_title $mol_view
+					dom_name \span
+					sub / <= current_title \
+		<= Caret $raggu_web_front_icon_caret
+	bubble_content /
+		<= Heading $mol_view
+			sub /
+				<= Heading_label $raggu_web_front_label
+					text <= corpora_label @ \Corpora
+		<= List $mol_view
+			sub <= rows /
+	Row* $raggu_web_front_link
+		arg *
+			corpus <= row_id* \
+		click? <=> row_click*? null
+		attr *
+			^
+			raggu_web_front_chrome_switcher_row_current <= row_current* false
+		sub /
+			<= Row_text* $mol_view
+				dom_name \span
+				sub /
+					<= Row_title* $mol_view
+						dom_name \span
+						sub / <= row_title* \
+					<= Row_domain* $mol_view
+						dom_name \span
+						sub / <= row_domain* \
+			<= Row_count* $raggu_web_front_label
+				dom_name \span
+				text <= row_count* \
+	Row_skeleton* $raggu_web_front_skeleton

@@ -1,0 +1,6 @@
+$raggu_web_front_glass $mol_view
+	dom_name \span
+	attr *
+		^
+		aria-hidden \true
+		raggu_web_front_glass_solid <= solid false

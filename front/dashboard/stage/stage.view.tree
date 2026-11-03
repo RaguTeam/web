@@ -1,9 +1,0 @@
-$raggu_web_front_dashboard_stage $bog_builderui_div
-	name \
-	time \
-	pct \0%
-	sub /
-		<= Name $bog_builderui_div sub / <= name
-		<= Bar $bog_builderui_div sub /
-			<= Bar_fill $bog_builderui_div
-		<= Time $bog_builderui_div sub / <= time

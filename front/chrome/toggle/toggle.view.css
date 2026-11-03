@@ -1,0 +1,44 @@
+[raggu_web_front_chrome_toggle] {
+	position: relative;
+	isolation: isolate;
+	margin-bottom: 1px;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	border-radius: var(--radius-inset);
+	padding: 0 0.875rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	font-weight: 500;
+	color: var(--text-3);
+	transition: color 200ms ease, background-color 200ms ease;
+}
+
+[raggu_web_front_chrome_toggle]:hover {
+	background: color-mix(in oklab, var(--text) 6%, transparent);
+	color: var(--text);
+}
+
+[raggu_web_front_chrome_toggle][aria-pressed="true"] {
+	color: var(--accent);
+}
+
+[raggu_web_front_chrome_toggle][aria-pressed="true"]:hover {
+	background: transparent;
+	color: var(--accent);
+}
+
+[raggu_web_front_chrome_toggle_pane] {
+	opacity: 0;
+	transform: scale(0.92);
+	transition:
+		opacity 300ms var(--ease-out-quint),
+		transform 360ms cubic-bezier(0.34, 1.3, 0.64, 1),
+		background 200ms var(--ease-out-quint),
+		box-shadow 200ms var(--ease-out-quint);
+}
+
+[raggu_web_front_chrome_toggle][aria-pressed="true"] > [raggu_web_front_chrome_toggle_pane] {
+	opacity: 1;
+	transform: none;
+}

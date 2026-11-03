@@ -1,0 +1,39 @@
+$raggu_web_front_corpus_loader $mol_view
+	label \
+	percent \
+	quiet false
+	attr *
+		^
+		raggu_web_front_corpus_loader_quiet <= quiet
+	sub /
+		<= Solid $mol_view
+			dom_name \span
+			attr *
+				^
+				aria-hidden \true
+			sub /
+				<= Face1 $mol_view
+					dom_name \i
+				<= Face2 $mol_view
+					dom_name \i
+				<= Face3 $mol_view
+					dom_name \i
+				<= Face4 $mol_view
+					dom_name \i
+				<= Face5 $mol_view
+					dom_name \i
+				<= Face6 $mol_view
+					dom_name \i
+		<= Caption $mol_view
+			dom_name \span
+			attr *
+				^
+				role \status
+				aria-live \polite
+			sub /
+				<= Label $raggu_web_front_label
+					dom_name \span
+					text <= label
+				<= Percent $raggu_web_front_label
+					dom_name \span
+					text <= percent

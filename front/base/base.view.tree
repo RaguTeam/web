@@ -1,0 +1,36 @@
+$raggu_web_front_base $mol_view
+
+$raggu_web_front_text $mol_view
+	dom_name \p
+	sub /$mol_view_content
+		<= text \
+
+$raggu_web_front_label $raggu_web_front_text
+
+$raggu_web_front_skeleton $mol_view
+	attr *
+		^
+		aria-hidden \true
+
+$raggu_web_front_reveal $mol_view
+	delay 0
+	style *
+		^
+		--reveal-delay <= delay_css \0ms
+	attr *
+		^
+		raggu_web_front_reveal_shown <= shown? false
+
+$raggu_web_front_link $mol_view
+	dom_name \a
+	uri \
+	arg *
+	hint \
+	attr *
+		^
+		href <= href \
+		title <= hint
+	event *
+		^
+		click? <=> click? null
+	sub /$mol_view_content

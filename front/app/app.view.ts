@@ -2,227 +2,78 @@ namespace $.$$ {
 
 	export class $raggu_web_front_app extends $.$raggu_web_front_app {
 
-		body() {
-			// Сводка не зависит от датасета, для остальных экранов без него показываем Gallery.
-			if( this.screen() === 'summary' ) return [ this.Summary() ]
-			const s = this.dataset_id() ? this.screen() : 'gallery'
-			switch( s ) {
-				case 'gallery': return [ this.Gallery() ]
-				case 'explorer': return [ this.Explorer() ]
-				case 'chat': return [ this.Chat() ]
-				// Дашборд спрятан до готовности бэка:
-				// case 'dashboard': return [ this.Dashboard() ]
-			}
-			return []
+		corpus_page() {
+			return !!this.Viewer().corpus()
 		}
 
-		// Буклетный UX на телефоне: при смене раздела доскролливаем горизонтальный
-		// снап к контенту. На десктопе скролла нет — вызов безвреден.
-		// Таймаут вместо after_tick: на первом рендере layout ещё не готов
-		// и scrollWidth равен clientWidth.
-		override auto() {
-			void this.screen()
-			this.track_screen()
-			new this.$.$mol_after_timeout( 100, () => {
-				const root = this.dom_node() as HTMLElement
-				const main = this.Main().dom_node() as HTMLElement
-				if( !root || !main ) return
-				if( root.scrollWidth <= root.clientWidth ) return
-				root.scroll( {
-					left: main.offsetLeft + main.offsetWidth - root.clientWidth,
-					behavior: 'smooth',
-				} )
-			} )
-			return [] as any
+		main() {
+			return this.corpus_page() ? [ this.Corpus() ] : [ this.Home() ]
 		}
 
-		/**
-		 * Просмотр экрана в аналитику. Через `@$mol_mem`, чтобы отправка шла на
-		 * смену экрана или корпуса, а не на каждый перерисованный кадр.
-		 */
-		@$mol_mem
-		track_screen() {
-			const screen = this.screen()
-			const dataset = this.dataset_id()
-			$raggu_web_front_analytics_pageview( screen, dataset )
-			return `${ screen }/${ dataset }`
+		quiet() {
+			return this.corpus_page()
 		}
 
-		@$mol_mem
-		lights_mode() {
-			return this.Theme_auto().is_light_now() ? 'light' : 'dark'
+		theme_choice( next?: string ) {
+			const value = this.$.$mol_state_local.value( 'ragu.theme', next ) as string | null
+			return value === 'light' || value === 'dark' ? value : 'system'
 		}
 
-		// Попап деталей сводки рендерим на уровне app: внутри Body его ломает
-		// contain:content у скролла — fixed-оверлей позиционируется не от вьюпорта.
-		Summary_popup() {
-			return this.Summary().Detail()
+		@ $mol_mem
+		theme_resolved() {
+			const choice = this.theme_choice()
+			if( choice !== 'system' ) return choice
+			return this.$.$mol_media.match( '(prefers-color-scheme: dark)' ) ? 'dark' : 'light'
 		}
 
-		@$mol_action
-		open_help() {
-			this.help_open( true )
-			return null
-		}
-
-		@$mol_action
 		open_settings() {
 			this.settings_open( true )
+		}
+
+		@ $mol_mem
+		document_sync() {
+			const root = this.$.$mol_dom_context.document.documentElement
+			root.dataset.theme = this.theme_resolved()
+			root.lang = $raggu_web_front_lib_lang()
 			return null
 		}
 
-		@$mol_action
-		close_settings() {
-			this.settings_open( false )
-			return null
-		}
-
-		sidebar_hidden() { return this.sidebar_collapsed() }
-
-		@$mol_action
-		toggle_sidebar() {
-			this.sidebar_collapsed( !this.sidebar_collapsed() )
-			return null
-		}
-
-		// Gallery владеет фетчем списка датасетов — сайдбар получает данные
-		// через эти прокси, чтобы не дублировать remote_datasets.
-		dataset_ids() {
-			return this.Gallery().datasets().map( ( ds: any ) => ds.id as string )
-		}
-
-		sidebar_dataset_name( id: string ) {
-			return this.Gallery().card_title( id )
-		}
-
-		sidebar_dataset_meta( id: string ) {
-			const g = this.Gallery()
-			return `⬡ ${ g.card_nodes( id ) } · ⇄ ${ g.card_edges( id ) }`
-		}
-
-		@$mol_action
-		select_dataset( id: string ) {
-			this.dataset_id( id )
-			return null
-		}
-
-		// Клик по карточке в галерее — сразу в граф: выбрать корпус и значит
-		// начать его смотреть, отдельный шаг «выбрал и стой на галерее» лишний.
-		// Сайдбар остаётся мягким переключателем — там select_dataset без прыжка.
-		@$mol_action
-		open_dataset( id: string ) {
-			$raggu_web_front_analytics_event( 'dataset_open', { dataset: id } )
-			this.dataset_id( id )
-			this.screen( 'explorer' )
-			return null
-		}
-
-		@$mol_action
-		ask_chat() {
-			// Переносим выбранное в графе (сущность или связь) в чат: переключаем
-			// экран и сразу кладём заготовку вопроса в поле ввода.
-			const explorer = this.Explorer()
-			const node = explorer.selected()
-			const edge = explorer.selected_edge()
-			$raggu_web_front_analytics_event( 'ask_from_graph', {
-				kind: edge ? 'relation' : 'entity',
-				dataset: this.dataset_id(),
-			} )
-			this.screen( 'chat' )
-			if( edge ) {
-				const label = `${ explorer.node_label( edge.source ) } ${ edge.relation } ${ explorer.node_label( edge.target ) }`
-				this.Chat().prompt_text( this.ask_relation_template().replace( '%s', label ) )
-			} else if( node?.label ) {
-				this.Chat().prompt_text( this.ask_entity_template().replace( '%s', node.label ) )
+		@ $mol_mem
+		scrollbar_publish() {
+			const measure = ()=> {
+				const probe = document.createElement( 'div' )
+				probe.style.cssText = 'position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll;visibility:hidden'
+				document.body.appendChild( probe )
+				const width = probe.offsetWidth - probe.clientWidth
+				probe.remove()
+				document.documentElement.style.setProperty( '--scrollbar-w', `${ width }px` )
 			}
+			measure()
+			window.addEventListener( 'resize', measure )
+			return { destructor: ()=> window.removeEventListener( 'resize', measure ) }
+		}
+
+		@ $mol_mem
+		pageview() {
+			const corpus = this.Viewer().corpus()
+			$raggu_web_front_analytics_pageview( corpus ? 'corpus' : 'home', corpus )
+			return corpus
+		}
+
+		@ $mol_mem
+		scroll_reset() {
+			this.Viewer().corpus()
+			window.scrollTo( 0, 0 )
 			return null
 		}
 
-		/**
-		 * Режимы, которые обслуживает выбранный корпус.
-		 *
-		 * Спрашиваем у бэка, а не перечисляем сами: хранилища у корпусов разные,
-		 * и режим без своего хранилища не заработает здесь никогда. Раньше набор
-		 * был захардкожен, и интерфейс предлагал то, что заведомо не отвечало.
-		 *
-		 * Отказ — не повод ломать чат: без списка остаётся mix, а бэк всё равно
-		 * подставит доступный и назовёт его в трейсе.
-		 */
-		@$mol_mem
-		dataset_engines(): readonly string[] {
-			const id = this.dataset_id()
-			if( !id || this.$.$mol_state_arg.value( 'mock' ) === '1' ) return [ 'mix' ]
-			try {
-				const res = this.$.$raggu_web_front_api(
-					$raggu_web_front_api_ragu_get_dataset,
-					{ params: { dataset_id: id }, query: {} },
-				)
-				const list = ( res as any )?.available_engines as string[] | undefined
-				return list?.length ? list : [ 'mix' ]
-			} catch( error: any ) {
-				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-				console.warn( '[raggu app] capabilities fetch failed, offering mix only:', error )
-				return [ 'mix' ]
-			}
+		auto() {
+			this.document_sync()
+			this.scrollbar_publish()
+			this.pageview()
+			this.scroll_reset()
+			return [] as never
 		}
-
-		/**
-		 * Режим поиска для запроса к агенту.
-		 *
-		 * Берём у панели уже разрешённое значение: выбранный режим, если корпус
-		 * его обслуживает, иначе первый доступный. Разрешение живёт в одном
-		 * месте — иначе интерфейс показывал бы одно, а отправлял другое.
-		 *
-		 * QueryPlanEngine намеренно НЕ сюда: это отдельный флаг запроса
-		 * (`use_query_plan`), а не значение того же enum — иначе «граф выключен
-		 * плюс декомпозиция включена» нельзя было бы выразить.
-		 */
-		@$mol_mem
-		chat_engine( next?: string ): string {
-			if( next !== undefined ) return this.Chat().thread_engine( next )
-			const available = this.dataset_engines()
-			const chosen = this.Chat().thread_engine()
-			return available.includes( chosen ) ? chosen : ( available[ 0 ] ?? 'mix' )
-		}
-
-		/**
-		 * Вторая переключалка панели — декомпозиция вопроса — тоже принадлежит
-		 * треду: она меняет и цену, и ответ, а значит относится к разговору.
-		 */
-		@$mol_mem
-		chat_query_plan( next?: string ): string {
-			if( next !== undefined ) this.Chat().thread_query_plan( next === 'on' )
-			return this.Chat().thread_query_plan() ? 'on' : 'off'
-		}
-
-		screen_title() {
-			switch( this.screen() ) {
-				case 'gallery': return this.screen_gallery_title()
-				case 'explorer': return this.screen_explorer_title()
-				case 'chat': return this.screen_chat_title()
-				case 'summary': return this.screen_summary_title()
-			}
-			return ''
-		}
-
-		dataset_title() {
-			const id = this.dataset_id()
-			if( !id ) return ''
-			return this.Gallery().card_title( id )
-		}
-
-		arg_value( key: string, next: string | undefined, fallback: string ) {
-			const arg = this.$.$mol_state_arg
-			if ( next === undefined ) return arg.value( key ) ?? fallback
-			arg.value( key, next === fallback ? null : next )
-			return next
-		}
-
-		@$mol_mem
-		screen( next?: string ) { return this.arg_value( 'screen', next, 'gallery' ) }
-
-		@$mol_mem
-		dataset_id( next?: string ) { return this.arg_value( 'ds', next, '' ) }
 
 	}
 
