@@ -32,4 +32,14 @@ namespace $.$$ {
 
 	}
 
+	export class $raggu_web_front_mark_icon extends $.$raggu_web_front_mark_icon {
+
+		@ $mol_mem
+		dom_tree() {
+			const parser = new this.$.$mol_dom_context.DOMParser
+			return parser.parseFromString( svg, 'image/svg+xml' ).documentElement as Element as HTMLElement
+		}
+
+	}
+
 }

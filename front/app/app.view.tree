@@ -1,6 +1,9 @@
 $raggu_web_front_app $raggu_web_front_base
 	title \RAGU
 	Viewer $raggu_web_front_viewer
+	plugins /
+		<= Favicon $bog_favicon
+			Icon <= Favicon_icon $raggu_web_front_mark_icon
 	attr *
 		^
 		raggu_web_front_app_corpus <= corpus_page false
