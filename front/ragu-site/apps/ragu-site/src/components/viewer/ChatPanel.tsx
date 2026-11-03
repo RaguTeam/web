@@ -463,13 +463,14 @@ export function ChatPanel({datasetId, className}: {datasetId: string; className?
                                 </li>
                             ),
                         )}
+                        {/* Keyed apart so the first words replace the card with an entrance, not a cut. */}
                         {chat.pending && chat.partial ? (
-                            <li>
+                            <li key="partial" className="chat-rise">
                                 <p className="label-xs mb-2">{t.chat.agent}</p>
                                 <Answer content={chat.partial} streaming/>
                             </li>
                         ) : chat.pending ? (
-                            <li>
+                            <li key="pending" className="chat-rise">
                                 <Pending startedAt={chat.startedAt}/>
                             </li>
                         ) : null}

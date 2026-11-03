@@ -357,20 +357,36 @@
     100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
+/*
+ * The band is sized and moved in rem, not in percent of each line: stacked
+ * lines of different widths then light up at the same x at the same moment,
+ * one sweep left to right, instead of each running at its own speed.
+ * The travel covers the widest skeleton (a 44rem card).
+ */
 @keyframes ragu-shimmer {
-    from { background-position: -160% 0; }
-    to   { background-position: 260% 0; }
+    from { background-position: -16rem 0; }
+    to   { background-position: 56rem 0; }
 }
 
 .shimmer {
     background-image: linear-gradient(
-        100deg,
-        transparent 20%,
-        color-mix(in oklab, var(--text-3) 28%, transparent) 45%,
-        transparent 70%
+        90deg,
+        transparent,
+        color-mix(in oklab, var(--text-3) 28%, transparent) 50%,
+        transparent
     );
-    background-size: 220% 100%;
-    animation: ragu-shimmer 1.9s linear infinite;
+    background-size: 16rem 100%;
+    background-repeat: no-repeat;
+    animation: ragu-shimmer 2.2s linear infinite;
+}
+
+/* A chat row that has just appeared: the pending card, then the first words. */
+@keyframes ragu-rise {
+    from { opacity: 0; transform: translate3d(0, 6px, 0); }
+}
+
+.chat-rise {
+    animation: ragu-rise 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* The end of an answer that is still being written. */
