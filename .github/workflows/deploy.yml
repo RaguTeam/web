@@ -24,54 +24,6 @@ jobs:
                   package: "raggu/web"
                   modules: 'front/app'
 
-            # RAGU_API в Settings → Variables — адрес бэкенда (по умолчанию
-            # https://ragu-back.duckdns.org, зашитый в код). Откат — очистить
-            # переменную и перезапустить workflow.
-            - name: Point old app at RAGU_API
-              if: vars.RAGU_API != '' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-              working-directory: raggu/web/front/app/-
-              env:
-                  RAGU_API: ${{ vars.RAGU_API }}
-              # Без sed: значение из веб-формы легко приходит с переводом строки или
-              # пробелом, и sed падал на нём с невнятным кодом 123.
-              run: |
-                  python3 - <<'PY'
-                  import os, pathlib, re, sys
-                  old = "https://ragu-back.duckdns.org"
-                  new = os.environ["RAGU_API"].strip().rstrip("/")
-                  if not re.fullmatch(r"https?://[A-Za-z0-9.-]+(:[0-9]+)?", new):
-                      sys.exit(f"RAGU_API должна быть вида https://host[:port], а пришло {os.environ['RAGU_API']!r}")
-                  changed = []
-                  for path in pathlib.Path(".").rglob("*"):
-                      if path.is_file() and not path.is_symlink() and path.suffix in (".js", ".mjs"):
-                          text = path.read_text(encoding="utf-8")
-                          if old in text:
-                              path.write_text(text.replace(old, new), encoding="utf-8")
-                              changed.append(str(path))
-                  web = pathlib.Path("web.js").read_text(encoding="utf-8")
-                  if old in web or new not in web:
-                      sys.exit("web.js не переключился на RAGU_API")
-                  print(f"{old} -> {new} в {len(changed)} файлах: {', '.join(sorted(changed))}")
-                  PY
-
-            # Ссылки на прежний React-сайт в /web/site/ уводим в корень.
-            - name: Redirect old site address
-              if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-              run: |
-                  mkdir -p raggu/web/front/app/-/site
-                  cat > raggu/web/front/app/-/site/index.html <<'HTML'
-                  <!doctype html>
-                  <html lang="ru">
-                  <head>
-                  <meta charset="utf-8">
-                  <title>RAGU</title>
-                  <meta http-equiv="refresh" content="0; url=../">
-                  <script>location.replace('../')</script>
-                  </head>
-                  <body><a href="../">RAGU</a></body>
-                  </html>
-                  HTML
-
             - name: Deploy main
               if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
               uses: hyoo-ru/gh-deploy@v4.4.1

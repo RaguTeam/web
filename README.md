@@ -54,8 +54,8 @@ uv run --project back pytest
 
 [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) собирает `front/app` через
 [b-on-g/mam_build2](https://github.com/b-on-g/mam_build2) на каждый пуш и PR. Из `main` сайт
-публикуется в корень `gh-pages`, ветки `feature/*` — в `feature/<ветка>/`. Старый адрес
-`/web/site/` уводит в корень. Бэкенд выкатывается на ВМ через Docker Compose.
+публикуется в корень `gh-pages`, ветки `feature/*` — в `feature/<ветка>/`.
+Бэкенд выкатывается на ВМ через Docker Compose.
 
 ## Контакты
 
