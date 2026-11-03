@@ -174,8 +174,15 @@
 	flex: 1;
 	overflow-y: auto;
 	padding: 0 0.75rem 0.5rem;
-	scrollbar-width: thin;
-	scrollbar-color: var(--edge-strong) transparent;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+
+	[raggu_web_front_corpus_detail_scroll] {
+		scrollbar-width: thin;
+		scrollbar-color: var(--edge-strong) transparent;
+	}
+
 }
 
 [raggu_web_front_corpus_detail_lines] {

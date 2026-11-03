@@ -156,6 +156,30 @@ body[mol_view_root] {
 	overflow-x: clip;
 }
 
+/*
+ * Chrome draws arrow buttons on a scrollbar styled with the standard
+ * scrollbar-width / scrollbar-color, and those win over ::-webkit-scrollbar.
+ * So engines that know the pseudo-elements (Chrome, Safari) get only these;
+ * the scrollers keep the standard pair for the rest, under
+ * @supports not selector(::-webkit-scrollbar).
+ */
+[raggu_web_front_base] ::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+[raggu_web_front_base] ::-webkit-scrollbar-thumb {
+	border: 3px solid transparent;
+	border-radius: 10px;
+	background: var(--edge-strong);
+	background-clip: content-box;
+}
+
+[raggu_web_front_base] ::-webkit-scrollbar-track,
+[raggu_web_front_base] ::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
 [mol_view] {
 	transition-property: none;
 	transition-duration: 0s;
