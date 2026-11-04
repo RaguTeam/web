@@ -7,7 +7,7 @@
 	gap: 1rem;
 	color: var(--text-3);
 	perspective: 320px;
-	animation: ragu-fade 400ms ease both;
+	animation: ragu-fade 400ms ease backwards;
 }
 
 [raggu_web_front_corpus_loader_quiet] {

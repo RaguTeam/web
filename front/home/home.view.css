@@ -22,7 +22,7 @@
 
 [raggu_web_front_home_eyebrow] {
 	color: var(--accent);
-	animation: ragu-rise 700ms var(--ease-out-quint) both;
+	animation: ragu-rise 700ms var(--ease-out-quint) backwards;
 }
 
 [raggu_web_front_home_title] {
@@ -34,7 +34,7 @@
 	font-weight: 300;
 	letter-spacing: -0.035em;
 	color: var(--text);
-	animation: ragu-rise 700ms var(--ease-out-quint) 60ms both;
+	animation: ragu-rise 700ms var(--ease-out-quint) 60ms backwards;
 }
 
 [raggu_web_front_home_title_accent] {
@@ -51,7 +51,7 @@
 	font-size: 1.0625rem;
 	line-height: 1.65;
 	color: var(--text-2);
-	animation: ragu-rise 700ms var(--ease-out-quint) 120ms both;
+	animation: ragu-rise 700ms var(--ease-out-quint) 120ms backwards;
 }
 
 [raggu_web_front_home_actions] {
@@ -61,7 +61,7 @@
 	align-items: center;
 	column-gap: 0.75rem;
 	row-gap: 1rem;
-	animation: ragu-rise 700ms var(--ease-out-quint) 180ms both;
+	animation: ragu-rise 700ms var(--ease-out-quint) 180ms backwards;
 }
 
 [raggu_web_front_home_cta] {
@@ -118,7 +118,7 @@
 	grid-column: span 12 / span 12;
 	border-radius: var(--radius-island);
 	padding: 0.375rem;
-	animation: ragu-rise-far 850ms var(--ease-out-quint) 280ms both;
+	animation: ragu-rise-far 850ms var(--ease-out-quint) 280ms backwards;
 }
 
 [raggu_web_front_home_metrics_body] {

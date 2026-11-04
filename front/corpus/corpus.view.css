@@ -62,7 +62,7 @@
 	border-radius: var(--radius-island);
 	padding: 1.5rem;
 	text-align: center;
-	animation: ragu-fade 300ms ease both;
+	animation: ragu-fade 300ms ease backwards;
 }
 
 [raggu_web_front_corpus_failed_title] {

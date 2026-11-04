@@ -34,5 +34,6 @@
 	"$raggu_web_front_home_rights": "Лицензия MIT",
 	"$raggu_web_front_home_title_accent": "Ответ ссылается на источник.",
 	"$raggu_web_front_home_title_text": "Документы становятся графом.",
-	"$raggu_web_front_home_footer_mol": "Сделано на $mol"
+	"$raggu_web_front_home_footer_mol": "Сделано на $mol",
+	"$raggu_web_front_home_footer_web": "Исходный код"
 }

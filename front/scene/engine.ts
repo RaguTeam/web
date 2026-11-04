@@ -780,9 +780,19 @@ namespace $ {
 
 		let hovered = null as string | null
 
+		const touches = new Map< number, { x: number, y: number } >()
+		let pinch = 0
+
+		const spread = () => {
+			const [ a, b ] = [ ... touches.values() ]
+			return Math.hypot( a.x - b.x, a.y - b.y )
+		}
+
 		const on_down = ( event: PointerEvent ) => {
+			touches.set( event.pointerId, { x: event.clientX, y: event.clientY } )
 			orbit.pressed = { x: event.clientX, y: event.clientY, last_x: event.clientX, last_y: event.clientY }
-			orbit.dragging = true
+			orbit.dragging = touches.size === 1
+			pinch = touches.size === 2 ? spread() : 0
 			idle = 0
 			if( event.isTrusted ) canvas.setPointerCapture( event.pointerId )
 			if( hovered ) {
@@ -794,6 +804,15 @@ namespace $ {
 		const on_move = ( event: PointerEvent ) => {
 
 			idle = 0
+
+			if( touches.has( event.pointerId ) ) touches.set( event.pointerId, { x: event.clientX, y: event.clientY } )
+
+			if( touches.size === 2 ) {
+				const next = spread()
+				if( pinch > 0 && next > 0 && orbit.zoom ) orbit.scale *= pinch / next
+				pinch = next
+				return
+			}
 
 			if( orbit.dragging && orbit.pressed ) {
 				const dx = event.clientX - orbit.pressed.last_x
@@ -813,7 +832,15 @@ namespace $ {
 		}
 
 		const on_up = ( event: PointerEvent ) => {
+			touches.delete( event.pointerId )
+			pinch = 0
 			orbit.dragging = false
+			const [ rest ] = [ ... touches.values() ]
+			if( rest && orbit.pressed ) {
+				orbit.pressed.last_x = rest.x
+				orbit.pressed.last_y = rest.y
+				orbit.dragging = touches.size === 1
+			}
 			if( canvas.hasPointerCapture( event.pointerId ) ) canvas.releasePointerCapture( event.pointerId )
 		}
 
