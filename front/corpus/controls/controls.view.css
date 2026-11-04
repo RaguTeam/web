@@ -19,6 +19,12 @@
 	gap: 0.5rem;
 }
 
+[raggu_web_front_corpus_controls_tools] {
+	min-height: 0;
+	align-self: stretch;
+	padding: 0;
+}
+
 [raggu_web_front_corpus_controls_search] {
 	position: relative;
 	display: flex;
