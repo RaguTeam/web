@@ -158,6 +158,7 @@
     "$raggu_web_front_viewer",
     "$raggu_web_front_graph",
     "$raggu_web_front_lib",
+    "$mol_media",
     "$raggu_web_front_data",
     "$raggu_web_front_mock",
     "$mol_fetch",
@@ -192,7 +193,6 @@
     "$mol_import",
     "$raggu_web_front_disclosure",
     "$raggu_web_front_corpus_chat",
-    "$mol_media",
     "$raggu_web_front_analytics"
   ],
   "dependencies": {

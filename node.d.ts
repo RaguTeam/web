@@ -2721,6 +2721,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_media extends $mol_object2 {
+        static match(query: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
     function $raggu_web_front_lib_lang(): 'ru' | 'en';
     function $raggu_web_front_lib_compact(n: number, locale?: "ru" | "en"): string;
     function $raggu_web_front_lib_badge(n: number): string;
@@ -2728,6 +2734,7 @@ declare namespace $ {
     function $raggu_web_front_lib_ms(value: number): string;
     function $raggu_web_front_lib_watt_hours(value: number): string;
     function $raggu_web_front_lib_humanize(raw: string): string;
+    function $raggu_web_front_lib_narrow(): boolean;
     function $raggu_web_front_lib_clamp(value: number, min: number, max: number): number;
     function $raggu_web_front_lib_entity_name(raw: string): string;
     function $raggu_web_front_lib_relation_name(raw: string): string;
@@ -6000,17 +6007,22 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__sub_raggu_web_front_corpus_controls_5 = $mol_type_enforce<
+	type $raggu_web_front_chrome_tools__viewer_raggu_web_front_corpus_controls_5 = $mol_type_enforce<
+		ReturnType< $raggu_web_front_corpus_controls['viewer'] >
+		,
+		ReturnType< $raggu_web_front_chrome_tools['viewer'] >
+	>
+	type $mol_view__sub_raggu_web_front_corpus_controls_6 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['search_box'] >
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_corpus_controls_6 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_corpus_controls_7 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__attr_raggu_web_front_corpus_controls_7 = $mol_type_enforce<
+	type $mol_view__attr_raggu_web_front_corpus_controls_8 = $mol_type_enforce<
 		({ 
 			'placeholder': ReturnType< $raggu_web_front_corpus_controls['search_label'] >,
 			'aria-label': ReturnType< $raggu_web_front_corpus_controls['search_label'] >,
@@ -6018,148 +6030,148 @@ declare namespace $ {
 		,
 		ReturnType< $mol_view['attr'] >
 	>
-	type $mol_view__field_raggu_web_front_corpus_controls_8 = $mol_type_enforce<
+	type $mol_view__field_raggu_web_front_corpus_controls_9 = $mol_type_enforce<
 		({ 
 			'value': ReturnType< $raggu_web_front_corpus_controls['search'] >,
 		})  & ReturnType< $mol_view['field'] >
 		,
 		ReturnType< $mol_view['field'] >
 	>
-	type $mol_view__event_raggu_web_front_corpus_controls_9 = $mol_type_enforce<
+	type $mol_view__event_raggu_web_front_corpus_controls_10 = $mol_type_enforce<
 		({ 
 			input( next?: ReturnType< $raggu_web_front_corpus_controls['search_input'] > ): ReturnType< $raggu_web_front_corpus_controls['search_input'] >,
 		}) 
 		,
 		ReturnType< $mol_view['event'] >
 	>
-	type $mol_button__hint_raggu_web_front_corpus_controls_10 = $mol_type_enforce<
+	type $mol_button__hint_raggu_web_front_corpus_controls_11 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['clear_label'] >
 		,
 		ReturnType< $mol_button['hint'] >
 	>
-	type $mol_button__attr_raggu_web_front_corpus_controls_11 = $mol_type_enforce<
+	type $mol_button__attr_raggu_web_front_corpus_controls_12 = $mol_type_enforce<
 		({ 
 			'aria-label': ReturnType< $raggu_web_front_corpus_controls['clear_label'] >,
 		})  & ReturnType< $mol_button['attr'] >
 		,
 		ReturnType< $mol_button['attr'] >
 	>
-	type $mol_button__click_raggu_web_front_corpus_controls_12 = $mol_type_enforce<
+	type $mol_button__click_raggu_web_front_corpus_controls_13 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['search_clear'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_button__sub_raggu_web_front_corpus_controls_13 = $mol_type_enforce<
+	type $mol_button__sub_raggu_web_front_corpus_controls_14 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button['sub'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__label_raggu_web_front_corpus_controls_14 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__label_raggu_web_front_corpus_controls_15 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['types_label'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['label'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__count_raggu_web_front_corpus_controls_15 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__count_raggu_web_front_corpus_controls_16 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['types_count'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['count'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__items_raggu_web_front_corpus_controls_16 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__items_raggu_web_front_corpus_controls_17 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['type_items'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['items'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__clear_raggu_web_front_corpus_controls_17 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__clear_raggu_web_front_corpus_controls_18 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['types_clear'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['clear'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__label_raggu_web_front_corpus_controls_18 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__label_raggu_web_front_corpus_controls_19 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['communities_label'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['label'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__count_raggu_web_front_corpus_controls_19 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__count_raggu_web_front_corpus_controls_20 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['communities_count'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['count'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__items_raggu_web_front_corpus_controls_20 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__items_raggu_web_front_corpus_controls_21 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['community_items'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['items'] >
 	>
-	type $raggu_web_front_corpus_controls_filter__clear_raggu_web_front_corpus_controls_21 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_filter__clear_raggu_web_front_corpus_controls_22 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['communities_clear'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_filter['clear'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__active_raggu_web_front_corpus_controls_22 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__active_raggu_web_front_corpus_controls_23 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['type_active'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['active'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__name_raggu_web_front_corpus_controls_23 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__name_raggu_web_front_corpus_controls_24 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['type_name'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['name'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__count_raggu_web_front_corpus_controls_24 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__count_raggu_web_front_corpus_controls_25 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['type_count'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['count'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__click_raggu_web_front_corpus_controls_25 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__click_raggu_web_front_corpus_controls_26 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['type_toggle'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['click'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__active_raggu_web_front_corpus_controls_26 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__active_raggu_web_front_corpus_controls_27 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['community_active'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['active'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__name_raggu_web_front_corpus_controls_27 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__name_raggu_web_front_corpus_controls_28 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['community_name'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['name'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__count_raggu_web_front_corpus_controls_28 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__count_raggu_web_front_corpus_controls_29 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['community_count'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['count'] >
 	>
-	type $raggu_web_front_corpus_controls_facet__click_raggu_web_front_corpus_controls_29 = $mol_type_enforce<
+	type $raggu_web_front_corpus_controls_facet__click_raggu_web_front_corpus_controls_30 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['community_toggle'] >
 		,
 		ReturnType< $raggu_web_front_corpus_controls_facet['click'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_corpus_controls_30 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_corpus_controls_31 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub_raggu_web_front_corpus_controls_31 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_corpus_controls_32 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_view__dom_name_raggu_web_front_corpus_controls_32 = $mol_type_enforce<
+	type $mol_view__dom_name_raggu_web_front_corpus_controls_33 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_view['dom_name'] >
 	>
-	type $mol_view__sub_raggu_web_front_corpus_controls_33 = $mol_type_enforce<
+	type $mol_view__sub_raggu_web_front_corpus_controls_34 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_view['sub'] >
 	>
-	type $mol_button__click_raggu_web_front_corpus_controls_34 = $mol_type_enforce<
+	type $mol_button__click_raggu_web_front_corpus_controls_35 = $mol_type_enforce<
 		ReturnType< $raggu_web_front_corpus_controls['clear_all'] >
 		,
 		ReturnType< $mol_button['click'] >
 	>
-	type $mol_button__sub_raggu_web_front_corpus_controls_35 = $mol_type_enforce<
+	type $mol_button__sub_raggu_web_front_corpus_controls_36 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_button['sub'] >
@@ -6204,6 +6216,7 @@ declare namespace $ {
 			'raggu_web_front_corpus_controls_filtering': ReturnType< $raggu_web_front_corpus_controls['filtering'] >,
 		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly(any)[]
+		Tools( ): $raggu_web_front_chrome_tools
 		Search( ): $mol_view
 		Search_icon( ): $raggu_web_front_icon_search
 		Search_input( ): $mol_view
@@ -6334,7 +6347,7 @@ declare namespace $.$$ {
         search_input(event: Event): void;
         search_clear(): void;
         filtering(): boolean;
-        bar(): ($mol_view | $.$raggu_web_front_corpus_controls_filter)[];
+        bar(): ($mol_view | $.$raggu_web_front_chrome_tools | $.$raggu_web_front_corpus_controls_filter)[];
         search_box(): ($mol_view | $raggu_web_front_icon_search)[];
         types_count(): number;
         communities_count(): number;
@@ -8517,12 +8530,6 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=app.view.tree.d.ts.map
-declare namespace $ {
-    class $mol_media extends $mol_object2 {
-        static match(query: string, next?: boolean): boolean;
-    }
-}
-
 declare namespace $ {
     /** Просмотр экрана. `screen` и `dataset` — то, что реально определяет страницу. */
     function $raggu_web_front_analytics_pageview(screen: string, dataset: string): void;

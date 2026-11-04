@@ -6296,6 +6296,25 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_media extends $mol_object2 {
+        static match(query, next) {
+            if (next !== undefined)
+                return next;
+            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
+            res.onchange = () => this.match(query, res.matches);
+            return res.matches;
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_media, "match", null);
+    $.$mol_media = $mol_media;
+})($ || ($ = {}));
+//mol/media/media.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $raggu_web_front_lib_lang() {
         return $mol_locale.lang() === 'ru' ? 'ru' : 'en';
     }
@@ -6333,6 +6352,10 @@ var $;
         return words.charAt(0).toUpperCase() + words.slice(1);
     }
     $.$raggu_web_front_lib_humanize = $raggu_web_front_lib_humanize;
+    function $raggu_web_front_lib_narrow() {
+        return $mol_media.match('(max-width: 639.98px)');
+    }
+    $.$raggu_web_front_lib_narrow = $raggu_web_front_lib_narrow;
     function $raggu_web_front_lib_clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
     }
@@ -37633,7 +37656,8 @@ var $;
                 return { destructor: () => window.removeEventListener('scroll', update) };
             }
             right() {
-                return this.corpus_page() ? [this.Tools(), this.Controls()] : [this.Controls()];
+                const tools = this.corpus_page() && !$raggu_web_front_lib_narrow();
+                return tools ? [this.Tools(), this.Controls()] : [this.Controls()];
             }
             centre_kind() {
                 return this.corpus_page() ? 'corpus' : 'home';
@@ -38014,7 +38038,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("raggu/web/front/chrome/chrome.view.css", "[raggu_web_front_chrome] {\n\tpointer-events: none;\n\tposition: sticky;\n\ttop: 0;\n\tz-index: 30;\n\tdisplay: block;\n\tpadding-top: 1rem;\n\ttransition: padding-top 500ms var(--ease-out-quint);\n}\n\n[raggu_web_front_chrome][raggu_web_front_chrome_scrolled] {\n\tpadding-top: 0.625rem;\n}\n\n[raggu_web_front_chrome][raggu_web_front_chrome_corpus] {\n\tpadding-right: var(--scrollbar-w, 0px);\n}\n\n[raggu_web_front_chrome_row] {\n\tposition: relative;\n\tmargin: 0 auto;\n\tdisplay: flex;\n\twidth: 100%;\n\tmax-width: 1680px;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\tgap: 0.5rem;\n\tpadding: 0 0.75rem;\n}\n\n[raggu_web_front_chrome_brand],\n[raggu_web_front_chrome_controls],\n[raggu_web_front_chrome_centre] {\n\tpointer-events: auto;\n\tposition: relative;\n\tisolation: isolate;\n\tdisplay: flex;\n\tmin-height: var(--island-h);\n\talign-items: stretch;\n\tborder-radius: var(--radius-island);\n\tpadding: 0.25rem;\n}\n\n[raggu_web_front_chrome_brand] {\n\tmin-width: 0;\n}\n\n[raggu_web_front_chrome_home_link] {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-items: center;\n\tgap: 0.625rem;\n\tborder-radius: var(--radius-inset);\n\tpadding: 0 0.5rem;\n\ttransition: background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_home_link]:hover {\n\tbackground: var(--accent-wash);\n}\n\n[raggu_web_front_chrome_wordmark] {\n\tdisplay: block;\n\tpadding-right: 0.25rem;\n}\n\n[raggu_web_front_chrome_word] {\n\tdisplay: block;\n\tfont-family: var(--font-display);\n\tfont-size: 1.05rem;\n\tline-height: 1;\n\tfont-weight: 500;\n\tletter-spacing: -0.01em;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_chrome_word_sub] {\n\tdisplay: none;\n\tmargin-top: 0.25rem;\n\tfont-family: var(--font-mono);\n\tfont-size: 9.5px;\n\tline-height: 1;\n\tletter-spacing: 0.1em;\n\ttext-transform: uppercase;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_chrome_switcher_box] {\n\tdisplay: flex;\n\talign-items: center;\n\toverflow: hidden;\n\twidth: 0;\n\topacity: 0;\n\ttransition:\n\t\twidth 520ms cubic-bezier(0.34, 1.12, 0.64, 1),\n\t\topacity 300ms var(--ease-out-quint);\n}\n\n[raggu_web_front_chrome_corpus] [raggu_web_front_chrome_switcher_box] {\n\twidth: auto;\n\topacity: 1;\n}\n\n[raggu_web_front_chrome_switcher_rule] {\n\tmargin: 0 0.375rem;\n\theight: 2rem;\n\twidth: 1px;\n\tflex-shrink: 0;\n\talign-self: center;\n\tbackground: var(--edge);\n}\n\n[raggu_web_front_chrome_right] {\n\tmargin-left: auto;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tgap: 0.5rem;\n}\n\n[raggu_web_front_chrome_controls] {\n\tgap: 0.25rem;\n}\n\n[raggu_web_front_chrome_controls_rule] {\n\tmargin: 0.5rem 0;\n\twidth: 1px;\n\tflex-shrink: 0;\n\tbackground: var(--edge);\n}\n\n[raggu_web_front_chrome_settings_open],\n[raggu_web_front_chrome_menu_trigger] {\n\tdisplay: flex;\n\twidth: 2.5rem;\n\theight: 2.5rem;\n\talign-items: center;\n\tjustify-content: center;\n\talign-self: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-2);\n\ttransition: color 200ms ease, background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_settings_open]:hover,\n[raggu_web_front_chrome_menu_trigger]:hover {\n\tbackground: var(--accent-wash);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_chrome_menu_trigger][raggu_web_front_pop_open=\"true\"] {\n\tbackground: var(--accent-wash);\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_chrome_centre_box] {\n\torder: 9999;\n\tmargin-top: 0.5rem;\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: center;\n}\n\n[raggu_web_front_chrome_centre][raggu_web_front_chrome_centre_kind=\"home\"] {\n\tdisplay: none;\n}\n\n[raggu_web_front_chrome_pane_home],\n[raggu_web_front_chrome_pane_corpus] {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-items: stretch;\n\tgap: 0.25rem;\n\twhite-space: nowrap;\n\twidth: 0;\n\topacity: 0;\n\toverflow: clip;\n\tpadding: 24px 8px;\n\tmargin: -24px -8px;\n\tpointer-events: none;\n\ttransition:\n\t\twidth 440ms var(--ease-out-quint),\n\t\topacity 160ms linear;\n}\n\n[raggu_web_front_chrome_pane_home] > *,\n[raggu_web_front_chrome_pane_corpus] > * {\n\tpointer-events: auto;\n}\n\n[raggu_web_front_chrome_pane_home][data-active],\n[raggu_web_front_chrome_pane_corpus][data-active] {\n\twidth: auto;\n\topacity: 1;\n\ttransition:\n\t\twidth 440ms var(--ease-out-quint),\n\t\topacity 240ms linear 140ms;\n}\n\n[raggu_web_front_chrome_link_pipeline],\n[raggu_web_front_chrome_link_corpora] {\n\tdisplay: flex;\n\talign-items: center;\n\tborder-radius: var(--radius-inset);\n\tpadding: 0 1rem;\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--text-2);\n\ttransition: color 200ms ease, background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_link_pipeline]:hover,\n[raggu_web_front_chrome_link_corpora]:hover {\n\tbackground: var(--accent-wash);\n\tcolor: var(--text);\n}\n\n@media (min-width: 640px) {\n\n\t[raggu_web_front_chrome_row] {\n\t\tgap: 0.75rem;\n\t\tpadding: 0 1.25rem;\n\t}\n\n\t[raggu_web_front_chrome_right] {\n\t\tgap: 0.75rem;\n\t}\n\n\t[raggu_web_front_chrome_word_sub] {\n\t\tdisplay: block;\n\t}\n\n}\n\n@media (max-width: 639.98px) {\n\n\t[raggu_web_front_chrome_corpus] [raggu_web_front_chrome_wordmark] {\n\t\tdisplay: none;\n\t}\n\n}\n\n@media (min-width: 768px) {\n\n\t[raggu_web_front_chrome_centre][raggu_web_front_chrome_centre_kind=\"home\"] {\n\t\tdisplay: flex;\n\t}\n\n}\n\n@media (min-width: 1024px) {\n\n\t[raggu_web_front_chrome_centre_box] {\n\t\tposition: absolute;\n\t\ttop: 0;\n\t\tleft: 50%;\n\t\torder: 0;\n\t\tmargin-top: 0;\n\t\twidth: auto;\n\t\ttransform: translateX(-50%);\n\t}\n\n}\n");
+    $mol_style_attach("raggu/web/front/chrome/chrome.view.css", "[raggu_web_front_chrome] {\n\tpointer-events: none;\n\tposition: sticky;\n\ttop: 0;\n\tz-index: 30;\n\tdisplay: block;\n\tpadding-top: 1rem;\n\ttransition: padding-top 500ms var(--ease-out-quint);\n}\n\n[raggu_web_front_chrome][raggu_web_front_chrome_scrolled] {\n\tpadding-top: 0.625rem;\n}\n\n[raggu_web_front_chrome][raggu_web_front_chrome_corpus] {\n\tpadding-right: var(--scrollbar-w, 0px);\n}\n\n[raggu_web_front_chrome_row] {\n\tposition: relative;\n\tmargin: 0 auto;\n\tdisplay: flex;\n\twidth: 100%;\n\tmax-width: 1680px;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\tgap: 0.5rem;\n\tpadding: 0 0.75rem;\n}\n\n[raggu_web_front_chrome_brand],\n[raggu_web_front_chrome_controls],\n[raggu_web_front_chrome_centre] {\n\tpointer-events: auto;\n\tposition: relative;\n\tisolation: isolate;\n\tdisplay: flex;\n\tmin-height: var(--island-h);\n\talign-items: stretch;\n\tborder-radius: var(--radius-island);\n\tpadding: 0.25rem;\n}\n\n[raggu_web_front_chrome_brand] {\n\tmin-width: 0;\n}\n\n[raggu_web_front_chrome_home_link] {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-items: center;\n\tgap: 0.625rem;\n\tborder-radius: var(--radius-inset);\n\tpadding: 0 0.5rem;\n\ttransition: background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_home_link]:hover {\n\tbackground: var(--accent-wash);\n}\n\n[raggu_web_front_chrome_wordmark] {\n\tdisplay: block;\n\tpadding-right: 0.25rem;\n}\n\n[raggu_web_front_chrome_word] {\n\tdisplay: block;\n\tfont-family: var(--font-display);\n\tfont-size: 1.05rem;\n\tline-height: 1;\n\tfont-weight: 500;\n\tletter-spacing: -0.01em;\n\tcolor: var(--text);\n}\n\n[raggu_web_front_chrome_word_sub] {\n\tdisplay: none;\n\tmargin-top: 0.25rem;\n\tfont-family: var(--font-mono);\n\tfont-size: 9.5px;\n\tline-height: 1;\n\tletter-spacing: 0.1em;\n\ttext-transform: uppercase;\n\tcolor: var(--text-3);\n}\n\n[raggu_web_front_chrome_switcher_box] {\n\tdisplay: flex;\n\talign-items: center;\n\toverflow: hidden;\n\twidth: 0;\n\topacity: 0;\n\ttransition:\n\t\twidth 520ms cubic-bezier(0.34, 1.12, 0.64, 1),\n\t\topacity 300ms var(--ease-out-quint);\n}\n\n[raggu_web_front_chrome_corpus] [raggu_web_front_chrome_switcher_box] {\n\twidth: auto;\n\topacity: 1;\n}\n\n[raggu_web_front_chrome_switcher_rule] {\n\tmargin: 0 0.375rem;\n\theight: 2rem;\n\twidth: 1px;\n\tflex-shrink: 0;\n\talign-self: center;\n\tbackground: var(--edge);\n}\n\n[raggu_web_front_chrome_right] {\n\tmargin-left: auto;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tgap: 0.5rem;\n}\n\n[raggu_web_front_chrome_controls] {\n\tgap: 0.25rem;\n}\n\n[raggu_web_front_chrome_controls_rule] {\n\tmargin: 0.5rem 0;\n\twidth: 1px;\n\tflex-shrink: 0;\n\tbackground: var(--edge);\n}\n\n[raggu_web_front_chrome_settings_open],\n[raggu_web_front_chrome_menu_trigger] {\n\tdisplay: flex;\n\twidth: 2.5rem;\n\theight: 2.5rem;\n\talign-items: center;\n\tjustify-content: center;\n\talign-self: center;\n\tborder-radius: var(--radius-inset);\n\tcolor: var(--text-2);\n\ttransition: color 200ms ease, background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_settings_open]:hover,\n[raggu_web_front_chrome_menu_trigger]:hover {\n\tbackground: var(--accent-wash);\n\tcolor: var(--text);\n}\n\n[raggu_web_front_chrome_menu_trigger][raggu_web_front_pop_open=\"true\"] {\n\tbackground: var(--accent-wash);\n\tcolor: var(--accent);\n}\n\n[raggu_web_front_chrome_centre_box] {\n\torder: 9999;\n\tmargin-top: 0.5rem;\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: center;\n}\n\n[raggu_web_front_chrome_centre][raggu_web_front_chrome_centre_kind=\"home\"] {\n\tdisplay: none;\n}\n\n[raggu_web_front_chrome_pane_home],\n[raggu_web_front_chrome_pane_corpus] {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-items: stretch;\n\tgap: 0.25rem;\n\twhite-space: nowrap;\n\twidth: 0;\n\topacity: 0;\n\toverflow: clip;\n\tpadding: 24px 8px;\n\tmargin: -24px -8px;\n\tpointer-events: none;\n\ttransition:\n\t\twidth 440ms var(--ease-out-quint),\n\t\topacity 160ms linear;\n}\n\n[raggu_web_front_chrome_pane_home] > *,\n[raggu_web_front_chrome_pane_corpus] > * {\n\tpointer-events: auto;\n}\n\n[raggu_web_front_chrome_pane_home][data-active],\n[raggu_web_front_chrome_pane_corpus][data-active] {\n\twidth: auto;\n\topacity: 1;\n\ttransition:\n\t\twidth 440ms var(--ease-out-quint),\n\t\topacity 240ms linear 140ms;\n}\n\n[raggu_web_front_chrome_link_pipeline],\n[raggu_web_front_chrome_link_corpora] {\n\tdisplay: flex;\n\talign-items: center;\n\tborder-radius: var(--radius-inset);\n\tpadding: 0 1rem;\n\tfont-size: 0.875rem;\n\tline-height: 1.25rem;\n\tfont-weight: 500;\n\tcolor: var(--text-2);\n\ttransition: color 200ms ease, background-color 200ms ease;\n}\n\n[raggu_web_front_chrome_link_pipeline]:hover,\n[raggu_web_front_chrome_link_corpora]:hover {\n\tbackground: var(--accent-wash);\n\tcolor: var(--text);\n}\n\n@media (min-width: 640px) {\n\n\t[raggu_web_front_chrome_row] {\n\t\tgap: 0.75rem;\n\t\tpadding: 0 1.25rem;\n\t}\n\n\t[raggu_web_front_chrome_right] {\n\t\tgap: 0.75rem;\n\t}\n\n\t[raggu_web_front_chrome_word_sub] {\n\t\tdisplay: block;\n\t}\n\n}\n\n@media (max-width: 639.98px) {\n\n\t[raggu_web_front_chrome_corpus] [raggu_web_front_chrome_wordmark] {\n\t\tdisplay: none;\n\t}\n\n\t[raggu_web_front_chrome_corpus] [raggu_web_front_chrome_brand] {\n\t\tflex: 1 1 0;\n\t\tmax-width: max-content;\n\t}\n\n\t[raggu_web_front_chrome_switcher_box],\n\t[raggu_web_front_chrome_switcher_box] > *,\n\t[raggu_web_front_chrome_switcher_trigger] {\n\t\tmin-width: 0;\n\t\tflex-shrink: 1;\n\t}\n\n}\n\n@media (min-width: 768px) {\n\n\t[raggu_web_front_chrome_centre][raggu_web_front_chrome_centre_kind=\"home\"] {\n\t\tdisplay: flex;\n\t}\n\n}\n\n@media (min-width: 1024px) {\n\n\t[raggu_web_front_chrome_centre_box] {\n\t\tposition: absolute;\n\t\ttop: 0;\n\t\tleft: 50%;\n\t\torder: 0;\n\t\tmargin-top: 0;\n\t\twidth: auto;\n\t\ttransform: translateX(-50%);\n\t}\n\n}\n");
 })($ || ($ = {}));
 //raggu/web/front/chrome/-css/chrome.view.css.ts
 ;
@@ -39702,6 +39726,11 @@ var $;
 				(this.Summary())
 			];
 		}
+		Tools(){
+			const obj = new this.$.$raggu_web_front_chrome_tools();
+			(obj.viewer) = () => ((this.viewer()));
+			return obj;
+		}
 		Search(){
 			const obj = new this.$.$mol_view();
 			(obj.sub) = () => ((this.search_box()));
@@ -39805,6 +39834,7 @@ var $;
 	($mol_mem_key(($.$raggu_web_front_corpus_controls.prototype), "community_toggle"));
 	($mol_mem(($.$raggu_web_front_corpus_controls.prototype), "clear_all"));
 	($mol_mem(($.$raggu_web_front_corpus_controls.prototype), "viewer"));
+	($mol_mem(($.$raggu_web_front_corpus_controls.prototype), "Tools"));
 	($mol_mem(($.$raggu_web_front_corpus_controls.prototype), "Search"));
 	($mol_mem(($.$raggu_web_front_corpus_controls.prototype), "Search_icon"));
 	($mol_mem(($.$raggu_web_front_corpus_controls.prototype), "Search_input"));
@@ -39974,6 +40004,7 @@ var $;
             bar() {
                 return [
                     this.Search(),
+                    ...$raggu_web_front_lib_narrow() ? [this.Tools()] : [],
                     this.Types(),
                     ...this.communities_sorted().length ? [this.Communities()] : [],
                 ];
@@ -43072,25 +43103,6 @@ var $;
 	($mol_mem(($.$raggu_web_front_app.prototype), "Home"));
 	($mol_mem(($.$raggu_web_front_app.prototype), "Corpus"));
 
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_media extends $mol_object2 {
-        static match(query, next) {
-            if (next !== undefined)
-                return next;
-            const res = this.$.$mol_dom_context.matchMedia?.(query) ?? {};
-            res.onchange = () => this.match(query, res.matches);
-            return res.matches;
-        }
-    }
-    __decorate([
-        $mol_mem_key
-    ], $mol_media, "match", null);
-    $.$mol_media = $mol_media;
-})($ || ($ = {}));
-//mol/media/media.ts
 ;
 "use strict";
 var $;

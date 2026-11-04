@@ -175,9 +175,9 @@
 			"mol/fetch": -9007199254740991,
 			"mol/file": -9007199254740991,
 			"mol/locale": -9007199254740991,
+			"mol/media": -9007199254740991,
 			"mol/svg": -9007199254740991,
-			"mol/import": -9007199254740991,
-			"mol/media": -9007199254740991
+			"mol/import": -9007199254740991
 		},
 		"mol/type": {
 			"mol/type/enforce": -9007199254740991,
@@ -273,12 +273,12 @@
 			"mol/locale/locale.ts": -3,
 			"mol/dom/parse/parse.ts": -2,
 			"mol/file/file.web.ts": -3,
+			"mol/media/media.ts": -3,
 			"mol/svg/svg.view.ts": -3,
 			"raggu/web/front/chrome/chrome.view.ts": -3,
 			"raggu/web/front/home/home.view.ts": -3,
 			"mol/import/import.ts": -3,
 			"raggu/web/front/rich/rich.view.ts": -3,
-			"mol/media/media.ts": -3,
 			"raggu/web/front/app/app.view.ts": -3,
 			"raggu/web/front/analytics/analytics.ts": -2
 		},
@@ -555,8 +555,8 @@
 			"mol/wrapper/wrapper.ts": -1,
 			"mol/after/timeout/timeout.ts": -1,
 			"mol/storage/storage.ts": -1,
-			"mol/import/import.ts": -1,
-			"mol/media/media.ts": -1
+			"mol/media/media.ts": -1,
+			"mol/import/import.ts": -1
 		},
 		"mol/ambient/readme.md": {
 			"mol/ambient": 0
@@ -647,6 +647,7 @@
 			"mol/mem/cached": -9007199254740991,
 			"mol/file/base/base.ts": -2,
 			"mol/file/webdav/webdav.ts": -2,
+			"mol/media/media.ts": -2,
 			"raggu/web/front/lib/settings.ts": -2,
 			"raggu/web/front/viewer/viewer.ts": -2,
 			"raggu/web/front/data/data.ts": -2,
@@ -683,8 +684,7 @@
 			"raggu/web/front/corpus/-view.tree/corpus.view.tree.js": -1,
 			"raggu/web/front/corpus/corpus.view.ts": -2,
 			"raggu/web/front/app/-view.tree/app.view.tree.js": -1,
-			"raggu/web/front/app/app.view.ts": -2,
-			"mol/media/media.ts": -2
+			"raggu/web/front/app/app.view.ts": -2
 		},
 		"mol/wire/solo": {
 			"mol/mem/mem.ts": -1
@@ -1622,6 +1622,7 @@
 			"raggu/web/front/data/data.ts": -3,
 			"raggu/web/front/chrome/switcher/switcher.view.ts": -3,
 			"raggu/web/front/chrome/tools/tools.view.ts": -3,
+			"raggu/web/front/chrome/chrome.view.ts": -3,
 			"raggu/web/front/chrome/menu/menu.view.ts": -2,
 			"raggu/web/front/settings/settings.view.ts": -3,
 			"raggu/web/front/home/card/card.view.ts": -3,
@@ -1640,6 +1641,13 @@
 		},
 		"raggu/web/front/lib/rich.ts": {
 			"raggu/web/front/lib": 0
+		},
+		"mol/media": {
+			"raggu/web/front/lib/format.ts": -2,
+			"raggu/web/front/app/app.view.ts": -3
+		},
+		"mol/media/media.ts": {
+			"mol/media": 0
 		},
 		"raggu/web/front/lib/format.ts": {
 			"raggu/web/front/lib": 0
@@ -1759,7 +1767,7 @@
 		},
 		"raggu/web/front/chrome/switcher": {
 			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
-			"raggu/web/front/chrome/chrome.view.css": 0
+			"raggu/web/front/chrome/chrome.view.css": -1
 		},
 		"raggu/web/front/pop": {
 			"raggu/web/front/chrome/switcher/-view.tree/switcher.view.tree.js": -1,
@@ -1911,7 +1919,8 @@
 			"raggu/web/front/chrome/switcher": 0
 		},
 		"raggu/web/front/chrome/tools": {
-			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3
+			"raggu/web/front/chrome/-view.tree/chrome.view.tree.js": -3,
+			"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.js": -3
 		},
 		"raggu/web/front/chrome/tools/-view.tree/tools.view.tree.js": {
 			"raggu/web/front/chrome/tools/tools.view.tree": 1
@@ -2312,12 +2321,6 @@
 			"raggu/web/front/app/app.view.ts": 0,
 			"raggu/web/front/app/app.view.css": 0,
 			"raggu/web/front/app": 0
-		},
-		"mol/media": {
-			"raggu/web/front/app/app.view.ts": -3
-		},
-		"mol/media/media.ts": {
-			"mol/media": 0
 		},
 		"raggu/web/front/analytics": {
 			"raggu/web/front/app/app.view.ts": -3
@@ -3582,7 +3585,17 @@
 		"raggu/web/front/lib/cite.ts": {},
 		"raggu/web/front/lib/rich.ts": {},
 		"raggu/web/front/lib/format.ts": {
-			"mol/locale": -2
+			"mol/locale": -2,
+			"mol/media": -2
+		},
+		"mol/media/media.ts": {
+			"mol/object2": -1,
+			"mol/mem": -2,
+			"mol/dom/context": -3
+		},
+		"mol/media": {
+			"mol/media/media.ts": 0,
+			"mol": -9007199254740991
 		},
 		"raggu/web/front/lib/settings.ts": {
 			"mol/object": -1,
@@ -3947,6 +3960,7 @@
 		"raggu/web/front/chrome/chrome.view.ts": {
 			"raggu/web/front/chrome/chrome.view.tree": 0,
 			"mol/mem": -2,
+			"raggu/web/front/lib": -3,
 			"mol/dom/context": -3
 		},
 		"raggu/web/front/chrome": {
@@ -3959,7 +3973,7 @@
 		"raggu/web/front/chrome/chrome.view.css": {
 			"mol/style/attach": 0,
 			"raggu/web/front/chrome/chrome.view.tree": 0,
-			"raggu/web/front/chrome/switcher": 0,
+			"raggu/web/front/chrome/switcher": -1,
 			"raggu/web/front/chrome/menu": 0,
 			"raggu/web/front/pop": 0,
 			"raggu/web/front/chrome/-css/chrome.view.css.ts": 1
@@ -4185,6 +4199,7 @@
 			"mol/locale": -3,
 			"raggu/web/front/icon": -3,
 			"raggu/web/front/viewer": -3,
+			"raggu/web/front/chrome/tools": -3,
 			"mol/view": -3,
 			"mol/button": -1,
 			"mol/mem": -1,
@@ -4193,8 +4208,8 @@
 		},
 		"raggu/web/front/corpus/controls/controls.view.ts": {
 			"raggu/web/front/corpus/controls/controls.view.tree": 0,
-			"mol/mem": -2,
-			"raggu/web/front/lib": -3
+			"raggu/web/front/lib": -3,
+			"mol/mem": -2
 		},
 		"raggu/web/front/corpus/controls": {
 			"raggu/web/front/corpus/controls/controls.view.ts": 0,
@@ -4461,15 +4476,6 @@
 			"mol/dom/context": -3,
 			"raggu/web/front/lib": -3,
 			"raggu/web/front/analytics": -3
-		},
-		"mol/media/media.ts": {
-			"mol/object2": -1,
-			"mol/mem": -2,
-			"mol/dom/context": -3
-		},
-		"mol/media": {
-			"mol/media/media.ts": 0,
-			"mol": -9007199254740991
 		},
 		"raggu/web/front/analytics/analytics.ts": {
 			"mol/dom/context": -2
@@ -4989,6 +4995,9 @@
 		"raggu/web/front/lib/rich.ts",
 		"raggu/web/front/lib/rich.ts.js",
 		"raggu/web/front/lib/rich.ts.js.map",
+		"mol/media/media.ts",
+		"mol/media/media.ts.js",
+		"mol/media/media.ts.js.map",
 		"raggu/web/front/lib/format.ts",
 		"raggu/web/front/lib/format.ts.js",
 		"raggu/web/front/lib/format.ts.js.map",
@@ -5335,9 +5344,6 @@
 		"raggu/web/front/app/-view.tree/app.view.tree.js.map",
 		"raggu/web/front/app/-view.tree/app.view.tree.d.ts",
 		"raggu/web/front/app/-view.tree/app.view.tree.d.ts.map",
-		"mol/media/media.ts",
-		"mol/media/media.ts.js",
-		"mol/media/media.ts.js.map",
 		"raggu/web/front/analytics/analytics.ts",
 		"raggu/web/front/analytics/analytics.ts.js",
 		"raggu/web/front/analytics/analytics.ts.js.map",
@@ -5850,7 +5856,10 @@
 		"raggu/web/front/lib/rich.ts": 2661,
 		"raggu/web/front/lib/rich.ts.js": 0,
 		"raggu/web/front/lib/rich.ts.js.map": 0,
-		"raggu/web/front/lib/format.ts": 2405,
+		"mol/media/media.ts": 345,
+		"mol/media/media.ts.js": 0,
+		"mol/media/media.ts.js.map": 0,
+		"raggu/web/front/lib/format.ts": 2511,
 		"raggu/web/front/lib/format.ts.js": 0,
 		"raggu/web/front/lib/format.ts.js.map": 0,
 		"raggu/web/front/lib/settings.ts": 3208,
@@ -6008,7 +6017,7 @@
 		"raggu/web/front/chrome/-view.tree/chrome.view.tree.js.map": 9487,
 		"raggu/web/front/chrome/-view.tree/chrome.view.tree.d.ts": 9519,
 		"raggu/web/front/chrome/-view.tree/chrome.view.tree.d.ts.map": 3709,
-		"raggu/web/front/chrome/chrome.view.ts": 2061,
+		"raggu/web/front/chrome/chrome.view.ts": 2118,
 		"raggu/web/front/chrome/chrome.view.ts.js": 0,
 		"raggu/web/front/chrome/chrome.view.ts.js.map": 0,
 		"raggu/web/front/chrome/menu/-view.tree/menu.view.tree.js": 7291,
@@ -6025,10 +6034,10 @@
 		"raggu/web/front/chrome/menu/-css/menu.view.css.ts.js.map": 0,
 		"raggu/web/front/chrome/menu/menu.view.css": 1723,
 		"raggu/web/front/chrome/menu/menu.locale=ru.json": 329,
-		"raggu/web/front/chrome/-css/chrome.view.css.ts": 5636,
+		"raggu/web/front/chrome/-css/chrome.view.css.ts": 5940,
 		"raggu/web/front/chrome/-css/chrome.view.css.ts.js": 0,
 		"raggu/web/front/chrome/-css/chrome.view.css.ts.js.map": 0,
-		"raggu/web/front/chrome/chrome.view.css": 5114,
+		"raggu/web/front/chrome/chrome.view.css": 5392,
 		"raggu/web/front/chrome/chrome.locale=ru.json": 378,
 		"raggu/web/front/settings/-view.tree/settings.view.tree.js": 17083,
 		"raggu/web/front/settings/settings.view.tree": 5438,
@@ -6058,13 +6067,13 @@
 		"raggu/web/front/home/-css/home.view.css.ts.js.map": 0,
 		"raggu/web/front/home/home.view.css": 10386,
 		"raggu/web/front/home/home.locale=ru.json": 4246,
-		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.js": 11116,
-		"raggu/web/front/corpus/controls/controls.view.tree": 2807,
+		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.js": 11318,
+		"raggu/web/front/corpus/controls/controls.view.tree": 2863,
 		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.locale=en.json": 644,
-		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.js.map": 9587,
-		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.d.ts": 12591,
-		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.d.ts.map": 4455,
-		"raggu/web/front/corpus/controls/controls.view.ts": 3595,
+		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.js.map": 9747,
+		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.d.ts": 12855,
+		"raggu/web/front/corpus/controls/-view.tree/controls.view.tree.d.ts.map": 4524,
+		"raggu/web/front/corpus/controls/controls.view.ts": 3658,
 		"raggu/web/front/corpus/controls/controls.view.ts.js": 0,
 		"raggu/web/front/corpus/controls/controls.view.ts.js.map": 0,
 		"raggu/web/front/corpus/controls/-css/controls.view.css.ts": 7312,
@@ -6196,9 +6205,6 @@
 		"raggu/web/front/app/-view.tree/app.view.tree.js.map": 4247,
 		"raggu/web/front/app/-view.tree/app.view.tree.d.ts": 4120,
 		"raggu/web/front/app/-view.tree/app.view.tree.d.ts.map": 1751,
-		"mol/media/media.ts": 345,
-		"mol/media/media.ts.js": 0,
-		"mol/media/media.ts.js.map": 0,
 		"raggu/web/front/analytics/analytics.ts": 2073,
 		"raggu/web/front/analytics/analytics.ts.js": 0,
 		"raggu/web/front/analytics/analytics.ts.js.map": 0,
@@ -6711,6 +6717,9 @@
 		"raggu/web/front/lib/rich.ts",
 		"raggu/web/front/lib/rich.ts.js",
 		"raggu/web/front/lib/rich.ts.js.map",
+		"mol/media/media.ts",
+		"mol/media/media.ts.js",
+		"mol/media/media.ts.js.map",
 		"raggu/web/front/lib/format.ts",
 		"raggu/web/front/lib/format.ts.js",
 		"raggu/web/front/lib/format.ts.js.map",
@@ -7057,9 +7066,6 @@
 		"raggu/web/front/app/-view.tree/app.view.tree.js.map",
 		"raggu/web/front/app/-view.tree/app.view.tree.d.ts",
 		"raggu/web/front/app/-view.tree/app.view.tree.d.ts.map",
-		"mol/media/media.ts",
-		"mol/media/media.ts.js",
-		"mol/media/media.ts.js.map",
 		"raggu/web/front/analytics/analytics.ts",
 		"raggu/web/front/analytics/analytics.ts.js",
 		"raggu/web/front/analytics/analytics.ts.js.map",
@@ -7420,6 +7426,8 @@
 		"raggu/web/front/lib/sse.ts",
 		"raggu/web/front/lib/cite.ts",
 		"raggu/web/front/lib/rich.ts",
+		"mol/media/media.ts",
+		"mol/media",
 		"raggu/web/front/lib/format.ts",
 		"raggu/web/front/lib/settings.ts",
 		"raggu/web/front/lib/-view.tree/names.view.tree.js",
@@ -7614,8 +7622,6 @@
 		"raggu/web/front/home/card",
 		"raggu/web/front/app/-view.tree/app.view.tree.js",
 		"raggu/web/front/app/app.view.tree",
-		"mol/media/media.ts",
-		"mol/media",
 		"raggu/web/front/analytics/analytics.ts",
 		"raggu/web/front/analytics",
 		"raggu/web/front/app/app.view.ts",
@@ -7629,15 +7635,15 @@
 	],
 	"sloc": {
 		"html": 56,
-		"ts": 9001,
-		"js": 9553,
+		"ts": 9006,
+		"js": 9559,
 		"map": 155,
 		"md": 2499,
 		"CNAME": 1,
 		"LICENSE": 181,
-		"tree": 1923,
+		"tree": 1925,
 		"json": 512,
-		"css": 3802,
+		"css": 3812,
 		"tsx": 400,
 		"Caddyfile": 25,
 		"yml": 171
@@ -9150,7 +9156,18 @@
 		},
 		"raggu/web/front/lib/format.ts": {
 			"raggu/web/front/lib": -1,
-			"mol/locale": -2
+			"mol/locale": -2,
+			"mol/media": -2
+		},
+		"mol/media": {
+			"mol/media/media.ts": 0,
+			"mol": -9007199254740991
+		},
+		"mol/media/media.ts": {
+			"mol/media": -1,
+			"mol/object2": -1,
+			"mol/mem": -2,
+			"mol/dom/context": -3
 		},
 		"raggu/web/front/lib/settings.ts": {
 			"raggu/web/front/lib": -1,
@@ -9258,6 +9275,7 @@
 			"raggu/web/front/chrome/chrome.view.tree": 0,
 			"raggu/web/front/chrome": -1,
 			"mol/mem": -2,
+			"raggu/web/front/lib": -3,
 			"mol/dom/context": -3
 		},
 		"raggu/web/front/chrome/chrome.view.tree": {
@@ -9563,7 +9581,7 @@
 			"mol/style/attach": 0,
 			"raggu/web/front/chrome/chrome.view.tree": 0,
 			"raggu/web/front/chrome": -1,
-			"raggu/web/front/chrome/switcher": 0,
+			"raggu/web/front/chrome/switcher": -1,
 			"raggu/web/front/chrome/menu": 0,
 			"raggu/web/front/pop": 0,
 			"raggu/web/front/chrome/-css/chrome.view.css.ts": 1
@@ -9829,8 +9847,8 @@
 		"raggu/web/front/corpus/controls/controls.view.ts": {
 			"raggu/web/front/corpus/controls/controls.view.tree": 0,
 			"raggu/web/front/corpus/controls": -1,
-			"mol/mem": -2,
-			"raggu/web/front/lib": -3
+			"raggu/web/front/lib": -3,
+			"mol/mem": -2
 		},
 		"raggu/web/front/corpus/controls/controls.view.tree": {
 			"mol/type/enforce": 0,
@@ -9843,6 +9861,7 @@
 			"mol/locale": -3,
 			"raggu/web/front/icon": -3,
 			"raggu/web/front/viewer": -3,
+			"raggu/web/front/chrome/tools": -3,
 			"mol/view": -3,
 			"mol/button": -1,
 			"mol/mem": -1,
@@ -10115,16 +10134,6 @@
 			"mol/type/enforce": 0
 		},
 		"raggu/web/front/corpus/corpus.locale=ru.json": {},
-		"mol/media": {
-			"mol/media/media.ts": 0,
-			"mol": -9007199254740991
-		},
-		"mol/media/media.ts": {
-			"mol/media": -1,
-			"mol/object2": -1,
-			"mol/mem": -2,
-			"mol/dom/context": -3
-		},
 		"raggu/web/front/analytics": {
 			"raggu/web/front/analytics/analytics.ts": 0,
 			"raggu/web/front": -9007199254740991
