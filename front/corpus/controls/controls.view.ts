@@ -25,6 +25,7 @@ namespace $.$$ {
 		bar() {
 			return [
 				this.Search(),
+				... $raggu_web_front_lib_narrow() ? [ this.Tools() ] : [],
 				this.Types(),
 				... this.communities_sorted().length ? [ this.Communities() ] : [],
 			]

@@ -238,6 +238,18 @@
 		display: none;
 	}
 
+	[raggu_web_front_chrome_corpus] [raggu_web_front_chrome_brand] {
+		flex: 1 1 0;
+		max-width: max-content;
+	}
+
+	[raggu_web_front_chrome_switcher_box],
+	[raggu_web_front_chrome_switcher_box] > *,
+	[raggu_web_front_chrome_switcher_trigger] {
+		min-width: 0;
+		flex-shrink: 1;
+	}
+
 }
 
 @media (min-width: 768px) {

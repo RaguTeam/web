@@ -33,6 +33,10 @@ namespace $ {
 		return words.charAt( 0 ).toUpperCase() + words.slice( 1 )
 	}
 
+	export function $raggu_web_front_lib_narrow() {
+		return $mol_media.match( '(max-width: 639.98px)' )
+	}
+
 	export function $raggu_web_front_lib_clamp( value: number, min: number, max: number ) {
 		return Math.min( max, Math.max( min, value ) )
 	}

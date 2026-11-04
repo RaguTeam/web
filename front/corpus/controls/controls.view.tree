@@ -12,6 +12,8 @@ $raggu_web_front_corpus_controls $mol_view
 				<= Summary_line $mol_view
 					dom_name \span
 					sub <= summary /
+	Tools $raggu_web_front_chrome_tools
+		viewer <= viewer
 	Search $mol_view
 		sub <= search_box /
 	Search_icon $raggu_web_front_icon_search

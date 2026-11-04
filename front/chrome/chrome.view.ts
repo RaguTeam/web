@@ -24,7 +24,8 @@ namespace $.$$ {
 		}
 
 		right() {
-			return this.corpus_page() ? [ this.Tools(), this.Controls() ] : [ this.Controls() ]
+			const tools = this.corpus_page() && !$raggu_web_front_lib_narrow()
+			return tools ? [ this.Tools(), this.Controls() ] : [ this.Controls() ]
 		}
 
 		centre_kind() {
