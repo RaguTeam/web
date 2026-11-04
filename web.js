@@ -7319,32 +7319,51 @@ var $;
             this.aborts.get(corpus)?.abort();
             this.aborts.set(corpus, controller);
             let received = '';
+            let shown = 0;
             let frame = 0;
-            const on_delta = (piece) => {
-                received += piece;
-                if (frame)
-                    return;
-                frame = requestAnimationFrame(() => {
-                    frame = 0;
-                    if (this.aborts.get(corpus) === controller)
-                        this.partial(corpus, received);
-                });
-            };
-            $raggu_web_front_viewer_ask(corpus, body, controller.signal, on_delta).then(response => {
-                cancelAnimationFrame(frame);
+            let finish = null;
+            const type = () => {
+                frame = 0;
                 if (this.aborts.get(corpus) !== controller)
                     return;
-                this.aborts.delete(corpus);
+                if (shown < received.length) {
+                    shown = Math.min(received.length, shown + Math.max(2, Math.ceil((received.length - shown) / 14)));
+                    if (/[\uDC00-\uDFFF]/.test(received[shown] ?? ''))
+                        shown += 1;
+                    this.partial(corpus, received.slice(0, shown));
+                }
+                if (shown < received.length)
+                    frame = requestAnimationFrame(type);
+                else
+                    finish?.();
+            };
+            const on_delta = (piece) => {
+                received += piece;
+                if (!frame)
+                    frame = requestAnimationFrame(type);
+            };
+            $raggu_web_front_viewer_ask(corpus, body, controller.signal, on_delta).then(response => {
+                if (this.aborts.get(corpus) !== controller)
+                    return;
                 const message = response.message;
-                this.entries(corpus, [
-                    ...this.entries(corpus),
-                    { id: this.next_id('assistant'), role: 'assistant', content: message.content, trace: message.trace ?? null },
-                ]);
-                this.pending(corpus, false);
-                this.partial(corpus, null);
-                this.started(corpus, null);
-                this.failure(corpus, null);
-                this.highlight_in(corpus, message.trace?.highlight?.node_ids ?? []);
+                finish = () => {
+                    cancelAnimationFrame(frame);
+                    this.aborts.delete(corpus);
+                    this.entries(corpus, [
+                        ...this.entries(corpus),
+                        { id: this.next_id('assistant'), role: 'assistant', content: message.content, trace: message.trace ?? null },
+                    ]);
+                    this.pending(corpus, false);
+                    this.partial(corpus, null);
+                    this.started(corpus, null);
+                    this.failure(corpus, null);
+                    this.highlight_in(corpus, message.trace?.highlight?.node_ids ?? []);
+                };
+                if (!received || !message.content.startsWith(received.slice(0, shown)))
+                    return finish();
+                received = message.content;
+                if (!frame)
+                    frame = requestAnimationFrame(type);
             }, error => {
                 cancelAnimationFrame(frame);
                 if (error instanceof DOMException && error.name === 'AbortError')
