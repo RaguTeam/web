@@ -10,14 +10,25 @@ namespace $ {
 		},
 
 		'type names come from the tree and fall back to the token'() {
-			$mol_locale.lang( 'en' )
-			$mol_locale.texts( 'en', {
+
+			const texts: Record< string, string > = {
 				'$raggu_web_front_lib_names_relation_RELATED_TO': 'Related to',
 				'$raggu_web_front_lib_names_entity_GENE_MUTATION': 'Gene mutation',
+			}
+
+			const names = new $raggu_web_front_lib_names
+			names.$ = $mol_ambient( {
+				$mol_locale: class extends $mol_locale {
+					static override text( key: string ) {
+						return texts[ key ] ?? key
+					}
+				},
 			} )
-			$mol_assert_equal( $raggu_web_front_lib_relation_name( 'RELATED_TO' ), 'Related to' )
-			$mol_assert_equal( $raggu_web_front_lib_entity_name( 'GeneMutation' ), 'Gene mutation' )
-			$mol_assert_equal( $raggu_web_front_lib_entity_name( 'UNKNOWN_KIND' ), 'Unknown kind' )
+
+			$mol_assert_equal( $raggu_web_front_lib_relation_name( 'RELATED_TO', names ), 'Related to' )
+			$mol_assert_equal( $raggu_web_front_lib_entity_name( 'GeneMutation', names ), 'Gene mutation' )
+			$mol_assert_equal( $raggu_web_front_lib_entity_name( 'UNKNOWN_KIND', names ), 'Unknown kind' )
+
 		},
 
 		'settings revive clamps and fills defaults'() {

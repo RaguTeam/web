@@ -50,19 +50,22 @@ namespace $ {
 
 	let $raggu_web_front_lib_names_all = null as null | $raggu_web_front_lib_names
 
-	function $raggu_web_front_lib_type_name( kind: 'entity' | 'relation', raw: string ) {
-		const names = $raggu_web_front_lib_names_all ??= new $raggu_web_front_lib_names
+	function $raggu_web_front_lib_type_name( kind: 'entity' | 'relation', raw: string, names: $raggu_web_front_lib_names ) {
 		const method = names[ `${ kind }_${ $raggu_web_front_lib_type_key( raw ) }` as keyof typeof names ]
 		if( typeof method === 'function' ) return String( ( method as ()=> string ).call( names ) )
 		return $raggu_web_front_lib_humanize( raw )
 	}
 
-	export function $raggu_web_front_lib_entity_name( raw: string ) {
-		return $raggu_web_front_lib_type_name( 'entity', raw )
+	function $raggu_web_front_lib_names_shared() {
+		return $raggu_web_front_lib_names_all ??= new $raggu_web_front_lib_names
 	}
 
-	export function $raggu_web_front_lib_relation_name( raw: string ) {
-		return $raggu_web_front_lib_type_name( 'relation', raw )
+	export function $raggu_web_front_lib_entity_name( raw: string, names = $raggu_web_front_lib_names_shared() ) {
+		return $raggu_web_front_lib_type_name( 'entity', raw, names )
+	}
+
+	export function $raggu_web_front_lib_relation_name( raw: string, names = $raggu_web_front_lib_names_shared() ) {
+		return $raggu_web_front_lib_type_name( 'relation', raw, names )
 	}
 
 }
