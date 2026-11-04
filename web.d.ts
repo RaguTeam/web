@@ -67,6 +67,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_log3_web_make(level: $mol_type_keys_extract<Console, Function>, color: string): (this: $, event: $mol_log3_event<{}>) => () => void;
+}
+
+declare namespace $ {
     /**
      * Extracts keys from `Input` which values extends `Upper` and extendable by `Lower`.
      *
@@ -118,6 +122,9 @@ declare namespace $ {
 
 declare namespace $ {
     var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1351,6 +1358,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_after_frame extends $mol_object2 {
+        task: () => void;
+        static _promise: Promise<void> | null;
+        static get promise(): Promise<void>;
+        cancelled: boolean;
+        promise: Promise<void>;
+        constructor(task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
     /**
      * Returns last element of `Tuple`.
      *
@@ -1365,6 +1384,10 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_try<Result>(handler: () => Result): Result | Error;
+}
+
+declare namespace $ {
+    function $mol_try_web<Result>(handler2: () => Result): Result | Error;
 }
 
 declare namespace $ {
@@ -1399,6 +1422,16 @@ declare namespace $ {
         static watch(task?: () => any): (() => any) | undefined;
         static track(fiber: $mol_wire_fiber<any, any, any>): any;
         static active(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_window extends $mol_object {
+        static size(): {
+            width: number;
+            height: number;
+        };
+        static resizes(next?: Event): Event | undefined;
     }
 }
 
@@ -1523,6 +1556,9 @@ declare namespace $ {
         bracketClose = 221,
         quoteSingle = 222
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1681,6 +1717,12 @@ declare namespace $ {
     type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
 }
 
+interface Window {
+    cordova: any;
+}
+declare namespace $ {
+}
+
 declare namespace $ {
     /** Plugin is component without its own DOM element, but instead uses the owner DOM element */
     class $mol_plugin extends $mol_view {
@@ -1747,6 +1789,40 @@ declare namespace $ {
      * @see https://mol.hyoo.ru/#!section=docs/=1fcpsq_1wh0h2
      */
     let $mol_action: typeof $mol_wire_method;
+}
+
+declare namespace $ {
+    /** State of arguments like `#foo=bar/xxx` or `?foo=bar&xxx` */
+    class $mol_state_arg extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static href_normal(): string;
+        static href_absolute(): string;
+        static dict(next?: {
+            [key: string]: string | null;
+        }): Readonly<{
+            [key: string]: string;
+        }>;
+        static dict_cut(except: string[]): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string | null): string | null;
+        static link(next: Record<string, string | null>): string;
+        static prolog: string;
+        static separator: string;
+        static make_link(next: {
+            [key: string]: string | null;
+        }): string;
+        static commit(): void;
+        static go(next: {
+            [key: string]: string | null;
+        }): void;
+        static encode(str: string): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string | null;
+        sub(postfix: string): $mol_state_arg;
+        link(next: Record<string, string | null>): string;
+    }
 }
 
 declare namespace $.$$ {
@@ -1960,7 +2036,29 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    let $mol_mem_persist: typeof $mol_wire_solid;
+}
+
+declare namespace $ {
     let $mol_mem_cached: typeof $mol_wire_probe;
+}
+
+declare namespace $ {
+    function $mol_wait_user_async(this: $): Promise<unknown>;
+    function $mol_wait_user(this: $): unknown;
+}
+
+declare namespace $ {
+    class $mol_storage_web extends $mol_storage {
+        static native(): StorageManager;
+        static persisted(next?: boolean, cache?: 'cache'): boolean;
+        static estimate(next?: null): StorageEstimate;
+        static total(): number;
+        static used(): number;
+        static free(): number;
+        static portion(): number;
+        static dir(): FileSystemDirectoryHandle;
+    }
 }
 
 declare namespace $ {
@@ -1976,6 +2074,9 @@ declare namespace $ {
         prefix(): string;
         value(key: string, next?: Value): Value | null;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -2236,6 +2337,35 @@ declare namespace $ {
         static xml(input: RequestInfo, init?: RequestInit): Document;
         static xhtml(input: RequestInfo, init?: RequestInit): Document;
         static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_webdav extends $mol_file_base {
+        static relative<This extends typeof $mol_file>(this: This, path: string): InstanceType<This>;
+        resolve(path: string): this;
+        static headers(): Record<string, string>;
+        headers(): Record<string, string>;
+        protected fetch(init: RequestInit): $mol_fetch_response;
+        protected read(): Uint8Array<ArrayBuffer>;
+        protected write(body: Uint8Array<ArrayBuffer>): void;
+        protected ensure(): void;
+        protected drop(): void;
+        protected copy(to: string): void;
+        protected kids(): this[];
+        readable(opts: {
+            start?: number;
+            end?: number;
+        }): ReadableStream<Uint8Array<ArrayBuffer>>;
+        protected info(): $mol_file_stat | null;
+    }
+}
+
+declare namespace $ {
+    class $mol_file_web extends $mol_file_webdav {
+        static base: string;
+        version(): string;
+        protected info(): $mol_file_stat | null;
     }
 }
 
@@ -2821,6 +2951,8 @@ declare namespace $ {
 
 interface $npm {
 }
+
+declare var $npm: $npm;
 
 declare namespace $ {
     type $raggu_web_front_scene_state = {

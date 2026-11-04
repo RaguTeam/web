@@ -8924,11 +8924,13 @@ var $;
                 return;
             event.preventDefault();
             idle = 0;
+            // As in three's OrbitControls: the wheel away from you (deltaY < 0)
+            // brings the camera closer, so the radius shrinks.
             const scale = Math.pow(0.95, 0.7 * Math.abs(event.deltaY * 0.01));
             if (event.deltaY < 0)
-                orbit.scale /= scale;
-            else if (event.deltaY > 0)
                 orbit.scale *= scale;
+            else if (event.deltaY > 0)
+                orbit.scale /= scale;
         };
         canvas.addEventListener('pointerdown', on_down);
         canvas.addEventListener('pointermove', on_move);
