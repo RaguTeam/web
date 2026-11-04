@@ -6367,19 +6367,21 @@ var $;
             .toUpperCase();
     }
     let $raggu_web_front_lib_names_all = null;
-    function $raggu_web_front_lib_type_name(kind, raw) {
-        const names = $raggu_web_front_lib_names_all ??= new $raggu_web_front_lib_names;
+    function $raggu_web_front_lib_type_name(kind, raw, names) {
         const method = names[`${kind}_${$raggu_web_front_lib_type_key(raw)}`];
         if (typeof method === 'function')
             return String(method.call(names));
         return $raggu_web_front_lib_humanize(raw);
     }
-    function $raggu_web_front_lib_entity_name(raw) {
-        return $raggu_web_front_lib_type_name('entity', raw);
+    function $raggu_web_front_lib_names_shared() {
+        return $raggu_web_front_lib_names_all ??= new $raggu_web_front_lib_names;
+    }
+    function $raggu_web_front_lib_entity_name(raw, names = $raggu_web_front_lib_names_shared()) {
+        return $raggu_web_front_lib_type_name('entity', raw, names);
     }
     $.$raggu_web_front_lib_entity_name = $raggu_web_front_lib_entity_name;
-    function $raggu_web_front_lib_relation_name(raw) {
-        return $raggu_web_front_lib_type_name('relation', raw);
+    function $raggu_web_front_lib_relation_name(raw, names = $raggu_web_front_lib_names_shared()) {
+        return $raggu_web_front_lib_type_name('relation', raw, names);
     }
     $.$raggu_web_front_lib_relation_name = $raggu_web_front_lib_relation_name;
 })($ || ($ = {}));

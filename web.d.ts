@@ -2644,8 +2644,8 @@ declare namespace $ {
     function $raggu_web_front_lib_humanize(raw: string): string;
     function $raggu_web_front_lib_narrow(): boolean;
     function $raggu_web_front_lib_clamp(value: number, min: number, max: number): number;
-    function $raggu_web_front_lib_entity_name(raw: string): string;
-    function $raggu_web_front_lib_relation_name(raw: string): string;
+    function $raggu_web_front_lib_entity_name(raw: string, names?: $raggu_web_front_lib_names): string;
+    function $raggu_web_front_lib_relation_name(raw: string, names?: $raggu_web_front_lib_names): string;
 }
 
 declare namespace $ {

@@ -6855,19 +6855,21 @@ var $;
             .toUpperCase();
     }
     let $raggu_web_front_lib_names_all = null;
-    function $raggu_web_front_lib_type_name(kind, raw) {
-        const names = $raggu_web_front_lib_names_all ??= new $raggu_web_front_lib_names;
+    function $raggu_web_front_lib_type_name(kind, raw, names) {
         const method = names[`${kind}_${$raggu_web_front_lib_type_key(raw)}`];
         if (typeof method === 'function')
             return String(method.call(names));
         return $raggu_web_front_lib_humanize(raw);
     }
-    function $raggu_web_front_lib_entity_name(raw) {
-        return $raggu_web_front_lib_type_name('entity', raw);
+    function $raggu_web_front_lib_names_shared() {
+        return $raggu_web_front_lib_names_all ??= new $raggu_web_front_lib_names;
+    }
+    function $raggu_web_front_lib_entity_name(raw, names = $raggu_web_front_lib_names_shared()) {
+        return $raggu_web_front_lib_type_name('entity', raw, names);
     }
     $.$raggu_web_front_lib_entity_name = $raggu_web_front_lib_entity_name;
-    function $raggu_web_front_lib_relation_name(raw) {
-        return $raggu_web_front_lib_type_name('relation', raw);
+    function $raggu_web_front_lib_relation_name(raw, names = $raggu_web_front_lib_names_shared()) {
+        return $raggu_web_front_lib_type_name('relation', raw, names);
     }
     $.$raggu_web_front_lib_relation_name = $raggu_web_front_lib_relation_name;
 })($ || ($ = {}));
@@ -19376,14 +19378,21 @@ var $;
             $mol_assert_equal($raggu_web_front_lib_badge(2_400_000), '2.4M');
         },
         'type names come from the tree and fall back to the token'() {
-            $mol_locale.lang('en');
-            $mol_locale.texts('en', {
+            const texts = {
                 '$raggu_web_front_lib_names_relation_RELATED_TO': 'Related to',
                 '$raggu_web_front_lib_names_entity_GENE_MUTATION': 'Gene mutation',
+            };
+            const names = new $raggu_web_front_lib_names;
+            names.$ = $mol_ambient({
+                $mol_locale: class extends $mol_locale {
+                    static text(key) {
+                        return texts[key] ?? key;
+                    }
+                },
             });
-            $mol_assert_equal($raggu_web_front_lib_relation_name('RELATED_TO'), 'Related to');
-            $mol_assert_equal($raggu_web_front_lib_entity_name('GeneMutation'), 'Gene mutation');
-            $mol_assert_equal($raggu_web_front_lib_entity_name('UNKNOWN_KIND'), 'Unknown kind');
+            $mol_assert_equal($raggu_web_front_lib_relation_name('RELATED_TO', names), 'Related to');
+            $mol_assert_equal($raggu_web_front_lib_entity_name('GeneMutation', names), 'Gene mutation');
+            $mol_assert_equal($raggu_web_front_lib_entity_name('UNKNOWN_KIND', names), 'Unknown kind');
         },
         'settings revive clamps and fills defaults'() {
             const value = $raggu_web_front_lib_settings_revive({ topK: 900, graphLimit: 9, useGraph: 'yes' });
