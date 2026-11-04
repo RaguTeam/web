@@ -101,6 +101,7 @@
 	"$raggu_web_front_home_footer_mol": "Built with $mol",
 	"$raggu_web_front_home_footer_project": "Project",
 	"$raggu_web_front_home_footer_this": "This interface",
+	"$raggu_web_front_home_footer_web": "Source code",
 	"$raggu_web_front_home_how_label": "How it works",
 	"$raggu_web_front_home_lede": "RAGU reads raw text, pulls out typed entities and the relations between them, clusters the result into communities, and answers questions over that structure — on your own hardware, with the source chunk attached to every claim.",
 	"$raggu_web_front_home_metric_chunks": "text chunks",

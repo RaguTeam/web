@@ -101,6 +101,7 @@
 	"$raggu_web_front_home_footer_mol": "Сделано на $mol",
 	"$raggu_web_front_home_footer_project": "Проект",
 	"$raggu_web_front_home_footer_this": "Этот интерфейс",
+	"$raggu_web_front_home_footer_web": "Исходный код",
 	"$raggu_web_front_home_how_label": "Как это работает",
 	"$raggu_web_front_home_lede": "RAGU читает сырой текст, вытаскивает типизированные сущности и связи между ними, собирает их в сообщества и отвечает на вопросы поверх этой структуры — на вашем железе, с фрагментом-источником у каждого утверждения.",
 	"$raggu_web_front_home_metric_chunks": "фрагментов",

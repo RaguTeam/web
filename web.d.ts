@@ -5587,6 +5587,7 @@ declare namespace $ {
 		Footer_project( ): $mol_view
 		footer_this( ): string
 		Footer_this_label( ): $raggu_web_front_label
+		footer_web( ): string
 		Footer_web( ): $raggu_web_front_link
 		Footer_mol_icon( ): $raggu_web_front_icon_mol
 		footer_mol( ): string

@@ -967,7 +967,7 @@ $raggu_web_front_home $mol_view
 									sub /
 										<= Footer_web $raggu_web_front_link
 											uri \https://github.com/RaguTeam/web
-											sub / <= footer_this
+											sub / <= footer_web @ \Source code
 										<= Footer_mol $raggu_web_front_link
 											uri \https://b-on-g.github.io/smalljs/
 											sub /
